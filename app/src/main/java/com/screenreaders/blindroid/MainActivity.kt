@@ -1,6 +1,7 @@
 package com.screenreaders.blindroid
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.DownloadManager
 import android.app.role.RoleManager
 import android.app.TimePickerDialog
@@ -118,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         binding.chimeSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setChimeEnabled(this, isChecked)
             if (isChecked) {
+                maybeRequestExactAlarmPermission()
                 ChimeScheduler.schedule(this)
             } else {
                 ChimeScheduler.cancel(this)
@@ -155,6 +157,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateNotificationAccessButton()
+        if (Prefs.isChimeEnabled(this) && isExactAlarmAllowed()) {
+            ChimeScheduler.schedule(this)
+        }
     }
 
     private fun handleDialIntent(intent: Intent) {
@@ -474,6 +479,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private data class VoiceEntry(val label: String, val name: String)
+
+    private fun isExactAlarmAllowed(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+        val alarmManager = getSystemService(AlarmManager::class.java)
+        return alarmManager.canScheduleExactAlarms()
+    }
+
+    private fun maybeRequestExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+        if (isExactAlarmAllowed()) return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.exact_alarm_title)
+            .setMessage(R.string.exact_alarm_message)
+            .setPositiveButton(R.string.exact_alarm_allow) { _, _ ->
+                openExactAlarmSettings()
+            }
+            .setNegativeButton(R.string.exact_alarm_cancel, null)
+            .show()
+    }
+
+    private fun openExactAlarmSettings() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+        startActivity(intent)
+    }
 
     private fun initChimeUi() {
         val intervals = listOf(15, 30, 60)

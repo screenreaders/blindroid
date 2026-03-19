@@ -43,6 +43,10 @@
     <string name="chime_interval_60">Co godzinę</string>
     <string name="chime_start">Od</string>
     <string name="chime_end">Do</string>
+    <string name="exact_alarm_title">Dokładne alarmy</string>
+    <string name="exact_alarm_message">Aby zegarynka działała dokładnie o pełnych godzinach i kwadransach, aplikacja potrzebuje zezwolenia na dokładne alarmy. Włącz je w ustawieniach.</string>
+    <string name="exact_alarm_allow">Przejdź do ustawień</string>
+    <string name="exact_alarm_cancel">Anuluj</string>
     <string name="in_call_title">Połączenie</string>
     <string name="answer">Odbierz</string>
     <string name="reject">Odrzuć</string>

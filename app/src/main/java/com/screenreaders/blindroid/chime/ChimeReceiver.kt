@@ -18,38 +18,43 @@ class ChimeReceiver : BroadcastReceiver() {
         val nowMinutes = currentMinutes()
         val start = Prefs.getChimeStartMinutes(context)
         val end = Prefs.getChimeEndMinutes(context)
-        if (!isWithinWindow(nowMinutes, start, end)) return
+        val withinWindow = isWithinWindow(nowMinutes, start, end)
 
         val activeCall = CallManager.getCall()
-        if (activeCall != null && activeCall.state != android.telecom.Call.STATE_DISCONNECTED) return
+        val canSpeak = withinWindow && (activeCall == null ||
+            activeCall.state == android.telecom.Call.STATE_DISCONNECTED)
 
-        val hour = nowMinutes / 60
-        val minute = nowMinutes % 60
-        val timeText = String.format("%02d:%02d", hour, minute)
+        if (canSpeak) {
+            val hour = nowMinutes / 60
+            val minute = nowMinutes % 60
+            val timeText = String.format("%02d:%02d", hour, minute)
 
-        val pendingResult = goAsync()
-        val finished = AtomicBoolean(false)
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            if (finished.compareAndSet(false, true)) {
-                pendingResult.finish()
-            }
-        }, 8000)
-
-        val announcer = CallAnnouncer(context)
-        announcer.speak(
-            text = "Jest godzina $timeText",
-            repeatCount = 1,
-            rate = Prefs.getSpeechRate(context),
-            volume = Prefs.getSpeechVolume(context),
-            voiceName = Prefs.getVoiceName(context),
-            onComplete = {
-                announcer.shutdown()
+            val pendingResult = goAsync()
+            val finished = AtomicBoolean(false)
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
                 if (finished.compareAndSet(false, true)) {
                     pendingResult.finish()
                 }
-            }
-        )
+            }, 8000)
+
+            val announcer = CallAnnouncer(context)
+            announcer.speak(
+                text = "Jest godzina $timeText",
+                repeatCount = 1,
+                rate = Prefs.getSpeechRate(context),
+                volume = Prefs.getSpeechVolume(context),
+                voiceName = Prefs.getVoiceName(context),
+                onComplete = {
+                    announcer.shutdown()
+                    if (finished.compareAndSet(false, true)) {
+                        pendingResult.finish()
+                    }
+                }
+            )
+        }
+
+        ChimeScheduler.schedule(context)
     }
 
     private fun currentMinutes(): Int {
