@@ -7,11 +7,12 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 
-class RingerController(context: Context) {
-    private val appContext = context.applicationContext
+object RingerController {
+    private var appContext: Context? = null
     private var ringtone: Ringtone? = null
 
-    fun start() {
+    fun start(context: Context) {
+        ensureContext(context)
         if (ringtone == null) {
             ringtone = buildRingtone()
         }
@@ -26,12 +27,20 @@ class RingerController(context: Context) {
         ringtone?.stop()
     }
 
+    private fun ensureContext(context: Context) {
+        if (appContext == null) {
+            appContext = context.applicationContext
+        }
+    }
+
     private fun buildRingtone(): Ringtone {
+        val context = appContext
+            ?: throw IllegalStateException("RingerController requires context")
         val uri: Uri = RingtoneManager.getActualDefaultRingtoneUri(
-            appContext,
+            context,
             RingtoneManager.TYPE_RINGTONE
         ) ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-        val rt = RingtoneManager.getRingtone(appContext, uri)
+        val rt = RingtoneManager.getRingtone(context, uri)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             rt.isLooping = true
         }

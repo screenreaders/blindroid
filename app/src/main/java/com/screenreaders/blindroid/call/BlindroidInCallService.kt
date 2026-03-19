@@ -12,7 +12,6 @@ import com.screenreaders.blindroid.data.Prefs
 class BlindroidInCallService : InCallService() {
     private lateinit var announcer: CallAnnouncer
     private lateinit var proximityController: ProximitySpeakerController
-    private lateinit var ringerController: RingerController
     private val announcedCalls = HashSet<Call>()
 
     private val callCallback = object : Call.Callback() {
@@ -30,7 +29,6 @@ class BlindroidInCallService : InCallService() {
         super.onCreate()
         announcer = CallAnnouncer(this)
         proximityController = ProximitySpeakerController(this)
-        ringerController = RingerController(this)
     }
 
     override fun onCallAdded(call: Call) {
@@ -50,7 +48,7 @@ class BlindroidInCallService : InCallService() {
             Prefs.clearSpeakerOverride(this)
             proximityController.stop()
             announcer.shutdown()
-            ringerController.stop()
+            RingerController.stop()
         }
     }
 
@@ -68,9 +66,9 @@ class BlindroidInCallService : InCallService() {
                     if (mode == Prefs.MODE_SPEECH_ONLY || mode == Prefs.MODE_SPEECH_THEN_RING) {
                         val telecomManager = getSystemService(TelecomManager::class.java)
                         telecomManager.silenceRinger()
-                        ringerController.stop()
+                        RingerController.stop()
                     } else {
-                        ringerController.stop()
+                        RingerController.stop()
                     }
                     announcer.speak(
                         text = "$prefix: $name",
@@ -80,14 +78,14 @@ class BlindroidInCallService : InCallService() {
                         voiceName = Prefs.getVoiceName(this),
                         onComplete = {
                             if (mode == Prefs.MODE_SPEECH_THEN_RING && call.state == Call.STATE_RINGING) {
-                                ringerController.start()
+                                RingerController.start(this)
                             }
                         }
                     )
                 }
             }
             Call.STATE_ACTIVE -> {
-                ringerController.stop()
+                RingerController.stop()
                 if (Prefs.isAutoSpeakerEnabled(this)) {
                     proximityController.start()
                 }
@@ -95,7 +93,7 @@ class BlindroidInCallService : InCallService() {
             Call.STATE_DISCONNECTED, Call.STATE_DISCONNECTING -> {
                 proximityController.stop()
                 announcer.shutdown()
-                ringerController.stop()
+                RingerController.stop()
             }
         }
     }

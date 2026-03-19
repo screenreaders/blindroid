@@ -13,6 +13,7 @@ import android.os.SystemClock
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.telecom.TelecomManager
 import android.telecom.Call
 import android.telecom.VideoProfile
 import android.view.KeyEvent
@@ -20,6 +21,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.screenreaders.blindroid.audio.RingerController
+import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.call.CallerInfoResolver
 import com.screenreaders.blindroid.data.Prefs
@@ -42,6 +45,8 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
     private val handler = Handler(Looper.getMainLooper())
     private var stopListeningRunnable: Runnable? = null
     private val audioManager by lazy { getSystemService(AudioManager::class.java) }
+    private val telecomManager by lazy { getSystemService(TelecomManager::class.java) }
+    private var announcer: CallAnnouncer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +72,17 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         super.onStart()
         CallManager.addListener(this)
         updateVoiceCommandVisibility()
+        if (announcer == null) {
+            announcer = CallAnnouncer(this)
+        }
     }
 
     override fun onStop() {
         super.onStop()
         CallManager.removeListener(this)
         stopListening()
+        announcer?.shutdown()
+        announcer = null
     }
 
     override fun onCallChanged(call: Call?) {
@@ -256,43 +266,104 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
     private fun handleVoiceCommand(text: String) {
         val normalized = normalize(text)
         when {
+            containsAny(normalized, "dzwonek") &&
+                containsAny(normalized, "wycisz", "wylacz", "mute", "ciszej", "wylaczyc", "wylaczic") -> {
+                silenceRinger()
+                speakConfirmation("Dzwonek wyciszony")
+                setStatusIdle()
+            }
+            containsAny(normalized, "rozmow") &&
+                containsAny(normalized, "wycisz", "mute", "wylacz", "wylaczyc", "wylaczic") -> {
+                audioManager.isMicrophoneMute = true
+                speakConfirmation("Mikrofon wyciszony")
+                setStatusIdle()
+            }
+            containsAny(normalized, "rozmow") &&
+                containsAny(normalized, "odcisz", "wlacz", "unmute", "uruchom") -> {
+                audioManager.isMicrophoneMute = false
+                speakConfirmation("Mikrofon włączony")
+                setStatusIdle()
+            }
             containsAny(normalized, "rozlacz", "zakoncz", "koniec", "koniec rozmowy") -> {
                 endCurrentCall()
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                speakConfirmation("Rozłączam")
+                setStatusIdle()
             }
             containsAny(normalized, "odbierz", "odebierz") -> {
                 val call = CallManager.getRingingCall()
-                call?.answer(VideoProfile.STATE_AUDIO_ONLY)
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                if (call != null) {
+                    call.answer(VideoProfile.STATE_AUDIO_ONLY)
+                    speakConfirmation("Odbieram")
+                    setStatusIdle()
+                } else {
+                    setStatusError()
+                }
             }
             containsAny(normalized, "odrzuc", "odrzucic", "odmow", "odrzucenie") -> {
                 val call = CallManager.getRingingCall()
-                call?.reject(false, null)
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                if (call != null) {
+                    call.reject(false, null)
+                    speakConfirmation("Odrzucam")
+                    setStatusIdle()
+                } else {
+                    setStatusError()
+                }
             }
             containsAny(normalized, "glosnik", "glosnomowiacy", "glosnomow") -> {
-                if (containsAny(normalized, "wylacz", "wyłącz", "off", "wylaczyc", "wylaczic")) {
-                    setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)
-                } else if (containsAny(normalized, "wlacz", "włącz", "on", "uruchom")) {
-                    setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_SPEAKER)
-                } else {
-                    toggleSpeakerOverride()
+                when {
+                    containsAny(normalized, "na stale", "na zawsze") -> {
+                        if (setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_SPEAKER)) {
+                            speakConfirmation("Głośnik na stałe")
+                            setStatusIdle()
+                        } else {
+                            setStatusError()
+                        }
+                    }
+                    containsAny(normalized, "wylacz", "off", "wylaczyc", "wylaczic") -> {
+                        if (setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)) {
+                            speakConfirmation("Głośnik wyłączony")
+                            setStatusIdle()
+                        } else {
+                            setStatusError()
+                        }
+                    }
+                    containsAny(normalized, "wlacz", "on", "uruchom") -> {
+                        if (setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_SPEAKER)) {
+                            speakConfirmation("Głośnik włączony")
+                            setStatusIdle()
+                        } else {
+                            setStatusError()
+                        }
+                    }
+                    else -> {
+                        if (toggleSpeakerOverride()) {
+                            speakConfirmation("Głośnik przełączony")
+                            setStatusIdle()
+                        } else {
+                            setStatusError()
+                        }
+                    }
                 }
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
             }
             containsAny(normalized, "sluchawka", "do ucha") -> {
-                setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                if (setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)) {
+                    speakConfirmation("Słuchawka")
+                    setStatusIdle()
+                } else {
+                    setStatusError()
+                }
             }
             containsAny(normalized, "mikrofon") -> {
-                if (containsAny(normalized, "wylacz", "wyłącz", "wycisz", "mute", "wylaczyc", "wylaczic")) {
+                if (containsAny(normalized, "wylacz", "wycisz", "mute", "wylaczyc", "wylaczic")) {
                     audioManager.isMicrophoneMute = true
-                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
-                } else if (containsAny(normalized, "wlacz", "włącz", "odcisz", "unmute", "uruchom")) {
+                    speakConfirmation("Mikrofon wyciszony")
+                    setStatusIdle()
+                } else if (containsAny(normalized, "wlacz", "odcisz", "unmute", "uruchom")) {
                     audioManager.isMicrophoneMute = false
-                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                    speakConfirmation("Mikrofon włączony")
+                    setStatusIdle()
                 } else {
-                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+                    setStatusError()
                 }
             }
             containsAny(normalized, "glosniej", "glosnosc w gore", "glosnosc wyzej") -> {
@@ -301,7 +372,8 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                     AudioManager.ADJUST_RAISE,
                     0
                 )
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                speakConfirmation("Głośniej")
+                setStatusIdle()
             }
             containsAny(normalized, "ciszej", "glosnosc w dol", "glosnosc nizej") -> {
                 audioManager.adjustStreamVolume(
@@ -309,10 +381,11 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                     AudioManager.ADJUST_LOWER,
                     0
                 )
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                speakConfirmation("Ciszej")
+                setStatusIdle()
             }
             else -> {
-                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+                setStatusError()
             }
         }
     }
@@ -326,24 +399,27 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         return candidates.any { text.contains(it) }
     }
 
-    private fun toggleSpeakerOverride() {
+    private fun toggleSpeakerOverride(): Boolean {
         val current = Prefs.getSpeakerOverride(this)
         val next = if (current == Prefs.SPEAKER_OVERRIDE_SPEAKER) {
             Prefs.SPEAKER_OVERRIDE_EARPIECE
         } else {
             Prefs.SPEAKER_OVERRIDE_SPEAKER
         }
-        setSpeakerOverride(next)
+        return setSpeakerOverride(next)
     }
 
-    private fun setSpeakerOverride(value: Int) {
-        if (hasExternalOutput()) return
+    private fun setSpeakerOverride(value: Int): Boolean {
+        if (hasExternalOutput()) {
+            return false
+        }
         Prefs.setSpeakerOverride(this, value)
         when (value) {
             Prefs.SPEAKER_OVERRIDE_SPEAKER -> routeToSpeaker()
             Prefs.SPEAKER_OVERRIDE_EARPIECE -> routeToEarpiece()
             else -> Unit
         }
+        return true
     }
 
     private fun routeToSpeaker() {
@@ -387,6 +463,30 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                 else -> false
             }
         }
+    }
+
+    private fun silenceRinger() {
+        telecomManager.silenceRinger()
+        RingerController.stop()
+    }
+
+    private fun speakConfirmation(text: String) {
+        val tts = announcer ?: CallAnnouncer(this).also { announcer = it }
+        tts.speak(
+            text = text,
+            repeatCount = 1,
+            rate = Prefs.getSpeechRate(this),
+            volume = Prefs.getSpeechVolume(this),
+            voiceName = Prefs.getVoiceName(this)
+        )
+    }
+
+    private fun setStatusIdle() {
+        binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+    }
+
+    private fun setStatusError() {
+        binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
     }
 
     override fun onRequestPermissionsResult(
