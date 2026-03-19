@@ -30,8 +30,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.BuildConfig
 import com.screenreaders.blindroid.chime.ChimeScheduler
+import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
+import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import java.util.Calendar
 import java.util.Locale
@@ -71,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         binding.contactsPermissionButton.setOnClickListener { requestContactsPermission() }
         binding.notificationAccessButton.setOnClickListener { openNotificationAccessSettings() }
         binding.launcherSettingsButton.setOnClickListener { openHomeSettings() }
+        binding.currencyButton.setOnClickListener { openCurrencyModule() }
+        binding.lightButton.setOnClickListener { openLightModule() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
@@ -238,6 +242,8 @@ class MainActivity : AppCompatActivity() {
             SECTION_LAUNCHER -> binding.launcherLabel
             SECTION_CALLS -> binding.callsLabel
             SECTION_NOTIFICATIONS -> binding.notificationsLabel
+            SECTION_CURRENCY -> binding.currencyLabel
+            SECTION_LIGHT -> binding.lightLabel
             SECTION_CHIME -> binding.chimeLabel
             SECTION_UPDATES -> binding.updateLabel
             else -> null
@@ -287,6 +293,14 @@ class MainActivity : AppCompatActivity() {
         val telecomManager = getSystemService(TelecomManager::class.java)
         val uri = Uri.fromParts("tel", number, null)
         telecomManager.placeCall(uri, Bundle())
+    }
+
+    private fun openCurrencyModule() {
+        startActivity(Intent(this, CurrencyActivity::class.java))
+    }
+
+    private fun openLightModule() {
+        startActivity(Intent(this, LightActivity::class.java))
     }
 
     private fun requestContactsPermission() {
@@ -903,6 +917,8 @@ class MainActivity : AppCompatActivity() {
         private const val SECTION_LAUNCHER = "launcher"
         private const val SECTION_CALLS = "calls"
         private const val SECTION_NOTIFICATIONS = "notifications"
+        private const val SECTION_CURRENCY = "currency"
+        private const val SECTION_LIGHT = "light"
         private const val SECTION_CHIME = "chime"
         private const val SECTION_UPDATES = "updates"
     }

@@ -106,6 +106,8 @@
     <string name="launcher_shortcut_launcher">Ustawienia launchera</string>
     <string name="launcher_shortcut_calls">Rozmowy</string>
     <string name="launcher_shortcut_notifications">Powiadomienia</string>
+    <string name="launcher_shortcut_currency">Waluty</string>
+    <string name="launcher_shortcut_light">Światło</string>
     <string name="launcher_shortcut_chime">Zegarynka</string>
     <string name="launcher_shortcut_updates">Aktualizacje</string>
     <string name="launcher_shortcut_hint">Skróty modułów ustawisz w Blindroid</string>
