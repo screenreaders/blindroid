@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.os.Build
+import android.os.BatteryManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,7 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.telecom.TelecomManager
+import android.telephony.TelephonyManager
 import android.telecom.Call
 import android.telecom.VideoProfile
 import android.view.KeyEvent
@@ -28,6 +30,7 @@ import com.screenreaders.blindroid.call.CallerInfoResolver
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityInCallBinding
 import java.text.Normalizer
+import java.util.Calendar
 import java.util.Locale
 
 class InCallActivity : AppCompatActivity(), CallManager.Listener {
@@ -46,6 +49,8 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
     private var stopListeningRunnable: Runnable? = null
     private val audioManager by lazy { getSystemService(AudioManager::class.java) }
     private val telecomManager by lazy { getSystemService(TelecomManager::class.java) }
+    private val telephonyManager by lazy { getSystemService(TelephonyManager::class.java) }
+    private val batteryManager by lazy { getSystemService(BatteryManager::class.java) }
     private var announcer: CallAnnouncer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -384,6 +389,18 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                 speakConfirmation("Ciszej")
                 setStatusIdle()
             }
+            containsAny(normalized, "godzina", "czas", "ktora", "jaka godzina") -> {
+                speakTime()
+                setStatusIdle()
+            }
+            containsAny(normalized, "bateria", "procent", "naladowanie") -> {
+                speakBattery()
+                setStatusIdle()
+            }
+            containsAny(normalized, "zasieg", "sygnal", "signal") -> {
+                speakSignal()
+                setStatusIdle()
+            }
             else -> {
                 setStatusError()
             }
@@ -487,6 +504,36 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
 
     private fun setStatusError() {
         binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+    }
+
+    private fun speakTime() {
+        val cal = Calendar.getInstance()
+        val hour = cal.get(Calendar.HOUR_OF_DAY)
+        val minute = cal.get(Calendar.MINUTE)
+        val timeText = String.format("%02d:%02d", hour, minute)
+        speakConfirmation("Jest godzina $timeText")
+    }
+
+    private fun speakBattery() {
+        val level = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        if (level in 0..100) {
+            speakConfirmation("Bateria $level procent")
+        } else {
+            speakConfirmation("Brak danych o baterii")
+        }
+    }
+
+    private fun speakSignal() {
+        val level = try {
+            telephonyManager.signalStrength?.level
+        } catch (_: SecurityException) {
+            null
+        }
+        if (level != null) {
+            speakConfirmation("Zasięg $level na 4")
+        } else {
+            speakConfirmation("Brak danych o zasięgu")
+        }
     }
 
     override fun onRequestPermissionsResult(

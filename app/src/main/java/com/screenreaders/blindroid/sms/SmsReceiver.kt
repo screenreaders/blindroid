@@ -26,8 +26,9 @@ class SmsReceiver : BroadcastReceiver() {
         if (messages.isNullOrEmpty()) return
 
         val from = messages.firstOrNull()?.originatingAddress ?: "Nieznany nadawca"
-        val body = messages.joinToString(separator = "") { it.messageBody.orEmpty() }
-        if (body.isBlank()) return
+        val privacy = Prefs.isPrivacyModeEnabled(context)
+        val body = if (privacy) "" else messages.joinToString(separator = "") { it.messageBody.orEmpty() }
+        if (!privacy && body.isBlank()) return
 
         val pendingResult = goAsync()
         val finished = AtomicBoolean(false)
@@ -39,8 +40,13 @@ class SmsReceiver : BroadcastReceiver() {
         }, 8000)
 
         val announcer = CallAnnouncer(context)
+        val message = if (privacy) {
+            "SMS od $from"
+        } else {
+            "SMS od $from. $body"
+        }
         announcer.speak(
-            text = "SMS od $from. $body",
+            text = message,
             repeatCount = 1,
             rate = Prefs.getSpeechRate(context),
             volume = Prefs.getSpeechVolume(context),

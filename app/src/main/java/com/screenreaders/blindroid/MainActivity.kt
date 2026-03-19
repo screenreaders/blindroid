@@ -72,10 +72,13 @@ class MainActivity : AppCompatActivity() {
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
         binding.callWaitingSwitch.isChecked = Prefs.isAnnounceDuringCallEnabled(this)
+        binding.callStateSwitch.isChecked = Prefs.isCallStateAnnounceEnabled(this)
+        binding.callVibrateSwitch.isChecked = Prefs.isCallStateVibrateEnabled(this)
         binding.voiceCommandsSwitch.isChecked = Prefs.isVoiceCommandsEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
+        binding.privacySwitch.isChecked = Prefs.isPrivacyModeEnabled(this)
         binding.updateAutoSwitch.isChecked = Prefs.isAutoUpdateEnabled(this)
         binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
 
@@ -92,6 +95,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.callWaitingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceDuringCallEnabled(this, isChecked)
+        }
+
+        binding.callStateSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCallStateAnnounceEnabled(this, isChecked)
+        }
+
+        binding.callVibrateSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCallStateVibrateEnabled(this, isChecked)
         }
 
         binding.voiceCommandsSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -114,6 +125,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.unlockedSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setReadWhenUnlockedEnabled(this, isChecked)
+        }
+
+        binding.privacySwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setPrivacyModeEnabled(this, isChecked)
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->

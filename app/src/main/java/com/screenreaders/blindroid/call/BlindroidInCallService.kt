@@ -4,6 +4,10 @@ import android.content.Intent
 import android.telecom.Call
 import android.telecom.InCallService
 import android.telecom.TelecomManager
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import com.screenreaders.blindroid.InCallActivity
 import com.screenreaders.blindroid.audio.RingerController
 import com.screenreaders.blindroid.audio.ProximitySpeakerController
@@ -13,6 +17,15 @@ class BlindroidInCallService : InCallService() {
     private lateinit var announcer: CallAnnouncer
     private lateinit var proximityController: ProximitySpeakerController
     private val announcedCalls = HashSet<Call>()
+    private val callStates = HashMap<Call, Int>()
+    private val vibrator: Vibrator? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSystemService(VibratorManager::class.java)?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as? Vibrator
+        }
+    }
 
     private val callCallback = object : Call.Callback() {
         override fun onStateChanged(call: Call, state: Int) {
@@ -34,6 +47,7 @@ class BlindroidInCallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         CallManager.addCall(call)
+        callStates[call] = call.state
         call.registerCallback(callCallback)
         startInCallUi()
         handleCallState(call, call.state)
@@ -43,6 +57,7 @@ class BlindroidInCallService : InCallService() {
         super.onCallRemoved(call)
         call.unregisterCallback(callCallback)
         announcedCalls.remove(call)
+        callStates.remove(call)
         CallManager.removeCall(call)
         if (CallManager.getCall() == null) {
             Prefs.clearSpeakerOverride(this)
@@ -53,6 +68,16 @@ class BlindroidInCallService : InCallService() {
     }
 
     private fun handleCallState(call: Call, state: Int) {
+        val previousState = callStates[call]
+        if (previousState != state) {
+            callStates[call] = state
+            if (Prefs.isCallStateAnnounceEnabled(this)) {
+                announceCallState(call, state)
+            }
+            if (Prefs.isCallStateVibrateEnabled(this)) {
+                vibrateForState(call, state)
+            }
+        }
         when (state) {
             Call.STATE_RINGING -> {
                 startInCallUi()
@@ -95,6 +120,49 @@ class BlindroidInCallService : InCallService() {
                 announcer.shutdown()
                 RingerController.stop()
             }
+        }
+    }
+
+    private fun announceCallState(call: Call, state: Int) {
+        if (state == Call.STATE_RINGING) return
+        val message = when (state) {
+            Call.STATE_DIALING -> "Wybieranie"
+            Call.STATE_CONNECTING -> "Łączenie"
+            Call.STATE_ACTIVE -> "Połączono"
+            Call.STATE_HOLDING -> "Zawieszono"
+            Call.STATE_DISCONNECTED -> "Rozłączono"
+            else -> null
+        } ?: return
+        announcer.speak(
+            text = message,
+            repeatCount = 1,
+            rate = Prefs.getSpeechRate(this),
+            volume = Prefs.getSpeechVolume(this),
+            voiceName = Prefs.getVoiceName(this)
+        )
+    }
+
+    private fun vibrateForState(call: Call, state: Int) {
+        val vib = vibrator ?: return
+        if (!vib.hasVibrator()) return
+        val hasActive = CallManager.hasActiveCall(exclude = call)
+        val pattern = when (state) {
+            Call.STATE_RINGING -> if (hasActive) {
+                longArrayOf(0, 120, 80, 120, 80, 120)
+            } else {
+                longArrayOf(0, 200, 100, 200)
+            }
+            Call.STATE_ACTIVE -> longArrayOf(0, 80)
+            Call.STATE_DISCONNECTED -> longArrayOf(0, 160, 80, 160)
+            Call.STATE_HOLDING -> longArrayOf(0, 80, 60, 80)
+            else -> null
+        } ?: return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createWaveform(pattern, -1))
+        } else {
+            @Suppress("DEPRECATION")
+            vib.vibrate(pattern, -1)
         }
     }
 

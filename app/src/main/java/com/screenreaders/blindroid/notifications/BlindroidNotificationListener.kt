@@ -32,25 +32,39 @@ class BlindroidNotificationListener : NotificationListenerService() {
         val activeCall = CallManager.getCall()
         if (activeCall != null && activeCall.state != android.telecom.Call.STATE_DISCONNECTED) return
 
-        val extras = sbn.notification.extras
-        val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()
-        val text = extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
-            ?: extras.getCharSequence(Notification.EXTRA_TEXT)?.toString().orEmpty()
+        val privacy = Prefs.isPrivacyModeEnabled(this)
+        val message = if (privacy) {
+            val appName = getAppName(sbn.packageName)
+            "Powiadomienie od $appName"
+        } else {
+            val extras = sbn.notification.extras
+            val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()
+            val text = extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
+                ?: extras.getCharSequence(Notification.EXTRA_TEXT)?.toString().orEmpty()
 
-        if (title.isBlank() && text.isBlank()) return
-
-        val message = when {
-            title.isNotBlank() && text.isNotBlank() -> "$title. $text"
-            title.isNotBlank() -> title
-            else -> text
+            if (title.isBlank() && text.isBlank()) return
+            when {
+                title.isNotBlank() && text.isNotBlank() -> "$title. $text"
+                title.isNotBlank() -> title
+                else -> text
+            }
         }
 
         announcer.speak(
-            text = "Powiadomienie: $message",
+            text = message,
             repeatCount = 1,
             rate = Prefs.getSpeechRate(this),
             volume = Prefs.getSpeechVolume(this),
             voiceName = Prefs.getVoiceName(this)
         )
+    }
+
+    private fun getAppName(packageName: String): String {
+        return try {
+            val appInfo = packageManager.getApplicationInfo(packageName, 0)
+            packageManager.getApplicationLabel(appInfo).toString()
+        } catch (_: Exception) {
+            packageName
+        }
     }
 }
