@@ -4,5 +4,7 @@ data class FeedData(
     val time: String,
     val date: String,
     val battery: String,
-    val notifications: List<String>
+    val notifications: List<String>,
+    val externalMode: Boolean,
+    val externalAvailable: Boolean
 )

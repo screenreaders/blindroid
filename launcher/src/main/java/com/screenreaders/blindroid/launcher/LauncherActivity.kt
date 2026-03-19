@@ -60,6 +60,7 @@ class LauncherActivity : AppCompatActivity() {
     private var pages: List<List<HomeItem>> = emptyList()
     private var hotseat: List<HomeItem> = emptyList()
     private var feedData: FeedData? = null
+    private var lastExternalFeedLaunchMs = 0L
 
     private val voiceRequestCode = 4201
 
@@ -88,6 +89,7 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.isFeedEnabled(this),
             feedData,
             LauncherPrefs.getThemeColors(this),
+            ::openExternalFeed,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
             ::onHomeItemMoved
@@ -103,6 +105,7 @@ class LauncherActivity : AppCompatActivity() {
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 updatePageIndicator()
+                maybeAutoOpenExternalFeed(position)
             }
         })
 
@@ -282,6 +285,20 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
+    private fun openFeed() {
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        val enabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        if (!enabled) {
+            Toast.makeText(this, R.string.launcher_feed_disabled, Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (LauncherPrefs.getFeedMode(this) == LauncherPrefs.FEED_MODE_GOOGLE) {
+            openExternalFeed(showError = true)
+        } else {
+            homePager.currentItem = 0
+        }
+    }
+
     private fun focusSearch() {
         searchInput.requestFocus()
         searchInput.setSelection(searchInput.text?.length ?: 0)
@@ -362,7 +379,16 @@ class LauncherActivity : AppCompatActivity() {
         val batteryLevel = getBatteryLevel()
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val notifications = getRecentNotifications()
-        return FeedData(time = time, date = date, battery = batteryText, notifications = notifications)
+        val externalMode = LauncherPrefs.getFeedMode(this) == LauncherPrefs.FEED_MODE_GOOGLE
+        val externalAvailable = isGoogleAppAvailable()
+        return FeedData(
+            time = time,
+            date = date,
+            battery = batteryText,
+            notifications = notifications,
+            externalMode = externalMode,
+            externalAvailable = externalAvailable
+        )
     }
 
     private fun getBatteryLevel(): Int {
@@ -394,6 +420,16 @@ class LauncherActivity : AppCompatActivity() {
             dot.alpha = if (selected) 1.0f else 0.6f
             pageIndicator.addView(dot)
         }
+    }
+
+    private fun maybeAutoOpenExternalFeed(position: Int) {
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
+        if (!feedEnabled) return
+        if (LauncherPrefs.getFeedMode(this) != LauncherPrefs.FEED_MODE_GOOGLE) return
+        if (position != 0) return
+        val now = System.currentTimeMillis()
+        if (now - lastExternalFeedLaunchMs < 1200L) return
+        openExternalFeed(showError = false)
     }
 
     private fun goToNextPage() {
@@ -437,18 +473,18 @@ class LauncherActivity : AppCompatActivity() {
                     val absY = kotlin.math.abs(deltaY)
                     val duration = System.currentTimeMillis() - twoFingerStartTime
                     if (absX < 40 && absY < 40 && duration < 250) {
-                        toggleDockVisibility()
+                        performGestureAction(LauncherPrefs.getGestureTwoFingerTap(this))
                     } else if (absX > absY && absX > 120) {
                         if (deltaX > 0) {
-                            goToNextPage()
+                            performGestureAction(LauncherPrefs.getGestureTwoFingerRight(this))
                         } else {
-                            goToPrevPage()
+                            performGestureAction(LauncherPrefs.getGestureTwoFingerLeft(this))
                         }
                     } else if (absY > 120) {
                         if (deltaY < 0) {
-                            openWidgets()
+                            performGestureAction(LauncherPrefs.getGestureTwoFingerUp(this))
                         } else {
-                            openSettings()
+                            performGestureAction(LauncherPrefs.getGestureTwoFingerDown(this))
                         }
                     }
                 }
@@ -483,18 +519,18 @@ class LauncherActivity : AppCompatActivity() {
                     val absY = kotlin.math.abs(deltaY)
                     val duration = System.currentTimeMillis() - threeFingerStartTime
                     if (absX < 40 && absY < 40 && duration < 250) {
-                        toggleSuperSimple()
+                        performGestureAction(LauncherPrefs.getGestureThreeFingerTap(this))
                     } else if (absX > absY && absX > 120) {
                         if (deltaX > 0) {
-                            openQuickSettings()
+                            performGestureAction(LauncherPrefs.getGestureThreeFingerRight(this))
                         } else {
-                            focusSearch()
+                            performGestureAction(LauncherPrefs.getGestureThreeFingerLeft(this))
                         }
                     } else if (absY > 120) {
                         if (deltaY < 0) {
-                            openAllApps()
+                            performGestureAction(LauncherPrefs.getGestureThreeFingerUp(this))
                         } else {
-                            openQuickSettings()
+                            performGestureAction(LauncherPrefs.getGestureThreeFingerDown(this))
                         }
                     }
                 }
@@ -763,4 +799,39 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun appKey(app: HomeItem.App): String = "a:${app.component.flattenToString()}"
+
+    private fun performGestureAction(action: Int) {
+        when (action) {
+            LauncherPrefs.ACTION_NONE -> Unit
+            LauncherPrefs.ACTION_TOGGLE_DOCK -> toggleDockVisibility()
+            LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE -> toggleSuperSimple()
+            LauncherPrefs.ACTION_OPEN_ALL_APPS -> openAllApps()
+            LauncherPrefs.ACTION_OPEN_WIDGETS -> openWidgets()
+            LauncherPrefs.ACTION_OPEN_SETTINGS -> openSettings()
+            LauncherPrefs.ACTION_OPEN_QUICK_SETTINGS -> openQuickSettings()
+            LauncherPrefs.ACTION_FOCUS_SEARCH -> focusSearch()
+            LauncherPrefs.ACTION_NEXT_PAGE -> goToNextPage()
+            LauncherPrefs.ACTION_PREV_PAGE -> goToPrevPage()
+            LauncherPrefs.ACTION_OPEN_FEED -> openFeed()
+            LauncherPrefs.ACTION_VOICE_SEARCH -> startVoiceSearch()
+        }
+    }
+
+    private fun openExternalFeed(showError: Boolean = true): Boolean {
+        val intent = packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox")
+        return if (intent != null) {
+            startActivity(intent)
+            lastExternalFeedLaunchMs = System.currentTimeMillis()
+            true
+        } else {
+            if (showError) {
+                Toast.makeText(this, R.string.launcher_feed_google_missing, Toast.LENGTH_SHORT).show()
+            }
+            false
+        }
+    }
+
+    private fun isGoogleAppAvailable(): Boolean {
+        return packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+    }
 }

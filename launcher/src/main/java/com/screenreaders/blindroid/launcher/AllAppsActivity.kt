@@ -31,9 +31,11 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var suggestedLayoutManager: GridLayoutManager
     private var allApps: List<AppEntry> = emptyList()
     private var filteredApps: List<AppEntry> = emptyList()
+    private var appCategories: Map<String, Int?> = emptyMap()
     private var targetPageIndex: Int = 0
     private var targetFolderId: String? = null
     private var currentCategory: Category = Category.ALL
+    private var availableCategories: List<Category> = listOf(Category.ALL)
 
     private enum class Category(val labelRes: Int, val appCategory: Int?) {
         ALL(R.string.launcher_category_all, null),
@@ -65,7 +67,6 @@ class AllAppsActivity : AppCompatActivity() {
         appsGrid.adapter = adapter
         suggestedGrid.adapter = suggestedAdapter
 
-        setupCategories()
         loadApps()
         setupSearch()
     }
@@ -79,8 +80,14 @@ class AllAppsActivity : AppCompatActivity() {
     private fun loadApps() {
         Thread {
             val apps = LauncherStore.loadAllApps(this)
+            val categories = apps.associate { entry ->
+                entry.component.flattenToString() to getAppCategory(entry)
+            }
             runOnUiThread {
                 allApps = apps
+                appCategories = categories
+                availableCategories = buildAvailableCategories()
+                setupCategories()
                 applyFilters()
                 updateSuggested()
             }
@@ -119,7 +126,7 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun setupCategories() {
         categoryRow.removeAllViews()
-        Category.values().forEach { category ->
+        availableCategories.forEach { category ->
             val button = android.widget.Button(this)
             button.text = getString(category.labelRes)
             button.setOnClickListener {
@@ -135,7 +142,7 @@ class AllAppsActivity : AppCompatActivity() {
     private fun updateCategoryButtons() {
         for (i in 0 until categoryRow.childCount) {
             val button = categoryRow.getChildAt(i) as android.widget.Button
-            val category = Category.values()[i]
+            val category = availableCategories[i]
             val selected = category == currentCategory
             button.alpha = if (selected) 1.0f else 0.5f
             button.isEnabled = !selected
@@ -146,16 +153,8 @@ class AllAppsActivity : AppCompatActivity() {
         val query = searchInput.text?.toString()?.trim().orEmpty().lowercase()
         filteredApps = allApps.filter { entry ->
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
-            val matchesCategory = when (currentCategory) {
-                Category.ALL -> true
-                Category.MEDIA -> {
-                    val cat = getAppCategory(entry)
-                    cat == ApplicationInfo.CATEGORY_AUDIO ||
-                        cat == ApplicationInfo.CATEGORY_VIDEO ||
-                        cat == ApplicationInfo.CATEGORY_IMAGE
-                }
-                else -> getAppCategory(entry) == currentCategory.appCategory
-            }
+            val category = appCategories[entry.component.flattenToString()]
+            val matchesCategory = matchesCategory(currentCategory, category)
             matchesQuery && matchesCategory
         }
         adapter.submit(filteredApps)
@@ -168,6 +167,34 @@ class AllAppsActivity : AppCompatActivity() {
         } catch (_: Exception) {
             null
         }
+    }
+
+    private fun matchesCategory(category: Category, appCategory: Int?): Boolean {
+        return when (category) {
+            Category.ALL -> true
+            Category.MEDIA -> appCategory == ApplicationInfo.CATEGORY_AUDIO ||
+                appCategory == ApplicationInfo.CATEGORY_VIDEO ||
+                appCategory == ApplicationInfo.CATEGORY_IMAGE
+            else -> appCategory == category.appCategory
+        }
+    }
+
+    private fun buildAvailableCategories(): List<Category> {
+        val present = mutableSetOf<Category>()
+        allApps.forEach { entry ->
+            val appCategory = appCategories[entry.component.flattenToString()]
+            Category.values().forEach { category ->
+                if (category != Category.ALL && matchesCategory(category, appCategory)) {
+                    present.add(category)
+                }
+            }
+        }
+        val list = mutableListOf(Category.ALL)
+        list.addAll(Category.values().filter { it != Category.ALL && present.contains(it) })
+        if (!list.contains(currentCategory)) {
+            currentCategory = Category.ALL
+        }
+        return list
     }
 
     private fun updateSuggested() {

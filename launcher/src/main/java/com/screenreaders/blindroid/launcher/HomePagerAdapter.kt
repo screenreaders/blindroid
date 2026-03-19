@@ -15,6 +15,7 @@ class HomePagerAdapter(
     private var hasFeed: Boolean,
     private var feedData: FeedData?,
     private var feedColors: LauncherPrefs.ThemeColors,
+    private val onOpenExternalFeed: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
     private val onMove: (Int, Int, Int) -> Unit
@@ -43,7 +44,7 @@ class HomePagerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FeedViewHolder) {
-            holder.bind(feedData, feedColors)
+            holder.bind(feedData, feedColors, onOpenExternalFeed)
             return
         }
         val pageIndex = if (hasFeed) position - 1 else position
@@ -132,18 +133,34 @@ class HomePagerAdapter(
         private val battery: TextView = view.findViewById(R.id.feedBattery)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
+        private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
+        private val openButton: android.widget.Button = view.findViewById(R.id.feedOpenButton)
 
-        fun bind(data: FeedData?, colors: LauncherPrefs.ThemeColors) {
+        fun bind(data: FeedData?, colors: LauncherPrefs.ThemeColors, onOpenExternalFeed: () -> Unit) {
             title.setTextColor(colors.text)
             time.setTextColor(colors.text)
             date.setTextColor(colors.muted)
             battery.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
+            openHint.setTextColor(colors.muted)
+            openButton.setTextColor(colors.text)
 
             if (data == null) return
             time.text = data.time
             date.text = data.date
             battery.text = data.battery
+
+            if (data.externalMode) {
+                openHint.visibility = View.VISIBLE
+                openButton.visibility = View.VISIBLE
+                openButton.isEnabled = data.externalAvailable
+                openButton.alpha = if (data.externalAvailable) 1.0f else 0.5f
+                openButton.setOnClickListener { onOpenExternalFeed() }
+            } else {
+                openHint.visibility = View.GONE
+                openButton.visibility = View.GONE
+                openButton.setOnClickListener(null)
+            }
 
             container.removeAllViews()
             if (data.notifications.isEmpty()) {

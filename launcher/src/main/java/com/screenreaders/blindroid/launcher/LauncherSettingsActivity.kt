@@ -2,8 +2,11 @@ package com.screenreaders.blindroid.launcher
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +20,38 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var hideDockLabelsSwitch: Switch
     private lateinit var superSimpleSwitch: Switch
     private lateinit var feedEnabledSwitch: Switch
+    private lateinit var feedModeSpinner: Spinner
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var themeGroup: RadioGroup
     private lateinit var iconStyleGroup: RadioGroup
     private lateinit var wallpaperButton: Button
     private lateinit var closeButton: Button
+    private lateinit var gestureTwoTapSpinner: Spinner
+    private lateinit var gestureTwoUpSpinner: Spinner
+    private lateinit var gestureTwoDownSpinner: Spinner
+    private lateinit var gestureTwoLeftSpinner: Spinner
+    private lateinit var gestureTwoRightSpinner: Spinner
+    private lateinit var gestureThreeTapSpinner: Spinner
+    private lateinit var gestureThreeUpSpinner: Spinner
+    private lateinit var gestureThreeDownSpinner: Spinner
+    private lateinit var gestureThreeLeftSpinner: Spinner
+    private lateinit var gestureThreeRightSpinner: Spinner
+
+    private data class GestureActionOption(val id: Int, val labelRes: Int)
+    private val gestureActions = listOf(
+        GestureActionOption(LauncherPrefs.ACTION_NONE, R.string.launcher_gesture_action_none),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_ALL_APPS, R.string.launcher_gesture_action_all_apps),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_WIDGETS, R.string.launcher_gesture_action_widgets),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_SETTINGS, R.string.launcher_gesture_action_settings),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_QUICK_SETTINGS, R.string.launcher_gesture_action_quick_settings),
+        GestureActionOption(LauncherPrefs.ACTION_FOCUS_SEARCH, R.string.launcher_gesture_action_search),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_FEED, R.string.launcher_gesture_action_feed),
+        GestureActionOption(LauncherPrefs.ACTION_VOICE_SEARCH, R.string.launcher_gesture_action_voice),
+        GestureActionOption(LauncherPrefs.ACTION_TOGGLE_DOCK, R.string.launcher_gesture_action_toggle_dock),
+        GestureActionOption(LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE, R.string.launcher_gesture_action_toggle_simple),
+        GestureActionOption(LauncherPrefs.ACTION_NEXT_PAGE, R.string.launcher_gesture_action_next_page),
+        GestureActionOption(LauncherPrefs.ACTION_PREV_PAGE, R.string.launcher_gesture_action_prev_page)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +65,22 @@ class LauncherSettingsActivity : AppCompatActivity() {
         hideDockLabelsSwitch = findViewById(R.id.hideDockLabelsSwitch)
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
         feedEnabledSwitch = findViewById(R.id.feedEnabledSwitch)
+        feedModeSpinner = findViewById(R.id.feedModeSpinner)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         themeGroup = findViewById(R.id.themeGroup)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
         wallpaperButton = findViewById(R.id.wallpaperButton)
         closeButton = findViewById(R.id.closeSettingsButton)
+        gestureTwoTapSpinner = findViewById(R.id.gestureTwoTapSpinner)
+        gestureTwoUpSpinner = findViewById(R.id.gestureTwoUpSpinner)
+        gestureTwoDownSpinner = findViewById(R.id.gestureTwoDownSpinner)
+        gestureTwoLeftSpinner = findViewById(R.id.gestureTwoLeftSpinner)
+        gestureTwoRightSpinner = findViewById(R.id.gestureTwoRightSpinner)
+        gestureThreeTapSpinner = findViewById(R.id.gestureThreeTapSpinner)
+        gestureThreeUpSpinner = findViewById(R.id.gestureThreeUpSpinner)
+        gestureThreeDownSpinner = findViewById(R.id.gestureThreeDownSpinner)
+        gestureThreeLeftSpinner = findViewById(R.id.gestureThreeLeftSpinner)
+        gestureThreeRightSpinner = findViewById(R.id.gestureThreeRightSpinner)
 
         bindInitialState()
         bindListeners()
@@ -71,6 +112,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
         feedEnabledSwitch.isChecked = LauncherPrefs.isFeedEnabled(this)
+        bindFeedModeSpinner(LauncherPrefs.getFeedMode(this))
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
         when (LauncherPrefs.getTheme(this)) {
             1 -> themeGroup.check(R.id.themeDark)
@@ -82,7 +124,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
             1 -> iconStyleGroup.check(R.id.iconStyleCircle)
             else -> iconStyleGroup.check(R.id.iconStyleNone)
         }
+        bindGestureSpinners()
         applySuperSimpleState(superSimpleSwitch.isChecked)
+        feedModeSpinner.isEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
     }
 
     private fun bindListeners() {
@@ -143,6 +187,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         feedEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setFeedEnabled(this, isChecked)
+            feedModeSpinner.isEnabled = isChecked && !superSimpleSwitch.isChecked
             toastSaved()
         }
 
@@ -187,6 +232,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         setGroupEnabled(iconSizeGroup, !enabled)
         setGroupEnabled(labelSizeGroup, !enabled)
         feedEnabledSwitch.isEnabled = !enabled
+        feedModeSpinner.isEnabled = !enabled && feedEnabledSwitch.isChecked
         dockVisibleSwitch.isEnabled = !enabled
         hideDockLabelsSwitch.isEnabled = !enabled
         setGroupEnabled(themeGroup, !enabled)
@@ -202,5 +248,75 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
     private fun toastSaved() {
         Toast.makeText(this, R.string.launcher_settings_saved, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun bindFeedModeSpinner(current: Int) {
+        val labels = listOf(
+            getString(R.string.launcher_feed_mode_local),
+            getString(R.string.launcher_feed_mode_google)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        feedModeSpinner.adapter = adapter
+        feedModeSpinner.setSelection(current.coerceIn(0, 1), false)
+        feedModeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                LauncherPrefs.setFeedMode(this@LauncherSettingsActivity, position)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+    }
+
+    private fun bindGestureSpinners() {
+        bindGestureSpinner(gestureTwoTapSpinner, LauncherPrefs.getGestureTwoFingerTap(this)) {
+            LauncherPrefs.setGestureTwoFingerTap(this, it)
+        }
+        bindGestureSpinner(gestureTwoUpSpinner, LauncherPrefs.getGestureTwoFingerUp(this)) {
+            LauncherPrefs.setGestureTwoFingerUp(this, it)
+        }
+        bindGestureSpinner(gestureTwoDownSpinner, LauncherPrefs.getGestureTwoFingerDown(this)) {
+            LauncherPrefs.setGestureTwoFingerDown(this, it)
+        }
+        bindGestureSpinner(gestureTwoLeftSpinner, LauncherPrefs.getGestureTwoFingerLeft(this)) {
+            LauncherPrefs.setGestureTwoFingerLeft(this, it)
+        }
+        bindGestureSpinner(gestureTwoRightSpinner, LauncherPrefs.getGestureTwoFingerRight(this)) {
+            LauncherPrefs.setGestureTwoFingerRight(this, it)
+        }
+        bindGestureSpinner(gestureThreeTapSpinner, LauncherPrefs.getGestureThreeFingerTap(this)) {
+            LauncherPrefs.setGestureThreeFingerTap(this, it)
+        }
+        bindGestureSpinner(gestureThreeUpSpinner, LauncherPrefs.getGestureThreeFingerUp(this)) {
+            LauncherPrefs.setGestureThreeFingerUp(this, it)
+        }
+        bindGestureSpinner(gestureThreeDownSpinner, LauncherPrefs.getGestureThreeFingerDown(this)) {
+            LauncherPrefs.setGestureThreeFingerDown(this, it)
+        }
+        bindGestureSpinner(gestureThreeLeftSpinner, LauncherPrefs.getGestureThreeFingerLeft(this)) {
+            LauncherPrefs.setGestureThreeFingerLeft(this, it)
+        }
+        bindGestureSpinner(gestureThreeRightSpinner, LauncherPrefs.getGestureThreeFingerRight(this)) {
+            LauncherPrefs.setGestureThreeFingerRight(this, it)
+        }
+    }
+
+    private fun bindGestureSpinner(spinner: Spinner, current: Int, onSelected: (Int) -> Unit) {
+        val labels = gestureActions.map { getString(it.labelRes) }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        val index = gestureActions.indexOfFirst { it.id == current }.coerceAtLeast(0)
+        spinner.setSelection(index, false)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val action = gestureActions[position].id
+                onSelected(action)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
     }
 }

@@ -15,16 +15,43 @@ object LauncherPrefs {
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
     private const val KEY_DOCK_VISIBLE = "dock_visible"
     private const val KEY_FEED_ENABLED = "feed_enabled"
+    private const val KEY_FEED_MODE = "feed_mode"
     private const val KEY_THEME = "launcher_theme"
     private const val KEY_ICON_STYLE = "icon_style"
+    private const val KEY_GESTURE_TWO_TAP = "gesture_two_tap"
+    private const val KEY_GESTURE_TWO_UP = "gesture_two_up"
+    private const val KEY_GESTURE_TWO_DOWN = "gesture_two_down"
+    private const val KEY_GESTURE_TWO_LEFT = "gesture_two_left"
+    private const val KEY_GESTURE_TWO_RIGHT = "gesture_two_right"
+    private const val KEY_GESTURE_THREE_TAP = "gesture_three_tap"
+    private const val KEY_GESTURE_THREE_UP = "gesture_three_up"
+    private const val KEY_GESTURE_THREE_DOWN = "gesture_three_down"
+    private const val KEY_GESTURE_THREE_LEFT = "gesture_three_left"
+    private const val KEY_GESTURE_THREE_RIGHT = "gesture_three_right"
 
     private const val THEME_LIGHT = 0
     private const val THEME_DARK = 1
     private const val THEME_BLACK = 2
     private const val THEME_BLUE = 3
 
+    const val FEED_MODE_LOCAL = 0
+    const val FEED_MODE_GOOGLE = 1
+
     private const val ICON_STYLE_NONE = 0
     private const val ICON_STYLE_CIRCLE = 1
+
+    const val ACTION_NONE = 0
+    const val ACTION_TOGGLE_DOCK = 1
+    const val ACTION_TOGGLE_SUPER_SIMPLE = 2
+    const val ACTION_OPEN_ALL_APPS = 3
+    const val ACTION_OPEN_WIDGETS = 4
+    const val ACTION_OPEN_SETTINGS = 5
+    const val ACTION_OPEN_QUICK_SETTINGS = 6
+    const val ACTION_FOCUS_SEARCH = 7
+    const val ACTION_NEXT_PAGE = 8
+    const val ACTION_PREV_PAGE = 9
+    const val ACTION_OPEN_FEED = 10
+    const val ACTION_VOICE_SEARCH = 11
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -89,6 +116,13 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_FEED_ENABLED, enabled).apply()
     }
 
+    fun getFeedMode(context: Context): Int =
+        prefs(context).getInt(KEY_FEED_MODE, FEED_MODE_LOCAL).coerceIn(FEED_MODE_LOCAL, FEED_MODE_GOOGLE)
+
+    fun setFeedMode(context: Context, mode: Int) {
+        prefs(context).edit().putInt(KEY_FEED_MODE, mode.coerceIn(FEED_MODE_LOCAL, FEED_MODE_GOOGLE)).apply()
+    }
+
     fun getTheme(context: Context): Int =
         prefs(context).getInt(KEY_THEME, THEME_LIGHT).coerceIn(THEME_LIGHT, THEME_BLUE)
 
@@ -102,6 +136,66 @@ object LauncherPrefs {
     fun setIconStyle(context: Context, style: Int) {
         prefs(context).edit().putInt(KEY_ICON_STYLE, style.coerceIn(ICON_STYLE_NONE, ICON_STYLE_CIRCLE)).apply()
     }
+
+    fun getGestureTwoFingerTap(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_TWO_TAP, ACTION_TOGGLE_DOCK)
+
+    fun setGestureTwoFingerTap(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_TWO_TAP, action)
+
+    fun getGestureTwoFingerUp(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_TWO_UP, ACTION_OPEN_WIDGETS)
+
+    fun setGestureTwoFingerUp(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_TWO_UP, action)
+
+    fun getGestureTwoFingerDown(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_TWO_DOWN, ACTION_OPEN_SETTINGS)
+
+    fun setGestureTwoFingerDown(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_TWO_DOWN, action)
+
+    fun getGestureTwoFingerLeft(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_TWO_LEFT, ACTION_PREV_PAGE)
+
+    fun setGestureTwoFingerLeft(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_TWO_LEFT, action)
+
+    fun getGestureTwoFingerRight(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_TWO_RIGHT, ACTION_NEXT_PAGE)
+
+    fun setGestureTwoFingerRight(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_TWO_RIGHT, action)
+
+    fun getGestureThreeFingerTap(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_THREE_TAP, ACTION_TOGGLE_SUPER_SIMPLE)
+
+    fun setGestureThreeFingerTap(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_THREE_TAP, action)
+
+    fun getGestureThreeFingerUp(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_THREE_UP, ACTION_OPEN_ALL_APPS)
+
+    fun setGestureThreeFingerUp(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_THREE_UP, action)
+
+    fun getGestureThreeFingerDown(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_THREE_DOWN, ACTION_OPEN_QUICK_SETTINGS)
+
+    fun setGestureThreeFingerDown(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_THREE_DOWN, action)
+
+    fun getGestureThreeFingerLeft(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_THREE_LEFT, ACTION_FOCUS_SEARCH)
+
+    fun setGestureThreeFingerLeft(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_THREE_LEFT, action)
+
+    fun getGestureThreeFingerRight(context: Context): Int =
+        getGestureAction(context, KEY_GESTURE_THREE_RIGHT, ACTION_OPEN_QUICK_SETTINGS)
+
+    fun setGestureThreeFingerRight(context: Context, action: Int) =
+        setGestureAction(context, KEY_GESTURE_THREE_RIGHT, action)
 
     fun getUiConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
         val metrics = context.resources.displayMetrics
@@ -153,4 +247,12 @@ object LauncherPrefs {
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    private fun getGestureAction(context: Context, key: String, defaultValue: Int): Int {
+        return prefs(context).getInt(key, defaultValue)
+    }
+
+    private fun setGestureAction(context: Context, key: String, action: Int) {
+        prefs(context).edit().putInt(key, action).apply()
+    }
 }

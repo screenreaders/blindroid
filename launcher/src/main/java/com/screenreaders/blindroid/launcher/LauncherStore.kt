@@ -17,6 +17,8 @@ object LauncherStore {
     private const val KEY_HOTSEAT = "hotseat"
     private const val KEY_WIDGETS = "widgets"
     private const val KEY_LAUNCH_PREFIX = "launch_"
+    private const val KEY_LAUNCH_LAST_PREFIX = "launch_last_"
+    private const val KEY_LAUNCH_BUCKET_PREFIX = "launch_bucket_"
     private const val KEY_WIDGET_SIZE_PREFIX = "widget_size_"
     private const val FOLDER_PREFIX = "folder_"
     private const val FOLDER_LABEL_SUFFIX = "_label"
@@ -268,20 +270,38 @@ object LauncherStore {
 
     fun recordLaunch(context: Context, component: ComponentName) {
         val prefs = prefs(context)
-        val key = "$KEY_LAUNCH_PREFIX${component.flattenToString()}"
+        val componentKey = component.flattenToString()
+        val key = "$KEY_LAUNCH_PREFIX$componentKey"
+        val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
+        val bucketKey = "$KEY_LAUNCH_BUCKET_PREFIX${currentBucket()}_$componentKey"
         val current = prefs.getInt(key, 0)
-        prefs.edit().putInt(key, current + 1).apply()
+        val bucketCount = prefs.getInt(bucketKey, 0)
+        prefs.edit()
+            .putInt(key, current + 1)
+            .putLong(lastKey, System.currentTimeMillis())
+            .putInt(bucketKey, bucketCount + 1)
+            .apply()
     }
 
     fun getSuggestedApps(context: Context, allApps: List<AppEntry>, limit: Int = 4): List<AppEntry> {
         val prefs = prefs(context)
+        val now = System.currentTimeMillis()
+        val bucket = currentBucket()
         val scored = allApps.map { entry ->
-            val key = "$KEY_LAUNCH_PREFIX${entry.component.flattenToString()}"
-            val score = prefs.getInt(key, 0)
+            val componentKey = entry.component.flattenToString()
+            val key = "$KEY_LAUNCH_PREFIX$componentKey"
+            val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
+            val bucketKey = "$KEY_LAUNCH_BUCKET_PREFIX${bucket}_$componentKey"
+            val count = prefs.getInt(key, 0)
+            val last = prefs.getLong(lastKey, 0L)
+            val bucketCount = prefs.getInt(bucketKey, 0)
+            val hours = if (last > 0L) (now - last).toFloat() / 3_600_000f else 9999f
+            val recencyScore = (24f - hours).coerceAtLeast(0f) / 24f
+            val score = count + bucketCount * 1.5f + recencyScore * 2f
             entry to score
         }
         return scored.sortedByDescending { it.second }
-            .filter { it.second > 0 }
+            .filter { it.second > 0f }
             .map { it.first }
             .take(limit)
     }
@@ -392,4 +412,14 @@ object LauncherStore {
     private fun folderKey(folderId: String) = "$FOLDER_PREFIX$folderId"
 
     private fun folderLabelKey(folderId: String) = "$FOLDER_PREFIX$folderId$FOLDER_LABEL_SUFFIX"
+
+    private fun currentBucket(): String {
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        return when (hour) {
+            in 5..10 -> "morning"
+            in 11..16 -> "day"
+            in 17..21 -> "evening"
+            else -> "night"
+        }
+    }
 }
