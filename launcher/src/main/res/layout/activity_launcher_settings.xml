@@ -20,6 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_feed" />
+
+        <Switch
+            android:id="@+id/feedEnabledSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_feed_enabled" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/launcher_settings_grid" />
 
         <RadioGroup
@@ -142,6 +154,12 @@
             android:text="@string/launcher_settings_dock" />
 
         <Switch
+            android:id="@+id/dockVisibleSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_dock_visible" />
+
+        <Switch
             android:id="@+id/hideDockLabelsSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,6 +176,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/launcher_settings_super_simple" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_theme" />
+
+        <RadioGroup
+            android:id="@+id/themeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/themeLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_light" />
+
+            <RadioButton
+                android:id="@+id/themeDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_dark" />
+
+            <RadioButton
+                android:id="@+id/themeBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_black" />
+
+            <RadioButton
+                android:id="@+id/themeBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_blue" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_icon_style" />
+
+        <RadioGroup
+            android:id="@+id/iconStyleGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/iconStyleNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_icon_style_none" />
+
+            <RadioButton
+                android:id="@+id/iconStyleCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_icon_style_circle" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/wallpaperButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_settings_wallpaper" />
 
         <TextView
             android:layout_width="match_parent"

@@ -13,6 +13,18 @@ object LauncherPrefs {
     private const val KEY_DOUBLE_TAP_LOCK = "double_tap_lock"
     private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
+    private const val KEY_DOCK_VISIBLE = "dock_visible"
+    private const val KEY_FEED_ENABLED = "feed_enabled"
+    private const val KEY_THEME = "launcher_theme"
+    private const val KEY_ICON_STYLE = "icon_style"
+
+    private const val THEME_LIGHT = 0
+    private const val THEME_DARK = 1
+    private const val THEME_BLACK = 2
+    private const val THEME_BLUE = 3
+
+    private const val ICON_STYLE_NONE = 0
+    private const val ICON_STYLE_CIRCLE = 1
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -63,6 +75,34 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_SUPER_SIMPLE, enabled).apply()
     }
 
+    fun isDockVisible(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_DOCK_VISIBLE, true)
+
+    fun setDockVisible(context: Context, visible: Boolean) {
+        prefs(context).edit().putBoolean(KEY_DOCK_VISIBLE, visible).apply()
+    }
+
+    fun isFeedEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FEED_ENABLED, true)
+
+    fun setFeedEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FEED_ENABLED, enabled).apply()
+    }
+
+    fun getTheme(context: Context): Int =
+        prefs(context).getInt(KEY_THEME, THEME_LIGHT).coerceIn(THEME_LIGHT, THEME_BLUE)
+
+    fun setTheme(context: Context, theme: Int) {
+        prefs(context).edit().putInt(KEY_THEME, theme.coerceIn(THEME_LIGHT, THEME_BLUE)).apply()
+    }
+
+    fun getIconStyle(context: Context): Int =
+        prefs(context).getInt(KEY_ICON_STYLE, ICON_STYLE_NONE).coerceIn(ICON_STYLE_NONE, ICON_STYLE_CIRCLE)
+
+    fun setIconStyle(context: Context, style: Int) {
+        prefs(context).edit().putInt(KEY_ICON_STYLE, style.coerceIn(ICON_STYLE_NONE, ICON_STYLE_CIRCLE)).apply()
+    }
+
     fun getUiConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
         val metrics = context.resources.displayMetrics
         val superSimple = isSuperSimpleEnabled(context)
@@ -85,6 +125,30 @@ object LauncherPrefs {
         val base = getUiConfig(context, itemHeightPx)
         val showLabels = !(isDockLabelsHidden(context) || isSuperSimpleEnabled(context))
         return base.copy(showLabels = showLabels)
+    }
+
+    fun getSimpleFavoritesConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
+        val metrics = context.resources.displayMetrics
+        val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, metrics).roundToInt()
+        return LauncherUiConfig(
+            columns = 2,
+            rows = 2,
+            iconSizePx = iconPx,
+            labelSizeSp = 20f,
+            itemHeightPx = itemHeightPx,
+            showLabels = true
+        )
+    }
+
+    data class ThemeColors(val background: Int, val text: Int, val muted: Int)
+
+    fun getThemeColors(context: Context): ThemeColors {
+        return when (getTheme(context)) {
+            THEME_DARK -> ThemeColors(0xFF202124.toInt(), 0xFFECEFF1.toInt(), 0xFFB0BEC5.toInt())
+            THEME_BLACK -> ThemeColors(0xFF000000.toInt(), 0xFFFFFFFF.toInt(), 0xFFB0BEC5.toInt())
+            THEME_BLUE -> ThemeColors(0xFFE3F2FD.toInt(), 0xFF0D47A1.toInt(), 0xFF1E88E5.toInt())
+            else -> ThemeColors(0xFFF5F5F5.toInt(), 0xFF1F1F1F.toInt(), 0xFF616161.toInt())
+        }
     }
 
     private fun prefs(context: Context) =

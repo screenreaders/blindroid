@@ -3,6 +3,8 @@ package com.screenreaders.blindroid.launcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -10,23 +12,46 @@ import androidx.recyclerview.widget.RecyclerView
 class HomePagerAdapter(
     private var pages: MutableList<MutableList<HomeItem>>,
     private var config: LauncherUiConfig,
+    private var hasFeed: Boolean,
+    private var feedData: FeedData?,
+    private var feedColors: LauncherPrefs.ThemeColors,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
     private val onMove: (Int, Int, Int) -> Unit
-) : RecyclerView.Adapter<HomePagerAdapter.PageViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_home_page, parent, false)
-        return PageViewHolder(view)
+    companion object {
+        private const val VIEW_TYPE_FEED = 0
+        private const val VIEW_TYPE_PAGE = 1
     }
 
-    override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
-        val items = pages.getOrElse(position) { mutableListOf() }
-        holder.bind(position, items, config)
+    override fun getItemViewType(position: Int): Int {
+        return if (hasFeed && position == 0) VIEW_TYPE_FEED else VIEW_TYPE_PAGE
     }
 
-    override fun getItemCount(): Int = pages.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_FEED) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_feed_page, parent, false)
+            FeedViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_home_page, parent, false)
+            PageViewHolder(view)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is FeedViewHolder) {
+            holder.bind(feedData, feedColors)
+            return
+        }
+        val pageIndex = if (hasFeed) position - 1 else position
+        val items = pages.getOrElse(pageIndex) { mutableListOf() }
+        (holder as PageViewHolder).bind(pageIndex, items, config)
+    }
+
+    override fun getItemCount(): Int = pages.size + if (hasFeed) 1 else 0
 
     fun submitPages(newPages: List<List<HomeItem>>) {
         pages = newPages.map { it.toMutableList() }.toMutableList()
@@ -35,6 +60,13 @@ class HomePagerAdapter(
 
     fun updateConfig(newConfig: LauncherUiConfig) {
         config = newConfig
+        notifyDataSetChanged()
+    }
+
+    fun updateFeed(enabled: Boolean, data: FeedData?, colors: LauncherPrefs.ThemeColors) {
+        hasFeed = enabled
+        feedData = data
+        feedColors = colors
         notifyDataSetChanged()
     }
 
@@ -90,6 +122,44 @@ class HomePagerAdapter(
             gridLayoutManager.spanCount = newConfig.columns
             adapter.updateConfig(newConfig)
             adapter.submit(items)
+        }
+    }
+
+    class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val title: TextView = view.findViewById(R.id.feedTitle)
+        private val time: TextView = view.findViewById(R.id.feedTime)
+        private val date: TextView = view.findViewById(R.id.feedDate)
+        private val battery: TextView = view.findViewById(R.id.feedBattery)
+        private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
+        private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
+
+        fun bind(data: FeedData?, colors: LauncherPrefs.ThemeColors) {
+            title.setTextColor(colors.text)
+            time.setTextColor(colors.text)
+            date.setTextColor(colors.muted)
+            battery.setTextColor(colors.muted)
+            notificationsLabel.setTextColor(colors.text)
+
+            if (data == null) return
+            time.text = data.time
+            date.text = data.date
+            battery.text = data.battery
+
+            container.removeAllViews()
+            if (data.notifications.isEmpty()) {
+                val empty = TextView(container.context)
+                empty.text = container.context.getString(R.string.launcher_feed_no_notifications)
+                empty.setTextColor(colors.muted)
+                container.addView(empty)
+            } else {
+                data.notifications.forEach { message ->
+                    val item = TextView(container.context)
+                    item.text = "• $message"
+                    item.setTextColor(colors.text)
+                    item.textSize = 14f
+                    container.addView(item)
+                }
+            }
         }
     }
 }

@@ -62,6 +62,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
             }
         }
 
+        Prefs.addRecentNotification(this, message)
         announcer.speak(
             text = message,
             repeatCount = 1,

@@ -30,6 +30,7 @@ object Prefs {
     private const val KEY_CHIME_INTERVAL = "chime_interval"
     private const val KEY_CHIME_START = "chime_start"
     private const val KEY_CHIME_END = "chime_end"
+    private const val KEY_RECENT_NOTIFICATIONS = "recent_notifications"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -230,5 +231,21 @@ object Prefs {
 
     fun setChimeEndMinutes(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_CHIME_END, value.coerceIn(0, 24 * 60)).apply()
+    }
+
+    fun addRecentNotification(context: Context, message: String) {
+        val prefs = prefs(context)
+        val current = prefs.getString(KEY_RECENT_NOTIFICATIONS, "").orEmpty()
+        val list = current.split('|').filter { it.isNotBlank() }.toMutableList()
+        list.remove(message)
+        list.add(0, message)
+        val trimmed = list.take(5)
+        prefs.edit().putString(KEY_RECENT_NOTIFICATIONS, trimmed.joinToString("|")).apply()
+    }
+
+    fun getRecentNotifications(context: Context): List<String> {
+        val raw = prefs(context).getString(KEY_RECENT_NOTIFICATIONS, "").orEmpty()
+        if (raw.isBlank()) return emptyList()
+        return raw.split('|').filter { it.isNotBlank() }.take(5)
     }
 }

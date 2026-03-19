@@ -37,6 +37,8 @@ class HomeItemAdapter(
         }
         applySizing(holder)
         holder.label.visibility = if (config.showLabels) View.VISIBLE else View.GONE
+        applyTheme(holder)
+        applyIconStyle(holder)
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
             onLongClick(item)
@@ -76,6 +78,23 @@ class HomeItemAdapter(
         if (itemLp != null && config.itemHeightPx > 0) {
             itemLp.height = config.itemHeightPx
             holder.itemView.layoutParams = itemLp
+        }
+    }
+
+    private fun applyTheme(holder: HomeViewHolder) {
+        val colors = LauncherPrefs.getThemeColors(holder.itemView.context)
+        holder.label.setTextColor(colors.text)
+    }
+
+    private fun applyIconStyle(holder: HomeViewHolder) {
+        val context = holder.itemView.context
+        if (LauncherPrefs.getIconStyle(context) == 1) {
+            holder.icon.setBackgroundResource(R.drawable.icon_bg_circle)
+            val pad = (config.iconSizePx * 0.12f).toInt().coerceAtLeast(6)
+            holder.icon.setPadding(pad, pad, pad, pad)
+        } else {
+            holder.icon.background = null
+            holder.icon.setPadding(0, 0, 0, 0)
         }
     }
 

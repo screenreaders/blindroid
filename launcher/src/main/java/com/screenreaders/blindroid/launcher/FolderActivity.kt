@@ -57,6 +57,7 @@ class FolderActivity : AppCompatActivity() {
         super.onResume()
         applyUiConfig()
         refreshFolder()
+        applyTheme()
     }
 
     private fun loadApps() {
@@ -73,6 +74,14 @@ class FolderActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
         adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+    }
+
+    private fun applyTheme() {
+        val colors = LauncherPrefs.getThemeColors(this)
+        findViewById<android.view.View>(android.R.id.content).setBackgroundColor(colors.background)
+        folderTitle.setTextColor(colors.text)
+        renameButton.setTextColor(colors.text)
+        addButton.setTextColor(colors.text)
     }
 
     private fun refreshFolder() {
@@ -113,6 +122,7 @@ class FolderActivity : AppCompatActivity() {
     }
 
     private fun launchApp(entry: AppEntry) {
+        LauncherStore.recordLaunch(this, entry.component)
         val intent = Intent(Intent.ACTION_MAIN)
             .addCategory(Intent.CATEGORY_LAUNCHER)
             .setComponent(entry.component)

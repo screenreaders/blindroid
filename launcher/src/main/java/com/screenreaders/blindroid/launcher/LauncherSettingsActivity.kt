@@ -1,5 +1,6 @@
 package com.screenreaders.blindroid.launcher
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.RadioGroup
@@ -15,6 +16,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var doubleTapSwitch: Switch
     private lateinit var hideDockLabelsSwitch: Switch
     private lateinit var superSimpleSwitch: Switch
+    private lateinit var feedEnabledSwitch: Switch
+    private lateinit var dockVisibleSwitch: Switch
+    private lateinit var themeGroup: RadioGroup
+    private lateinit var iconStyleGroup: RadioGroup
+    private lateinit var wallpaperButton: Button
     private lateinit var closeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch = findViewById(R.id.doubleTapLockSwitch)
         hideDockLabelsSwitch = findViewById(R.id.hideDockLabelsSwitch)
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
+        feedEnabledSwitch = findViewById(R.id.feedEnabledSwitch)
+        dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
+        themeGroup = findViewById(R.id.themeGroup)
+        iconStyleGroup = findViewById(R.id.iconStyleGroup)
+        wallpaperButton = findViewById(R.id.wallpaperButton)
         closeButton = findViewById(R.id.closeSettingsButton)
 
         bindInitialState()
@@ -59,6 +70,18 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch.isChecked = LauncherPrefs.isDoubleTapLockEnabled(this)
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
+        feedEnabledSwitch.isChecked = LauncherPrefs.isFeedEnabled(this)
+        dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
+        when (LauncherPrefs.getTheme(this)) {
+            1 -> themeGroup.check(R.id.themeDark)
+            2 -> themeGroup.check(R.id.themeBlack)
+            3 -> themeGroup.check(R.id.themeBlue)
+            else -> themeGroup.check(R.id.themeLight)
+        }
+        when (LauncherPrefs.getIconStyle(this)) {
+            1 -> iconStyleGroup.check(R.id.iconStyleCircle)
+            else -> iconStyleGroup.check(R.id.iconStyleNone)
+        }
         applySuperSimpleState(superSimpleSwitch.isChecked)
     }
 
@@ -117,6 +140,45 @@ class LauncherSettingsActivity : AppCompatActivity() {
             applySuperSimpleState(isChecked)
             toastSaved()
         }
+
+        feedEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setFeedEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        dockVisibleSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setDockVisible(this, isChecked)
+            toastSaved()
+        }
+
+        themeGroup.setOnCheckedChangeListener { _, checkedId ->
+            val theme = when (checkedId) {
+                R.id.themeDark -> 1
+                R.id.themeBlack -> 2
+                R.id.themeBlue -> 3
+                else -> 0
+            }
+            LauncherPrefs.setTheme(this, theme)
+            toastSaved()
+        }
+
+        iconStyleGroup.setOnCheckedChangeListener { _, checkedId ->
+            val style = when (checkedId) {
+                R.id.iconStyleCircle -> 1
+                else -> 0
+            }
+            LauncherPrefs.setIconStyle(this, style)
+            toastSaved()
+        }
+
+        wallpaperButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SET_WALLPAPER)
+            try {
+                startActivity(intent)
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun applySuperSimpleState(enabled: Boolean) {
@@ -124,6 +186,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
         setGroupEnabled(rowsGroup, !enabled)
         setGroupEnabled(iconSizeGroup, !enabled)
         setGroupEnabled(labelSizeGroup, !enabled)
+        feedEnabledSwitch.isEnabled = !enabled
+        dockVisibleSwitch.isEnabled = !enabled
+        hideDockLabelsSwitch.isEnabled = !enabled
+        setGroupEnabled(themeGroup, !enabled)
+        setGroupEnabled(iconStyleGroup, !enabled)
     }
 
     private fun setGroupEnabled(group: RadioGroup, enabled: Boolean) {

@@ -5,11 +5,33 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <Button
-        android:id="@+id/addWidgetButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/launcher_widgets_add" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/addWidgetButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/launcher_widgets_add" />
+
+        <Button
+            android:id="@+id/listWidgetButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/launcher_widgets_list" />
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/gridWidgetsSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/launcher_widgets_grid" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,11 +39,12 @@
         android:layout_weight="1"
         android:layout_marginTop="12dp">
 
-        <LinearLayout
+        <androidx.gridlayout.widget.GridLayout
             android:id="@+id/widgetsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:columnCount="1"
+            android:orientation="horizontal" />
     </ScrollView>
 
 </LinearLayout>

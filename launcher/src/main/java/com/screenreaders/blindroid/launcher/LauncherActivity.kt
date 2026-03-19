@@ -5,69 +5,106 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.BatteryManager
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import android.speech.RecognizerIntent
 
 class LauncherActivity : AppCompatActivity() {
     private lateinit var searchInput: EditText
+    private lateinit var searchRow: LinearLayout
     private lateinit var homePager: ViewPager2
     private lateinit var hotseatRow: RecyclerView
     private lateinit var allAppsButton: Button
     private lateinit var widgetsButton: Button
     private lateinit var settingsButton: Button
+    private lateinit var voiceButton: Button
+    private lateinit var simpleFavoritesLabel: TextView
+    private lateinit var simpleFavoritesGrid: RecyclerView
+    private lateinit var pageIndicator: LinearLayout
     private lateinit var gestureDetector: GestureDetector
     private var twoFingerActive = false
     private var twoFingerStartX = 0f
     private var twoFingerStartY = 0f
     private var twoFingerLastX = 0f
     private var twoFingerLastY = 0f
+    private var twoFingerStartTime = 0L
     private var threeFingerActive = false
     private var threeFingerStartX = 0f
     private var threeFingerStartY = 0f
     private var threeFingerLastX = 0f
     private var threeFingerLastY = 0f
+    private var threeFingerStartTime = 0L
 
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
+    private lateinit var simpleFavoritesAdapter: AppAdapter
 
     private var allApps: List<AppEntry> = emptyList()
     private var pages: List<List<HomeItem>> = emptyList()
     private var hotseat: List<HomeItem> = emptyList()
+    private var feedData: FeedData? = null
+
+    private val voiceRequestCode = 4201
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
 
         searchInput = findViewById(R.id.searchInput)
+        searchRow = findViewById(R.id.searchRow)
         homePager = findViewById(R.id.homePager)
         hotseatRow = findViewById(R.id.hotseatRow)
         allAppsButton = findViewById(R.id.allAppsButton)
         widgetsButton = findViewById(R.id.widgetsButton)
         settingsButton = findViewById(R.id.settingsButton)
+        voiceButton = findViewById(R.id.voiceButton)
+        simpleFavoritesLabel = findViewById(R.id.simpleFavoritesLabel)
+        simpleFavoritesGrid = findViewById(R.id.simpleFavoritesGrid)
+        pageIndicator = findViewById(R.id.pageIndicator)
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
+        feedData = buildFeedData()
 
         homeAdapter = HomePagerAdapter(
             pages.map { it.toMutableList() }.toMutableList(),
             baseConfig,
+            LauncherPrefs.isFeedEnabled(this),
+            feedData,
+            LauncherPrefs.getThemeColors(this),
             ::onHomeItemClick,
             ::onHomeItemLongClick,
             ::onHomeItemMoved
         )
         homePager.adapter = homeAdapter
         homePager.offscreenPageLimit = 1
+        homePager.setPageTransformer { page, position ->
+            val scale = 0.92f + (1 - kotlin.math.abs(position)) * 0.08f
+            page.scaleX = scale
+            page.scaleY = scale
+            page.alpha = 0.85f + (1 - kotlin.math.abs(position)) * 0.15f
+        }
+        homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                updatePageIndicator()
+            }
+        })
 
         hotseatAdapter = HomeItemAdapter(
             hotseat.toMutableList(),
@@ -79,6 +116,15 @@ class LauncherActivity : AppCompatActivity() {
         hotseatRow.adapter = hotseatAdapter
         setupHotseatDrag()
 
+        simpleFavoritesAdapter = AppAdapter(
+            emptyList(),
+            LauncherPrefs.getSimpleFavoritesConfig(this, 0),
+            { entry -> launchApp(entry.component) },
+            ::handleSimpleFavoriteLongPress
+        )
+        simpleFavoritesGrid.layoutManager = GridLayoutManager(this, 2)
+        simpleFavoritesGrid.adapter = simpleFavoritesAdapter
+
         allAppsButton.setOnClickListener { openAllApps() }
 
         widgetsButton.setOnClickListener {
@@ -86,6 +132,7 @@ class LauncherActivity : AppCompatActivity() {
         }
 
         settingsButton.setOnClickListener { openSettings() }
+        voiceButton.setOnClickListener { startVoiceSearch() }
 
         searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -128,6 +175,8 @@ class LauncherActivity : AppCompatActivity() {
         hotseat = LauncherStore.loadHotseat(this, allApps)
         homeAdapter.submitPages(pages)
         hotseatAdapter.submit(hotseat)
+        updateSimpleFavorites()
+        updatePageIndicator()
     }
 
     private fun applyUiConfig() {
@@ -140,10 +189,29 @@ class LauncherActivity : AppCompatActivity() {
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
-        searchInput.visibility = if (simple) View.GONE else View.VISIBLE
+        searchRow.visibility = if (simple) View.GONE else View.VISIBLE
         widgetsButton.visibility = if (simple) View.GONE else View.VISIBLE
         settingsButton.visibility = if (simple) View.GONE else View.VISIBLE
         allAppsButton.visibility = View.VISIBLE
+        voiceButton.visibility = if (simple) View.GONE else View.VISIBLE
+        hotseatRow.visibility = if (LauncherPrefs.isDockVisible(this)) View.VISIBLE else View.GONE
+        simpleFavoritesLabel.visibility = if (simple) View.VISIBLE else View.GONE
+        simpleFavoritesGrid.visibility = if (simple) View.VISIBLE else View.GONE
+
+        val colors = LauncherPrefs.getThemeColors(this)
+        findViewById<View>(R.id.launcherRoot).setBackgroundColor(colors.background)
+        searchInput.setTextColor(colors.text)
+        searchInput.setHintTextColor(colors.muted)
+        allAppsButton.setTextColor(colors.text)
+        widgetsButton.setTextColor(colors.text)
+        settingsButton.setTextColor(colors.text)
+        voiceButton.setTextColor(colors.text)
+        simpleFavoritesLabel.setTextColor(colors.text)
+
+        feedData = buildFeedData()
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        homeAdapter.updateFeed(feedEnabled, feedData, colors)
+        updatePageIndicator()
     }
 
     private fun setupGestureDetector() {
@@ -193,7 +261,7 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun openAllApps() {
         val intent = Intent(this, AllAppsActivity::class.java)
-        intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, homePager.currentItem)
+        intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, currentHomePageIndex())
         startActivity(intent)
     }
 
@@ -219,6 +287,115 @@ class LauncherActivity : AppCompatActivity() {
         searchInput.setSelection(searchInput.text?.length ?: 0)
     }
 
+    private fun startVoiceSearch() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_settings_voice_search))
+        try {
+            startActivityForResult(intent, voiceRequestCode)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == voiceRequestCode && resultCode == RESULT_OK) {
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).orEmpty()
+            val query = results.firstOrNull().orEmpty()
+            if (query.isNotBlank()) {
+                launchSearch(query)
+            }
+        }
+    }
+
+    private fun handleSimpleFavoriteLongPress(entry: AppEntry) {
+        val item = HomeItem.App(entry.label, entry.component, entry.icon)
+        showHotseatAppOptions(item)
+    }
+
+    private fun updateSimpleFavorites() {
+        if (!LauncherPrefs.isSuperSimpleEnabled(this)) return
+        val favorites = hotseat.filterIsInstance<HomeItem.App>()
+            .take(4)
+            .map { AppEntry(it.label, it.component, it.icon) }
+        val list = if (favorites.isNotEmpty()) {
+            favorites
+        } else {
+            LauncherStore.getSuggestedApps(this, allApps, 4)
+        }
+        simpleFavoritesAdapter.submit(list)
+    }
+
+    private fun toggleDockVisibility() {
+        val visible = !LauncherPrefs.isDockVisible(this)
+        LauncherPrefs.setDockVisible(this, visible)
+        hotseatRow.visibility = if (visible) View.VISIBLE else View.GONE
+        Toast.makeText(
+            this,
+            if (visible) R.string.launcher_dock_shown else R.string.launcher_dock_hidden,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun toggleSuperSimple() {
+        val enabled = !LauncherPrefs.isSuperSimpleEnabled(this)
+        LauncherPrefs.setSuperSimpleEnabled(this, enabled)
+        if (enabled) {
+            LauncherPrefs.setDockVisible(this, false)
+        }
+        refreshHome()
+        applyUiConfig()
+        Toast.makeText(
+            this,
+            if (enabled) R.string.launcher_super_simple_on else R.string.launcher_super_simple_off,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun buildFeedData(): FeedData {
+        val now = java.time.LocalDateTime.now()
+        val timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm")
+        val dateFormatter = java.time.format.DateTimeFormatter.ofPattern("EEEE, d MMMM", java.util.Locale("pl", "PL"))
+        val time = now.format(timeFormatter)
+        val date = now.format(dateFormatter)
+        val batteryLevel = getBatteryLevel()
+        val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
+        val notifications = getRecentNotifications()
+        return FeedData(time = time, date = date, battery = batteryText, notifications = notifications)
+    }
+
+    private fun getBatteryLevel(): Int {
+        val intent = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
+        val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
+        return if (level >= 0 && scale > 0) (level * 100 / scale) else -1
+    }
+
+    private fun getRecentNotifications(): List<String> {
+        val prefs = getSharedPreferences("blindroid_prefs", Context.MODE_PRIVATE)
+        val raw = prefs.getString("recent_notifications", "") ?: ""
+        if (raw.isBlank()) return emptyList()
+        return raw.split("|").filter { it.isNotBlank() }.take(5)
+    }
+
+    private fun updatePageIndicator() {
+        pageIndicator.removeAllViews()
+        val count = homeAdapter.itemCount
+        if (count <= 1) return
+        val params = LinearLayout.LayoutParams(16, 16)
+        params.marginEnd = 8
+        val colors = LauncherPrefs.getThemeColors(this)
+        for (i in 0 until count) {
+            val dot = View(this)
+            dot.layoutParams = params
+            val selected = i == homePager.currentItem
+            dot.setBackgroundColor(if (selected) colors.text else colors.muted)
+            dot.alpha = if (selected) 1.0f else 0.6f
+            pageIndicator.addView(dot)
+        }
+    }
+
     private fun goToNextPage() {
         val next = (homePager.currentItem + 1).coerceAtMost(homeAdapter.itemCount - 1)
         homePager.currentItem = next
@@ -227,6 +404,11 @@ class LauncherActivity : AppCompatActivity() {
     private fun goToPrevPage() {
         val prev = (homePager.currentItem - 1).coerceAtLeast(0)
         homePager.currentItem = prev
+    }
+
+    private fun currentHomePageIndex(): Int {
+        val feedOffset = if (LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
+        return (homePager.currentItem - feedOffset).coerceAtLeast(0)
     }
 
     private fun handleTwoFingerGesture(event: MotionEvent) {
@@ -238,6 +420,7 @@ class LauncherActivity : AppCompatActivity() {
                     twoFingerStartY = averageY(event, 2)
                     twoFingerLastX = twoFingerStartX
                     twoFingerLastY = twoFingerStartY
+                    twoFingerStartTime = System.currentTimeMillis()
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -252,7 +435,10 @@ class LauncherActivity : AppCompatActivity() {
                     val deltaY = twoFingerLastY - twoFingerStartY
                     val absX = kotlin.math.abs(deltaX)
                     val absY = kotlin.math.abs(deltaY)
-                    if (absX > absY && absX > 120) {
+                    val duration = System.currentTimeMillis() - twoFingerStartTime
+                    if (absX < 40 && absY < 40 && duration < 250) {
+                        toggleDockVisibility()
+                    } else if (absX > absY && absX > 120) {
                         if (deltaX > 0) {
                             goToNextPage()
                         } else {
@@ -280,6 +466,7 @@ class LauncherActivity : AppCompatActivity() {
                     threeFingerStartY = averageY(event, 3)
                     threeFingerLastX = threeFingerStartX
                     threeFingerLastY = threeFingerStartY
+                    threeFingerStartTime = System.currentTimeMillis()
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -294,7 +481,10 @@ class LauncherActivity : AppCompatActivity() {
                     val deltaY = threeFingerLastY - threeFingerStartY
                     val absX = kotlin.math.abs(deltaX)
                     val absY = kotlin.math.abs(deltaY)
-                    if (absX > absY && absX > 120) {
+                    val duration = System.currentTimeMillis() - threeFingerStartTime
+                    if (absX < 40 && absY < 40 && duration < 250) {
+                        toggleSuperSimple()
+                    } else if (absX > absY && absX > 120) {
                         if (deltaX > 0) {
                             openQuickSettings()
                         } else {
@@ -397,7 +587,7 @@ class LauncherActivity : AppCompatActivity() {
     private fun onHotseatItemLongClick(item: HomeItem) {
         when (item) {
             is HomeItem.App -> showHotseatAppOptions(item)
-            is HomeItem.Folder -> showFolderOptions(homePager.currentItem, item)
+            is HomeItem.Folder -> showFolderOptions(currentHomePageIndex(), item)
         }
     }
 
@@ -444,7 +634,7 @@ class LauncherActivity : AppCompatActivity() {
             refreshHome()
         }
         options += getString(R.string.launcher_action_move_to_home) to {
-            val pageIndex = homePager.currentItem
+            val pageIndex = currentHomePageIndex()
             val added = LauncherStore.addToPage(this, pageIndex, app.component)
             if (added) {
                 LauncherStore.removeFromHotseat(this, appKey(app))
@@ -551,6 +741,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun launchApp(component: ComponentName) {
+        LauncherStore.recordLaunch(this, component)
         val intent = Intent(Intent.ACTION_MAIN)
             .addCategory(Intent.CATEGORY_LAUNCHER)
             .setComponent(component)

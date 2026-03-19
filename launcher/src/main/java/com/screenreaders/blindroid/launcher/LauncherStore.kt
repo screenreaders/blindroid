@@ -16,6 +16,8 @@ object LauncherStore {
     private const val KEY_PAGES = "pages"
     private const val KEY_HOTSEAT = "hotseat"
     private const val KEY_WIDGETS = "widgets"
+    private const val KEY_LAUNCH_PREFIX = "launch_"
+    private const val KEY_WIDGET_SIZE_PREFIX = "widget_size_"
     private const val FOLDER_PREFIX = "folder_"
     private const val FOLDER_LABEL_SUFFIX = "_label"
     private const val PAGE_COUNT = 3
@@ -245,6 +247,43 @@ object LauncherStore {
         if (list.remove(widgetId)) {
             prefs.edit().putString(KEY_WIDGETS, list.joinToString("|")) .apply()
         }
+    }
+
+    fun setWidgetSize(context: Context, widgetId: Int, width: Int, height: Int) {
+        val prefs = prefs(context)
+        prefs.edit()
+            .putString("$KEY_WIDGET_SIZE_PREFIX$widgetId", "$width,$height")
+            .apply()
+    }
+
+    fun getWidgetSize(context: Context, widgetId: Int): Pair<Int, Int>? {
+        val prefs = prefs(context)
+        val raw = prefs.getString("$KEY_WIDGET_SIZE_PREFIX$widgetId", null) ?: return null
+        val parts = raw.split(',')
+        if (parts.size != 2) return null
+        val w = parts[0].toIntOrNull() ?: return null
+        val h = parts[1].toIntOrNull() ?: return null
+        return w to h
+    }
+
+    fun recordLaunch(context: Context, component: ComponentName) {
+        val prefs = prefs(context)
+        val key = "$KEY_LAUNCH_PREFIX${component.flattenToString()}"
+        val current = prefs.getInt(key, 0)
+        prefs.edit().putInt(key, current + 1).apply()
+    }
+
+    fun getSuggestedApps(context: Context, allApps: List<AppEntry>, limit: Int = 4): List<AppEntry> {
+        val prefs = prefs(context)
+        val scored = allApps.map { entry ->
+            val key = "$KEY_LAUNCH_PREFIX${entry.component.flattenToString()}"
+            val score = prefs.getInt(key, 0)
+            entry to score
+        }
+        return scored.sortedByDescending { it.second }
+            .filter { it.second > 0 }
+            .map { it.first }
+            .take(limit)
     }
 
     private fun ensurePages(context: Context): MutableList<MutableList<String>> {
