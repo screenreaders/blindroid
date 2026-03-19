@@ -1,8 +1,14 @@
 package com.screenreaders.blindroid.launcher
 
 import android.app.SearchManager
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +25,8 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var hotseatRow: RecyclerView
     private lateinit var allAppsButton: Button
     private lateinit var widgetsButton: Button
+    private lateinit var settingsButton: Button
+    private lateinit var gestureDetector: GestureDetector
 
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
@@ -36,9 +44,13 @@ class LauncherActivity : AppCompatActivity() {
         hotseatRow = findViewById(R.id.hotseatRow)
         allAppsButton = findViewById(R.id.allAppsButton)
         widgetsButton = findViewById(R.id.widgetsButton)
+        settingsButton = findViewById(R.id.settingsButton)
+
+        val baseConfig = LauncherPrefs.getUiConfig(this)
 
         homeAdapter = HomePagerAdapter(
             pages,
+            baseConfig,
             ::onHomeItemClick,
             ::onHomeItemLongClick
         )
@@ -46,8 +58,8 @@ class LauncherActivity : AppCompatActivity() {
         homePager.offscreenPageLimit = 1
 
         hotseatAdapter = HomeItemAdapter(
-            this,
             hotseat,
+            baseConfig.copy(itemHeightPx = 0),
             ::onHotseatItemClick,
             ::onHotseatItemLongClick
         )
@@ -64,6 +76,10 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(Intent(this, WidgetsActivity::class.java))
         }
 
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, LauncherSettingsActivity::class.java))
+        }
+
         searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 launchSearch(searchInput.text?.toString())
@@ -73,12 +89,14 @@ class LauncherActivity : AppCompatActivity() {
             }
         }
 
+        setupGestureDetector()
         loadApps()
     }
 
     override fun onResume() {
         super.onResume()
         refreshHome()
+        applyUiConfig()
     }
 
     private fun loadApps() {
@@ -87,6 +105,7 @@ class LauncherActivity : AppCompatActivity() {
             runOnUiThread {
                 allApps = apps
                 refreshHome()
+                applyUiConfig()
             }
         }.start()
     }
@@ -97,6 +116,52 @@ class LauncherActivity : AppCompatActivity() {
         hotseat = LauncherStore.loadHotseat(this, allApps)
         homeAdapter.submitPages(pages)
         hotseatAdapter.submit(hotseat)
+    }
+
+    private fun applyUiConfig() {
+        val baseConfig = LauncherPrefs.getUiConfig(this)
+        homePager.post {
+            val rows = baseConfig.rows
+            val itemHeight = if (rows > 0) homePager.height / rows else 0
+            val pageConfig = baseConfig.copy(itemHeightPx = itemHeight)
+            homeAdapter.updateConfig(pageConfig)
+            hotseatAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
+        }
+    }
+
+    private fun setupGestureDetector() {
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                if (LauncherPrefs.isDoubleTapLockEnabled(this@LauncherActivity)) {
+                    attemptLock()
+                }
+                return true
+            }
+        })
+        val listener = View.OnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            false
+        }
+        findViewById<View>(R.id.launcherRoot).setOnTouchListener(listener)
+        homePager.setOnTouchListener(listener)
+    }
+
+    private fun attemptLock() {
+        val dpm = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+        val admin = ComponentName(this, LauncherAdminReceiver::class.java)
+        if (dpm.isAdminActive(admin)) {
+            dpm.lockNow()
+            Toast.makeText(this, R.string.launcher_lock_enabled, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, R.string.launcher_lock_requires_admin, Toast.LENGTH_SHORT).show()
+            val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, admin)
+            intent.putExtra(
+                DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                getString(R.string.launcher_admin_explanation)
+            )
+            startActivity(intent)
+        }
     }
 
     private fun onHomeItemClick(pageIndex: Int, item: HomeItem) {
@@ -272,7 +337,7 @@ class LauncherActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun launchApp(component: android.content.ComponentName) {
+    private fun launchApp(component: ComponentName) {
         val intent = Intent(Intent.ACTION_MAIN)
             .addCategory(Intent.CATEGORY_LAUNCHER)
             .setComponent(component)

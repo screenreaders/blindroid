@@ -21,6 +21,7 @@ class FolderActivity : AppCompatActivity() {
     private lateinit var addButton: Button
     private lateinit var folderGrid: RecyclerView
     private lateinit var adapter: AppAdapter
+    private lateinit var gridLayoutManager: GridLayoutManager
 
     private var allApps: List<AppEntry> = emptyList()
     private var folderId: String = ""
@@ -40,8 +41,10 @@ class FolderActivity : AppCompatActivity() {
         addButton = findViewById(R.id.addFolderAppButton)
         folderGrid = findViewById(R.id.folderGrid)
 
-        adapter = AppAdapter(emptyList(), ::launchApp, ::removeFromFolder)
-        folderGrid.layoutManager = GridLayoutManager(this, 4)
+        val baseConfig = LauncherPrefs.getUiConfig(this)
+        gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
+        folderGrid.layoutManager = gridLayoutManager
+        adapter = AppAdapter(emptyList(), baseConfig, ::launchApp, ::removeFromFolder)
         folderGrid.adapter = adapter
 
         renameButton.setOnClickListener { promptRename() }
@@ -52,6 +55,7 @@ class FolderActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        applyUiConfig()
         refreshFolder()
     }
 
@@ -63,6 +67,12 @@ class FolderActivity : AppCompatActivity() {
                 refreshFolder()
             }
         }.start()
+    }
+
+    private fun applyUiConfig() {
+        val baseConfig = LauncherPrefs.getUiConfig(this)
+        gridLayoutManager.spanCount = baseConfig.columns
+        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
     }
 
     private fun refreshFolder() {

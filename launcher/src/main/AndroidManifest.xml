@@ -32,6 +32,24 @@
             android:exported="false"
             android:label="@string/launcher_widgets_title"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".LauncherSettingsActivity"
+            android:exported="false"
+            android:label="@string/launcher_settings_title"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <receiver
+            android:name=".LauncherAdminReceiver"
+            android:exported="true"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/launcher_device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

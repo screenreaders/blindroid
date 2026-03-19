@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_grid" />
+
+        <RadioGroup
+            android:id="@+id/columnsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/columns4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_columns_4" />
+
+            <RadioButton
+                android:id="@+id/columns5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_columns_5" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rowsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rows4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_rows_4" />
+
+            <RadioButton
+                android:id="@+id/rows5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_rows_5" />
+
+            <RadioButton
+                android:id="@+id/rows6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_rows_6" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_icon_size" />
+
+        <RadioGroup
+            android:id="@+id/iconSizeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/iconSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_small" />
+
+            <RadioButton
+                android:id="@+id/iconNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_normal" />
+
+            <RadioButton
+                android:id="@+id/iconLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_large" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_label_size" />
+
+        <RadioGroup
+            android:id="@+id/labelSizeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/labelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_small" />
+
+            <RadioButton
+                android:id="@+id/labelNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_normal" />
+
+            <RadioButton
+                android:id="@+id/labelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/launcher_settings_large" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_gestures" />
+
+        <Switch
+            android:id="@+id/doubleTapLockSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_double_tap_lock" />
+
+        <Button
+            android:id="@+id/closeSettingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/launcher_settings_close" />
+
+    </LinearLayout>
+</ScrollView>

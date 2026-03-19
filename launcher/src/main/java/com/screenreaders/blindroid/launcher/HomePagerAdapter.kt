@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class HomePagerAdapter(
     private var pages: List<List<HomeItem>>,
+    private var config: LauncherUiConfig,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit
 ) : RecyclerView.Adapter<HomePagerAdapter.PageViewHolder>() {
@@ -20,8 +21,7 @@ class HomePagerAdapter(
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         val items = pages.getOrElse(position) { emptyList() }
-        holder.adapter.submit(items)
-        holder.adapterPageIndex = position
+        holder.bind(position, items, config)
     }
 
     override fun getItemCount(): Int = pages.size
@@ -31,20 +31,33 @@ class HomePagerAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateConfig(newConfig: LauncherUiConfig) {
+        config = newConfig
+        notifyDataSetChanged()
+    }
+
     inner class PageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val grid: RecyclerView = view.findViewById(R.id.pageGrid)
+        private val gridLayoutManager = GridLayoutManager(view.context, config.columns)
         val adapter: HomeItemAdapter
         var adapterPageIndex: Int = 0
 
         init {
-            grid.layoutManager = GridLayoutManager(view.context, 4)
+            grid.layoutManager = gridLayoutManager
             adapter = HomeItemAdapter(
-                view.context,
                 emptyList(),
+                config,
                 { item -> onClick(adapterPageIndex, item) },
                 { item -> onLongClick(adapterPageIndex, item) }
             )
             grid.adapter = adapter
+        }
+
+        fun bind(pageIndex: Int, items: List<HomeItem>, newConfig: LauncherUiConfig) {
+            adapterPageIndex = pageIndex
+            gridLayoutManager.spanCount = newConfig.columns
+            adapter.updateConfig(newConfig)
+            adapter.submit(items)
         }
     }
 }

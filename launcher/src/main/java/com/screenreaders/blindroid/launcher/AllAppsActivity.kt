@@ -20,6 +20,7 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var searchInput: EditText
     private lateinit var appsGrid: RecyclerView
     private lateinit var adapter: AppAdapter
+    private lateinit var gridLayoutManager: GridLayoutManager
     private var allApps: List<AppEntry> = emptyList()
     private var targetPageIndex: Int = 0
     private var targetFolderId: String? = null
@@ -33,12 +34,19 @@ class AllAppsActivity : AppCompatActivity() {
         targetPageIndex = intent.getIntExtra(EXTRA_PAGE_INDEX, 0)
         targetFolderId = intent.getStringExtra(EXTRA_FOLDER_ID)
 
-        appsGrid.layoutManager = GridLayoutManager(this, 4)
-        adapter = AppAdapter(emptyList(), ::launchApp, ::handleLongPress)
+        val baseConfig = LauncherPrefs.getUiConfig(this)
+        gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
+        appsGrid.layoutManager = gridLayoutManager
+        adapter = AppAdapter(emptyList(), baseConfig, ::launchApp, ::handleLongPress)
         appsGrid.adapter = adapter
 
         loadApps()
         setupSearch()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyUiConfig()
     }
 
     private fun loadApps() {
@@ -49,6 +57,12 @@ class AllAppsActivity : AppCompatActivity() {
                 adapter.submit(allApps)
             }
         }.start()
+    }
+
+    private fun applyUiConfig() {
+        val baseConfig = LauncherPrefs.getUiConfig(this)
+        gridLayoutManager.spanCount = baseConfig.columns
+        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
     }
 
     private fun setupSearch() {
