@@ -5,27 +5,12 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <EditText
-        android:id="@+id/searchInput"
+    <TextView
+        android:id="@+id/folderTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/launcher_search_hint"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:singleLine="true" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/homePager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/hotseatRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,19 +19,26 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/allAppsButton"
+            android:id="@+id/renameFolderButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/launcher_all_apps_button" />
+            android:text="@string/launcher_action_rename_folder" />
 
         <Button
-            android:id="@+id/widgetsButton"
+            android:id="@+id/addFolderAppButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="@string/launcher_widgets_button" />
+            android:text="@string/launcher_action_add_to_folder" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/folderGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>

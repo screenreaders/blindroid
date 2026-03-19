@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="launcher_widget_margin">12dp</dimen>
+</resources>

@@ -20,6 +20,18 @@
             android:exported="false"
             android:label="@string/launcher_all_apps"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".FolderActivity"
+            android:exported="false"
+            android:label="@string/launcher_folder_title"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".WidgetsActivity"
+            android:exported="false"
+            android:label="@string/launcher_widgets_title"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
