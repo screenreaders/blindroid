@@ -17,6 +17,81 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/currencyModeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/currency_mode"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/currencyModeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/currencyModeOcr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_mode_ocr" />
+
+            <RadioButton
+                android:id="@+id/currencyModeModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_mode_model" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/currencyModelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/currency_model_label"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/currencyModelSourceGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/currencyModelSourceFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_model_source_file" />
+
+            <RadioButton
+                android:id="@+id/currencyModelSourceBuiltin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/currency_model_source_builtin" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/currencyModelPickButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/currency_model_pick" />
+
+        <Button
+            android:id="@+id/currencyLabelsPickButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/currency_labels_pick" />
+
+        <TextView
+            android:id="@+id/currencyModelStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/currency_model_status_empty" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/currencyScanSwitch"
             android:layout_width="match_parent"

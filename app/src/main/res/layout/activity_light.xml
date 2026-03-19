@@ -31,6 +31,13 @@
             android:layout_marginTop="8dp"
             android:text="@string/light_direction_toggle" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/lightSoundSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/light_sound_toggle" />
+
         <TextView
             android:id="@+id/lightLuxLabel"
             android:layout_width="wrap_content"

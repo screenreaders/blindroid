@@ -32,6 +32,11 @@ object Prefs {
     private const val KEY_CHIME_END = "chime_end"
     private const val KEY_RECENT_NOTIFICATIONS = "recent_notifications"
     private const val KEY_MODULE_SHORTCUTS = "module_shortcuts"
+    private const val KEY_CURRENCY_MODE = "currency_mode"
+    private const val KEY_CURRENCY_MODEL_URI = "currency_model_uri"
+    private const val KEY_CURRENCY_LABELS_URI = "currency_labels_uri"
+    private const val KEY_CURRENCY_MODEL_SOURCE = "currency_model_source"
+    private const val KEY_LIGHT_SOUND = "light_sound_cues"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -44,6 +49,10 @@ object Prefs {
     const val END_CALL_VOLUME_DOWN = 2
     const val END_CALL_HEADSET = 3
     const val END_CALL_POWER = 4
+    const val CURRENCY_MODE_OCR = 0
+    const val CURRENCY_MODE_MODEL = 1
+    const val CURRENCY_MODEL_SOURCE_FILE = 0
+    const val CURRENCY_MODEL_SOURCE_BUILTIN = 1
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -255,5 +264,40 @@ object Prefs {
 
     fun setModuleShortcutsEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_MODULE_SHORTCUTS, value).apply()
+    }
+
+    fun getCurrencyMode(context: Context): Int =
+        prefs(context).getInt(KEY_CURRENCY_MODE, CURRENCY_MODE_OCR).coerceIn(0, 1)
+
+    fun setCurrencyMode(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_CURRENCY_MODE, value.coerceIn(0, 1)).apply()
+    }
+
+    fun getCurrencyModelUri(context: Context): String? =
+        prefs(context).getString(KEY_CURRENCY_MODEL_URI, null)
+
+    fun setCurrencyModelUri(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_CURRENCY_MODEL_URI, value).apply()
+    }
+
+    fun getCurrencyLabelsUri(context: Context): String? =
+        prefs(context).getString(KEY_CURRENCY_LABELS_URI, null)
+
+    fun setCurrencyLabelsUri(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_CURRENCY_LABELS_URI, value).apply()
+    }
+
+    fun getCurrencyModelSource(context: Context): Int =
+        prefs(context).getInt(KEY_CURRENCY_MODEL_SOURCE, CURRENCY_MODEL_SOURCE_FILE).coerceIn(0, 1)
+
+    fun setCurrencyModelSource(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_CURRENCY_MODEL_SOURCE, value.coerceIn(0, 1)).apply()
+    }
+
+    fun isLightSoundCuesEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_LIGHT_SOUND, false)
+
+    fun setLightSoundCuesEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_LIGHT_SOUND, value).apply()
     }
 }

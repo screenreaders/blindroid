@@ -6,6 +6,8 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.AudioManager
+import android.media.ToneGenerator
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -47,6 +49,8 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     private var lastLuxValue = 0f
     private var lastDirection: String? = null
     private var lastDirectionSpoken = 0L
+    private var soundCuesEnabled = false
+    private var toneGenerator: ToneGenerator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +64,7 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
                 applyTtsSettings()
             }
         }
+        toneGenerator = ToneGenerator(AudioManager.STREAM_ACCESSIBILITY, 80)
 
         binding.lightActiveSwitch.setOnCheckedChangeListener { _, isChecked ->
             setActive(isChecked)
@@ -82,6 +87,12 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
                 updateDirection(getString(R.string.light_direction_idle))
             }
         }
+        binding.lightSoundSwitch.isChecked = Prefs.isLightSoundCuesEnabled(this)
+        soundCuesEnabled = binding.lightSoundSwitch.isChecked
+        binding.lightSoundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setLightSoundCuesEnabled(this, isChecked)
+            soundCuesEnabled = isChecked
+        }
 
         binding.lightActiveSwitch.isChecked = false
         binding.lightDirectionSwitch.isEnabled = false
@@ -97,6 +108,7 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     override fun onDestroy() {
         super.onDestroy()
         tts?.shutdown()
+        toneGenerator?.release()
         cameraExecutor.shutdown()
     }
 
@@ -298,7 +310,21 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
         if (direction == lastDirection && now - lastDirectionSpoken < DIRECTION_SPEAK_INTERVAL_MS) return
         lastDirection = direction
         lastDirectionSpoken = now
-        speak(getString(R.string.light_direction_spoken, direction))
+        if (soundCuesEnabled) {
+            playDirectionTone(direction)
+        } else {
+            speak(getString(R.string.light_direction_spoken, direction))
+        }
+    }
+
+    private fun playDirectionTone(direction: String) {
+        val tone = when (direction) {
+            getString(R.string.light_direction_left) -> ToneGenerator.TONE_PROP_BEEP
+            getString(R.string.light_direction_center) -> ToneGenerator.TONE_PROP_BEEP2
+            getString(R.string.light_direction_right) -> ToneGenerator.TONE_PROP_ACK
+            else -> ToneGenerator.TONE_PROP_NACK
+        }
+        toneGenerator?.startTone(tone, 150)
     }
 
     private fun speak(text: String) {
