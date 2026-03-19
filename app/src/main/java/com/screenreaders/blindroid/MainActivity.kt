@@ -33,6 +33,7 @@ import com.screenreaders.blindroid.chime.ChimeScheduler
 import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
+import com.screenreaders.blindroid.document.DocumentAssistActivity
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import java.util.Calendar
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         binding.contactsPermissionButton.setOnClickListener { requestContactsPermission() }
         binding.notificationAccessButton.setOnClickListener { openNotificationAccessSettings() }
         binding.launcherSettingsButton.setOnClickListener { openHomeSettings() }
+        binding.documentsButton.setOnClickListener { openDocumentModule() }
         binding.currencyButton.setOnClickListener { openCurrencyModule() }
         binding.lightButton.setOnClickListener { openLightModule() }
 
@@ -242,6 +244,7 @@ class MainActivity : AppCompatActivity() {
             SECTION_LAUNCHER -> binding.launcherLabel
             SECTION_CALLS -> binding.callsLabel
             SECTION_NOTIFICATIONS -> binding.notificationsLabel
+            SECTION_DOCUMENTS -> binding.documentsLabel
             SECTION_CURRENCY -> binding.currencyLabel
             SECTION_LIGHT -> binding.lightLabel
             SECTION_CHIME -> binding.chimeLabel
@@ -297,6 +300,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun openCurrencyModule() {
         startActivity(Intent(this, CurrencyActivity::class.java))
+    }
+
+    private fun openDocumentModule() {
+        startActivity(Intent(this, DocumentAssistActivity::class.java))
     }
 
     private fun openLightModule() {
@@ -917,6 +924,7 @@ class MainActivity : AppCompatActivity() {
         private const val SECTION_LAUNCHER = "launcher"
         private const val SECTION_CALLS = "calls"
         private const val SECTION_NOTIFICATIONS = "notifications"
+        private const val SECTION_DOCUMENTS = "documents"
         private const val SECTION_CURRENCY = "currency"
         private const val SECTION_LIGHT = "light"
         private const val SECTION_CHIME = "chime"

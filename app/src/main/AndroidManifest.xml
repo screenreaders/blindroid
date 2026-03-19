@@ -48,6 +48,13 @@
             android:excludeFromRecents="true" />
 
         <activity
+            android:name=".document.DocumentAssistActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

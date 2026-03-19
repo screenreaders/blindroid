@@ -908,6 +908,7 @@ class LauncherActivity : AppCompatActivity() {
             ModuleShortcuts.ID_LAUNCHER -> openSettings()
             ModuleShortcuts.ID_CALLS -> openMainSection("calls")
             ModuleShortcuts.ID_NOTIFICATIONS -> openMainSection("notifications")
+            ModuleShortcuts.ID_DOCUMENTS -> openMainSection("documents")
             ModuleShortcuts.ID_CURRENCY -> openMainSection("currency")
             ModuleShortcuts.ID_LIGHT -> openMainSection("light")
             ModuleShortcuts.ID_CHIME -> openMainSection("chime")

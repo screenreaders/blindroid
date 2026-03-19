@@ -37,6 +37,8 @@ object Prefs {
     private const val KEY_CURRENCY_LABELS_URI = "currency_labels_uri"
     private const val KEY_CURRENCY_MODEL_SOURCE = "currency_model_source"
     private const val KEY_LIGHT_SOUND = "light_sound_cues"
+    private const val KEY_DOC_AUTO = "doc_auto_capture"
+    private const val KEY_DOC_SPEAK = "doc_speak_result"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -299,5 +301,19 @@ object Prefs {
 
     fun setLightSoundCuesEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_LIGHT_SOUND, value).apply()
+    }
+
+    fun isDocAutoCaptureEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_DOC_AUTO, true)
+
+    fun setDocAutoCaptureEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_DOC_AUTO, value).apply()
+    }
+
+    fun isDocSpeakResultEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_DOC_SPEAK, true)
+
+    fun setDocSpeakResultEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_DOC_SPEAK, value).apply()
     }
 }
