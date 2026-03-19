@@ -14,8 +14,15 @@ sealed class HomeItem {
         val label: String
     ) : HomeItem()
 
+    data class Shortcut(
+        val id: String,
+        val label: String,
+        val iconRes: Int
+    ) : HomeItem()
+
     companion object {
         fun app(entry: AppEntry) = App(entry.label, entry.component, entry.icon)
         fun folder(id: String, label: String) = Folder(id, label)
+        fun shortcut(id: String, label: String, iconRes: Int) = Shortcut(id, label, iconRes)
     }
 }

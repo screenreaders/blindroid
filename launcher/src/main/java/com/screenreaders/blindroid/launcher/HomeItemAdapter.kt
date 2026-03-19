@@ -34,6 +34,11 @@ class HomeItemAdapter(
                 holder.icon.setImageResource(android.R.drawable.ic_menu_agenda)
                 holder.icon.contentDescription = item.label
             }
+            is HomeItem.Shortcut -> {
+                holder.label.text = item.label
+                holder.icon.setImageResource(item.iconRes)
+                holder.icon.contentDescription = item.label
+            }
         }
         applySizing(holder)
         holder.label.visibility = if (config.showLabels) View.VISIBLE else View.GONE

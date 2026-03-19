@@ -26,6 +26,10 @@ object LauncherStore {
 
     private const val TYPE_APP = "a"
     private const val TYPE_FOLDER = "f"
+    private const val TYPE_SHORTCUT = "s"
+
+    private const val MODULE_PREFS_NAME = "blindroid_prefs"
+    private const val KEY_MODULE_SHORTCUTS = "module_shortcuts"
 
     fun loadAllApps(context: Context): List<AppEntry> {
         val pm = context.packageManager
@@ -60,6 +64,48 @@ object LauncherStore {
             }
         }
         return decodeItems(context, hotseat, allApps)
+    }
+
+    fun syncModuleShortcuts(context: Context, enabled: Boolean) {
+        val pages = ensurePages(context)
+        val hotseat = loadHotseatKeys(context)
+        val shortcutKeys = ModuleShortcuts.shortcutKeys()
+        var changed = false
+
+        if (!enabled) {
+            pages.forEach { page ->
+                val removed = page.removeAll { it.startsWith("$TYPE_SHORTCUT:") }
+                if (removed) changed = true
+            }
+            val removedHotseat = hotseat.removeAll { it.startsWith("$TYPE_SHORTCUT:") }
+            if (removedHotseat) changed = true
+            if (changed) {
+                savePages(context, pages)
+                saveList(prefs(context), KEY_HOTSEAT, hotseat)
+            }
+            return
+        }
+
+        val existing = pages.flatten().toMutableSet()
+        existing.addAll(hotseat)
+        val target = pages.firstOrNull() ?: return
+        var insertIndex = 0
+        shortcutKeys.forEach { key ->
+            if (!existing.contains(key)) {
+                target.add(insertIndex, key)
+                insertIndex++
+                existing.add(key)
+                changed = true
+            } else {
+                val idx = target.indexOf(key)
+                if (idx >= 0) {
+                    insertIndex = idx + 1
+                }
+            }
+        }
+        if (changed) {
+            savePages(context, pages)
+        }
     }
 
     fun addToPage(context: Context, pageIndex: Int, component: ComponentName): Boolean {
@@ -352,6 +398,10 @@ object LauncherStore {
                     val label = getFolderLabel(context, parts[1])
                     HomeItem.folder(parts[1], label)
                 }
+                TYPE_SHORTCUT -> {
+                    val info = ModuleShortcuts.getInfo(parts[1]) ?: return@mapNotNull null
+                    ModuleShortcuts.buildHomeItem(context, info)
+                }
                 else -> null
             }
         }
@@ -393,6 +443,11 @@ object LauncherStore {
             }
         }
         return components.distinct()
+    }
+
+    fun isModuleShortcutsEnabled(context: Context): Boolean {
+        return context.getSharedPreferences(MODULE_PREFS_NAME, Context.MODE_PRIVATE)
+            .getBoolean(KEY_MODULE_SHORTCUTS, true)
     }
 
     private fun prefs(context: Context) =

@@ -52,6 +52,9 @@ object LauncherPrefs {
     const val ACTION_PREV_PAGE = 9
     const val ACTION_OPEN_FEED = 10
     const val ACTION_VOICE_SEARCH = 11
+    const val ACTION_FLASHLIGHT = 12
+    const val ACTION_OPEN_DIALER = 13
+    const val ACTION_OPEN_MESSAGES = 14
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)

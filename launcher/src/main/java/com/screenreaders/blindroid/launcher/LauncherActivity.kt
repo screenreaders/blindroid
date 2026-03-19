@@ -1,11 +1,16 @@
 package com.screenreaders.blindroid.launcher
 
+import android.Manifest
 import android.app.SearchManager
 import android.app.admin.DevicePolicyManager
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.os.BatteryManager
 import android.view.GestureDetector
@@ -17,6 +22,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -61,6 +68,11 @@ class LauncherActivity : AppCompatActivity() {
     private var hotseat: List<HomeItem> = emptyList()
     private var feedData: FeedData? = null
     private var lastExternalFeedLaunchMs = 0L
+    private var flashlightOn = false
+    private var flashlightCameraId: String? = null
+    private var pendingFlashToggle = false
+
+    private val flashPermissionRequestCode = 9201
 
     private val voiceRequestCode = 4201
 
@@ -169,6 +181,7 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun refreshHome() {
         if (allApps.isEmpty()) return
+        LauncherStore.syncModuleShortcuts(this, LauncherStore.isModuleShortcutsEnabled(this))
         val allPages = LauncherStore.loadPages(this, allApps)
         pages = if (LauncherPrefs.isSuperSimpleEnabled(this)) {
             listOf(allPages.firstOrNull() ?: emptyList())
@@ -603,6 +616,7 @@ class LauncherActivity : AppCompatActivity() {
         when (item) {
             is HomeItem.App -> launchApp(item.component)
             is HomeItem.Folder -> openFolder(item.id)
+            is HomeItem.Shortcut -> openModuleShortcut(item.id)
         }
     }
 
@@ -610,6 +624,7 @@ class LauncherActivity : AppCompatActivity() {
         when (item) {
             is HomeItem.App -> showHomeAppOptions(pageIndex, item)
             is HomeItem.Folder -> showFolderOptions(pageIndex, item)
+            is HomeItem.Shortcut -> showShortcutHint()
         }
     }
 
@@ -617,6 +632,7 @@ class LauncherActivity : AppCompatActivity() {
         when (item) {
             is HomeItem.App -> launchApp(item.component)
             is HomeItem.Folder -> openFolder(item.id)
+            is HomeItem.Shortcut -> openModuleShortcut(item.id)
         }
     }
 
@@ -624,6 +640,7 @@ class LauncherActivity : AppCompatActivity() {
         when (item) {
             is HomeItem.App -> showHotseatAppOptions(item)
             is HomeItem.Folder -> showFolderOptions(currentHomePageIndex(), item)
+            is HomeItem.Shortcut -> showShortcutHint()
         }
     }
 
@@ -814,6 +831,9 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.ACTION_PREV_PAGE -> goToPrevPage()
             LauncherPrefs.ACTION_OPEN_FEED -> openFeed()
             LauncherPrefs.ACTION_VOICE_SEARCH -> startVoiceSearch()
+            LauncherPrefs.ACTION_FLASHLIGHT -> toggleFlashlight()
+            LauncherPrefs.ACTION_OPEN_DIALER -> openDialer()
+            LauncherPrefs.ACTION_OPEN_MESSAGES -> openMessages()
         }
     }
 
@@ -833,5 +853,109 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun isGoogleAppAvailable(): Boolean {
         return packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+    }
+
+    private fun openModuleShortcut(id: String) {
+        when (id) {
+            ModuleShortcuts.ID_LAUNCHER -> openSettings()
+            ModuleShortcuts.ID_CALLS -> openMainSection("calls")
+            ModuleShortcuts.ID_NOTIFICATIONS -> openMainSection("notifications")
+            ModuleShortcuts.ID_CHIME -> openMainSection("chime")
+            ModuleShortcuts.ID_UPDATES -> openMainSection("updates")
+            else -> Unit
+        }
+    }
+
+    private fun openMainSection(section: String) {
+        val intent = Intent().apply {
+            component = ComponentName(
+                "com.screenreaders.blindroid",
+                "com.screenreaders.blindroid.MainActivity"
+            )
+            putExtra("extra_section", section)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showShortcutHint() {
+        Toast.makeText(this, R.string.launcher_shortcut_hint, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openDialer() {
+        val intent = Intent(Intent.ACTION_DIAL)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openMessages() {
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MESSAGING)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun toggleFlashlight() {
+        if (!ensureFlashlightSupport()) return
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            pendingFlashToggle = true
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), flashPermissionRequestCode)
+            return
+        }
+        val manager = getSystemService(CameraManager::class.java)
+        val cameraId = flashlightCameraId ?: return
+        try {
+            flashlightOn = !flashlightOn
+            manager.setTorchMode(cameraId, flashlightOn)
+            Toast.makeText(
+                this,
+                if (flashlightOn) R.string.launcher_flashlight_on else R.string.launcher_flashlight_off,
+                Toast.LENGTH_SHORT
+            ).show()
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_flashlight_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun ensureFlashlightSupport(): Boolean {
+        if (flashlightCameraId != null) return true
+        val manager = getSystemService(CameraManager::class.java)
+        val ids = manager.cameraIdList
+        for (id in ids) {
+            val characteristics = manager.getCameraCharacteristics(id)
+            val hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+            if (hasFlash) {
+                flashlightCameraId = id
+                return true
+            }
+        }
+        Toast.makeText(this, R.string.launcher_flashlight_missing, Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == flashPermissionRequestCode) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (granted && pendingFlashToggle) {
+                pendingFlashToggle = false
+                toggleFlashlight()
+            } else {
+                Toast.makeText(this, R.string.launcher_flashlight_permission, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

@@ -31,6 +31,7 @@ object Prefs {
     private const val KEY_CHIME_START = "chime_start"
     private const val KEY_CHIME_END = "chime_end"
     private const val KEY_RECENT_NOTIFICATIONS = "recent_notifications"
+    private const val KEY_MODULE_SHORTCUTS = "module_shortcuts"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -247,5 +248,12 @@ object Prefs {
         val raw = prefs(context).getString(KEY_RECENT_NOTIFICATIONS, "").orEmpty()
         if (raw.isBlank()) return emptyList()
         return raw.split('|').filter { it.isNotBlank() }.take(5)
+    }
+
+    fun isModuleShortcutsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_MODULE_SHORTCUTS, true)
+
+    fun setModuleShortcutsEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_MODULE_SHORTCUTS, value).apply()
     }
 }

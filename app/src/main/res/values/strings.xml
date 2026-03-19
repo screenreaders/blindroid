@@ -44,6 +44,7 @@
     <string name="launcher_label">Launcher</string>
     <string name="section_calls">Rozmowy</string>
     <string name="section_notifications">Powiadomienia</string>
+    <string name="module_shortcuts">Pokaż skróty modułów na pulpicie</string>
     <string name="launcher_enable">Włącz Blindroid Launcher</string>
     <string name="launcher_settings">Ustaw jako domyślny launcher</string>
     <string name="launcher_hint">Po włączeniu wybierz Blindroid Launcher jako domyślny ekran główny.</string>

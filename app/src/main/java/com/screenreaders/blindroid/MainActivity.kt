@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         binding.updateAutoSwitch.isChecked = Prefs.isAutoUpdateEnabled(this)
         binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
         binding.launcherSwitch.isChecked = isLauncherEnabled()
+        binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceEnabled(this, isChecked)
@@ -149,6 +151,10 @@ class MainActivity : AppCompatActivity() {
             setLauncherEnabled(isChecked)
         }
 
+        binding.moduleShortcutsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setModuleShortcutsEnabled(this, isChecked)
+        }
+
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAutoUpdateEnabled(this, isChecked)
             if (isChecked) {
@@ -187,11 +193,15 @@ class MainActivity : AppCompatActivity() {
         initChimeUi()
         initTtsUi()
         handleDialIntent(intent)
+        handleSectionIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if (intent != null) handleDialIntent(intent)
+        if (intent != null) {
+            handleDialIntent(intent)
+            handleSectionIntent(intent)
+        }
     }
 
     override fun onStart() {
@@ -219,6 +229,21 @@ class MainActivity : AppCompatActivity() {
                 val number = data.schemeSpecificPart
                 binding.numberInput.setText(number)
             }
+        }
+    }
+
+    private fun handleSectionIntent(intent: Intent) {
+        val section = intent.getStringExtra(EXTRA_SECTION) ?: return
+        val target = when (section) {
+            SECTION_LAUNCHER -> binding.launcherLabel
+            SECTION_CALLS -> binding.callsLabel
+            SECTION_NOTIFICATIONS -> binding.notificationsLabel
+            SECTION_CHIME -> binding.chimeLabel
+            SECTION_UPDATES -> binding.updateLabel
+            else -> null
+        } ?: return
+        binding.mainScroll.post {
+            binding.mainScroll.smoothScrollTo(0, target.top)
         }
     }
 
@@ -874,5 +899,11 @@ class MainActivity : AppCompatActivity() {
         private const val REQ_CALL_PHONE = 101
         private const val REQ_CONTACTS = 102
         private const val REQ_SMS = 103
+        private const val EXTRA_SECTION = "extra_section"
+        private const val SECTION_LAUNCHER = "launcher"
+        private const val SECTION_CALLS = "calls"
+        private const val SECTION_NOTIFICATIONS = "notifications"
+        private const val SECTION_CHIME = "chime"
+        private const val SECTION_UPDATES = "updates"
     }
 }
