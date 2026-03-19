@@ -3,6 +3,9 @@ package com.screenreaders.blindroid
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioDeviceInfo
+import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,6 +41,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
     private var isListening = false
     private val handler = Handler(Looper.getMainLooper())
     private var stopListeningRunnable: Runnable? = null
+    private val audioManager by lazy { getSystemService(AudioManager::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -266,6 +270,47 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                 call?.reject(false, null)
                 binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
             }
+            containsAny(normalized, "glosnik", "glosnomowiacy", "glosnomow") -> {
+                if (containsAny(normalized, "wylacz", "wyłącz", "off", "wylaczyc", "wylaczic")) {
+                    setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)
+                } else if (containsAny(normalized, "wlacz", "włącz", "on", "uruchom")) {
+                    setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_SPEAKER)
+                } else {
+                    toggleSpeakerOverride()
+                }
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            containsAny(normalized, "sluchawka", "do ucha") -> {
+                setSpeakerOverride(Prefs.SPEAKER_OVERRIDE_EARPIECE)
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            containsAny(normalized, "mikrofon") -> {
+                if (containsAny(normalized, "wylacz", "wyłącz", "wycisz", "mute", "wylaczyc", "wylaczic")) {
+                    audioManager.isMicrophoneMute = true
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                } else if (containsAny(normalized, "wlacz", "włącz", "odcisz", "unmute", "uruchom")) {
+                    audioManager.isMicrophoneMute = false
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+                } else {
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+                }
+            }
+            containsAny(normalized, "glosniej", "glosnosc w gore", "glosnosc wyzej") -> {
+                audioManager.adjustStreamVolume(
+                    AudioManager.STREAM_VOICE_CALL,
+                    AudioManager.ADJUST_RAISE,
+                    0
+                )
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            containsAny(normalized, "ciszej", "glosnosc w dol", "glosnosc nizej") -> {
+                audioManager.adjustStreamVolume(
+                    AudioManager.STREAM_VOICE_CALL,
+                    AudioManager.ADJUST_LOWER,
+                    0
+                )
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
             else -> {
                 binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
             }
@@ -279,6 +324,69 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
 
     private fun containsAny(text: String, vararg candidates: String): Boolean {
         return candidates.any { text.contains(it) }
+    }
+
+    private fun toggleSpeakerOverride() {
+        val current = Prefs.getSpeakerOverride(this)
+        val next = if (current == Prefs.SPEAKER_OVERRIDE_SPEAKER) {
+            Prefs.SPEAKER_OVERRIDE_EARPIECE
+        } else {
+            Prefs.SPEAKER_OVERRIDE_SPEAKER
+        }
+        setSpeakerOverride(next)
+    }
+
+    private fun setSpeakerOverride(value: Int) {
+        if (hasExternalOutput()) return
+        Prefs.setSpeakerOverride(this, value)
+        when (value) {
+            Prefs.SPEAKER_OVERRIDE_SPEAKER -> routeToSpeaker()
+            Prefs.SPEAKER_OVERRIDE_EARPIECE -> routeToEarpiece()
+            else -> Unit
+        }
+    }
+
+    private fun routeToSpeaker() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val device = audioManager.availableCommunicationDevices
+                .firstOrNull { it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER }
+            if (device != null) {
+                audioManager.setCommunicationDevice(device)
+                return
+            }
+        }
+        audioManager.isSpeakerphoneOn = true
+    }
+
+    private fun routeToEarpiece() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val device = audioManager.availableCommunicationDevices
+                .firstOrNull { it.type == AudioDeviceInfo.TYPE_BUILTIN_EARPIECE }
+            if (device != null) {
+                audioManager.setCommunicationDevice(device)
+                return
+            }
+            audioManager.clearCommunicationDevice()
+            return
+        }
+        audioManager.isSpeakerphoneOn = false
+    }
+
+    private fun hasExternalOutput(): Boolean {
+        val outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
+        return outputs.any { device ->
+            when (device.type) {
+                AudioDeviceInfo.TYPE_BLUETOOTH_A2DP,
+                AudioDeviceInfo.TYPE_BLUETOOTH_SCO,
+                AudioDeviceInfo.TYPE_BLE_HEADSET,
+                AudioDeviceInfo.TYPE_BLE_SPEAKER,
+                AudioDeviceInfo.TYPE_HEARING_AID,
+                AudioDeviceInfo.TYPE_USB_HEADSET,
+                AudioDeviceInfo.TYPE_WIRED_HEADSET,
+                AudioDeviceInfo.TYPE_WIRED_HEADPHONES -> true
+                else -> false
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(

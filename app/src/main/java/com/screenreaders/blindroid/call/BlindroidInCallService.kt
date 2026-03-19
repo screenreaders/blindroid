@@ -47,6 +47,7 @@ class BlindroidInCallService : InCallService() {
         announcedCalls.remove(call)
         CallManager.removeCall(call)
         if (CallManager.getCall() == null) {
+            Prefs.clearSpeakerOverride(this)
             proximityController.stop()
             announcer.shutdown()
             ringerController.stop()

@@ -19,6 +19,7 @@ object Prefs {
     private const val KEY_AUTO_UPDATE = "auto_update"
     private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
     private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
+    private const val KEY_SPEAKER_OVERRIDE = "speaker_override"
     private const val KEY_END_CALL_KEY = "end_call_key"
     private const val KEY_CHIME_ENABLED = "chime_enabled"
     private const val KEY_CHIME_INTERVAL = "chime_interval"
@@ -28,6 +29,9 @@ object Prefs {
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
     const val MODE_SPEECH_THEN_RING = 2
+    const val SPEAKER_OVERRIDE_NONE = 0
+    const val SPEAKER_OVERRIDE_SPEAKER = 1
+    const val SPEAKER_OVERRIDE_EARPIECE = 2
     const val END_CALL_NONE = 0
     const val END_CALL_VOLUME_UP = 1
     const val END_CALL_VOLUME_DOWN = 2
@@ -105,6 +109,17 @@ object Prefs {
 
     fun setEndCallKey(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_END_CALL_KEY, value).apply()
+    }
+
+    fun getSpeakerOverride(context: Context): Int =
+        prefs(context).getInt(KEY_SPEAKER_OVERRIDE, SPEAKER_OVERRIDE_NONE).coerceIn(0, 2)
+
+    fun setSpeakerOverride(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SPEAKER_OVERRIDE, value.coerceIn(0, 2)).apply()
+    }
+
+    fun clearSpeakerOverride(context: Context) {
+        prefs(context).edit().remove(KEY_SPEAKER_OVERRIDE).apply()
     }
 
     fun isSmsReadEnabled(context: Context): Boolean =

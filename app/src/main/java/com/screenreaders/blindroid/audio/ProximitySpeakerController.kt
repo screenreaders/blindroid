@@ -36,6 +36,16 @@ class ProximitySpeakerController(context: Context) : SensorEventListener {
     override fun onSensorChanged(event: SensorEvent) {
         if (!Prefs.isAutoSpeakerEnabled(appContext)) return
         if (hasExternalOutput()) return
+        when (Prefs.getSpeakerOverride(appContext)) {
+            Prefs.SPEAKER_OVERRIDE_SPEAKER -> {
+                routeToSpeaker()
+                return
+            }
+            Prefs.SPEAKER_OVERRIDE_EARPIECE -> {
+                routeToEarpiece()
+                return
+            }
+        }
         val sensor = proximitySensor ?: return
         val distance = event.values[0]
         val near = distance < sensor.maximumRange
