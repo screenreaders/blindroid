@@ -28,6 +28,9 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var widgetsButton: Button
     private lateinit var settingsButton: Button
     private lateinit var gestureDetector: GestureDetector
+    private var twoFingerActive = false
+    private var twoFingerStartY = 0f
+    private var twoFingerLastY = 0f
 
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
@@ -75,9 +78,7 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(Intent(this, WidgetsActivity::class.java))
         }
 
-        settingsButton.setOnClickListener {
-            startActivity(Intent(this, LauncherSettingsActivity::class.java))
-        }
+        settingsButton.setOnClickListener { openSettings() }
 
         searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -137,6 +138,10 @@ class LauncherActivity : AppCompatActivity() {
                 return true
             }
 
+            override fun onLongPress(e: MotionEvent) {
+                openSettings()
+            }
+
             override fun onFling(
                 e1: MotionEvent?,
                 e2: MotionEvent,
@@ -160,6 +165,7 @@ class LauncherActivity : AppCompatActivity() {
             }
         })
         val listener = View.OnTouchListener { _, event ->
+            handleTwoFingerGesture(event)
             gestureDetector.onTouchEvent(event)
             false
         }
@@ -173,9 +179,55 @@ class LauncherActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun openWidgets() {
+        startActivity(Intent(this, WidgetsActivity::class.java))
+    }
+
+    private fun openSettings() {
+        startActivity(Intent(this, LauncherSettingsActivity::class.java))
+    }
+
     private fun focusSearch() {
         searchInput.requestFocus()
         searchInput.setSelection(searchInput.text?.length ?: 0)
+    }
+
+    private fun handleTwoFingerGesture(event: MotionEvent) {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                if (event.pointerCount == 2) {
+                    twoFingerActive = true
+                    twoFingerStartY = averageY(event)
+                    twoFingerLastY = twoFingerStartY
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (twoFingerActive && event.pointerCount >= 2) {
+                    twoFingerLastY = averageY(event)
+                }
+            }
+            MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (twoFingerActive) {
+                    val delta = twoFingerLastY - twoFingerStartY
+                    if (kotlin.math.abs(delta) > 120) {
+                        if (delta < 0) {
+                            openWidgets()
+                        } else {
+                            openSettings()
+                        }
+                    }
+                }
+                twoFingerActive = false
+            }
+        }
+    }
+
+    private fun averageY(event: MotionEvent): Float {
+        return if (event.pointerCount >= 2) {
+            (event.getY(0) + event.getY(1)) / 2f
+        } else {
+            event.getY(0)
+        }
     }
 
     private fun setupHotseatDrag() {

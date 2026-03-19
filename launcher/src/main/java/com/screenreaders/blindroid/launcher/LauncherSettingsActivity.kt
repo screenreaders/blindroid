@@ -59,6 +59,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch.isChecked = LauncherPrefs.isDoubleTapLockEnabled(this)
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
+        applySuperSimpleState(superSimpleSwitch.isChecked)
     }
 
     private fun bindListeners() {
@@ -113,7 +114,22 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         superSimpleSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setSuperSimpleEnabled(this, isChecked)
+            applySuperSimpleState(isChecked)
             toastSaved()
+        }
+    }
+
+    private fun applySuperSimpleState(enabled: Boolean) {
+        setGroupEnabled(columnsGroup, !enabled)
+        setGroupEnabled(rowsGroup, !enabled)
+        setGroupEnabled(iconSizeGroup, !enabled)
+        setGroupEnabled(labelSizeGroup, !enabled)
+    }
+
+    private fun setGroupEnabled(group: RadioGroup, enabled: Boolean) {
+        group.isEnabled = enabled
+        for (i in 0 until group.childCount) {
+            group.getChildAt(i).isEnabled = enabled
         }
     }
 
