@@ -11,12 +11,14 @@ object Prefs {
     private const val KEY_SPEECH_VOLUME = "tts_volume"
     private const val KEY_REPEAT_COUNT = "tts_repeat"
     private const val KEY_ANNOUNCE_MODE = "announce_mode"
+    private const val KEY_ANNOUNCE_DURING_CALL = "announce_during_call"
     private const val KEY_READ_SMS = "read_sms"
     private const val KEY_READ_NOTIFICATIONS = "read_notifications"
     private const val KEY_READ_UNLOCKED = "read_unlocked"
     private const val KEY_AUTO_UPDATE = "auto_update"
     private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
     private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
+    private const val KEY_END_CALL_KEY = "end_call_key"
     private const val KEY_CHIME_ENABLED = "chime_enabled"
     private const val KEY_CHIME_INTERVAL = "chime_interval"
     private const val KEY_CHIME_START = "chime_start"
@@ -25,6 +27,11 @@ object Prefs {
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
     const val MODE_SPEECH_THEN_RING = 2
+    const val END_CALL_NONE = 0
+    const val END_CALL_VOLUME_UP = 1
+    const val END_CALL_VOLUME_DOWN = 2
+    const val END_CALL_HEADSET = 3
+    const val END_CALL_POWER = 4
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -76,6 +83,20 @@ object Prefs {
 
     fun setAnnounceMode(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_ANNOUNCE_MODE, value).apply()
+    }
+
+    fun isAnnounceDuringCallEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_ANNOUNCE_DURING_CALL, true)
+
+    fun setAnnounceDuringCallEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_ANNOUNCE_DURING_CALL, value).apply()
+    }
+
+    fun getEndCallKey(context: Context): Int =
+        prefs(context).getInt(KEY_END_CALL_KEY, END_CALL_NONE)
+
+    fun setEndCallKey(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_END_CALL_KEY, value).apply()
     }
 
     fun isSmsReadEnabled(context: Context): Boolean =

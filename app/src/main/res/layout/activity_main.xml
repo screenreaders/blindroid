@@ -53,6 +53,43 @@
             android:layout_marginTop="8dp"
             android:text="@string/switch_speaker" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/callWaitingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_call_waiting" />
+
+        <TextView
+            android:id="@+id/endCallKeyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/endCallKeySpinner"
+            android:text="@string/end_call_key"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/endCallKeySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/endCallPowerHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/end_call_power_hint"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/accessibilitySettingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/open_accessibility_settings"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/ttsModeLabel"
             android:layout_width="wrap_content"

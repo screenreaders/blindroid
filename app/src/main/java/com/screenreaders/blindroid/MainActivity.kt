@@ -17,6 +17,7 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.provider.Settings
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
+        binding.callWaitingSwitch.isChecked = Prefs.isAnnounceDuringCallEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
@@ -85,6 +87,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.speakerSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAutoSpeakerEnabled(this, isChecked)
+        }
+
+        binding.callWaitingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setAnnounceDuringCallEnabled(this, isChecked)
         }
 
         binding.smsSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -116,6 +122,10 @@ class MainActivity : AppCompatActivity() {
             checkForUpdates(manual = true)
         }
 
+        binding.accessibilitySettingsButton.setOnClickListener {
+            openAccessibilitySettings()
+        }
+
         binding.chimeSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setChimeEnabled(this, isChecked)
             if (isChecked) {
@@ -134,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         updateUnlockedSwitch()
         updateStatusText(getString(R.string.update_status_idle))
         maybeAutoCheckUpdates()
+        initEndCallKeyUi()
         initChimeUi()
         initTtsUi()
         handleDialIntent(intent)
@@ -479,6 +490,61 @@ class MainActivity : AppCompatActivity() {
     }
 
     private data class VoiceEntry(val label: String, val name: String)
+
+    private fun initEndCallKeyUi() {
+        val options = listOf(
+            Prefs.END_CALL_NONE,
+            Prefs.END_CALL_VOLUME_UP,
+            Prefs.END_CALL_VOLUME_DOWN,
+            Prefs.END_CALL_HEADSET,
+            Prefs.END_CALL_POWER
+        )
+        val labels = listOf(
+            getString(R.string.end_call_key_none),
+            getString(R.string.end_call_key_volume_up),
+            getString(R.string.end_call_key_volume_down),
+            getString(R.string.end_call_key_headset),
+            getString(R.string.end_call_key_power)
+        )
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            labels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.endCallKeySpinner.adapter = adapter
+
+        val current = Prefs.getEndCallKey(this)
+        val index = options.indexOf(current).let { if (it >= 0) it else 0 }
+        binding.endCallKeySpinner.setSelection(index)
+        updateEndCallPowerHint(current)
+
+        binding.endCallKeySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = options.getOrElse(position) { Prefs.END_CALL_NONE }
+                Prefs.setEndCallKey(this@MainActivity, value)
+                updateEndCallPowerHint(value)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun updateEndCallPowerHint(value: Int) {
+        val show = value == Prefs.END_CALL_POWER
+        binding.endCallPowerHint.visibility = if (show) View.VISIBLE else View.GONE
+        binding.accessibilitySettingsButton.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    private fun openAccessibilitySettings() {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        startActivity(intent)
+    }
 
     private fun isExactAlarmAllowed(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true

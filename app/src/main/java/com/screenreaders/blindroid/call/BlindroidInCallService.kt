@@ -17,11 +17,12 @@ class BlindroidInCallService : InCallService() {
 
     private val callCallback = object : Call.Callback() {
         override fun onStateChanged(call: Call, state: Int) {
+            CallManager.updateCall(call)
             handleCallState(call, state)
         }
 
         override fun onDetailsChanged(call: Call, details: Call.Details) {
-            CallManager.setCall(call)
+            CallManager.updateCall(call)
         }
     }
 
@@ -34,7 +35,7 @@ class BlindroidInCallService : InCallService() {
 
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
-        CallManager.setCall(call)
+        CallManager.addCall(call)
         call.registerCallback(callCallback)
         startInCallUi()
         handleCallState(call, call.state)
@@ -44,9 +45,7 @@ class BlindroidInCallService : InCallService() {
         super.onCallRemoved(call)
         call.unregisterCallback(callCallback)
         announcedCalls.remove(call)
-        if (CallManager.getCall() == call) {
-            CallManager.setCall(null)
-        }
+        CallManager.removeCall(call)
         if (CallManager.getCall() == null) {
             proximityController.stop()
             announcer.shutdown()
@@ -55,13 +54,16 @@ class BlindroidInCallService : InCallService() {
     }
 
     private fun handleCallState(call: Call, state: Int) {
-        CallManager.setCall(call)
         when (state) {
             Call.STATE_RINGING -> {
                 startInCallUi()
-                if (Prefs.isAnnounceEnabled(this) && announcedCalls.add(call)) {
+                val hasActiveCall = CallManager.hasActiveCall(exclude = call)
+                if (!Prefs.isAnnounceEnabled(this)) return
+                if (hasActiveCall && !Prefs.isAnnounceDuringCallEnabled(this)) return
+                if (announcedCalls.add(call)) {
                     val name = CallerInfoResolver.displayName(this, call)
                     val mode = Prefs.getAnnounceMode(this)
+                    val prefix = if (hasActiveCall) "Połączenie oczekujące" else "Dzwoni"
                     if (mode == Prefs.MODE_SPEECH_ONLY || mode == Prefs.MODE_SPEECH_THEN_RING) {
                         val telecomManager = getSystemService(TelecomManager::class.java)
                         telecomManager.silenceRinger()
@@ -70,7 +72,7 @@ class BlindroidInCallService : InCallService() {
                         ringerController.stop()
                     }
                     announcer.speak(
-                        text = "Dzwoni: $name",
+                        text = "$prefix: $name",
                         repeatCount = Prefs.getRepeatCount(this),
                         rate = Prefs.getSpeechRate(this),
                         volume = Prefs.getSpeechVolume(this),

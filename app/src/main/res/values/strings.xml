@@ -6,6 +6,15 @@
     <string name="call_button">Zadzwoń</string>
     <string name="switch_announce">Ogłaszaj kto dzwoni</string>
     <string name="switch_speaker">Automatyczny głośnik po odsunięciu od ucha</string>
+    <string name="switch_call_waiting">Ogłaszaj połączenie oczekujące w trakcie rozmowy</string>
+    <string name="end_call_key">Klawisz kończący rozmowę</string>
+    <string name="end_call_key_none">Brak</string>
+    <string name="end_call_key_volume_up">Głośność + (podwójne naciśnięcie)</string>
+    <string name="end_call_key_volume_down">Głośność - (podwójne naciśnięcie)</string>
+    <string name="end_call_key_headset">Zestaw słuchawkowy (przycisk)</string>
+    <string name="end_call_key_power">Przycisk zasilania (ustawienie systemowe)</string>
+    <string name="end_call_power_hint">Aby kończyć rozmowy przyciskiem zasilania, włącz tę opcję w ustawieniach dostępności systemu.</string>
+    <string name="open_accessibility_settings">Otwórz ustawienia dostępności</string>
     <string name="permission_contacts">Dostęp do kontaktów</string>
     <string name="permission_contacts_granted">Dostęp do kontaktów: OK</string>
     <string name="tts_voice">Głos TTS</string>
