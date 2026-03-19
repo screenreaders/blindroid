@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Button
 import android.widget.LinearLayout
@@ -43,6 +45,10 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var listWidgetButton: Button
     private lateinit var gridWidgetsSwitch: android.widget.Switch
     private lateinit var widgetsGrid: GridLayout
+    private lateinit var dragTargetsRow: LinearLayout
+    private lateinit var dragHomeTarget: Button
+    private lateinit var dragDockTarget: Button
+    private lateinit var dragOptionsTarget: Button
     private lateinit var adapter: AppAdapter
     private lateinit var suggestedAdapter: AppAdapter
     private lateinit var gridLayoutManager: GridLayoutManager
@@ -60,6 +66,7 @@ class AllAppsActivity : AppCompatActivity() {
     private var currentCategory: Category = Category.ALL
     private var availableCategories: List<Category> = listOf(Category.ALL)
     private var currentTab: String = TAB_APPS
+    private var draggingEntry: AppEntry? = null
 
     private val hostId = 2048
     private val requestPickWidget = 2001
@@ -91,6 +98,10 @@ class AllAppsActivity : AppCompatActivity() {
         listWidgetButton = findViewById(R.id.listWidgetButton)
         gridWidgetsSwitch = findViewById(R.id.gridWidgetsSwitch)
         widgetsGrid = findViewById(R.id.widgetsGrid)
+        dragTargetsRow = findViewById(R.id.dragTargetsRow)
+        dragHomeTarget = findViewById(R.id.dragHomeTarget)
+        dragDockTarget = findViewById(R.id.dragDockTarget)
+        dragOptionsTarget = findViewById(R.id.dragOptionsTarget)
         soundFeedback = LauncherSoundFeedback(this)
 
         targetPageIndex = intent.getIntExtra(EXTRA_PAGE_INDEX, 0)
@@ -106,8 +117,20 @@ class AllAppsActivity : AppCompatActivity() {
         suggestedLayoutManager = GridLayoutManager(this, baseConfig.columns)
         appsGrid.layoutManager = gridLayoutManager
         suggestedGrid.layoutManager = suggestedLayoutManager
-        adapter = AppAdapter(emptyList(), baseConfig.copy(showLabels = true), ::launchApp, ::handleLongPress)
-        suggestedAdapter = AppAdapter(emptyList(), baseConfig.copy(showLabels = true), ::launchApp, ::handleLongPress)
+        adapter = AppAdapter(
+            emptyList(),
+            baseConfig.copy(showLabels = true),
+            ::launchApp,
+            ::handleLongPress,
+            if (targetFolderId == null) ::startDragAdd else null
+        )
+        suggestedAdapter = AppAdapter(
+            emptyList(),
+            baseConfig.copy(showLabels = true),
+            ::launchApp,
+            ::handleLongPress,
+            if (targetFolderId == null) ::startDragAdd else null
+        )
         appsGrid.adapter = adapter
         suggestedGrid.adapter = suggestedAdapter
 
@@ -129,6 +152,7 @@ class AllAppsActivity : AppCompatActivity() {
 
         appsTabButton.setOnClickListener { switchTab(TAB_APPS) }
         widgetsTabButton.setOnClickListener { switchTab(TAB_WIDGETS) }
+        setupDragTargets()
 
         loadApps()
         setupSearch()
@@ -194,6 +218,9 @@ class AllAppsActivity : AppCompatActivity() {
         addWidgetButton.setTextColor(colors.text)
         listWidgetButton.setTextColor(colors.text)
         gridWidgetsSwitch.setTextColor(colors.text)
+        dragHomeTarget.setTextColor(colors.text)
+        dragDockTarget.setTextColor(colors.text)
+        dragOptionsTarget.setTextColor(colors.text)
         for (i in 0 until categoryRow.childCount) {
             val button = categoryRow.getChildAt(i) as android.widget.Button
             button.setTextColor(colors.text)
@@ -208,6 +235,93 @@ class AllAppsActivity : AppCompatActivity() {
                 applyFilters()
             }
         })
+    }
+
+    private fun setupDragTargets() {
+        val listener = android.view.View.OnDragListener { _, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DRAG_STARTED -> true
+                android.view.DragEvent.ACTION_DROP -> false
+                android.view.DragEvent.ACTION_DRAG_ENDED -> {
+                    hideDragTargets()
+                    true
+                }
+                else -> true
+            }
+        }
+        dragTargetsRow.setOnDragListener(listener)
+
+        dragHomeTarget.setOnDragListener { _, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DROP -> {
+                    val entry = draggingEntry ?: return@setOnDragListener true
+                    val added = LauncherStore.addToPage(this, targetPageIndex, entry.component)
+                    Toast.makeText(
+                        this,
+                        if (added) R.string.launcher_added_to_home else R.string.launcher_already_on_home,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    hideDragTargets()
+                    if (added) finish()
+                    true
+                }
+                android.view.DragEvent.ACTION_DRAG_ENDED -> {
+                    hideDragTargets()
+                    true
+                }
+                else -> true
+            }
+        }
+
+        dragDockTarget.setOnDragListener { _, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DROP -> {
+                    val entry = draggingEntry ?: return@setOnDragListener true
+                    val added = LauncherStore.addToHotseat(this, entry.component)
+                    Toast.makeText(
+                        this,
+                        if (added) R.string.launcher_added_to_hotseat else R.string.launcher_already_in_hotseat,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    hideDragTargets()
+                    if (added) finish()
+                    true
+                }
+                android.view.DragEvent.ACTION_DRAG_ENDED -> {
+                    hideDragTargets()
+                    true
+                }
+                else -> true
+            }
+        }
+
+        dragOptionsTarget.setOnDragListener { _, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DROP -> {
+                    val entry = draggingEntry ?: return@setOnDragListener true
+                    hideDragTargets()
+                    handleLongPress(entry)
+                    true
+                }
+                android.view.DragEvent.ACTION_DRAG_ENDED -> {
+                    hideDragTargets()
+                    true
+                }
+                else -> true
+            }
+        }
+    }
+
+    private fun startDragAdd(entry: AppEntry, view: android.view.View) {
+        draggingEntry = entry
+        dragTargetsRow.visibility = android.view.View.VISIBLE
+        val data = android.content.ClipData.newPlainText("app", entry.component.flattenToString())
+        view.startDragAndDrop(data, android.view.View.DragShadowBuilder(view), null, 0)
+    }
+
+    private fun hideDragTargets() {
+        draggingEntry = null
+        dragTargetsRow.visibility = android.view.View.GONE
     }
 
     private fun switchTab(tab: String, playSound: Boolean = true) {
@@ -328,15 +442,23 @@ class AllAppsActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.launcher_no_widgets, Toast.LENGTH_SHORT).show()
             return
         }
-        val labels = providers.map { it.label ?: it.provider.className }.toTypedArray()
+        val dialogView = layoutInflater.inflate(R.layout.dialog_widget_list, null)
+        val recycler = dialogView.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.widgetListRecycler)
+        recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        val entries = providers.map { info ->
+            val label = info.label ?: info.provider.className
+            WidgetProviderEntry(info, label, loadWidgetPreview(info))
+        }
+        val adapter = WidgetPreviewAdapter(entries) { entry ->
+            pendingProvider = entry.info
+            pendingWidgetId = appWidgetHost.allocateAppWidgetId()
+            bindWidgetFromProvider(entry.info, pendingWidgetId)
+        }
+        recycler.adapter = adapter
         AlertDialog.Builder(this)
             .setTitle(R.string.launcher_widgets_list)
-            .setItems(labels) { _, which ->
-                val info = providers[which]
-                pendingProvider = info
-                pendingWidgetId = appWidgetHost.allocateAppWidgetId()
-                bindWidgetFromProvider(info, pendingWidgetId)
-            }
+            .setView(dialogView)
+            .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 
@@ -499,6 +621,61 @@ class AllAppsActivity : AppCompatActivity() {
             appWidgetHost.deleteAppWidgetId(widgetId)
         }
         pendingWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    }
+
+    private data class WidgetProviderEntry(
+        val info: AppWidgetProviderInfo,
+        val label: String,
+        val preview: android.graphics.drawable.Drawable?
+    )
+
+    private inner class WidgetPreviewAdapter(
+        private val items: List<WidgetProviderEntry>,
+        private val onSelect: (WidgetProviderEntry) -> Unit
+    ) : RecyclerView.Adapter<WidgetPreviewAdapter.WidgetViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WidgetViewHolder {
+            val view = layoutInflater.inflate(R.layout.item_widget_preview, parent, false)
+            return WidgetViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: WidgetViewHolder, position: Int) {
+            val item = items[position]
+            holder.label.text = item.label
+            holder.label.setTextColor(LauncherPrefs.getThemeColors(this@AllAppsActivity).text)
+            holder.preview.setImageDrawable(item.preview)
+            holder.itemView.setOnClickListener {
+                onSelect(item)
+            }
+        }
+
+        override fun getItemCount(): Int = items.size
+
+        inner class WidgetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val preview: android.widget.ImageView = view.findViewById(R.id.widgetPreviewImage)
+            val label: TextView = view.findViewById(R.id.widgetPreviewLabel)
+        }
+    }
+
+    private fun loadWidgetPreview(info: AppWidgetProviderInfo): android.graphics.drawable.Drawable? {
+        return try {
+            if (android.os.Build.VERSION.SDK_INT >= 31) {
+                info.loadPreviewImage(this, resources.displayMetrics.densityDpi)
+            } else {
+                val res = packageManager.getResourcesForApplication(info.provider.packageName)
+                if (info.previewImage != 0) {
+                    res.getDrawable(info.previewImage, theme)
+                } else {
+                    info.loadIcon(this, resources.displayMetrics.densityDpi)
+                }
+            }
+        } catch (_: Exception) {
+            try {
+                info.loadIcon(this, resources.displayMetrics.densityDpi)
+            } catch (_: Exception) {
+                null
+            }
+        }
     }
 
     private fun handleLongPress(entry: AppEntry) {

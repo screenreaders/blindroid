@@ -118,6 +118,10 @@ class LauncherSoundFeedback(private val context: Context) {
                 ToneSpec(ToneGenerator.TONE_DTMF_7, 70),
                 ToneSpec(ToneGenerator.TONE_DTMF_5, 70)
             )
+            LauncherPrefs.ACTION_OPEN_GEMINI -> listOf(
+                ToneSpec(ToneGenerator.TONE_SUP_PIP, 60),
+                ToneSpec(ToneGenerator.TONE_SUP_RADIO_ACK, 80)
+            )
             else -> listOf(ToneSpec(ToneGenerator.TONE_PROP_ACK, 60))
         }
     }
@@ -167,6 +171,10 @@ class LauncherSoundFeedback(private val context: Context) {
             LauncherPrefs.ACTION_OPEN_MESSAGES -> listOf(
                 ToneSpec(ToneGenerator.TONE_SUP_PIP, 60),
                 ToneSpec(ToneGenerator.TONE_PROP_BEEP, 50)
+            )
+            LauncherPrefs.ACTION_OPEN_GEMINI -> listOf(
+                ToneSpec(ToneGenerator.TONE_SUP_PIP, 70),
+                ToneSpec(ToneGenerator.TONE_PROP_BEEP, 70)
             )
             else -> listOf(ToneSpec(ToneGenerator.TONE_PROP_BEEP, 60))
         }
@@ -222,6 +230,10 @@ class LauncherSoundFeedback(private val context: Context) {
             LauncherPrefs.ACTION_OPEN_MESSAGES -> listOf(
                 ToneSpec(ToneGenerator.TONE_DTMF_7, 70),
                 ToneSpec(ToneGenerator.TONE_DTMF_5, 70)
+            )
+            LauncherPrefs.ACTION_OPEN_GEMINI -> listOf(
+                ToneSpec(ToneGenerator.TONE_DTMF_8, 70),
+                ToneSpec(ToneGenerator.TONE_DTMF_0, 70)
             )
             else -> listOf(ToneSpec(ToneGenerator.TONE_DTMF_2, 60))
         }

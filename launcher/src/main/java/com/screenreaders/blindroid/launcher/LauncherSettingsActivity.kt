@@ -25,6 +25,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var searchBarSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
+    private lateinit var assistantSpinner: Spinner
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var themeGroup: RadioGroup
     private lateinit var iconStyleGroup: RadioGroup
@@ -60,6 +61,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         GestureActionOption(LauncherPrefs.ACTION_FLASHLIGHT, R.string.launcher_gesture_action_flashlight),
         GestureActionOption(LauncherPrefs.ACTION_OPEN_DIALER, R.string.launcher_gesture_action_phone),
         GestureActionOption(LauncherPrefs.ACTION_OPEN_MESSAGES, R.string.launcher_gesture_action_messages),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_GEMINI, R.string.launcher_gesture_action_gemini),
         GestureActionOption(LauncherPrefs.ACTION_TOGGLE_DOCK, R.string.launcher_gesture_action_toggle_dock),
         GestureActionOption(LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE, R.string.launcher_gesture_action_toggle_simple),
         GestureActionOption(LauncherPrefs.ACTION_NEXT_PAGE, R.string.launcher_gesture_action_next_page),
@@ -82,6 +84,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         searchBarSwitch = findViewById(R.id.searchBarSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
+        assistantSpinner = findViewById(R.id.assistantSpinner)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         themeGroup = findViewById(R.id.themeGroup)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
@@ -138,6 +141,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
+        bindAssistantSpinner()
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
         when (LauncherPrefs.getTheme(this)) {
             1 -> themeGroup.check(R.id.themeDark)
@@ -422,6 +426,27 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundSchemeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 LauncherPrefs.setSoundFeedbackScheme(this@LauncherSettingsActivity, position)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+    }
+
+    private fun bindAssistantSpinner() {
+        val labels = listOf(
+            getString(R.string.launcher_assistant_gemini),
+            getString(R.string.launcher_assistant_voice)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        assistantSpinner.adapter = adapter
+        val mode = LauncherPrefs.getAssistantMode(this)
+        assistantSpinner.setSelection(if (mode == LauncherPrefs.ASSISTANT_GEMINI) 0 else 1, false)
+        assistantSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val selected = if (position == 0) LauncherPrefs.ASSISTANT_GEMINI else LauncherPrefs.ASSISTANT_VOICE
+                LauncherPrefs.setAssistantMode(this@LauncherSettingsActivity, selected)
                 toastSaved()
             }
 

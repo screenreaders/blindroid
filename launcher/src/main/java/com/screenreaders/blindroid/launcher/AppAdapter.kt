@@ -12,7 +12,8 @@ class AppAdapter(
     private var items: List<AppEntry>,
     private var config: LauncherUiConfig,
     private val onClick: (AppEntry) -> Unit,
-    private val onLongClick: (AppEntry) -> Unit
+    private val onLongClick: (AppEntry) -> Unit,
+    private val onLongClickView: ((AppEntry, View) -> Unit)? = null
 ) : RecyclerView.Adapter<AppAdapter.AppViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
@@ -32,7 +33,11 @@ class AppAdapter(
         applyIconStyle(holder)
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
-            onLongClick(item)
+            if (onLongClickView != null) {
+                onLongClickView.invoke(item, holder.itemView)
+            } else {
+                onLongClick(item)
+            }
             true
         }
     }

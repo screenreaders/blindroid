@@ -60,6 +60,7 @@
     <string name="launcher_gesture_action_flashlight">Latarka</string>
     <string name="launcher_gesture_action_phone">Telefon</string>
     <string name="launcher_gesture_action_messages">Wiadomości</string>
+    <string name="launcher_gesture_action_gemini">Gemini</string>
     <string name="launcher_gesture_action_toggle_dock">Pokaż/ukryj dok</string>
     <string name="launcher_gesture_action_toggle_simple">Tryb super-prosty</string>
     <string name="launcher_gesture_action_next_page">Następna strona</string>
@@ -80,6 +81,9 @@
     <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
+    <string name="launcher_settings_assistant">Asystent głosowy</string>
+    <string name="launcher_assistant_gemini">Gemini</string>
+    <string name="launcher_assistant_voice">Wyszukiwanie głosowe</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
     <string name="launcher_settings_theme">Motyw launchera</string>
     <string name="launcher_settings_theme_light">Jasny</string>
@@ -106,6 +110,7 @@
     <string name="launcher_shortcut_updates">Aktualizacje</string>
     <string name="launcher_shortcut_hint">Skróty modułów ustawisz w Blindroid</string>
     <string name="launcher_shortcut_unavailable">Nie można otworzyć modułu</string>
+    <string name="launcher_gemini_missing">Brak aplikacji Gemini</string>
     <string name="launcher_flashlight_on">Latarka włączona</string>
     <string name="launcher_flashlight_off">Latarka wyłączona</string>
     <string name="launcher_flashlight_missing">Brak latarki w urządzeniu</string>
@@ -125,6 +130,9 @@
     <string name="launcher_restore_fail">Nie udało się przywrócić</string>
     <string name="launcher_tab_apps">Aplikacje</string>
     <string name="launcher_tab_widgets">Widgety</string>
+    <string name="launcher_drag_home">Upuść na ekran główny</string>
+    <string name="launcher_drag_dock">Upuść do doku</string>
+    <string name="launcher_drag_options">Opcje</string>
     <string name="launcher_dock_hidden">Dok ukryty</string>
     <string name="launcher_dock_shown">Dok pokazany</string>
     <string name="launcher_super_simple_on">Tryb super-prosty włączony</string>

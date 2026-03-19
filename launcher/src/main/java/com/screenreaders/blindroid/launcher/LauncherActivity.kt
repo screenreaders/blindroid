@@ -162,8 +162,7 @@ class LauncherActivity : AppCompatActivity() {
             openSettings()
         }
         voiceButton.setOnClickListener {
-            soundFeedback?.playAction(LauncherPrefs.ACTION_VOICE_SEARCH)
-            startVoiceSearch()
+            openAssistant()
         }
 
         searchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -863,6 +862,7 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.ACTION_FLASHLIGHT -> toggleFlashlight()
             LauncherPrefs.ACTION_OPEN_DIALER -> openDialer()
             LauncherPrefs.ACTION_OPEN_MESSAGES -> openMessages()
+            LauncherPrefs.ACTION_OPEN_GEMINI -> openGemini()
         }
         if (action != LauncherPrefs.ACTION_NONE) {
             soundFeedback?.playAction(action)
@@ -949,6 +949,42 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(intent)
         } catch (_: Exception) {
             Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openAssistant() {
+        val mode = LauncherPrefs.getAssistantMode(this)
+        if (mode == LauncherPrefs.ASSISTANT_GEMINI) {
+            if (openGemini()) {
+                soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_GEMINI)
+            } else {
+                startVoiceSearch()
+            }
+        } else {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_VOICE_SEARCH)
+            startVoiceSearch()
+        }
+    }
+
+    private fun openGemini(): Boolean {
+        val packages = listOf(
+            "com.google.android.apps.bard",
+            "com.google.android.apps.gemini"
+        )
+        for (pkg in packages) {
+            val intent = packageManager.getLaunchIntentForPackage(pkg)
+            if (intent != null) {
+                startActivity(intent)
+                return true
+            }
+        }
+        val assist = Intent(Intent.ACTION_ASSIST)
+        return try {
+            startActivity(assist)
+            true
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_gemini_missing, Toast.LENGTH_SHORT).show()
+            false
         }
     }
 
