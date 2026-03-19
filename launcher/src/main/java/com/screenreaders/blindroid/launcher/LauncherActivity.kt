@@ -29,8 +29,15 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var settingsButton: Button
     private lateinit var gestureDetector: GestureDetector
     private var twoFingerActive = false
+    private var twoFingerStartX = 0f
     private var twoFingerStartY = 0f
+    private var twoFingerLastX = 0f
     private var twoFingerLastY = 0f
+    private var threeFingerActive = false
+    private var threeFingerStartX = 0f
+    private var threeFingerStartY = 0f
+    private var threeFingerLastX = 0f
+    private var threeFingerLastY = 0f
 
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
@@ -112,7 +119,12 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun refreshHome() {
         if (allApps.isEmpty()) return
-        pages = LauncherStore.loadPages(this, allApps)
+        val allPages = LauncherStore.loadPages(this, allApps)
+        pages = if (LauncherPrefs.isSuperSimpleEnabled(this)) {
+            listOf(allPages.firstOrNull() ?: emptyList())
+        } else {
+            allPages
+        }
         hotseat = LauncherStore.loadHotseat(this, allApps)
         homeAdapter.submitPages(pages)
         hotseatAdapter.submit(hotseat)
@@ -127,6 +139,11 @@ class LauncherActivity : AppCompatActivity() {
             homeAdapter.updateConfig(pageConfig)
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        searchInput.visibility = if (simple) View.GONE else View.VISIBLE
+        widgetsButton.visibility = if (simple) View.GONE else View.VISIBLE
+        settingsButton.visibility = if (simple) View.GONE else View.VISIBLE
+        allAppsButton.visibility = View.VISIBLE
     }
 
     private fun setupGestureDetector() {
@@ -166,6 +183,7 @@ class LauncherActivity : AppCompatActivity() {
         })
         val listener = View.OnTouchListener { _, event ->
             handleTwoFingerGesture(event)
+            handleThreeFingerGesture(event)
             gestureDetector.onTouchEvent(event)
             false
         }
@@ -187,9 +205,28 @@ class LauncherActivity : AppCompatActivity() {
         startActivity(Intent(this, LauncherSettingsActivity::class.java))
     }
 
+    private fun openQuickSettings() {
+        val intent = Intent("android.settings.QUICK_SETTINGS")
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            startActivity(Intent(android.provider.Settings.ACTION_SETTINGS))
+        }
+    }
+
     private fun focusSearch() {
         searchInput.requestFocus()
         searchInput.setSelection(searchInput.text?.length ?: 0)
+    }
+
+    private fun goToNextPage() {
+        val next = (homePager.currentItem + 1).coerceAtMost(homeAdapter.itemCount - 1)
+        homePager.currentItem = next
+    }
+
+    private fun goToPrevPage() {
+        val prev = (homePager.currentItem - 1).coerceAtLeast(0)
+        homePager.currentItem = prev
     }
 
     private fun handleTwoFingerGesture(event: MotionEvent) {
@@ -197,20 +234,32 @@ class LauncherActivity : AppCompatActivity() {
             MotionEvent.ACTION_POINTER_DOWN -> {
                 if (event.pointerCount == 2) {
                     twoFingerActive = true
-                    twoFingerStartY = averageY(event)
+                    twoFingerStartX = averageX(event, 2)
+                    twoFingerStartY = averageY(event, 2)
+                    twoFingerLastX = twoFingerStartX
                     twoFingerLastY = twoFingerStartY
                 }
             }
             MotionEvent.ACTION_MOVE -> {
                 if (twoFingerActive && event.pointerCount >= 2) {
-                    twoFingerLastY = averageY(event)
+                    twoFingerLastX = averageX(event, 2)
+                    twoFingerLastY = averageY(event, 2)
                 }
             }
             MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (twoFingerActive) {
-                    val delta = twoFingerLastY - twoFingerStartY
-                    if (kotlin.math.abs(delta) > 120) {
-                        if (delta < 0) {
+                    val deltaX = twoFingerLastX - twoFingerStartX
+                    val deltaY = twoFingerLastY - twoFingerStartY
+                    val absX = kotlin.math.abs(deltaX)
+                    val absY = kotlin.math.abs(deltaY)
+                    if (absX > absY && absX > 120) {
+                        if (deltaX > 0) {
+                            goToNextPage()
+                        } else {
+                            goToPrevPage()
+                        }
+                    } else if (absY > 120) {
+                        if (deltaY < 0) {
                             openWidgets()
                         } else {
                             openSettings()
@@ -222,12 +271,64 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
-    private fun averageY(event: MotionEvent): Float {
-        return if (event.pointerCount >= 2) {
-            (event.getY(0) + event.getY(1)) / 2f
-        } else {
-            event.getY(0)
+    private fun handleThreeFingerGesture(event: MotionEvent) {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                if (event.pointerCount == 3) {
+                    threeFingerActive = true
+                    threeFingerStartX = averageX(event, 3)
+                    threeFingerStartY = averageY(event, 3)
+                    threeFingerLastX = threeFingerStartX
+                    threeFingerLastY = threeFingerStartY
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (threeFingerActive && event.pointerCount >= 3) {
+                    threeFingerLastX = averageX(event, 3)
+                    threeFingerLastY = averageY(event, 3)
+                }
+            }
+            MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (threeFingerActive) {
+                    val deltaX = threeFingerLastX - threeFingerStartX
+                    val deltaY = threeFingerLastY - threeFingerStartY
+                    val absX = kotlin.math.abs(deltaX)
+                    val absY = kotlin.math.abs(deltaY)
+                    if (absX > absY && absX > 120) {
+                        if (deltaX > 0) {
+                            openQuickSettings()
+                        } else {
+                            focusSearch()
+                        }
+                    } else if (absY > 120) {
+                        if (deltaY < 0) {
+                            openAllApps()
+                        } else {
+                            openQuickSettings()
+                        }
+                    }
+                }
+                threeFingerActive = false
+            }
         }
+    }
+
+    private fun averageX(event: MotionEvent, count: Int): Float {
+        val safe = minOf(count, event.pointerCount)
+        var sum = 0f
+        for (i in 0 until safe) {
+            sum += event.getX(i)
+        }
+        return sum / safe
+    }
+
+    private fun averageY(event: MotionEvent, count: Int): Float {
+        val safe = minOf(count, event.pointerCount)
+        var sum = 0f
+        for (i in 0 until safe) {
+            sum += event.getY(i)
+        }
+        return sum / safe
     }
 
     private fun setupHotseatDrag() {
