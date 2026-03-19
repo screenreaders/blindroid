@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
         binding.callWaitingSwitch.isChecked = Prefs.isAnnounceDuringCallEnabled(this)
+        binding.voiceCommandsSwitch.isChecked = Prefs.isVoiceCommandsEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
@@ -91,6 +92,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.callWaitingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceDuringCallEnabled(this, isChecked)
+        }
+
+        binding.voiceCommandsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setVoiceCommandsEnabled(this, isChecked)
         }
 
         binding.smsSwitch.setOnCheckedChangeListener { _, isChecked ->

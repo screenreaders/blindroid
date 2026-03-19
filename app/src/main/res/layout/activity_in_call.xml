@@ -40,4 +40,19 @@
         android:layout_marginTop="8dp"
         android:text="@string/hangup" />
 
+    <Button
+        android:id="@+id/voiceCommandButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/voice_command_button" />
+
+    <TextView
+        android:id="@+id/voiceCommandStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:accessibilityLiveRegion="polite"
+        android:text="@string/voice_command_status_idle" />
+
 </LinearLayout>

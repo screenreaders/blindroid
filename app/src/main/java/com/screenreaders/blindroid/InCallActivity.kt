@@ -1,21 +1,43 @@
 package com.screenreaders.blindroid
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.telecom.Call
 import android.telecom.VideoProfile
 import android.view.KeyEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.call.CallerInfoResolver
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityInCallBinding
+import java.text.Normalizer
+import java.util.Locale
 
 class InCallActivity : AppCompatActivity(), CallManager.Listener {
+    companion object {
+        private const val REQ_RECORD_AUDIO = 4001
+        private const val VOICE_TIMEOUT_MS = 7000L
+    }
+
     private lateinit var binding: ActivityInCallBinding
     private var currentCall: Call? = null
     private var lastEndKeyTime: Long = 0L
     private var lastEndKeyCode: Int = 0
+    private var speechRecognizer: SpeechRecognizer? = null
+    private var isListening = false
+    private val handler = Handler(Looper.getMainLooper())
+    private var stopListeningRunnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,16 +53,22 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         binding.hangupButton.setOnClickListener {
             currentCall?.disconnect()
         }
+        binding.voiceCommandButton.setOnClickListener {
+            startVoiceCommand()
+        }
+        binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
     }
 
     override fun onStart() {
         super.onStart()
         CallManager.addListener(this)
+        updateVoiceCommandVisibility()
     }
 
     override fun onStop() {
         super.onStop()
         CallManager.removeListener(this)
+        stopListening()
     }
 
     override fun onCallChanged(call: Call?) {
@@ -126,5 +154,150 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         val active = CallManager.getActiveCall()
         val target = active ?: CallManager.getCall()
         target?.disconnect()
+    }
+
+    private fun updateVoiceCommandVisibility() {
+        val enabled = Prefs.isVoiceCommandsEnabled(this) &&
+            SpeechRecognizer.isRecognitionAvailable(this)
+        binding.voiceCommandButton.visibility = if (enabled) View.VISIBLE else View.GONE
+        binding.voiceCommandStatus.visibility = if (enabled) View.VISIBLE else View.GONE
+        if (!enabled) {
+            binding.voiceCommandStatus.text = getString(R.string.voice_command_status_unavailable)
+        }
+    }
+
+    private fun startVoiceCommand() {
+        if (!Prefs.isVoiceCommandsEnabled(this)) return
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            binding.voiceCommandStatus.text = getString(R.string.voice_command_status_unavailable)
+            return
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                REQ_RECORD_AUDIO
+            )
+            return
+        }
+        if (isListening) return
+        ensureSpeechRecognizer()
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toLanguageTag())
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
+            putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
+        }
+        isListening = true
+        binding.voiceCommandStatus.text = getString(R.string.voice_command_status_listening)
+        speechRecognizer?.startListening(intent)
+        scheduleStopListening()
+    }
+
+    private fun ensureSpeechRecognizer() {
+        if (speechRecognizer != null) return
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this).apply {
+            setRecognitionListener(object : RecognitionListener {
+                override fun onReadyForSpeech(params: Bundle?) {
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_listening)
+                }
+
+                override fun onBeginningOfSpeech() {
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_processing)
+                }
+
+                override fun onRmsChanged(rmsdB: Float) {}
+
+                override fun onBufferReceived(buffer: ByteArray?) {}
+
+                override fun onEndOfSpeech() {}
+
+                override fun onError(error: Int) {
+                    stopListening()
+                    binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+                }
+
+                override fun onResults(results: Bundle) {
+                    stopListening()
+                    val matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    val text = matches?.firstOrNull().orEmpty()
+                    handleVoiceCommand(text)
+                }
+
+                override fun onPartialResults(partialResults: Bundle?) {}
+
+                override fun onEvent(eventType: Int, params: Bundle?) {}
+            })
+        }
+    }
+
+    private fun scheduleStopListening() {
+        stopListeningRunnable?.let { handler.removeCallbacks(it) }
+        val runnable = Runnable { stopListening() }
+        stopListeningRunnable = runnable
+        handler.postDelayed(runnable, VOICE_TIMEOUT_MS)
+    }
+
+    private fun stopListening() {
+        if (!isListening) return
+        isListening = false
+        stopListeningRunnable?.let { handler.removeCallbacks(it) }
+        stopListeningRunnable = null
+        speechRecognizer?.stopListening()
+        binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+    }
+
+    private fun handleVoiceCommand(text: String) {
+        val normalized = normalize(text)
+        when {
+            containsAny(normalized, "rozlacz", "zakoncz", "koniec", "koniec rozmowy") -> {
+                endCurrentCall()
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            containsAny(normalized, "odbierz", "odebierz") -> {
+                val call = CallManager.getRingingCall()
+                call?.answer(VideoProfile.STATE_AUDIO_ONLY)
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            containsAny(normalized, "odrzuc", "odrzucic", "odmow", "odrzucenie") -> {
+                val call = CallManager.getRingingCall()
+                call?.reject(false, null)
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_idle)
+            }
+            else -> {
+                binding.voiceCommandStatus.text = getString(R.string.voice_command_status_error)
+            }
+        }
+    }
+
+    private fun normalize(text: String): String {
+        val normalized = Normalizer.normalize(text.lowercase(Locale.getDefault()), Normalizer.Form.NFD)
+        return normalized.replace("\\p{M}+".toRegex(), "")
+    }
+
+    private fun containsAny(text: String, vararg candidates: String): Boolean {
+        return candidates.any { text.contains(it) }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_RECORD_AUDIO &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            startVoiceCommand()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speechRecognizer?.destroy()
+        speechRecognizer = null
     }
 }

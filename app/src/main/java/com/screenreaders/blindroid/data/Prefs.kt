@@ -12,6 +12,7 @@ object Prefs {
     private const val KEY_REPEAT_COUNT = "tts_repeat"
     private const val KEY_ANNOUNCE_MODE = "announce_mode"
     private const val KEY_ANNOUNCE_DURING_CALL = "announce_during_call"
+    private const val KEY_VOICE_COMMANDS = "voice_commands"
     private const val KEY_READ_SMS = "read_sms"
     private const val KEY_READ_NOTIFICATIONS = "read_notifications"
     private const val KEY_READ_UNLOCKED = "read_unlocked"
@@ -90,6 +91,13 @@ object Prefs {
 
     fun setAnnounceDuringCallEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_ANNOUNCE_DURING_CALL, value).apply()
+    }
+
+    fun isVoiceCommandsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_VOICE_COMMANDS, false)
+
+    fun setVoiceCommandsEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_VOICE_COMMANDS, value).apply()
     }
 
     fun getEndCallKey(context: Context): Int =
