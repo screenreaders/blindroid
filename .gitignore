@@ -6,3 +6,4 @@ keystore/
 build/
 app/build/
 *.apk
+data/
