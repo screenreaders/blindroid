@@ -77,6 +77,8 @@
     <string name="launcher_settings_feed_mode">Źródło feedu</string>
     <string name="launcher_feed_mode_local">Wbudowany feed</string>
     <string name="launcher_feed_mode_google">Google (jeśli zainstalowany)</string>
+    <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
+    <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
     <string name="launcher_settings_theme">Motyw launchera</string>
     <string name="launcher_settings_theme_light">Jasny</string>
@@ -108,6 +110,15 @@
     <string name="launcher_flashlight_missing">Brak latarki w urządzeniu</string>
     <string name="launcher_flashlight_failed">Nie udało się włączyć latarki</string>
     <string name="launcher_flashlight_permission">Wymagane pozwolenie na aparat</string>
+    <string name="launcher_settings_sound_feedback">Dźwięki gestów i akcji</string>
+    <string name="launcher_backup">Utwórz kopię ustawień launchera</string>
+    <string name="launcher_restore">Przywróć ustawienia launchera</string>
+    <string name="launcher_backup_ok">Kopia zapisana</string>
+    <string name="launcher_backup_fail">Nie udało się zapisać kopii</string>
+    <string name="launcher_restore_ok">Przywrócono ustawienia</string>
+    <string name="launcher_restore_fail">Nie udało się przywrócić</string>
+    <string name="launcher_tab_apps">Aplikacje</string>
+    <string name="launcher_tab_widgets">Widgety</string>
     <string name="launcher_dock_hidden">Dok ukryty</string>
     <string name="launcher_dock_shown">Dok pokazany</string>
     <string name="launcher_super_simple_on">Tryb super-prosty włączony</string>

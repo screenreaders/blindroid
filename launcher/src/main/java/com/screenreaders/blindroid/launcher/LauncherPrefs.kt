@@ -18,6 +18,9 @@ object LauncherPrefs {
     private const val KEY_FEED_MODE = "feed_mode"
     private const val KEY_THEME = "launcher_theme"
     private const val KEY_ICON_STYLE = "icon_style"
+    private const val KEY_SEARCH_BAR = "search_bar"
+    private const val KEY_SOUND_FEEDBACK = "sound_feedback"
+    private const val KEY_GN_LAYOUT = "gn_layout"
     private const val KEY_GESTURE_TWO_TAP = "gesture_two_tap"
     private const val KEY_GESTURE_TWO_UP = "gesture_two_up"
     private const val KEY_GESTURE_TWO_DOWN = "gesture_two_down"
@@ -140,6 +143,27 @@ object LauncherPrefs {
         prefs(context).edit().putInt(KEY_ICON_STYLE, style.coerceIn(ICON_STYLE_NONE, ICON_STYLE_CIRCLE)).apply()
     }
 
+    fun isSearchBarEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SEARCH_BAR, true)
+
+    fun setSearchBarEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SEARCH_BAR, enabled).apply()
+    }
+
+    fun isSoundFeedbackEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SOUND_FEEDBACK, true)
+
+    fun setSoundFeedbackEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SOUND_FEEDBACK, enabled).apply()
+    }
+
+    fun isGnLayoutEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_GN_LAYOUT, false)
+
+    fun setGnLayoutEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_GN_LAYOUT, enabled).apply()
+    }
+
     fun getGestureTwoFingerTap(context: Context): Int =
         getGestureAction(context, KEY_GESTURE_TWO_TAP, ACTION_TOGGLE_DOCK)
 
@@ -203,16 +227,34 @@ object LauncherPrefs {
     fun getUiConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
         val metrics = context.resources.displayMetrics
         val superSimple = isSuperSimpleEnabled(context)
-        val columns = if (superSimple) 3 else getColumns(context)
-        val rows = if (superSimple) 4 else getRows(context)
-        val iconDp = (if (superSimple) 64 else getIconSizeDp(context)).toFloat()
+        val gnLayout = isGnLayoutEnabled(context)
+        val columns = when {
+            superSimple -> 3
+            gnLayout -> 4
+            else -> getColumns(context)
+        }
+        val rows = when {
+            superSimple -> 4
+            gnLayout -> 5
+            else -> getRows(context)
+        }
+        val iconDp = when {
+            superSimple -> 64
+            gnLayout -> 48
+            else -> getIconSizeDp(context)
+        }.toFloat()
         val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, iconDp, metrics)
             .roundToInt()
+        val labelSize = when {
+            superSimple -> 18f
+            gnLayout -> 12f
+            else -> getLabelSizeSp(context)
+        }
         return LauncherUiConfig(
             columns = columns,
             rows = rows,
             iconSizePx = iconPx,
-            labelSizeSp = if (superSimple) 18f else getLabelSizeSp(context),
+            labelSizeSp = labelSize,
             itemHeightPx = itemHeightPx,
             showLabels = true
         )

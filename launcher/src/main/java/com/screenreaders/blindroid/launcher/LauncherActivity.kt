@@ -71,6 +71,7 @@ class LauncherActivity : AppCompatActivity() {
     private var flashlightOn = false
     private var flashlightCameraId: String? = null
     private var pendingFlashToggle = false
+    private var soundFeedback: LauncherSoundFeedback? = null
 
     private val flashPermissionRequestCode = 9201
 
@@ -91,6 +92,7 @@ class LauncherActivity : AppCompatActivity() {
         simpleFavoritesLabel = findViewById(R.id.simpleFavoritesLabel)
         simpleFavoritesGrid = findViewById(R.id.simpleFavoritesGrid)
         pageIndicator = findViewById(R.id.pageIndicator)
+        soundFeedback = LauncherSoundFeedback(this)
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
         feedData = buildFeedData()
@@ -107,12 +109,13 @@ class LauncherActivity : AppCompatActivity() {
             ::onHomeItemMoved
         )
         homePager.adapter = homeAdapter
-        homePager.offscreenPageLimit = 1
+        homePager.offscreenPageLimit = 2
         homePager.setPageTransformer { page, position ->
-            val scale = 0.92f + (1 - kotlin.math.abs(position)) * 0.08f
+            val scale = 0.9f + (1 - kotlin.math.abs(position)) * 0.1f
             page.scaleX = scale
             page.scaleY = scale
-            page.alpha = 0.85f + (1 - kotlin.math.abs(position)) * 0.15f
+            page.alpha = 0.8f + (1 - kotlin.math.abs(position)) * 0.2f
+            page.translationX = -position * page.width * 0.04f
         }
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -140,14 +143,24 @@ class LauncherActivity : AppCompatActivity() {
         simpleFavoritesGrid.layoutManager = GridLayoutManager(this, 2)
         simpleFavoritesGrid.adapter = simpleFavoritesAdapter
 
-        allAppsButton.setOnClickListener { openAllApps() }
-
-        widgetsButton.setOnClickListener {
-            startActivity(Intent(this, WidgetsActivity::class.java))
+        allAppsButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_ALL_APPS)
+            openAllApps()
         }
 
-        settingsButton.setOnClickListener { openSettings() }
-        voiceButton.setOnClickListener { startVoiceSearch() }
+        widgetsButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_WIDGETS)
+            openWidgets()
+        }
+
+        settingsButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_SETTINGS)
+            openSettings()
+        }
+        voiceButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_VOICE_SEARCH)
+            startVoiceSearch()
+        }
 
         searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -166,6 +179,12 @@ class LauncherActivity : AppCompatActivity() {
         super.onResume()
         refreshHome()
         applyUiConfig()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        soundFeedback?.release()
+        soundFeedback = null
     }
 
     private fun loadApps() {
@@ -205,7 +224,8 @@ class LauncherActivity : AppCompatActivity() {
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
-        searchRow.visibility = if (simple) View.GONE else View.VISIBLE
+        val searchEnabled = LauncherPrefs.isSearchBarEnabled(this)
+        searchRow.visibility = if (simple || !searchEnabled) View.GONE else View.VISIBLE
         widgetsButton.visibility = if (simple) View.GONE else View.VISIBLE
         settingsButton.visibility = if (simple) View.GONE else View.VISIBLE
         allAppsButton.visibility = View.VISIBLE
@@ -282,7 +302,10 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openWidgets() {
-        startActivity(Intent(this, WidgetsActivity::class.java))
+        val intent = Intent(this, AllAppsActivity::class.java)
+        intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, currentHomePageIndex())
+        intent.putExtra(AllAppsActivity.EXTRA_TAB, AllAppsActivity.TAB_WIDGETS)
+        startActivity(intent)
     }
 
     private fun openSettings() {
@@ -613,6 +636,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun onHomeItemClick(pageIndex: Int, item: HomeItem) {
+        soundFeedback?.playTap()
         when (item) {
             is HomeItem.App -> launchApp(item.component)
             is HomeItem.Folder -> openFolder(item.id)
@@ -629,6 +653,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun onHotseatItemClick(item: HomeItem) {
+        soundFeedback?.playTap()
         when (item) {
             is HomeItem.App -> launchApp(item.component)
             is HomeItem.Folder -> openFolder(item.id)
@@ -834,6 +859,9 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.ACTION_FLASHLIGHT -> toggleFlashlight()
             LauncherPrefs.ACTION_OPEN_DIALER -> openDialer()
             LauncherPrefs.ACTION_OPEN_MESSAGES -> openMessages()
+        }
+        if (action != LauncherPrefs.ACTION_NONE) {
+            soundFeedback?.playAction(action)
         }
     }
 

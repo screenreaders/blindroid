@@ -1,16 +1,22 @@
 package com.screenreaders.blindroid.launcher
 
+import android.appwidget.AppWidgetHost
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.widget.EditText
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.gridlayout.widget.GridLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,6 +24,9 @@ class AllAppsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_PAGE_INDEX = "extra_page_index"
         const val EXTRA_FOLDER_ID = "extra_folder_id"
+        const val EXTRA_TAB = "extra_tab"
+        const val TAB_APPS = "apps"
+        const val TAB_WIDGETS = "widgets"
     }
 
     private lateinit var searchInput: EditText
@@ -25,10 +34,24 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
     private lateinit var categoryRow: LinearLayout
+    private lateinit var tabRow: LinearLayout
+    private lateinit var appsTabButton: Button
+    private lateinit var widgetsTabButton: Button
+    private lateinit var appsContainer: LinearLayout
+    private lateinit var widgetsContainer: LinearLayout
+    private lateinit var addWidgetButton: Button
+    private lateinit var listWidgetButton: Button
+    private lateinit var gridWidgetsSwitch: android.widget.Switch
+    private lateinit var widgetsGrid: GridLayout
     private lateinit var adapter: AppAdapter
     private lateinit var suggestedAdapter: AppAdapter
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var suggestedLayoutManager: GridLayoutManager
+    private var soundFeedback: LauncherSoundFeedback? = null
+    private lateinit var appWidgetHost: AppWidgetHost
+    private lateinit var appWidgetManager: AppWidgetManager
+    private var pendingWidgetId: Int = AppWidgetManager.INVALID_APPWIDGET_ID
+    private var pendingProvider: AppWidgetProviderInfo? = null
     private var allApps: List<AppEntry> = emptyList()
     private var filteredApps: List<AppEntry> = emptyList()
     private var appCategories: Map<String, Int?> = emptyMap()
@@ -36,6 +59,12 @@ class AllAppsActivity : AppCompatActivity() {
     private var targetFolderId: String? = null
     private var currentCategory: Category = Category.ALL
     private var availableCategories: List<Category> = listOf(Category.ALL)
+    private var currentTab: String = TAB_APPS
+
+    private val hostId = 2048
+    private val requestPickWidget = 2001
+    private val requestBindWidget = 2002
+    private val requestConfigureWidget = 2003
 
     private enum class Category(val labelRes: Int, val appCategory: Int?) {
         ALL(R.string.launcher_category_all, null),
@@ -53,9 +82,24 @@ class AllAppsActivity : AppCompatActivity() {
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
         categoryRow = findViewById(R.id.categoryRow)
+        tabRow = findViewById(R.id.tabRow)
+        appsTabButton = findViewById(R.id.appsTabButton)
+        widgetsTabButton = findViewById(R.id.widgetsTabButton)
+        appsContainer = findViewById(R.id.appsContainer)
+        widgetsContainer = findViewById(R.id.widgetsContainer)
+        addWidgetButton = findViewById(R.id.addWidgetButton)
+        listWidgetButton = findViewById(R.id.listWidgetButton)
+        gridWidgetsSwitch = findViewById(R.id.gridWidgetsSwitch)
+        widgetsGrid = findViewById(R.id.widgetsGrid)
+        soundFeedback = LauncherSoundFeedback(this)
 
         targetPageIndex = intent.getIntExtra(EXTRA_PAGE_INDEX, 0)
         targetFolderId = intent.getStringExtra(EXTRA_FOLDER_ID)
+        currentTab = intent.getStringExtra(EXTRA_TAB) ?: TAB_APPS
+        if (targetFolderId != null) {
+            tabRow.visibility = android.view.View.GONE
+            currentTab = TAB_APPS
+        }
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
@@ -67,14 +111,44 @@ class AllAppsActivity : AppCompatActivity() {
         appsGrid.adapter = adapter
         suggestedGrid.adapter = suggestedAdapter
 
+        appWidgetManager = AppWidgetManager.getInstance(this)
+        appWidgetHost = AppWidgetHost(this, hostId)
+
+        addWidgetButton.setOnClickListener { pickWidget() }
+        listWidgetButton.setOnClickListener { showWidgetList() }
+        gridWidgetsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            widgetsGrid.columnCount = if (isChecked) 2 else 1
+            reloadWidgets()
+        }
+
+        appsTabButton.setOnClickListener { switchTab(TAB_APPS) }
+        widgetsTabButton.setOnClickListener { switchTab(TAB_WIDGETS) }
+
         loadApps()
         setupSearch()
+        switchTab(currentTab, playSound = false)
     }
 
     override fun onResume() {
         super.onResume()
         applyUiConfig()
         applyTheme()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        appWidgetHost.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        appWidgetHost.stopListening()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        soundFeedback?.release()
+        soundFeedback = null
     }
 
     private fun loadApps() {
@@ -100,6 +174,7 @@ class AllAppsActivity : AppCompatActivity() {
         suggestedLayoutManager.spanCount = baseConfig.columns
         adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         suggestedAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+        widgetsGrid.columnCount = if (gridWidgetsSwitch.isChecked) 2 else 1
     }
 
     private fun applyTheme() {
@@ -108,6 +183,11 @@ class AllAppsActivity : AppCompatActivity() {
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
         suggestedLabel.setTextColor(colors.text)
+        appsTabButton.setTextColor(colors.text)
+        widgetsTabButton.setTextColor(colors.text)
+        addWidgetButton.setTextColor(colors.text)
+        listWidgetButton.setTextColor(colors.text)
+        gridWidgetsSwitch.setTextColor(colors.text)
         for (i in 0 until categoryRow.childCount) {
             val button = categoryRow.getChildAt(i) as android.widget.Button
             button.setTextColor(colors.text)
@@ -122,6 +202,26 @@ class AllAppsActivity : AppCompatActivity() {
                 applyFilters()
             }
         })
+    }
+
+    private fun switchTab(tab: String, playSound: Boolean = true) {
+        currentTab = tab
+        val showApps = tab == TAB_APPS
+        searchInput.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        appsContainer.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        widgetsContainer.visibility = if (showApps) android.view.View.GONE else android.view.View.VISIBLE
+        appsTabButton.isEnabled = !showApps
+        widgetsTabButton.isEnabled = showApps
+        appsTabButton.alpha = if (showApps) 1.0f else 0.5f
+        widgetsTabButton.alpha = if (showApps) 0.5f else 1.0f
+        if (playSound) {
+            soundFeedback?.playAction(
+                if (showApps) LauncherPrefs.ACTION_OPEN_ALL_APPS else LauncherPrefs.ACTION_OPEN_WIDGETS
+            )
+        }
+        if (!showApps) {
+            reloadWidgets()
+        }
     }
 
     private fun setupCategories() {
@@ -209,6 +309,192 @@ class AllAppsActivity : AppCompatActivity() {
         }
     }
 
+    private fun pickWidget() {
+        pendingWidgetId = appWidgetHost.allocateAppWidgetId()
+        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, pendingWidgetId)
+        startActivityForResult(intent, requestPickWidget)
+    }
+
+    private fun showWidgetList() {
+        val providers = appWidgetManager.installedProviders
+        if (providers.isNullOrEmpty()) {
+            Toast.makeText(this, R.string.launcher_no_widgets, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val labels = providers.map { it.label ?: it.provider.className }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_widgets_list)
+            .setItems(labels) { _, which ->
+                val info = providers[which]
+                pendingProvider = info
+                pendingWidgetId = appWidgetHost.allocateAppWidgetId()
+                bindWidgetFromProvider(info, pendingWidgetId)
+            }
+            .show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val appWidgetId = data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+
+        if (resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return
+        }
+
+        when (requestCode) {
+            requestPickWidget -> handleWidgetPicked(appWidgetId)
+            requestBindWidget -> handleWidgetBound(appWidgetId)
+            requestConfigureWidget -> completeAddWidget(appWidgetId)
+        }
+    }
+
+    private fun handleWidgetPicked(appWidgetId: Int) {
+        val info = appWidgetManager.getAppWidgetInfo(appWidgetId)
+        if (info == null) {
+            cleanupWidgetId(appWidgetId)
+            return
+        }
+        bindWidgetFromProvider(info, appWidgetId)
+    }
+
+    private fun bindWidgetFromProvider(info: AppWidgetProviderInfo, appWidgetId: Int) {
+        val bound = appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, info.provider)
+        if (!bound) {
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, info.provider)
+            startActivityForResult(intent, requestBindWidget)
+            return
+        }
+        if (info.configure != null) {
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
+            intent.component = info.configure
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            startActivityForResult(intent, requestConfigureWidget)
+        } else {
+            completeAddWidget(appWidgetId)
+        }
+    }
+
+    private fun handleWidgetBound(appWidgetId: Int) {
+        val info = appWidgetManager.getAppWidgetInfo(appWidgetId)
+        if (info == null) {
+            cleanupWidgetId(appWidgetId)
+            return
+        }
+        if (info.configure != null) {
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
+            intent.component = info.configure
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            startActivityForResult(intent, requestConfigureWidget)
+        } else {
+            completeAddWidget(appWidgetId)
+        }
+    }
+
+    private fun completeAddWidget(appWidgetId: Int) {
+        LauncherStore.addWidgetId(this, appWidgetId)
+        addWidgetView(appWidgetId)
+        Toast.makeText(this, R.string.launcher_widget_added, Toast.LENGTH_SHORT).show()
+        pendingWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+        pendingProvider = null
+    }
+
+    private fun reloadWidgets() {
+        widgetsGrid.removeAllViews()
+        LauncherStore.getWidgetIds(this).forEach { widgetId ->
+            addWidgetView(widgetId)
+        }
+    }
+
+    private fun addWidgetView(widgetId: Int) {
+        val info = appWidgetManager.getAppWidgetInfo(widgetId) ?: return
+        val hostView = appWidgetHost.createView(this, widgetId, info)
+        val wrapper = LinearLayout(this)
+        wrapper.orientation = LinearLayout.VERTICAL
+
+        val controls = LinearLayout(this)
+        controls.orientation = LinearLayout.HORIZONTAL
+        val bigger = Button(this)
+        val smaller = Button(this)
+        bigger.text = getString(R.string.launcher_widget_bigger)
+        smaller.text = getString(R.string.launcher_widget_smaller)
+        controls.addView(bigger)
+        controls.addView(smaller)
+        wrapper.addView(controls)
+        wrapper.addView(hostView)
+
+        val params = GridLayout.LayoutParams()
+        params.width = if (widgetsGrid.columnCount > 1) 0 else GridLayout.LayoutParams.MATCH_PARENT
+        params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+        params.setMargins(0, 0, 0, resources.getDimensionPixelSize(R.dimen.launcher_widget_margin))
+        wrapper.layoutParams = params
+
+        val size = LauncherStore.getWidgetSize(this, widgetId)
+        if (size != null) {
+            hostView.layoutParams = LinearLayout.LayoutParams(size.first, size.second)
+        } else {
+            val minWidth = dpToPx(info.minWidth.toFloat())
+            val minHeight = dpToPx(info.minHeight.toFloat())
+            hostView.layoutParams = LinearLayout.LayoutParams(minWidth, minHeight)
+            LauncherStore.setWidgetSize(this, widgetId, minWidth, minHeight)
+        }
+
+        bigger.setOnClickListener { resizeWidget(widgetId, hostView, 30) }
+        smaller.setOnClickListener { resizeWidget(widgetId, hostView, -30) }
+        hostView.setOnLongClickListener {
+            confirmRemoveWidget(widgetId, wrapper)
+            true
+        }
+
+        widgetsGrid.addView(wrapper)
+    }
+
+    private fun resizeWidget(widgetId: Int, view: android.view.View, deltaDp: Int) {
+        val deltaPx = dpToPx(deltaDp.toFloat())
+        val size = LauncherStore.getWidgetSize(this, widgetId)
+        val width = (size?.first ?: view.width) + deltaPx
+        val height = (size?.second ?: view.height) + deltaPx
+        val newW = width.coerceAtLeast(dpToPx(60f))
+        val newH = height.coerceAtLeast(dpToPx(60f))
+        view.layoutParams = LinearLayout.LayoutParams(newW, newH)
+        LauncherStore.setWidgetSize(this, widgetId, newW, newH)
+    }
+
+    private fun dpToPx(dp: Float): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics).toInt()
+    }
+
+    private fun confirmRemoveWidget(widgetId: Int, wrapper: android.view.View) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_action_remove_widget)
+            .setMessage(R.string.launcher_remove_widget_message)
+            .setPositiveButton(R.string.launcher_action_remove_widget) { _, _ ->
+                removeWidget(widgetId, wrapper)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun removeWidget(widgetId: Int, wrapper: android.view.View) {
+        widgetsGrid.removeView(wrapper)
+        LauncherStore.removeWidgetId(this, widgetId)
+        appWidgetHost.deleteAppWidgetId(widgetId)
+        Toast.makeText(this, R.string.launcher_widget_removed, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun cleanupWidgetId(widgetId: Int) {
+        if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+            appWidgetHost.deleteAppWidgetId(widgetId)
+        }
+        pendingWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    }
+
     private fun handleLongPress(entry: AppEntry) {
         val folderId = targetFolderId
         if (folderId != null) {
@@ -279,6 +565,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun launchApp(entry: AppEntry) {
+        soundFeedback?.playTap()
         LauncherStore.recordLaunch(this, entry.component)
         val intent = Intent(Intent.ACTION_MAIN)
             .addCategory(Intent.CATEGORY_LAUNCHER)

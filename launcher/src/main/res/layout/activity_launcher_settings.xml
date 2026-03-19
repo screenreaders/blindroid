@@ -39,6 +39,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Switch
+            android:id="@+id/searchBarSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_search_bar" />
+
+        <Switch
+            android:id="@+id/gnLayoutSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_gn_layout" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -379,6 +393,27 @@
             android:id="@+id/gestureThreeRightSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/soundFeedbackSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_settings_sound_feedback" />
+
+        <Button
+            android:id="@+id/backupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_backup" />
+
+        <Button
+            android:id="@+id/restoreButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_restore" />
 
         <Button
             android:id="@+id/closeSettingsButton"

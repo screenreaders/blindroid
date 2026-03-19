@@ -21,11 +21,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var superSimpleSwitch: Switch
     private lateinit var feedEnabledSwitch: Switch
     private lateinit var feedModeSpinner: Spinner
+    private lateinit var searchBarSwitch: Switch
+    private lateinit var gnLayoutSwitch: Switch
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var themeGroup: RadioGroup
     private lateinit var iconStyleGroup: RadioGroup
     private lateinit var wallpaperButton: Button
     private lateinit var closeButton: Button
+    private lateinit var soundFeedbackSwitch: Switch
+    private lateinit var backupButton: Button
+    private lateinit var restoreButton: Button
     private lateinit var gestureTwoTapSpinner: Spinner
     private lateinit var gestureTwoUpSpinner: Spinner
     private lateinit var gestureTwoDownSpinner: Spinner
@@ -69,11 +74,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
         feedEnabledSwitch = findViewById(R.id.feedEnabledSwitch)
         feedModeSpinner = findViewById(R.id.feedModeSpinner)
+        searchBarSwitch = findViewById(R.id.searchBarSwitch)
+        gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         themeGroup = findViewById(R.id.themeGroup)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
         wallpaperButton = findViewById(R.id.wallpaperButton)
         closeButton = findViewById(R.id.closeSettingsButton)
+        soundFeedbackSwitch = findViewById(R.id.soundFeedbackSwitch)
+        backupButton = findViewById(R.id.backupButton)
+        restoreButton = findViewById(R.id.restoreButton)
         gestureTwoTapSpinner = findViewById(R.id.gestureTwoTapSpinner)
         gestureTwoUpSpinner = findViewById(R.id.gestureTwoUpSpinner)
         gestureTwoDownSpinner = findViewById(R.id.gestureTwoDownSpinner)
@@ -116,6 +126,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
         feedEnabledSwitch.isChecked = LauncherPrefs.isFeedEnabled(this)
         bindFeedModeSpinner(LauncherPrefs.getFeedMode(this))
+        searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
+        gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
         when (LauncherPrefs.getTheme(this)) {
             1 -> themeGroup.check(R.id.themeDark)
@@ -127,8 +139,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
             1 -> iconStyleGroup.check(R.id.iconStyleCircle)
             else -> iconStyleGroup.check(R.id.iconStyleNone)
         }
+        soundFeedbackSwitch.isChecked = LauncherPrefs.isSoundFeedbackEnabled(this)
         bindGestureSpinners()
         applySuperSimpleState(superSimpleSwitch.isChecked)
+        applyLayoutModeState()
         feedModeSpinner.isEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
     }
 
@@ -185,12 +199,24 @@ class LauncherSettingsActivity : AppCompatActivity() {
         superSimpleSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setSuperSimpleEnabled(this, isChecked)
             applySuperSimpleState(isChecked)
+            applyLayoutModeState()
             toastSaved()
         }
 
         feedEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setFeedEnabled(this, isChecked)
             feedModeSpinner.isEnabled = isChecked && !superSimpleSwitch.isChecked
+            toastSaved()
+        }
+
+        searchBarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setSearchBarEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        gnLayoutSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setGnLayoutEnabled(this, isChecked)
+            applyLayoutModeState()
             toastSaved()
         }
 
@@ -227,6 +253,14 @@ class LauncherSettingsActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
             }
         }
+
+        soundFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setSoundFeedbackEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        backupButton.setOnClickListener { backupLauncher() }
+        restoreButton.setOnClickListener { restoreLauncher() }
     }
 
     private fun applySuperSimpleState(enabled: Boolean) {
@@ -240,6 +274,17 @@ class LauncherSettingsActivity : AppCompatActivity() {
         hideDockLabelsSwitch.isEnabled = !enabled
         setGroupEnabled(themeGroup, !enabled)
         setGroupEnabled(iconStyleGroup, !enabled)
+        gnLayoutSwitch.isEnabled = !enabled
+    }
+
+    private fun applyLayoutModeState() {
+        val simple = superSimpleSwitch.isChecked
+        val gnLayout = gnLayoutSwitch.isChecked
+        val allowCustom = !simple && !gnLayout
+        setGroupEnabled(columnsGroup, allowCustom)
+        setGroupEnabled(rowsGroup, allowCustom)
+        setGroupEnabled(iconSizeGroup, allowCustom)
+        setGroupEnabled(labelSizeGroup, allowCustom)
     }
 
     private fun setGroupEnabled(group: RadioGroup, enabled: Boolean) {
@@ -321,5 +366,40 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
+    }
+
+    private val backupLauncherFile = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val success = LauncherBackup.writeBackup(this, uri)
+        Toast.makeText(
+            this,
+            if (success) R.string.launcher_backup_ok else R.string.launcher_backup_fail,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private val restoreLauncherFile = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri == null) return@registerForActivityResult
+        val success = LauncherBackup.readBackup(this, uri)
+        Toast.makeText(
+            this,
+            if (success) R.string.launcher_restore_ok else R.string.launcher_restore_fail,
+            Toast.LENGTH_SHORT
+        ).show()
+        if (success) {
+            recreate()
+        }
+    }
+
+    private fun backupLauncher() {
+        backupLauncherFile.launch("blindroid-launcher-backup.json")
+    }
+
+    private fun restoreLauncher() {
+        restoreLauncherFile.launch(arrayOf("application/json"))
     }
 }
