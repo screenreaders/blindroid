@@ -115,8 +115,11 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         lastEndKeyCode = keyCode
         if (isDoublePress) {
             endCurrentCall()
+            lastEndKeyTime = 0L
+            lastEndKeyCode = 0
+            return true
         }
-        return true
+        return false
     }
 
     private fun endCurrentCall() {
