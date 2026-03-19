@@ -1,0 +1,56 @@
+package com.screenreaders.blindroid.notifications
+
+import android.app.Notification
+import android.service.notification.NotificationListenerService
+import android.service.notification.StatusBarNotification
+import com.screenreaders.blindroid.call.CallAnnouncer
+import com.screenreaders.blindroid.call.CallManager
+import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.util.LockScreenUtils
+
+class BlindroidNotificationListener : NotificationListenerService() {
+    private lateinit var announcer: CallAnnouncer
+
+    override fun onCreate() {
+        super.onCreate()
+        announcer = CallAnnouncer(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        announcer.shutdown()
+    }
+
+    override fun onNotificationPosted(sbn: StatusBarNotification) {
+        if (!Prefs.isNotificationsReadEnabled(this)) return
+        val locked = LockScreenUtils.isDeviceLocked(this)
+        if (!locked && !Prefs.isReadWhenUnlockedEnabled(this)) return
+        if (sbn.packageName == packageName) return
+        if (sbn.isOngoing) return
+        if (sbn.notification.flags and Notification.FLAG_GROUP_SUMMARY != 0) return
+
+        val activeCall = CallManager.getCall()
+        if (activeCall != null && activeCall.state != android.telecom.Call.STATE_DISCONNECTED) return
+
+        val extras = sbn.notification.extras
+        val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()
+        val text = extras.getCharSequence(Notification.EXTRA_BIG_TEXT)?.toString()
+            ?: extras.getCharSequence(Notification.EXTRA_TEXT)?.toString().orEmpty()
+
+        if (title.isBlank() && text.isBlank()) return
+
+        val message = when {
+            title.isNotBlank() && text.isNotBlank() -> "$title. $text"
+            title.isNotBlank() -> title
+            else -> text
+        }
+
+        announcer.speak(
+            text = "Powiadomienie: $message",
+            repeatCount = 1,
+            rate = Prefs.getSpeechRate(this),
+            volume = Prefs.getSpeechVolume(this),
+            voiceName = Prefs.getVoiceName(this)
+        )
+    }
+}

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/roleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/role_button_request" />
+
+        <EditText
+            android:id="@+id/numberInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/phone_number_hint"
+            android:inputType="phone" />
+
+        <Button
+            android:id="@+id/callButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/call_button" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/announceSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/switch_announce" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/speakerSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_speaker" />
+
+        <TextView
+            android:id="@+id/ttsModeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tts_mode"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/ttsModeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/ttsModeRingSpeech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tts_mode_ring_and_speech" />
+
+            <RadioButton
+                android:id="@+id/ttsModeSpeechOnly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tts_mode_speech_only" />
+
+            <RadioButton
+                android:id="@+id/ttsModeSpeechThenRing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tts_mode_speech_then_ring" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/ttsVoiceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tts_voice"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/ttsVoiceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/ttsRateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tts_rate"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ttsRateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0x" />
+
+        <SeekBar
+            android:id="@+id/ttsRateSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:min="50" />
+
+        <TextView
+            android:id="@+id/ttsVolumeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tts_volume"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ttsVolumeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%" />
+
+        <SeekBar
+            android:id="@+id/ttsVolumeSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/ttsRepeatLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tts_repeat"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ttsRepeatValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1x" />
+
+        <SeekBar
+            android:id="@+id/ttsRepeatSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="3"
+            android:min="1" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/smsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/switch_sms" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/notificationSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_notifications" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/unlockedSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_unlocked" />
+
+        <Button
+            android:id="@+id/notificationAccessButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/notification_access_button" />
+
+        <TextView
+            android:id="@+id/updateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/update_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/updateAutoSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/update_auto" />
+
+        <TextView
+            android:id="@+id/updateStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/update_status_idle" />
+
+        <Button
+            android:id="@+id/updateCheckButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/update_check_now" />
+
+        <Button
+            android:id="@+id/contactsPermissionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/permission_contacts" />
+
+    </LinearLayout>
+</ScrollView>
