@@ -5,5 +5,6 @@ data class LauncherUiConfig(
     val rows: Int,
     val iconSizePx: Int,
     val labelSizeSp: Float,
-    val itemHeightPx: Int
+    val itemHeightPx: Int,
+    val showLabels: Boolean
 )

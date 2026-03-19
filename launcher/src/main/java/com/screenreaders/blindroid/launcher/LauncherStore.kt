@@ -93,6 +93,24 @@ object LauncherStore {
         saveList(prefs, KEY_HOTSEAT, hotseat)
     }
 
+    fun moveItemInPage(context: Context, pageIndex: Int, from: Int, to: Int) {
+        val pages = ensurePages(context)
+        val target = pages.getOrNull(pageIndex) ?: return
+        if (from !in target.indices || to !in target.indices) return
+        val item = target.removeAt(from)
+        target.add(to, item)
+        savePages(context, pages)
+    }
+
+    fun moveItemInHotseat(context: Context, from: Int, to: Int) {
+        val prefs = prefs(context)
+        val hotseat = loadHotseatKeys(context)
+        if (from !in hotseat.indices || to !in hotseat.indices) return
+        val item = hotseat.removeAt(from)
+        hotseat.add(to, item)
+        saveList(prefs, KEY_HOTSEAT, hotseat)
+    }
+
     fun createFolderOnPage(
         context: Context,
         pageIndex: Int,

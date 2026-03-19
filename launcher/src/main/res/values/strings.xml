@@ -28,6 +28,10 @@
     <string name="launcher_admin_explanation">Włącz to uprawnienie, aby podwójne stuknięcie blokowało ekran.</string>
     <string name="launcher_lock_requires_admin">Wymagane uprawnienie administratora urządzenia</string>
     <string name="launcher_lock_enabled">Ekran zablokowany</string>
+    <string name="launcher_settings_dock">Dok</string>
+    <string name="launcher_settings_hide_dock_labels">Ukryj etykiety w doku</string>
+    <string name="launcher_settings_modes">Tryby</string>
+    <string name="launcher_settings_super_simple">Tryb super-prosty (duże ikony)</string>
     <string name="launcher_home_options">Opcje ekranu głównego</string>
     <string name="launcher_hotseat_options">Opcje doku</string>
     <string name="launcher_action_remove_from_home">Usuń z ekranu głównego</string>

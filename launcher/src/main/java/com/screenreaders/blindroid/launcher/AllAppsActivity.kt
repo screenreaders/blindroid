@@ -37,7 +37,7 @@ class AllAppsActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
         appsGrid.layoutManager = gridLayoutManager
-        adapter = AppAdapter(emptyList(), baseConfig, ::launchApp, ::handleLongPress)
+        adapter = AppAdapter(emptyList(), baseConfig.copy(showLabels = true), ::launchApp, ::handleLongPress)
         appsGrid.adapter = adapter
 
         loadApps()
@@ -62,7 +62,7 @@ class AllAppsActivity : AppCompatActivity() {
     private fun applyUiConfig() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
-        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
+        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
     }
 
     private fun setupSearch() {

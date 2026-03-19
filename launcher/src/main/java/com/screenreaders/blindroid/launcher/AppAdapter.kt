@@ -27,6 +27,7 @@ class AppAdapter(
         holder.icon.setImageDrawable(item.icon)
         holder.icon.contentDescription = item.label
         applySizing(holder)
+        holder.label.visibility = if (config.showLabels) View.VISIBLE else View.GONE
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
             onLongClick(item)

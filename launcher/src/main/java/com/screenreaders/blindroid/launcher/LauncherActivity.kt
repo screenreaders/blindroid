@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
@@ -49,28 +50,26 @@ class LauncherActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
 
         homeAdapter = HomePagerAdapter(
-            pages,
+            pages.map { it.toMutableList() }.toMutableList(),
             baseConfig,
             ::onHomeItemClick,
-            ::onHomeItemLongClick
+            ::onHomeItemLongClick,
+            ::onHomeItemMoved
         )
         homePager.adapter = homeAdapter
         homePager.offscreenPageLimit = 1
 
         hotseatAdapter = HomeItemAdapter(
-            hotseat,
-            baseConfig.copy(itemHeightPx = 0),
+            hotseat.toMutableList(),
+            LauncherPrefs.getDockConfig(this, 0),
             ::onHotseatItemClick,
             ::onHotseatItemLongClick
         )
         hotseatRow.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         hotseatRow.adapter = hotseatAdapter
+        setupHotseatDrag()
 
-        allAppsButton.setOnClickListener {
-            val intent = Intent(this, AllAppsActivity::class.java)
-            intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, homePager.currentItem)
-            startActivity(intent)
-        }
+        allAppsButton.setOnClickListener { openAllApps() }
 
         widgetsButton.setOnClickListener {
             startActivity(Intent(this, WidgetsActivity::class.java))
@@ -123,9 +122,9 @@ class LauncherActivity : AppCompatActivity() {
         homePager.post {
             val rows = baseConfig.rows
             val itemHeight = if (rows > 0) homePager.height / rows else 0
-            val pageConfig = baseConfig.copy(itemHeightPx = itemHeight)
+            val pageConfig = baseConfig.copy(itemHeightPx = itemHeight, showLabels = true)
             homeAdapter.updateConfig(pageConfig)
-            hotseatAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
+            hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
     }
 
@@ -137,6 +136,28 @@ class LauncherActivity : AppCompatActivity() {
                 }
                 return true
             }
+
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                if (e1 == null) return false
+                val diffY = e2.y - e1.y
+                val diffX = e2.x - e1.x
+                val absX = kotlin.math.abs(diffX)
+                val absY = kotlin.math.abs(diffY)
+                if (absY > absX && absY > 120 && kotlin.math.abs(velocityY) > 120) {
+                    if (diffY < 0) {
+                        openAllApps()
+                    } else {
+                        focusSearch()
+                    }
+                    return true
+                }
+                return false
+            }
         })
         val listener = View.OnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
@@ -144,6 +165,41 @@ class LauncherActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.launcherRoot).setOnTouchListener(listener)
         homePager.setOnTouchListener(listener)
+    }
+
+    private fun openAllApps() {
+        val intent = Intent(this, AllAppsActivity::class.java)
+        intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, homePager.currentItem)
+        startActivity(intent)
+    }
+
+    private fun focusSearch() {
+        searchInput.requestFocus()
+        searchInput.setSelection(searchInput.text?.length ?: 0)
+    }
+
+    private fun setupHotseatDrag() {
+        val touchHelper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                0
+            ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val from = viewHolder.bindingAdapterPosition
+                val to = target.bindingAdapterPosition
+                if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
+                hotseatAdapter.moveItem(from, to)
+                LauncherStore.moveItemInHotseat(this@LauncherActivity, from, to)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+        })
+        touchHelper.attachToRecyclerView(hotseatRow)
     }
 
     private fun attemptLock() {
@@ -190,6 +246,10 @@ class LauncherActivity : AppCompatActivity() {
             is HomeItem.App -> showHotseatAppOptions(item)
             is HomeItem.Folder -> showFolderOptions(homePager.currentItem, item)
         }
+    }
+
+    private fun onHomeItemMoved(pageIndex: Int, from: Int, to: Int) {
+        LauncherStore.moveItemInPage(this, pageIndex, from, to)
     }
 
     private fun showHomeAppOptions(pageIndex: Int, app: HomeItem.App) {

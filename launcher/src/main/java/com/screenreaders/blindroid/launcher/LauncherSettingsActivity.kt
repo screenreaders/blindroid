@@ -13,6 +13,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var iconSizeGroup: RadioGroup
     private lateinit var labelSizeGroup: RadioGroup
     private lateinit var doubleTapSwitch: Switch
+    private lateinit var hideDockLabelsSwitch: Switch
+    private lateinit var superSimpleSwitch: Switch
     private lateinit var closeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         iconSizeGroup = findViewById(R.id.iconSizeGroup)
         labelSizeGroup = findViewById(R.id.labelSizeGroup)
         doubleTapSwitch = findViewById(R.id.doubleTapLockSwitch)
+        hideDockLabelsSwitch = findViewById(R.id.hideDockLabelsSwitch)
+        superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
         closeButton = findViewById(R.id.closeSettingsButton)
 
         bindInitialState()
@@ -53,6 +57,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
             else -> labelSizeGroup.check(R.id.labelLarge)
         }
         doubleTapSwitch.isChecked = LauncherPrefs.isDoubleTapLockEnabled(this)
+        hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
+        superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
     }
 
     private fun bindListeners() {
@@ -97,6 +103,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         doubleTapSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDoubleTapLockEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        hideDockLabelsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setDockLabelsHidden(this, isChecked)
+            toastSaved()
+        }
+
+        superSimpleSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setSuperSimpleEnabled(this, isChecked)
             toastSaved()
         }
     }

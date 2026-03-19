@@ -11,6 +11,8 @@ object LauncherPrefs {
     private const val KEY_ICON_SIZE_DP = "icon_size_dp"
     private const val KEY_LABEL_SIZE_SP = "label_size_sp"
     private const val KEY_DOUBLE_TAP_LOCK = "double_tap_lock"
+    private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
+    private const val KEY_SUPER_SIMPLE = "super_simple_mode"
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -47,18 +49,42 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_DOUBLE_TAP_LOCK, enabled).apply()
     }
 
+    fun isDockLabelsHidden(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_HIDE_DOCK_LABELS, false)
+
+    fun setDockLabelsHidden(context: Context, hidden: Boolean) {
+        prefs(context).edit().putBoolean(KEY_HIDE_DOCK_LABELS, hidden).apply()
+    }
+
+    fun isSuperSimpleEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SUPER_SIMPLE, false)
+
+    fun setSuperSimpleEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SUPER_SIMPLE, enabled).apply()
+    }
+
     fun getUiConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
         val metrics = context.resources.displayMetrics
-        val iconDp = getIconSizeDp(context).toFloat()
+        val superSimple = isSuperSimpleEnabled(context)
+        val columns = if (superSimple) 3 else getColumns(context)
+        val rows = if (superSimple) 4 else getRows(context)
+        val iconDp = (if (superSimple) 64 else getIconSizeDp(context)).toFloat()
         val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, iconDp, metrics)
             .roundToInt()
         return LauncherUiConfig(
-            columns = getColumns(context),
-            rows = getRows(context),
+            columns = columns,
+            rows = rows,
             iconSizePx = iconPx,
-            labelSizeSp = getLabelSizeSp(context),
-            itemHeightPx = itemHeightPx
+            labelSizeSp = if (superSimple) 18f else getLabelSizeSp(context),
+            itemHeightPx = itemHeightPx,
+            showLabels = true
         )
+    }
+
+    fun getDockConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
+        val base = getUiConfig(context, itemHeightPx)
+        val showLabels = !(isDockLabelsHidden(context) || isSuperSimpleEnabled(context))
+        return base.copy(showLabels = showLabels)
     }
 
     private fun prefs(context: Context) =

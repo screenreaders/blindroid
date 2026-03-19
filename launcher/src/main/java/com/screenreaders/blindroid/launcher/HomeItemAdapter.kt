@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class HomeItemAdapter(
-    private var items: List<HomeItem>,
+    private var items: MutableList<HomeItem>,
     private var config: LauncherUiConfig,
     private val onClick: (HomeItem) -> Unit,
     private val onLongClick: (HomeItem) -> Unit
@@ -36,6 +36,7 @@ class HomeItemAdapter(
             }
         }
         applySizing(holder)
+        holder.label.visibility = if (config.showLabels) View.VISIBLE else View.GONE
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
             onLongClick(item)
@@ -46,13 +47,21 @@ class HomeItemAdapter(
     override fun getItemCount(): Int = items.size
 
     fun submit(newItems: List<HomeItem>) {
-        items = newItems
+        items = newItems.toMutableList()
         notifyDataSetChanged()
     }
 
     fun updateConfig(newConfig: LauncherUiConfig) {
         config = newConfig
         notifyDataSetChanged()
+    }
+
+    fun moveItem(from: Int, to: Int) {
+        if (from == to) return
+        if (from !in items.indices || to !in items.indices) return
+        val item = items.removeAt(from)
+        items.add(to, item)
+        notifyItemMoved(from, to)
     }
 
     private fun applySizing(holder: HomeViewHolder) {

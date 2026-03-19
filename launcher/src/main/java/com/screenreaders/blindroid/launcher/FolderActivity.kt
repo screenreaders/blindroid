@@ -44,7 +44,7 @@ class FolderActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
         folderGrid.layoutManager = gridLayoutManager
-        adapter = AppAdapter(emptyList(), baseConfig, ::launchApp, ::removeFromFolder)
+        adapter = AppAdapter(emptyList(), baseConfig.copy(showLabels = true), ::launchApp, ::removeFromFolder)
         folderGrid.adapter = adapter
 
         renameButton.setOnClickListener { promptRename() }
@@ -72,7 +72,7 @@ class FolderActivity : AppCompatActivity() {
     private fun applyUiConfig() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
-        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0))
+        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
     }
 
     private fun refreshFolder() {
