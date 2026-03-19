@@ -14,8 +14,8 @@ android {
         applicationId = "com.screenreaders.blindroid"
         minSdk = 29
         targetSdk = 35
-        versionCode = 26
-        versionName = "026"
+        versionCode = 27
+        versionName = "027"
     }
 
     val keystorePropsFile = rootProject.file("keystore.properties")
@@ -75,6 +75,7 @@ dependencies {
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
+    implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0")
     implementation("org.tensorflow:tensorflow-lite:2.14.0")
     implementation(project(":launcher"))
 }

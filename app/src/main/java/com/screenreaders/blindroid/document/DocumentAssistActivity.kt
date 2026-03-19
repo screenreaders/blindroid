@@ -2,6 +2,7 @@ package com.screenreaders.blindroid.document
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.Size
 import android.view.WindowManager
+import androidx.activity.result.IntentSenderRequest
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -19,6 +21,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -48,6 +53,42 @@ class DocumentAssistActivity : AppCompatActivity() {
     private lateinit var textRecognizer: TextRecognizer
     private var autoCapture = true
     private var speakResult = true
+    private val googleScanner = GmsDocumentScanning.getClient(
+        GmsDocumentScannerOptions.Builder()
+            .setScannerMode(GmsDocumentScannerOptions.SCANNER_MODE_FULL)
+            .setResultFormats(
+                GmsDocumentScannerOptions.RESULT_FORMAT_JPEG,
+                GmsDocumentScannerOptions.RESULT_FORMAT_PDF
+            )
+            .setPageLimit(5)
+            .setGalleryImportAllowed(true)
+            .build()
+    )
+    private val googleScannerLauncher =
+        registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode != RESULT_OK || result.data == null) {
+                updateStatus(getString(R.string.documents_status_google_cancel))
+                return@registerForActivityResult
+            }
+            val scanResult = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
+            if (scanResult == null) {
+                updateStatus(getString(R.string.documents_status_google_failed))
+                return@registerForActivityResult
+            }
+            val pages = scanResult.pages
+            if (pages.isNullOrEmpty()) {
+                updateStatus(getString(R.string.documents_status_google_failed))
+                return@registerForActivityResult
+            }
+            updateStatus(getString(R.string.documents_status_google_ready, pages.size))
+            if (scanResult.pdf != null) {
+                updateStatus(getString(R.string.documents_status_google_pdf))
+            }
+            val first = pages.firstOrNull()?.imageUri
+            if (first != null) {
+                runOcrOnUri(first)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +124,9 @@ class DocumentAssistActivity : AppCompatActivity() {
             } else {
                 stopScanning()
             }
+        }
+        binding.documentGoogleScanButton.setOnClickListener {
+            openGoogleScanner()
         }
 
         updateStatus(getString(R.string.documents_status_idle))
@@ -176,6 +220,19 @@ class DocumentAssistActivity : AppCompatActivity() {
         readyFrames = 0
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         updateStatus(getString(R.string.documents_status_idle))
+    }
+
+    private fun openGoogleScanner() {
+        stopScanning()
+        updateStatus(getString(R.string.documents_status_google_start))
+        googleScanner.getStartScanIntent(this)
+            .addOnSuccessListener { intentSender ->
+                val request = IntentSenderRequest.Builder(intentSender).build()
+                googleScannerLauncher.launch(request)
+            }
+            .addOnFailureListener {
+                updateStatus(getString(R.string.documents_status_google_failed))
+            }
     }
 
     private fun analyzeFrame(imageProxy: ImageProxy) {
@@ -395,6 +452,32 @@ class DocumentAssistActivity : AppCompatActivity() {
                 lastCaptureTime = System.currentTimeMillis()
                 capturing = false
                 imageProxy.close()
+            }
+    }
+
+    private fun runOcrOnUri(uri: Uri) {
+        updateStatus(getString(R.string.documents_status_ocr))
+        val inputImage = try {
+            InputImage.fromFilePath(this, uri)
+        } catch (_: Exception) {
+            updateStatus(getString(R.string.documents_status_failed))
+            return
+        }
+        textRecognizer.process(inputImage)
+            .addOnSuccessListener { result ->
+                val text = result.text.trim()
+                if (text.isBlank()) {
+                    updateStatus(getString(R.string.documents_status_empty))
+                } else {
+                    updateStatus(getString(R.string.documents_status_done))
+                }
+                updateResult(text.ifBlank { getString(R.string.documents_status_empty) })
+                if (speakResult && text.isNotBlank()) {
+                    speakText(text)
+                }
+            }
+            .addOnFailureListener {
+                updateStatus(getString(R.string.documents_status_failed))
             }
     }
 

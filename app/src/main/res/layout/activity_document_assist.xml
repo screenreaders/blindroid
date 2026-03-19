@@ -24,6 +24,13 @@
             android:layout_marginTop="16dp"
             android:text="@string/documents_scan_toggle" />
 
+        <Button
+            android:id="@+id/documentGoogleScanButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/documents_google_scan" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/documentAutoSwitch"
             android:layout_width="match_parent"
