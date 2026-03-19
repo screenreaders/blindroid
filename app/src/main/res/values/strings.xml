@@ -35,6 +35,14 @@
     <string name="update_download_started">Pobieranie aktualizacji rozpoczęte</string>
     <string name="update_download_complete">Pobieranie zakończone, rozpocznij instalację</string>
     <string name="update_no_download">Brak pliku APK w najnowszym wydaniu</string>
+    <string name="chime_label">Zegarynka</string>
+    <string name="chime_enable">Podawanie godziny</string>
+    <string name="chime_interval">Interwał</string>
+    <string name="chime_interval_15">Co 15 minut</string>
+    <string name="chime_interval_30">Co 30 minut</string>
+    <string name="chime_interval_60">Co godzinę</string>
+    <string name="chime_start">Od</string>
+    <string name="chime_end">Do</string>
     <string name="in_call_title">Połączenie</string>
     <string name="answer">Odbierz</string>
     <string name="reject">Odrzuć</string>

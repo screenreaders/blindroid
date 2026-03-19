@@ -91,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:labelFor="@id/ttsVoiceSpinner"
             android:text="@string/tts_voice"
             android:textStyle="bold" />
 
@@ -104,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:labelFor="@id/ttsRateSeek"
             android:text="@string/tts_rate"
             android:textStyle="bold" />
 
@@ -125,6 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:labelFor="@id/ttsVolumeSeek"
             android:text="@string/tts_volume"
             android:textStyle="bold" />
 
@@ -145,6 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:labelFor="@id/ttsRepeatSeek"
             android:text="@string/tts_repeat"
             android:textStyle="bold" />
 
@@ -190,6 +194,65 @@
             android:text="@string/notification_access_button" />
 
         <TextView
+            android:id="@+id/chimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/chime_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/chimeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/chime_enable" />
+
+        <TextView
+            android:id="@+id/chimeIntervalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/chimeIntervalSpinner"
+            android:text="@string/chime_interval"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/chimeIntervalSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/chimeStartLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/chimeStartButton"
+            android:text="@string/chime_start"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/chimeStartButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="06:00" />
+
+        <TextView
+            android:id="@+id/chimeEndLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/chimeEndButton"
+            android:text="@string/chime_end"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/chimeEndButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="00:00" />
+
+        <TextView
             android:id="@+id/updateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -209,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="polite"
             android:text="@string/update_status_idle" />
 
         <Button

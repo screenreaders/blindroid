@@ -17,6 +17,10 @@ object Prefs {
     private const val KEY_AUTO_UPDATE = "auto_update"
     private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
     private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
+    private const val KEY_CHIME_ENABLED = "chime_enabled"
+    private const val KEY_CHIME_INTERVAL = "chime_interval"
+    private const val KEY_CHIME_START = "chime_start"
+    private const val KEY_CHIME_END = "chime_end"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -114,5 +118,33 @@ object Prefs {
 
     fun setUpdateDownloadId(context: Context, value: Long) {
         prefs(context).edit().putLong(KEY_UPDATE_DOWNLOAD_ID, value).apply()
+    }
+
+    fun isChimeEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CHIME_ENABLED, false)
+
+    fun setChimeEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CHIME_ENABLED, value).apply()
+    }
+
+    fun getChimeInterval(context: Context): Int =
+        prefs(context).getInt(KEY_CHIME_INTERVAL, 60).coerceIn(15, 60)
+
+    fun setChimeInterval(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_CHIME_INTERVAL, value).apply()
+    }
+
+    fun getChimeStartMinutes(context: Context): Int =
+        prefs(context).getInt(KEY_CHIME_START, 6 * 60).coerceIn(0, 24 * 60)
+
+    fun setChimeStartMinutes(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_CHIME_START, value.coerceIn(0, 24 * 60)).apply()
+    }
+
+    fun getChimeEndMinutes(context: Context): Int =
+        prefs(context).getInt(KEY_CHIME_END, 0).coerceIn(0, 24 * 60)
+
+    fun setChimeEndMinutes(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_CHIME_END, value.coerceIn(0, 24 * 60)).apply()
     }
 }

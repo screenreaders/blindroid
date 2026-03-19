@@ -3,6 +3,7 @@ package com.screenreaders.blindroid
 import android.Manifest
 import android.app.DownloadManager
 import android.app.role.RoleManager
+import android.app.TimePickerDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -25,9 +26,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.BuildConfig
+import com.screenreaders.blindroid.chime.ChimeScheduler
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
 import com.screenreaders.blindroid.update.UpdateChecker
+import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.Executors
 
@@ -70,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
         binding.updateAutoSwitch.isChecked = Prefs.isAutoUpdateEnabled(this)
+        binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceEnabled(this, isChecked)
@@ -111,6 +115,16 @@ class MainActivity : AppCompatActivity() {
             checkForUpdates(manual = true)
         }
 
+        binding.chimeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setChimeEnabled(this, isChecked)
+            if (isChecked) {
+                ChimeScheduler.schedule(this)
+            } else {
+                ChimeScheduler.cancel(this)
+            }
+            setChimeControlsEnabled(isChecked)
+        }
+
         updateRoleButton()
         updateContactsButton()
         updateSmsSwitch()
@@ -118,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         updateUnlockedSwitch()
         updateStatusText(getString(R.string.update_status_idle))
         maybeAutoCheckUpdates()
+        initChimeUi()
         initTtsUi()
         handleDialIntent(intent)
     }
@@ -319,6 +334,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.ttsRateSeek.progress = (currentRate * 100).toInt().coerceIn(50, 200)
         binding.ttsRateValue.text = String.format(Locale.getDefault(), "%.1fx", currentRate)
+        binding.ttsRateValue.contentDescription =
+            "${getString(R.string.tts_rate)} ${binding.ttsRateValue.text}"
 
         binding.ttsVolumeSeek.progress = (currentVolume * 100).toInt().coerceIn(0, 100)
         binding.ttsVolumeValue.text = String.format(
@@ -326,10 +343,14 @@ class MainActivity : AppCompatActivity() {
             "%d%%",
             (currentVolume * 100).toInt()
         )
+        binding.ttsVolumeValue.contentDescription =
+            "${getString(R.string.tts_volume)} ${binding.ttsVolumeValue.text}"
 
         val repeatDisplay = currentRepeat.coerceIn(1, 3)
         binding.ttsRepeatSeek.progress = repeatDisplay
         binding.ttsRepeatValue.text = String.format(Locale.getDefault(), "%dx", repeatDisplay)
+        binding.ttsRepeatValue.contentDescription =
+            "${getString(R.string.tts_repeat)} ${binding.ttsRepeatValue.text}"
 
         when (currentMode) {
             Prefs.MODE_SPEECH_ONLY -> binding.ttsModeSpeechOnly.isChecked = true
@@ -350,6 +371,8 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val rate = (progress.coerceIn(50, 200)) / 100f
                 binding.ttsRateValue.text = String.format(Locale.getDefault(), "%.1fx", rate)
+                binding.ttsRateValue.contentDescription =
+                    "${getString(R.string.tts_rate)} ${binding.ttsRateValue.text}"
                 Prefs.setSpeechRate(this@MainActivity, rate)
             }
 
@@ -362,6 +385,8 @@ class MainActivity : AppCompatActivity() {
                 val value = progress.coerceIn(0, 100)
                 val volume = value / 100f
                 binding.ttsVolumeValue.text = String.format(Locale.getDefault(), "%d%%", value)
+                binding.ttsVolumeValue.contentDescription =
+                    "${getString(R.string.tts_volume)} ${binding.ttsVolumeValue.text}"
                 Prefs.setSpeechVolume(this@MainActivity, volume)
             }
 
@@ -373,6 +398,8 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val repeat = progress.coerceIn(1, 3)
                 binding.ttsRepeatValue.text = String.format(Locale.getDefault(), "%dx", repeat)
+                binding.ttsRepeatValue.contentDescription =
+                    "${getString(R.string.tts_repeat)} ${binding.ttsRepeatValue.text}"
                 Prefs.setRepeatCount(this@MainActivity, repeat)
             }
 
@@ -447,6 +474,101 @@ class MainActivity : AppCompatActivity() {
     }
 
     private data class VoiceEntry(val label: String, val name: String)
+
+    private fun initChimeUi() {
+        val intervals = listOf(15, 30, 60)
+        val labels = listOf(
+            getString(R.string.chime_interval_15),
+            getString(R.string.chime_interval_30),
+            getString(R.string.chime_interval_60)
+        )
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            labels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.chimeIntervalSpinner.adapter = adapter
+
+        val currentInterval = Prefs.getChimeInterval(this)
+        val index = intervals.indexOf(currentInterval).let { if (it >= 0) it else 2 }
+        binding.chimeIntervalSpinner.setSelection(index)
+
+        binding.chimeIntervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
+                val interval = intervals.getOrElse(position) { 60 }
+                Prefs.setChimeInterval(this@MainActivity, interval)
+                if (Prefs.isChimeEnabled(this@MainActivity)) {
+                    ChimeScheduler.schedule(this@MainActivity)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.chimeStartButton.setOnClickListener { showChimeTimePicker(isStart = true) }
+        binding.chimeEndButton.setOnClickListener { showChimeTimePicker(isStart = false) }
+
+        updateChimeTimeButtons()
+        setChimeControlsEnabled(Prefs.isChimeEnabled(this))
+    }
+
+    private fun setChimeControlsEnabled(enabled: Boolean) {
+        binding.chimeIntervalSpinner.isEnabled = enabled
+        binding.chimeStartButton.isEnabled = enabled
+        binding.chimeEndButton.isEnabled = enabled
+    }
+
+    private fun updateChimeTimeButtons() {
+        val start = Prefs.getChimeStartMinutes(this)
+        val end = Prefs.getChimeEndMinutes(this)
+        val startText = minutesToTimeText(start)
+        val endText = minutesToTimeText(end)
+        binding.chimeStartButton.text = startText
+        binding.chimeEndButton.text = endText
+        binding.chimeStartButton.contentDescription = "${getString(R.string.chime_start)} $startText"
+        binding.chimeEndButton.contentDescription = "${getString(R.string.chime_end)} $endText"
+    }
+
+    private fun minutesToTimeText(minutes: Int): String {
+        val clamped = minutes.coerceIn(0, 24 * 60)
+        val hour = clamped / 60
+        val minute = clamped % 60
+        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+    }
+
+    private fun showChimeTimePicker(isStart: Boolean) {
+        val current = if (isStart) {
+            Prefs.getChimeStartMinutes(this)
+        } else {
+            Prefs.getChimeEndMinutes(this)
+        }
+        val hour = current / 60
+        val minute = current % 60
+        TimePickerDialog(
+            this,
+            { _, h, m ->
+                val value = h * 60 + m
+                if (isStart) {
+                    Prefs.setChimeStartMinutes(this, value)
+                } else {
+                    Prefs.setChimeEndMinutes(this, value)
+                }
+                updateChimeTimeButtons()
+                if (Prefs.isChimeEnabled(this)) {
+                    ChimeScheduler.schedule(this)
+                }
+            },
+            hour,
+            minute,
+            true
+        ).show()
+    }
 
     private fun updateStatusText(text: String) {
         binding.updateStatusText.text = text
