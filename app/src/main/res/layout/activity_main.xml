@@ -75,6 +75,13 @@
             android:text="@string/switch_call_vibrate" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/endCallVibrateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_end_call_vibrate" />
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/voiceCommandsSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -250,6 +257,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/switch_privacy" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privacyTitleSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/switch_privacy_title" />
 
         <Button
             android:id="@+id/notificationAccessButton"

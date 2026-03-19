@@ -74,11 +74,13 @@ class MainActivity : AppCompatActivity() {
         binding.callWaitingSwitch.isChecked = Prefs.isAnnounceDuringCallEnabled(this)
         binding.callStateSwitch.isChecked = Prefs.isCallStateAnnounceEnabled(this)
         binding.callVibrateSwitch.isChecked = Prefs.isCallStateVibrateEnabled(this)
+        binding.endCallVibrateSwitch.isChecked = Prefs.isEndCallVibrateEnabled(this)
         binding.voiceCommandsSwitch.isChecked = Prefs.isVoiceCommandsEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
         binding.privacySwitch.isChecked = Prefs.isPrivacyModeEnabled(this)
+        binding.privacyTitleSwitch.isChecked = Prefs.isPrivacyTitleOnlyEnabled(this)
         binding.updateAutoSwitch.isChecked = Prefs.isAutoUpdateEnabled(this)
         binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
 
@@ -105,6 +107,10 @@ class MainActivity : AppCompatActivity() {
             Prefs.setCallStateVibrateEnabled(this, isChecked)
         }
 
+        binding.endCallVibrateSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setEndCallVibrateEnabled(this, isChecked)
+        }
+
         binding.voiceCommandsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setVoiceCommandsEnabled(this, isChecked)
         }
@@ -129,6 +135,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.privacySwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setPrivacyModeEnabled(this, isChecked)
+        }
+
+        binding.privacyTitleSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setPrivacyTitleOnlyEnabled(this, isChecked)
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->

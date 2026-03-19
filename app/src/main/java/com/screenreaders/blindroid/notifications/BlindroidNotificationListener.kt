@@ -33,9 +33,21 @@ class BlindroidNotificationListener : NotificationListenerService() {
         if (activeCall != null && activeCall.state != android.telecom.Call.STATE_DISCONNECTED) return
 
         val privacy = Prefs.isPrivacyModeEnabled(this)
+        val privacyTitleOnly = Prefs.isPrivacyTitleOnlyEnabled(this)
         val message = if (privacy) {
-            val appName = getAppName(sbn.packageName)
-            "Powiadomienie od $appName"
+            if (privacyTitleOnly) {
+                val extras = sbn.notification.extras
+                val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()
+                if (title.isNotBlank()) {
+                    title
+                } else {
+                    val appName = getAppName(sbn.packageName)
+                    "Powiadomienie od $appName"
+                }
+            } else {
+                val appName = getAppName(sbn.packageName)
+                "Powiadomienie od $appName"
+            }
         } else {
             val extras = sbn.notification.extras
             val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()

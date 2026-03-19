@@ -76,6 +76,8 @@ class BlindroidInCallService : InCallService() {
             }
             if (Prefs.isCallStateVibrateEnabled(this)) {
                 vibrateForState(call, state)
+            } else if (state == Call.STATE_DISCONNECTED && Prefs.isEndCallVibrateEnabled(this)) {
+                vibrateEndCallShort()
             }
         }
         when (state) {
@@ -158,6 +160,18 @@ class BlindroidInCallService : InCallService() {
             else -> null
         } ?: return
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vib.vibrate(VibrationEffect.createWaveform(pattern, -1))
+        } else {
+            @Suppress("DEPRECATION")
+            vib.vibrate(pattern, -1)
+        }
+    }
+
+    private fun vibrateEndCallShort() {
+        val vib = vibrator ?: return
+        if (!vib.hasVibrator()) return
+        val pattern = longArrayOf(0, 120)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vib.vibrate(VibrationEffect.createWaveform(pattern, -1))
         } else {

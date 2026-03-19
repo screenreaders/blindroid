@@ -15,7 +15,9 @@ object Prefs {
     private const val KEY_VOICE_COMMANDS = "voice_commands"
     private const val KEY_CALL_STATE_ANNOUNCE = "call_state_announce"
     private const val KEY_CALL_STATE_VIBRATE = "call_state_vibrate"
+    private const val KEY_END_CALL_VIBRATE = "end_call_vibrate"
     private const val KEY_PRIVACY_MODE = "privacy_mode"
+    private const val KEY_PRIVACY_TITLE_ONLY = "privacy_title_only"
     private const val KEY_READ_SMS = "read_sms"
     private const val KEY_READ_NOTIFICATIONS = "read_notifications"
     private const val KEY_READ_UNLOCKED = "read_unlocked"
@@ -121,11 +123,25 @@ object Prefs {
         prefs(context).edit().putBoolean(KEY_CALL_STATE_VIBRATE, value).apply()
     }
 
+    fun isEndCallVibrateEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_END_CALL_VIBRATE, false)
+
+    fun setEndCallVibrateEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_END_CALL_VIBRATE, value).apply()
+    }
+
     fun isPrivacyModeEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_PRIVACY_MODE, false)
 
     fun setPrivacyModeEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_PRIVACY_MODE, value).apply()
+    }
+
+    fun isPrivacyTitleOnlyEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_PRIVACY_TITLE_ONLY, false)
+
+    fun setPrivacyTitleOnlyEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_PRIVACY_TITLE_ONLY, value).apply()
     }
 
     fun getEndCallKey(context: Context): Int =
