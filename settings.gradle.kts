@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "blindroid"
 include(":app")
+include(":launcher")

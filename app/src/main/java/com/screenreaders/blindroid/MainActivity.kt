@@ -6,6 +6,7 @@ import android.app.DownloadManager
 import android.app.role.RoleManager
 import android.app.TimePickerDialog
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         binding.callButton.setOnClickListener { placeCall() }
         binding.contactsPermissionButton.setOnClickListener { requestContactsPermission() }
         binding.notificationAccessButton.setOnClickListener { openNotificationAccessSettings() }
+        binding.launcherSettingsButton.setOnClickListener { openHomeSettings() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
@@ -83,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         binding.privacyTitleSwitch.isChecked = Prefs.isPrivacyTitleOnlyEnabled(this)
         binding.updateAutoSwitch.isChecked = Prefs.isAutoUpdateEnabled(this)
         binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
+        binding.launcherSwitch.isChecked = isLauncherEnabled()
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceEnabled(this, isChecked)
@@ -135,10 +138,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.privacySwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setPrivacyModeEnabled(this, isChecked)
+            binding.privacyTitleSwitch.isEnabled = isChecked
         }
 
         binding.privacyTitleSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setPrivacyTitleOnlyEnabled(this, isChecked)
+        }
+
+        binding.launcherSwitch.setOnCheckedChangeListener { _, isChecked ->
+            setLauncherEnabled(isChecked)
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -172,6 +180,7 @@ class MainActivity : AppCompatActivity() {
         updateSmsSwitch()
         updateNotificationAccessButton()
         updateUnlockedSwitch()
+        binding.privacyTitleSwitch.isEnabled = binding.privacySwitch.isChecked
         updateStatusText(getString(R.string.update_status_idle))
         maybeAutoCheckUpdates()
         initEndCallKeyUi()
@@ -573,6 +582,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun openAccessibilitySettings() {
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        startActivity(intent)
+    }
+
+    private fun isLauncherEnabled(): Boolean {
+        val component = ComponentName(
+            this,
+            "com.screenreaders.blindroid.launcher.LauncherActivity"
+        )
+        val state = packageManager.getComponentEnabledSetting(component)
+        return state == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+    }
+
+    private fun setLauncherEnabled(enabled: Boolean) {
+        val component = ComponentName(
+            this,
+            "com.screenreaders.blindroid.launcher.LauncherActivity"
+        )
+        packageManager.setComponentEnabledSetting(
+            component,
+            if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
+    }
+
+    private fun openHomeSettings() {
+        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent(Settings.ACTION_HOME_SETTINGS)
+        } else {
+            Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS)
+        }
         startActivity(intent)
     }
 

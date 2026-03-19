@@ -24,6 +24,35 @@
             android:layout_marginTop="16dp"
             android:text="@string/role_button_request" />
 
+        <TextView
+            android:id="@+id/launcherLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/launcherSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_enable" />
+
+        <TextView
+            android:id="@+id/launcherHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_hint" />
+
+        <Button
+            android:id="@+id/launcherSettingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings" />
+
         <EditText
             android:id="@+id/numberInput"
             android:layout_width="match_parent"

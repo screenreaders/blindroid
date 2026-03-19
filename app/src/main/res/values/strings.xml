@@ -41,6 +41,10 @@
     <string name="switch_unlocked">Czytaj także po odblokowaniu</string>
     <string name="switch_privacy">Tryb prywatny: tylko nadawca/aplikacja</string>
     <string name="switch_privacy_title">Prywatny: czytaj tylko tytuł powiadomień</string>
+    <string name="launcher_label">Launcher</string>
+    <string name="launcher_enable">Włącz Blindroid Launcher</string>
+    <string name="launcher_settings">Ustaw jako domyślny launcher</string>
+    <string name="launcher_hint">Po włączeniu wybierz Blindroid Launcher jako domyślny ekran główny.</string>
     <string name="notification_access_button">Włącz dostęp do powiadomień</string>
     <string name="notification_access_granted">Dostęp do powiadomień: OK</string>
     <string name="update_label">Aktualizacje</string>
