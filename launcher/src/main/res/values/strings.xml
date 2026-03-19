@@ -1,4 +1,8 @@
 <resources>
     <string name="launcher_name">Blindroid Launcher</string>
-    <string name="launcher_title">Aplikacje</string>
+    <string name="launcher_title">Ekran główny</string>
+    <string name="launcher_all_apps">Wszystkie aplikacje</string>
+    <string name="launcher_search_hint">Szukaj</string>
+    <string name="launcher_search_apps_hint">Szukaj aplikacji</string>
+    <string name="launcher_all_apps_button">Wszystkie aplikacje</string>
 </resources>

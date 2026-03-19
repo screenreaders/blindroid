@@ -14,6 +14,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".AllAppsActivity"
+            android:exported="false"
+            android:label="@string/launcher_all_apps"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

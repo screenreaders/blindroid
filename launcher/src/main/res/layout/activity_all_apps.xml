@@ -9,23 +9,16 @@
         android:id="@+id/searchInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/launcher_search_hint"
+        android:hint="@string/launcher_search_apps_hint"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:singleLine="true" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pinnedGrid"
+        android:id="@+id/appsGrid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="12dp" />
-
-    <Button
-        android:id="@+id/allAppsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/launcher_all_apps_button" />
 
 </LinearLayout>

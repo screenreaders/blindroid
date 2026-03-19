@@ -1,53 +1,95 @@
 package com.screenreaders.blindroid.launcher
 
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.text.Collator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LauncherActivity : AppCompatActivity() {
-    private lateinit var appsList: ListView
-    private var entries: List<AppEntry> = emptyList()
+    private lateinit var searchInput: EditText
+    private lateinit var pinnedGrid: RecyclerView
+    private lateinit var allAppsButton: Button
+    private lateinit var adapter: AppAdapter
+    private var allApps: List<AppEntry> = emptyList()
+    private var pinned: List<AppEntry> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
-        appsList = findViewById(R.id.appsList)
+        searchInput = findViewById(R.id.searchInput)
+        pinnedGrid = findViewById(R.id.pinnedGrid)
+        allAppsButton = findViewById(R.id.allAppsButton)
+
+        pinnedGrid.layoutManager = GridLayoutManager(this, 4)
+        adapter = AppAdapter(emptyList(), ::launchApp) { entry ->
+            val removed = LauncherStore.removePinned(this, entry.component)
+            if (removed) {
+                Toast.makeText(this, "Usunięto z ekranu głównego", Toast.LENGTH_SHORT).show()
+                refreshPinned()
+            }
+        }
+        pinnedGrid.adapter = adapter
+
+        allAppsButton.setOnClickListener {
+            startActivity(Intent(this, AllAppsActivity::class.java))
+        }
+
+        searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                launchSearch(searchInput.text?.toString())
+                true
+            } else {
+                false
+            }
+        }
+
         loadApps()
     }
 
-    private fun loadApps() {
-        val pm = packageManager
-        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-        val resolveInfos = pm.queryIntentActivities(intent, 0)
-        val currentPackage = packageName
-        val list = resolveInfos.mapNotNull { info ->
-            val packageName = info.activityInfo.packageName
-            if (packageName == currentPackage) return@mapNotNull null
-            val launchIntent = pm.getLaunchIntentForPackage(packageName) ?: return@mapNotNull null
-            val label = info.loadLabel(pm)?.toString() ?: packageName
-            AppEntry(label, launchIntent)
-        }
-        val collator = Collator.getInstance()
-        entries = list.sortedWith(compareBy(collator) { it.label })
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            entries.map { it.label }
-        )
-        appsList.adapter = adapter
-        appsList.setOnItemClickListener { _, _, position, _ ->
-            val entry = entries.getOrNull(position) ?: return@setOnItemClickListener
-            val launch = entry.intent
-            launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(launch)
-        }
+    override fun onResume() {
+        super.onResume()
+        refreshPinned()
     }
 
-    private data class AppEntry(
-        val label: String,
-        val intent: Intent
-    )
+    private fun loadApps() {
+        Thread {
+            val apps = LauncherStore.loadAllApps(this)
+            runOnUiThread {
+                allApps = apps
+                refreshPinned()
+            }
+        }.start()
+    }
+
+    private fun refreshPinned() {
+        if (allApps.isEmpty()) return
+        pinned = LauncherStore.loadPinned(this, allApps)
+        adapter.submit(pinned)
+    }
+
+    private fun launchApp(entry: AppEntry) {
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            .setComponent(entry.component)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    private fun launchSearch(query: String?) {
+        val text = query?.trim().orEmpty()
+        val intent = Intent(Intent.ACTION_WEB_SEARCH)
+        if (text.isNotBlank()) {
+            intent.putExtra(SearchManager.QUERY, text)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, "Brak aplikacji wyszukiwania", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
