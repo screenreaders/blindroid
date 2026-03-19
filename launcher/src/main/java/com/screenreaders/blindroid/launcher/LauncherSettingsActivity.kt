@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -23,12 +24,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var feedModeSpinner: Spinner
     private lateinit var searchBarSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
+    private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var themeGroup: RadioGroup
     private lateinit var iconStyleGroup: RadioGroup
     private lateinit var wallpaperButton: Button
     private lateinit var closeButton: Button
     private lateinit var soundFeedbackSwitch: Switch
+    private lateinit var soundVolumeSeek: android.widget.SeekBar
+    private lateinit var soundVolumeValue: TextView
+    private lateinit var soundSchemeSpinner: Spinner
     private lateinit var backupButton: Button
     private lateinit var restoreButton: Button
     private lateinit var gestureTwoTapSpinner: Spinner
@@ -76,12 +81,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
         feedModeSpinner = findViewById(R.id.feedModeSpinner)
         searchBarSwitch = findViewById(R.id.searchBarSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
+        wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         themeGroup = findViewById(R.id.themeGroup)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
         wallpaperButton = findViewById(R.id.wallpaperButton)
         closeButton = findViewById(R.id.closeSettingsButton)
         soundFeedbackSwitch = findViewById(R.id.soundFeedbackSwitch)
+        soundVolumeSeek = findViewById(R.id.soundVolumeSeek)
+        soundVolumeValue = findViewById(R.id.soundVolumeValue)
+        soundSchemeSpinner = findViewById(R.id.soundSchemeSpinner)
         backupButton = findViewById(R.id.backupButton)
         restoreButton = findViewById(R.id.restoreButton)
         gestureTwoTapSpinner = findViewById(R.id.gestureTwoTapSpinner)
@@ -128,6 +137,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         bindFeedModeSpinner(LauncherPrefs.getFeedMode(this))
         searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
+        wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
         when (LauncherPrefs.getTheme(this)) {
             1 -> themeGroup.check(R.id.themeDark)
@@ -140,6 +150,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
             else -> iconStyleGroup.check(R.id.iconStyleNone)
         }
         soundFeedbackSwitch.isChecked = LauncherPrefs.isSoundFeedbackEnabled(this)
+        bindSoundVolume()
+        bindSoundScheme()
         bindGestureSpinners()
         applySuperSimpleState(superSimpleSwitch.isChecked)
         applyLayoutModeState()
@@ -220,6 +232,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        wallpaperParallaxSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setWallpaperParallaxEnabled(this, isChecked)
+            toastSaved()
+        }
+
         dockVisibleSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDockVisible(this, isChecked)
             toastSaved()
@@ -256,6 +273,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         soundFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setSoundFeedbackEnabled(this, isChecked)
+            soundVolumeSeek.isEnabled = isChecked
+            soundSchemeSpinner.isEnabled = isChecked
             toastSaved()
         }
 
@@ -275,6 +294,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         setGroupEnabled(themeGroup, !enabled)
         setGroupEnabled(iconStyleGroup, !enabled)
         gnLayoutSwitch.isEnabled = !enabled
+        wallpaperParallaxSwitch.isEnabled = !enabled
     }
 
     private fun applyLayoutModeState() {
@@ -361,6 +381,47 @@ class LauncherSettingsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 val action = gestureActions[position].id
                 onSelected(action)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+    }
+
+    private fun bindSoundVolume() {
+        val current = LauncherPrefs.getSoundFeedbackVolume(this)
+        soundVolumeSeek.max = 100
+        soundVolumeSeek.progress = current
+        soundVolumeValue.text = "${current}%"
+        soundVolumeSeek.isEnabled = soundFeedbackSwitch.isChecked
+        soundVolumeSeek.setOnSeekBarChangeListener(object : android.widget.SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
+                LauncherPrefs.setSoundFeedbackVolume(this@LauncherSettingsActivity, progress)
+                soundVolumeValue.text = "${progress}%"
+            }
+
+            override fun onStartTrackingTouch(seekBar: android.widget.SeekBar?) = Unit
+
+            override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {
+                toastSaved()
+            }
+        })
+    }
+
+    private fun bindSoundScheme() {
+        val labels = listOf(
+            getString(R.string.launcher_sound_scheme_classic),
+            getString(R.string.launcher_sound_scheme_soft),
+            getString(R.string.launcher_sound_scheme_sharp)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        soundSchemeSpinner.adapter = adapter
+        soundSchemeSpinner.setSelection(LauncherPrefs.getSoundFeedbackScheme(this).coerceIn(0, 2), false)
+        soundSchemeSpinner.isEnabled = soundFeedbackSwitch.isChecked
+        soundSchemeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                LauncherPrefs.setSoundFeedbackScheme(this@LauncherSettingsActivity, position)
                 toastSaved()
             }
 

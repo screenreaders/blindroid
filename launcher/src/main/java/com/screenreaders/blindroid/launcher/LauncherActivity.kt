@@ -122,6 +122,10 @@ class LauncherActivity : AppCompatActivity() {
                 updatePageIndicator()
                 maybeAutoOpenExternalFeed(position)
             }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                updateWallpaperParallax(position, positionOffset)
+            }
         })
 
         hotseatAdapter = HomeItemAdapter(
@@ -881,6 +885,22 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun isGoogleAppAvailable(): Boolean {
         return packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+    }
+
+    private fun updateWallpaperParallax(position: Int, offset: Float) {
+        if (!LauncherPrefs.isWallpaperParallaxEnabled(this)) return
+        val count = homeAdapter.itemCount
+        if (count <= 1) return
+        val total = (position + offset).coerceIn(0f, (count - 1).toFloat())
+        val progress = total / (count - 1).toFloat()
+        try {
+            val wm = android.app.WallpaperManager.getInstance(this)
+            val token = window.decorView.windowToken ?: return
+            wm.setWallpaperOffsetSteps(1f / (count - 1), 0f)
+            wm.setWallpaperOffsets(token, progress, 0.5f)
+        } catch (_: Exception) {
+            // Ignore
+        }
     }
 
     private fun openModuleShortcut(id: String) {

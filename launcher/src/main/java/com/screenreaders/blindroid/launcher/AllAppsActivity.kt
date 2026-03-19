@@ -114,8 +114,14 @@ class AllAppsActivity : AppCompatActivity() {
         appWidgetManager = AppWidgetManager.getInstance(this)
         appWidgetHost = AppWidgetHost(this, hostId)
 
-        addWidgetButton.setOnClickListener { pickWidget() }
-        listWidgetButton.setOnClickListener { showWidgetList() }
+        addWidgetButton.setOnClickListener {
+            soundFeedback?.playTap()
+            pickWidget()
+        }
+        listWidgetButton.setOnClickListener {
+            soundFeedback?.playTap()
+            showWidgetList()
+        }
         gridWidgetsSwitch.setOnCheckedChangeListener { _, isChecked ->
             widgetsGrid.columnCount = if (isChecked) 2 else 1
             reloadWidgets()

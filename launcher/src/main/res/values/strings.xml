@@ -79,6 +79,7 @@
     <string name="launcher_feed_mode_google">Google (jeśli zainstalowany)</string>
     <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
+    <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
     <string name="launcher_settings_theme">Motyw launchera</string>
     <string name="launcher_settings_theme_light">Jasny</string>
@@ -111,6 +112,11 @@
     <string name="launcher_flashlight_failed">Nie udało się włączyć latarki</string>
     <string name="launcher_flashlight_permission">Wymagane pozwolenie na aparat</string>
     <string name="launcher_settings_sound_feedback">Dźwięki gestów i akcji</string>
+    <string name="launcher_settings_sound_volume">Głośność dźwięków launchera</string>
+    <string name="launcher_settings_sound_scheme">Schemat dźwięków</string>
+    <string name="launcher_sound_scheme_classic">Klasyczny</string>
+    <string name="launcher_sound_scheme_soft">Miękki</string>
+    <string name="launcher_sound_scheme_sharp">Wyraźny</string>
     <string name="launcher_backup">Utwórz kopię ustawień launchera</string>
     <string name="launcher_restore">Przywróć ustawienia launchera</string>
     <string name="launcher_backup_ok">Kopia zapisana</string>

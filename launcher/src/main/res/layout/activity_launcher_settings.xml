@@ -53,6 +53,13 @@
             android:layout_marginTop="4dp"
             android:text="@string/launcher_settings_gn_layout" />
 
+        <Switch
+            android:id="@+id/wallpaperParallaxSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_wallpaper_parallax" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -400,6 +407,37 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/launcher_settings_sound_feedback" />
+
+        <TextView
+            android:id="@+id/soundVolumeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_sound_volume" />
+
+        <TextView
+            android:id="@+id/soundVolumeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80%" />
+
+        <SeekBar
+            android:id="@+id/soundVolumeSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/soundSchemeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_sound_scheme" />
+
+        <Spinner
+            android:id="@+id/soundSchemeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/backupButton"

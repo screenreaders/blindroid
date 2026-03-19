@@ -20,7 +20,10 @@ object LauncherPrefs {
     private const val KEY_ICON_STYLE = "icon_style"
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
+    private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
+    private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
     private const val KEY_GN_LAYOUT = "gn_layout"
+    private const val KEY_WALLPAPER_PARALLAX = "wallpaper_parallax"
     private const val KEY_GESTURE_TWO_TAP = "gesture_two_tap"
     private const val KEY_GESTURE_TWO_UP = "gesture_two_up"
     private const val KEY_GESTURE_TWO_DOWN = "gesture_two_down"
@@ -58,6 +61,10 @@ object LauncherPrefs {
     const val ACTION_FLASHLIGHT = 12
     const val ACTION_OPEN_DIALER = 13
     const val ACTION_OPEN_MESSAGES = 14
+
+    const val SOUND_SCHEME_CLASSIC = 0
+    const val SOUND_SCHEME_SOFT = 1
+    const val SOUND_SCHEME_SHARP = 2
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -157,11 +164,36 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_SOUND_FEEDBACK, enabled).apply()
     }
 
+    fun getSoundFeedbackVolume(context: Context): Int =
+        prefs(context).getInt(KEY_SOUND_FEEDBACK_VOLUME, 80).coerceIn(0, 100)
+
+    fun setSoundFeedbackVolume(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SOUND_FEEDBACK_VOLUME, value.coerceIn(0, 100)).apply()
+    }
+
+    fun getSoundFeedbackScheme(context: Context): Int =
+        prefs(context).getInt(KEY_SOUND_FEEDBACK_SCHEME, SOUND_SCHEME_CLASSIC)
+            .coerceIn(SOUND_SCHEME_CLASSIC, SOUND_SCHEME_SHARP)
+
+    fun setSoundFeedbackScheme(context: Context, scheme: Int) {
+        prefs(context).edit().putInt(
+            KEY_SOUND_FEEDBACK_SCHEME,
+            scheme.coerceIn(SOUND_SCHEME_CLASSIC, SOUND_SCHEME_SHARP)
+        ).apply()
+    }
+
     fun isGnLayoutEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_GN_LAYOUT, false)
 
     fun setGnLayoutEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_GN_LAYOUT, enabled).apply()
+    }
+
+    fun isWallpaperParallaxEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_WALLPAPER_PARALLAX, true)
+
+    fun setWallpaperParallaxEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_WALLPAPER_PARALLAX, enabled).apply()
     }
 
     fun getGestureTwoFingerTap(context: Context): Int =
