@@ -61,6 +61,13 @@
             android:text="@string/launcher_settings_google_search" />
 
         <Switch
+            android:id="@+id/googleVoiceSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_google_voice" />
+
+        <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

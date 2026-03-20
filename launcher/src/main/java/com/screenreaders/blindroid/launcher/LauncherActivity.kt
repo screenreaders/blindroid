@@ -344,12 +344,32 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun startVoiceSearch() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        val googleAvailable = isGoogleAppAvailable()
+        val preferGoogle = LauncherPrefs.isGoogleVoiceEnabled(this) && googleAvailable
+        val intent = if (preferGoogle) {
+            Intent(RecognizerIntent.ACTION_WEB_SEARCH).apply {
+                setPackage("com.google.android.googlequicksearchbox")
+            }
+        } else {
+            Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        }
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_settings_voice_search))
         try {
             startActivityForResult(intent, voiceRequestCode)
         } catch (_: Exception) {
+            if (preferGoogle) {
+                val fallback = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                    putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_settings_voice_search))
+                }
+                try {
+                    startActivityForResult(fallback, voiceRequestCode)
+                    return
+                } catch (_: Exception) {
+                    // fall through
+                }
+            }
             Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
         }
     }

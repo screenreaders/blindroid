@@ -25,6 +25,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var feedAutoOpenSwitch: Switch
     private lateinit var searchBarSwitch: Switch
     private lateinit var googleSearchSwitch: Switch
+    private lateinit var googleVoiceSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -86,6 +87,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         feedAutoOpenSwitch = findViewById(R.id.feedAutoOpenSwitch)
         searchBarSwitch = findViewById(R.id.searchBarSwitch)
         googleSearchSwitch = findViewById(R.id.googleSearchSwitch)
+        googleVoiceSwitch = findViewById(R.id.googleVoiceSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -145,6 +147,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         feedAutoOpenSwitch.isChecked = LauncherPrefs.isFeedAutoOpenEnabled(this)
         searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
         googleSearchSwitch.isChecked = LauncherPrefs.isGoogleSearchEnabled(this)
+        googleVoiceSwitch.isChecked = LauncherPrefs.isGoogleVoiceEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -167,6 +170,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         applyLayoutModeState()
         feedModeSpinner.isEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
         googleSearchSwitch.isEnabled = isGoogleAppAvailable()
+        googleVoiceSwitch.isEnabled = isGoogleAppAvailable()
         updateFeedAutoOpenState()
     }
 
@@ -252,6 +256,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
                 return@setOnCheckedChangeListener
             }
             LauncherPrefs.setGoogleSearchEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        googleVoiceSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!isGoogleAppAvailable() && isChecked) {
+                googleVoiceSwitch.isChecked = false
+                toastSaved()
+                return@setOnCheckedChangeListener
+            }
+            LauncherPrefs.setGoogleVoiceEnabled(this, isChecked)
             toastSaved()
         }
 

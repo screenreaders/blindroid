@@ -21,6 +21,7 @@ object LauncherPrefs {
     private const val KEY_ICON_STYLE = "icon_style"
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_GOOGLE_SEARCH = "google_search"
+    private const val KEY_GOOGLE_VOICE = "google_voice"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -176,6 +177,13 @@ object LauncherPrefs {
 
     fun setGoogleSearchEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_GOOGLE_SEARCH, enabled).apply()
+    }
+
+    fun isGoogleVoiceEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_GOOGLE_VOICE, true)
+
+    fun setGoogleVoiceEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_GOOGLE_VOICE, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =
