@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 
 class OnboardingActivity : AppCompatActivity() {
     private lateinit var dialerStatus: TextView
@@ -38,32 +39,41 @@ class OnboardingActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.onboardDialerButton).setOnClickListener {
             requestDialerRole()
+            DiagnosticLog.log(this, "onboarding_dialer_request")
         }
         findViewById<Button>(R.id.onboardContactsButton).setOnClickListener {
             requestContactsPermission()
+            DiagnosticLog.log(this, "onboarding_contacts_request")
         }
         findViewById<Button>(R.id.onboardSmsButton).setOnClickListener {
             requestSmsPermission()
+            DiagnosticLog.log(this, "onboarding_sms_request")
         }
         findViewById<Button>(R.id.onboardNotificationsButton).setOnClickListener {
             openNotificationAccessSettings()
+            DiagnosticLog.log(this, "onboarding_notifications_request")
         }
         findViewById<Button>(R.id.onboardAccessibilityButton).setOnClickListener {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            DiagnosticLog.log(this, "onboarding_accessibility_open")
         }
         findViewById<Button>(R.id.onboardExactAlarmButton).setOnClickListener {
             openExactAlarmSettings()
+            DiagnosticLog.log(this, "onboarding_exact_alarm_request")
         }
         findViewById<Button>(R.id.onboardUpdatesButton).setOnClickListener {
             openUpdates()
+            DiagnosticLog.log(this, "onboarding_updates_check")
         }
         findViewById<Button>(R.id.onboardFinishButton).setOnClickListener {
             Prefs.setOnboardingDone(this, true)
+            DiagnosticLog.log(this, "onboarding_finish")
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
         findViewById<Button>(R.id.onboardSkipButton).setOnClickListener {
             Prefs.setOnboardingDone(this, true)
+            DiagnosticLog.log(this, "onboarding_skip")
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

@@ -46,6 +46,7 @@ object Prefs {
     private const val KEY_CRASH_CHARGING_ONLY = "crash_charging_only"
     private const val KEY_CRASH_CLIENT_ID = "crash_client_id"
     private const val KEY_ONBOARDING_DONE = "onboarding_done"
+    private const val KEY_DIAGNOSTICS = "diagnostics_enabled"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -148,6 +149,13 @@ object Prefs {
 
     fun setOnboardingDone(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_ONBOARDING_DONE, value).apply()
+    }
+
+    fun isDiagnosticsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_DIAGNOSTICS, false)
+
+    fun setDiagnosticsEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_DIAGNOSTICS, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

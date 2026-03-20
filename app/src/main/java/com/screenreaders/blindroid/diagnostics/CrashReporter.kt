@@ -195,6 +195,12 @@ object CrashReporter {
             sb.appendLine("battery=${getBatteryPercent(context)}")
             sb.appendLine("charging=${isCharging(context)}")
         }
+        val diagnostics = DiagnosticLog.dump(context)
+        if (diagnostics.isNotEmpty()) {
+            sb.appendLine()
+            sb.appendLine("Diagnostics:")
+            diagnostics.forEach { sb.appendLine(it) }
+        }
         return sb.toString()
     }
 

@@ -36,8 +36,11 @@ import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
 import com.screenreaders.blindroid.document.DocumentAssistActivity
 import com.screenreaders.blindroid.diagnostics.CrashReporter
+import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -101,9 +104,11 @@ class MainActivity : AppCompatActivity() {
         binding.chimeSwitch.isChecked = Prefs.isChimeEnabled(this)
         binding.launcherSwitch.isChecked = isLauncherEnabled()
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
+        binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceEnabled(this, isChecked)
+            logSettingChange("announce", isChecked)
             if (isChecked) {
                 requestContactsPermission()
             }
@@ -111,30 +116,37 @@ class MainActivity : AppCompatActivity() {
 
         binding.speakerSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAutoSpeakerEnabled(this, isChecked)
+            logSettingChange("speaker", isChecked)
         }
 
         binding.callWaitingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceDuringCallEnabled(this, isChecked)
+            logSettingChange("call_waiting", isChecked)
         }
 
         binding.callStateSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCallStateAnnounceEnabled(this, isChecked)
+            logSettingChange("call_state", isChecked)
         }
 
         binding.callVibrateSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCallStateVibrateEnabled(this, isChecked)
+            logSettingChange("call_vibrate", isChecked)
         }
 
         binding.endCallVibrateSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setEndCallVibrateEnabled(this, isChecked)
+            logSettingChange("end_call_vibrate", isChecked)
         }
 
         binding.voiceCommandsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setVoiceCommandsEnabled(this, isChecked)
+            logSettingChange("voice_commands", isChecked)
         }
 
         binding.smsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setSmsReadEnabled(this, isChecked)
+            logSettingChange("sms_read", isChecked)
             if (isChecked) {
                 requestSmsPermission()
             }
@@ -142,6 +154,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNotificationsReadEnabled(this, isChecked)
+            logSettingChange("notifications_read", isChecked)
             if (isChecked && !isNotificationAccessEnabled()) {
                 openNotificationAccessSettings()
             }
@@ -149,27 +162,33 @@ class MainActivity : AppCompatActivity() {
 
         binding.unlockedSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setReadWhenUnlockedEnabled(this, isChecked)
+            logSettingChange("read_unlocked", isChecked)
         }
 
         binding.privacySwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setPrivacyModeEnabled(this, isChecked)
+            logSettingChange("privacy_mode", isChecked)
             binding.privacyTitleSwitch.isEnabled = isChecked
         }
 
         binding.privacyTitleSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setPrivacyTitleOnlyEnabled(this, isChecked)
+            logSettingChange("privacy_title_only", isChecked)
         }
 
         binding.launcherSwitch.setOnCheckedChangeListener { _, isChecked ->
             setLauncherEnabled(isChecked)
+            logSettingChange("launcher", isChecked)
         }
 
         binding.moduleShortcutsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setModuleShortcutsEnabled(this, isChecked)
+            logSettingChange("module_shortcuts", isChecked)
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAutoUpdateEnabled(this, isChecked)
+            logSettingChange("auto_update", isChecked)
             if (isChecked) {
                 maybeAutoCheckUpdates()
             }
@@ -185,6 +204,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.chimeSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setChimeEnabled(this, isChecked)
+            logSettingChange("chime", isChecked)
             if (isChecked) {
                 maybeRequestExactAlarmPermission()
                 ChimeScheduler.schedule(this)
@@ -206,6 +226,7 @@ class MainActivity : AppCompatActivity() {
         initChimeUi()
         initTtsUi()
         initCrashReportUi()
+        initSettingsTransferUi()
         handleDialIntent(intent)
         handleSectionIntent(intent)
     }
@@ -245,21 +266,31 @@ class MainActivity : AppCompatActivity() {
         binding.crashReportForegroundSwitch.isChecked = Prefs.isCrashForegroundOnly(this)
         binding.crashReportChargingSwitch.isChecked = Prefs.isCrashChargingOnly(this)
         binding.crashReportDeviceInfoSwitch.isChecked = Prefs.isCrashDeviceInfoEnabled(this)
+        binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
         binding.crashReportSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashReportingEnabled(this, isChecked)
+            logSettingChange("crash_reporting", isChecked)
             updateCrashReportControls()
         }
         binding.crashReportWifiSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashWifiOnly(this, isChecked)
+            logSettingChange("crash_wifi_only", isChecked)
         }
         binding.crashReportForegroundSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashForegroundOnly(this, isChecked)
+            logSettingChange("crash_foreground_only", isChecked)
         }
         binding.crashReportChargingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashChargingOnly(this, isChecked)
+            logSettingChange("crash_charging_only", isChecked)
         }
         binding.crashReportDeviceInfoSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashDeviceInfoEnabled(this, isChecked)
+            logSettingChange("crash_device_info", isChecked)
+        }
+        binding.diagnosticsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setDiagnosticsEnabled(this, isChecked)
+            logSettingChange("diagnostics", isChecked)
         }
 
         binding.crashReportShareButton.setOnClickListener {
@@ -320,6 +351,107 @@ class MainActivity : AppCompatActivity() {
             updateCrashReportStatus()
             updateCrashReportControls()
         }, 1500)
+    }
+
+    private fun logSettingChange(name: String, value: Any) {
+        DiagnosticLog.log(this, "setting $name=$value")
+    }
+
+    private fun initSettingsTransferUi() {
+        binding.exportSettingsButton.setOnClickListener { exportSettings() }
+        binding.importSettingsButton.setOnClickListener { importSettings() }
+    }
+
+    private fun exportSettings() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/json"
+            putExtra(Intent.EXTRA_TITLE, "blindroid-settings.json")
+        }
+        startActivityForResult(intent, REQ_EXPORT_SETTINGS)
+    }
+
+    private fun importSettings() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/json"
+        }
+        startActivityForResult(intent, REQ_IMPORT_SETTINGS)
+    }
+
+    private fun exportSettingsToUri(uri: Uri) {
+        val prefs = getSharedPreferences("blindroid_prefs", Context.MODE_PRIVATE)
+        val items = JSONArray()
+        for ((key, value) in prefs.all) {
+            if (EXPORT_EXCLUDE_KEYS.contains(key)) continue
+            val obj = JSONObject()
+            obj.put("key", key)
+            when (value) {
+                is Boolean -> {
+                    obj.put("type", "bool")
+                    obj.put("value", value)
+                }
+                is Int -> {
+                    obj.put("type", "int")
+                    obj.put("value", value)
+                }
+                is Long -> {
+                    obj.put("type", "long")
+                    obj.put("value", value)
+                }
+                is Float -> {
+                    obj.put("type", "float")
+                    obj.put("value", value.toDouble())
+                }
+                is String -> {
+                    obj.put("type", "string")
+                    obj.put("value", value)
+                }
+                else -> continue
+            }
+            items.put(obj)
+        }
+        val root = JSONObject()
+        root.put("version", 1)
+        root.put("items", items)
+        try {
+            contentResolver.openOutputStream(uri)?.use { out ->
+                out.write(root.toString().toByteArray(Charsets.UTF_8))
+            } ?: throw IllegalStateException("No output stream")
+            Toast.makeText(this, R.string.settings_export_done, Toast.LENGTH_SHORT).show()
+            DiagnosticLog.log(this, "settings_export")
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.settings_export_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun importSettingsFromUri(uri: Uri) {
+        try {
+            val text = contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+                ?: throw IllegalStateException("No input stream")
+            val root = JSONObject(text)
+            val items = root.optJSONArray("items") ?: JSONArray()
+            val prefs = getSharedPreferences("blindroid_prefs", Context.MODE_PRIVATE)
+            val editor = prefs.edit()
+            for (i in 0 until items.length()) {
+                val obj = items.optJSONObject(i) ?: continue
+                val key = obj.optString("key")
+                if (key.isBlank() || EXPORT_EXCLUDE_KEYS.contains(key)) continue
+                when (obj.optString("type")) {
+                    "bool" -> editor.putBoolean(key, obj.optBoolean("value"))
+                    "int" -> editor.putInt(key, obj.optInt("value"))
+                    "long" -> editor.putLong(key, obj.optLong("value"))
+                    "float" -> editor.putFloat(key, obj.optDouble("value").toFloat())
+                    "string" -> editor.putString(key, obj.optString("value"))
+                }
+            }
+            editor.apply()
+            Toast.makeText(this, R.string.settings_import_done, Toast.LENGTH_SHORT).show()
+            DiagnosticLog.log(this, "settings_import")
+            recreate()
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.settings_import_failed, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun handleDialIntent(intent: Intent) {
@@ -514,6 +646,12 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_ROLE) {
             updateRoleButton()
+        }
+        if (resultCode != RESULT_OK || data?.data == null) return
+        val uri = data.data ?: return
+        when (requestCode) {
+            REQ_EXPORT_SETTINGS -> exportSettingsToUri(uri)
+            REQ_IMPORT_SETTINGS -> importSettingsFromUri(uri)
         }
     }
 
@@ -895,6 +1033,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkForUpdates(manual: Boolean) {
         if (checkingUpdates) return
         checkingUpdates = true
+        DiagnosticLog.log(this, "update_check manual=$manual")
         updateStatusText(getString(R.string.update_status_checking))
         updateExecutor.execute {
             val result = try {
@@ -1017,6 +1156,8 @@ class MainActivity : AppCompatActivity() {
         private const val REQ_CALL_PHONE = 101
         private const val REQ_CONTACTS = 102
         private const val REQ_SMS = 103
+        private const val REQ_EXPORT_SETTINGS = 301
+        private const val REQ_IMPORT_SETTINGS = 302
         const val EXTRA_SECTION = "extra_section"
         const val EXTRA_CHECK_UPDATES = "extra_check_updates"
         const val SECTION_LAUNCHER = "launcher"
@@ -1027,6 +1168,14 @@ class MainActivity : AppCompatActivity() {
         const val SECTION_LIGHT = "light"
         const val SECTION_CHIME = "chime"
         const val SECTION_UPDATES = "updates"
+
+        private val EXPORT_EXCLUDE_KEYS = setOf(
+            "update_download_id",
+            "last_update_check",
+            "crash_client_id",
+            "onboarding_done",
+            "recent_notifications"
+        )
 
         fun createUpdatesIntent(context: Context, checkNow: Boolean): Intent {
             return Intent(context, MainActivity::class.java)
