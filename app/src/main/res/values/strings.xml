@@ -175,9 +175,9 @@
     <string name="light_direction_right">Światło z prawej</string>
     <string name="light_direction_even">Światło równomierne</string>
     <string name="light_hint">Tryb kierunku używa kamery i zużywa więcej baterii.</string>
-    <string name="navigation_label">Nawigacja</string>
-    <string name="navigation_open">Otwórz nawigację tekstową</string>
-    <string name="navigation_title">Nawigacja tekstowa</string>
+    <string name="navigation_label">Mówiąca mapa</string>
+    <string name="navigation_open">Otwórz mówiącą mapę</string>
+    <string name="navigation_title">Mówiąca mapa</string>
     <string name="navigation_place_hint">Ulica / miejsce docelowe</string>
     <string name="navigation_city_hint">Miejscowość (wymagana)</string>
     <string name="navigation_mode_driving">Tryb samochód</string>
