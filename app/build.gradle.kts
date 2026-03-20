@@ -74,6 +74,7 @@ dependencies {
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("com.google.mlkit:face-detection:16.1.5")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
     implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0")
     implementation("org.tensorflow:tensorflow-lite:2.14.0")

@@ -179,6 +179,19 @@
             android:text="@string/low_vision_enable" />
 
         <TextView
+            android:id="@+id/lowVisionPresetLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/low_vision_preset_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/lowVisionPresetSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/lowVisionThemeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -410,6 +423,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/documents_open" />
+
+        <TextView
+            android:id="@+id/faceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/section_face"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/faceSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/face_enable" />
+
+        <Button
+            android:id="@+id/faceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/face_open" />
+
+        <TextView
+            android:id="@+id/faceHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/face_hint" />
 
         <TextView
             android:id="@+id/currencyLabel"

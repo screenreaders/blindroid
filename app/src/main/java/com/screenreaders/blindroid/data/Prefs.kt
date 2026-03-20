@@ -51,6 +51,8 @@ object Prefs {
     private const val KEY_LOW_VISION_STYLE = "low_vision_style"
     private const val KEY_LOW_VISION_INVERT = "low_vision_invert"
     private const val KEY_LOW_VISION_SCALE = "low_vision_scale"
+    private const val KEY_LOW_VISION_PRESET = "low_vision_preset"
+    private const val KEY_FACE_ASSIST = "face_assist_enabled"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -188,6 +190,20 @@ object Prefs {
 
     fun setLowVisionScale(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_LOW_VISION_SCALE, value.coerceIn(100, 150)).apply()
+    }
+
+    fun getLowVisionPreset(context: Context): Int =
+        prefs(context).getInt(KEY_LOW_VISION_PRESET, 0)
+
+    fun setLowVisionPreset(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_LOW_VISION_PRESET, value).apply()
+    }
+
+    fun isFaceAssistEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FACE_ASSIST, true)
+
+    fun setFaceAssistEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FACE_ASSIST, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

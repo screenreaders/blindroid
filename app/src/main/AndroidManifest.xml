@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-feature
         android:name="android.hardware.sensor.proximity"
         android:required="false" />
@@ -50,6 +52,13 @@
 
         <activity
             android:name=".document.DocumentAssistActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".face.FaceAssistActivity"
             android:exported="false"
             android:showWhenLocked="true"
             android:turnScreenOn="true"

@@ -31,5 +31,14 @@ data class FeedData(
     val showDnd: Boolean,
     val dndText: String?,
     val showRinger: Boolean,
-    val ringerText: String?
+    val ringerText: String?,
+    val showBluetooth: Boolean,
+    val bluetoothText: String?,
+    val bluetoothPermissionGranted: Boolean,
+    val showBrightness: Boolean,
+    val brightnessText: String?,
+    val showVolume: Boolean,
+    val volumeText: String?,
+    val showPower: Boolean,
+    val powerText: String?
 )

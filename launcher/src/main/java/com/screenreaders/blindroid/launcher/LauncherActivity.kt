@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.AlarmManager
 import android.app.SearchManager
 import android.app.admin.DevicePolicyManager
+import android.bluetooth.BluetoothManager
+import android.bluetooth.BluetoothProfile
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.ContentUris
@@ -17,11 +19,13 @@ import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.os.BatteryManager
 import android.app.ActivityManager
 import android.app.NotificationManager
 import android.os.Environment
+import android.os.PowerManager
 import android.os.StatFs
 import android.provider.AlarmClock
 import android.provider.CalendarContract
@@ -91,6 +95,7 @@ class LauncherActivity : AppCompatActivity() {
 
     private val flashPermissionRequestCode = 9201
     private val calendarPermissionRequestCode = 9202
+    private val bluetoothPermissionRequestCode = 9203
 
     private val voiceRequestCode = 4201
 
@@ -127,8 +132,11 @@ class LauncherActivity : AppCompatActivity() {
             ::requestCalendarPermission,
             ::openWeather,
             ::openBluetoothSettings,
+            ::requestBluetoothPermission,
             ::openNetworkSettings,
             ::openStorageSettings,
+            ::openDisplaySettings,
+            ::openBatterySettings,
             ::openDndSettings,
             ::openSoundSettings,
             ::openAllApps,
@@ -485,10 +493,15 @@ class LauncherActivity : AppCompatActivity() {
         val showRam = LauncherPrefs.isNowRamEnabled(this)
         val showDnd = LauncherPrefs.isNowDndEnabled(this)
         val showRinger = LauncherPrefs.isNowRingerEnabled(this)
+        val showBluetooth = LauncherPrefs.isNowBluetoothEnabled(this)
+        val showBrightness = LauncherPrefs.isNowBrightnessEnabled(this)
+        val showVolume = LauncherPrefs.isNowVolumeEnabled(this)
+        val showPower = LauncherPrefs.isNowPowerEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
         ) == PackageManager.PERMISSION_GRANTED
+        val bluetoothPermissionGranted = isBluetoothPermissionGranted()
         val alarmText = if (showAlarm) getNextAlarmText() else null
         val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
         val weatherText = if (showWeather) getString(R.string.launcher_feed_weather_open) else null
@@ -496,6 +509,10 @@ class LauncherActivity : AppCompatActivity() {
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
         val networkText = if (showNetwork) getNetworkText() else null
         val storageText = if (showStorage) getStorageText() else null
+        val bluetoothText = if (showBluetooth) getBluetoothText(bluetoothPermissionGranted) else null
+        val brightnessText = if (showBrightness) getBrightnessText() else null
+        val volumeText = if (showVolume) getVolumeText() else null
+        val powerText = if (showPower) getPowerText() else null
         val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
         val airplaneText = if (showAirplane) getAirplaneText() else null
         val ramText = if (showRam) getRamText() else null
@@ -523,6 +540,15 @@ class LauncherActivity : AppCompatActivity() {
             networkText = networkText,
             showStorage = showStorage,
             storageText = storageText,
+            showBluetooth = showBluetooth,
+            bluetoothText = bluetoothText,
+            bluetoothPermissionGranted = bluetoothPermissionGranted,
+            showBrightness = showBrightness,
+            brightnessText = brightnessText,
+            showVolume = showVolume,
+            volumeText = volumeText,
+            showPower = showPower,
+            powerText = powerText,
             showTopApps = showTopApps,
             topApps = topApps,
             showAirplane = showAirplane,
@@ -677,6 +703,83 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
+    private fun getBluetoothText(permissionGranted: Boolean): String? {
+        if (!permissionGranted) {
+            return getString(R.string.launcher_feed_bluetooth_permission)
+        }
+        return try {
+            val manager = getSystemService(BluetoothManager::class.java)
+            val adapter = manager.adapter ?: return getString(R.string.launcher_feed_bluetooth_off)
+            if (!adapter.isEnabled) return getString(R.string.launcher_feed_bluetooth_off)
+            val devices = mutableListOf<android.bluetooth.BluetoothDevice>()
+            devices.addAll(manager.getConnectedDevices(BluetoothProfile.HEADSET))
+            devices.addAll(manager.getConnectedDevices(BluetoothProfile.A2DP))
+            devices.addAll(manager.getConnectedDevices(BluetoothProfile.GATT))
+            val names = devices.mapNotNull { device ->
+                val label = device.name?.takeIf { name -> name.isNotBlank() } ?: device.address
+                val battery = try {
+                    val method = device.javaClass.methods.firstOrNull { it.name == "getBatteryLevel" }
+                    val value = (method?.invoke(device) as? Int) ?: -1
+                    if (value in 0..100) value else -1
+                } catch (_: Exception) {
+                    -1
+                }
+                if (battery in 0..100) "$label ($battery%)" else label
+            }.distinct()
+            if (names.isEmpty()) {
+                getString(R.string.launcher_feed_bluetooth_on)
+            } else {
+                getString(R.string.launcher_feed_bluetooth_connected, names.joinToString(", "))
+            }
+        } catch (_: Exception) {
+            getString(R.string.launcher_feed_bluetooth_off)
+        }
+    }
+
+    private fun getBrightnessText(): String? {
+        return try {
+            val mode = Settings.System.getInt(
+                contentResolver,
+                Settings.System.SCREEN_BRIGHTNESS_MODE,
+                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
+            )
+            if (mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+                getString(R.string.launcher_feed_brightness_auto)
+            } else {
+                val value = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 0)
+                val percent = ((value / 255f) * 100f).toInt().coerceIn(0, 100)
+                getString(R.string.launcher_feed_brightness_text, percent)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun getVolumeText(): String? {
+        return try {
+            val audio = getSystemService(AudioManager::class.java)
+            val current = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
+            val max = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            val percent = if (max > 0) ((current.toFloat() / max.toFloat()) * 100f).toInt() else 0
+            getString(R.string.launcher_feed_volume_text, percent)
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun getPowerText(): String? {
+        return try {
+            val pm = getSystemService(PowerManager::class.java)
+            if (pm.isPowerSaveMode) {
+                getString(R.string.launcher_feed_power_on)
+            } else {
+                getString(R.string.launcher_feed_power_off)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     private fun bytesToHuman(bytes: Long): String {
         if (bytes < 1024) return "${bytes}B"
         var value = bytes.toDouble()
@@ -740,6 +843,17 @@ class LauncherActivity : AppCompatActivity() {
             }
         } catch (_: Exception) {
             null
+        }
+    }
+
+    private fun isBluetoothPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
         }
     }
 
@@ -1294,6 +1408,7 @@ class LauncherActivity : AppCompatActivity() {
             ModuleShortcuts.ID_DOCUMENTS -> openMainSection("documents")
             ModuleShortcuts.ID_CURRENCY -> openMainSection("currency")
             ModuleShortcuts.ID_LIGHT -> openMainSection("light")
+            ModuleShortcuts.ID_FACE -> openMainSection("face")
             ModuleShortcuts.ID_CHIME -> openMainSection("chime")
             ModuleShortcuts.ID_UPDATES -> openMainSection("updates")
             else -> Unit
@@ -1378,6 +1493,28 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
+    private fun openDisplaySettings() {
+        val intent = Intent(Settings.ACTION_DISPLAY_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openBatterySettings() {
+        val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            try {
+                startActivity(Intent(Settings.ACTION_SETTINGS))
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun openDndSettings() {
         try {
             startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
@@ -1421,6 +1558,22 @@ class LauncherActivity : AppCompatActivity() {
             this,
             arrayOf(Manifest.permission.READ_CALENDAR),
             calendarPermissionRequestCode
+        )
+    }
+
+    private fun requestBluetoothPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            openBluetoothSettings()
+            return
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+            openBluetoothSettings()
+            return
+        }
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+            bluetoothPermissionRequestCode
         )
     }
 
@@ -1518,6 +1671,15 @@ class LauncherActivity : AppCompatActivity() {
                 refreshHome()
                 applyUiConfig()
                 openCalendar()
+            }
+        } else if (requestCode == bluetoothPermissionRequestCode) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (granted) {
+                refreshHome()
+                applyUiConfig()
+                openBluetoothSettings()
+            } else {
+                Toast.makeText(this, R.string.launcher_feed_bluetooth_permission, Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -157,6 +157,34 @@
             android:text="@string/launcher_settings_now_ringer" />
 
         <Switch
+            android:id="@+id/nowBluetoothSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_bluetooth" />
+
+        <Switch
+            android:id="@+id/nowBrightnessSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_brightness" />
+
+        <Switch
+            android:id="@+id/nowVolumeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_volume" />
+
+        <Switch
+            android:id="@+id/nowPowerSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_power" />
+
+        <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -38,6 +38,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowRamSwitch: Switch
     private lateinit var nowDndSwitch: Switch
     private lateinit var nowRingerSwitch: Switch
+    private lateinit var nowBluetoothSwitch: Switch
+    private lateinit var nowBrightnessSwitch: Switch
+    private lateinit var nowVolumeSwitch: Switch
+    private lateinit var nowPowerSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -113,6 +117,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowRamSwitch = findViewById(R.id.nowRamSwitch)
         nowDndSwitch = findViewById(R.id.nowDndSwitch)
         nowRingerSwitch = findViewById(R.id.nowRingerSwitch)
+        nowBluetoothSwitch = findViewById(R.id.nowBluetoothSwitch)
+        nowBrightnessSwitch = findViewById(R.id.nowBrightnessSwitch)
+        nowVolumeSwitch = findViewById(R.id.nowVolumeSwitch)
+        nowPowerSwitch = findViewById(R.id.nowPowerSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -186,6 +194,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowRamSwitch.isChecked = LauncherPrefs.isNowRamEnabled(this)
         nowDndSwitch.isChecked = LauncherPrefs.isNowDndEnabled(this)
         nowRingerSwitch.isChecked = LauncherPrefs.isNowRingerEnabled(this)
+        nowBluetoothSwitch.isChecked = LauncherPrefs.isNowBluetoothEnabled(this)
+        nowBrightnessSwitch.isChecked = LauncherPrefs.isNowBrightnessEnabled(this)
+        nowVolumeSwitch.isChecked = LauncherPrefs.isNowVolumeEnabled(this)
+        nowPowerSwitch.isChecked = LauncherPrefs.isNowPowerEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -367,6 +379,26 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowRingerSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowRingerEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowBluetoothSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowBluetoothEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowBrightnessSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowBrightnessEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowVolumeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowVolumeEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowPowerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowPowerEnabled(this, isChecked)
             toastSaved()
         }
 

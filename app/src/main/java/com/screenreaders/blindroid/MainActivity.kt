@@ -37,6 +37,7 @@ import com.screenreaders.blindroid.databinding.ActivityMainBinding
 import com.screenreaders.blindroid.document.DocumentAssistActivity
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import com.screenreaders.blindroid.face.FaceAssistActivity
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.util.LowVisionStyler
@@ -75,6 +76,21 @@ class MainActivity : AppCompatActivity() {
         LowVisionOption(LowVisionStyler.STYLE_LIGHT, R.string.low_vision_theme_light),
         LowVisionOption(LowVisionStyler.STYLE_YELLOW, R.string.low_vision_theme_yellow)
     )
+    private data class LowVisionPreset(
+        val id: Int,
+        val labelRes: Int,
+        val enabled: Boolean,
+        val style: Int,
+        val invert: Boolean,
+        val scale: Int
+    )
+    private val lowVisionPresets = listOf(
+        LowVisionPreset(PRESET_CUSTOM, R.string.low_vision_preset_custom, true, LowVisionStyler.STYLE_DEFAULT, false, 100),
+        LowVisionPreset(PRESET_LARGE, R.string.low_vision_preset_large, true, LowVisionStyler.STYLE_DEFAULT, false, 130),
+        LowVisionPreset(PRESET_CONTRAST, R.string.low_vision_preset_contrast, true, LowVisionStyler.STYLE_DARK, false, 120),
+        LowVisionPreset(PRESET_YELLOW, R.string.low_vision_preset_yellow, true, LowVisionStyler.STYLE_YELLOW, false, 140)
+    )
+    private var updatingLowVisionPreset = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         binding.notificationAccessButton.setOnClickListener { openNotificationAccessSettings() }
         binding.launcherSettingsButton.setOnClickListener { openHomeSettings() }
         binding.documentsButton.setOnClickListener { openDocumentModule() }
+        binding.faceButton.setOnClickListener { openFaceModule() }
         binding.currencyButton.setOnClickListener { openCurrencyModule() }
         binding.lightButton.setOnClickListener { openLightModule() }
 
@@ -113,6 +130,8 @@ class MainActivity : AppCompatActivity() {
         binding.launcherSwitch.isChecked = isLauncherEnabled()
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
         binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
+        binding.faceSwitch.isChecked = Prefs.isFaceAssistEnabled(this)
+        binding.faceButton.isEnabled = binding.faceSwitch.isChecked
         initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
             startActivity(Intent(this, DiagnosticsActivity::class.java))
@@ -196,6 +215,12 @@ class MainActivity : AppCompatActivity() {
         binding.moduleShortcutsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setModuleShortcutsEnabled(this, isChecked)
             logSettingChange("module_shortcuts", isChecked)
+        }
+
+        binding.faceSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setFaceAssistEnabled(this, isChecked)
+            logSettingChange("face_assist", isChecked)
+            binding.faceButton.isEnabled = isChecked
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -382,6 +407,26 @@ class MainActivity : AppCompatActivity() {
             Prefs.getLowVisionScale(this)
         )
 
+        val presetLabels = lowVisionPresets.map { getString(it.labelRes) }
+        val presetAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, presetLabels)
+        presetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.lowVisionPresetSpinner.adapter = presetAdapter
+        val presetIndex = lowVisionPresets.indexOfFirst { it.id == Prefs.getLowVisionPreset(this) }.coerceAtLeast(0)
+        binding.lowVisionPresetSpinner.setSelection(presetIndex, false)
+        binding.lowVisionPresetSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (updatingLowVisionPreset) return
+                val preset = lowVisionPresets.getOrNull(position) ?: return
+                if (preset.id == PRESET_CUSTOM) {
+                    Prefs.setLowVisionPreset(this@MainActivity, PRESET_CUSTOM)
+                    return
+                }
+                applyLowVisionPreset(preset)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+
         val labels = lowVisionOptions.map { getString(it.labelRes) }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -392,16 +437,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.lowVisionSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setLowVisionEnabled(this, isChecked)
+            markLowVisionPresetCustom()
             applyLowVision()
         }
         binding.lowVisionInvertSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setLowVisionInvert(this, isChecked)
+            markLowVisionPresetCustom()
             applyLowVision()
         }
         binding.lowVisionThemeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val option = lowVisionOptions.getOrNull(position) ?: return
                 Prefs.setLowVisionStyle(this@MainActivity, option.id)
+                markLowVisionPresetCustom()
                 applyLowVision()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -411,6 +459,9 @@ class MainActivity : AppCompatActivity() {
                 val value = progress.coerceIn(100, 150)
                 Prefs.setLowVisionScale(this@MainActivity, value)
                 binding.lowVisionScaleValue.text = getString(R.string.low_vision_scale_value, value)
+                if (fromUser) {
+                    markLowVisionPresetCustom()
+                }
                 applyLowVision()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -430,6 +481,34 @@ class MainActivity : AppCompatActivity() {
     private fun applyLowVision() {
         updateLowVisionControls()
         LowVisionStyler.apply(this)
+    }
+
+    private fun applyLowVisionPreset(preset: LowVisionPreset) {
+        updatingLowVisionPreset = true
+        Prefs.setLowVisionPreset(this, preset.id)
+        Prefs.setLowVisionEnabled(this, preset.enabled)
+        Prefs.setLowVisionStyle(this, preset.style)
+        Prefs.setLowVisionInvert(this, preset.invert)
+        Prefs.setLowVisionScale(this, preset.scale)
+        binding.lowVisionSwitch.isChecked = preset.enabled
+        binding.lowVisionInvertSwitch.isChecked = preset.invert
+        binding.lowVisionScaleSeek.progress = preset.scale
+        binding.lowVisionScaleValue.text = getString(R.string.low_vision_scale_value, preset.scale)
+        val themeIndex = lowVisionOptions.indexOfFirst { it.id == preset.style }.coerceAtLeast(0)
+        binding.lowVisionThemeSpinner.setSelection(themeIndex, false)
+        val presetIndex = lowVisionPresets.indexOfFirst { it.id == preset.id }.coerceAtLeast(0)
+        binding.lowVisionPresetSpinner.setSelection(presetIndex, false)
+        updatingLowVisionPreset = false
+        applyLowVision()
+    }
+
+    private fun markLowVisionPresetCustom() {
+        if (updatingLowVisionPreset) return
+        Prefs.setLowVisionPreset(this, PRESET_CUSTOM)
+        val index = lowVisionPresets.indexOfFirst { it.id == PRESET_CUSTOM }.coerceAtLeast(0)
+        updatingLowVisionPreset = true
+        binding.lowVisionPresetSpinner.setSelection(index, false)
+        updatingLowVisionPreset = false
     }
 
     private fun initSettingsTransferUi() {
@@ -546,6 +625,7 @@ class MainActivity : AppCompatActivity() {
             SECTION_CALLS -> binding.callsLabel
             SECTION_NOTIFICATIONS -> binding.notificationsLabel
             SECTION_DOCUMENTS -> binding.documentsLabel
+            SECTION_FACE -> binding.faceLabel
             SECTION_CURRENCY -> binding.currencyLabel
             SECTION_LIGHT -> binding.lightLabel
             SECTION_CHIME -> binding.chimeLabel
@@ -610,6 +690,15 @@ class MainActivity : AppCompatActivity() {
     private fun openDocumentModule() {
         DiagnosticLog.log(this, "module_documents_open")
         startActivity(Intent(this, DocumentAssistActivity::class.java))
+    }
+
+    private fun openFaceModule() {
+        if (!Prefs.isFaceAssistEnabled(this)) {
+            Toast.makeText(this, R.string.face_enable, Toast.LENGTH_SHORT).show()
+            return
+        }
+        DiagnosticLog.log(this, "module_face_open")
+        startActivity(Intent(this, FaceAssistActivity::class.java))
     }
 
     private fun openLightModule() {
@@ -1242,10 +1331,15 @@ class MainActivity : AppCompatActivity() {
         const val SECTION_CALLS = "calls"
         const val SECTION_NOTIFICATIONS = "notifications"
         const val SECTION_DOCUMENTS = "documents"
+        const val SECTION_FACE = "face"
         const val SECTION_CURRENCY = "currency"
         const val SECTION_LIGHT = "light"
         const val SECTION_CHIME = "chime"
         const val SECTION_UPDATES = "updates"
+        const val PRESET_CUSTOM = 0
+        const val PRESET_LARGE = 1
+        const val PRESET_CONTRAST = 2
+        const val PRESET_YELLOW = 3
 
         private val EXPORT_EXCLUDE_KEYS = setOf(
             "update_download_id",

@@ -35,6 +35,10 @@ object LauncherPrefs {
     private const val KEY_NOW_RAM = "now_ram"
     private const val KEY_NOW_DND = "now_dnd"
     private const val KEY_NOW_RINGER = "now_ringer"
+    private const val KEY_NOW_BLUETOOTH = "now_bluetooth"
+    private const val KEY_NOW_BRIGHTNESS = "now_brightness"
+    private const val KEY_NOW_VOLUME = "now_volume"
+    private const val KEY_NOW_POWER = "now_power"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -290,6 +294,34 @@ object LauncherPrefs {
 
     fun setNowRingerEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOW_RINGER, enabled).apply()
+    }
+
+    fun isNowBluetoothEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_BLUETOOTH, true)
+
+    fun setNowBluetoothEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_BLUETOOTH, enabled).apply()
+    }
+
+    fun isNowBrightnessEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_BRIGHTNESS, true)
+
+    fun setNowBrightnessEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_BRIGHTNESS, enabled).apply()
+    }
+
+    fun isNowVolumeEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_VOLUME, true)
+
+    fun setNowVolumeEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_VOLUME, enabled).apply()
+    }
+
+    fun isNowPowerEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_POWER, true)
+
+    fun setNowPowerEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_POWER, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =
