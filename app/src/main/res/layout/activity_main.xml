@@ -643,6 +643,21 @@
             android:text="@string/light_hint" />
 
         <TextView
+            android:id="@+id/navigationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/navigation_label"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/navigationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_open" />
+
+        <TextView
             android:id="@+id/safetyLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

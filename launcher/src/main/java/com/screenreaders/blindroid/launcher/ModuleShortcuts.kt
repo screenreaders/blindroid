@@ -15,6 +15,7 @@ object ModuleShortcuts {
     const val ID_DOCUMENTS = "documents"
     const val ID_CURRENCY = "currency"
     const val ID_LIGHT = "light"
+    const val ID_NAVIGATION = "navigation"
     const val ID_FACE = "face"
     const val ID_CHIME = "chime"
     const val ID_UPDATES = "updates"
@@ -26,6 +27,7 @@ object ModuleShortcuts {
         ShortcutInfo(ID_DOCUMENTS, R.string.launcher_shortcut_documents, android.R.drawable.ic_menu_search),
         ShortcutInfo(ID_CURRENCY, R.string.launcher_shortcut_currency, android.R.drawable.ic_menu_camera),
         ShortcutInfo(ID_LIGHT, R.string.launcher_shortcut_light, android.R.drawable.ic_menu_day),
+        ShortcutInfo(ID_NAVIGATION, R.string.launcher_shortcut_navigation, android.R.drawable.ic_menu_directions),
         ShortcutInfo(ID_FACE, R.string.launcher_shortcut_face, android.R.drawable.ic_menu_camera),
         ShortcutInfo(ID_CHIME, R.string.launcher_shortcut_chime, android.R.drawable.ic_menu_recent_history),
         ShortcutInfo(ID_UPDATES, R.string.launcher_shortcut_updates, android.R.drawable.ic_menu_rotate)

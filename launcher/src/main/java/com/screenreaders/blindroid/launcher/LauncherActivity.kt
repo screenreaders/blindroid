@@ -1408,6 +1408,7 @@ class LauncherActivity : AppCompatActivity() {
             ModuleShortcuts.ID_DOCUMENTS -> openMainSection("documents")
             ModuleShortcuts.ID_CURRENCY -> openMainSection("currency")
             ModuleShortcuts.ID_LIGHT -> openMainSection("light")
+            ModuleShortcuts.ID_NAVIGATION -> openMainSection("navigation")
             ModuleShortcuts.ID_FACE -> openMainSection("face")
             ModuleShortcuts.ID_CHIME -> openMainSection("chime")
             ModuleShortcuts.ID_UPDATES -> openMainSection("updates")

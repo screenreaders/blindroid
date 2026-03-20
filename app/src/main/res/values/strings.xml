@@ -18,6 +18,8 @@
     <string name="end_call_key_headset">Zestaw słuchawkowy (przycisk)</string>
     <string name="end_call_key_power">Przycisk zasilania (ustawienie systemowe)</string>
     <string name="end_call_power_hint">Aby kończyć rozmowy przyciskiem zasilania, włącz tę opcję w ustawieniach dostępności systemu.</string>
+    <string name="accessibility_power_service_label">Blindroid - przycisk zasilania</string>
+    <string name="accessibility_power_service_desc">Kończy rozmowę po dwukrotnym naciśnięciu przycisku zasilania, gdy opcja jest włączona.</string>
     <string name="open_accessibility_settings">Otwórz ustawienia dostępności</string>
     <string name="voice_command_button">Komendy głosowe</string>
     <string name="voice_command_status_idle">Komendy głosowe: gotowe</string>
@@ -173,6 +175,16 @@
     <string name="light_direction_right">Światło z prawej</string>
     <string name="light_direction_even">Światło równomierne</string>
     <string name="light_hint">Tryb kierunku używa kamery i zużywa więcej baterii.</string>
+    <string name="navigation_label">Nawigacja</string>
+    <string name="navigation_open">Otwórz nawigację tekstową</string>
+    <string name="navigation_title">Nawigacja tekstowa</string>
+    <string name="navigation_place_hint">Ulica / miejsce docelowe</string>
+    <string name="navigation_city_hint">Miejscowość (wymagana)</string>
+    <string name="navigation_mode_driving">Tryb samochód</string>
+    <string name="navigation_mode_walking">Tryb pieszy</string>
+    <string name="navigation_start">Wyznacz trasę</string>
+    <string name="navigation_hint">Podaj miejscowość, aby trasa była jednoznaczna.</string>
+    <string name="navigation_city_required">Podaj miejscowość docelową</string>
     <string name="obstacle_open">Uruchom asystenta przeszkód</string>
     <string name="obstacle_title">Asystent przeszkód</string>
     <string name="obstacle_active">Wykrywanie aktywne</string>

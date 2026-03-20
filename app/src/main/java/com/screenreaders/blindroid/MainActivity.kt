@@ -41,6 +41,7 @@ import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.face.FaceAssistActivity
 import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
+import com.screenreaders.blindroid.navigation.NavigationAssistActivity
 import com.screenreaders.blindroid.obstacle.ObstacleAssistActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.update.UpdateScheduler
@@ -118,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         binding.obstacleButton.setOnClickListener { openObstacleModule() }
         binding.currencyButton.setOnClickListener { openCurrencyModule() }
         binding.lightButton.setOnClickListener { openLightModule() }
+        binding.navigationButton.setOnClickListener { openNavigationModule() }
         binding.talkbackWizardButton.setOnClickListener { openTalkbackWizard() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
@@ -844,6 +846,7 @@ class MainActivity : AppCompatActivity() {
             SECTION_FACE -> binding.faceLabel
             SECTION_CURRENCY -> binding.currencyLabel
             SECTION_LIGHT -> binding.lightLabel
+            SECTION_NAVIGATION -> binding.navigationLabel
             SECTION_CHIME -> binding.chimeLabel
             SECTION_UPDATES -> binding.updateLabel
             else -> null
@@ -925,6 +928,11 @@ class MainActivity : AppCompatActivity() {
     private fun openLightModule() {
         DiagnosticLog.log(this, "module_light_open")
         startActivity(Intent(this, LightActivity::class.java))
+    }
+
+    private fun openNavigationModule() {
+        DiagnosticLog.log(this, "module_navigation_open")
+        startActivity(Intent(this, NavigationAssistActivity::class.java))
     }
 
     private fun openTalkbackWizard() {
@@ -1559,6 +1567,7 @@ class MainActivity : AppCompatActivity() {
         const val SECTION_FACE = "face"
         const val SECTION_CURRENCY = "currency"
         const val SECTION_LIGHT = "light"
+        const val SECTION_NAVIGATION = "navigation"
         const val SECTION_CHIME = "chime"
         const val SECTION_UPDATES = "updates"
         const val PRESET_CUSTOM = 0
