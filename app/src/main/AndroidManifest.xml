@@ -81,6 +81,9 @@
         <activity
             android:name=".navigation.MapSelectActivity"
             android:exported="false" />
+        <activity
+            android:name=".navigation.MapPointSelectActivity"
+            android:exported="false" />
 
 
         <activity

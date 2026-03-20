@@ -107,6 +107,10 @@ object Prefs {
     private const val KEY_NAV_ROUTE_LABEL = "nav_route_label"
     private const val KEY_NAV_ROUTE_INTERVAL = "nav_route_interval"
     private const val KEY_NAV_ROUTE_MIN_DISTANCE = "nav_route_min_distance"
+    private const val KEY_NAV_ROUTE_GPX_PATH = "nav_route_gpx_path"
+    private const val KEY_NAV_ROUTE_GPX_ENABLED = "nav_route_gpx_enabled"
+    private const val KEY_NAV_ROUTE_GPX_COUNT = "nav_route_gpx_count"
+    private const val KEY_NAV_ROUTE_GPX_INDEX = "nav_route_gpx_index"
     private const val KEY_NAV_OFFLINE_GZIP = "nav_offline_gzip"
     private const val KEY_NAV_OFFLINE_SEGMENTED = "nav_offline_segmented"
     private const val KEY_NAV_OFFLINE_SEGMENT_SIZE = "nav_offline_segment_size"
@@ -645,6 +649,34 @@ object Prefs {
 
     fun setNavigationRouteMinDistance(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_NAV_ROUTE_MIN_DISTANCE, value.coerceIn(5, 100)).apply()
+    }
+
+    fun getNavigationRouteGpxPath(context: Context): String? =
+        prefs(context).getString(KEY_NAV_ROUTE_GPX_PATH, null)
+
+    fun setNavigationRouteGpxPath(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_NAV_ROUTE_GPX_PATH, value).apply()
+    }
+
+    fun isNavigationRouteGpxEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_ROUTE_GPX_ENABLED, false)
+
+    fun setNavigationRouteGpxEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_ROUTE_GPX_ENABLED, value).apply()
+    }
+
+    fun getNavigationRouteGpxCount(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_ROUTE_GPX_COUNT, 0).coerceAtLeast(0)
+
+    fun setNavigationRouteGpxCount(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_ROUTE_GPX_COUNT, value.coerceAtLeast(0)).apply()
+    }
+
+    fun getNavigationRouteGpxIndex(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_ROUTE_GPX_INDEX, 0).coerceAtLeast(0)
+
+    fun setNavigationRouteGpxIndex(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_ROUTE_GPX_INDEX, value.coerceAtLeast(0)).apply()
     }
 
     fun isNavigationOfflineGzipEnabled(context: Context): Boolean =

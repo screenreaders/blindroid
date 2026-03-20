@@ -68,7 +68,8 @@ class NavigationAssistActivity : AppCompatActivity() {
         restoreLastDestination()
         binding.navigationStartButton.setOnClickListener { startNavigation() }
         binding.navigationStartOfflineButton.setOnClickListener { startOfflineNavigation() }
-        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this)
+        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this) &&
+            !Prefs.isNavigationRouteGpxEnabled(this)
         binding.navigationOfflineGuidanceSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 startOfflineGuidance()
@@ -76,6 +77,19 @@ class NavigationAssistActivity : AppCompatActivity() {
                 stopOfflineGuidance()
             }
         }
+        binding.navigationMapPointSelectButton.setOnClickListener { openMapPointSelect() }
+        binding.navigationOfflineGpxSwitch.isChecked = Prefs.isNavigationRouteGpxEnabled(this)
+        binding.navigationOfflineGpxSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationRouteGpxEnabled(this, isChecked)
+            if (isChecked) {
+                binding.navigationOfflineGuidanceSwitch.isChecked = false
+                startGpxGuidance()
+            } else {
+                stopRouteIfNone()
+            }
+            updateGpxStatus()
+        }
+        binding.navigationOfflineGpxImportButton.setOnClickListener { pickGpxFile() }
         binding.navigationTrackingSwitch.isChecked = Prefs.isNavigationTrackingEnabled(this)
         binding.navigationTrackingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNavigationTrackingEnabled(this, isChecked)
@@ -102,12 +116,16 @@ class NavigationAssistActivity : AppCompatActivity() {
         loadSelectedCategories()
         updateCategorySummary()
         updateOfflineStatus()
+        updateGpxStatus()
         updatePoiSourceUi()
     }
 
     override fun onStart() {
         super.onStart()
-        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this)
+        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this) &&
+            !Prefs.isNavigationRouteGpxEnabled(this)
+        binding.navigationOfflineGpxSwitch.isChecked = Prefs.isNavigationRouteGpxEnabled(this)
+        updateGpxStatus()
     }
 
     override fun onDestroy() {
@@ -190,6 +208,10 @@ class NavigationAssistActivity : AppCompatActivity() {
             )
             return
         }
+        Prefs.setNavigationRouteGpxEnabled(this, false)
+        if (binding.navigationOfflineGpxSwitch.isChecked) {
+            binding.navigationOfflineGpxSwitch.isChecked = false
+        }
         val place = binding.navigationPlaceInput.text?.toString()?.trim().orEmpty()
         val city = binding.navigationCityInput.text?.toString()?.trim().orEmpty()
         val coord = parseCoordinates(place) ?: parseCoordinates(city)
@@ -245,6 +267,91 @@ class NavigationAssistActivity : AppCompatActivity() {
         Prefs.setNavigationRouteEnabled(this, true)
         NavigationRouteService.start(this)
         Toast.makeText(this, R.string.navigation_offline_guidance_started, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startGpxGuidance() {
+        val path = Prefs.getNavigationRouteGpxPath(this)
+        if (path.isNullOrBlank()) {
+            Toast.makeText(this, R.string.navigation_offline_gpx_missing, Toast.LENGTH_SHORT).show()
+            binding.navigationOfflineGpxSwitch.isChecked = false
+            return
+        }
+        Prefs.setNavigationRouteEnabled(this, true)
+        NavigationRouteService.start(this)
+        Toast.makeText(this, R.string.navigation_offline_gpx_loaded, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun stopRouteIfNone() {
+        val any = binding.navigationOfflineGuidanceSwitch.isChecked || binding.navigationOfflineGpxSwitch.isChecked
+        if (!any) {
+            Prefs.setNavigationRouteEnabled(this, false)
+            NavigationRouteService.stop(this)
+        }
+    }
+
+    private fun pickGpxFile() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/gpx+xml", "text/xml", "application/octet-stream"))
+        }
+        startActivityForResult(intent, REQ_GPX_PICK)
+    }
+
+    private fun handleGpxPicked(data: Intent) {
+        val uri = data.data ?: return
+        val dir = java.io.File(filesDir, "gpx")
+        if (!dir.exists()) dir.mkdirs()
+        val dest = java.io.File(dir, "route_${System.currentTimeMillis()}.gpx")
+        try {
+            contentResolver.openInputStream(uri)?.use { input ->
+                dest.outputStream().use { output -> input.copyTo(output) }
+            } ?: run {
+                Toast.makeText(this, R.string.navigation_offline_gpx_failed, Toast.LENGTH_SHORT).show()
+                return
+            }
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.navigation_offline_gpx_failed, Toast.LENGTH_SHORT).show()
+            return
+        }
+        executor.execute {
+            val points = try {
+                GpxRouteParser.parse(dest)
+            } catch (_: Exception) {
+                emptyList()
+            }
+            runOnUiThread {
+                if (points.size < 2) {
+                    Toast.makeText(this, R.string.navigation_offline_gpx_failed, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+                Prefs.setNavigationRouteGpxPath(this, dest.absolutePath)
+                Prefs.setNavigationRouteGpxCount(this, points.size)
+                Prefs.setNavigationRouteGpxIndex(this, 0)
+                binding.navigationOfflineGpxSwitch.isChecked = true
+                updateGpxStatus()
+            }
+        }
+    }
+
+    private fun updateGpxStatus() {
+        val count = Prefs.getNavigationRouteGpxCount(this)
+        if (count <= 0) {
+            binding.navigationOfflineGpxStatus.text = getString(R.string.navigation_offline_gpx_missing)
+        } else {
+            binding.navigationOfflineGpxStatus.text = getString(R.string.navigation_offline_gpx_status, count)
+        }
+    }
+
+    private fun openMapPointSelect() {
+        val coord = parseCoordinates(binding.navigationPlaceInput.text?.toString().orEmpty())
+        val intent = Intent(this, MapPointSelectActivity::class.java).apply {
+            if (coord != null) {
+                putExtra(MapPointSelectActivity.EXTRA_LAT, coord.first.toFloat())
+                putExtra(MapPointSelectActivity.EXTRA_LON, coord.second.toFloat())
+            }
+        }
+        startActivityForResult(intent, REQ_MAP_POINT)
     }
 
     private fun parseCoordinates(input: String): Pair<Double, Double>? {
@@ -394,6 +501,8 @@ class NavigationAssistActivity : AppCompatActivity() {
     companion object {
         private const val REQ_LOCATION = 812
         private const val REQ_MAP_SELECT = 813
+        private const val REQ_GPX_PICK = 814
+        private const val REQ_MAP_POINT = 815
     }
 
     private fun initPoiControls() {
@@ -615,6 +724,18 @@ class NavigationAssistActivity : AppCompatActivity() {
             binding.navigationImportMaxLonInput.setText(maxLon.toString())
             binding.navigationImportModeManual.isChecked = true
             updateImportModeUi()
+        } else if (requestCode == REQ_MAP_POINT && resultCode == RESULT_OK && data != null) {
+            val lat = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LAT, Double.NaN)
+            val lon = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LON, Double.NaN)
+            if (!lat.isNaN() && !lon.isNaN()) {
+                val coordText = "%.6f, %.6f".format(Locale.US, lat, lon)
+                binding.navigationPlaceInput.setText(coordText)
+                if (binding.navigationOfflineGuidanceSwitch.isChecked) {
+                    beginOfflineGuidance(coordText, lat, lon)
+                }
+            }
+        } else if (requestCode == REQ_GPX_PICK && resultCode == RESULT_OK && data != null) {
+            handleGpxPicked(data)
         }
     }
 

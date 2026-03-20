@@ -101,6 +101,42 @@
             android:layout_marginTop="4dp"
             android:text="@string/navigation_offline_guidance_hint" />
 
+        <Button
+            android:id="@+id/navigationMapPointSelectButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_map_point_select" />
+
+        <TextView
+            android:id="@+id/navigationOfflineGpxLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/navigation_offline_gpx_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationOfflineGpxSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_gpx_enable" />
+
+        <Button
+            android:id="@+id/navigationOfflineGpxImportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_gpx_import" />
+
+        <TextView
+            android:id="@+id/navigationOfflineGpxStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_offline_gpx_missing" />
+
         <TextView
             android:id="@+id/navigationTrackingLabel"
             android:layout_width="wrap_content"

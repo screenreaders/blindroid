@@ -19,6 +19,7 @@ import com.screenreaders.blindroid.R
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import java.io.File
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -32,6 +33,9 @@ class NavigationRouteService : Service(), LocationListener {
     private var lastHeading: Float? = null
     private var lastSpeakTime = 0L
     private var lastDistance = Double.MAX_VALUE
+    private var routePoints: List<RoutePoint> = emptyList()
+    private var routeIndex = 0
+    private var routePath: String? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
@@ -43,6 +47,10 @@ class NavigationRouteService : Service(), LocationListener {
             return START_NOT_STICKY
         }
         startForeground(NOTIF_ID, buildNotification())
+        if (Prefs.isNavigationRouteGpxEnabled(this) && !ensureGpxRouteLoaded(true)) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
         startTracking()
         return START_STICKY
     }
@@ -98,6 +106,10 @@ class NavigationRouteService : Service(), LocationListener {
             stopSelf()
             return
         }
+        if (Prefs.isNavigationRouteGpxEnabled(this) && ensureGpxRouteLoaded(false)) {
+            handleGpxGuidance(location)
+            return
+        }
         val destLat = Prefs.getNavigationRouteLat(this)
         val destLon = Prefs.getNavigationRouteLon(this)
         if (destLat.isNaN() || destLon.isNaN()) {
@@ -133,6 +145,82 @@ class NavigationRouteService : Service(), LocationListener {
             )
         }
         speakOnce(message)
+    }
+
+    private fun handleGpxGuidance(location: Location) {
+        if (routePoints.isEmpty()) return
+        updateHeading(location)
+        var idx = routeIndex.coerceIn(0, routePoints.lastIndex)
+        var target = routePoints[idx]
+        var distance = distanceMeters(location.latitude, location.longitude, target.lat, target.lon).toDouble()
+        val threshold = GPX_POINT_REACHED_METERS
+        while (idx < routePoints.lastIndex && distance <= threshold) {
+            idx++
+            target = routePoints[idx]
+            distance = distanceMeters(location.latitude, location.longitude, target.lat, target.lon).toDouble()
+            lastSpeakTime = 0L
+        }
+        if (idx != routeIndex) {
+            routeIndex = idx
+            Prefs.setNavigationRouteGpxIndex(this, idx)
+        }
+        if (routeIndex >= routePoints.lastIndex && distance <= threshold) {
+            speakOnce(getString(R.string.navigation_offline_guidance_arrived))
+            Prefs.setNavigationRouteEnabled(this, false)
+            stopSelf()
+            return
+        }
+        val now = System.currentTimeMillis()
+        val intervalMs = Prefs.getNavigationRouteIntervalSec(this).toLong() * 1000L
+        val distanceDelta = abs(lastDistance - distance)
+        if (now - lastSpeakTime < intervalMs && distanceDelta < 20) return
+        lastSpeakTime = now
+        lastDistance = distance
+        val direction = buildDirectionMessage(location, target.lat, target.lon)
+        val count = routePoints.size
+        val message = if (direction.isBlank()) {
+            getString(
+                R.string.navigation_offline_gpx_guidance_simple,
+                routeIndex + 1,
+                count,
+                formatDistance(distance.toInt())
+            )
+        } else {
+            getString(
+                R.string.navigation_offline_gpx_guidance_direction,
+                routeIndex + 1,
+                count,
+                formatDistance(distance.toInt()),
+                direction
+            )
+        }
+        speakOnce(message)
+    }
+
+    private fun ensureGpxRouteLoaded(forceSpeak: Boolean): Boolean {
+        val path = Prefs.getNavigationRouteGpxPath(this)
+        if (path.isNullOrBlank()) {
+            if (forceSpeak) speakOnce(getString(R.string.navigation_offline_gpx_missing))
+            return false
+        }
+        if (path != routePath || routePoints.isEmpty()) {
+            routePath = path
+            routePoints = try {
+                GpxRouteParser.parse(File(path))
+            } catch (_: Exception) {
+                emptyList()
+            }
+            routeIndex = Prefs.getNavigationRouteGpxIndex(this)
+        }
+        if (routePoints.size < 2) {
+            if (forceSpeak) speakOnce(getString(R.string.navigation_offline_gpx_failed))
+            return false
+        }
+        if (routeIndex >= routePoints.size) {
+            routeIndex = 0
+            Prefs.setNavigationRouteGpxIndex(this, 0)
+        }
+        return true
     }
 
     private fun updateHeading(location: Location) {
@@ -265,6 +353,7 @@ class NavigationRouteService : Service(), LocationListener {
         private const val NOTIF_ID = 4202
         private const val ACTION_STOP = "blindroid_nav_route_stop"
         private const val ARRIVAL_DISTANCE_METERS = 20
+        private const val GPX_POINT_REACHED_METERS = 15
 
         fun start(context: android.content.Context) {
             DiagnosticLog.log(context, "nav_route_start")

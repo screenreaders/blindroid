@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Wybór punktu</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    #toolbar {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.9);
+      padding: 8px;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      max-width: 240px;
+    }
+    #coords { font-size: 12px; margin-top: 4px; }
+    #toolbar button { margin-top: 6px; width: 100%; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="toolbar">
+  <div>Dotknij punkt na mapie.</div>
+  <div id="coords">Brak punktu</div>
+  <button onclick="savePoint()">Zapisz punkt</button>
+  <button onclick="clearPoint()">Wyczyść</button>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const startLat = parseFloat(params.get('lat') || '0');
+  const startLon = parseFloat(params.get('lon') || '0');
+  const centerLat = parseFloat(params.get('centerLat') || '52.23');
+  const centerLon = parseFloat(params.get('centerLon') || '21.01');
+
+  const map = L.map('map').setView([centerLat, centerLon], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+  }).addTo(map);
+
+  let marker = null;
+  const coordsEl = document.getElementById('coords');
+
+  function setMarker(lat, lon) {
+    const point = L.latLng(lat, lon);
+    if (marker) marker.remove();
+    marker = L.marker(point).addTo(map);
+    coordsEl.textContent = lat.toFixed(6) + ", " + lon.toFixed(6);
+  }
+
+  if (startLat !== 0 || startLon !== 0) {
+    setMarker(startLat, startLon);
+    map.setView([startLat, startLon], 15);
+  }
+
+  map.on('click', function(e) {
+    setMarker(e.latlng.lat, e.latlng.lng);
+  });
+
+  function clearPoint() {
+    if (marker) marker.remove();
+    marker = null;
+    coordsEl.textContent = 'Brak punktu';
+  }
+
+  function savePoint() {
+    if (!marker) {
+      alert('Najpierw wybierz punkt.');
+      return;
+    }
+    const p = marker.getLatLng();
+    if (window.Android && Android.onPoint) {
+      Android.onPoint(p.lat, p.lng);
+    }
+  }
+</script>
+</body>
+</html>

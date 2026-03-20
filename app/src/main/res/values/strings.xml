@@ -229,6 +229,9 @@
     <string name="navigation_map_select">Wybierz obszar na mapie</string>
     <string name="navigation_map_select_title">Wybór obszaru</string>
     <string name="navigation_map_select_hint">Dotknij dwa punkty, aby wybrać obszar.</string>
+    <string name="navigation_map_point_select">Wybierz cel na mapie</string>
+    <string name="navigation_map_point_select_title">Wybór celu</string>
+    <string name="navigation_map_point_select_hint">Dotknij punkt, aby wybrać cel.</string>
     <string name="navigation_auto_import_label">Automatyczny import</string>
     <string name="navigation_auto_import_enable">Włącz automatyczny import</string>
     <string name="navigation_auto_import_interval">Częstotliwość importu</string>
@@ -253,6 +256,15 @@
     <string name="navigation_offline_segmented">Segmentuj duże obszary (mniej pamięci)</string>
     <string name="navigation_offline_segment_label">Rozmiar segmentu</string>
     <string name="navigation_offline_segment_value">%1$d kafelków</string>
+    <string name="navigation_offline_gpx_label">Prowadzenie po śladzie (GPX)</string>
+    <string name="navigation_offline_gpx_enable">Włącz prowadzenie po GPX</string>
+    <string name="navigation_offline_gpx_import">Importuj GPX</string>
+    <string name="navigation_offline_gpx_status">GPX: %1$d punktów</string>
+    <string name="navigation_offline_gpx_missing">Brak pliku GPX</string>
+    <string name="navigation_offline_gpx_loaded">Załadowano trasę GPX</string>
+    <string name="navigation_offline_gpx_failed">Nie udało się wczytać GPX</string>
+    <string name="navigation_offline_gpx_guidance_simple">GPX punkt %1$d z %2$d. %3$s</string>
+    <string name="navigation_offline_gpx_guidance_direction">GPX punkt %1$d z %2$d. %4$s, %3$s</string>
     <string name="navigation_radius_label">Zasięg wyszukiwania obiektów</string>
     <string name="navigation_radius_value">%1$d m</string>
     <string name="navigation_interval_label">Częstotliwość komunikatów</string>
