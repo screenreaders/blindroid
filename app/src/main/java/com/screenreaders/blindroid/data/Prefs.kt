@@ -39,6 +39,7 @@ object Prefs {
     private const val KEY_LIGHT_SOUND = "light_sound_cues"
     private const val KEY_DOC_AUTO = "doc_auto_capture"
     private const val KEY_DOC_SPEAK = "doc_speak_result"
+    private const val KEY_CRASH_REPORTING = "crash_reporting"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -315,5 +316,12 @@ object Prefs {
 
     fun setDocSpeakResultEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_DOC_SPEAK, value).apply()
+    }
+
+    fun isCrashReportingEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CRASH_REPORTING, true)
+
+    fun setCrashReportingEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CRASH_REPORTING, value).apply()
     }
 }

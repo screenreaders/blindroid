@@ -254,6 +254,54 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardAirplane"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/cardAirplaneTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/launcher_feed_airplane_title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cardAirplaneText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardRam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/cardRamTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/launcher_feed_ram_title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cardRamText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

@@ -488,5 +488,56 @@
             android:layout_marginTop="8dp"
             android:text="@string/update_check_now" />
 
+        <TextView
+            android:id="@+id/crashReportLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/crash_report_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/crashReportSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_enable" />
+
+        <TextView
+            android:id="@+id/crashReportStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="polite"
+            android:text="@string/crash_report_status_none" />
+
+        <Button
+            android:id="@+id/crashReportShareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_share" />
+
+        <Button
+            android:id="@+id/crashReportIssueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_issue" />
+
+        <Button
+            android:id="@+id/crashReportClearButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_clear" />
+
+        <TextView
+            android:id="@+id/crashReportHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_hint" />
+
     </LinearLayout>
 </ScrollView>

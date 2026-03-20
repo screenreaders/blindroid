@@ -23,5 +23,9 @@ data class FeedData(
     val showStorage: Boolean,
     val storageText: String?,
     val showTopApps: Boolean,
-    val topApps: List<String>
+    val topApps: List<String>,
+    val showAirplane: Boolean,
+    val airplaneText: String?,
+    val showRam: Boolean,
+    val ramText: String?
 )

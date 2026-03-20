@@ -30,6 +30,8 @@ object LauncherPrefs {
     private const val KEY_NOW_NETWORK = "now_network"
     private const val KEY_NOW_STORAGE = "now_storage"
     private const val KEY_NOW_TOP_APPS = "now_top_apps"
+    private const val KEY_NOW_AIRPLANE = "now_airplane"
+    private const val KEY_NOW_RAM = "now_ram"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -248,6 +250,20 @@ object LauncherPrefs {
 
     fun setNowTopAppsEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOW_TOP_APPS, enabled).apply()
+    }
+
+    fun isNowAirplaneEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_AIRPLANE, true)
+
+    fun setNowAirplaneEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_AIRPLANE, enabled).apply()
+    }
+
+    fun isNowRamEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_RAM, true)
+
+    fun setNowRamEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_RAM, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =

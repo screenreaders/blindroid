@@ -170,4 +170,11 @@
     <string name="light_level_bright">jasno</string>
     <string name="light_lux_spoken">Jasność %1$d luksów, %2$s</string>
     <string name="light_direction_spoken">Kierunek: %1$s</string>
+    <string name="crash_report_label">Raportowanie błędów</string>
+    <string name="crash_report_enable">Zapisuj raporty awarii</string>
+    <string name="crash_report_status_none">Brak raportów</string>
+    <string name="crash_report_share">Udostępnij raport</string>
+    <string name="crash_report_issue">Utwórz zgłoszenie na GitHub</string>
+    <string name="crash_report_clear">Wyczyść raporty</string>
+    <string name="crash_report_hint">Raporty są zapisywane lokalnie. Do wysłania użyj przycisku Udostępnij.</string>
 </resources>

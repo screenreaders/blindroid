@@ -177,6 +177,12 @@ class HomePagerAdapter(
         private val cardTopApps: LinearLayout = view.findViewById(R.id.cardTopApps)
         private val cardTopAppsTitle: TextView = view.findViewById(R.id.cardTopAppsTitle)
         private val cardTopAppsText: TextView = view.findViewById(R.id.cardTopAppsText)
+        private val cardAirplane: LinearLayout = view.findViewById(R.id.cardAirplane)
+        private val cardAirplaneTitle: TextView = view.findViewById(R.id.cardAirplaneTitle)
+        private val cardAirplaneText: TextView = view.findViewById(R.id.cardAirplaneText)
+        private val cardRam: LinearLayout = view.findViewById(R.id.cardRam)
+        private val cardRamTitle: TextView = view.findViewById(R.id.cardRamTitle)
+        private val cardRamText: TextView = view.findViewById(R.id.cardRamText)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
@@ -215,6 +221,10 @@ class HomePagerAdapter(
             cardStorageText.setTextColor(colors.muted)
             cardTopAppsTitle.setTextColor(colors.text)
             cardTopAppsText.setTextColor(colors.muted)
+            cardAirplaneTitle.setTextColor(colors.text)
+            cardAirplaneText.setTextColor(colors.muted)
+            cardRamTitle.setTextColor(colors.text)
+            cardRamText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
             openButton.setTextColor(colors.text)
@@ -343,6 +353,26 @@ class HomePagerAdapter(
                 cardTopApps.setOnClickListener(null)
             }
 
+            if (data.showAirplane) {
+                cardAirplane.visibility = View.VISIBLE
+                cardAirplaneText.text = data.airplaneText
+                    ?: itemView.context.getString(R.string.launcher_feed_airplane_off)
+                cardAirplane.setOnClickListener { onOpenNetworkSettings() }
+            } else {
+                cardAirplane.visibility = View.GONE
+                cardAirplane.setOnClickListener(null)
+            }
+
+            if (data.showRam) {
+                cardRam.visibility = View.VISIBLE
+                cardRamText.text = data.ramText
+                    ?: itemView.context.getString(R.string.launcher_feed_ram_title)
+                cardRam.setOnClickListener { onOpenNetworkSettings() }
+            } else {
+                cardRam.visibility = View.GONE
+                cardRam.setOnClickListener(null)
+            }
+
             applyCardStyle(cardAlarm, colors)
             applyCardStyle(cardCalendar, colors)
             applyCardStyle(cardWeather, colors)
@@ -351,6 +381,8 @@ class HomePagerAdapter(
             applyCardStyle(cardNetwork, colors)
             applyCardStyle(cardStorage, colors)
             applyCardStyle(cardTopApps, colors)
+            applyCardStyle(cardAirplane, colors)
+            applyCardStyle(cardRam, colors)
 
             nowCards.visibility = if (
                 data.showAlarm ||
@@ -360,7 +392,9 @@ class HomePagerAdapter(
                 data.showHeadphones ||
                 data.showNetwork ||
                 data.showStorage ||
-                data.showTopApps
+                data.showTopApps ||
+                data.showAirplane ||
+                data.showRam
             ) {
                 View.VISIBLE
             } else {

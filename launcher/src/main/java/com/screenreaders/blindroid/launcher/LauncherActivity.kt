@@ -19,6 +19,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.BatteryManager
+import android.app.ActivityManager
 import android.os.Environment
 import android.os.StatFs
 import android.provider.AlarmClock
@@ -471,6 +472,8 @@ class LauncherActivity : AppCompatActivity() {
         val showNetwork = LauncherPrefs.isNowNetworkEnabled(this)
         val showStorage = LauncherPrefs.isNowStorageEnabled(this)
         val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
+        val showAirplane = LauncherPrefs.isNowAirplaneEnabled(this)
+        val showRam = LauncherPrefs.isNowRamEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
@@ -483,6 +486,8 @@ class LauncherActivity : AppCompatActivity() {
         val networkText = if (showNetwork) getNetworkText() else null
         val storageText = if (showStorage) getStorageText() else null
         val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
+        val airplaneText = if (showAirplane) getAirplaneText() else null
+        val ramText = if (showRam) getRamText() else null
         return FeedData(
             time = time,
             date = date,
@@ -506,7 +511,11 @@ class LauncherActivity : AppCompatActivity() {
             showStorage = showStorage,
             storageText = storageText,
             showTopApps = showTopApps,
-            topApps = topApps
+            topApps = topApps,
+            showAirplane = showAirplane,
+            airplaneText = airplaneText,
+            showRam = showRam,
+            ramText = ramText
         )
     }
 
@@ -661,6 +670,28 @@ class LauncherActivity : AppCompatActivity() {
         }
         val pre = "KMGTPE"[exp - 1]
         return String.format(java.util.Locale("pl", "PL"), "%.1f %sB", value, pre)
+    }
+
+    private fun getAirplaneText(): String {
+        val enabled = Settings.Global.getInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, 0) == 1
+        return if (enabled) {
+            getString(R.string.launcher_feed_airplane_on)
+        } else {
+            getString(R.string.launcher_feed_airplane_off)
+        }
+    }
+
+    private fun getRamText(): String? {
+        return try {
+            val am = getSystemService(ActivityManager::class.java)
+            val info = ActivityManager.MemoryInfo()
+            am.getMemoryInfo(info)
+            val avail = bytesToHuman(info.availMem)
+            val total = bytesToHuman(info.totalMem)
+            getString(R.string.launcher_feed_ram_text, avail, total)
+        } catch (_: Exception) {
+            null
+        }
     }
 
     private fun formatDateTime(epochMillis: Long, allowTodayLabel: Boolean): String {

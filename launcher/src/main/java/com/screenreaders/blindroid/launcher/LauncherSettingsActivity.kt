@@ -34,6 +34,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowNetworkSwitch: Switch
     private lateinit var nowStorageSwitch: Switch
     private lateinit var nowTopAppsSwitch: Switch
+    private lateinit var nowAirplaneSwitch: Switch
+    private lateinit var nowRamSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -104,6 +106,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowNetworkSwitch = findViewById(R.id.nowNetworkSwitch)
         nowStorageSwitch = findViewById(R.id.nowStorageSwitch)
         nowTopAppsSwitch = findViewById(R.id.nowTopAppsSwitch)
+        nowAirplaneSwitch = findViewById(R.id.nowAirplaneSwitch)
+        nowRamSwitch = findViewById(R.id.nowRamSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -172,6 +176,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowNetworkSwitch.isChecked = LauncherPrefs.isNowNetworkEnabled(this)
         nowStorageSwitch.isChecked = LauncherPrefs.isNowStorageEnabled(this)
         nowTopAppsSwitch.isChecked = LauncherPrefs.isNowTopAppsEnabled(this)
+        nowAirplaneSwitch.isChecked = LauncherPrefs.isNowAirplaneEnabled(this)
+        nowRamSwitch.isChecked = LauncherPrefs.isNowRamEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -330,6 +336,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowTopAppsSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowTopAppsEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowAirplaneSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowAirplaneEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowRamSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowRamEnabled(this, isChecked)
             toastSaved()
         }
 

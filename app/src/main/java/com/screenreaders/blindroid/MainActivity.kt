@@ -34,6 +34,7 @@ import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
 import com.screenreaders.blindroid.document.DocumentAssistActivity
+import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import java.util.Calendar
@@ -198,6 +199,7 @@ class MainActivity : AppCompatActivity() {
         initEndCallKeyUi()
         initChimeUi()
         initTtsUi()
+        initCrashReportUi()
         handleDialIntent(intent)
         handleSectionIntent(intent)
     }
@@ -223,9 +225,47 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateNotificationAccessButton()
+        updateCrashReportStatus()
         if (Prefs.isChimeEnabled(this) && isExactAlarmAllowed()) {
             ChimeScheduler.schedule(this)
         }
+    }
+
+    private fun initCrashReportUi() {
+        binding.crashReportSwitch.isChecked = Prefs.isCrashReportingEnabled(this)
+        binding.crashReportSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCrashReportingEnabled(this, isChecked)
+        }
+
+        binding.crashReportShareButton.setOnClickListener {
+            shareCrashReport()
+        }
+
+        binding.crashReportIssueButton.setOnClickListener {
+            startActivity(CrashReporter.createIssueIntent(this))
+        }
+
+        binding.crashReportClearButton.setOnClickListener {
+            CrashReporter.clearReports(this)
+            updateCrashReportStatus()
+        }
+
+        updateCrashReportStatus()
+    }
+
+    private fun updateCrashReportStatus() {
+        binding.crashReportStatus.text = CrashReporter.buildReportSummary(this)
+        val hasReport = CrashReporter.getLatestReport(this) != null
+        binding.crashReportShareButton.isEnabled = hasReport
+        binding.crashReportClearButton.isEnabled = hasReport
+    }
+
+    private fun shareCrashReport() {
+        val intent = CrashReporter.createShareIntent(this) ?: run {
+            updateCrashReportStatus()
+            return
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.crash_report_share)))
     }
 
     private fun handleDialIntent(intent: Intent) {
