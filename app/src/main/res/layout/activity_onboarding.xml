@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/onboardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onboard_title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_hint" />
+
+        <TextView
+            android:id="@+id/onboardDialerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_dialer_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardDialerStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardDialerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_dialer_button" />
+
+        <TextView
+            android:id="@+id/onboardContactsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_contacts_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardContactsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardContactsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_contacts_button" />
+
+        <TextView
+            android:id="@+id/onboardSmsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_sms_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardSmsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardSmsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_sms_button" />
+
+        <TextView
+            android:id="@+id/onboardNotificationsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_notifications_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardNotificationsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardNotificationsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_notifications_button" />
+
+        <TextView
+            android:id="@+id/onboardAccessibilityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_accessibility_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardAccessibilityStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardAccessibilityButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_accessibility_button" />
+
+        <TextView
+            android:id="@+id/onboardExactAlarmLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_exact_alarm_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardExactAlarmStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardExactAlarmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_exact_alarm_button" />
+
+        <TextView
+            android:id="@+id/onboardUpdatesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_updates_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardUpdatesStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_updates_hint" />
+
+        <Button
+            android:id="@+id/onboardUpdatesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_updates_button" />
+
+        <Button
+            android:id="@+id/onboardFinishButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/onboard_finish" />
+
+        <Button
+            android:id="@+id/onboardSkipButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_skip" />
+
+    </LinearLayout>
+</ScrollView>

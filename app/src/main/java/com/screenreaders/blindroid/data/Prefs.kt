@@ -43,6 +43,9 @@ object Prefs {
     private const val KEY_CRASH_WIFI_ONLY = "crash_wifi_only"
     private const val KEY_CRASH_FOREGROUND_ONLY = "crash_foreground_only"
     private const val KEY_CRASH_DEVICE_INFO = "crash_device_info"
+    private const val KEY_CRASH_CHARGING_ONLY = "crash_charging_only"
+    private const val KEY_CRASH_CLIENT_ID = "crash_client_id"
+    private const val KEY_ONBOARDING_DONE = "onboarding_done"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -124,6 +127,27 @@ object Prefs {
 
     fun setCrashDeviceInfoEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_CRASH_DEVICE_INFO, value).apply()
+    }
+
+    fun isCrashChargingOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CRASH_CHARGING_ONLY, false)
+
+    fun setCrashChargingOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CRASH_CHARGING_ONLY, value).apply()
+    }
+
+    fun getCrashClientId(context: Context): String? =
+        prefs(context).getString(KEY_CRASH_CLIENT_ID, null)
+
+    fun setCrashClientId(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_CRASH_CLIENT_ID, value).apply()
+    }
+
+    fun isOnboardingDone(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_ONBOARDING_DONE, false)
+
+    fun setOnboardingDone(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_ONBOARDING_DONE, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

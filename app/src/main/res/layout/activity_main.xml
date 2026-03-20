@@ -518,6 +518,13 @@
             android:text="@string/crash_report_foreground_only" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/crashReportChargingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_charging_only" />
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/crashReportDeviceInfoSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -538,6 +545,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/crash_report_share" />
+
+        <Button
+            android:id="@+id/crashReportSendButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_send" />
 
         <Button
             android:id="@+id/crashReportIssueButton"

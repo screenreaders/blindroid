@@ -1,11 +1,13 @@
 package com.screenreaders.blindroid.diagnostics
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.app.ActivityManager
+import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.StatFs
@@ -18,12 +20,14 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 object CrashReporter {
     private const val DIR_NAME = "crash_reports"
     private const val MAX_REPORTS = 5
     private const val REPORT_ENDPOINT = "https://report.asteja.eu/"
     private const val REPORT_HEADER = "X-Report-Token"
+    private const val REPORT_CLIENT_HEADER = "X-Client-Token"
     private const val REPORT_TOKEN = "47dc28661ef7d1ac07400827508b6aa9"
     private const val CONNECT_TIMEOUT_MS = 5000
     private const val READ_TIMEOUT_MS = 7000
@@ -113,8 +117,9 @@ object CrashReporter {
         Thread {
             try {
                 if (!hasAllowedNetwork(appContext)) return@Thread
+                if (!hasAllowedPower(appContext)) return@Thread
                 for (file in files) {
-                    val ok = uploadReport(file)
+                    val ok = uploadReport(appContext, file)
                     if (ok) {
                         file.delete()
                     } else {
@@ -125,6 +130,14 @@ object CrashReporter {
                 uploadInProgress = false
             }
         }.start()
+    }
+
+    fun canUploadNow(context: Context): Boolean {
+        if (!Prefs.isCrashReportingEnabled(context)) return false
+        if (Prefs.isCrashForegroundOnly(context) && !appInForeground) return false
+        if (!hasAllowedNetwork(context)) return false
+        if (!hasAllowedPower(context)) return false
+        return true
     }
 
     private fun writeReport(context: Context, thread: Thread, throwable: Throwable) {
@@ -139,14 +152,18 @@ object CrashReporter {
 
     private fun buildReport(context: Context, thread: Thread, throwable: Throwable): String {
         val sb = StringBuilder()
+        val reportId = UUID.randomUUID().toString()
+        val clientId = ensureClientId(context)
         sb.appendLine("Blindroid crash report")
         sb.appendLine("Time: ${Date()}")
+        sb.appendLine("ReportId: $reportId")
+        sb.appendLine("ClientId: $clientId")
         sb.appendLine("Version: ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
         sb.appendLine("Android: ${android.os.Build.VERSION.RELEASE} (SDK ${android.os.Build.VERSION.SDK_INT})")
         sb.appendLine("Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
         sb.appendLine("Thread: ${thread.name}")
         sb.appendLine()
-        sb.appendLine(throwable.stackTraceToString())
+        sb.appendLine(maskPhoneNumbers(throwable.stackTraceToString()))
         sb.appendLine()
         sb.appendLine("Prefs:")
         sb.appendLine("announce=${Prefs.isAnnounceEnabled(context)}")
@@ -162,6 +179,7 @@ object CrashReporter {
             sb.appendLine("cpu_abis=${Build.SUPPORTED_ABIS.joinToString()}")
             sb.appendLine("locale=${context.resources.configuration.locales.toLanguageTags()}")
             sb.appendLine("timezone=${java.util.TimeZone.getDefault().id}")
+            sb.appendLine("security_patch=${Build.VERSION.SECURITY_PATCH ?: "unknown"}")
             val am = context.getSystemService(ActivityManager::class.java)
             if (am != null) {
                 val info = ActivityManager.MemoryInfo()
@@ -174,6 +192,8 @@ object CrashReporter {
                 sb.appendLine("storage_avail=${storage.first}")
                 sb.appendLine("storage_total=${storage.second}")
             }
+            sb.appendLine("battery=${getBatteryPercent(context)}")
+            sb.appendLine("charging=${isCharging(context)}")
         }
         return sb.toString()
     }
@@ -192,7 +212,12 @@ object CrashReporter {
         }
     }
 
-    private fun uploadReport(file: File): Boolean {
+    private fun hasAllowedPower(context: Context): Boolean {
+        if (!Prefs.isCrashChargingOnly(context)) return true
+        return isCharging(context)
+    }
+
+    private fun uploadReport(context: Context, file: File): Boolean {
         return try {
             val conn = (URL(REPORT_ENDPOINT).openConnection() as HttpURLConnection).apply {
                 requestMethod = "POST"
@@ -201,6 +226,7 @@ object CrashReporter {
                 readTimeout = READ_TIMEOUT_MS
                 setRequestProperty("Content-Type", "text/plain; charset=utf-8")
                 setRequestProperty(REPORT_HEADER, REPORT_TOKEN)
+                setRequestProperty(REPORT_CLIENT_HEADER, ensureClientId(context))
             }
             conn.outputStream.use { it.write(file.readBytes()) }
             val code = conn.responseCode
@@ -208,6 +234,14 @@ object CrashReporter {
         } catch (_: Exception) {
             false
         }
+    }
+
+    private fun ensureClientId(context: Context): String {
+        val existing = Prefs.getCrashClientId(context)
+        if (!existing.isNullOrBlank()) return existing
+        val id = UUID.randomUUID().toString()
+        Prefs.setCrashClientId(context, id)
+        return id
     }
 
     private fun getStorageInfo(): Pair<String, String>? {
@@ -232,6 +266,46 @@ object CrashReporter {
         }
         val pre = "KMGTPE"[exp - 1]
         return String.format(Locale.US, "%.1f %sB", value, pre)
+    }
+
+    private fun getBatteryPercent(context: Context): Int {
+        val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
+        val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
+        return if (level >= 0 && scale > 0) (level * 100 / scale) else -1
+    }
+
+    private fun isCharging(context: Context): Boolean {
+        val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val status = intent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
+        return status == BatteryManager.BATTERY_STATUS_CHARGING ||
+            status == BatteryManager.BATTERY_STATUS_FULL
+    }
+
+    private fun maskPhoneNumbers(text: String): String {
+        val regex = Regex("(?<!\\d)(\\+?\\d[\\d\\s\\-]{5,}\\d)")
+        return regex.replace(text) { match ->
+            val raw = match.value
+            val digits = raw.filter { it.isDigit() }
+            if (digits.length < 7) return@replace raw
+            val maskedDigits = buildString {
+                val keep = 2
+                val maskLen = (digits.length - keep).coerceAtLeast(0)
+                repeat(maskLen) { append('*') }
+                append(digits.takeLast(keep))
+            }
+            var idx = 0
+            val result = StringBuilder()
+            for (ch in raw) {
+                if (ch.isDigit()) {
+                    result.append(maskedDigits[idx])
+                    idx += 1
+                } else {
+                    result.append(ch)
+                }
+            }
+            result.toString()
+        }
     }
 
     private fun trimOldReports(dir: File) {

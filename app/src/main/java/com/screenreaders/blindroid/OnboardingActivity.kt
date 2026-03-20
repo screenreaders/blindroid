@@ -1,0 +1,174 @@
+package com.screenreaders.blindroid
+
+import android.Manifest
+import android.app.role.RoleManager
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
+import android.provider.Settings
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationManagerCompat
+import com.screenreaders.blindroid.data.Prefs
+
+class OnboardingActivity : AppCompatActivity() {
+    private lateinit var dialerStatus: TextView
+    private lateinit var contactsStatus: TextView
+    private lateinit var smsStatus: TextView
+    private lateinit var notificationsStatus: TextView
+    private lateinit var accessibilityStatus: TextView
+    private lateinit var exactAlarmStatus: TextView
+    private lateinit var updatesStatus: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_onboarding)
+
+        dialerStatus = findViewById(R.id.onboardDialerStatus)
+        contactsStatus = findViewById(R.id.onboardContactsStatus)
+        smsStatus = findViewById(R.id.onboardSmsStatus)
+        notificationsStatus = findViewById(R.id.onboardNotificationsStatus)
+        accessibilityStatus = findViewById(R.id.onboardAccessibilityStatus)
+        exactAlarmStatus = findViewById(R.id.onboardExactAlarmStatus)
+        updatesStatus = findViewById(R.id.onboardUpdatesStatus)
+
+        findViewById<Button>(R.id.onboardDialerButton).setOnClickListener {
+            requestDialerRole()
+        }
+        findViewById<Button>(R.id.onboardContactsButton).setOnClickListener {
+            requestContactsPermission()
+        }
+        findViewById<Button>(R.id.onboardSmsButton).setOnClickListener {
+            requestSmsPermission()
+        }
+        findViewById<Button>(R.id.onboardNotificationsButton).setOnClickListener {
+            openNotificationAccessSettings()
+        }
+        findViewById<Button>(R.id.onboardAccessibilityButton).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        }
+        findViewById<Button>(R.id.onboardExactAlarmButton).setOnClickListener {
+            openExactAlarmSettings()
+        }
+        findViewById<Button>(R.id.onboardUpdatesButton).setOnClickListener {
+            openUpdates()
+        }
+        findViewById<Button>(R.id.onboardFinishButton).setOnClickListener {
+            Prefs.setOnboardingDone(this, true)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        findViewById<Button>(R.id.onboardSkipButton).setOnClickListener {
+            Prefs.setOnboardingDone(this, true)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateStatuses()
+    }
+
+    private fun updateStatuses() {
+        dialerStatus.text = if (isDialerRoleHeld()) {
+            getString(R.string.onboard_status_ok)
+        } else {
+            getString(R.string.onboard_status_missing)
+        }
+        contactsStatus.text = if (hasPermission(Manifest.permission.READ_CONTACTS)) {
+            getString(R.string.onboard_status_ok)
+        } else {
+            getString(R.string.onboard_status_missing)
+        }
+        smsStatus.text = if (hasPermission(Manifest.permission.RECEIVE_SMS)) {
+            getString(R.string.onboard_status_ok)
+        } else {
+            getString(R.string.onboard_status_missing)
+        }
+        notificationsStatus.text = if (isNotificationAccessEnabled()) {
+            getString(R.string.onboard_status_ok)
+        } else {
+            getString(R.string.onboard_status_missing)
+        }
+        accessibilityStatus.text = getString(R.string.onboard_status_manual)
+        exactAlarmStatus.text = when {
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.S -> getString(R.string.onboard_status_not_needed)
+            isExactAlarmAllowed() -> getString(R.string.onboard_status_ok)
+            else -> getString(R.string.onboard_status_missing)
+        }
+        updatesStatus.text = getString(R.string.onboard_updates_hint)
+    }
+
+    private fun isDialerRoleHeld(): Boolean {
+        val roleManager = getSystemService(RoleManager::class.java)
+        return roleManager.isRoleAvailable(RoleManager.ROLE_DIALER) &&
+            roleManager.isRoleHeld(RoleManager.ROLE_DIALER)
+    }
+
+    private fun requestDialerRole() {
+        val roleManager = getSystemService(RoleManager::class.java)
+        if (roleManager.isRoleAvailable(RoleManager.ROLE_DIALER)
+            && !roleManager.isRoleHeld(RoleManager.ROLE_DIALER)
+        ) {
+            val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
+            startActivity(intent)
+        }
+    }
+
+    private fun requestContactsPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_CONTACTS),
+            REQ_CONTACTS
+        )
+    }
+
+    private fun requestSmsPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.RECEIVE_SMS),
+            REQ_SMS
+        )
+    }
+
+    private fun openNotificationAccessSettings() {
+        startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) ==
+            PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun isNotificationAccessEnabled(): Boolean {
+        val packages = NotificationManagerCompat.getEnabledListenerPackages(this)
+        return packages.contains(packageName)
+    }
+
+    private fun isExactAlarmAllowed(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+        val alarmManager = getSystemService(android.app.AlarmManager::class.java)
+        return alarmManager.canScheduleExactAlarms()
+    }
+
+    private fun openExactAlarmSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+        }
+    }
+
+    private fun openUpdates() {
+        val intent = MainActivity.createUpdatesIntent(this, checkNow = true)
+        startActivity(intent)
+    }
+
+    companion object {
+        private const val REQ_CONTACTS = 201
+        private const val REQ_SMS = 202
+    }
+}

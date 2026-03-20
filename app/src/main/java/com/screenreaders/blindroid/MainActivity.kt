@@ -23,6 +23,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.telecom.TelecomManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -67,6 +68,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!Prefs.isOnboardingDone(this)) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -237,6 +243,7 @@ class MainActivity : AppCompatActivity() {
         binding.crashReportSwitch.isChecked = Prefs.isCrashReportingEnabled(this)
         binding.crashReportWifiSwitch.isChecked = Prefs.isCrashWifiOnly(this)
         binding.crashReportForegroundSwitch.isChecked = Prefs.isCrashForegroundOnly(this)
+        binding.crashReportChargingSwitch.isChecked = Prefs.isCrashChargingOnly(this)
         binding.crashReportDeviceInfoSwitch.isChecked = Prefs.isCrashDeviceInfoEnabled(this)
         binding.crashReportSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashReportingEnabled(this, isChecked)
@@ -248,12 +255,18 @@ class MainActivity : AppCompatActivity() {
         binding.crashReportForegroundSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashForegroundOnly(this, isChecked)
         }
+        binding.crashReportChargingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCrashChargingOnly(this, isChecked)
+        }
         binding.crashReportDeviceInfoSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashDeviceInfoEnabled(this, isChecked)
         }
 
         binding.crashReportShareButton.setOnClickListener {
             shareCrashReport()
+        }
+        binding.crashReportSendButton.setOnClickListener {
+            sendCrashReports()
         }
 
         binding.crashReportIssueButton.setOnClickListener {
@@ -277,11 +290,14 @@ class MainActivity : AppCompatActivity() {
         val enabled = Prefs.isCrashReportingEnabled(this)
         binding.crashReportWifiSwitch.isEnabled = enabled
         binding.crashReportForegroundSwitch.isEnabled = enabled
+        binding.crashReportChargingSwitch.isEnabled = enabled
         binding.crashReportDeviceInfoSwitch.isEnabled = enabled
         binding.crashReportShareButton.isEnabled =
             enabled && CrashReporter.getLatestReport(this) != null
         binding.crashReportClearButton.isEnabled =
             enabled && CrashReporter.getLatestReport(this) != null
+        binding.crashReportSendButton.isEnabled =
+            enabled && CrashReporter.getLatestReport(this) != null && CrashReporter.canUploadNow(this)
     }
 
     private fun shareCrashReport() {
@@ -290,6 +306,20 @@ class MainActivity : AppCompatActivity() {
             return
         }
         startActivity(Intent.createChooser(intent, getString(R.string.crash_report_share)))
+    }
+
+    private fun sendCrashReports() {
+        if (!CrashReporter.canUploadNow(this)) {
+            Toast.makeText(this, R.string.crash_report_cannot_send, Toast.LENGTH_SHORT).show()
+            return
+        }
+        CrashReporter.uploadPendingReports(this)
+        updateCrashReportStatus()
+        updateCrashReportControls()
+        Handler(Looper.getMainLooper()).postDelayed({
+            updateCrashReportStatus()
+            updateCrashReportControls()
+        }, 1500)
     }
 
     private fun handleDialIntent(intent: Intent) {
@@ -317,6 +347,9 @@ class MainActivity : AppCompatActivity() {
         } ?: return
         binding.mainScroll.post {
             binding.mainScroll.smoothScrollTo(0, target.top)
+        }
+        if (section == SECTION_UPDATES && intent.getBooleanExtra(EXTRA_CHECK_UPDATES, false)) {
+            checkForUpdates(manual = true)
         }
     }
 
@@ -984,14 +1017,21 @@ class MainActivity : AppCompatActivity() {
         private const val REQ_CALL_PHONE = 101
         private const val REQ_CONTACTS = 102
         private const val REQ_SMS = 103
-        private const val EXTRA_SECTION = "extra_section"
-        private const val SECTION_LAUNCHER = "launcher"
-        private const val SECTION_CALLS = "calls"
-        private const val SECTION_NOTIFICATIONS = "notifications"
-        private const val SECTION_DOCUMENTS = "documents"
-        private const val SECTION_CURRENCY = "currency"
-        private const val SECTION_LIGHT = "light"
-        private const val SECTION_CHIME = "chime"
-        private const val SECTION_UPDATES = "updates"
+        const val EXTRA_SECTION = "extra_section"
+        const val EXTRA_CHECK_UPDATES = "extra_check_updates"
+        const val SECTION_LAUNCHER = "launcher"
+        const val SECTION_CALLS = "calls"
+        const val SECTION_NOTIFICATIONS = "notifications"
+        const val SECTION_DOCUMENTS = "documents"
+        const val SECTION_CURRENCY = "currency"
+        const val SECTION_LIGHT = "light"
+        const val SECTION_CHIME = "chime"
+        const val SECTION_UPDATES = "updates"
+
+        fun createUpdatesIntent(context: Context, checkNow: Boolean): Intent {
+            return Intent(context, MainActivity::class.java)
+                .putExtra(EXTRA_SECTION, SECTION_UPDATES)
+                .putExtra(EXTRA_CHECK_UPDATES, checkNow)
+        }
     }
 }
