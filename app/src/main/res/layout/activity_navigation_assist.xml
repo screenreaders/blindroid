@@ -151,6 +151,13 @@
             android:text="@string/navigation_share_track" />
 
         <Button
+            android:id="@+id/navigationShareGpxButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_share_gpx" />
+
+        <Button
             android:id="@+id/navigationSharePinButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

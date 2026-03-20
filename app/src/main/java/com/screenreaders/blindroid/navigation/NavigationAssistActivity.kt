@@ -57,6 +57,7 @@ class NavigationAssistActivity : AppCompatActivity() {
             syncTrackingService()
         }
         binding.navigationShareTrackButton.setOnClickListener { shareLastTrack() }
+        binding.navigationShareGpxButton.setOnClickListener { shareLastTrackGpx() }
         binding.navigationSharePinButton.setOnClickListener { sharePin() }
         loadSelectedCategories()
         updateCategorySummary()
@@ -357,6 +358,32 @@ class NavigationAssistActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         startActivity(Intent.createChooser(intent, getString(R.string.navigation_share_track)))
+    }
+
+    private fun shareLastTrackGpx() {
+        val path = Prefs.getNavigationLastTrack(this)
+        if (path.isNullOrBlank()) {
+            Toast.makeText(this, R.string.navigation_track_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val csvFile = java.io.File(path)
+        val gpxFile = TrackExporter.csvToGpx(this, csvFile)
+        if (gpxFile == null || !gpxFile.exists()) {
+            Toast.makeText(this, R.string.navigation_gpx_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uri = androidx.core.content.FileProvider.getUriForFile(
+            this,
+            "${packageName}.fileprovider",
+            gpxFile
+        )
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "application/gpx+xml"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_SUBJECT, "Blindroid GPX")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.navigation_share_gpx)))
     }
 
     private fun restoreLastDestination() {

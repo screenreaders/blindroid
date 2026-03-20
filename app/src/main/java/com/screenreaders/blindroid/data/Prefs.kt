@@ -86,6 +86,7 @@ object Prefs {
     private const val KEY_NAV_LAST_PLACE = "nav_last_place"
     private const val KEY_NAV_LAST_CITY = "nav_last_city"
     private const val KEY_NAV_LAST_MODE = "nav_last_mode"
+    private const val KEY_TYFLO_LAST_LINK = "tyflo_last_link"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -465,6 +466,13 @@ object Prefs {
 
     fun setNavigationLastMode(context: Context, value: String) {
         prefs(context).edit().putString(KEY_NAV_LAST_MODE, value).apply()
+    }
+
+    fun getTyflomapLastLink(context: Context): String? =
+        prefs(context).getString(KEY_TYFLO_LAST_LINK, null)
+
+    fun setTyflomapLastLink(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_TYFLO_LAST_LINK, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

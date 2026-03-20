@@ -43,6 +43,7 @@ import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.navigation.NavigationAssistActivity
 import com.screenreaders.blindroid.obstacle.ObstacleAssistActivity
+import com.screenreaders.blindroid.tyflomap.TyflomapActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.update.UpdateScheduler
 import com.screenreaders.blindroid.util.LowVisionStyler
@@ -120,6 +121,7 @@ class MainActivity : AppCompatActivity() {
         binding.currencyButton.setOnClickListener { openCurrencyModule() }
         binding.lightButton.setOnClickListener { openLightModule() }
         binding.navigationButton.setOnClickListener { openNavigationModule() }
+        binding.tyflomapButton.setOnClickListener { openTyflomapModule() }
         binding.talkbackWizardButton.setOnClickListener { openTalkbackWizard() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
@@ -847,6 +849,7 @@ class MainActivity : AppCompatActivity() {
             SECTION_CURRENCY -> binding.currencyLabel
             SECTION_LIGHT -> binding.lightLabel
             SECTION_NAVIGATION -> binding.navigationLabel
+            SECTION_TYFLOMAP -> binding.tyflomapLabel
             SECTION_CHIME -> binding.chimeLabel
             SECTION_UPDATES -> binding.updateLabel
             else -> null
@@ -933,6 +936,11 @@ class MainActivity : AppCompatActivity() {
     private fun openNavigationModule() {
         DiagnosticLog.log(this, "module_navigation_open")
         startActivity(Intent(this, NavigationAssistActivity::class.java))
+    }
+
+    private fun openTyflomapModule() {
+        DiagnosticLog.log(this, "module_tyflomap_open")
+        startActivity(Intent(this, TyflomapActivity::class.java))
     }
 
     private fun openTalkbackWizard() {
@@ -1568,6 +1576,7 @@ class MainActivity : AppCompatActivity() {
         const val SECTION_CURRENCY = "currency"
         const val SECTION_LIGHT = "light"
         const val SECTION_NAVIGATION = "navigation"
+        const val SECTION_TYFLOMAP = "tyflomap"
         const val SECTION_CHIME = "chime"
         const val SECTION_UPDATES = "updates"
         const val PRESET_CUSTOM = 0
