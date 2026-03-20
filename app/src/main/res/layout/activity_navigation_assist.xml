@@ -80,6 +80,28 @@
             android:text="@string/navigation_offline_route" />
 
         <TextView
+            android:id="@+id/navigationOfflineGuidanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/navigation_offline_guidance_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationOfflineGuidanceSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_guidance_enable" />
+
+        <TextView
+            android:id="@+id/navigationOfflineGuidanceHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_offline_guidance_hint" />
+
+        <TextView
             android:id="@+id/navigationTrackingLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,6 +183,33 @@
             android:layout_marginTop="8dp"
             android:hint="@string/navigation_offline_base_url_hint"
             android:inputType="textUri" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationOfflineGzipSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_gzip" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationOfflineSegmentSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_offline_segmented" />
+
+        <TextView
+            android:id="@+id/navigationOfflineSegmentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_segment_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationOfflineSegmentSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/navigationOfflineCheckButton"

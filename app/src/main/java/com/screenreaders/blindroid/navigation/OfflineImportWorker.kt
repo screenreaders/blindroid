@@ -25,15 +25,25 @@ class OfflineImportWorker(
 
         val bbox = resolveBbox() ?: return Result.retry()
         return try {
-            val pois = GithubTileClient.fetchTiles(
-                bbox = bbox,
-                categories = categories.toSet(),
-                config = GithubTileClient.Config(
-                    baseUrl = baseUrl,
-                    zoom = Prefs.getNavigationOfflineZoom(applicationContext),
-                    maxTiles = 256
-                )
+            val config = GithubTileClient.Config(
+                baseUrl = baseUrl,
+                zoom = Prefs.getNavigationOfflineZoom(applicationContext),
+                maxTiles = Prefs.getNavigationOfflineSegmentSize(applicationContext),
+                useGzip = Prefs.isNavigationOfflineGzipEnabled(applicationContext)
             )
+            val pois = if (Prefs.isNavigationOfflineSegmented(applicationContext)) {
+                GithubTileClient.fetchTilesSegmented(
+                    bbox = bbox,
+                    categories = categories.toSet(),
+                    config = config
+                )
+            } else {
+                GithubTileClient.fetchTiles(
+                    bbox = bbox,
+                    categories = categories.toSet(),
+                    config = config
+                )
+            }
             NavigationPoiStore.replaceAll(applicationContext, pois)
             Prefs.setNavigationOfflineCount(applicationContext, pois.size)
             Prefs.setNavigationOfflineUpdated(applicationContext, System.currentTimeMillis())

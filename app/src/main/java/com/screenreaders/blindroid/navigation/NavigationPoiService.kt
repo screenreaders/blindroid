@@ -42,6 +42,8 @@ class NavigationPoiService : Service(), LocationListener {
     private var lastSpokenLocation: Location? = null
     private var lastMotionLocation: Location? = null
     private var lastMotionTime = 0L
+    private var lastHeading: Float? = null
+    private var lastLocation: Location? = null
     private val announced = LinkedHashMap<String, Long>()
     private var tts: TextToSpeech? = null
     private var lastTrackWrite = 0L
@@ -121,6 +123,7 @@ class NavigationPoiService : Service(), LocationListener {
             stopSelf()
             return
         }
+        updateHeading(location)
         if (Prefs.isNavigationMovingOnly(this) && !isMoving(location)) return
         maybeWriteTrack(location)
         val wantsPoi = Prefs.isNavigationTrackingEnabled(this)
@@ -195,7 +198,7 @@ class NavigationPoiService : Service(), LocationListener {
                 if (!canSpeakNow()) continue
                 if (!passesMinDistance(location)) continue
                 markAnnounced(placeId)
-                speakOnce("Mijasz: $name, ${labelForType(type)}")
+                speakOnce(buildPoiAnnouncement(name, type, lat, lng, location))
                 break
             }
         } catch (_: Exception) {
@@ -223,7 +226,7 @@ class NavigationPoiService : Service(), LocationListener {
             if (!canSpeakNow()) continue
             if (!passesMinDistance(location)) continue
             markAnnounced(poi.id)
-            speakOnce("Mijasz: ${poi.name}, ${labelForType(poi.type)}")
+            speakOnce(buildPoiAnnouncement(poi.name, poi.type, poi.lat, poi.lon, location))
             return true
         }
         return false
@@ -254,8 +257,56 @@ class NavigationPoiService : Service(), LocationListener {
             if (!canSpeakNow()) continue
             if (!passesMinDistance(location)) continue
             markAnnounced(poi.id)
-            speakOnce("Mijasz: ${poi.name}, ${labelForType(poi.type)}")
+            speakOnce(buildPoiAnnouncement(poi.name, poi.type, poi.lat, poi.lon, location))
             break
+        }
+    }
+
+    private fun buildPoiAnnouncement(name: String, type: String, lat: Double, lon: Double, location: Location): String {
+        val distance = distanceMeters(location.latitude, location.longitude, lat, lon)
+        val distanceText = formatDistance(distance)
+        val direction = buildRelativeDirection(location, lat, lon)
+        val label = labelForType(type)
+        return if (direction.isBlank()) {
+            getString(R.string.navigation_poi_announce, name, label, distanceText)
+        } else {
+            getString(R.string.navigation_poi_announce_direction, name, label, distanceText, direction)
+        }
+    }
+
+    private fun buildRelativeDirection(location: Location, lat: Double, lon: Double): String {
+        val bearingTo = bearingBetween(location.latitude, location.longitude, lat, lon)
+        val heading = lastHeading
+        return if (heading != null) {
+            val diff = normalizeBearing(bearingTo - heading)
+            val absDiff = kotlin.math.abs(diff)
+            when {
+                absDiff < 20 -> getString(R.string.direction_forward)
+                absDiff < 50 -> if (diff < 0) getString(R.string.direction_slight_left) else getString(R.string.direction_slight_right)
+                absDiff < 130 -> if (diff < 0) getString(R.string.direction_left) else getString(R.string.direction_right)
+                else -> getString(R.string.direction_back)
+            }
+        } else {
+            val idx = ((bearingTo + 22.5) / 45.0).toInt() % 8
+            when (idx) {
+                0 -> getString(R.string.direction_north)
+                1 -> getString(R.string.direction_north_east)
+                2 -> getString(R.string.direction_east)
+                3 -> getString(R.string.direction_south_east)
+                4 -> getString(R.string.direction_south)
+                5 -> getString(R.string.direction_south_west)
+                6 -> getString(R.string.direction_west)
+                else -> getString(R.string.direction_north_west)
+            }
+        }
+    }
+
+    private fun formatDistance(distanceMeters: Int): String {
+        return if (distanceMeters < 1000) {
+            getString(R.string.navigation_distance_meters, distanceMeters)
+        } else {
+            val km = distanceMeters / 1000.0
+            getString(R.string.navigation_distance_kilometers, String.format(java.util.Locale.US, "%.1f", km))
         }
     }
 
@@ -375,6 +426,33 @@ class NavigationPoiService : Service(), LocationListener {
             lastMotionTime = now
             speed >= 0.6f
         }
+    }
+
+    private fun updateHeading(location: Location) {
+        val prev = lastLocation
+        if (prev != null && prev.distanceTo(location) >= 3f) {
+            lastHeading = bearingBetween(prev.latitude, prev.longitude, location.latitude, location.longitude)
+        } else if (location.hasBearing()) {
+            lastHeading = location.bearing
+        }
+        lastLocation = location
+    }
+
+    private fun bearingBetween(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Float {
+        val phi1 = Math.toRadians(lat1)
+        val phi2 = Math.toRadians(lat2)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val y = sin(dLon) * cos(phi2)
+        val x = cos(phi1) * sin(phi2) - sin(phi1) * cos(phi2) * cos(dLon)
+        val bearing = Math.toDegrees(atan2(y, x))
+        return ((bearing + 360) % 360).toFloat()
+    }
+
+    private fun normalizeBearing(value: Float): Float {
+        var v = value % 360f
+        if (v > 180f) v -= 360f
+        if (v < -180f) v += 360f
+        return v
     }
 
     private fun ensureTrackFile() {

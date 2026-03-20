@@ -3,6 +3,7 @@ package com.screenreaders.blindroid.navigation
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +56,7 @@ class NavigationAssistActivity : AppCompatActivity() {
     private var pendingTyflomap = false
     private var pendingOfflineImport = false
     private var pendingOfflineCheck = false
+    private var pendingRouteStart = false
     private var tyflomapLink: String? = null
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -66,6 +68,14 @@ class NavigationAssistActivity : AppCompatActivity() {
         restoreLastDestination()
         binding.navigationStartButton.setOnClickListener { startNavigation() }
         binding.navigationStartOfflineButton.setOnClickListener { startOfflineNavigation() }
+        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this)
+        binding.navigationOfflineGuidanceSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                startOfflineGuidance()
+            } else {
+                stopOfflineGuidance()
+            }
+        }
         binding.navigationTrackingSwitch.isChecked = Prefs.isNavigationTrackingEnabled(this)
         binding.navigationTrackingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNavigationTrackingEnabled(this, isChecked)
@@ -93,6 +103,11 @@ class NavigationAssistActivity : AppCompatActivity() {
         updateCategorySummary()
         updateOfflineStatus()
         updatePoiSourceUi()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.navigationOfflineGuidanceSwitch.isChecked = Prefs.isNavigationRouteEnabled(this)
     }
 
     override fun onDestroy() {
@@ -163,6 +178,84 @@ class NavigationAssistActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, R.string.navigation_offline_route_missing, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun startOfflineGuidance() {
+        if (!hasLocationPermission()) {
+            pendingRouteStart = true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        val place = binding.navigationPlaceInput.text?.toString()?.trim().orEmpty()
+        val city = binding.navigationCityInput.text?.toString()?.trim().orEmpty()
+        val coord = parseCoordinates(place) ?: parseCoordinates(city)
+        if (coord != null) {
+            beginOfflineGuidance(place.ifBlank { city }, coord.first, coord.second)
+            return
+        }
+        val destination = if (place.isBlank()) city else "$place, $city"
+        if (destination.isBlank()) {
+            Toast.makeText(this, R.string.navigation_offline_guidance_missing, Toast.LENGTH_SHORT).show()
+            binding.navigationOfflineGuidanceSwitch.isChecked = false
+            return
+        }
+        if (!Geocoder.isPresent()) {
+            Toast.makeText(this, R.string.navigation_offline_guidance_missing, Toast.LENGTH_SHORT).show()
+            binding.navigationOfflineGuidanceSwitch.isChecked = false
+            return
+        }
+        val geocoder = Geocoder(this, Locale.getDefault())
+        Toast.makeText(this, R.string.navigation_offline_guidance_lookup, Toast.LENGTH_SHORT).show()
+        executor.execute {
+            val result = try {
+                val list = geocoder.getFromLocationName(destination, 1)
+                list?.firstOrNull()
+            } catch (_: Exception) {
+                null
+            }
+            runOnUiThread {
+                if (!binding.navigationOfflineGuidanceSwitch.isChecked) {
+                    return@runOnUiThread
+                }
+                if (result == null) {
+                    Toast.makeText(this, R.string.navigation_offline_guidance_missing, Toast.LENGTH_SHORT).show()
+                    binding.navigationOfflineGuidanceSwitch.isChecked = false
+                    Prefs.setNavigationRouteEnabled(this, false)
+                } else {
+                    beginOfflineGuidance(destination, result.latitude, result.longitude)
+                }
+            }
+        }
+    }
+
+    private fun stopOfflineGuidance() {
+        Prefs.setNavigationRouteEnabled(this, false)
+        NavigationRouteService.stop(this)
+        Toast.makeText(this, R.string.navigation_offline_guidance_stopped, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun beginOfflineGuidance(label: String, lat: Double, lon: Double) {
+        Prefs.setNavigationRouteLabel(this, label)
+        Prefs.setNavigationRouteLat(this, lat)
+        Prefs.setNavigationRouteLon(this, lon)
+        Prefs.setNavigationRouteEnabled(this, true)
+        NavigationRouteService.start(this)
+        Toast.makeText(this, R.string.navigation_offline_guidance_started, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun parseCoordinates(input: String): Pair<Double, Double>? {
+        if (input.isBlank()) return null
+        val cleaned = input.replace(",", " ").trim()
+        val parts = cleaned.split(Regex("\\s+")).filter { it.isNotBlank() }
+        if (parts.size < 2) return null
+        val lat = parts[0].toDoubleOrNull() ?: return null
+        val lon = parts[1].toDoubleOrNull() ?: return null
+        if (lat !in -90.0..90.0 || lon !in -180.0..180.0) return null
+        return lat to lon
     }
 
     private fun startTracking() {
@@ -262,6 +355,9 @@ class NavigationAssistActivity : AppCompatActivity() {
                 } else if (pendingTyflomap) {
                     pendingTyflomap = false
                     fetchTyflomap()
+                } else if (pendingRouteStart) {
+                    pendingRouteStart = false
+                    startOfflineGuidance()
                 } else if (pendingOfflineImport) {
                     pendingOfflineImport = false
                     importOfflinePois()
@@ -274,6 +370,8 @@ class NavigationAssistActivity : AppCompatActivity() {
             } else {
                 if (pendingTyflomap) {
                     Toast.makeText(this, R.string.tyflomap_permission_missing, Toast.LENGTH_SHORT).show()
+                } else if (pendingRouteStart) {
+                    Toast.makeText(this, R.string.navigation_tracking_missing_location, Toast.LENGTH_SHORT).show()
                 } else if (pendingOfflineImport) {
                     Toast.makeText(this, R.string.navigation_tracking_missing_location, Toast.LENGTH_SHORT).show()
                 } else if (pendingOfflineCheck) {
@@ -281,10 +379,12 @@ class NavigationAssistActivity : AppCompatActivity() {
                 }
                 pendingSharePin = false
                 pendingTyflomap = false
+                pendingRouteStart = false
                 pendingOfflineImport = false
                 pendingOfflineCheck = false
                 binding.navigationTrackingSwitch.isChecked = false
                 binding.navigationTrackLogSwitch.isChecked = false
+                binding.navigationOfflineGuidanceSwitch.isChecked = false
             }
         }
     }
@@ -545,6 +645,44 @@ class NavigationAssistActivity : AppCompatActivity() {
         }
         binding.navigationOfflineCheckButton.setOnClickListener { checkOfflineBase() }
 
+        binding.navigationOfflineGzipSwitch.isChecked = Prefs.isNavigationOfflineGzipEnabled(this)
+        binding.navigationOfflineGzipSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationOfflineGzipEnabled(this, isChecked)
+        }
+
+        binding.navigationOfflineSegmentSwitch.isChecked = Prefs.isNavigationOfflineSegmented(this)
+        binding.navigationOfflineSegmentSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationOfflineSegmented(this, isChecked)
+            updateOfflineSegmentUi()
+        }
+
+        val segmentOptions = listOf(8, 16, 32, 64)
+        val segmentLabels = segmentOptions.map { getString(R.string.navigation_offline_segment_value, it) }
+        val segmentAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            segmentLabels
+        )
+        segmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationOfflineSegmentSpinner.adapter = segmentAdapter
+        val segmentIndex = segmentOptions.indexOf(Prefs.getNavigationOfflineSegmentSize(this)).let { if (it >= 0) it else 1 }
+        binding.navigationOfflineSegmentSpinner.setSelection(segmentIndex, false)
+        binding.navigationOfflineSegmentSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val value = segmentOptions.getOrElse(position) { 16 }
+                    Prefs.setNavigationOfflineSegmentSize(this@NavigationAssistActivity, value)
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+            }
+        updateOfflineSegmentUi()
+
         val zoomOptions = listOf(12, 13, 14, 15, 16, 17)
         val zoomLabels = zoomOptions.map { getString(R.string.navigation_offline_zoom_value, it) }
         val zoomAdapter = android.widget.ArrayAdapter(
@@ -621,6 +759,15 @@ class NavigationAssistActivity : AppCompatActivity() {
         }
         updateImportModeUi()
         binding.navigationMapSelectButton.setOnClickListener { openMapSelect() }
+    }
+
+    private fun updateOfflineSegmentUi() {
+        val source = Prefs.getNavigationPoiSource(this)
+        val offlineCapable = source == Prefs.NAV_POI_SOURCE_OFFLINE || source == Prefs.NAV_POI_SOURCE_HYBRID
+        val enabled = offlineCapable && Prefs.isNavigationOfflineSegmented(this)
+        binding.navigationOfflineSegmentLabel.isEnabled = enabled
+        binding.navigationOfflineSegmentLabel.alpha = if (enabled) 1f else 0.6f
+        binding.navigationOfflineSegmentSpinner.isEnabled = enabled
     }
 
     private fun setupAutoImportControls() {
@@ -729,6 +876,10 @@ class NavigationAssistActivity : AppCompatActivity() {
         binding.navigationOfflineBaseUrlInput.isEnabled = isOfflineCapable
         binding.navigationOfflineBaseUrlHint.alpha = if (isOfflineCapable) 1f else 0.6f
         binding.navigationOfflineBaseUrlInput.alpha = if (isOfflineCapable) 1f else 0.6f
+        binding.navigationOfflineGzipSwitch.isEnabled = isOfflineCapable
+        binding.navigationOfflineSegmentSwitch.isEnabled = isOfflineCapable
+        binding.navigationOfflineSegmentLabel.alpha = if (isOfflineCapable) 1f else 0.6f
+        binding.navigationOfflineSegmentSpinner.alpha = if (isOfflineCapable) 1f else 0.6f
         binding.navigationOfflineZoomSpinner.isEnabled = isOfflineCapable
         binding.navigationImportRadiusSpinner.isEnabled = isOfflineCapable
         binding.navigationImportModeGroup.isEnabled = isOfflineCapable
@@ -741,6 +892,7 @@ class NavigationAssistActivity : AppCompatActivity() {
         binding.navigationImportMinLonInput.isEnabled = enabled
         binding.navigationImportMaxLatInput.isEnabled = enabled
         binding.navigationImportMaxLonInput.isEnabled = enabled
+        updateOfflineSegmentUi()
     }
 
     private fun updateOfflineStatus() {
@@ -787,20 +939,37 @@ class NavigationAssistActivity : AppCompatActivity() {
             var tooMany = false
             var noTiles = false
             val result = try {
-                GithubTileClient.fetchTilesWithProgress(
-                    bbox = bbox,
-                    categories = categories.toSet(),
-                    config = GithubTileClient.Config(
-                        baseUrl = baseUrl,
-                        zoom = Prefs.getNavigationOfflineZoom(this)
-                    ),
-                    onProgress = { done, total ->
-                        runOnUiThread {
-                            binding.navigationOfflineStatus.text =
-                                getString(R.string.navigation_offline_progress, done, total)
-                        }
-                    }
+                val config = GithubTileClient.Config(
+                    baseUrl = baseUrl,
+                    zoom = Prefs.getNavigationOfflineZoom(this),
+                    maxTiles = Prefs.getNavigationOfflineSegmentSize(this),
+                    useGzip = Prefs.isNavigationOfflineGzipEnabled(this)
                 )
+                if (Prefs.isNavigationOfflineSegmented(this)) {
+                    GithubTileClient.fetchTilesSegmentedWithProgress(
+                        bbox = bbox,
+                        categories = categories.toSet(),
+                        config = config,
+                        onProgress = { done, total ->
+                            runOnUiThread {
+                                binding.navigationOfflineStatus.text =
+                                    getString(R.string.navigation_offline_progress, done, total)
+                            }
+                        }
+                    )
+                } else {
+                    GithubTileClient.fetchTilesWithProgress(
+                        bbox = bbox,
+                        categories = categories.toSet(),
+                        config = config,
+                        onProgress = { done, total ->
+                            runOnUiThread {
+                                binding.navigationOfflineStatus.text =
+                                    getString(R.string.navigation_offline_progress, done, total)
+                            }
+                        }
+                    )
+                }
             } catch (e: IllegalArgumentException) {
                 if (e.message == "too_many_tiles") {
                     tooMany = true
@@ -980,13 +1149,21 @@ class NavigationAssistActivity : AppCompatActivity() {
         executor.execute {
             val zoom = Prefs.getNavigationOfflineZoom(this)
             val tiles = GithubTileClient.listTiles(bbox, zoom)
-            val tooMany = tiles.size > GithubTileClient.Config(baseUrl, Prefs.getNavigationOfflineZoom(this)).maxTiles
-            if (tooMany) {
-                runOnUiThread {
-                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_too_many_tiles)
-                    Toast.makeText(this, R.string.navigation_offline_too_many_tiles, Toast.LENGTH_SHORT).show()
+            val config = GithubTileClient.Config(
+                baseUrl = baseUrl,
+                zoom = zoom,
+                maxTiles = Prefs.getNavigationOfflineSegmentSize(this),
+                useGzip = Prefs.isNavigationOfflineGzipEnabled(this)
+            )
+            if (!Prefs.isNavigationOfflineSegmented(this)) {
+                val tooMany = tiles.size > config.maxTiles
+                if (tooMany) {
+                    runOnUiThread {
+                        binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_too_many_tiles)
+                        Toast.makeText(this, R.string.navigation_offline_too_many_tiles, Toast.LENGTH_SHORT).show()
+                    }
+                    return@execute
                 }
-                return@execute
             }
             val tile = tiles.firstOrNull()
             if (tile == null) {
@@ -998,7 +1175,7 @@ class NavigationAssistActivity : AppCompatActivity() {
             }
             val url = "${baseUrl.trimEnd('/')}/$zoom/${tile.x}/${tile.y}.json"
             val pois = try {
-                GithubTileClient.fetchTile(url, emptySet())
+                GithubTileClient.fetchTile(url, emptySet(), config.useGzip)
             } catch (_: Exception) {
                 null
             }

@@ -17,7 +17,8 @@ object GithubTileClient {
     data class Config(
         val baseUrl: String,
         val zoom: Int,
-        val maxTiles: Int = 16
+        val maxTiles: Int = 16,
+        val useGzip: Boolean = true
     )
 
     data class Tile(val x: Int, val y: Int)
@@ -35,7 +36,7 @@ object GithubTileClient {
         if (tiles.size > config.maxTiles) {
             throw IllegalArgumentException("too_many_tiles")
         }
-        return fetchTilesInternal(tiles, categories, config, null)
+        return fetchTilesInternal(tiles, categories, config, null, allowEmpty = false)
     }
 
     fun fetchTilesWithProgress(
@@ -48,23 +49,84 @@ object GithubTileClient {
         if (tiles.size > config.maxTiles) {
             throw IllegalArgumentException("too_many_tiles")
         }
-        return fetchTilesInternal(tiles, categories, config, onProgress)
+        return fetchTilesInternal(tiles, categories, config, onProgress, allowEmpty = false)
     }
 
-    fun fetchTile(url: String, categories: Set<String>): List<OfflinePoi>? {
-        val text = download(url) ?: return null
+    fun fetchTilesSegmented(
+        bbox: Bbox,
+        categories: Set<String>,
+        config: Config
+    ): List<OfflinePoi> {
+        val tiles = listTiles(bbox, config.zoom)
+        if (tiles.isEmpty()) throw IllegalArgumentException("no_tiles")
+        val chunkSize = config.maxTiles.coerceAtLeast(1)
+        val result = ArrayList<OfflinePoi>()
+        var fetchedTotal = 0
+        for (chunk in tiles.chunked(chunkSize)) {
+            val chunkResult = fetchTilesInternal(chunk, categories, config, null, allowEmpty = true)
+            if (chunkResult.isNotEmpty()) {
+                fetchedTotal++
+                result.addAll(chunkResult)
+            }
+        }
+        if (result.isEmpty() || fetchedTotal == 0) {
+            throw IllegalArgumentException("no_tiles")
+        }
+        return result
+    }
+
+    fun fetchTilesSegmentedWithProgress(
+        bbox: Bbox,
+        categories: Set<String>,
+        config: Config,
+        onProgress: (done: Int, total: Int) -> Unit
+    ): List<OfflinePoi> {
+        val tiles = listTiles(bbox, config.zoom)
+        if (tiles.isEmpty()) throw IllegalArgumentException("no_tiles")
+        val chunkSize = config.maxTiles.coerceAtLeast(1)
+        val result = ArrayList<OfflinePoi>()
+        var fetchedTotal = 0
+        var done = 0
+        for (chunk in tiles.chunked(chunkSize)) {
+            val chunkResult = fetchTilesInternal(chunk, categories, config, null, allowEmpty = true)
+            if (chunkResult.isNotEmpty()) {
+                fetchedTotal++
+                result.addAll(chunkResult)
+            }
+            done += chunk.size
+            onProgress(done.coerceAtMost(tiles.size), tiles.size)
+        }
+        if (result.isEmpty() || fetchedTotal == 0) {
+            throw IllegalArgumentException("no_tiles")
+        }
+        return result
+    }
+
+    fun fetchTile(url: String, categories: Set<String>, useGzip: Boolean = true): List<OfflinePoi>? {
+        val text = download(url, useGzip) ?: return null
         return parsePois(text, categories)
     }
 
-    private fun download(url: String): String? {
-        val conn = (URL(url).openConnection() as HttpURLConnection).apply {
+    private fun download(url: String, useGzip: Boolean): String? {
+        val resolved = if (useGzip && !url.endsWith(".gz")) "$url.gz" else url
+        val conn = (URL(resolved).openConnection() as HttpURLConnection).apply {
             connectTimeout = 7000
             readTimeout = 9000
             requestMethod = "GET"
         }
         return try {
-            if (conn.responseCode !in 200..299) return null
-            conn.inputStream.bufferedReader().use { it.readText() }
+            if (conn.responseCode !in 200..299) {
+                if (resolved != url) {
+                    return download(url, false)
+                }
+                return null
+            }
+            val stream = if (resolved.endsWith(".gz") || conn.contentEncoding?.contains("gzip") == true) {
+                java.util.zip.GZIPInputStream(conn.inputStream)
+            } else {
+                conn.inputStream
+            }
+            stream.bufferedReader().use { it.readText() }
         } finally {
             conn.disconnect()
         }
@@ -74,20 +136,21 @@ object GithubTileClient {
         tiles: List<Tile>,
         categories: Set<String>,
         config: Config,
-        onProgress: ((Int, Int) -> Unit)?
+        onProgress: ((Int, Int) -> Unit)?,
+        allowEmpty: Boolean
     ): List<OfflinePoi> {
         val result = ArrayList<OfflinePoi>()
         var fetchedTiles = 0
         for ((index, tile) in tiles.withIndex()) {
             val url = "${config.baseUrl.trimEnd('/')}/${config.zoom}/${tile.x}/${tile.y}.json"
-            val pois = fetchTile(url, categories)
+            val pois = fetchTile(url, categories, config.useGzip)
             if (pois != null) {
                 fetchedTiles++
                 result.addAll(pois)
             }
             onProgress?.invoke(index + 1, tiles.size)
         }
-        if (fetchedTiles == 0) {
+        if (!allowEmpty && fetchedTiles == 0) {
             throw IllegalArgumentException("no_tiles")
         }
         return result

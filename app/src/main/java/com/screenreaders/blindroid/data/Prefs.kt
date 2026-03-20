@@ -101,6 +101,15 @@ object Prefs {
     private const val KEY_NAV_AUTO_INTERVAL = "nav_auto_interval"
     private const val KEY_NAV_AUTO_WIFI = "nav_auto_wifi"
     private const val KEY_NAV_AUTO_CHARGING = "nav_auto_charging"
+    private const val KEY_NAV_ROUTE_ENABLED = "nav_route_enabled"
+    private const val KEY_NAV_ROUTE_LAT = "nav_route_lat"
+    private const val KEY_NAV_ROUTE_LON = "nav_route_lon"
+    private const val KEY_NAV_ROUTE_LABEL = "nav_route_label"
+    private const val KEY_NAV_ROUTE_INTERVAL = "nav_route_interval"
+    private const val KEY_NAV_ROUTE_MIN_DISTANCE = "nav_route_min_distance"
+    private const val KEY_NAV_OFFLINE_GZIP = "nav_offline_gzip"
+    private const val KEY_NAV_OFFLINE_SEGMENTED = "nav_offline_segmented"
+    private const val KEY_NAV_OFFLINE_SEGMENT_SIZE = "nav_offline_segment_size"
     private const val KEY_TYFLO_LAST_LINK = "tyflo_last_link"
 
     const val MODE_RING_AND_SPEECH = 0
@@ -594,6 +603,69 @@ object Prefs {
 
     fun setNavigationAutoImportChargingOnly(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_NAV_AUTO_CHARGING, value).apply()
+    }
+
+    fun isNavigationRouteEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_ROUTE_ENABLED, false)
+
+    fun setNavigationRouteEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_ROUTE_ENABLED, value).apply()
+    }
+
+    fun getNavigationRouteLat(context: Context): Double =
+        prefs(context).getFloat(KEY_NAV_ROUTE_LAT, Float.NaN).toDouble()
+
+    fun setNavigationRouteLat(context: Context, value: Double) {
+        prefs(context).edit().putFloat(KEY_NAV_ROUTE_LAT, value.toFloat()).apply()
+    }
+
+    fun getNavigationRouteLon(context: Context): Double =
+        prefs(context).getFloat(KEY_NAV_ROUTE_LON, Float.NaN).toDouble()
+
+    fun setNavigationRouteLon(context: Context, value: Double) {
+        prefs(context).edit().putFloat(KEY_NAV_ROUTE_LON, value.toFloat()).apply()
+    }
+
+    fun getNavigationRouteLabel(context: Context): String =
+        prefs(context).getString(KEY_NAV_ROUTE_LABEL, "") ?: ""
+
+    fun setNavigationRouteLabel(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_ROUTE_LABEL, value).apply()
+    }
+
+    fun getNavigationRouteIntervalSec(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_ROUTE_INTERVAL, 20).coerceIn(5, 180)
+
+    fun setNavigationRouteIntervalSec(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_ROUTE_INTERVAL, value.coerceIn(5, 180)).apply()
+    }
+
+    fun getNavigationRouteMinDistance(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_ROUTE_MIN_DISTANCE, 12).coerceIn(5, 100)
+
+    fun setNavigationRouteMinDistance(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_ROUTE_MIN_DISTANCE, value.coerceIn(5, 100)).apply()
+    }
+
+    fun isNavigationOfflineGzipEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_OFFLINE_GZIP, true)
+
+    fun setNavigationOfflineGzipEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_OFFLINE_GZIP, value).apply()
+    }
+
+    fun isNavigationOfflineSegmented(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_OFFLINE_SEGMENTED, true)
+
+    fun setNavigationOfflineSegmented(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_OFFLINE_SEGMENTED, value).apply()
+    }
+
+    fun getNavigationOfflineSegmentSize(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_OFFLINE_SEGMENT_SIZE, 16).coerceIn(4, 128)
+
+    fun setNavigationOfflineSegmentSize(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_OFFLINE_SEGMENT_SIZE, value.coerceIn(4, 128)).apply()
     }
 
     fun getTyflomapLastLink(context: Context): String? =

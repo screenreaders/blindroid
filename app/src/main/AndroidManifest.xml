@@ -152,6 +152,11 @@
             android:exported="false"
             android:foregroundServiceType="location" />
 
+        <service
+            android:name=".navigation.NavigationRouteService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
         <receiver
             android:name=".sms.SmsReceiver"
             android:exported="true"
