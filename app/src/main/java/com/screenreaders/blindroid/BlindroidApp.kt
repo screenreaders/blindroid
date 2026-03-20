@@ -3,6 +3,7 @@ package com.screenreaders.blindroid
 import android.app.Application
 import android.app.Activity
 import android.os.Bundle
+import com.screenreaders.blindroid.diagnostics.AnrWatchdog
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 
@@ -11,6 +12,7 @@ class BlindroidApp : Application() {
         super.onCreate()
         CrashReporter.init(this)
         DiagnosticLog.log(this, "app_start")
+        AnrWatchdog(this).start()
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             private var startedCount = 0
 

@@ -12,6 +12,7 @@ import com.screenreaders.blindroid.InCallActivity
 import com.screenreaders.blindroid.audio.RingerController
 import com.screenreaders.blindroid.audio.ProximitySpeakerController
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 
 class BlindroidInCallService : InCallService() {
     private lateinit var announcer: CallAnnouncer
@@ -46,6 +47,7 @@ class BlindroidInCallService : InCallService() {
 
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
+        DiagnosticLog.log(this, "call_added state=${call.state}")
         CallManager.addCall(call)
         callStates[call] = call.state
         call.registerCallback(callCallback)
@@ -55,6 +57,7 @@ class BlindroidInCallService : InCallService() {
 
     override fun onCallRemoved(call: Call) {
         super.onCallRemoved(call)
+        DiagnosticLog.log(this, "call_removed state=${call.state}")
         call.unregisterCallback(callCallback)
         announcedCalls.remove(call)
         callStates.remove(call)
@@ -71,6 +74,7 @@ class BlindroidInCallService : InCallService() {
         val previousState = callStates[call]
         if (previousState != state) {
             callStates[call] = state
+            DiagnosticLog.log(this, "call_state $previousState->$state")
             if (Prefs.isCallStateAnnounceEnabled(this)) {
                 announceCallState(call, state)
             }

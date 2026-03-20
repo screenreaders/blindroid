@@ -10,12 +10,14 @@ import java.util.concurrent.atomic.AtomicBoolean
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.LockScreenUtils
 
 class SmsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Telephony.Sms.Intents.SMS_RECEIVED_ACTION) return
         if (!Prefs.isSmsReadEnabled(context)) return
+        DiagnosticLog.log(context, "sms_received")
         val locked = LockScreenUtils.isDeviceLocked(context)
         if (!locked && !Prefs.isReadWhenUnlockedEnabled(context)) return
 
@@ -45,6 +47,7 @@ class SmsReceiver : BroadcastReceiver() {
         } else {
             "SMS od $from. $body"
         }
+        DiagnosticLog.log(context, "sms_announce privacy=$privacy")
         announcer.speak(
             text = message,
             repeatCount = 1,

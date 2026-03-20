@@ -6,6 +6,7 @@ import android.service.notification.StatusBarNotification
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.LockScreenUtils
 
 class BlindroidNotificationListener : NotificationListenerService() {
@@ -28,6 +29,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
         if (sbn.packageName == packageName) return
         if (sbn.isOngoing) return
         if (sbn.notification.flags and Notification.FLAG_GROUP_SUMMARY != 0) return
+        DiagnosticLog.log(this, "notification_posted pkg=${sbn.packageName}")
 
         val activeCall = CallManager.getCall()
         if (activeCall != null && activeCall.state != android.telecom.Call.STATE_DISCONNECTED) return

@@ -45,6 +45,7 @@ object CrashReporter {
             if (Prefs.isCrashReportingEnabled(appContext)) {
                 try {
                     writeReport(appContext, thread, throwable)
+                    uploadPendingReports(appContext)
                 } catch (_: Exception) {
                     // Ignore reporting failures
                 }
@@ -105,6 +106,19 @@ object CrashReporter {
         return Intent(Intent.ACTION_VIEW, Uri.parse(url))
     }
 
+    fun reportAnr(context: Context, reason: String, threadDump: String) {
+        if (!Prefs.isCrashReportingEnabled(context)) return
+        try {
+            val content = buildAnrReport(context, reason, threadDump)
+            val file = writeCustomReport(context, "anr", content)
+            if (file != null && canUploadNow(context)) {
+                uploadReport(context, file)
+            }
+        } catch (_: Exception) {
+            // Ignore reporting failures
+        }
+    }
+
     fun uploadPendingReports(context: Context) {
         if (!Prefs.isCrashReportingEnabled(context)) return
         if (uploadInProgress) return
@@ -148,6 +162,16 @@ object CrashReporter {
         val report = buildReport(context, thread, throwable)
         file.writeText(report)
         trimOldReports(dir)
+    }
+
+    private fun writeCustomReport(context: Context, prefix: String, content: String): File? {
+        val dir = File(context.filesDir, DIR_NAME)
+        if (!dir.exists()) dir.mkdirs()
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val file = File(dir, "${prefix}_$timestamp.txt")
+        file.writeText(content)
+        trimOldReports(dir)
+        return file
     }
 
     private fun buildReport(context: Context, thread: Thread, throwable: Throwable): String {
@@ -200,6 +224,35 @@ object CrashReporter {
             sb.appendLine()
             sb.appendLine("Diagnostics:")
             diagnostics.forEach { sb.appendLine(it) }
+        }
+        return sb.toString()
+    }
+
+    private fun buildAnrReport(context: Context, reason: String, threadDump: String): String {
+        val sb = StringBuilder()
+        val reportId = UUID.randomUUID().toString()
+        val clientId = ensureClientId(context)
+        sb.appendLine("Blindroid ANR report")
+        sb.appendLine("Time: ${Date()}")
+        sb.appendLine("ReportId: $reportId")
+        sb.appendLine("ClientId: $clientId")
+        sb.appendLine("Reason: $reason")
+        sb.appendLine("Version: ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+        sb.appendLine("Android: ${android.os.Build.VERSION.RELEASE} (SDK ${android.os.Build.VERSION.SDK_INT})")
+        sb.appendLine("Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
+        sb.appendLine()
+        sb.appendLine(maskPhoneNumbers(threadDump))
+        if (Prefs.isCrashDeviceInfoEnabled(context)) {
+            sb.appendLine()
+            sb.appendLine("DeviceInfo:")
+            sb.appendLine("brand=${Build.BRAND}")
+            sb.appendLine("device=${Build.DEVICE}")
+            sb.appendLine("product=${Build.PRODUCT}")
+            sb.appendLine("hardware=${Build.HARDWARE}")
+            sb.appendLine("cpu_abis=${Build.SUPPORTED_ABIS.joinToString()}")
+            sb.appendLine("locale=${context.resources.configuration.locales.toLanguageTags()}")
+            sb.appendLine("timezone=${java.util.TimeZone.getDefault().id}")
+            sb.appendLine("security_patch=${Build.VERSION.SECURITY_PATCH ?: "unknown"}")
         }
         return sb.toString()
     }

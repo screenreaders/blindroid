@@ -105,6 +105,9 @@ class MainActivity : AppCompatActivity() {
         binding.launcherSwitch.isChecked = isLauncherEnabled()
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
         binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
+        binding.diagnosticsViewButton.setOnClickListener {
+            startActivity(Intent(this, DiagnosticsActivity::class.java))
+        }
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setAnnounceEnabled(this, isChecked)
@@ -291,6 +294,7 @@ class MainActivity : AppCompatActivity() {
         binding.diagnosticsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setDiagnosticsEnabled(this, isChecked)
             logSettingChange("diagnostics", isChecked)
+            updateCrashReportControls()
         }
 
         binding.crashReportShareButton.setOnClickListener {
@@ -329,6 +333,7 @@ class MainActivity : AppCompatActivity() {
             enabled && CrashReporter.getLatestReport(this) != null
         binding.crashReportSendButton.isEnabled =
             enabled && CrashReporter.getLatestReport(this) != null && CrashReporter.canUploadNow(this)
+        binding.diagnosticsViewButton.isEnabled = Prefs.isDiagnosticsEnabled(this)
     }
 
     private fun shareCrashReport() {
@@ -528,14 +533,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openCurrencyModule() {
+        DiagnosticLog.log(this, "module_currency_open")
         startActivity(Intent(this, CurrencyActivity::class.java))
     }
 
     private fun openDocumentModule() {
+        DiagnosticLog.log(this, "module_documents_open")
         startActivity(Intent(this, DocumentAssistActivity::class.java))
     }
 
     private fun openLightModule() {
+        DiagnosticLog.log(this, "module_light_open")
         startActivity(Intent(this, LightActivity::class.java))
     }
 

@@ -96,6 +96,7 @@ class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
+        LauncherDiagnosticLog.log(this, "launcher_open")
 
         searchInput = findViewById(R.id.searchInput)
         searchRow = findViewById(R.id.searchRow)
@@ -323,12 +324,14 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openAllApps() {
+        LauncherDiagnosticLog.log(this, "launcher_all_apps")
         val intent = Intent(this, AllAppsActivity::class.java)
         intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, currentHomePageIndex())
         startActivity(intent)
     }
 
     private fun openWidgets() {
+        LauncherDiagnosticLog.log(this, "launcher_widgets")
         val intent = Intent(this, AllAppsActivity::class.java)
         intent.putExtra(AllAppsActivity.EXTRA_PAGE_INDEX, currentHomePageIndex())
         intent.putExtra(AllAppsActivity.EXTRA_TAB, AllAppsActivity.TAB_WIDGETS)
@@ -336,6 +339,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openSettings() {
+        LauncherDiagnosticLog.log(this, "launcher_settings")
         startActivity(Intent(this, LauncherSettingsActivity::class.java))
     }
 
@@ -1161,6 +1165,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openExternalFeed(showError: Boolean = true): Boolean {
+        LauncherDiagnosticLog.log(this, "launcher_external_feed")
         val intent = packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox")
         return if (intent != null) {
             startActivity(intent)
