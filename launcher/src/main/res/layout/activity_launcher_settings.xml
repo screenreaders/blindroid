@@ -108,6 +108,13 @@
             android:text="@string/launcher_settings_now_headphones" />
 
         <Switch
+            android:id="@+id/nowLocationSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_location" />
+
+        <Switch
             android:id="@+id/nowNetworkSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,6 +127,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/launcher_settings_now_storage" />
+
+        <Switch
+            android:id="@+id/nowScreenTimeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_screen_time" />
 
         <Switch
             android:id="@+id/nowTopAppsSwitch"

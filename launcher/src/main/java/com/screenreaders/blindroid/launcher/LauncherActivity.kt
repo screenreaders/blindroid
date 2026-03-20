@@ -139,8 +139,12 @@ class LauncherActivity : AppCompatActivity() {
             ::openWeather,
             ::openBluetoothSettings,
             ::requestBluetoothPermission,
+            ::openLocationSettings,
+            ::requestLocationPermission,
             ::openNetworkSettings,
             ::openStorageSettings,
+            ::openScreenTime,
+            ::openUsageAccess,
             ::openDisplaySettings,
             ::openBatterySettings,
             ::openDndSettings,
@@ -507,8 +511,10 @@ class LauncherActivity : AppCompatActivity() {
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
         val showReminders = LauncherPrefs.isNowRemindersEnabled(this)
         val showHeadphones = LauncherPrefs.isNowHeadphonesEnabled(this)
+        val showLocation = LauncherPrefs.isNowLocationEnabled(this)
         val showNetwork = LauncherPrefs.isNowNetworkEnabled(this)
         val showStorage = LauncherPrefs.isNowStorageEnabled(this)
+        val showScreenTime = LauncherPrefs.isNowScreenTimeEnabled(this)
         val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
         val showAirplane = LauncherPrefs.isNowAirplaneEnabled(this)
         val showRam = LauncherPrefs.isNowRamEnabled(this)
@@ -528,8 +534,12 @@ class LauncherActivity : AppCompatActivity() {
         val weatherText = if (showWeather) getWeatherText() else null
         val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
+        val locationPermissionGranted = hasLocationPermission()
+        val locationText = if (showLocation) getLocationText(locationPermissionGranted) else null
         val networkText = if (showNetwork) getNetworkText() else null
         val storageText = if (showStorage) getStorageText() else null
+        val usagePermissionGranted = LauncherStore.hasUsageStatsPermission(this)
+        val screenTimeText = if (showScreenTime) getScreenTimeText(usagePermissionGranted) else null
         val bluetoothText = if (showBluetooth) getBluetoothText(bluetoothPermissionGranted) else null
         val brightnessText = if (showBrightness) getBrightnessText() else null
         val volumeText = if (showVolume) getVolumeText() else null
@@ -564,10 +574,16 @@ class LauncherActivity : AppCompatActivity() {
             reminderText = reminderText,
             showHeadphones = showHeadphones,
             headphonesText = headphonesText,
+            showLocation = showLocation,
+            locationText = locationText,
+            locationPermissionGranted = locationPermissionGranted,
             showNetwork = showNetwork,
             networkText = networkText,
             showStorage = showStorage,
             storageText = storageText,
+            showScreenTime = showScreenTime,
+            screenTimeText = screenTimeText,
+            usagePermissionGranted = usagePermissionGranted,
             showBluetooth = showBluetooth,
             bluetoothText = bluetoothText,
             bluetoothPermissionGranted = bluetoothPermissionGranted,
@@ -855,6 +871,21 @@ class LauncherActivity : AppCompatActivity() {
         return if (labels.isEmpty()) null else labels.joinToString(", ")
     }
 
+    private fun getLocationText(permissionGranted: Boolean): String? {
+        if (!permissionGranted) {
+            return getString(R.string.launcher_feed_location_permission)
+        }
+        if (!isLocationEnabled()) {
+            return getString(R.string.launcher_feed_location_off)
+        }
+        val location = getLastKnownLocationSafe() ?: return getString(R.string.launcher_feed_location_unknown)
+        val lat = String.format(java.util.Locale.US, "%.5f", location.latitude)
+        val lon = String.format(java.util.Locale.US, "%.5f", location.longitude)
+        val accuracy = if (location.hasAccuracy()) " ±${location.accuracy.toInt()}m" else ""
+        val age = formatRelativeTime(System.currentTimeMillis() - location.time)
+        return getString(R.string.launcher_feed_location_text, lat, lon, accuracy, age)
+    }
+
     private fun getNetworkText(): String? {
         val cm = getSystemService(ConnectivityManager::class.java)
         val network = cm.activeNetwork ?: return null
@@ -880,6 +911,72 @@ class LauncherActivity : AppCompatActivity() {
             getString(R.string.launcher_feed_storage_text, availableGb, totalGb)
         } catch (_: Exception) {
             null
+        }
+    }
+
+    private fun getScreenTimeText(permissionGranted: Boolean): String? {
+        if (!permissionGranted) {
+            return getString(R.string.launcher_feed_screen_time_permission)
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return getString(R.string.launcher_feed_screen_time_unavailable)
+        }
+        return try {
+            val manager = getSystemService(android.app.usage.UsageStatsManager::class.java)
+            val end = System.currentTimeMillis()
+            val start = end - 24L * 60L * 60L * 1000L
+            val stats = manager.queryUsageStats(
+                android.app.usage.UsageStatsManager.INTERVAL_DAILY,
+                start,
+                end
+            )
+            if (stats.isNullOrEmpty()) {
+                getString(R.string.launcher_feed_screen_time_none)
+            } else {
+                val totalMs = stats.sumOf { it.totalTimeInForeground }
+                val top = stats.maxByOrNull { it.totalTimeInForeground }
+                val totalText = formatDuration(totalMs)
+                val topLabel = top?.packageName?.let { resolveAppLabel(it) }
+                if (!topLabel.isNullOrBlank()) {
+                    getString(R.string.launcher_feed_screen_time_top, totalText, topLabel)
+                } else {
+                    getString(R.string.launcher_feed_screen_time_text, totalText)
+                }
+            }
+        } catch (_: Exception) {
+            getString(R.string.launcher_feed_screen_time_unavailable)
+        }
+    }
+
+    private fun resolveAppLabel(packageName: String): String? {
+        return try {
+            val info = packageManager.getApplicationInfo(packageName, 0)
+            packageManager.getApplicationLabel(info)?.toString()
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun formatDuration(durationMs: Long): String {
+        val totalMinutes = (durationMs / 60000L).toInt().coerceAtLeast(0)
+        val hours = totalMinutes / 60
+        val minutes = totalMinutes % 60
+        return if (hours > 0) {
+            "${hours}h ${minutes}m"
+        } else {
+            "${minutes}m"
+        }
+    }
+
+    private fun formatRelativeTime(ageMs: Long): String {
+        val minutes = (ageMs / 60000L).toInt().coerceAtLeast(0)
+        return when {
+            minutes < 1 -> getString(R.string.launcher_time_just_now)
+            minutes < 60 -> getString(R.string.launcher_time_minutes, minutes)
+            else -> {
+                val hours = minutes / 60
+                getString(R.string.launcher_time_hours, hours)
+            }
         }
     }
 
@@ -1706,6 +1803,35 @@ class LauncherActivity : AppCompatActivity() {
         }
         maybeRefreshWeather(force = true)
         launchSearch(getString(R.string.launcher_feed_weather_query))
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            weatherPermissionRequestCode
+        )
+    }
+
+    private fun openLocationSettings() {
+        try {
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        } catch (_: Exception) {
+            // ignore
+        }
+    }
+
+    private fun openScreenTime() {
+        val intent = packageManager.getLaunchIntentForPackage("com.google.android.apps.wellbeing")
+        if (intent != null) {
+            startActivity(intent)
+            return
+        }
+        openUsageAccess()
+    }
+
+    private fun openUsageAccess() {
+        LauncherStore.openUsageAccessSettings(this)
     }
 
     private fun openBluetoothSettings() {

@@ -31,8 +31,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowWeatherSwitch: Switch
     private lateinit var nowRemindersSwitch: Switch
     private lateinit var nowHeadphonesSwitch: Switch
+    private lateinit var nowLocationSwitch: Switch
     private lateinit var nowNetworkSwitch: Switch
     private lateinit var nowStorageSwitch: Switch
+    private lateinit var nowScreenTimeSwitch: Switch
     private lateinit var nowTopAppsSwitch: Switch
     private lateinit var nowAirplaneSwitch: Switch
     private lateinit var nowRamSwitch: Switch
@@ -112,8 +114,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowWeatherSwitch = findViewById(R.id.nowWeatherSwitch)
         nowRemindersSwitch = findViewById(R.id.nowRemindersSwitch)
         nowHeadphonesSwitch = findViewById(R.id.nowHeadphonesSwitch)
+        nowLocationSwitch = findViewById(R.id.nowLocationSwitch)
         nowNetworkSwitch = findViewById(R.id.nowNetworkSwitch)
         nowStorageSwitch = findViewById(R.id.nowStorageSwitch)
+        nowScreenTimeSwitch = findViewById(R.id.nowScreenTimeSwitch)
         nowTopAppsSwitch = findViewById(R.id.nowTopAppsSwitch)
         nowAirplaneSwitch = findViewById(R.id.nowAirplaneSwitch)
         nowRamSwitch = findViewById(R.id.nowRamSwitch)
@@ -191,8 +195,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowWeatherSwitch.isChecked = LauncherPrefs.isNowWeatherEnabled(this)
         nowRemindersSwitch.isChecked = LauncherPrefs.isNowRemindersEnabled(this)
         nowHeadphonesSwitch.isChecked = LauncherPrefs.isNowHeadphonesEnabled(this)
+        nowLocationSwitch.isChecked = LauncherPrefs.isNowLocationEnabled(this)
         nowNetworkSwitch.isChecked = LauncherPrefs.isNowNetworkEnabled(this)
         nowStorageSwitch.isChecked = LauncherPrefs.isNowStorageEnabled(this)
+        nowScreenTimeSwitch.isChecked = LauncherPrefs.isNowScreenTimeEnabled(this)
         nowTopAppsSwitch.isChecked = LauncherPrefs.isNowTopAppsEnabled(this)
         nowAirplaneSwitch.isChecked = LauncherPrefs.isNowAirplaneEnabled(this)
         nowRamSwitch.isChecked = LauncherPrefs.isNowRamEnabled(this)
@@ -358,6 +364,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        nowLocationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowLocationEnabled(this, isChecked)
+            toastSaved()
+        }
+
         nowNetworkSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowNetworkEnabled(this, isChecked)
             toastSaved()
@@ -365,6 +376,14 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowStorageSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowStorageEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowScreenTimeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowScreenTimeEnabled(this, isChecked)
+            if (isChecked && !LauncherStore.hasUsageStatsPermission(this)) {
+                Toast.makeText(this, R.string.launcher_usage_access_missing, Toast.LENGTH_LONG).show()
+            }
             toastSaved()
         }
 

@@ -21,6 +21,9 @@
     <string name="launcher_usage_access_hint">Włącz dostęp do statystyk użycia, aby sugestie były pełniejsze.</string>
     <string name="launcher_usage_access_open">Otwórz ustawienia użycia</string>
     <string name="launcher_usage_access_missing">Włącz dostęp do statystyk użycia w ustawieniach systemu.</string>
+    <string name="launcher_time_just_now">przed chwilą</string>
+    <string name="launcher_time_minutes">%1$d min temu</string>
+    <string name="launcher_time_hours">%1$d h temu</string>
     <string name="launcher_category_all">Wszystkie</string>
     <string name="launcher_category_recent">Ostatnie</string>
     <string name="launcher_category_frequent">Często używane</string>
@@ -108,8 +111,10 @@
     <string name="launcher_settings_now_weather">Karta: pogoda</string>
     <string name="launcher_settings_now_reminders">Karta: przypomnienia</string>
     <string name="launcher_settings_now_headphones">Karta: słuchawki</string>
+    <string name="launcher_settings_now_location">Karta: lokalizacja</string>
     <string name="launcher_settings_now_network">Karta: sieć</string>
     <string name="launcher_settings_now_storage">Karta: pamięć</string>
+    <string name="launcher_settings_now_screen_time">Karta: czas ekranu</string>
     <string name="launcher_settings_now_top_apps">Karta: ostatnio używane aplikacje</string>
     <string name="launcher_settings_now_airplane">Karta: tryb samolotowy</string>
     <string name="launcher_settings_now_ram">Karta: pamięć RAM</string>
@@ -156,6 +161,11 @@
     <string name="launcher_feed_reminders_none">Brak przypomnień</string>
     <string name="launcher_feed_headphones_title">Słuchawki</string>
     <string name="launcher_feed_headphones_none">Brak podłączonych słuchawek</string>
+    <string name="launcher_feed_location_title">Lokalizacja</string>
+    <string name="launcher_feed_location_permission">Brak zgody na lokalizację</string>
+    <string name="launcher_feed_location_off">Lokalizacja wyłączona</string>
+    <string name="launcher_feed_location_unknown">Brak danych o lokalizacji</string>
+    <string name="launcher_feed_location_text">%1$s, %2$s%3$s • %4$s</string>
     <string name="launcher_feed_network_title">Sieć</string>
     <string name="launcher_feed_network_none">Brak połączenia</string>
     <string name="launcher_feed_network_settings">Dotknij, aby otworzyć ustawienia sieci</string>
@@ -163,6 +173,12 @@
     <string name="launcher_feed_storage_title">Pamięć</string>
     <string name="launcher_feed_storage_text">Wolne %1$s z %2$s</string>
     <string name="launcher_feed_storage_settings">Dotknij, aby otworzyć ustawienia pamięci</string>
+    <string name="launcher_feed_screen_time_title">Czas ekranu</string>
+    <string name="launcher_feed_screen_time_permission">Włącz dostęp do statystyk użycia</string>
+    <string name="launcher_feed_screen_time_text">Łącznie: %1$s</string>
+    <string name="launcher_feed_screen_time_top">Łącznie: %1$s • Najczęściej: %2$s</string>
+    <string name="launcher_feed_screen_time_none">Brak danych o czasie ekranu</string>
+    <string name="launcher_feed_screen_time_unavailable">Czas ekranu niedostępny</string>
     <string name="launcher_feed_top_apps_title">Ostatnio używane</string>
     <string name="launcher_feed_top_apps_none">Brak danych</string>
     <string name="launcher_feed_airplane_title">Tryb samolotowy</string>

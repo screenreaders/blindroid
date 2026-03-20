@@ -32,6 +32,8 @@ object LauncherPrefs {
     private const val KEY_NOW_HEADPHONES = "now_headphones"
     private const val KEY_NOW_NETWORK = "now_network"
     private const val KEY_NOW_STORAGE = "now_storage"
+    private const val KEY_NOW_LOCATION = "now_location"
+    private const val KEY_NOW_SCREEN_TIME = "now_screen_time"
     private const val KEY_NOW_TOP_APPS = "now_top_apps"
     private const val KEY_NOW_AIRPLANE = "now_airplane"
     private const val KEY_NOW_RAM = "now_ram"
@@ -264,6 +266,13 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_NOW_HEADPHONES, enabled).apply()
     }
 
+    fun isNowLocationEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_LOCATION, true)
+
+    fun setNowLocationEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_LOCATION, enabled).apply()
+    }
+
     fun isNowNetworkEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_NOW_NETWORK, true)
 
@@ -276,6 +285,13 @@ object LauncherPrefs {
 
     fun setNowStorageEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOW_STORAGE, enabled).apply()
+    }
+
+    fun isNowScreenTimeEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_SCREEN_TIME, true)
+
+    fun setNowScreenTimeEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_SCREEN_TIME, enabled).apply()
     }
 
     fun isNowTopAppsEnabled(context: Context): Boolean =

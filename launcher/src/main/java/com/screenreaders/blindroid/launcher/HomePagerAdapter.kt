@@ -22,8 +22,12 @@ class HomePagerAdapter(
     private val onOpenWeather: () -> Unit,
     private val onOpenBluetoothSettings: () -> Unit,
     private val onRequestBluetoothPermission: () -> Unit,
+    private val onOpenLocationSettings: () -> Unit,
+    private val onRequestLocationPermission: () -> Unit,
     private val onOpenNetworkSettings: () -> Unit,
     private val onOpenStorageSettings: () -> Unit,
+    private val onOpenScreenTime: () -> Unit,
+    private val onOpenUsageAccess: () -> Unit,
     private val onOpenDisplaySettings: () -> Unit,
     private val onOpenBatterySettings: () -> Unit,
     private val onOpenDndSettings: () -> Unit,
@@ -62,18 +66,22 @@ class HomePagerAdapter(
                 feedColors,
                 onOpenExternalFeed,
                 onOpenAlarms,
-            onOpenCalendar,
-            onRequestCalendarPermission,
-            onOpenWeather,
-            onOpenBluetoothSettings,
-            onRequestBluetoothPermission,
-            onOpenNetworkSettings,
-            onOpenStorageSettings,
-            onOpenDisplaySettings,
-            onOpenBatterySettings,
-            onOpenDndSettings,
-            onOpenSoundSettings,
-            onOpenAllApps
+                onOpenCalendar,
+                onRequestCalendarPermission,
+                onOpenWeather,
+                onOpenBluetoothSettings,
+                onRequestBluetoothPermission,
+                onOpenLocationSettings,
+                onRequestLocationPermission,
+                onOpenNetworkSettings,
+                onOpenStorageSettings,
+                onOpenScreenTime,
+                onOpenUsageAccess,
+                onOpenDisplaySettings,
+                onOpenBatterySettings,
+                onOpenDndSettings,
+                onOpenSoundSettings,
+                onOpenAllApps
             )
             return
         }
@@ -183,12 +191,18 @@ class HomePagerAdapter(
         private val cardHeadphones: LinearLayout = view.findViewById(R.id.cardHeadphones)
         private val cardHeadphonesTitle: TextView = view.findViewById(R.id.cardHeadphonesTitle)
         private val cardHeadphonesText: TextView = view.findViewById(R.id.cardHeadphonesText)
+        private val cardLocation: LinearLayout = view.findViewById(R.id.cardLocation)
+        private val cardLocationTitle: TextView = view.findViewById(R.id.cardLocationTitle)
+        private val cardLocationText: TextView = view.findViewById(R.id.cardLocationText)
         private val cardNetwork: LinearLayout = view.findViewById(R.id.cardNetwork)
         private val cardNetworkTitle: TextView = view.findViewById(R.id.cardNetworkTitle)
         private val cardNetworkText: TextView = view.findViewById(R.id.cardNetworkText)
         private val cardStorage: LinearLayout = view.findViewById(R.id.cardStorage)
         private val cardStorageTitle: TextView = view.findViewById(R.id.cardStorageTitle)
         private val cardStorageText: TextView = view.findViewById(R.id.cardStorageText)
+        private val cardScreenTime: LinearLayout = view.findViewById(R.id.cardScreenTime)
+        private val cardScreenTimeTitle: TextView = view.findViewById(R.id.cardScreenTimeTitle)
+        private val cardScreenTimeText: TextView = view.findViewById(R.id.cardScreenTimeText)
         private val cardBluetooth: LinearLayout = view.findViewById(R.id.cardBluetooth)
         private val cardBluetoothTitle: TextView = view.findViewById(R.id.cardBluetoothTitle)
         private val cardBluetoothText: TextView = view.findViewById(R.id.cardBluetoothText)
@@ -231,8 +245,12 @@ class HomePagerAdapter(
             onOpenWeather: () -> Unit,
             onOpenBluetoothSettings: () -> Unit,
             onRequestBluetoothPermission: () -> Unit,
+            onOpenLocationSettings: () -> Unit,
+            onRequestLocationPermission: () -> Unit,
             onOpenNetworkSettings: () -> Unit,
             onOpenStorageSettings: () -> Unit,
+            onOpenScreenTime: () -> Unit,
+            onOpenUsageAccess: () -> Unit,
             onOpenDisplaySettings: () -> Unit,
             onOpenBatterySettings: () -> Unit,
             onOpenDndSettings: () -> Unit,
@@ -255,10 +273,14 @@ class HomePagerAdapter(
             cardRemindersText.setTextColor(colors.muted)
             cardHeadphonesTitle.setTextColor(colors.text)
             cardHeadphonesText.setTextColor(colors.muted)
+            cardLocationTitle.setTextColor(colors.text)
+            cardLocationText.setTextColor(colors.muted)
             cardNetworkTitle.setTextColor(colors.text)
             cardNetworkText.setTextColor(colors.muted)
             cardStorageTitle.setTextColor(colors.text)
             cardStorageText.setTextColor(colors.muted)
+            cardScreenTimeTitle.setTextColor(colors.text)
+            cardScreenTimeText.setTextColor(colors.muted)
             cardBluetoothTitle.setTextColor(colors.text)
             cardBluetoothText.setTextColor(colors.muted)
             cardBrightnessTitle.setTextColor(colors.text)
@@ -412,6 +434,22 @@ class HomePagerAdapter(
                 cardHeadphones.setOnClickListener(null)
             }
 
+            if (data.showLocation) {
+                cardLocation.visibility = View.VISIBLE
+                cardLocationText.text = data.locationText
+                    ?: itemView.context.getString(R.string.launcher_feed_location_unknown)
+                cardLocation.setOnClickListener {
+                    if (!data.locationPermissionGranted) {
+                        onRequestLocationPermission()
+                    } else {
+                        onOpenLocationSettings()
+                    }
+                }
+            } else {
+                cardLocation.visibility = View.GONE
+                cardLocation.setOnClickListener(null)
+            }
+
             if (data.showNetwork) {
                 cardNetwork.visibility = View.VISIBLE
                 cardNetworkText.text = data.networkText
@@ -430,6 +468,22 @@ class HomePagerAdapter(
             } else {
                 cardStorage.visibility = View.GONE
                 cardStorage.setOnClickListener(null)
+            }
+
+            if (data.showScreenTime) {
+                cardScreenTime.visibility = View.VISIBLE
+                cardScreenTimeText.text = data.screenTimeText
+                    ?: itemView.context.getString(R.string.launcher_feed_screen_time_none)
+                cardScreenTime.setOnClickListener {
+                    if (!data.usagePermissionGranted) {
+                        onOpenUsageAccess()
+                    } else {
+                        onOpenScreenTime()
+                    }
+                }
+            } else {
+                cardScreenTime.visibility = View.GONE
+                cardScreenTime.setOnClickListener(null)
             }
 
             if (data.showBluetooth) {
@@ -536,8 +590,10 @@ class HomePagerAdapter(
             applyCardStyle(cardWeather, colors)
             applyCardStyle(cardReminders, colors)
             applyCardStyle(cardHeadphones, colors)
+            applyCardStyle(cardLocation, colors)
             applyCardStyle(cardNetwork, colors)
             applyCardStyle(cardStorage, colors)
+            applyCardStyle(cardScreenTime, colors)
             applyCardStyle(cardBluetooth, colors)
             applyCardStyle(cardBrightness, colors)
             applyCardStyle(cardVolume, colors)
