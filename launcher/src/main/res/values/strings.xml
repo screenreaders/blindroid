@@ -61,6 +61,8 @@
     <string name="launcher_sort_alpha">Alfabetycznie</string>
     <string name="launcher_sort_recent">Ostatnio używane</string>
     <string name="launcher_sort_usage">Najczęściej używane</string>
+    <string name="launcher_sort_install">Najnowsze instalacje</string>
+    <string name="launcher_sort_update">Ostatnie aktualizacje</string>
     <string name="launcher_suggested_now">Polecane teraz</string>
     <string name="launcher_recent_apps">Ostatnio używane</string>
     <string name="launcher_widgets_search_hint">Szukaj widgetu</string>
@@ -71,6 +73,9 @@
     <string name="launcher_results_count">Wyniki: 0</string>
     <string name="launcher_results_count_format">Wyniki: %1$d</string>
     <string name="launcher_clear_hidden">Pokaż wszystkie ukryte aplikacje</string>
+    <string name="launcher_show_system_apps">Pokaż aplikacje systemowe</string>
+    <string name="launcher_scroll_top">Do góry</string>
+    <string name="launcher_scroll_bottom">Na dół</string>
     <string name="launcher_favorites">Ulubione</string>
     <string name="launcher_action_favorite_add">Dodaj do ulubionych</string>
     <string name="launcher_action_favorite_remove">Usuń z ulubionych</string>
@@ -89,6 +94,9 @@
     <string name="launcher_edit_unlocked">Edycja ekranu głównego jest odblokowana.</string>
     <string name="launcher_settings_home_lock">Blokada edycji ekranu głównego</string>
     <string name="launcher_feed_enabled">Feed jest włączony</string>
+    <string name="launcher_action_lock_edit">Zablokuj edycję</string>
+    <string name="launcher_action_unlock_edit">Odblokuj edycję</string>
+    <string name="launcher_settings_page_count">Liczba stron pulpitu</string>
     <string name="launcher_settings_button">Ustawienia</string>
     <string name="launcher_settings_title">Ustawienia launchera</string>
     <string name="launcher_settings_saved">Zapisano</string>

@@ -42,7 +42,10 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var voiceSearchButton: Button
     private lateinit var resultsLabel: TextView
     private lateinit var showHiddenSwitch: android.widget.Switch
+    private lateinit var showSystemSwitch: android.widget.Switch
     private lateinit var clearHiddenButton: Button
+    private lateinit var scrollTopButton: Button
+    private lateinit var scrollBottomButton: Button
     private lateinit var sortRow: LinearLayout
     private lateinit var sortLabel: TextView
     private lateinit var sortSpinner: Spinner
@@ -92,6 +95,7 @@ class AllAppsActivity : AppCompatActivity() {
     private var appCategories: Map<String, Int?> = emptyMap()
     private var installTimes: Map<String, Long> = emptyMap()
     private var updateTimes: Map<String, Long> = emptyMap()
+    private var systemAppKeys: Set<String> = emptySet()
     private var favoriteKeys: Set<String> = emptySet()
     private var categoryCounts: Map<Category, Int> = emptyMap()
     private var targetPageIndex: Int = 0
@@ -137,7 +141,9 @@ class AllAppsActivity : AppCompatActivity() {
     private enum class SortMode(val labelRes: Int, val prefValue: Int) {
         ALPHA(R.string.launcher_sort_alpha, LauncherPrefs.SORT_ALPHA),
         RECENT(R.string.launcher_sort_recent, LauncherPrefs.SORT_RECENT),
-        USAGE(R.string.launcher_sort_usage, LauncherPrefs.SORT_USAGE)
+        USAGE(R.string.launcher_sort_usage, LauncherPrefs.SORT_USAGE),
+        INSTALL(R.string.launcher_sort_install, LauncherPrefs.SORT_INSTALL_NEWEST),
+        UPDATE(R.string.launcher_sort_update, LauncherPrefs.SORT_UPDATE_NEWEST)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,7 +154,10 @@ class AllAppsActivity : AppCompatActivity() {
         voiceSearchButton = findViewById(R.id.voiceSearchButton)
         resultsLabel = findViewById(R.id.resultsLabel)
         showHiddenSwitch = findViewById(R.id.showHiddenSwitch)
+        showSystemSwitch = findViewById(R.id.showSystemSwitch)
         clearHiddenButton = findViewById(R.id.clearHiddenButton)
+        scrollTopButton = findViewById(R.id.scrollTopButton)
+        scrollBottomButton = findViewById(R.id.scrollBottomButton)
         sortRow = findViewById(R.id.sortRow)
         sortLabel = findViewById(R.id.sortLabel)
         sortSpinner = findViewById(R.id.sortSpinner)
@@ -258,6 +267,11 @@ class AllAppsActivity : AppCompatActivity() {
             reloadWidgets()
         }
         showHiddenSwitch.setOnCheckedChangeListener { _, _ -> refreshAppsForHidden() }
+        showSystemSwitch.isChecked = LauncherPrefs.isShowSystemApps(this)
+        showSystemSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setShowSystemApps(this, isChecked)
+            refreshAppsForHidden()
+        }
         clearSearchButton.setOnClickListener {
             searchInput.setText("")
             searchInput.clearFocus()
@@ -269,6 +283,11 @@ class AllAppsActivity : AppCompatActivity() {
         }
         voiceSearchButton.setOnClickListener {
             startVoiceSearch()
+        }
+        scrollTopButton.setOnClickListener { appsGrid.smoothScrollToPosition(0) }
+        scrollBottomButton.setOnClickListener {
+            val last = (adapter.itemCount - 1).coerceAtLeast(0)
+            appsGrid.smoothScrollToPosition(last)
         }
         widgetsGrid.setOnDragListener { _, event ->
             when (event.action) {
@@ -325,11 +344,12 @@ class AllAppsActivity : AppCompatActivity() {
     private fun loadApps() {
         Thread {
             val apps = LauncherStore.loadAllApps(this)
-            val times = buildInstallUpdateTimes(apps)
+            val meta = buildAppMeta(apps)
             runOnUiThread {
                 allAppsRaw = apps
-                installTimes = times.first
-                updateTimes = times.second
+                installTimes = meta.installs
+                updateTimes = meta.updates
+                systemAppKeys = meta.systemKeys
                 favoriteKeys = LauncherStore.getFavoriteKeys(this)
                 refreshAppsForHidden()
                 updateUsageAccessUi()
@@ -339,10 +359,14 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun refreshAppsForHidden() {
         val hidden = LauncherStore.getHiddenAppKeys(this)
+        val showSystem = LauncherPrefs.isShowSystemApps(this)
         allApps = if (showHiddenSwitch.isChecked) {
             allAppsRaw
         } else {
             allAppsRaw.filterNot { hidden.contains(it.component.flattenToString()) }
+        }
+        if (!showSystem) {
+            allApps = allApps.filterNot { systemAppKeys.contains(it.component.flattenToString()) }
         }
         clearHiddenButton.visibility = if (hidden.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
         appCategories = allApps.associate { entry ->
@@ -397,12 +421,15 @@ class AllAppsActivity : AppCompatActivity() {
         voiceSearchButton.setTextColor(colors.text)
         resultsLabel.setTextColor(colors.muted)
         showHiddenSwitch.setTextColor(colors.text)
+        showSystemSwitch.setTextColor(colors.text)
         clearHiddenButton.setTextColor(colors.text)
         sortLabel.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
         favoritesLabel.setTextColor(colors.text)
         suggestedNowLabel.setTextColor(colors.text)
         recentLabel.setTextColor(colors.text)
+        scrollTopButton.setTextColor(colors.text)
+        scrollBottomButton.setTextColor(colors.text)
         usageAccessHint.setTextColor(colors.muted)
         usageAccessButton.setTextColor(colors.text)
         appsTabButton.setTextColor(colors.text)
@@ -529,8 +556,11 @@ class AllAppsActivity : AppCompatActivity() {
         } else {
             android.view.View.GONE
         }
+        showSystemSwitch.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         sortRow.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         resultsLabel.visibility = if (showApps) resultsLabel.visibility else android.view.View.GONE
+        scrollTopButton.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        scrollBottomButton.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         appsContainer.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         widgetsContainer.visibility = if (showApps) android.view.View.GONE else android.view.View.VISIBLE
         appsTabButton.isEnabled = !showApps
@@ -639,7 +669,9 @@ class AllAppsActivity : AppCompatActivity() {
             emptySet()
         }
         filteredApps = allApps.filter { entry ->
-            val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
+            val matchesQuery = query.isBlank() ||
+                entry.label.lowercase().contains(query) ||
+                entry.component.packageName.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
             val matchesCategory = when (currentCategory) {
                 Category.FAVORITES -> favoriteSet.contains(entry.component.flattenToString())
@@ -840,6 +872,14 @@ class AllAppsActivity : AppCompatActivity() {
         return when (LauncherPrefs.getAppSortMode(this)) {
             LauncherPrefs.SORT_RECENT -> sortByOrder(input, LauncherStore.getRecentApps(this, allApps, 168, allApps.size))
             LauncherPrefs.SORT_USAGE -> sortByOrder(input, LauncherStore.getSuggestedApps(this, allApps, allApps.size))
+            LauncherPrefs.SORT_INSTALL_NEWEST -> input.sortedWith(
+                compareByDescending<AppEntry> { installTimes[it.component.flattenToString()] ?: 0L }
+                    .thenBy { it.label.lowercase() }
+            )
+            LauncherPrefs.SORT_UPDATE_NEWEST -> input.sortedWith(
+                compareByDescending<AppEntry> { updateTimes[it.component.flattenToString()] ?: 0L }
+                    .thenBy { it.label.lowercase() }
+            )
             else -> input.sortedBy { it.label.lowercase() }
         }
     }
@@ -855,9 +895,16 @@ class AllAppsActivity : AppCompatActivity() {
         )
     }
 
-    private fun buildInstallUpdateTimes(apps: List<AppEntry>): Pair<Map<String, Long>, Map<String, Long>> {
+    private data class AppMeta(
+        val installs: Map<String, Long>,
+        val updates: Map<String, Long>,
+        val systemKeys: Set<String>
+    )
+
+    private fun buildAppMeta(apps: List<AppEntry>): AppMeta {
         val installs = mutableMapOf<String, Long>()
         val updates = mutableMapOf<String, Long>()
+        val system = mutableSetOf<String>()
         apps.forEach { entry ->
             try {
                 val pkg = entry.component.packageName
@@ -869,11 +916,17 @@ class AllAppsActivity : AppCompatActivity() {
                 }
                 installs[entry.component.flattenToString()] = info.firstInstallTime
                 updates[entry.component.flattenToString()] = info.lastUpdateTime
+                val appInfo = packageManager.getApplicationInfo(pkg, 0)
+                val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0 ||
+                    (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                if (isSystem) {
+                    system.add(entry.component.flattenToString())
+                }
             } catch (_: Exception) {
                 // Ignore missing package
             }
         }
-        return installs to updates
+        return AppMeta(installs, updates, system)
     }
 
     private fun updateSuggested() {

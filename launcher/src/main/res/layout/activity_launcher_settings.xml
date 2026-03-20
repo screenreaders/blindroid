@@ -304,6 +304,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_page_count" />
+
+        <Spinner
+            android:id="@+id/pageCountSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/launcher_settings_icon_size" />
 

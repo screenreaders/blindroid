@@ -31,6 +31,8 @@ object LauncherPrefs {
     private const val KEY_GOOGLE_SEARCH = "google_search"
     private const val KEY_GOOGLE_VOICE = "google_voice"
     private const val KEY_APP_SORT = "app_sort"
+    private const val KEY_SHOW_SYSTEM_APPS = "show_system_apps"
+    private const val KEY_PAGE_COUNT = "page_count"
     private const val KEY_NOW_ALARM = "now_alarm"
     private const val KEY_NOW_CALENDAR = "now_calendar"
     private const val KEY_NOW_WEATHER = "now_weather"
@@ -120,6 +122,8 @@ object LauncherPrefs {
     const val SORT_ALPHA = 0
     const val SORT_RECENT = 1
     const val SORT_USAGE = 2
+    const val SORT_INSTALL_NEWEST = 3
+    const val SORT_UPDATE_NEWEST = 4
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -276,10 +280,24 @@ object LauncherPrefs {
     }
 
     fun getAppSortMode(context: Context): Int =
-        prefs(context).getInt(KEY_APP_SORT, SORT_ALPHA).coerceIn(SORT_ALPHA, SORT_USAGE)
+        prefs(context).getInt(KEY_APP_SORT, SORT_ALPHA).coerceIn(SORT_ALPHA, SORT_UPDATE_NEWEST)
 
     fun setAppSortMode(context: Context, mode: Int) {
-        prefs(context).edit().putInt(KEY_APP_SORT, mode.coerceIn(SORT_ALPHA, SORT_USAGE)).apply()
+        prefs(context).edit().putInt(KEY_APP_SORT, mode.coerceIn(SORT_ALPHA, SORT_UPDATE_NEWEST)).apply()
+    }
+
+    fun isShowSystemApps(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_SYSTEM_APPS, true)
+
+    fun setShowSystemApps(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_SYSTEM_APPS, show).apply()
+    }
+
+    fun getPageCount(context: Context): Int =
+        prefs(context).getInt(KEY_PAGE_COUNT, 3).coerceIn(1, 5)
+
+    fun setPageCount(context: Context, count: Int) {
+        prefs(context).edit().putInt(KEY_PAGE_COUNT, count.coerceIn(1, 5)).apply()
     }
 
     fun isGoogleSearchEnabled(context: Context): Boolean =

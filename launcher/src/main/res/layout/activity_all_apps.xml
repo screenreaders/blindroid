@@ -44,12 +44,42 @@
         android:text="@string/launcher_results_count"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/scrollButtonsRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/scrollTopButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/launcher_scroll_top" />
+
+        <Button
+            android:id="@+id/scrollBottomButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/launcher_scroll_bottom" />
+    </LinearLayout>
+
     <Switch
         android:id="@+id/showHiddenSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="@string/launcher_show_hidden" />
+
+    <Switch
+        android:id="@+id/showSystemSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/launcher_show_system_apps" />
 
     <Button
         android:id="@+id/clearHiddenButton"

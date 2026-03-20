@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var columnsGroup: RadioGroup
     private lateinit var rowsGroup: RadioGroup
+    private lateinit var pageCountSpinner: Spinner
     private lateinit var iconSizeGroup: RadioGroup
     private lateinit var labelSizeGroup: RadioGroup
     private lateinit var doubleTapSwitch: Switch
@@ -107,6 +108,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         columnsGroup = findViewById(R.id.columnsGroup)
         rowsGroup = findViewById(R.id.rowsGroup)
+        pageCountSpinner = findViewById(R.id.pageCountSpinner)
         iconSizeGroup = findViewById(R.id.iconSizeGroup)
         labelSizeGroup = findViewById(R.id.labelSizeGroup)
         doubleTapSwitch = findViewById(R.id.doubleTapLockSwitch)
@@ -189,6 +191,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
             6 -> rowsGroup.check(R.id.rows6)
             else -> rowsGroup.check(R.id.rows5)
         }
+        bindPageCount()
         when (LauncherPrefs.getIconSizeDp(this)) {
             in 0..44 -> iconSizeGroup.check(R.id.iconSmall)
             in 45..52 -> iconSizeGroup.check(R.id.iconNormal)
@@ -264,6 +267,15 @@ class LauncherSettingsActivity : AppCompatActivity() {
         updateFeedAutoOpenState()
     }
 
+    private fun bindPageCount() {
+        val labels = (1..5).map { it.toString() }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        pageCountSpinner.adapter = adapter
+        val current = LauncherPrefs.getPageCount(this).coerceIn(1, 5)
+        pageCountSpinner.setSelection(current - 1)
+    }
+
     private fun bindListeners() {
         columnsGroup.setOnCheckedChangeListener { _, checkedId ->
             val value = when (checkedId) {
@@ -282,6 +294,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
             }
             LauncherPrefs.setRows(this, value)
             toastSaved()
+        }
+
+        pageCountSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = position + 1
+                LauncherPrefs.setPageCount(this@LauncherSettingsActivity, value)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
 
         iconSizeGroup.setOnCheckedChangeListener { _, checkedId ->

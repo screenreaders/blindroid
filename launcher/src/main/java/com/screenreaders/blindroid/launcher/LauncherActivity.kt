@@ -1825,10 +1825,24 @@ class LauncherActivity : AppCompatActivity() {
             options += getString(R.string.launcher_action_add_widget) to { openWidgets() }
             options += getString(R.string.launcher_action_add_folder) to { promptCreateEmptyFolder() }
         }
+        options += getString(
+            if (locked) R.string.launcher_action_unlock_edit else R.string.launcher_action_lock_edit
+        ) to { toggleHomeEditLock() }
         options += getString(R.string.launcher_action_toggle_feed) to { toggleFeedEnabled() }
         options += getString(R.string.launcher_action_toggle_dock) to { toggleDockVisibility() }
         options += getString(R.string.launcher_action_open_settings) to { openSettings() }
         showOptionsDialog(getString(R.string.launcher_home_quick_menu), options)
+    }
+
+    private fun toggleHomeEditLock() {
+        val locked = !LauncherPrefs.isHomeEditLocked(this)
+        LauncherPrefs.setHomeEditLocked(this, locked)
+        applyUiConfig()
+        Toast.makeText(
+            this,
+            if (locked) R.string.launcher_edit_locked else R.string.launcher_edit_unlocked,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun promptCreateEmptyFolder() {

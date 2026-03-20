@@ -28,7 +28,6 @@ object LauncherStore {
     private const val KEY_FAVORITES = "favorites"
     private const val FOLDER_PREFIX = "folder_"
     private const val FOLDER_LABEL_SUFFIX = "_label"
-    private const val PAGE_COUNT = 3
 
     private const val TYPE_APP = "a"
     private const val TYPE_FOLDER = "f"
@@ -559,13 +558,14 @@ object LauncherStore {
     private fun ensurePages(context: Context): MutableList<MutableList<String>> {
         val prefs = prefs(context)
         val raw = prefs.getString(KEY_PAGES, "") ?: ""
+        val desired = LauncherPrefs.getPageCount(context).coerceAtLeast(1)
         val pages = if (raw.isBlank()) {
-            MutableList(PAGE_COUNT) { mutableListOf<String>() }
+            MutableList(desired) { mutableListOf<String>() }
         } else {
             val parsed = raw.split(";;").map { decodeList(it) }.toMutableList()
-            while (parsed.size < PAGE_COUNT) parsed.add(mutableListOf())
-            if (parsed.size > PAGE_COUNT) {
-                parsed.subList(PAGE_COUNT, parsed.size).clear()
+            while (parsed.size < desired) parsed.add(mutableListOf())
+            if (parsed.size > desired) {
+                parsed.subList(desired, parsed.size).clear()
             }
             parsed
         }
