@@ -37,6 +37,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private lateinit var searchInput: EditText
+    private lateinit var clearSearchButton: Button
     private lateinit var showHiddenSwitch: android.widget.Switch
     private lateinit var sortRow: LinearLayout
     private lateinit var sortLabel: TextView
@@ -44,6 +45,8 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var appsGrid: RecyclerView
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
+    private lateinit var favoritesGrid: RecyclerView
+    private lateinit var favoritesLabel: TextView
     private lateinit var suggestedNowGrid: RecyclerView
     private lateinit var suggestedNowLabel: TextView
     private lateinit var recentGrid: RecyclerView
@@ -66,10 +69,12 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var dragOptionsTarget: Button
     private lateinit var adapter: AppAdapter
     private lateinit var suggestedAdapter: AppAdapter
+    private lateinit var favoritesAdapter: AppAdapter
     private lateinit var suggestedNowAdapter: AppAdapter
     private lateinit var recentAdapter: AppAdapter
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var suggestedLayoutManager: GridLayoutManager
+    private lateinit var favoritesLayoutManager: GridLayoutManager
     private lateinit var suggestedNowLayoutManager: GridLayoutManager
     private lateinit var recentLayoutManager: GridLayoutManager
     private var soundFeedback: LauncherSoundFeedback? = null
@@ -83,6 +88,8 @@ class AllAppsActivity : AppCompatActivity() {
     private var appCategories: Map<String, Int?> = emptyMap()
     private var installTimes: Map<String, Long> = emptyMap()
     private var updateTimes: Map<String, Long> = emptyMap()
+    private var favoriteKeys: Set<String> = emptySet()
+    private var categoryCounts: Map<Category, Int> = emptyMap()
     private var targetPageIndex: Int = 0
     private var targetFolderId: String? = null
     private var currentCategory: Category = Category.ALL
@@ -98,6 +105,7 @@ class AllAppsActivity : AppCompatActivity() {
 
     private enum class Category(val labelRes: Int, val categoryNames: List<String>) {
         ALL(R.string.launcher_category_all, emptyList()),
+        FAVORITES(R.string.launcher_category_favorites, emptyList()),
         RECENT(R.string.launcher_category_recent, emptyList()),
         FREQUENT(R.string.launcher_category_frequent, emptyList()),
         MORNING(R.string.launcher_category_morning, emptyList()),
@@ -131,6 +139,7 @@ class AllAppsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_apps)
         searchInput = findViewById(R.id.searchInput)
+        clearSearchButton = findViewById(R.id.clearSearchButton)
         showHiddenSwitch = findViewById(R.id.showHiddenSwitch)
         sortRow = findViewById(R.id.sortRow)
         sortLabel = findViewById(R.id.sortLabel)
@@ -138,6 +147,8 @@ class AllAppsActivity : AppCompatActivity() {
         appsGrid = findViewById(R.id.appsGrid)
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
+        favoritesGrid = findViewById(R.id.favoritesGrid)
+        favoritesLabel = findViewById(R.id.favoritesLabel)
         suggestedNowGrid = findViewById(R.id.suggestedNowGrid)
         suggestedNowLabel = findViewById(R.id.suggestedNowLabel)
         recentGrid = findViewById(R.id.recentGrid)
@@ -173,10 +184,12 @@ class AllAppsActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
         suggestedLayoutManager = GridLayoutManager(this, baseConfig.columns)
+        favoritesLayoutManager = GridLayoutManager(this, baseConfig.columns)
         suggestedNowLayoutManager = GridLayoutManager(this, baseConfig.columns)
         recentLayoutManager = GridLayoutManager(this, baseConfig.columns)
         appsGrid.layoutManager = gridLayoutManager
         suggestedGrid.layoutManager = suggestedLayoutManager
+        favoritesGrid.layoutManager = favoritesLayoutManager
         suggestedNowGrid.layoutManager = suggestedNowLayoutManager
         recentGrid.layoutManager = recentLayoutManager
         adapter = AppAdapter(
@@ -187,6 +200,13 @@ class AllAppsActivity : AppCompatActivity() {
             if (targetFolderId == null) ::startDragAdd else null
         )
         suggestedAdapter = AppAdapter(
+            emptyList(),
+            baseConfig.copy(showLabels = true),
+            ::launchApp,
+            ::handleLongPress,
+            if (targetFolderId == null) ::startDragAdd else null
+        )
+        favoritesAdapter = AppAdapter(
             emptyList(),
             baseConfig.copy(showLabels = true),
             ::launchApp,
@@ -209,6 +229,7 @@ class AllAppsActivity : AppCompatActivity() {
         )
         appsGrid.adapter = adapter
         suggestedGrid.adapter = suggestedAdapter
+        favoritesGrid.adapter = favoritesAdapter
         suggestedNowGrid.adapter = suggestedNowAdapter
         recentGrid.adapter = recentAdapter
 
@@ -227,8 +248,10 @@ class AllAppsActivity : AppCompatActivity() {
             widgetsGrid.columnCount = if (isChecked) 2 else 1
             reloadWidgets()
         }
-        showHiddenSwitch.setOnCheckedChangeListener { _, _ ->
-            refreshAppsForHidden()
+        showHiddenSwitch.setOnCheckedChangeListener { _, _ -> refreshAppsForHidden() }
+        clearSearchButton.setOnClickListener {
+            searchInput.setText("")
+            searchInput.clearFocus()
         }
         widgetsGrid.setOnDragListener { _, event ->
             when (event.action) {
@@ -290,6 +313,7 @@ class AllAppsActivity : AppCompatActivity() {
                 allAppsRaw = apps
                 installTimes = times.first
                 updateTimes = times.second
+                favoriteKeys = LauncherStore.getFavoriteKeys(this)
                 refreshAppsForHidden()
                 updateUsageAccessUi()
             }
@@ -335,10 +359,12 @@ class AllAppsActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
         suggestedLayoutManager.spanCount = baseConfig.columns
+        favoritesLayoutManager.spanCount = baseConfig.columns
         suggestedNowLayoutManager.spanCount = baseConfig.columns
         recentLayoutManager.spanCount = baseConfig.columns
         adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         suggestedAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+        favoritesAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         suggestedNowAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         recentAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         widgetsGrid.columnCount = if (gridWidgetsSwitch.isChecked) 2 else 1
@@ -349,9 +375,11 @@ class AllAppsActivity : AppCompatActivity() {
         findViewById<android.view.View>(android.R.id.content).setBackgroundColor(colors.background)
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
+        clearSearchButton.setTextColor(colors.text)
         showHiddenSwitch.setTextColor(colors.text)
         sortLabel.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
+        favoritesLabel.setTextColor(colors.text)
         suggestedNowLabel.setTextColor(colors.text)
         recentLabel.setTextColor(colors.text)
         usageAccessHint.setTextColor(colors.muted)
@@ -375,9 +403,11 @@ class AllAppsActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
+                clearSearchButton.visibility = if (s.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE
                 applyFilters()
             }
         })
+        clearSearchButton.visibility = if (searchInput.text.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE
     }
 
     private fun setupDragTargets() {
@@ -494,7 +524,13 @@ class AllAppsActivity : AppCompatActivity() {
         categoryRow.removeAllViews()
         availableCategories.forEach { category ->
             val button = android.widget.Button(this)
-            button.text = getString(category.labelRes)
+            val baseLabel = getString(category.labelRes)
+            val count = categoryCounts[category]
+            button.text = if (count != null && category != Category.ALL) {
+                "$baseLabel ($count)"
+            } else {
+                baseLabel
+            }
             button.setOnClickListener {
                 currentCategory = category
                 applyFilters()
@@ -525,6 +561,11 @@ class AllAppsActivity : AppCompatActivity() {
         }
         val updatedKeys = if (currentCategory == Category.UPDATED) {
             updateTimes.filterValues { now - it <= 7L * 24L * 60L * 60L * 1000L }.keys
+        } else {
+            emptySet()
+        }
+        val favoriteSet = if (currentCategory == Category.FAVORITES) {
+            favoriteKeys
         } else {
             emptySet()
         }
@@ -574,6 +615,7 @@ class AllAppsActivity : AppCompatActivity() {
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
             val matchesCategory = when (currentCategory) {
+                Category.FAVORITES -> favoriteSet.contains(entry.component.flattenToString())
                 Category.NEW -> newKeys.contains(entry.component.flattenToString())
                 Category.UPDATED -> updatedKeys.contains(entry.component.flattenToString())
                 Category.FREQUENT -> frequentKeys.contains(entry.component.flattenToString())
@@ -600,6 +642,7 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun matchesCategory(category: Category, appCategory: Int?, entry: AppEntry): Boolean {
         if (category == Category.ALL ||
+            category == Category.FAVORITES ||
             category == Category.FREQUENT ||
             category == Category.RECENT ||
             category == Category.MORNING ||
@@ -655,7 +698,7 @@ class AllAppsActivity : AppCompatActivity() {
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
                 if (category != Category.ALL && category != Category.FREQUENT && category != Category.RECENT &&
-                    category != Category.NEW && category != Category.UPDATED
+                    category != Category.NEW && category != Category.UPDATED && category != Category.FAVORITES
                 ) {
                     if (matchesCategory(category, appCategory, entry)) {
                         present.add(category)
@@ -665,41 +708,55 @@ class AllAppsActivity : AppCompatActivity() {
             }
         }
         val list = mutableListOf(Category.ALL)
+        val favorites = favoriteKeys
+        if (favorites.isNotEmpty()) {
+            list.add(Category.FAVORITES)
+            counts[Category.FAVORITES] = favorites.size
+        }
         val newApps = getNewAppKeys()
         if (newApps.isNotEmpty()) {
             list.add(Category.NEW)
+            counts[Category.NEW] = newApps.size
         }
         val updatedApps = getUpdatedAppKeys()
         if (updatedApps.isNotEmpty()) {
             list.add(Category.UPDATED)
+            counts[Category.UPDATED] = updatedApps.size
         }
         val recent = LauncherStore.getRecentApps(this, allApps, 48, 12)
         if (recent.isNotEmpty()) {
             list.add(Category.RECENT)
+            counts[Category.RECENT] = recent.size
         }
         val frequent = LauncherStore.getSuggestedApps(this, allApps, 12)
         if (frequent.isNotEmpty()) {
             list.add(Category.FREQUENT)
+            counts[Category.FREQUENT] = frequent.size
         }
         val morning = LauncherStore.getSuggestedAppsForBucket(this, allApps, "morning", 12)
         if (morning.isNotEmpty()) {
             list.add(Category.MORNING)
+            counts[Category.MORNING] = morning.size
         }
         val day = LauncherStore.getSuggestedAppsForBucket(this, allApps, "day", 12)
         if (day.isNotEmpty()) {
             list.add(Category.DAY)
+            counts[Category.DAY] = day.size
         }
         val evening = LauncherStore.getSuggestedAppsForBucket(this, allApps, "evening", 12)
         if (evening.isNotEmpty()) {
             list.add(Category.EVENING)
+            counts[Category.EVENING] = evening.size
         }
         val night = LauncherStore.getSuggestedAppsForBucket(this, allApps, "night", 12)
         if (night.isNotEmpty()) {
             list.add(Category.NIGHT)
+            counts[Category.NIGHT] = night.size
         }
         val ranked = Category.values()
             .filter {
                 it != Category.ALL &&
+                    it != Category.FAVORITES &&
                     it != Category.NEW &&
                     it != Category.UPDATED &&
                     it != Category.FREQUENT &&
@@ -712,6 +769,7 @@ class AllAppsActivity : AppCompatActivity() {
             .filter { present.contains(it) }
             .sortedByDescending { counts[it] ?: 0 }
         list.addAll(ranked)
+        categoryCounts = counts
         if (!list.contains(currentCategory)) {
             currentCategory = Category.ALL
         }
@@ -773,6 +831,15 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun updateSuggested() {
+        val favoriteEntries = allApps.filter { favoriteKeys.contains(it.component.flattenToString()) }
+        if (favoriteEntries.isEmpty()) {
+            favoritesLabel.visibility = android.view.View.GONE
+            favoritesGrid.visibility = android.view.View.GONE
+        } else {
+            favoritesLabel.visibility = android.view.View.VISIBLE
+            favoritesGrid.visibility = android.view.View.VISIBLE
+            favoritesAdapter.submit(favoriteEntries)
+        }
         val suggestedNow = LauncherStore.getSuggestedAppsForBucket(this, allApps, currentBucket(), 4)
         if (suggestedNow.isEmpty()) {
             suggestedNowLabel.visibility = android.view.View.GONE
@@ -1178,12 +1245,61 @@ class AllAppsActivity : AppCompatActivity() {
         options += getString(R.string.launcher_action_add_to_folder) to {
             showFolderPicker(entry)
         }
+        val isFavorite = LauncherStore.isFavorite(this, entry.component)
+        options += getString(
+            if (isFavorite) R.string.launcher_action_favorite_remove else R.string.launcher_action_favorite_add
+        ) to {
+            LauncherStore.setFavorite(this, entry.component, !isFavorite)
+            favoriteKeys = LauncherStore.getFavoriteKeys(this)
+            updateSuggested()
+            setupCategories()
+            applyFilters()
+        }
         val isHidden = LauncherStore.isAppHidden(this, entry.component)
         options += getString(if (isHidden) R.string.launcher_action_unhide_app else R.string.launcher_action_hide_app) to {
             LauncherStore.setAppHidden(this, entry.component, !isHidden)
             refreshAppsForHidden()
         }
+        options += getString(R.string.launcher_action_app_info) to {
+            openAppInfo(entry)
+        }
+        options += getString(R.string.launcher_action_uninstall) to {
+            confirmUninstall(entry)
+        }
         showOptionsDialog(getString(R.string.launcher_all_apps), options)
+    }
+
+    private fun openAppInfo(entry: AppEntry) {
+        try {
+            val intent = Intent(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                android.net.Uri.fromParts("package", entry.component.packageName, null)
+            )
+            startActivity(intent)
+        } catch (_: Exception) {
+            // Ignore
+        }
+    }
+
+    private fun confirmUninstall(entry: AppEntry) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_action_uninstall)
+            .setMessage(getString(R.string.launcher_uninstall_confirm, entry.label))
+            .setPositiveButton(R.string.launcher_action_uninstall) { _, _ ->
+                uninstallApp(entry)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun uninstallApp(entry: AppEntry) {
+        try {
+            val intent = Intent(Intent.ACTION_DELETE)
+            intent.data = android.net.Uri.parse("package:${entry.component.packageName}")
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_uninstall_not_allowed, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showFolderPicker(entry: AppEntry) {

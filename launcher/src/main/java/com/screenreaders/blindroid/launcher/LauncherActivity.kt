@@ -86,6 +86,7 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
     private lateinit var simpleFavoritesAdapter: AppAdapter
+    private var hotseatTouchHelper: ItemTouchHelper? = null
 
     private var allApps: List<AppEntry> = emptyList()
     private var pages: List<List<HomeItem>> = emptyList()
@@ -132,6 +133,7 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.isFeedEnabled(this),
             feedData,
             LauncherPrefs.getThemeColors(this),
+            !LauncherPrefs.isHomeEditLocked(this),
             ::openExternalFeed,
             ::openAlarms,
             ::openCalendar,
@@ -173,7 +175,8 @@ class LauncherActivity : AppCompatActivity() {
             hotseat.toMutableList(),
             LauncherPrefs.getDockConfig(this, 0),
             ::onHotseatItemClick,
-            ::onHotseatItemLongClick
+            ::onHotseatItemLongClick,
+            !LauncherPrefs.isHomeEditLocked(this)
         )
         hotseatRow.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         hotseatRow.adapter = hotseatAdapter
@@ -204,6 +207,10 @@ class LauncherActivity : AppCompatActivity() {
         }
         voiceButton.setOnClickListener {
             openAssistant()
+        }
+        findViewById<View>(R.id.launcherRoot).setOnLongClickListener {
+            showHomeQuickMenu()
+            true
         }
 
         searchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -279,6 +286,10 @@ class LauncherActivity : AppCompatActivity() {
             val pageConfig = baseConfig.copy(itemHeightPx = itemHeight, showLabels = true)
             homeAdapter.updateConfig(pageConfig)
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
+            val editingEnabled = !LauncherPrefs.isHomeEditLocked(this)
+            homeAdapter.setEditingEnabled(editingEnabled)
+            hotseatAdapter.setEditingEnabled(editingEnabled)
+            applyHotseatEditingLock()
         }
         val simpleConfig = LauncherPrefs.getSimpleFavoritesConfig(this, 0)
         (simpleFavoritesGrid.layoutManager as? GridLayoutManager)?.spanCount = simpleConfig.columns
@@ -602,6 +613,17 @@ class LauncherActivity : AppCompatActivity() {
         Toast.makeText(
             this,
             if (visible) R.string.launcher_dock_shown else R.string.launcher_dock_hidden,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun toggleFeedEnabled() {
+        val enabled = !LauncherPrefs.isFeedEnabled(this)
+        LauncherPrefs.setFeedEnabled(this, enabled)
+        applyUiConfig()
+        Toast.makeText(
+            this,
+            if (enabled) R.string.launcher_feed_enabled else R.string.launcher_feed_disabled,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -1567,7 +1589,13 @@ class LauncherActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
         })
-        touchHelper.attachToRecyclerView(hotseatRow)
+        hotseatTouchHelper = touchHelper
+        applyHotseatEditingLock()
+    }
+
+    private fun applyHotseatEditingLock() {
+        val locked = LauncherPrefs.isHomeEditLocked(this)
+        hotseatTouchHelper?.attachToRecyclerView(if (locked) null else hotseatRow)
     }
 
     private fun attemptLock() {
@@ -1598,6 +1626,10 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun onHomeItemLongClick(pageIndex: Int, item: HomeItem) {
+        if (LauncherPrefs.isHomeEditLocked(this)) {
+            Toast.makeText(this, R.string.launcher_edit_locked, Toast.LENGTH_SHORT).show()
+            return
+        }
         when (item) {
             is HomeItem.App -> showHomeAppOptions(pageIndex, item)
             is HomeItem.Folder -> showFolderOptions(pageIndex, item)
@@ -1615,6 +1647,10 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun onHotseatItemLongClick(item: HomeItem) {
+        if (LauncherPrefs.isHomeEditLocked(this)) {
+            Toast.makeText(this, R.string.launcher_edit_locked, Toast.LENGTH_SHORT).show()
+            return
+        }
         when (item) {
             is HomeItem.App -> showHotseatAppOptions(item)
             is HomeItem.Folder -> showFolderOptions(currentHomePageIndex(), item)
@@ -1752,6 +1788,37 @@ class LauncherActivity : AppCompatActivity() {
             .setItems(labels) { _, which ->
                 onPick(folders[which].id)
             }
+            .show()
+    }
+
+    private fun showHomeQuickMenu() {
+        val locked = LauncherPrefs.isHomeEditLocked(this)
+        val options = mutableListOf<Pair<String, () -> Unit>>()
+        if (!locked) {
+            options += getString(R.string.launcher_action_add_app) to { openAllApps() }
+            options += getString(R.string.launcher_action_add_widget) to { openWidgets() }
+            options += getString(R.string.launcher_action_add_folder) to { promptCreateEmptyFolder() }
+        }
+        options += getString(R.string.launcher_action_toggle_feed) to { toggleFeedEnabled() }
+        options += getString(R.string.launcher_action_toggle_dock) to { toggleDockVisibility() }
+        options += getString(R.string.launcher_action_open_settings) to { openSettings() }
+        showOptionsDialog(getString(R.string.launcher_home_quick_menu), options)
+    }
+
+    private fun promptCreateEmptyFolder() {
+        val input = EditText(this)
+        input.hint = getString(R.string.launcher_action_add_folder)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_action_add_folder)
+            .setView(input)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val label = input.text?.toString().orEmpty()
+                val folderId = LauncherStore.createEmptyFolderOnPage(this, currentHomePageIndex(), label)
+                if (folderId.isNotEmpty()) {
+                    refreshHome()
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 

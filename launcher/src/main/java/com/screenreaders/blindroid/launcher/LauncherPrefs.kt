@@ -11,6 +11,7 @@ object LauncherPrefs {
     private const val KEY_ICON_SIZE_DP = "icon_size_dp"
     private const val KEY_LABEL_SIZE_SP = "label_size_sp"
     private const val KEY_DOUBLE_TAP_LOCK = "double_tap_lock"
+    private const val KEY_HOME_EDIT_LOCK = "home_edit_lock"
     private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
     private const val KEY_SUPER_SIMPLE_COLUMNS = "super_simple_columns"
@@ -153,6 +154,13 @@ object LauncherPrefs {
 
     fun setDoubleTapLockEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_DOUBLE_TAP_LOCK, enabled).apply()
+    }
+
+    fun isHomeEditLocked(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_HOME_EDIT_LOCK, false)
+
+    fun setHomeEditLocked(context: Context, locked: Boolean) {
+        prefs(context).edit().putBoolean(KEY_HOME_EDIT_LOCK, locked).apply()
     }
 
     fun isDockLabelsHidden(context: Context): Boolean =

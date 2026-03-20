@@ -527,6 +527,12 @@
             android:text="@string/launcher_settings_gestures" />
 
         <Switch
+            android:id="@+id/homeEditLockSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_home_lock" />
+
+        <Switch
             android:id="@+id/doubleTapLockSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

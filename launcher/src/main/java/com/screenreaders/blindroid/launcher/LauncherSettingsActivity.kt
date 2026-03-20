@@ -19,6 +19,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var iconSizeGroup: RadioGroup
     private lateinit var labelSizeGroup: RadioGroup
     private lateinit var doubleTapSwitch: Switch
+    private lateinit var homeEditLockSwitch: Switch
     private lateinit var hideDockLabelsSwitch: Switch
     private lateinit var superSimpleSwitch: Switch
     private lateinit var superSimpleGridSpinner: Spinner
@@ -109,6 +110,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         iconSizeGroup = findViewById(R.id.iconSizeGroup)
         labelSizeGroup = findViewById(R.id.labelSizeGroup)
         doubleTapSwitch = findViewById(R.id.doubleTapLockSwitch)
+        homeEditLockSwitch = findViewById(R.id.homeEditLockSwitch)
         hideDockLabelsSwitch = findViewById(R.id.hideDockLabelsSwitch)
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
         superSimpleGridSpinner = findViewById(R.id.superSimpleGridSpinner)
@@ -198,6 +200,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
             else -> labelSizeGroup.check(R.id.labelLarge)
         }
         doubleTapSwitch.isChecked = LauncherPrefs.isDoubleTapLockEnabled(this)
+        homeEditLockSwitch.isChecked = LauncherPrefs.isHomeEditLocked(this)
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
         bindSuperSimpleGrid()
@@ -304,6 +307,15 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDoubleTapLockEnabled(this, isChecked)
             toastSaved()
+        }
+
+        homeEditLockSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setHomeEditLocked(this, isChecked)
+            Toast.makeText(
+                this,
+                if (isChecked) R.string.launcher_edit_locked else R.string.launcher_edit_unlocked,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         hideDockLabelsSwitch.setOnCheckedChangeListener { _, isChecked ->

@@ -15,6 +15,7 @@ class HomePagerAdapter(
     private var hasFeed: Boolean,
     private var feedData: FeedData?,
     private var feedColors: LauncherPrefs.ThemeColors,
+    private var editingEnabled: Boolean,
     private val onOpenExternalFeed: () -> Unit,
     private val onOpenAlarms: () -> Unit,
     private val onOpenCalendar: () -> Unit,
@@ -109,6 +110,12 @@ class HomePagerAdapter(
         notifyDataSetChanged()
     }
 
+    fun setEditingEnabled(enabled: Boolean) {
+        if (editingEnabled == enabled) return
+        editingEnabled = enabled
+        notifyDataSetChanged()
+    }
+
     private fun moveItem(pageIndex: Int, from: Int, to: Int, adapter: HomeItemAdapter) {
         if (pageIndex !in pages.indices) return
         val page = pages[pageIndex]
@@ -123,6 +130,8 @@ class HomePagerAdapter(
         private val gridLayoutManager = GridLayoutManager(view.context, config.columns)
         val adapter: HomeItemAdapter
         var adapterPageIndex: Int = 0
+        private val touchHelper: ItemTouchHelper
+        private var touchAttached = false
 
         init {
             grid.layoutManager = gridLayoutManager
@@ -130,11 +139,12 @@ class HomePagerAdapter(
                 mutableListOf(),
                 config,
                 { item -> onClick(adapterPageIndex, item) },
-                { item -> onLongClick(adapterPageIndex, item) }
+                { item -> onLongClick(adapterPageIndex, item) },
+                editingEnabled
             )
             grid.adapter = adapter
 
-            val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 0
             ) {
@@ -153,7 +163,6 @@ class HomePagerAdapter(
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
             })
-            touchHelper.attachToRecyclerView(grid)
         }
 
         fun bind(pageIndex: Int, items: List<HomeItem>, newConfig: LauncherUiConfig) {
@@ -161,6 +170,18 @@ class HomePagerAdapter(
             gridLayoutManager.spanCount = newConfig.columns
             adapter.updateConfig(newConfig)
             adapter.submit(items)
+            setEditingEnabled(editingEnabled)
+        }
+
+        private fun setEditingEnabled(enabled: Boolean) {
+            adapter.setEditingEnabled(enabled)
+            if (enabled && !touchAttached) {
+                touchHelper.attachToRecyclerView(grid)
+                touchAttached = true
+            } else if (!enabled && touchAttached) {
+                touchHelper.attachToRecyclerView(null)
+                touchAttached = false
+            }
         }
     }
 

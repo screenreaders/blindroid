@@ -25,6 +25,7 @@ object LauncherStore {
     private const val KEY_LAUNCH_LAST_PREFIX = "launch_last_"
     private const val KEY_LAUNCH_BUCKET_PREFIX = "launch_bucket_"
     private const val KEY_WIDGET_SIZE_PREFIX = "widget_size_"
+    private const val KEY_FAVORITES = "favorites"
     private const val FOLDER_PREFIX = "folder_"
     private const val FOLDER_LABEL_SUFFIX = "_label"
     private const val PAGE_COUNT = 3
@@ -216,6 +217,18 @@ object LauncherStore {
         return folderId
     }
 
+    fun createEmptyFolderOnPage(context: Context, pageIndex: Int, label: String): String {
+        val pages = ensurePages(context)
+        val target = pages.getOrNull(pageIndex) ?: return ""
+        val folderId = UUID.randomUUID().toString()
+        val folderKey = "${TYPE_FOLDER}:$folderId"
+        target.add(folderKey)
+        saveFolderItems(context, folderId, emptyList())
+        saveFolderLabel(context, folderId, label.ifBlank { "Folder" })
+        savePages(context, pages)
+        return folderId
+    }
+
     fun addToFolder(context: Context, folderId: String, component: ComponentName): Boolean {
         val items = loadFolderItems(context, folderId)
         val key = component.flattenToString()
@@ -368,6 +381,28 @@ object LauncherStore {
         val w = parts[0].toIntOrNull() ?: return null
         val h = parts[1].toIntOrNull() ?: return null
         return w to h
+    }
+
+    fun getFavoriteKeys(context: Context): Set<String> {
+        val prefs = prefs(context)
+        return decodeList(prefs.getString(KEY_FAVORITES, "") ?: "").toSet()
+    }
+
+    fun isFavorite(context: Context, component: ComponentName): Boolean {
+        val key = component.flattenToString()
+        return getFavoriteKeys(context).contains(key)
+    }
+
+    fun setFavorite(context: Context, component: ComponentName, favorite: Boolean) {
+        val prefs = prefs(context)
+        val list = getFavoriteKeys(context).toMutableSet()
+        val key = component.flattenToString()
+        if (favorite) {
+            list.add(key)
+        } else {
+            list.remove(key)
+        }
+        saveList(prefs, KEY_FAVORITES, list.toList())
     }
 
     fun recordLaunch(context: Context, component: ComponentName) {

@@ -19,6 +19,14 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:singleLine="true" />
+
+        <Button
+            android:id="@+id/clearSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/launcher_clear_search"
+            android:visibility="gone" />
     </LinearLayout>
 
     <Switch
@@ -93,6 +101,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/favoritesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_favorites"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favoritesGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/suggestedNowLabel"

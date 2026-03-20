@@ -12,7 +12,8 @@ class HomeItemAdapter(
     private var items: MutableList<HomeItem>,
     private var config: LauncherUiConfig,
     private val onClick: (HomeItem) -> Unit,
-    private val onLongClick: (HomeItem) -> Unit
+    private val onLongClick: (HomeItem) -> Unit,
+    private var editingEnabled: Boolean = true
 ) : RecyclerView.Adapter<HomeItemAdapter.HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
@@ -46,6 +47,7 @@ class HomeItemAdapter(
         applyIconStyle(holder)
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
+            if (!editingEnabled) return@setOnLongClickListener false
             onLongClick(item)
             true
         }
@@ -60,6 +62,12 @@ class HomeItemAdapter(
 
     fun updateConfig(newConfig: LauncherUiConfig) {
         config = newConfig
+        notifyDataSetChanged()
+    }
+
+    fun setEditingEnabled(enabled: Boolean) {
+        if (editingEnabled == enabled) return
+        editingEnabled = enabled
         notifyDataSetChanged()
     }
 
