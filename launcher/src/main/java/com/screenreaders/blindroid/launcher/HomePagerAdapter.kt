@@ -185,6 +185,9 @@ class HomePagerAdapter(
         private val cardWeather: LinearLayout = view.findViewById(R.id.cardWeather)
         private val cardWeatherTitle: TextView = view.findViewById(R.id.cardWeatherTitle)
         private val cardWeatherText: TextView = view.findViewById(R.id.cardWeatherText)
+        private val cardBattery: LinearLayout = view.findViewById(R.id.cardBattery)
+        private val cardBatteryTitle: TextView = view.findViewById(R.id.cardBatteryTitle)
+        private val cardBatteryText: TextView = view.findViewById(R.id.cardBatteryText)
         private val cardReminders: LinearLayout = view.findViewById(R.id.cardReminders)
         private val cardRemindersTitle: TextView = view.findViewById(R.id.cardRemindersTitle)
         private val cardRemindersText: TextView = view.findViewById(R.id.cardRemindersText)
@@ -269,6 +272,8 @@ class HomePagerAdapter(
             cardCalendarText.setTextColor(colors.muted)
             cardWeatherTitle.setTextColor(colors.text)
             cardWeatherText.setTextColor(colors.muted)
+            cardBatteryTitle.setTextColor(colors.text)
+            cardBatteryText.setTextColor(colors.muted)
             cardRemindersTitle.setTextColor(colors.text)
             cardRemindersText.setTextColor(colors.muted)
             cardHeadphonesTitle.setTextColor(colors.text)
@@ -407,6 +412,16 @@ class HomePagerAdapter(
             } else {
                 cardWeather.visibility = View.GONE
                 cardWeather.setOnClickListener(null)
+            }
+
+            if (data.showBattery) {
+                cardBattery.visibility = View.VISIBLE
+                cardBatteryText.text = data.batteryDetailsText
+                    ?: itemView.context.getString(R.string.launcher_battery_unknown)
+                cardBattery.setOnClickListener { onOpenBatterySettings() }
+            } else {
+                cardBattery.visibility = View.GONE
+                cardBattery.setOnClickListener(null)
             }
 
             if (data.showReminders) {
@@ -588,6 +603,7 @@ class HomePagerAdapter(
             applyCardStyle(cardAlarm, colors)
             applyCardStyle(cardCalendar, colors)
             applyCardStyle(cardWeather, colors)
+            applyCardStyle(cardBattery, colors)
             applyCardStyle(cardReminders, colors)
             applyCardStyle(cardHeadphones, colors)
             applyCardStyle(cardLocation, colors)

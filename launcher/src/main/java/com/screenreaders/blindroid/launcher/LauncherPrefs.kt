@@ -13,6 +13,10 @@ object LauncherPrefs {
     private const val KEY_DOUBLE_TAP_LOCK = "double_tap_lock"
     private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
+    private const val KEY_SUPER_SIMPLE_COLUMNS = "super_simple_columns"
+    private const val KEY_SUPER_SIMPLE_ROWS = "super_simple_rows"
+    private const val KEY_SIMPLE_FAVORITES_COLUMNS = "simple_favorites_columns"
+    private const val KEY_SIMPLE_FAVORITES_ROWS = "simple_favorites_rows"
     private const val KEY_DOCK_VISIBLE = "dock_visible"
     private const val KEY_SMART_HOTSEAT = "smart_hotseat"
     private const val KEY_FEED_ENABLED = "feed_enabled"
@@ -28,6 +32,7 @@ object LauncherPrefs {
     private const val KEY_NOW_ALARM = "now_alarm"
     private const val KEY_NOW_CALENDAR = "now_calendar"
     private const val KEY_NOW_WEATHER = "now_weather"
+    private const val KEY_NOW_BATTERY = "now_battery"
     private const val KEY_NOW_REMINDERS = "now_reminders"
     private const val KEY_NOW_HEADPHONES = "now_headphones"
     private const val KEY_NOW_NETWORK = "now_network"
@@ -153,6 +158,34 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_SUPER_SIMPLE, enabled).apply()
     }
 
+    fun getSuperSimpleColumns(context: Context): Int =
+        prefs(context).getInt(KEY_SUPER_SIMPLE_COLUMNS, 3).coerceIn(2, 4)
+
+    fun setSuperSimpleColumns(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SUPER_SIMPLE_COLUMNS, value.coerceIn(2, 4)).apply()
+    }
+
+    fun getSuperSimpleRows(context: Context): Int =
+        prefs(context).getInt(KEY_SUPER_SIMPLE_ROWS, 4).coerceIn(2, 5)
+
+    fun setSuperSimpleRows(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SUPER_SIMPLE_ROWS, value.coerceIn(2, 5)).apply()
+    }
+
+    fun getSimpleFavoritesColumns(context: Context): Int =
+        prefs(context).getInt(KEY_SIMPLE_FAVORITES_COLUMNS, 2).coerceIn(2, 3)
+
+    fun setSimpleFavoritesColumns(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SIMPLE_FAVORITES_COLUMNS, value.coerceIn(2, 3)).apply()
+    }
+
+    fun getSimpleFavoritesRows(context: Context): Int =
+        prefs(context).getInt(KEY_SIMPLE_FAVORITES_ROWS, 2).coerceIn(2, 4)
+
+    fun setSimpleFavoritesRows(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SIMPLE_FAVORITES_ROWS, value.coerceIn(2, 4)).apply()
+    }
+
     fun isDockVisible(context: Context): Boolean =
         prefs(context).getBoolean(KEY_DOCK_VISIBLE, true)
 
@@ -256,6 +289,13 @@ object LauncherPrefs {
 
     fun setNowWeatherEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOW_WEATHER, enabled).apply()
+    }
+
+    fun isNowBatteryEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_BATTERY, true)
+
+    fun setNowBatteryEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_BATTERY, enabled).apply()
     }
 
     fun isNowRemindersEnabled(context: Context): Boolean =
@@ -485,24 +525,31 @@ object LauncherPrefs {
         val superSimple = isSuperSimpleEnabled(context)
         val gnLayout = isGnLayoutEnabled(context)
         val columns = when {
-            superSimple -> 3
+            superSimple -> getSuperSimpleColumns(context)
             gnLayout -> 4
             else -> getColumns(context)
         }
         val rows = when {
-            superSimple -> 4
+            superSimple -> getSuperSimpleRows(context)
             gnLayout -> 5
             else -> getRows(context)
         }
         val iconDp = when {
-            superSimple -> 64
+            superSimple -> {
+                val densityScale = when (getSuperSimpleColumns(context)) {
+                    2 -> 86
+                    3 -> 72
+                    else -> 60
+                }
+                densityScale
+            }
             gnLayout -> 48
             else -> getIconSizeDp(context)
         }.toFloat()
         val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, iconDp, metrics)
             .roundToInt()
         val labelSize = when {
-            superSimple -> 18f
+            superSimple -> 20f
             gnLayout -> 12f
             else -> getLabelSizeSp(context)
         }
@@ -524,10 +571,16 @@ object LauncherPrefs {
 
     fun getSimpleFavoritesConfig(context: Context, itemHeightPx: Int = 0): LauncherUiConfig {
         val metrics = context.resources.displayMetrics
-        val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, metrics).roundToInt()
+        val columns = getSimpleFavoritesColumns(context)
+        val rows = getSimpleFavoritesRows(context)
+        val iconDp = when (columns) {
+            2 -> 84f
+            else -> 64f
+        }
+        val iconPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, iconDp, metrics).roundToInt()
         return LauncherUiConfig(
-            columns = 2,
-            rows = 2,
+            columns = columns,
+            rows = rows,
             iconSizePx = iconPx,
             labelSizeSp = 20f,
             itemHeightPx = itemHeightPx,

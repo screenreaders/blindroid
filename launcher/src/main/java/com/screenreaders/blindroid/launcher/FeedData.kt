@@ -17,6 +17,8 @@ data class FeedData(
     val calendarPermissionGranted: Boolean,
     val showWeather: Boolean,
     val weatherText: String?,
+    val showBattery: Boolean,
+    val batteryDetailsText: String?,
     val showReminders: Boolean,
     val reminderText: String?,
     val showHeadphones: Boolean,

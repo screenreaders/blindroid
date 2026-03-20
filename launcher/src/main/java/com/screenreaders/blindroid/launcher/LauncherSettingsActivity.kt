@@ -20,6 +20,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var doubleTapSwitch: Switch
     private lateinit var hideDockLabelsSwitch: Switch
     private lateinit var superSimpleSwitch: Switch
+    private lateinit var superSimpleGridSpinner: Spinner
+    private lateinit var simpleFavoritesGridSpinner: Spinner
     private lateinit var feedEnabledSwitch: Switch
     private lateinit var feedModeSpinner: Spinner
     private lateinit var feedAutoOpenSwitch: Switch
@@ -29,6 +31,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowAlarmSwitch: Switch
     private lateinit var nowCalendarSwitch: Switch
     private lateinit var nowWeatherSwitch: Switch
+    private lateinit var nowBatterySwitch: Switch
     private lateinit var nowRemindersSwitch: Switch
     private lateinit var nowHeadphonesSwitch: Switch
     private lateinit var nowLocationSwitch: Switch
@@ -104,6 +107,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch = findViewById(R.id.doubleTapLockSwitch)
         hideDockLabelsSwitch = findViewById(R.id.hideDockLabelsSwitch)
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
+        superSimpleGridSpinner = findViewById(R.id.superSimpleGridSpinner)
+        simpleFavoritesGridSpinner = findViewById(R.id.simpleFavoritesGridSpinner)
         feedEnabledSwitch = findViewById(R.id.feedEnabledSwitch)
         feedModeSpinner = findViewById(R.id.feedModeSpinner)
         feedAutoOpenSwitch = findViewById(R.id.feedAutoOpenSwitch)
@@ -113,6 +118,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowAlarmSwitch = findViewById(R.id.nowAlarmSwitch)
         nowCalendarSwitch = findViewById(R.id.nowCalendarSwitch)
         nowWeatherSwitch = findViewById(R.id.nowWeatherSwitch)
+        nowBatterySwitch = findViewById(R.id.nowBatterySwitch)
         nowRemindersSwitch = findViewById(R.id.nowRemindersSwitch)
         nowHeadphonesSwitch = findViewById(R.id.nowHeadphonesSwitch)
         nowLocationSwitch = findViewById(R.id.nowLocationSwitch)
@@ -186,6 +192,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         doubleTapSwitch.isChecked = LauncherPrefs.isDoubleTapLockEnabled(this)
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
+        bindSuperSimpleGrid()
+        bindSimpleFavoritesGrid()
         feedEnabledSwitch.isChecked = LauncherPrefs.isFeedEnabled(this)
         bindFeedModeSpinner(LauncherPrefs.getFeedMode(this))
         feedAutoOpenSwitch.isChecked = LauncherPrefs.isFeedAutoOpenEnabled(this)
@@ -195,6 +203,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowAlarmSwitch.isChecked = LauncherPrefs.isNowAlarmEnabled(this)
         nowCalendarSwitch.isChecked = LauncherPrefs.isNowCalendarEnabled(this)
         nowWeatherSwitch.isChecked = LauncherPrefs.isNowWeatherEnabled(this)
+        nowBatterySwitch.isChecked = LauncherPrefs.isNowBatteryEnabled(this)
         nowRemindersSwitch.isChecked = LauncherPrefs.isNowRemindersEnabled(this)
         nowHeadphonesSwitch.isChecked = LauncherPrefs.isNowHeadphonesEnabled(this)
         nowLocationSwitch.isChecked = LauncherPrefs.isNowLocationEnabled(this)
@@ -305,6 +314,54 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        superSimpleGridSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        LauncherPrefs.setSuperSimpleColumns(this@LauncherSettingsActivity, 2)
+                        LauncherPrefs.setSuperSimpleRows(this@LauncherSettingsActivity, 3)
+                    }
+                    1 -> {
+                        LauncherPrefs.setSuperSimpleColumns(this@LauncherSettingsActivity, 3)
+                        LauncherPrefs.setSuperSimpleRows(this@LauncherSettingsActivity, 4)
+                    }
+                    else -> {
+                        LauncherPrefs.setSuperSimpleColumns(this@LauncherSettingsActivity, 4)
+                        LauncherPrefs.setSuperSimpleRows(this@LauncherSettingsActivity, 5)
+                    }
+                }
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
+        }
+
+        simpleFavoritesGridSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        LauncherPrefs.setSimpleFavoritesColumns(this@LauncherSettingsActivity, 2)
+                        LauncherPrefs.setSimpleFavoritesRows(this@LauncherSettingsActivity, 2)
+                    }
+                    1 -> {
+                        LauncherPrefs.setSimpleFavoritesColumns(this@LauncherSettingsActivity, 2)
+                        LauncherPrefs.setSimpleFavoritesRows(this@LauncherSettingsActivity, 3)
+                    }
+                    2 -> {
+                        LauncherPrefs.setSimpleFavoritesColumns(this@LauncherSettingsActivity, 3)
+                        LauncherPrefs.setSimpleFavoritesRows(this@LauncherSettingsActivity, 3)
+                    }
+                    else -> {
+                        LauncherPrefs.setSimpleFavoritesColumns(this@LauncherSettingsActivity, 3)
+                        LauncherPrefs.setSimpleFavoritesRows(this@LauncherSettingsActivity, 4)
+                    }
+                }
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
+        }
+
         feedEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setFeedEnabled(this, isChecked)
             feedModeSpinner.isEnabled = isChecked && !superSimpleSwitch.isChecked
@@ -354,6 +411,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowWeatherSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowWeatherEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowBatterySwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowBatteryEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -528,6 +590,46 @@ class LauncherSettingsActivity : AppCompatActivity() {
         pageAnimationSpinner.setSelection(LauncherPrefs.getPageAnimation(this))
     }
 
+    private fun bindSuperSimpleGrid() {
+        val labels = listOf(
+            getString(R.string.launcher_simple_grid_2x3),
+            getString(R.string.launcher_simple_grid_3x4),
+            getString(R.string.launcher_simple_grid_4x5)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        superSimpleGridSpinner.adapter = adapter
+        val columns = LauncherPrefs.getSuperSimpleColumns(this)
+        val rows = LauncherPrefs.getSuperSimpleRows(this)
+        val index = when {
+            columns <= 2 && rows <= 3 -> 0
+            columns >= 4 || rows >= 5 -> 2
+            else -> 1
+        }
+        superSimpleGridSpinner.setSelection(index)
+    }
+
+    private fun bindSimpleFavoritesGrid() {
+        val labels = listOf(
+            getString(R.string.launcher_simple_fav_2x2),
+            getString(R.string.launcher_simple_fav_2x3),
+            getString(R.string.launcher_simple_fav_3x3),
+            getString(R.string.launcher_simple_fav_3x4)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        simpleFavoritesGridSpinner.adapter = adapter
+        val columns = LauncherPrefs.getSimpleFavoritesColumns(this)
+        val rows = LauncherPrefs.getSimpleFavoritesRows(this)
+        val index = when {
+            columns == 2 && rows == 2 -> 0
+            columns == 2 && rows == 3 -> 1
+            columns == 3 && rows == 3 -> 2
+            else -> 3
+        }
+        simpleFavoritesGridSpinner.setSelection(index)
+    }
+
     private fun applySuperSimpleState(enabled: Boolean) {
         setGroupEnabled(columnsGroup, !enabled)
         setGroupEnabled(rowsGroup, !enabled)
@@ -542,6 +644,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         invertColorsSwitch.isEnabled = !enabled
         gnLayoutSwitch.isEnabled = !enabled
         wallpaperParallaxSwitch.isEnabled = !enabled
+        superSimpleGridSpinner.isEnabled = enabled
+        simpleFavoritesGridSpinner.isEnabled = enabled
     }
 
     private fun applyLayoutModeState() {

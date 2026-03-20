@@ -185,7 +185,7 @@ class LauncherActivity : AppCompatActivity() {
             { entry -> launchApp(entry.component) },
             ::handleSimpleFavoriteLongPress
         )
-        simpleFavoritesGrid.layoutManager = GridLayoutManager(this, 2)
+        simpleFavoritesGrid.layoutManager = GridLayoutManager(this, LauncherPrefs.getSimpleFavoritesConfig(this, 0).columns)
         simpleFavoritesGrid.adapter = simpleFavoritesAdapter
 
         allAppsButton.setOnClickListener {
@@ -280,6 +280,9 @@ class LauncherActivity : AppCompatActivity() {
             homeAdapter.updateConfig(pageConfig)
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
+        val simpleConfig = LauncherPrefs.getSimpleFavoritesConfig(this, 0)
+        (simpleFavoritesGrid.layoutManager as? GridLayoutManager)?.spanCount = simpleConfig.columns
+        simpleFavoritesAdapter.updateConfig(simpleConfig)
         applyPageTransformer()
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
         val searchEnabled = LauncherPrefs.isSearchBarEnabled(this)
@@ -504,13 +507,14 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun updateSimpleFavorites() {
         if (!LauncherPrefs.isSuperSimpleEnabled(this)) return
+        val slots = LauncherPrefs.getSimpleFavoritesColumns(this) * LauncherPrefs.getSimpleFavoritesRows(this)
         val favorites = hotseat.filterIsInstance<HomeItem.App>()
-            .take(4)
+            .take(slots)
             .map { AppEntry(it.label, it.component, it.icon) }
         val list = if (favorites.isNotEmpty()) {
             favorites
         } else {
-            LauncherStore.getSuggestedApps(this, allApps, 4)
+            LauncherStore.getSuggestedApps(this, allApps, slots)
         }
         simpleFavoritesAdapter.submit(list)
     }
@@ -557,6 +561,7 @@ class LauncherActivity : AppCompatActivity() {
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
+        val showBattery = LauncherPrefs.isNowBatteryEnabled(this)
         val showReminders = LauncherPrefs.isNowRemindersEnabled(this)
         val showHeadphones = LauncherPrefs.isNowHeadphonesEnabled(this)
         val showLocation = LauncherPrefs.isNowLocationEnabled(this)
@@ -580,6 +585,7 @@ class LauncherActivity : AppCompatActivity() {
         val alarmText = if (showAlarm) getNextAlarmText() else null
         val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
         val weatherText = if (showWeather) getWeatherText() else null
+        val batteryDetailsText = if (showBattery) getBatteryDetailsText() else null
         val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
         val locationPermissionGranted = hasLocationPermission()
@@ -618,6 +624,8 @@ class LauncherActivity : AppCompatActivity() {
             calendarPermissionGranted = calendarPermissionGranted,
             showWeather = showWeather,
             weatherText = weatherText,
+            showBattery = showBattery,
+            batteryDetailsText = batteryDetailsText,
             showReminders = showReminders,
             reminderText = reminderText,
             showHeadphones = showHeadphones,
@@ -659,6 +667,37 @@ class LauncherActivity : AppCompatActivity() {
         val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
         val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
         return if (level >= 0 && scale > 0) (level * 100 / scale) else -1
+    }
+
+    private fun getBatteryDetailsText(): String? {
+        val intent = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return null
+        val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        val percent = if (level >= 0 && scale > 0) (level * 100 / scale) else -1
+        val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+        val plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
+        val tempTenth = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
+        val temp = if (tempTenth > 0) tempTenth / 10f else null
+
+        val statusText = when (status) {
+            BatteryManager.BATTERY_STATUS_CHARGING -> getString(R.string.launcher_battery_charging)
+            BatteryManager.BATTERY_STATUS_FULL -> getString(R.string.launcher_battery_full)
+            BatteryManager.BATTERY_STATUS_DISCHARGING -> getString(R.string.launcher_battery_discharging)
+            BatteryManager.BATTERY_STATUS_NOT_CHARGING -> getString(R.string.launcher_battery_not_charging)
+            else -> getString(R.string.launcher_battery_unknown)
+        }
+        val plugText = when (plugged) {
+            BatteryManager.BATTERY_PLUGGED_AC -> getString(R.string.launcher_battery_plug_ac)
+            BatteryManager.BATTERY_PLUGGED_USB -> getString(R.string.launcher_battery_plug_usb)
+            BatteryManager.BATTERY_PLUGGED_WIRELESS -> getString(R.string.launcher_battery_plug_wireless)
+            else -> null
+        }
+        val parts = mutableListOf<String>()
+        parts.add(statusText)
+        if (plugText != null) parts.add(plugText)
+        if (percent >= 0) parts.add("$percent%")
+        if (temp != null) parts.add(String.format(java.util.Locale.US, "%.1f°C", temp))
+        return parts.joinToString(" • ").ifBlank { null }
     }
 
     private fun getRecentNotifications(): List<String> {
@@ -941,8 +980,25 @@ class LauncherActivity : AppCompatActivity() {
         val hasInternet = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
         val suffix = if (hasInternet) "" else " (bez internetu)"
         return when {
-            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> "Wi‑Fi$suffix"
-            caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> "Komórkowa$suffix"
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                val ssid = try {
+                    val wifi = applicationContext.getSystemService(android.net.wifi.WifiManager::class.java)
+                    val raw = wifi.connectionInfo?.ssid?.trim('"')
+                    raw?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
+                } catch (_: Exception) {
+                    null
+                }
+                if (ssid != null) "Wi‑Fi: $ssid$suffix" else "Wi‑Fi$suffix"
+            }
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                val carrier = try {
+                    val tm = getSystemService(android.telephony.TelephonyManager::class.java)
+                    tm.networkOperatorName?.takeIf { it.isNotBlank() }
+                } catch (_: Exception) {
+                    null
+                }
+                if (carrier != null) "Komórkowa: $carrier$suffix" else "Komórkowa$suffix"
+            }
             caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> "Ethernet$suffix"
             else -> "Połączenie$suffix"
         }

@@ -24,6 +24,14 @@
     <string name="launcher_time_just_now">przed chwilą</string>
     <string name="launcher_time_minutes">%1$d min temu</string>
     <string name="launcher_time_hours">%1$d h temu</string>
+    <string name="launcher_battery_charging">Ładowanie</string>
+    <string name="launcher_battery_full">Naładowana</string>
+    <string name="launcher_battery_discharging">Rozładowywanie</string>
+    <string name="launcher_battery_not_charging">Nie ładuje</string>
+    <string name="launcher_battery_unknown">Bateria</string>
+    <string name="launcher_battery_plug_ac">Sieć</string>
+    <string name="launcher_battery_plug_usb">USB</string>
+    <string name="launcher_battery_plug_wireless">Indukcja</string>
     <string name="launcher_category_all">Wszystkie</string>
     <string name="launcher_category_recent">Ostatnie</string>
     <string name="launcher_category_frequent">Często używane</string>
@@ -95,6 +103,8 @@
     <string name="launcher_settings_hide_dock_labels">Ukryj etykiety w doku</string>
     <string name="launcher_settings_modes">Tryby</string>
     <string name="launcher_settings_super_simple">Tryb super-prosty (duże ikony)</string>
+    <string name="launcher_settings_super_simple_grid">Układ super-prosty (ikony)</string>
+    <string name="launcher_settings_simple_favorites_grid">Układ dużych kafli ulubionych</string>
     <string name="launcher_settings_feed">Feed</string>
     <string name="launcher_settings_feed_enabled">Pokaż ekran feedu</string>
     <string name="launcher_settings_feed_mode">Źródło feedu</string>
@@ -109,6 +119,7 @@
     <string name="launcher_settings_now_alarm">Karta: następny alarm</string>
     <string name="launcher_settings_now_calendar">Karta: kalendarz</string>
     <string name="launcher_settings_now_weather">Karta: pogoda</string>
+    <string name="launcher_settings_now_battery">Karta: bateria</string>
     <string name="launcher_settings_now_reminders">Karta: przypomnienia</string>
     <string name="launcher_settings_now_headphones">Karta: słuchawki</string>
     <string name="launcher_settings_now_location">Karta: lokalizacja</string>
@@ -134,6 +145,13 @@
     <string name="launcher_page_anim_carousel">Karuzela</string>
     <string name="launcher_page_anim_depth">Głębia</string>
     <string name="launcher_page_anim_stack">Stos</string>
+    <string name="launcher_simple_grid_2x3">2 x 3 (bardzo duże)</string>
+    <string name="launcher_simple_grid_3x4">3 x 4 (domyślne)</string>
+    <string name="launcher_simple_grid_4x5">4 x 5 (więcej ikon)</string>
+    <string name="launcher_simple_fav_2x2">2 x 2 (bardzo duże)</string>
+    <string name="launcher_simple_fav_2x3">2 x 3</string>
+    <string name="launcher_simple_fav_3x3">3 x 3</string>
+    <string name="launcher_simple_fav_3x4">3 x 4 (więcej)</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
     <string name="launcher_settings_usage_suggestions">Sugestie na podstawie użycia aplikacji</string>
     <string name="launcher_settings_theme">Motyw launchera</string>
@@ -157,6 +175,7 @@
     <string name="launcher_feed_calendar_none">Brak nadchodzących wydarzeń</string>
     <string name="launcher_feed_calendar_permission">Brak dostępu do kalendarza. Dotknij, aby nadać dostęp.</string>
     <string name="launcher_feed_weather_title">Pogoda</string>
+    <string name="launcher_feed_battery_title">Bateria</string>
     <string name="launcher_feed_weather_open">Dotknij, aby otworzyć prognozę</string>
     <string name="launcher_feed_weather_permission">Włącz lokalizację, aby zobaczyć pogodę.</string>
     <string name="launcher_feed_weather_location_off">Włącz lokalizację w systemie.</string>

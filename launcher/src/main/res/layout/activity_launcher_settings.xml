@@ -94,6 +94,13 @@
             android:text="@string/launcher_settings_now_weather" />
 
         <Switch
+            android:id="@+id/nowBatterySwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_battery" />
+
+        <Switch
             android:id="@+id/nowRemindersSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -394,6 +401,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/launcher_settings_super_simple" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_super_simple_grid" />
+
+        <Spinner
+            android:id="@+id/superSimpleGridSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_simple_favorites_grid" />
+
+        <Spinner
+            android:id="@+id/simpleFavoritesGridSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
