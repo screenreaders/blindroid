@@ -47,6 +47,10 @@ object Prefs {
     private const val KEY_CRASH_CLIENT_ID = "crash_client_id"
     private const val KEY_ONBOARDING_DONE = "onboarding_done"
     private const val KEY_DIAGNOSTICS = "diagnostics_enabled"
+    private const val KEY_LOW_VISION = "low_vision_enabled"
+    private const val KEY_LOW_VISION_STYLE = "low_vision_style"
+    private const val KEY_LOW_VISION_INVERT = "low_vision_invert"
+    private const val KEY_LOW_VISION_SCALE = "low_vision_scale"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -156,6 +160,34 @@ object Prefs {
 
     fun setDiagnosticsEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_DIAGNOSTICS, value).apply()
+    }
+
+    fun isLowVisionEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_LOW_VISION, false)
+
+    fun setLowVisionEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_LOW_VISION, value).apply()
+    }
+
+    fun getLowVisionStyle(context: Context): Int =
+        prefs(context).getInt(KEY_LOW_VISION_STYLE, 0)
+
+    fun setLowVisionStyle(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_LOW_VISION_STYLE, value).apply()
+    }
+
+    fun isLowVisionInvert(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_LOW_VISION_INVERT, false)
+
+    fun setLowVisionInvert(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_LOW_VISION_INVERT, value).apply()
+    }
+
+    fun getLowVisionScale(context: Context): Int =
+        prefs(context).getInt(KEY_LOW_VISION_SCALE, 100).coerceIn(100, 150)
+
+    fun setLowVisionScale(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_LOW_VISION_SCALE, value.coerceIn(100, 150)).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

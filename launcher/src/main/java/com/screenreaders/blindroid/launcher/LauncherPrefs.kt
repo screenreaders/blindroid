@@ -18,6 +18,7 @@ object LauncherPrefs {
     private const val KEY_FEED_MODE = "feed_mode"
     private const val KEY_FEED_AUTO_OPEN = "feed_auto_open"
     private const val KEY_THEME = "launcher_theme"
+    private const val KEY_INVERT_COLORS = "invert_colors"
     private const val KEY_ICON_STYLE = "icon_style"
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_GOOGLE_SEARCH = "google_search"
@@ -53,6 +54,8 @@ object LauncherPrefs {
     private const val THEME_DARK = 1
     private const val THEME_BLACK = 2
     private const val THEME_BLUE = 3
+    private const val THEME_HIGH_CONTRAST = 4
+    private const val THEME_YELLOW = 5
 
     const val FEED_MODE_LOCAL = 0
     const val FEED_MODE_GOOGLE = 1
@@ -162,10 +165,17 @@ object LauncherPrefs {
     }
 
     fun getTheme(context: Context): Int =
-        prefs(context).getInt(KEY_THEME, THEME_LIGHT).coerceIn(THEME_LIGHT, THEME_BLUE)
+        prefs(context).getInt(KEY_THEME, THEME_LIGHT).coerceIn(THEME_LIGHT, THEME_YELLOW)
 
     fun setTheme(context: Context, theme: Int) {
-        prefs(context).edit().putInt(KEY_THEME, theme.coerceIn(THEME_LIGHT, THEME_BLUE)).apply()
+        prefs(context).edit().putInt(KEY_THEME, theme.coerceIn(THEME_LIGHT, THEME_YELLOW)).apply()
+    }
+
+    fun isInvertColorsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_INVERT_COLORS, false)
+
+    fun setInvertColorsEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_INVERT_COLORS, enabled).apply()
     }
 
     fun getIconStyle(context: Context): Int =
@@ -432,11 +442,18 @@ object LauncherPrefs {
     data class ThemeColors(val background: Int, val text: Int, val muted: Int)
 
     fun getThemeColors(context: Context): ThemeColors {
-        return when (getTheme(context)) {
+        val base = when (getTheme(context)) {
             THEME_DARK -> ThemeColors(0xFF202124.toInt(), 0xFFECEFF1.toInt(), 0xFFB0BEC5.toInt())
             THEME_BLACK -> ThemeColors(0xFF000000.toInt(), 0xFFFFFFFF.toInt(), 0xFFB0BEC5.toInt())
             THEME_BLUE -> ThemeColors(0xFFE3F2FD.toInt(), 0xFF0D47A1.toInt(), 0xFF1E88E5.toInt())
+            THEME_HIGH_CONTRAST -> ThemeColors(0xFFFFFFFF.toInt(), 0xFF000000.toInt(), 0xFF424242.toInt())
+            THEME_YELLOW -> ThemeColors(0xFF000000.toInt(), 0xFFFFEB3B.toInt(), 0xFFFFF59D.toInt())
             else -> ThemeColors(0xFFF5F5F5.toInt(), 0xFF1F1F1F.toInt(), 0xFF616161.toInt())
+        }
+        return if (isInvertColorsEnabled(context)) {
+            ThemeColors(base.text, base.background, base.muted)
+        } else {
+            base
         }
     }
 

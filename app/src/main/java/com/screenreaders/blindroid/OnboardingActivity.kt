@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import com.screenreaders.blindroid.util.LowVisionStyler
 
 class OnboardingActivity : AppCompatActivity() {
     private lateinit var dialerStatus: TextView
@@ -28,6 +29,7 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
+        LowVisionStyler.apply(this)
 
         dialerStatus = findViewById(R.id.onboardDialerStatus)
         contactsStatus = findViewById(R.id.onboardContactsStatus)
@@ -81,6 +83,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        LowVisionStyler.apply(this)
         updateStatuses()
     }
 

@@ -39,6 +39,7 @@ import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
+import com.screenreaders.blindroid.util.LowVisionStyler
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Calendar
@@ -67,6 +68,13 @@ class MainActivity : AppCompatActivity() {
             showInstallPrompt(uri)
         }
     }
+    private data class LowVisionOption(val id: Int, val labelRes: Int)
+    private val lowVisionOptions = listOf(
+        LowVisionOption(LowVisionStyler.STYLE_DEFAULT, R.string.low_vision_theme_default),
+        LowVisionOption(LowVisionStyler.STYLE_DARK, R.string.low_vision_theme_dark),
+        LowVisionOption(LowVisionStyler.STYLE_LIGHT, R.string.low_vision_theme_light),
+        LowVisionOption(LowVisionStyler.STYLE_YELLOW, R.string.low_vision_theme_yellow)
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         binding.launcherSwitch.isChecked = isLauncherEnabled()
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
         binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
+        initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
             startActivity(Intent(this, DiagnosticsActivity::class.java))
         }
@@ -230,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         initTtsUi()
         initCrashReportUi()
         initSettingsTransferUi()
+        applyLowVision()
         handleDialIntent(intent)
         handleSectionIntent(intent)
     }
@@ -258,6 +268,7 @@ class MainActivity : AppCompatActivity() {
         updateNotificationAccessButton()
         updateCrashReportStatus()
         updateCrashReportControls()
+        applyLowVision()
         if (Prefs.isChimeEnabled(this) && isExactAlarmAllowed()) {
             ChimeScheduler.schedule(this)
         }
@@ -360,6 +371,65 @@ class MainActivity : AppCompatActivity() {
 
     private fun logSettingChange(name: String, value: Any) {
         DiagnosticLog.log(this, "setting $name=$value")
+    }
+
+    private fun initLowVisionUi() {
+        binding.lowVisionSwitch.isChecked = Prefs.isLowVisionEnabled(this)
+        binding.lowVisionInvertSwitch.isChecked = Prefs.isLowVisionInvert(this)
+        binding.lowVisionScaleSeek.progress = Prefs.getLowVisionScale(this)
+        binding.lowVisionScaleValue.text = getString(
+            R.string.low_vision_scale_value,
+            Prefs.getLowVisionScale(this)
+        )
+
+        val labels = lowVisionOptions.map { getString(it.labelRes) }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.lowVisionThemeSpinner.adapter = adapter
+        val current = Prefs.getLowVisionStyle(this)
+        val index = lowVisionOptions.indexOfFirst { it.id == current }.coerceAtLeast(0)
+        binding.lowVisionThemeSpinner.setSelection(index)
+
+        binding.lowVisionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setLowVisionEnabled(this, isChecked)
+            applyLowVision()
+        }
+        binding.lowVisionInvertSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setLowVisionInvert(this, isChecked)
+            applyLowVision()
+        }
+        binding.lowVisionThemeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val option = lowVisionOptions.getOrNull(position) ?: return
+                Prefs.setLowVisionStyle(this@MainActivity, option.id)
+                applyLowVision()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+        binding.lowVisionScaleSeek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val value = progress.coerceIn(100, 150)
+                Prefs.setLowVisionScale(this@MainActivity, value)
+                binding.lowVisionScaleValue.text = getString(R.string.low_vision_scale_value, value)
+                applyLowVision()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        updateLowVisionControls()
+    }
+
+    private fun updateLowVisionControls() {
+        val enabled = Prefs.isLowVisionEnabled(this)
+        binding.lowVisionThemeSpinner.isEnabled = enabled
+        binding.lowVisionInvertSwitch.isEnabled = enabled
+        binding.lowVisionScaleSeek.isEnabled = enabled
+    }
+
+    private fun applyLowVision() {
+        updateLowVisionControls()
+        LowVisionStyler.apply(this)
     }
 
     private fun initSettingsTransferUi() {

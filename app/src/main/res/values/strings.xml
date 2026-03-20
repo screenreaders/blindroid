@@ -217,6 +217,16 @@
     <string name="settings_import_done">Ustawienia zaimportowane</string>
     <string name="settings_import_failed">Nie udało się zaimportować</string>
     <string name="settings_export_failed">Nie udało się wyeksportować</string>
+    <string name="low_vision_label">Ułatwienia wzroku</string>
+    <string name="low_vision_enable">Włącz tryb słabowidzących</string>
+    <string name="low_vision_theme">Motyw wysokiego kontrastu</string>
+    <string name="low_vision_invert">Odwróć kolory w aplikacji</string>
+    <string name="low_vision_scale">Powiększenie tekstu</string>
+    <string name="low_vision_scale_value">%1$d%%</string>
+    <string name="low_vision_theme_default">Jasny</string>
+    <string name="low_vision_theme_dark">Ciemny (biały na czarnym)</string>
+    <string name="low_vision_theme_light">Jasny (czarny na białym)</string>
+    <string name="low_vision_theme_yellow">Żółty na czarnym</string>
     <string name="crash_report_issue">Utwórz zgłoszenie na GitHub</string>
     <string name="crash_report_clear">Wyczyść raporty</string>
     <string name="crash_report_hint">Raporty są zapisywane lokalnie i wysyłane automatycznie po uruchomieniu aplikacji.</string>

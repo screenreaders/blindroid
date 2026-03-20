@@ -17,6 +17,7 @@
     <string name="launcher_simple_favorites">Ulubione</string>
     <string name="launcher_suggested_apps">Sugerowane</string>
     <string name="launcher_category_all">Wszystkie</string>
+    <string name="launcher_category_frequent">Często używane</string>
     <string name="launcher_category_communication">Komunikacja</string>
     <string name="launcher_category_media">Multimedia</string>
     <string name="launcher_category_productivity">Produktywność</string>
@@ -104,6 +105,9 @@
     <string name="launcher_settings_theme_dark">Ciemny</string>
     <string name="launcher_settings_theme_black">Czarny</string>
     <string name="launcher_settings_theme_blue">Niebieski</string>
+    <string name="launcher_settings_theme_high_contrast">Wysoki kontrast</string>
+    <string name="launcher_settings_theme_yellow">Żółty na czarnym</string>
+    <string name="launcher_settings_invert_colors">Odwróć kolory</string>
     <string name="launcher_settings_icon_style">Styl ikon</string>
     <string name="launcher_settings_icon_style_none">Bez tła</string>
     <string name="launcher_settings_icon_style_circle">Okrągłe tło</string>

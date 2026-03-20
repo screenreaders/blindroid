@@ -75,6 +75,7 @@ class AllAppsActivity : AppCompatActivity() {
 
     private enum class Category(val labelRes: Int, val appCategory: Int?) {
         ALL(R.string.launcher_category_all, null),
+        FREQUENT(R.string.launcher_category_frequent, null),
         MEDIA(R.string.launcher_category_media, ApplicationInfo.CATEGORY_AUDIO),
         PRODUCTIVITY(R.string.launcher_category_productivity, ApplicationInfo.CATEGORY_PRODUCTIVITY),
         SOCIAL(R.string.launcher_category_social, ApplicationInfo.CATEGORY_SOCIAL),
@@ -371,10 +372,21 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun applyFilters() {
         val query = searchInput.text?.toString()?.trim().orEmpty().lowercase()
+        val frequentKeys = if (currentCategory == Category.FREQUENT) {
+            LauncherStore.getSuggestedApps(this, allApps, 20)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
         filteredApps = allApps.filter { entry ->
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
-            val matchesCategory = matchesCategory(currentCategory, category)
+            val matchesCategory = if (currentCategory == Category.FREQUENT) {
+                frequentKeys.contains(entry.component.flattenToString())
+            } else {
+                matchesCategory(currentCategory, category)
+            }
             matchesQuery && matchesCategory
         }
         adapter.submit(filteredApps)
@@ -392,6 +404,7 @@ class AllAppsActivity : AppCompatActivity() {
     private fun matchesCategory(category: Category, appCategory: Int?): Boolean {
         return when (category) {
             Category.ALL -> true
+            Category.FREQUENT -> true
             Category.MEDIA -> appCategory == ApplicationInfo.CATEGORY_AUDIO ||
                 appCategory == ApplicationInfo.CATEGORY_VIDEO ||
                 appCategory == ApplicationInfo.CATEGORY_IMAGE
@@ -404,12 +417,16 @@ class AllAppsActivity : AppCompatActivity() {
         allApps.forEach { entry ->
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
-                if (category != Category.ALL && matchesCategory(category, appCategory)) {
+                if (category != Category.ALL && category != Category.FREQUENT && matchesCategory(category, appCategory)) {
                     present.add(category)
                 }
             }
         }
         val list = mutableListOf(Category.ALL)
+        val frequent = LauncherStore.getSuggestedApps(this, allApps, 12)
+        if (frequent.isNotEmpty()) {
+            list.add(Category.FREQUENT)
+        }
         list.addAll(Category.values().filter { it != Category.ALL && present.contains(it) })
         if (!list.contains(currentCategory)) {
             currentCategory = Category.ALL

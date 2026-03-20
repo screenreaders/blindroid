@@ -351,7 +351,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/launcher_settings_theme_blue" />
+
+            <RadioButton
+                android:id="@+id/themeHighContrast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_high_contrast" />
+
+            <RadioButton
+                android:id="@+id/themeYellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/launcher_settings_theme_yellow" />
         </RadioGroup>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/invertColorsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_invert_colors" />
 
         <TextView
             android:layout_width="match_parent"

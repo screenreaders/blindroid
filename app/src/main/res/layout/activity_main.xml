@@ -164,6 +164,62 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/lowVisionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/low_vision_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/lowVisionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/low_vision_enable" />
+
+        <TextView
+            android:id="@+id/lowVisionThemeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/low_vision_theme"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/lowVisionThemeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/lowVisionInvertSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/low_vision_invert" />
+
+        <TextView
+            android:id="@+id/lowVisionScaleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/low_vision_scale"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lowVisionScaleValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%" />
+
+        <SeekBar
+            android:id="@+id/lowVisionScaleSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="150"
+            android:min="100" />
+
+        <TextView
             android:id="@+id/ttsModeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import com.screenreaders.blindroid.util.LowVisionStyler
 
 class DiagnosticsActivity : AppCompatActivity() {
     private lateinit var logView: TextView
@@ -13,6 +14,7 @@ class DiagnosticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_diagnostics)
+        LowVisionStyler.apply(this)
 
         logView = findViewById(R.id.diagLog)
         findViewById<Button>(R.id.diagRefreshButton).setOnClickListener { refresh() }

@@ -41,6 +41,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var assistantSpinner: Spinner
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var themeGroup: RadioGroup
+    private lateinit var invertColorsSwitch: Switch
     private lateinit var iconStyleGroup: RadioGroup
     private lateinit var wallpaperButton: Button
     private lateinit var closeButton: Button
@@ -113,6 +114,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         assistantSpinner = findViewById(R.id.assistantSpinner)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         themeGroup = findViewById(R.id.themeGroup)
+        invertColorsSwitch = findViewById(R.id.invertColorsSwitch)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
         wallpaperButton = findViewById(R.id.wallpaperButton)
         closeButton = findViewById(R.id.closeSettingsButton)
@@ -186,8 +188,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
             1 -> themeGroup.check(R.id.themeDark)
             2 -> themeGroup.check(R.id.themeBlack)
             3 -> themeGroup.check(R.id.themeBlue)
+            4 -> themeGroup.check(R.id.themeHighContrast)
+            5 -> themeGroup.check(R.id.themeYellow)
             else -> themeGroup.check(R.id.themeLight)
         }
+        invertColorsSwitch.isChecked = LauncherPrefs.isInvertColorsEnabled(this)
         when (LauncherPrefs.getIconStyle(this)) {
             1 -> iconStyleGroup.check(R.id.iconStyleCircle)
             else -> iconStyleGroup.check(R.id.iconStyleNone)
@@ -370,9 +375,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
                 R.id.themeDark -> 1
                 R.id.themeBlack -> 2
                 R.id.themeBlue -> 3
+                R.id.themeHighContrast -> 4
+                R.id.themeYellow -> 5
                 else -> 0
             }
             LauncherPrefs.setTheme(this, theme)
+            toastSaved()
+        }
+
+        invertColorsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setInvertColorsEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -416,6 +428,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         hideDockLabelsSwitch.isEnabled = !enabled
         setGroupEnabled(themeGroup, !enabled)
         setGroupEnabled(iconStyleGroup, !enabled)
+        invertColorsSwitch.isEnabled = !enabled
         gnLayoutSwitch.isEnabled = !enabled
         wallpaperParallaxSwitch.isEnabled = !enabled
     }
