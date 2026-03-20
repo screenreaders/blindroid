@@ -89,6 +89,8 @@
     <string name="launcher_settings_now_reminders">Karta: przypomnienia</string>
     <string name="launcher_settings_now_headphones">Karta: słuchawki</string>
     <string name="launcher_settings_now_network">Karta: sieć</string>
+    <string name="launcher_settings_now_storage">Karta: pamięć</string>
+    <string name="launcher_settings_now_top_apps">Karta: ostatnio używane aplikacje</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
@@ -123,6 +125,11 @@
     <string name="launcher_feed_network_none">Brak połączenia</string>
     <string name="launcher_feed_network_settings">Dotknij, aby otworzyć ustawienia sieci</string>
     <string name="launcher_feed_bluetooth_settings">Dotknij, aby otworzyć ustawienia Bluetooth</string>
+    <string name="launcher_feed_storage_title">Pamięć</string>
+    <string name="launcher_feed_storage_text">Wolne %1$s z %2$s</string>
+    <string name="launcher_feed_storage_settings">Dotknij, aby otworzyć ustawienia pamięci</string>
+    <string name="launcher_feed_top_apps_title">Ostatnio używane</string>
+    <string name="launcher_feed_top_apps_none">Brak danych</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>

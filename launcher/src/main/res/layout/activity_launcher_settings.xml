@@ -115,6 +115,20 @@
             android:text="@string/launcher_settings_now_network" />
 
         <Switch
+            android:id="@+id/nowStorageSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_storage" />
+
+        <Switch
+            android:id="@+id/nowTopAppsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_top_apps" />
+
+        <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

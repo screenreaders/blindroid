@@ -32,6 +32,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowRemindersSwitch: Switch
     private lateinit var nowHeadphonesSwitch: Switch
     private lateinit var nowNetworkSwitch: Switch
+    private lateinit var nowStorageSwitch: Switch
+    private lateinit var nowTopAppsSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -100,6 +102,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowRemindersSwitch = findViewById(R.id.nowRemindersSwitch)
         nowHeadphonesSwitch = findViewById(R.id.nowHeadphonesSwitch)
         nowNetworkSwitch = findViewById(R.id.nowNetworkSwitch)
+        nowStorageSwitch = findViewById(R.id.nowStorageSwitch)
+        nowTopAppsSwitch = findViewById(R.id.nowTopAppsSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -166,6 +170,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowRemindersSwitch.isChecked = LauncherPrefs.isNowRemindersEnabled(this)
         nowHeadphonesSwitch.isChecked = LauncherPrefs.isNowHeadphonesEnabled(this)
         nowNetworkSwitch.isChecked = LauncherPrefs.isNowNetworkEnabled(this)
+        nowStorageSwitch.isChecked = LauncherPrefs.isNowStorageEnabled(this)
+        nowTopAppsSwitch.isChecked = LauncherPrefs.isNowTopAppsEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -314,6 +320,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowNetworkSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowNetworkEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowStorageSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowStorageEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowTopAppsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowTopAppsEnabled(this, isChecked)
             toastSaved()
         }
 

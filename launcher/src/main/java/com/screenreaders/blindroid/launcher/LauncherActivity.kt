@@ -19,6 +19,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.BatteryManager
+import android.os.Environment
+import android.os.StatFs
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.Settings
@@ -123,6 +125,8 @@ class LauncherActivity : AppCompatActivity() {
             ::openWeather,
             ::openBluetoothSettings,
             ::openNetworkSettings,
+            ::openStorageSettings,
+            ::openAllApps,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
             ::onHomeItemMoved
@@ -465,6 +469,8 @@ class LauncherActivity : AppCompatActivity() {
         val showReminders = LauncherPrefs.isNowRemindersEnabled(this)
         val showHeadphones = LauncherPrefs.isNowHeadphonesEnabled(this)
         val showNetwork = LauncherPrefs.isNowNetworkEnabled(this)
+        val showStorage = LauncherPrefs.isNowStorageEnabled(this)
+        val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
@@ -475,6 +481,8 @@ class LauncherActivity : AppCompatActivity() {
         val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
         val networkText = if (showNetwork) getNetworkText() else null
+        val storageText = if (showStorage) getStorageText() else null
+        val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
         return FeedData(
             time = time,
             date = date,
@@ -494,7 +502,11 @@ class LauncherActivity : AppCompatActivity() {
             showHeadphones = showHeadphones,
             headphonesText = headphonesText,
             showNetwork = showNetwork,
-            networkText = networkText
+            networkText = networkText,
+            showStorage = showStorage,
+            storageText = storageText,
+            showTopApps = showTopApps,
+            topApps = topApps
         )
     }
 
@@ -623,6 +635,32 @@ class LauncherActivity : AppCompatActivity() {
             caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> "Ethernet$suffix"
             else -> "Połączenie$suffix"
         }
+    }
+
+    private fun getStorageText(): String? {
+        return try {
+            val path = Environment.getDataDirectory()
+            val stat = StatFs(path.path)
+            val available = stat.availableBytes
+            val total = stat.totalBytes
+            val availableGb = bytesToHuman(available)
+            val totalGb = bytesToHuman(total)
+            getString(R.string.launcher_feed_storage_text, availableGb, totalGb)
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun bytesToHuman(bytes: Long): String {
+        if (bytes < 1024) return "${bytes}B"
+        var value = bytes.toDouble()
+        var exp = 0
+        while (value >= 1024.0 && exp < 6) {
+            value /= 1024.0
+            exp += 1
+        }
+        val pre = "KMGTPE"[exp - 1]
+        return String.format(java.util.Locale("pl", "PL"), "%.1f %sB", value, pre)
     }
 
     private fun formatDateTime(epochMillis: Long, allowTodayLabel: Boolean): String {
@@ -1214,6 +1252,19 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(intent)
         } catch (_: Exception) {
             Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openStorageSettings() {
+        val intent = Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            try {
+                startActivity(Intent(Settings.ACTION_SETTINGS))
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

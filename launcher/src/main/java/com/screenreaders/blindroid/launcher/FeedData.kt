@@ -19,5 +19,9 @@ data class FeedData(
     val showHeadphones: Boolean,
     val headphonesText: String?,
     val showNetwork: Boolean,
-    val networkText: String?
+    val networkText: String?,
+    val showStorage: Boolean,
+    val storageText: String?,
+    val showTopApps: Boolean,
+    val topApps: List<String>
 )

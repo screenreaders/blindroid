@@ -22,6 +22,8 @@ class HomePagerAdapter(
     private val onOpenWeather: () -> Unit,
     private val onOpenBluetoothSettings: () -> Unit,
     private val onOpenNetworkSettings: () -> Unit,
+    private val onOpenStorageSettings: () -> Unit,
+    private val onOpenAllApps: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
     private val onMove: (Int, Int, Int) -> Unit
@@ -59,7 +61,9 @@ class HomePagerAdapter(
                 onRequestCalendarPermission,
                 onOpenWeather,
                 onOpenBluetoothSettings,
-                onOpenNetworkSettings
+                onOpenNetworkSettings,
+                onOpenStorageSettings,
+                onOpenAllApps
             )
             return
         }
@@ -167,6 +171,12 @@ class HomePagerAdapter(
         private val cardNetwork: LinearLayout = view.findViewById(R.id.cardNetwork)
         private val cardNetworkTitle: TextView = view.findViewById(R.id.cardNetworkTitle)
         private val cardNetworkText: TextView = view.findViewById(R.id.cardNetworkText)
+        private val cardStorage: LinearLayout = view.findViewById(R.id.cardStorage)
+        private val cardStorageTitle: TextView = view.findViewById(R.id.cardStorageTitle)
+        private val cardStorageText: TextView = view.findViewById(R.id.cardStorageText)
+        private val cardTopApps: LinearLayout = view.findViewById(R.id.cardTopApps)
+        private val cardTopAppsTitle: TextView = view.findViewById(R.id.cardTopAppsTitle)
+        private val cardTopAppsText: TextView = view.findViewById(R.id.cardTopAppsText)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
@@ -181,7 +191,9 @@ class HomePagerAdapter(
             onRequestCalendarPermission: () -> Unit,
             onOpenWeather: () -> Unit,
             onOpenBluetoothSettings: () -> Unit,
-            onOpenNetworkSettings: () -> Unit
+            onOpenNetworkSettings: () -> Unit,
+            onOpenStorageSettings: () -> Unit,
+            onOpenAllApps: () -> Unit
         ) {
             title.setTextColor(colors.text)
             time.setTextColor(colors.text)
@@ -199,6 +211,10 @@ class HomePagerAdapter(
             cardHeadphonesText.setTextColor(colors.muted)
             cardNetworkTitle.setTextColor(colors.text)
             cardNetworkText.setTextColor(colors.muted)
+            cardStorageTitle.setTextColor(colors.text)
+            cardStorageText.setTextColor(colors.muted)
+            cardTopAppsTitle.setTextColor(colors.text)
+            cardTopAppsText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
             openButton.setTextColor(colors.text)
@@ -304,12 +320,37 @@ class HomePagerAdapter(
                 cardNetwork.setOnClickListener(null)
             }
 
+            if (data.showStorage) {
+                cardStorage.visibility = View.VISIBLE
+                cardStorageText.text = data.storageText
+                    ?: itemView.context.getString(R.string.launcher_feed_storage_settings)
+                cardStorage.setOnClickListener { onOpenStorageSettings() }
+            } else {
+                cardStorage.visibility = View.GONE
+                cardStorage.setOnClickListener(null)
+            }
+
+            if (data.showTopApps) {
+                cardTopApps.visibility = View.VISIBLE
+                cardTopAppsText.text = if (data.topApps.isNotEmpty()) {
+                    data.topApps.joinToString(separator = " • ")
+                } else {
+                    itemView.context.getString(R.string.launcher_feed_top_apps_none)
+                }
+                cardTopApps.setOnClickListener { onOpenAllApps() }
+            } else {
+                cardTopApps.visibility = View.GONE
+                cardTopApps.setOnClickListener(null)
+            }
+
             applyCardStyle(cardAlarm, colors)
             applyCardStyle(cardCalendar, colors)
             applyCardStyle(cardWeather, colors)
             applyCardStyle(cardReminders, colors)
             applyCardStyle(cardHeadphones, colors)
             applyCardStyle(cardNetwork, colors)
+            applyCardStyle(cardStorage, colors)
+            applyCardStyle(cardTopApps, colors)
 
             nowCards.visibility = if (
                 data.showAlarm ||
@@ -317,7 +358,9 @@ class HomePagerAdapter(
                 data.showWeather ||
                 data.showReminders ||
                 data.showHeadphones ||
-                data.showNetwork
+                data.showNetwork ||
+                data.showStorage ||
+                data.showTopApps
             ) {
                 View.VISIBLE
             } else {
