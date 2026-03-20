@@ -82,6 +82,10 @@
     <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
     <string name="launcher_settings_google_search">Wyszukiwanie przez aplikację Google (jeśli dostępna)</string>
     <string name="launcher_settings_google_voice">Wyszukiwanie głosowe przez aplikację Google (jeśli dostępna)</string>
+    <string name="launcher_settings_now_cards">Karty informacyjne</string>
+    <string name="launcher_settings_now_alarm">Karta: następny alarm</string>
+    <string name="launcher_settings_now_calendar">Karta: kalendarz</string>
+    <string name="launcher_settings_now_weather">Karta: pogoda</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
@@ -100,6 +104,14 @@
     <string name="launcher_settings_voice_search">Wyszukiwanie głosowe</string>
     <string name="launcher_feed_title">Feed</string>
     <string name="launcher_feed_title_google">Google Discover</string>
+    <string name="launcher_feed_alarm_title">Następny alarm</string>
+    <string name="launcher_feed_alarm_none">Brak zaplanowanych alarmów</string>
+    <string name="launcher_feed_calendar_title">Kalendarz</string>
+    <string name="launcher_feed_calendar_none">Brak nadchodzących wydarzeń</string>
+    <string name="launcher_feed_calendar_permission">Brak dostępu do kalendarza. Dotknij, aby nadać dostęp.</string>
+    <string name="launcher_feed_weather_title">Pogoda</string>
+    <string name="launcher_feed_weather_open">Dotknij, aby otworzyć prognozę</string>
+    <string name="launcher_feed_weather_query">pogoda</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>

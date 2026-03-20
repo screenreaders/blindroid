@@ -26,6 +26,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var searchBarSwitch: Switch
     private lateinit var googleSearchSwitch: Switch
     private lateinit var googleVoiceSwitch: Switch
+    private lateinit var nowAlarmSwitch: Switch
+    private lateinit var nowCalendarSwitch: Switch
+    private lateinit var nowWeatherSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -88,6 +91,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         searchBarSwitch = findViewById(R.id.searchBarSwitch)
         googleSearchSwitch = findViewById(R.id.googleSearchSwitch)
         googleVoiceSwitch = findViewById(R.id.googleVoiceSwitch)
+        nowAlarmSwitch = findViewById(R.id.nowAlarmSwitch)
+        nowCalendarSwitch = findViewById(R.id.nowCalendarSwitch)
+        nowWeatherSwitch = findViewById(R.id.nowWeatherSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -148,6 +154,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
         googleSearchSwitch.isChecked = LauncherPrefs.isGoogleSearchEnabled(this)
         googleVoiceSwitch.isChecked = LauncherPrefs.isGoogleVoiceEnabled(this)
+        nowAlarmSwitch.isChecked = LauncherPrefs.isNowAlarmEnabled(this)
+        nowCalendarSwitch.isChecked = LauncherPrefs.isNowCalendarEnabled(this)
+        nowWeatherSwitch.isChecked = LauncherPrefs.isNowWeatherEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -266,6 +275,21 @@ class LauncherSettingsActivity : AppCompatActivity() {
                 return@setOnCheckedChangeListener
             }
             LauncherPrefs.setGoogleVoiceEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowAlarmSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowAlarmEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowCalendarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowCalendarEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowWeatherSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowWeatherEnabled(this, isChecked)
             toastSaved()
         }
 

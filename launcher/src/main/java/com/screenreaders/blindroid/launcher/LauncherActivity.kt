@@ -1,10 +1,12 @@
 package com.screenreaders.blindroid.launcher
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.SearchManager
 import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -13,6 +15,8 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.os.BatteryManager
+import android.provider.AlarmClock
+import android.provider.CalendarContract
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -32,6 +36,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import android.speech.RecognizerIntent
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 class LauncherActivity : AppCompatActivity() {
     private lateinit var searchInput: EditText
@@ -74,6 +81,7 @@ class LauncherActivity : AppCompatActivity() {
     private var soundFeedback: LauncherSoundFeedback? = null
 
     private val flashPermissionRequestCode = 9201
+    private val calendarPermissionRequestCode = 9202
 
     private val voiceRequestCode = 4201
 
@@ -104,6 +112,10 @@ class LauncherActivity : AppCompatActivity() {
             feedData,
             LauncherPrefs.getThemeColors(this),
             ::openExternalFeed,
+            ::openAlarms,
+            ::openCalendar,
+            ::requestCalendarPermission,
+            ::openWeather,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
             ::onHomeItemMoved
@@ -440,13 +452,30 @@ class LauncherActivity : AppCompatActivity() {
         val notifications = getRecentNotifications()
         val externalMode = LauncherPrefs.getFeedMode(this) == LauncherPrefs.FEED_MODE_GOOGLE
         val externalAvailable = isGoogleAppAvailable()
+        val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
+        val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
+        val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
+        val calendarPermissionGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_CALENDAR
+        ) == PackageManager.PERMISSION_GRANTED
+        val alarmText = if (showAlarm) getNextAlarmText() else null
+        val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
+        val weatherText = if (showWeather) getString(R.string.launcher_feed_weather_open) else null
         return FeedData(
             time = time,
             date = date,
             battery = batteryText,
             notifications = notifications,
             externalMode = externalMode,
-            externalAvailable = externalAvailable
+            externalAvailable = externalAvailable,
+            showAlarm = showAlarm,
+            alarmText = alarmText,
+            showCalendar = showCalendar,
+            calendarText = calendarText,
+            calendarPermissionGranted = calendarPermissionGranted,
+            showWeather = showWeather,
+            weatherText = weatherText
         )
     }
 
@@ -462,6 +491,71 @@ class LauncherActivity : AppCompatActivity() {
         val raw = prefs.getString("recent_notifications", "") ?: ""
         if (raw.isBlank()) return emptyList()
         return raw.split("|").filter { it.isNotBlank() }.take(5)
+    }
+
+    private fun getNextAlarmText(): String? {
+        val alarmManager = getSystemService(AlarmManager::class.java)
+        val next = alarmManager.nextAlarmClock ?: return null
+        return formatDateTime(next.triggerTime, allowTodayLabel = true)
+    }
+
+    private fun getNextCalendarEventText(): String? {
+        val now = System.currentTimeMillis()
+        val weekAhead = now + 7L * 24L * 60L * 60L * 1000L
+        val projection = arrayOf(
+            CalendarContract.Instances.TITLE,
+            CalendarContract.Instances.BEGIN,
+            CalendarContract.Instances.ALL_DAY
+        )
+        val uriBuilder = CalendarContract.Instances.CONTENT_URI.buildUpon()
+        ContentUris.appendId(uriBuilder, now)
+        ContentUris.appendId(uriBuilder, weekAhead)
+        val cursor = contentResolver.query(
+            uriBuilder.build(),
+            projection,
+            "${CalendarContract.Instances.BEGIN} >= ?",
+            arrayOf(now.toString()),
+            "${CalendarContract.Instances.BEGIN} ASC"
+        ) ?: return null
+        cursor.use {
+            if (!it.moveToFirst()) return null
+            val title = it.getString(0)?.trim().orEmpty()
+            val begin = it.getLong(1)
+            val allDay = it.getInt(2) == 1
+            val whenText = if (allDay) {
+                formatDateOnly(begin, allowTodayLabel = true)
+            } else {
+                formatDateTime(begin, allowTodayLabel = true)
+            }
+            return if (title.isNotBlank()) {
+                "$title — $whenText"
+            } else {
+                whenText
+            }
+        }
+    }
+
+    private fun formatDateTime(epochMillis: Long, allowTodayLabel: Boolean): String {
+        val zone = ZoneId.systemDefault()
+        val dateTime = Instant.ofEpochMilli(epochMillis).atZone(zone)
+        val date = dateTime.toLocalDate()
+        val today = LocalDate.now(zone)
+        return if (allowTodayLabel && date == today) {
+            "Dziś ${dateTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))}"
+        } else {
+            dateTime.format(java.time.format.DateTimeFormatter.ofPattern("d MMM, HH:mm", java.util.Locale("pl", "PL")))
+        }
+    }
+
+    private fun formatDateOnly(epochMillis: Long, allowTodayLabel: Boolean): String {
+        val zone = ZoneId.systemDefault()
+        val date = Instant.ofEpochMilli(epochMillis).atZone(zone).toLocalDate()
+        val today = LocalDate.now(zone)
+        return if (allowTodayLabel && date == today) {
+            "Dziś"
+        } else {
+            date.format(java.time.format.DateTimeFormatter.ofPattern("d MMM", java.util.Locale("pl", "PL")))
+        }
     }
 
     private fun updatePageIndicator() {
@@ -993,6 +1087,40 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
+    private fun openAlarms() {
+        val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openCalendar() {
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_CALENDAR)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openWeather() {
+        launchSearch(getString(R.string.launcher_feed_weather_query))
+    }
+
+    private fun requestCalendarPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            openCalendar()
+            return
+        }
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_CALENDAR),
+            calendarPermissionRequestCode
+        )
+    }
+
     private fun openAssistant() {
         val mode = LauncherPrefs.getAssistantMode(this)
         if (mode == LauncherPrefs.ASSISTANT_GEMINI) {
@@ -1080,6 +1208,13 @@ class LauncherActivity : AppCompatActivity() {
                 toggleFlashlight()
             } else {
                 Toast.makeText(this, R.string.launcher_flashlight_permission, Toast.LENGTH_SHORT).show()
+            }
+        } else if (requestCode == calendarPermissionRequestCode) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (granted) {
+                refreshHome()
+                applyUiConfig()
+                openCalendar()
             }
         }
     }

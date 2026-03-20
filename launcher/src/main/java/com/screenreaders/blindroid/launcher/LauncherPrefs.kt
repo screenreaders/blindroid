@@ -22,6 +22,9 @@ object LauncherPrefs {
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_GOOGLE_SEARCH = "google_search"
     private const val KEY_GOOGLE_VOICE = "google_voice"
+    private const val KEY_NOW_ALARM = "now_alarm"
+    private const val KEY_NOW_CALENDAR = "now_calendar"
+    private const val KEY_NOW_WEATHER = "now_weather"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -184,6 +187,27 @@ object LauncherPrefs {
 
     fun setGoogleVoiceEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_GOOGLE_VOICE, enabled).apply()
+    }
+
+    fun isNowAlarmEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_ALARM, true)
+
+    fun setNowAlarmEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_ALARM, enabled).apply()
+    }
+
+    fun isNowCalendarEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_CALENDAR, true)
+
+    fun setNowCalendarEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_CALENDAR, enabled).apply()
+    }
+
+    fun isNowWeatherEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_WEATHER, true)
+
+    fun setNowWeatherEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_WEATHER, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =

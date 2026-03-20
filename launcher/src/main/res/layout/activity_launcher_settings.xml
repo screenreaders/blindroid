@@ -67,6 +67,32 @@
             android:layout_marginTop="4dp"
             android:text="@string/launcher_settings_google_voice" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_now_cards" />
+
+        <Switch
+            android:id="@+id/nowAlarmSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_now_alarm" />
+
+        <Switch
+            android:id="@+id/nowCalendarSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_calendar" />
+
+        <Switch
+            android:id="@+id/nowWeatherSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_weather" />
+
         <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"

@@ -16,6 +16,10 @@ class HomePagerAdapter(
     private var feedData: FeedData?,
     private var feedColors: LauncherPrefs.ThemeColors,
     private val onOpenExternalFeed: () -> Unit,
+    private val onOpenAlarms: () -> Unit,
+    private val onOpenCalendar: () -> Unit,
+    private val onRequestCalendarPermission: () -> Unit,
+    private val onOpenWeather: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
     private val onMove: (Int, Int, Int) -> Unit
@@ -44,7 +48,15 @@ class HomePagerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FeedViewHolder) {
-            holder.bind(feedData, feedColors, onOpenExternalFeed)
+            holder.bind(
+                feedData,
+                feedColors,
+                onOpenExternalFeed,
+                onOpenAlarms,
+                onOpenCalendar,
+                onRequestCalendarPermission,
+                onOpenWeather
+            )
             return
         }
         val pageIndex = if (hasFeed) position - 1 else position
@@ -132,16 +144,40 @@ class HomePagerAdapter(
         private val time: TextView = view.findViewById(R.id.feedTime)
         private val date: TextView = view.findViewById(R.id.feedDate)
         private val battery: TextView = view.findViewById(R.id.feedBattery)
+        private val nowCards: LinearLayout = view.findViewById(R.id.nowCardsContainer)
+        private val cardAlarm: LinearLayout = view.findViewById(R.id.cardAlarm)
+        private val cardAlarmTitle: TextView = view.findViewById(R.id.cardAlarmTitle)
+        private val cardAlarmText: TextView = view.findViewById(R.id.cardAlarmText)
+        private val cardCalendar: LinearLayout = view.findViewById(R.id.cardCalendar)
+        private val cardCalendarTitle: TextView = view.findViewById(R.id.cardCalendarTitle)
+        private val cardCalendarText: TextView = view.findViewById(R.id.cardCalendarText)
+        private val cardWeather: LinearLayout = view.findViewById(R.id.cardWeather)
+        private val cardWeatherTitle: TextView = view.findViewById(R.id.cardWeatherTitle)
+        private val cardWeatherText: TextView = view.findViewById(R.id.cardWeatherText)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
         private val openButton: android.widget.Button = view.findViewById(R.id.feedOpenButton)
 
-        fun bind(data: FeedData?, colors: LauncherPrefs.ThemeColors, onOpenExternalFeed: () -> Unit) {
+        fun bind(
+            data: FeedData?,
+            colors: LauncherPrefs.ThemeColors,
+            onOpenExternalFeed: () -> Unit,
+            onOpenAlarms: () -> Unit,
+            onOpenCalendar: () -> Unit,
+            onRequestCalendarPermission: () -> Unit,
+            onOpenWeather: () -> Unit
+        ) {
             title.setTextColor(colors.text)
             time.setTextColor(colors.text)
             date.setTextColor(colors.muted)
             battery.setTextColor(colors.muted)
+            cardAlarmTitle.setTextColor(colors.text)
+            cardAlarmText.setTextColor(colors.muted)
+            cardCalendarTitle.setTextColor(colors.text)
+            cardCalendarText.setTextColor(colors.muted)
+            cardWeatherTitle.setTextColor(colors.text)
+            cardWeatherText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
             openButton.setTextColor(colors.text)
@@ -160,6 +196,7 @@ class HomePagerAdapter(
                 openButton.setOnClickListener { onOpenExternalFeed() }
                 notificationsLabel.visibility = View.GONE
                 container.visibility = View.GONE
+                nowCards.visibility = View.GONE
                 root.setOnClickListener { if (data.externalAvailable) onOpenExternalFeed() }
             } else {
                 openHint.visibility = View.GONE
@@ -168,12 +205,59 @@ class HomePagerAdapter(
                 root.setOnClickListener(null)
                 notificationsLabel.visibility = View.VISIBLE
                 container.visibility = View.VISIBLE
+                nowCards.visibility = View.VISIBLE
             }
 
             container.removeAllViews()
             if (data.externalMode) {
                 return
             }
+
+            if (data.showAlarm) {
+                cardAlarm.visibility = View.VISIBLE
+                cardAlarmText.text = data.alarmText
+                    ?: itemView.context.getString(R.string.launcher_feed_alarm_none)
+                cardAlarm.setOnClickListener { onOpenAlarms() }
+            } else {
+                cardAlarm.visibility = View.GONE
+                cardAlarm.setOnClickListener(null)
+            }
+
+            if (data.showCalendar) {
+                cardCalendar.visibility = View.VISIBLE
+                if (data.calendarPermissionGranted) {
+                    cardCalendarText.text = data.calendarText
+                        ?: itemView.context.getString(R.string.launcher_feed_calendar_none)
+                    cardCalendar.setOnClickListener { onOpenCalendar() }
+                } else {
+                    cardCalendarText.text = itemView.context.getString(R.string.launcher_feed_calendar_permission)
+                    cardCalendar.setOnClickListener { onRequestCalendarPermission() }
+                }
+            } else {
+                cardCalendar.visibility = View.GONE
+                cardCalendar.setOnClickListener(null)
+            }
+
+            if (data.showWeather) {
+                cardWeather.visibility = View.VISIBLE
+                cardWeatherText.text = data.weatherText
+                    ?: itemView.context.getString(R.string.launcher_feed_weather_open)
+                cardWeather.setOnClickListener { onOpenWeather() }
+            } else {
+                cardWeather.visibility = View.GONE
+                cardWeather.setOnClickListener(null)
+            }
+
+            applyCardStyle(cardAlarm, colors)
+            applyCardStyle(cardCalendar, colors)
+            applyCardStyle(cardWeather, colors)
+
+            nowCards.visibility = if (data.showAlarm || data.showCalendar || data.showWeather) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
             if (data.notifications.isEmpty()) {
                 val empty = TextView(container.context)
                 empty.text = container.context.getString(R.string.launcher_feed_no_notifications)
@@ -188,6 +272,22 @@ class HomePagerAdapter(
                     container.addView(item)
                 }
             }
+        }
+
+        private fun applyCardStyle(view: View, colors: LauncherPrefs.ThemeColors) {
+            val background = android.graphics.drawable.GradientDrawable().apply {
+                cornerRadius = 24f
+                setColor(blend(colors.background, colors.muted, 0.12f))
+                setStroke(2, blend(colors.muted, colors.text, 0.12f))
+            }
+            view.background = background
+        }
+
+        private fun blend(base: Int, overlay: Int, alpha: Float): Int {
+            val r = ((1 - alpha) * android.graphics.Color.red(base) + alpha * android.graphics.Color.red(overlay)).toInt()
+            val g = ((1 - alpha) * android.graphics.Color.green(base) + alpha * android.graphics.Color.green(overlay)).toInt()
+            val b = ((1 - alpha) * android.graphics.Color.blue(base) + alpha * android.graphics.Color.blue(overlay)).toInt()
+            return android.graphics.Color.rgb(r, g, b)
         }
     }
 }
