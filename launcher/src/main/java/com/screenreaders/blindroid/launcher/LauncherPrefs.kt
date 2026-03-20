@@ -29,6 +29,7 @@ object LauncherPrefs {
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_GOOGLE_SEARCH = "google_search"
     private const val KEY_GOOGLE_VOICE = "google_voice"
+    private const val KEY_APP_SORT = "app_sort"
     private const val KEY_NOW_ALARM = "now_alarm"
     private const val KEY_NOW_CALENDAR = "now_calendar"
     private const val KEY_NOW_WEATHER = "now_weather"
@@ -114,6 +115,10 @@ object LauncherPrefs {
     const val PAGE_ANIM_CAROUSEL = 1
     const val PAGE_ANIM_DEPTH = 2
     const val PAGE_ANIM_STACK = 3
+
+    const val SORT_ALPHA = 0
+    const val SORT_RECENT = 1
+    const val SORT_USAGE = 2
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -260,6 +265,13 @@ object LauncherPrefs {
 
     fun setSearchBarEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_SEARCH_BAR, enabled).apply()
+    }
+
+    fun getAppSortMode(context: Context): Int =
+        prefs(context).getInt(KEY_APP_SORT, SORT_ALPHA).coerceIn(SORT_ALPHA, SORT_USAGE)
+
+    fun setAppSortMode(context: Context, mode: Int) {
+        prefs(context).edit().putInt(KEY_APP_SORT, mode.coerceIn(SORT_ALPHA, SORT_USAGE)).apply()
     }
 
     fun isGoogleSearchEnabled(context: Context): Boolean =

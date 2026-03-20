@@ -314,12 +314,23 @@ class HomePagerAdapter(
             date.text = data.date
             battery.text = data.battery
             atGlanceText.text = data.atGlanceText ?: itemView.context.getString(R.string.launcher_at_glance_empty)
+            time.setOnClickListener {
+                if (data.externalMode && data.externalAvailable) onOpenExternalFeed() else onOpenAlarms()
+            }
+            date.setOnClickListener {
+                if (data.externalMode && data.externalAvailable) onOpenExternalFeed() else onOpenCalendar()
+            }
             atGlanceCard.setOnClickListener {
-                if (data.externalAvailable) {
-                    onOpenExternalFeed()
-                } else if (data.calendarPermissionGranted) {
-                    onOpenCalendar()
+                when {
+                    data.externalMode && data.externalAvailable -> onOpenExternalFeed()
+                    data.showWeather -> onOpenWeather()
+                    data.calendarPermissionGranted -> onOpenCalendar()
+                    else -> onOpenAlarms()
                 }
+            }
+            atGlanceCard.setOnLongClickListener {
+                onOpenAllApps()
+                true
             }
 
             if (data.externalMode) {

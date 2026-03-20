@@ -5,15 +5,20 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -33,6 +38,9 @@ class AllAppsActivity : AppCompatActivity() {
 
     private lateinit var searchInput: EditText
     private lateinit var showHiddenSwitch: android.widget.Switch
+    private lateinit var sortRow: LinearLayout
+    private lateinit var sortLabel: TextView
+    private lateinit var sortSpinner: Spinner
     private lateinit var appsGrid: RecyclerView
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
@@ -65,6 +73,8 @@ class AllAppsActivity : AppCompatActivity() {
     private var allAppsRaw: List<AppEntry> = emptyList()
     private var filteredApps: List<AppEntry> = emptyList()
     private var appCategories: Map<String, Int?> = emptyMap()
+    private var installTimes: Map<String, Long> = emptyMap()
+    private var updateTimes: Map<String, Long> = emptyMap()
     private var targetPageIndex: Int = 0
     private var targetFolderId: String? = null
     private var currentCategory: Category = Category.ALL
@@ -86,6 +96,8 @@ class AllAppsActivity : AppCompatActivity() {
         DAY(R.string.launcher_category_day, emptyList()),
         EVENING(R.string.launcher_category_evening, emptyList()),
         NIGHT(R.string.launcher_category_night, emptyList()),
+        NEW(R.string.launcher_category_new, emptyList()),
+        UPDATED(R.string.launcher_category_updated, emptyList()),
         COMMUNICATION(R.string.launcher_category_communication, listOf("CATEGORY_COMMUNICATION")),
         SOCIAL(R.string.launcher_category_social, listOf("CATEGORY_SOCIAL")),
         PRODUCTIVITY(R.string.launcher_category_productivity, listOf("CATEGORY_PRODUCTIVITY")),
@@ -101,11 +113,20 @@ class AllAppsActivity : AppCompatActivity() {
         GAME(R.string.launcher_category_game, listOf("CATEGORY_GAME"))
     }
 
+    private enum class SortMode(val labelRes: Int, val prefValue: Int) {
+        ALPHA(R.string.launcher_sort_alpha, LauncherPrefs.SORT_ALPHA),
+        RECENT(R.string.launcher_sort_recent, LauncherPrefs.SORT_RECENT),
+        USAGE(R.string.launcher_sort_usage, LauncherPrefs.SORT_USAGE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_apps)
         searchInput = findViewById(R.id.searchInput)
         showHiddenSwitch = findViewById(R.id.showHiddenSwitch)
+        sortRow = findViewById(R.id.sortRow)
+        sortLabel = findViewById(R.id.sortLabel)
+        sortSpinner = findViewById(R.id.sortSpinner)
         appsGrid = findViewById(R.id.appsGrid)
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
@@ -126,6 +147,7 @@ class AllAppsActivity : AppCompatActivity() {
         dragDockTarget = findViewById(R.id.dragDockTarget)
         dragOptionsTarget = findViewById(R.id.dragOptionsTarget)
         soundFeedback = LauncherSoundFeedback(this)
+        setupSortSpinner()
 
         targetPageIndex = intent.getIntExtra(EXTRA_PAGE_INDEX, 0)
         targetFolderId = intent.getStringExtra(EXTRA_FOLDER_ID)
@@ -231,8 +253,11 @@ class AllAppsActivity : AppCompatActivity() {
     private fun loadApps() {
         Thread {
             val apps = LauncherStore.loadAllApps(this)
+            val times = buildInstallUpdateTimes(apps)
             runOnUiThread {
                 allAppsRaw = apps
+                installTimes = times.first
+                updateTimes = times.second
                 refreshAppsForHidden()
                 updateUsageAccessUi()
             }
@@ -255,6 +280,25 @@ class AllAppsActivity : AppCompatActivity() {
         updateSuggested()
     }
 
+    private fun setupSortSpinner() {
+        val labels = SortMode.values().map { getString(it.labelRes) }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sortSpinner.adapter = adapter
+        val current = LauncherPrefs.getAppSortMode(this)
+        val index = SortMode.values().indexOfFirst { it.prefValue == current }.coerceAtLeast(0)
+        sortSpinner.setSelection(index)
+        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val mode = SortMode.values().getOrNull(position) ?: SortMode.ALPHA
+                LauncherPrefs.setAppSortMode(this@AllAppsActivity, mode.prefValue)
+                applyFilters()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+    }
+
     private fun applyUiConfig() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
@@ -270,6 +314,7 @@ class AllAppsActivity : AppCompatActivity() {
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
         showHiddenSwitch.setTextColor(colors.text)
+        sortLabel.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
         usageAccessHint.setTextColor(colors.muted)
         usageAccessButton.setTextColor(colors.text)
@@ -388,6 +433,9 @@ class AllAppsActivity : AppCompatActivity() {
         currentTab = tab
         val showApps = tab == TAB_APPS
         searchInput.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        val showControls = showApps && targetFolderId == null
+        showHiddenSwitch.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
+        sortRow.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         appsContainer.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         widgetsContainer.visibility = if (showApps) android.view.View.GONE else android.view.View.VISIBLE
         appsTabButton.isEnabled = !showApps
@@ -431,6 +479,17 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun applyFilters() {
         val query = searchInput.text?.toString()?.trim().orEmpty().lowercase()
+        val now = System.currentTimeMillis()
+        val newKeys = if (currentCategory == Category.NEW) {
+            installTimes.filterValues { now - it <= 7L * 24L * 60L * 60L * 1000L }.keys
+        } else {
+            emptySet()
+        }
+        val updatedKeys = if (currentCategory == Category.UPDATED) {
+            updateTimes.filterValues { now - it <= 7L * 24L * 60L * 60L * 1000L }.keys
+        } else {
+            emptySet()
+        }
         val frequentKeys = if (currentCategory == Category.FREQUENT) {
             LauncherStore.getSuggestedApps(this, allApps, 20)
                 .map { it.component.flattenToString() }
@@ -477,6 +536,8 @@ class AllAppsActivity : AppCompatActivity() {
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
             val matchesCategory = when (currentCategory) {
+                Category.NEW -> newKeys.contains(entry.component.flattenToString())
+                Category.UPDATED -> updatedKeys.contains(entry.component.flattenToString())
                 Category.FREQUENT -> frequentKeys.contains(entry.component.flattenToString())
                 Category.RECENT -> recentKeys.contains(entry.component.flattenToString())
                 Category.MORNING -> morningKeys.contains(entry.component.flattenToString())
@@ -487,7 +548,7 @@ class AllAppsActivity : AppCompatActivity() {
             }
             matchesQuery && matchesCategory
         }
-        adapter.submit(filteredApps)
+        adapter.submit(sortApps(filteredApps))
     }
 
     private fun getAppCategory(entry: AppEntry): Int? {
@@ -506,7 +567,9 @@ class AllAppsActivity : AppCompatActivity() {
             category == Category.MORNING ||
             category == Category.DAY ||
             category == Category.EVENING ||
-            category == Category.NIGHT
+            category == Category.NIGHT ||
+            category == Category.NEW ||
+            category == Category.UPDATED
         ) return true
         if (appCategory == null) {
             val inferred = inferCategory(entry)
@@ -553,6 +616,7 @@ class AllAppsActivity : AppCompatActivity() {
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
                 if (category != Category.ALL && category != Category.FREQUENT && category != Category.RECENT &&
+                    category != Category.NEW && category != Category.UPDATED &&
                     matchesCategory(category, appCategory, entry)
                 ) {
                     present.add(category)
@@ -560,6 +624,14 @@ class AllAppsActivity : AppCompatActivity() {
             }
         }
         val list = mutableListOf(Category.ALL)
+        val newApps = getNewAppKeys()
+        if (newApps.isNotEmpty()) {
+            list.add(Category.NEW)
+        }
+        val updatedApps = getUpdatedAppKeys()
+        if (updatedApps.isNotEmpty()) {
+            list.add(Category.UPDATED)
+        }
         val recent = LauncherStore.getRecentApps(this, allApps, 48, 12)
         if (recent.isNotEmpty()) {
             list.add(Category.RECENT)
@@ -589,6 +661,60 @@ class AllAppsActivity : AppCompatActivity() {
             currentCategory = Category.ALL
         }
         return list
+    }
+
+    private fun getNewAppKeys(): Set<String> {
+        if (installTimes.isEmpty()) return emptySet()
+        val now = System.currentTimeMillis()
+        val cutoff = now - 7L * 24L * 60L * 60L * 1000L
+        return installTimes.filterValues { it >= cutoff }.keys
+    }
+
+    private fun getUpdatedAppKeys(): Set<String> {
+        if (updateTimes.isEmpty()) return emptySet()
+        val now = System.currentTimeMillis()
+        val cutoff = now - 7L * 24L * 60L * 60L * 1000L
+        return updateTimes.filterValues { it >= cutoff }.keys
+    }
+
+    private fun sortApps(input: List<AppEntry>): List<AppEntry> {
+        return when (LauncherPrefs.getAppSortMode(this)) {
+            LauncherPrefs.SORT_RECENT -> sortByOrder(input, LauncherStore.getRecentApps(this, allApps, 168, allApps.size))
+            LauncherPrefs.SORT_USAGE -> sortByOrder(input, LauncherStore.getSuggestedApps(this, allApps, allApps.size))
+            else -> input.sortedBy { it.label.lowercase() }
+        }
+    }
+
+    private fun sortByOrder(input: List<AppEntry>, ordered: List<AppEntry>): List<AppEntry> {
+        if (input.isEmpty()) return input
+        val orderMap = ordered.mapIndexed { index, entry ->
+            entry.component.flattenToString() to index
+        }.toMap()
+        return input.sortedWith(
+            compareBy<AppEntry> { orderMap[it.component.flattenToString()] ?: Int.MAX_VALUE }
+                .thenBy { it.label.lowercase() }
+        )
+    }
+
+    private fun buildInstallUpdateTimes(apps: List<AppEntry>): Pair<Map<String, Long>, Map<String, Long>> {
+        val installs = mutableMapOf<String, Long>()
+        val updates = mutableMapOf<String, Long>()
+        apps.forEach { entry ->
+            try {
+                val pkg = entry.component.packageName
+                val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    packageManager.getPackageInfo(pkg, PackageManager.PackageInfoFlags.of(0))
+                } else {
+                    @Suppress("DEPRECATION")
+                    packageManager.getPackageInfo(pkg, 0)
+                }
+                installs[entry.component.flattenToString()] = info.firstInstallTime
+                updates[entry.component.flattenToString()] = info.lastUpdateTime
+            } catch (_: Exception) {
+                // Ignore missing package
+            }
+        }
+        return installs to updates
     }
 
     private fun updateSuggested() {

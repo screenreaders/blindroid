@@ -1345,20 +1345,23 @@ class LauncherActivity : AppCompatActivity() {
         }
         if (pageIndicator.childCount != count) {
             pageIndicator.removeAllViews()
-            val size = dpToPx(6f)
+            val height = dpToPx(6f)
+            val baseWidth = dpToPx(6f)
+            val activeWidth = dpToPx(18f)
             val margin = dpToPx(6f)
             val colors = LauncherPrefs.getThemeColors(this)
             for (i in 0 until count) {
                 val dot = View(this)
-                val params = LinearLayout.LayoutParams(size, size)
+                val params = LinearLayout.LayoutParams(baseWidth, height)
                 params.marginEnd = margin
                 dot.layoutParams = params
                 val drawable = android.graphics.drawable.GradientDrawable().apply {
-                    shape = android.graphics.drawable.GradientDrawable.OVAL
+                    shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+                    cornerRadius = height / 2f
                     setColor(colors.muted)
                 }
                 dot.background = drawable
-                dot.tag = drawable
+                dot.tag = DotMeta(drawable, baseWidth, activeWidth, height)
                 pageIndicator.addView(dot)
             }
         }
@@ -1374,15 +1377,26 @@ class LauncherActivity : AppCompatActivity() {
             val dot = pageIndicator.getChildAt(i)
             val distance = kotlin.math.abs(total - i.toFloat()).coerceAtMost(1f)
             val focus = 1f - distance
-            val scale = 0.85f + focus * 0.45f
-            dot.scaleX = scale
-            dot.scaleY = scale
-            dot.alpha = 0.6f + focus * 0.4f
+            val meta = dot.tag as? DotMeta ?: continue
+            val width = (meta.base + (meta.active - meta.base) * focus).toInt().coerceAtLeast(meta.base)
+            val params = dot.layoutParams as LinearLayout.LayoutParams
+            if (params.width != width) {
+                params.width = width
+                params.height = meta.height
+                dot.layoutParams = params
+            }
+            dot.alpha = 0.55f + focus * 0.45f
             val color = blendColor(colors.muted, colors.text, focus)
-            val drawable = dot.tag as? android.graphics.drawable.GradientDrawable
-            drawable?.setColor(color)
+            meta.drawable.setColor(color)
         }
     }
+
+    private data class DotMeta(
+        val drawable: android.graphics.drawable.GradientDrawable,
+        val base: Int,
+        val active: Int,
+        val height: Int
+    )
 
     private fun dpToPx(dp: Float): Int {
         val density = resources.displayMetrics.density
