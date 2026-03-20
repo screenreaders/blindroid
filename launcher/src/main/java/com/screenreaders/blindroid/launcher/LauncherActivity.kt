@@ -465,6 +465,7 @@ class LauncherActivity : AppCompatActivity() {
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
         if (!feedEnabled) return
         if (LauncherPrefs.getFeedMode(this) != LauncherPrefs.FEED_MODE_GOOGLE) return
+        if (!LauncherPrefs.isFeedAutoOpenEnabled(this)) return
         if (position != 0) return
         val now = System.currentTimeMillis()
         if (now - lastExternalFeedLaunchMs < 1200L) return
@@ -832,13 +833,30 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun launchSearch(query: String?) {
         val text = query?.trim().orEmpty()
-        val intent = Intent(Intent.ACTION_WEB_SEARCH)
-        if (text.isNotBlank()) {
-            intent.putExtra(SearchManager.QUERY, text)
+        val preferGoogle = LauncherPrefs.isGoogleSearchEnabled(this) && isGoogleAppAvailable()
+        val intent = Intent(Intent.ACTION_WEB_SEARCH).apply {
+            if (text.isNotBlank()) {
+                putExtra(SearchManager.QUERY, text)
+            }
+            if (preferGoogle) {
+                setPackage("com.google.android.googlequicksearchbox")
+            }
         }
         try {
             startActivity(intent)
         } catch (_: Exception) {
+            if (preferGoogle) {
+                val fallback = Intent(Intent.ACTION_WEB_SEARCH)
+                if (text.isNotBlank()) {
+                    fallback.putExtra(SearchManager.QUERY, text)
+                }
+                try {
+                    startActivity(fallback)
+                    return
+                } catch (_: Exception) {
+                    // fall through
+                }
+            }
             Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
         }
     }

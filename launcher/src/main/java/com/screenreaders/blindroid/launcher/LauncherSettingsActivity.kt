@@ -22,7 +22,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var superSimpleSwitch: Switch
     private lateinit var feedEnabledSwitch: Switch
     private lateinit var feedModeSpinner: Spinner
+    private lateinit var feedAutoOpenSwitch: Switch
     private lateinit var searchBarSwitch: Switch
+    private lateinit var googleSearchSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -81,7 +83,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         superSimpleSwitch = findViewById(R.id.superSimpleSwitch)
         feedEnabledSwitch = findViewById(R.id.feedEnabledSwitch)
         feedModeSpinner = findViewById(R.id.feedModeSpinner)
+        feedAutoOpenSwitch = findViewById(R.id.feedAutoOpenSwitch)
         searchBarSwitch = findViewById(R.id.searchBarSwitch)
+        googleSearchSwitch = findViewById(R.id.googleSearchSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -138,7 +142,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
         feedEnabledSwitch.isChecked = LauncherPrefs.isFeedEnabled(this)
         bindFeedModeSpinner(LauncherPrefs.getFeedMode(this))
+        feedAutoOpenSwitch.isChecked = LauncherPrefs.isFeedAutoOpenEnabled(this)
         searchBarSwitch.isChecked = LauncherPrefs.isSearchBarEnabled(this)
+        googleSearchSwitch.isChecked = LauncherPrefs.isGoogleSearchEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -160,6 +166,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         applySuperSimpleState(superSimpleSwitch.isChecked)
         applyLayoutModeState()
         feedModeSpinner.isEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
+        googleSearchSwitch.isEnabled = isGoogleAppAvailable()
+        updateFeedAutoOpenState()
     }
 
     private fun bindListeners() {
@@ -216,17 +224,34 @@ class LauncherSettingsActivity : AppCompatActivity() {
             LauncherPrefs.setSuperSimpleEnabled(this, isChecked)
             applySuperSimpleState(isChecked)
             applyLayoutModeState()
+            updateFeedAutoOpenState()
             toastSaved()
         }
 
         feedEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setFeedEnabled(this, isChecked)
             feedModeSpinner.isEnabled = isChecked && !superSimpleSwitch.isChecked
+            updateFeedAutoOpenState()
+            toastSaved()
+        }
+
+        feedAutoOpenSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setFeedAutoOpenEnabled(this, isChecked)
             toastSaved()
         }
 
         searchBarSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setSearchBarEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        googleSearchSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!isGoogleAppAvailable() && isChecked) {
+                googleSearchSwitch.isChecked = false
+                toastSaved()
+                return@setOnCheckedChangeListener
+            }
+            LauncherPrefs.setGoogleSearchEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -322,6 +347,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.launcher_settings_saved, Toast.LENGTH_SHORT).show()
     }
 
+    private fun updateFeedAutoOpenState() {
+        val feedEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
+        val googleMode = feedModeSpinner.selectedItemPosition == LauncherPrefs.FEED_MODE_GOOGLE
+        feedAutoOpenSwitch.isEnabled = feedEnabled && googleMode
+    }
+
+    private fun isGoogleAppAvailable(): Boolean {
+        return packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+    }
+
     private fun bindFeedModeSpinner(current: Int) {
         val labels = listOf(
             getString(R.string.launcher_feed_mode_local),
@@ -334,6 +369,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         feedModeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 LauncherPrefs.setFeedMode(this@LauncherSettingsActivity, position)
+                updateFeedAutoOpenState()
                 toastSaved()
             }
 

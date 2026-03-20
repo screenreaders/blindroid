@@ -40,11 +40,25 @@
             android:layout_height="wrap_content" />
 
         <Switch
+            android:id="@+id/feedAutoOpenSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_feed_auto_open" />
+
+        <Switch
             android:id="@+id/searchBarSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/launcher_settings_search_bar" />
+
+        <Switch
+            android:id="@+id/googleSearchSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_google_search" />
 
         <Switch
             android:id="@+id/gnLayoutSwitch"

@@ -127,6 +127,7 @@ class HomePagerAdapter(
     }
 
     class FeedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val root: View = view.findViewById(R.id.feedRoot)
         private val title: TextView = view.findViewById(R.id.feedTitle)
         private val time: TextView = view.findViewById(R.id.feedTime)
         private val date: TextView = view.findViewById(R.id.feedDate)
@@ -146,6 +147,7 @@ class HomePagerAdapter(
             openButton.setTextColor(colors.text)
 
             if (data == null) return
+            title.setText(if (data.externalMode) R.string.launcher_feed_title_google else R.string.launcher_feed_title)
             time.text = data.time
             date.text = data.date
             battery.text = data.battery
@@ -156,13 +158,22 @@ class HomePagerAdapter(
                 openButton.isEnabled = data.externalAvailable
                 openButton.alpha = if (data.externalAvailable) 1.0f else 0.5f
                 openButton.setOnClickListener { onOpenExternalFeed() }
+                notificationsLabel.visibility = View.GONE
+                container.visibility = View.GONE
+                root.setOnClickListener { if (data.externalAvailable) onOpenExternalFeed() }
             } else {
                 openHint.visibility = View.GONE
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
+                root.setOnClickListener(null)
+                notificationsLabel.visibility = View.VISIBLE
+                container.visibility = View.VISIBLE
             }
 
             container.removeAllViews()
+            if (data.externalMode) {
+                return
+            }
             if (data.notifications.isEmpty()) {
                 val empty = TextView(container.context)
                 empty.text = container.context.getString(R.string.launcher_feed_no_notifications)

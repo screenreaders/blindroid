@@ -16,9 +16,11 @@ object LauncherPrefs {
     private const val KEY_DOCK_VISIBLE = "dock_visible"
     private const val KEY_FEED_ENABLED = "feed_enabled"
     private const val KEY_FEED_MODE = "feed_mode"
+    private const val KEY_FEED_AUTO_OPEN = "feed_auto_open"
     private const val KEY_THEME = "launcher_theme"
     private const val KEY_ICON_STYLE = "icon_style"
     private const val KEY_SEARCH_BAR = "search_bar"
+    private const val KEY_GOOGLE_SEARCH = "google_search"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -141,6 +143,13 @@ object LauncherPrefs {
         prefs(context).edit().putInt(KEY_FEED_MODE, mode.coerceIn(FEED_MODE_LOCAL, FEED_MODE_GOOGLE)).apply()
     }
 
+    fun isFeedAutoOpenEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FEED_AUTO_OPEN, true)
+
+    fun setFeedAutoOpenEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FEED_AUTO_OPEN, enabled).apply()
+    }
+
     fun getTheme(context: Context): Int =
         prefs(context).getInt(KEY_THEME, THEME_LIGHT).coerceIn(THEME_LIGHT, THEME_BLUE)
 
@@ -160,6 +169,13 @@ object LauncherPrefs {
 
     fun setSearchBarEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_SEARCH_BAR, enabled).apply()
+    }
+
+    fun isGoogleSearchEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_GOOGLE_SEARCH, true)
+
+    fun setGoogleSearchEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_GOOGLE_SEARCH, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =

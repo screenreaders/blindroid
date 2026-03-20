@@ -78,7 +78,9 @@
     <string name="launcher_settings_feed_mode">Źródło feedu</string>
     <string name="launcher_feed_mode_local">Wbudowany feed</string>
     <string name="launcher_feed_mode_google">Google (jeśli zainstalowany)</string>
+    <string name="launcher_settings_feed_auto_open">Automatycznie otwieraj Google Discover po przesunięciu w lewo</string>
     <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
+    <string name="launcher_settings_google_search">Wyszukiwanie przez aplikację Google (jeśli dostępna)</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
@@ -96,6 +98,7 @@
     <string name="launcher_settings_wallpaper">Ustaw tapetę</string>
     <string name="launcher_settings_voice_search">Wyszukiwanie głosowe</string>
     <string name="launcher_feed_title">Feed</string>
+    <string name="launcher_feed_title_google">Google Discover</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>
