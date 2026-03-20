@@ -16,7 +16,7 @@ for denom in DENOMS:
         print(f"Failed to download page {page_url}: {exc}")
         continue
 
-    regex = re.compile(rf"assets/img/content/(?:front|back)-{denom}[^\"']*\.jpg")
+    regex = re.compile(rf"assets/img/content/(?:front|back)-{denom}[^\"']*\.(?:jpg|jpeg|png)")
     files = sorted(set(regex.findall(page)))
     if not files:
         print(f"No images found for {denom} zł")
