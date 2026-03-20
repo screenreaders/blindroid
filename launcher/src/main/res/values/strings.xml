@@ -66,6 +66,11 @@
     <string name="launcher_widgets_search_hint">Szukaj widgetu</string>
     <string name="launcher_widget_size_format">Min: %1$ddp × %2$ddp</string>
     <string name="launcher_clear_search">Wyczyść</string>
+    <string name="launcher_voice_search_button">Mów</string>
+    <string name="launcher_voice_search_prompt">Powiedz nazwę aplikacji</string>
+    <string name="launcher_results_count">Wyniki: 0</string>
+    <string name="launcher_results_count_format">Wyniki: %1$d</string>
+    <string name="launcher_clear_hidden">Pokaż wszystkie ukryte aplikacje</string>
     <string name="launcher_favorites">Ulubione</string>
     <string name="launcher_action_favorite_add">Dodaj do ulubionych</string>
     <string name="launcher_action_favorite_remove">Usuń z ulubionych</string>

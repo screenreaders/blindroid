@@ -1691,6 +1691,19 @@ class LauncherActivity : AppCompatActivity() {
                 ).show()
             }
         }
+        val isFavorite = LauncherStore.isFavorite(this, app.component)
+        options += getString(
+            if (isFavorite) R.string.launcher_action_favorite_remove else R.string.launcher_action_favorite_add
+        ) to {
+            LauncherStore.setFavorite(this, app.component, !isFavorite)
+            Toast.makeText(
+                this,
+                if (isFavorite) R.string.launcher_action_favorite_remove else R.string.launcher_action_favorite_add,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        options += getString(R.string.launcher_action_app_info) to { openAppInfo(app.component) }
+        options += getString(R.string.launcher_action_uninstall) to { confirmUninstall(app.label, app.component) }
         showOptionsDialog(getString(R.string.launcher_home_options), options)
     }
 
@@ -1721,6 +1734,19 @@ class LauncherActivity : AppCompatActivity() {
                 ).show()
             }
         }
+        val isFavorite = LauncherStore.isFavorite(this, app.component)
+        options += getString(
+            if (isFavorite) R.string.launcher_action_favorite_remove else R.string.launcher_action_favorite_add
+        ) to {
+            LauncherStore.setFavorite(this, app.component, !isFavorite)
+            Toast.makeText(
+                this,
+                if (isFavorite) R.string.launcher_action_favorite_remove else R.string.launcher_action_favorite_add,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        options += getString(R.string.launcher_action_app_info) to { openAppInfo(app.component) }
+        options += getString(R.string.launcher_action_uninstall) to { confirmUninstall(app.label, app.component) }
         showOptionsDialog(getString(R.string.launcher_hotseat_options), options)
     }
 
@@ -1830,6 +1856,39 @@ class LauncherActivity : AppCompatActivity() {
                 options[which].second.invoke()
             }
             .show()
+    }
+
+    private fun openAppInfo(component: ComponentName) {
+        try {
+            val intent = Intent(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                android.net.Uri.fromParts("package", component.packageName, null)
+            )
+            startActivity(intent)
+        } catch (_: Exception) {
+            // Ignore
+        }
+    }
+
+    private fun confirmUninstall(label: String, component: ComponentName) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_action_uninstall)
+            .setMessage(getString(R.string.launcher_uninstall_confirm, label))
+            .setPositiveButton(R.string.launcher_action_uninstall) { _, _ ->
+                uninstallApp(component)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun uninstallApp(component: ComponentName) {
+        try {
+            val intent = Intent(Intent.ACTION_DELETE)
+            intent.data = android.net.Uri.parse("package:${component.packageName}")
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_uninstall_not_allowed, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun openFolder(folderId: String) {

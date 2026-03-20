@@ -8,6 +8,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
@@ -38,7 +39,10 @@ class AllAppsActivity : AppCompatActivity() {
 
     private lateinit var searchInput: EditText
     private lateinit var clearSearchButton: Button
+    private lateinit var voiceSearchButton: Button
+    private lateinit var resultsLabel: TextView
     private lateinit var showHiddenSwitch: android.widget.Switch
+    private lateinit var clearHiddenButton: Button
     private lateinit var sortRow: LinearLayout
     private lateinit var sortLabel: TextView
     private lateinit var sortSpinner: Spinner
@@ -102,6 +106,7 @@ class AllAppsActivity : AppCompatActivity() {
     private val requestPickWidget = 2001
     private val requestBindWidget = 2002
     private val requestConfigureWidget = 2003
+    private val requestVoiceSearch = 2104
 
     private enum class Category(val labelRes: Int, val categoryNames: List<String>) {
         ALL(R.string.launcher_category_all, emptyList()),
@@ -140,7 +145,10 @@ class AllAppsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_all_apps)
         searchInput = findViewById(R.id.searchInput)
         clearSearchButton = findViewById(R.id.clearSearchButton)
+        voiceSearchButton = findViewById(R.id.voiceSearchButton)
+        resultsLabel = findViewById(R.id.resultsLabel)
         showHiddenSwitch = findViewById(R.id.showHiddenSwitch)
+        clearHiddenButton = findViewById(R.id.clearHiddenButton)
         sortRow = findViewById(R.id.sortRow)
         sortLabel = findViewById(R.id.sortLabel)
         sortSpinner = findViewById(R.id.sortSpinner)
@@ -179,6 +187,7 @@ class AllAppsActivity : AppCompatActivity() {
             tabRow.visibility = android.view.View.GONE
             currentTab = TAB_APPS
             showHiddenSwitch.visibility = android.view.View.GONE
+            clearHiddenButton.visibility = android.view.View.GONE
         }
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
@@ -252,6 +261,14 @@ class AllAppsActivity : AppCompatActivity() {
         clearSearchButton.setOnClickListener {
             searchInput.setText("")
             searchInput.clearFocus()
+        }
+        clearHiddenButton.setOnClickListener {
+            LauncherStore.clearHiddenApps(this)
+            refreshAppsForHidden()
+            Toast.makeText(this, R.string.launcher_clear_hidden, Toast.LENGTH_SHORT).show()
+        }
+        voiceSearchButton.setOnClickListener {
+            startVoiceSearch()
         }
         widgetsGrid.setOnDragListener { _, event ->
             when (event.action) {
@@ -327,6 +344,7 @@ class AllAppsActivity : AppCompatActivity() {
         } else {
             allAppsRaw.filterNot { hidden.contains(it.component.flattenToString()) }
         }
+        clearHiddenButton.visibility = if (hidden.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
         appCategories = allApps.associate { entry ->
             entry.component.flattenToString() to getAppCategory(entry)
         }
@@ -376,7 +394,10 @@ class AllAppsActivity : AppCompatActivity() {
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
         clearSearchButton.setTextColor(colors.text)
+        voiceSearchButton.setTextColor(colors.text)
+        resultsLabel.setTextColor(colors.muted)
         showHiddenSwitch.setTextColor(colors.text)
+        clearHiddenButton.setTextColor(colors.text)
         sortLabel.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
         favoritesLabel.setTextColor(colors.text)
@@ -503,7 +524,13 @@ class AllAppsActivity : AppCompatActivity() {
         searchInput.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         val showControls = showApps && targetFolderId == null
         showHiddenSwitch.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
+        clearHiddenButton.visibility = if (showControls && LauncherStore.getHiddenAppKeys(this).isNotEmpty()) {
+            android.view.View.VISIBLE
+        } else {
+            android.view.View.GONE
+        }
         sortRow.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
+        resultsLabel.visibility = if (showApps) resultsLabel.visibility else android.view.View.GONE
         appsContainer.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         widgetsContainer.visibility = if (showApps) android.view.View.GONE else android.view.View.VISIBLE
         appsTabButton.isEnabled = !showApps
@@ -629,6 +656,25 @@ class AllAppsActivity : AppCompatActivity() {
             matchesQuery && matchesCategory
         }
         adapter.submit(sortApps(filteredApps))
+        if (query.isNotBlank() || currentCategory != Category.ALL) {
+            resultsLabel.text = getString(R.string.launcher_results_count_format, filteredApps.size)
+            resultsLabel.visibility = android.view.View.VISIBLE
+        } else {
+            resultsLabel.visibility = android.view.View.GONE
+        }
+    }
+
+    private fun startVoiceSearch() {
+        try {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pl-PL")
+                putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_voice_search_prompt))
+            }
+            startActivityForResult(intent, requestVoiceSearch)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getAppCategory(entry: AppEntry): Int? {
@@ -939,6 +985,15 @@ class AllAppsActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == requestVoiceSearch && resultCode == RESULT_OK) {
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val text = results?.firstOrNull().orEmpty()
+            if (text.isNotBlank()) {
+                searchInput.setText(text)
+                searchInput.setSelection(text.length)
+            }
+            return
+        }
         val appWidgetId = data?.getIntExtra(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             pendingWidgetId

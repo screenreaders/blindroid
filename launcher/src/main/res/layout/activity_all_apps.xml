@@ -27,7 +27,22 @@
             android:layout_marginStart="8dp"
             android:text="@string/launcher_clear_search"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/voiceSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/launcher_voice_search_button" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/resultsLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/launcher_results_count"
+        android:visibility="gone" />
 
     <Switch
         android:id="@+id/showHiddenSwitch"
@@ -35,6 +50,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="@string/launcher_show_hidden" />
+
+    <Button
+        android:id="@+id/clearHiddenButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/launcher_clear_hidden"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/sortRow"
