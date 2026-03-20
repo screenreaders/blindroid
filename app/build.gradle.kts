@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "com.screenreaders.blindroid"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.screenreaders.blindroid"
         minSdk = 29
-        targetSdk = 35
-        versionCode = 55
-        versionName = "055"
+        targetSdk = 36
+        versionCode = 57
+        versionName = "057"
     }
 
     val keystorePropsFile = rootProject.file("keystore.properties")

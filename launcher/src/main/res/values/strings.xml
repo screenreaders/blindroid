@@ -126,9 +126,14 @@
     <string name="launcher_settings_now_power">Karta: oszczędzanie energii</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
+    <string name="launcher_settings_page_animation">Animacja przewijania stron</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
     <string name="launcher_assistant_gemini">Gemini</string>
     <string name="launcher_assistant_voice">Wyszukiwanie głosowe</string>
+    <string name="launcher_page_anim_default">Standardowa</string>
+    <string name="launcher_page_anim_carousel">Karuzela</string>
+    <string name="launcher_page_anim_depth">Głębia</string>
+    <string name="launcher_page_anim_stack">Stos</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
     <string name="launcher_settings_usage_suggestions">Sugestie na podstawie użycia aplikacji</string>
     <string name="launcher_settings_theme">Motyw launchera</string>

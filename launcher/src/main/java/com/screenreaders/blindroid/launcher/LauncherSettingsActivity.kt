@@ -46,6 +46,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowPowerSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
+    private lateinit var pageAnimationSpinner: Spinner
     private lateinit var assistantSpinner: Spinner
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var smartHotseatSwitch: Switch
@@ -129,6 +130,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowPowerSwitch = findViewById(R.id.nowPowerSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
+        pageAnimationSpinner = findViewById(R.id.pageAnimationSpinner)
         assistantSpinner = findViewById(R.id.assistantSpinner)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         smartHotseatSwitch = findViewById(R.id.smartHotseatSwitch)
@@ -210,6 +212,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowPowerSwitch.isChecked = LauncherPrefs.isNowPowerEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
+        bindPageAnimation()
         bindAssistantSpinner()
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
         smartHotseatSwitch.isChecked = LauncherPrefs.isSmartHotseatEnabled(this)
@@ -451,6 +454,15 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        pageAnimationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                LauncherPrefs.setPageAnimation(this@LauncherSettingsActivity, position)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
+        }
+
         dockVisibleSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDockVisible(this, isChecked)
             toastSaved()
@@ -501,6 +513,19 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         backupButton.setOnClickListener { backupLauncher() }
         restoreButton.setOnClickListener { restoreLauncher() }
+    }
+
+    private fun bindPageAnimation() {
+        val labels = listOf(
+            getString(R.string.launcher_page_anim_default),
+            getString(R.string.launcher_page_anim_carousel),
+            getString(R.string.launcher_page_anim_depth),
+            getString(R.string.launcher_page_anim_stack)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        pageAnimationSpinner.adapter = adapter
+        pageAnimationSpinner.setSelection(LauncherPrefs.getPageAnimation(this))
     }
 
     private fun applySuperSimpleState(enabled: Boolean) {

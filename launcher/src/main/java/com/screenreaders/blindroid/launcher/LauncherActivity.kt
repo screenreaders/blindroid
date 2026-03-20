@@ -156,14 +156,7 @@ class LauncherActivity : AppCompatActivity() {
         )
         homePager.adapter = homeAdapter
         homePager.offscreenPageLimit = 2
-        homePager.setPageTransformer { page, position ->
-            val absPos = kotlin.math.abs(position)
-            val scale = 0.92f + (1f - absPos) * 0.08f
-            page.scaleX = scale
-            page.scaleY = scale
-            page.alpha = 0.6f + (1f - absPos) * 0.4f
-            page.translationX = -position * page.width * 0.08f
-        }
+        applyPageTransformer()
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 updatePageIndicator()
@@ -287,6 +280,7 @@ class LauncherActivity : AppCompatActivity() {
             homeAdapter.updateConfig(pageConfig)
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
         }
+        applyPageTransformer()
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
         val searchEnabled = LauncherPrefs.isSearchBarEnabled(this)
         searchRow.visibility = if (simple || !searchEnabled) View.GONE else View.VISIBLE
@@ -312,6 +306,60 @@ class LauncherActivity : AppCompatActivity() {
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
         homeAdapter.updateFeed(feedEnabled, feedData, colors)
         updatePageIndicator()
+    }
+
+    private fun applyPageTransformer() {
+        when (LauncherPrefs.getPageAnimation(this)) {
+            LauncherPrefs.PAGE_ANIM_CAROUSEL -> homePager.setPageTransformer { page, position ->
+                val absPos = kotlin.math.abs(position)
+                val scale = 0.85f + (1f - absPos) * 0.15f
+                page.scaleX = scale
+                page.scaleY = scale
+                page.alpha = 0.5f + (1f - absPos) * 0.5f
+                page.translationX = -position * page.width * 0.2f
+                page.rotationY = position * -30f
+            }
+            LauncherPrefs.PAGE_ANIM_DEPTH -> homePager.setPageTransformer { page, position ->
+                if (position <= 0f) {
+                    page.alpha = 1f
+                    page.translationX = 0f
+                    page.scaleX = 1f
+                    page.scaleY = 1f
+                } else if (position <= 1f) {
+                    page.alpha = 1f - position
+                    page.translationX = page.width * -position
+                    val scale = 0.75f + (1f - 0.75f) * (1f - position)
+                    page.scaleX = scale
+                    page.scaleY = scale
+                } else {
+                    page.alpha = 0f
+                }
+                page.rotationY = 0f
+            }
+            LauncherPrefs.PAGE_ANIM_STACK -> homePager.setPageTransformer { page, position ->
+                if (position >= 0f) {
+                    page.translationX = -position * page.width
+                    page.scaleX = 1f - 0.08f * position
+                    page.scaleY = 1f - 0.08f * position
+                    page.alpha = 1f - 0.25f * position
+                } else {
+                    page.translationX = 0f
+                    page.scaleX = 1f
+                    page.scaleY = 1f
+                    page.alpha = 1f
+                }
+                page.rotationY = 0f
+            }
+            else -> homePager.setPageTransformer { page, position ->
+                val absPos = kotlin.math.abs(position)
+                val scale = 0.92f + (1f - absPos) * 0.08f
+                page.scaleX = scale
+                page.scaleY = scale
+                page.alpha = 0.6f + (1f - absPos) * 0.4f
+                page.translationX = -position * page.width * 0.08f
+                page.rotationY = 0f
+            }
+        }
     }
 
     private fun setupGestureDetector() {

@@ -48,6 +48,7 @@ object LauncherPrefs {
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
     private const val KEY_GN_LAYOUT = "gn_layout"
     private const val KEY_WALLPAPER_PARALLAX = "wallpaper_parallax"
+    private const val KEY_PAGE_ANIMATION = "page_animation"
     private const val KEY_ASSISTANT_MODE = "assistant_mode"
     private const val KEY_GESTURE_TWO_TAP = "gesture_two_tap"
     private const val KEY_GESTURE_TWO_UP = "gesture_two_up"
@@ -97,6 +98,11 @@ object LauncherPrefs {
 
     const val ASSISTANT_VOICE = 0
     const val ASSISTANT_GEMINI = 1
+
+    const val PAGE_ANIM_DEFAULT = 0
+    const val PAGE_ANIM_CAROUSEL = 1
+    const val PAGE_ANIM_DEPTH = 2
+    const val PAGE_ANIM_STACK = 3
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -394,6 +400,15 @@ object LauncherPrefs {
 
     fun setWallpaperParallaxEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_WALLPAPER_PARALLAX, enabled).apply()
+    }
+
+    fun getPageAnimation(context: Context): Int =
+        prefs(context).getInt(KEY_PAGE_ANIMATION, PAGE_ANIM_DEFAULT).coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_STACK)
+
+    fun setPageAnimation(context: Context, mode: Int) {
+        prefs(context).edit()
+            .putInt(KEY_PAGE_ANIMATION, mode.coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_STACK))
+            .apply()
     }
 
     fun getAssistantMode(context: Context): Int =
