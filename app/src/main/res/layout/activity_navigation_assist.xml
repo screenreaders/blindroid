@@ -61,6 +61,50 @@
             android:text="@string/navigation_start" />
 
         <TextView
+            android:id="@+id/navigationTrackingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/navigation_tracking_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationTrackingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_tracking_enable" />
+
+        <Button
+            android:id="@+id/navigationCategoriesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_categories_button" />
+
+        <TextView
+            android:id="@+id/navigationCategoriesSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_categories_none" />
+
+        <EditText
+            android:id="@+id/navigationApiKeyInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/navigation_api_key_hint"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/navigationApiKeyHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_api_key_info" />
+
+        <TextView
             android:id="@+id/navigationHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

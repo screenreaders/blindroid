@@ -74,6 +74,9 @@ object Prefs {
     private const val KEY_QUIET_MUTE_SMS = "quiet_mute_sms"
     private const val KEY_QUIET_MUTE_NOTIFICATIONS = "quiet_mute_notifications"
     private const val KEY_QUIET_MUTE_CHIME = "quiet_mute_chime"
+    private const val KEY_NAV_API_KEY = "nav_api_key"
+    private const val KEY_NAV_TRACKING = "nav_tracking"
+    private const val KEY_NAV_CATEGORIES = "nav_categories"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -369,6 +372,27 @@ object Prefs {
 
     fun setQuietMuteChime(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_QUIET_MUTE_CHIME, value).apply()
+    }
+
+    fun getNavigationApiKey(context: Context): String =
+        prefs(context).getString(KEY_NAV_API_KEY, "") ?: ""
+
+    fun setNavigationApiKey(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_API_KEY, value.trim()).apply()
+    }
+
+    fun isNavigationTrackingEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_TRACKING, false)
+
+    fun setNavigationTrackingEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_TRACKING, value).apply()
+    }
+
+    fun getNavigationCategories(context: Context): String =
+        prefs(context).getString(KEY_NAV_CATEGORIES, "") ?: ""
+
+    fun setNavigationCategories(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_CATEGORIES, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

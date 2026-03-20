@@ -1,15 +1,36 @@
 package com.screenreaders.blindroid.navigation
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.screenreaders.blindroid.R
+import com.screenreaders.blindroid.call.CallAnnouncer
+import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityNavigationAssistBinding
 
 class NavigationAssistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNavigationAssistBinding
+    private val categories = listOf(
+        Category("restaurant", R.string.navigation_category_restaurant),
+        Category("cafe", R.string.navigation_category_cafe),
+        Category("pharmacy", R.string.navigation_category_pharmacy),
+        Category("hospital", R.string.navigation_category_hospital),
+        Category("bank", R.string.navigation_category_bank),
+        Category("atm", R.string.navigation_category_atm),
+        Category("gas_station", R.string.navigation_category_fuel),
+        Category("movie_theater", R.string.navigation_category_cinema),
+        Category("supermarket", R.string.navigation_category_grocery),
+        Category("police", R.string.navigation_category_police),
+        Category("parking", R.string.navigation_category_parking),
+        Category("lodging", R.string.navigation_category_hotel)
+    )
+    private val selected = BooleanArray(categories.size)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +39,23 @@ class NavigationAssistActivity : AppCompatActivity() {
 
         binding.navigationModeDriving.isChecked = true
         binding.navigationStartButton.setOnClickListener { startNavigation() }
+        binding.navigationTrackingSwitch.isChecked = Prefs.isNavigationTrackingEnabled(this)
+        binding.navigationTrackingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationTrackingEnabled(this, isChecked)
+            if (isChecked) {
+                startTracking()
+            } else {
+                NavigationPoiService.stop(this)
+                Toast.makeText(this, R.string.navigation_tracking_stopped, Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.navigationCategoriesButton.setOnClickListener { openCategoryDialog() }
+        binding.navigationApiKeyInput.setText(Prefs.getNavigationApiKey(this))
+        binding.navigationApiKeyInput.setOnFocusChangeListener { _, _ ->
+            Prefs.setNavigationApiKey(this, binding.navigationApiKeyInput.text?.toString().orEmpty())
+        }
+        loadSelectedCategories()
+        updateCategorySummary()
     }
 
     private fun startNavigation() {
@@ -33,6 +71,10 @@ class NavigationAssistActivity : AppCompatActivity() {
             "$place, $city"
         }
         val mode = if (binding.navigationModeDriving.isChecked) "driving" else "walking"
+        speakConfirmation(destination, mode == "driving")
+        if (binding.navigationTrackingSwitch.isChecked) {
+            startTracking()
+        }
         val uri = Uri.parse(
             "https://www.google.com/maps/dir/?api=1&destination=${Uri.encode(destination)}&travelmode=$mode"
         )
@@ -44,5 +86,118 @@ class NavigationAssistActivity : AppCompatActivity() {
         } else {
             startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
+    }
+
+    private fun startTracking() {
+        val apiKey = binding.navigationApiKeyInput.text?.toString()?.trim().orEmpty()
+        Prefs.setNavigationApiKey(this, apiKey)
+        if (apiKey.isBlank()) {
+            Toast.makeText(this, R.string.navigation_tracking_missing_key, Toast.LENGTH_SHORT).show()
+            binding.navigationTrackingSwitch.isChecked = false
+            return
+        }
+        val selectedTypes = selectedTypes()
+        if (selectedTypes.isEmpty()) {
+            Toast.makeText(this, R.string.navigation_tracking_no_categories, Toast.LENGTH_SHORT).show()
+            binding.navigationTrackingSwitch.isChecked = false
+            return
+        }
+        Prefs.setNavigationCategories(this, selectedTypes.joinToString(","))
+        if (!hasLocationPermission()) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        NavigationPoiService.start(this)
+        Toast.makeText(this, R.string.navigation_tracking_started, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun loadSelectedCategories() {
+        val saved = Prefs.getNavigationCategories(this)
+            .split(',')
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .toSet()
+        categories.forEachIndexed { index, category ->
+            selected[index] = saved.contains(category.type)
+        }
+    }
+
+    private fun openCategoryDialog() {
+        val labels = categories.map { getString(it.labelRes) }.toTypedArray()
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(R.string.navigation_categories_button)
+            .setMultiChoiceItems(labels, selected) { _, which, isChecked ->
+                selected[which] = isChecked
+            }
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                Prefs.setNavigationCategories(this, selectedTypes().joinToString(","))
+                updateCategorySummary()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun selectedTypes(): List<String> {
+        return categories.filterIndexed { index, _ -> selected[index] }.map { it.type }
+    }
+
+    private fun updateCategorySummary() {
+        val labels = categories.filterIndexed { index, _ -> selected[index] }
+            .map { getString(it.labelRes) }
+        binding.navigationCategoriesSummary.text = if (labels.isEmpty()) {
+            getString(R.string.navigation_categories_none)
+        } else {
+            labels.joinToString(", ")
+        }
+    }
+
+    private fun speakConfirmation(destination: String, driving: Boolean) {
+        val text = if (driving) {
+            getString(R.string.navigation_confirm_driving, destination)
+        } else {
+            getString(R.string.navigation_confirm_walking, destination)
+        }
+        val announcer = CallAnnouncer(this)
+        announcer.speak(
+            text = text,
+            repeatCount = 1,
+            rate = Prefs.getSpeechRate(this),
+            volume = Prefs.getSpeechVolume(this),
+            voiceName = Prefs.getVoiceName(this),
+            onComplete = { announcer.shutdown() }
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_LOCATION) {
+            val granted = grantResults.any { it == PackageManager.PERMISSION_GRANTED }
+            if (granted && binding.navigationTrackingSwitch.isChecked) {
+                NavigationPoiService.start(this)
+            } else {
+                binding.navigationTrackingSwitch.isChecked = false
+            }
+        }
+    }
+
+    private data class Category(val type: String, val labelRes: Int)
+
+    companion object {
+        private const val REQ_LOCATION = 812
     }
 }
