@@ -44,6 +44,10 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var appsGrid: RecyclerView
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
+    private lateinit var suggestedNowGrid: RecyclerView
+    private lateinit var suggestedNowLabel: TextView
+    private lateinit var recentGrid: RecyclerView
+    private lateinit var recentLabel: TextView
     private lateinit var usageAccessHint: TextView
     private lateinit var usageAccessButton: Button
     private lateinit var categoryRow: LinearLayout
@@ -62,8 +66,12 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var dragOptionsTarget: Button
     private lateinit var adapter: AppAdapter
     private lateinit var suggestedAdapter: AppAdapter
+    private lateinit var suggestedNowAdapter: AppAdapter
+    private lateinit var recentAdapter: AppAdapter
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var suggestedLayoutManager: GridLayoutManager
+    private lateinit var suggestedNowLayoutManager: GridLayoutManager
+    private lateinit var recentLayoutManager: GridLayoutManager
     private var soundFeedback: LauncherSoundFeedback? = null
     private lateinit var appWidgetHost: AppWidgetHost
     private lateinit var appWidgetManager: AppWidgetManager
@@ -130,6 +138,10 @@ class AllAppsActivity : AppCompatActivity() {
         appsGrid = findViewById(R.id.appsGrid)
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
+        suggestedNowGrid = findViewById(R.id.suggestedNowGrid)
+        suggestedNowLabel = findViewById(R.id.suggestedNowLabel)
+        recentGrid = findViewById(R.id.recentGrid)
+        recentLabel = findViewById(R.id.recentLabel)
         usageAccessHint = findViewById(R.id.usageAccessHint)
         usageAccessButton = findViewById(R.id.usageAccessButton)
         categoryRow = findViewById(R.id.categoryRow)
@@ -161,8 +173,12 @@ class AllAppsActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager = GridLayoutManager(this, baseConfig.columns)
         suggestedLayoutManager = GridLayoutManager(this, baseConfig.columns)
+        suggestedNowLayoutManager = GridLayoutManager(this, baseConfig.columns)
+        recentLayoutManager = GridLayoutManager(this, baseConfig.columns)
         appsGrid.layoutManager = gridLayoutManager
         suggestedGrid.layoutManager = suggestedLayoutManager
+        suggestedNowGrid.layoutManager = suggestedNowLayoutManager
+        recentGrid.layoutManager = recentLayoutManager
         adapter = AppAdapter(
             emptyList(),
             baseConfig.copy(showLabels = true),
@@ -177,8 +193,24 @@ class AllAppsActivity : AppCompatActivity() {
             ::handleLongPress,
             if (targetFolderId == null) ::startDragAdd else null
         )
+        suggestedNowAdapter = AppAdapter(
+            emptyList(),
+            baseConfig.copy(showLabels = true),
+            ::launchApp,
+            ::handleLongPress,
+            if (targetFolderId == null) ::startDragAdd else null
+        )
+        recentAdapter = AppAdapter(
+            emptyList(),
+            baseConfig.copy(showLabels = true),
+            ::launchApp,
+            ::handleLongPress,
+            if (targetFolderId == null) ::startDragAdd else null
+        )
         appsGrid.adapter = adapter
         suggestedGrid.adapter = suggestedAdapter
+        suggestedNowGrid.adapter = suggestedNowAdapter
+        recentGrid.adapter = recentAdapter
 
         appWidgetManager = AppWidgetManager.getInstance(this)
         appWidgetHost = AppWidgetHost(this, hostId)
@@ -303,8 +335,12 @@ class AllAppsActivity : AppCompatActivity() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
         gridLayoutManager.spanCount = baseConfig.columns
         suggestedLayoutManager.spanCount = baseConfig.columns
+        suggestedNowLayoutManager.spanCount = baseConfig.columns
+        recentLayoutManager.spanCount = baseConfig.columns
         adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         suggestedAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+        suggestedNowAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+        recentAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
         widgetsGrid.columnCount = if (gridWidgetsSwitch.isChecked) 2 else 1
     }
 
@@ -316,6 +352,8 @@ class AllAppsActivity : AppCompatActivity() {
         showHiddenSwitch.setTextColor(colors.text)
         sortLabel.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
+        suggestedNowLabel.setTextColor(colors.text)
+        recentLabel.setTextColor(colors.text)
         usageAccessHint.setTextColor(colors.muted)
         usageAccessButton.setTextColor(colors.text)
         appsTabButton.setTextColor(colors.text)
@@ -612,14 +650,17 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun buildAvailableCategories(): List<Category> {
         val present = mutableSetOf<Category>()
+        val counts = mutableMapOf<Category, Int>()
         allApps.forEach { entry ->
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
                 if (category != Category.ALL && category != Category.FREQUENT && category != Category.RECENT &&
-                    category != Category.NEW && category != Category.UPDATED &&
-                    matchesCategory(category, appCategory, entry)
+                    category != Category.NEW && category != Category.UPDATED
                 ) {
-                    present.add(category)
+                    if (matchesCategory(category, appCategory, entry)) {
+                        present.add(category)
+                        counts[category] = (counts[category] ?: 0) + 1
+                    }
                 }
             }
         }
@@ -656,7 +697,21 @@ class AllAppsActivity : AppCompatActivity() {
         if (night.isNotEmpty()) {
             list.add(Category.NIGHT)
         }
-        list.addAll(Category.values().filter { it != Category.ALL && present.contains(it) })
+        val ranked = Category.values()
+            .filter {
+                it != Category.ALL &&
+                    it != Category.NEW &&
+                    it != Category.UPDATED &&
+                    it != Category.FREQUENT &&
+                    it != Category.RECENT &&
+                    it != Category.MORNING &&
+                    it != Category.DAY &&
+                    it != Category.EVENING &&
+                    it != Category.NIGHT
+            }
+            .filter { present.contains(it) }
+            .sortedByDescending { counts[it] ?: 0 }
+        list.addAll(ranked)
         if (!list.contains(currentCategory)) {
             currentCategory = Category.ALL
         }
@@ -718,6 +773,15 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun updateSuggested() {
+        val suggestedNow = LauncherStore.getSuggestedAppsForBucket(this, allApps, currentBucket(), 4)
+        if (suggestedNow.isEmpty()) {
+            suggestedNowLabel.visibility = android.view.View.GONE
+            suggestedNowGrid.visibility = android.view.View.GONE
+        } else {
+            suggestedNowLabel.visibility = android.view.View.VISIBLE
+            suggestedNowGrid.visibility = android.view.View.VISIBLE
+            suggestedNowAdapter.submit(suggestedNow)
+        }
         val suggested = LauncherStore.getSuggestedApps(this, allApps, 4)
         if (suggested.isEmpty()) {
             suggestedLabel.visibility = android.view.View.GONE
@@ -726,6 +790,25 @@ class AllAppsActivity : AppCompatActivity() {
             suggestedLabel.visibility = android.view.View.VISIBLE
             suggestedGrid.visibility = android.view.View.VISIBLE
             suggestedAdapter.submit(suggested)
+        }
+        val recent = LauncherStore.getRecentApps(this, allApps, 48, 8)
+        if (recent.isEmpty()) {
+            recentLabel.visibility = android.view.View.GONE
+            recentGrid.visibility = android.view.View.GONE
+        } else {
+            recentLabel.visibility = android.view.View.VISIBLE
+            recentGrid.visibility = android.view.View.VISIBLE
+            recentAdapter.submit(recent)
+        }
+    }
+
+    private fun currentBucket(): String {
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        return when (hour) {
+            in 5..10 -> "morning"
+            in 11..16 -> "day"
+            in 17..21 -> "evening"
+            else -> "night"
         }
     }
 
@@ -755,11 +838,14 @@ class AllAppsActivity : AppCompatActivity() {
             return
         }
         val dialogView = layoutInflater.inflate(R.layout.dialog_widget_list, null)
+        val searchInput = dialogView.findViewById<EditText>(R.id.widgetSearchInput)
         val recycler = dialogView.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.widgetListRecycler)
         recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         val entries = providers.map { info ->
             val label = info.label ?: info.provider.className
-            WidgetProviderEntry(info, label, loadWidgetPreview(info))
+            val sizeText = getString(R.string.launcher_widget_size_format, info.minWidth, info.minHeight)
+            val searchText = (label + " " + info.provider.packageName).lowercase()
+            WidgetProviderEntry(info, label, sizeText, searchText, loadWidgetPreview(info))
         }
         val adapter = WidgetPreviewAdapter(entries) { entry ->
             pendingProvider = entry.info
@@ -767,6 +853,16 @@ class AllAppsActivity : AppCompatActivity() {
             bindWidgetFromProvider(entry.info, pendingWidgetId)
         }
         recycler.adapter = adapter
+        val colors = LauncherPrefs.getThemeColors(this)
+        searchInput.setTextColor(colors.text)
+        searchInput.setHintTextColor(colors.muted)
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+            override fun afterTextChanged(s: Editable?) {
+                adapter.filter(s?.toString().orEmpty())
+            }
+        })
         AlertDialog.Builder(this)
             .setTitle(R.string.launcher_widgets_list)
             .setView(dialogView)
@@ -977,6 +1073,8 @@ class AllAppsActivity : AppCompatActivity() {
     private data class WidgetProviderEntry(
         val info: AppWidgetProviderInfo,
         val label: String,
+        val sizeText: String,
+        val searchText: String,
         val preview: android.graphics.drawable.Drawable?
     )
 
@@ -985,26 +1083,42 @@ class AllAppsActivity : AppCompatActivity() {
         private val onSelect: (WidgetProviderEntry) -> Unit
     ) : RecyclerView.Adapter<WidgetPreviewAdapter.WidgetViewHolder>() {
 
+        private val filtered = items.toMutableList()
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WidgetViewHolder {
             val view = layoutInflater.inflate(R.layout.item_widget_preview, parent, false)
             return WidgetViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: WidgetViewHolder, position: Int) {
-            val item = items[position]
+            val item = filtered[position]
             holder.label.text = item.label
             holder.label.setTextColor(LauncherPrefs.getThemeColors(this@AllAppsActivity).text)
+            holder.size.text = item.sizeText
+            holder.size.setTextColor(LauncherPrefs.getThemeColors(this@AllAppsActivity).muted)
             holder.preview.setImageDrawable(item.preview)
             holder.itemView.setOnClickListener {
                 onSelect(item)
             }
         }
 
-        override fun getItemCount(): Int = items.size
+        override fun getItemCount(): Int = filtered.size
+
+        fun filter(query: String) {
+            val needle = query.trim().lowercase()
+            filtered.clear()
+            if (needle.isBlank()) {
+                filtered.addAll(items)
+            } else {
+                filtered.addAll(items.filter { it.searchText.contains(needle) })
+            }
+            notifyDataSetChanged()
+        }
 
         inner class WidgetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val preview: android.widget.ImageView = view.findViewById(R.id.widgetPreviewImage)
             val label: TextView = view.findViewById(R.id.widgetPreviewLabel)
+            val size: TextView = view.findViewById(R.id.widgetPreviewSize)
         }
     }
 

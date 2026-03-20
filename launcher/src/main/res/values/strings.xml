@@ -60,6 +60,10 @@
     <string name="launcher_sort_alpha">Alfabetycznie</string>
     <string name="launcher_sort_recent">Ostatnio używane</string>
     <string name="launcher_sort_usage">Najczęściej używane</string>
+    <string name="launcher_suggested_now">Polecane teraz</string>
+    <string name="launcher_recent_apps">Ostatnio używane</string>
+    <string name="launcher_widgets_search_hint">Szukaj widgetu</string>
+    <string name="launcher_widget_size_format">Min: %1$ddp × %2$ddp</string>
     <string name="launcher_settings_button">Ustawienia</string>
     <string name="launcher_settings_title">Ustawienia launchera</string>
     <string name="launcher_settings_saved">Zapisano</string>
