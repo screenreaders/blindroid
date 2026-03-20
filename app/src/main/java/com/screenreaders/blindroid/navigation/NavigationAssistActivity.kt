@@ -54,6 +54,7 @@ class NavigationAssistActivity : AppCompatActivity() {
         binding.navigationApiKeyInput.setOnFocusChangeListener { _, _ ->
             Prefs.setNavigationApiKey(this, binding.navigationApiKeyInput.text?.toString().orEmpty())
         }
+        initPoiControls()
         loadSelectedCategories()
         updateCategorySummary()
     }
@@ -70,8 +71,13 @@ class NavigationAssistActivity : AppCompatActivity() {
         } else {
             "$place, $city"
         }
-        val mode = if (binding.navigationModeDriving.isChecked) "driving" else "walking"
-        speakConfirmation(destination, mode == "driving")
+        val mode = when {
+            binding.navigationModeDriving.isChecked -> "driving"
+            binding.navigationModeWalking.isChecked -> "walking"
+            binding.navigationModeBicycling.isChecked -> "bicycling"
+            else -> "transit"
+        }
+        speakConfirmation(destination, mode)
         if (binding.navigationTrackingSwitch.isChecked) {
             startTracking()
         }
@@ -162,11 +168,12 @@ class NavigationAssistActivity : AppCompatActivity() {
         }
     }
 
-    private fun speakConfirmation(destination: String, driving: Boolean) {
-        val text = if (driving) {
-            getString(R.string.navigation_confirm_driving, destination)
-        } else {
-            getString(R.string.navigation_confirm_walking, destination)
+    private fun speakConfirmation(destination: String, mode: String) {
+        val text = when (mode) {
+            "driving" -> getString(R.string.navigation_confirm_driving, destination)
+            "walking" -> getString(R.string.navigation_confirm_walking, destination)
+            "bicycling" -> getString(R.string.navigation_confirm_bicycling, destination)
+            else -> getString(R.string.navigation_confirm_transit, destination)
         }
         val announcer = CallAnnouncer(this)
         announcer.speak(
@@ -199,5 +206,54 @@ class NavigationAssistActivity : AppCompatActivity() {
 
     companion object {
         private const val REQ_LOCATION = 812
+    }
+
+    private fun initPoiControls() {
+        val radiusOptions = listOf(50, 100, 200)
+        val radiusLabels = radiusOptions.map { getString(R.string.navigation_radius_value, it) }
+        val radiusAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            radiusLabels
+        )
+        radiusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationRadiusSpinner.adapter = radiusAdapter
+        val radiusIndex = radiusOptions.indexOf(Prefs.getNavigationRadius(this)).let { if (it >= 0) it else 1 }
+        binding.navigationRadiusSpinner.setSelection(radiusIndex, false)
+        binding.navigationRadiusSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = radiusOptions.getOrElse(position) { 100 }
+                Prefs.setNavigationRadius(this@NavigationAssistActivity, value)
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+        }
+
+        val intervalOptions = listOf(15, 60, 180)
+        val intervalLabels = listOf(
+            getString(R.string.navigation_interval_fast),
+            getString(R.string.navigation_interval_normal),
+            getString(R.string.navigation_interval_slow)
+        )
+        val intervalAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            intervalLabels
+        )
+        intervalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationIntervalSpinner.adapter = intervalAdapter
+        val intervalIndex = intervalOptions.indexOf(Prefs.getNavigationSpeakIntervalSec(this)).let { if (it >= 0) it else 1 }
+        binding.navigationIntervalSpinner.setSelection(intervalIndex, false)
+        binding.navigationIntervalSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = intervalOptions.getOrElse(position) { 60 }
+                Prefs.setNavigationSpeakIntervalSec(this@NavigationAssistActivity, value)
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+        }
+
+        binding.navigationMovingOnlySwitch.isChecked = Prefs.isNavigationMovingOnly(this)
+        binding.navigationMovingOnlySwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationMovingOnly(this, isChecked)
+        }
     }
 }

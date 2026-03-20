@@ -77,6 +77,9 @@ object Prefs {
     private const val KEY_NAV_API_KEY = "nav_api_key"
     private const val KEY_NAV_TRACKING = "nav_tracking"
     private const val KEY_NAV_CATEGORIES = "nav_categories"
+    private const val KEY_NAV_RADIUS = "nav_radius"
+    private const val KEY_NAV_SPEAK_INTERVAL = "nav_speak_interval"
+    private const val KEY_NAV_MOVING_ONLY = "nav_moving_only"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -393,6 +396,27 @@ object Prefs {
 
     fun setNavigationCategories(context: Context, value: String) {
         prefs(context).edit().putString(KEY_NAV_CATEGORIES, value).apply()
+    }
+
+    fun getNavigationRadius(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_RADIUS, 100).coerceIn(50, 500)
+
+    fun setNavigationRadius(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_RADIUS, value.coerceIn(50, 500)).apply()
+    }
+
+    fun getNavigationSpeakIntervalSec(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_SPEAK_INTERVAL, 60).coerceIn(10, 600)
+
+    fun setNavigationSpeakIntervalSec(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_SPEAK_INTERVAL, value.coerceIn(10, 600)).apply()
+    }
+
+    fun isNavigationMovingOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_MOVING_ONLY, false)
+
+    fun setNavigationMovingOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_MOVING_ONLY, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

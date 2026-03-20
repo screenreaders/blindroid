@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import android.speech.tts.TextToSpeech
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -37,6 +38,9 @@ class NavigationPoiService : Service(), LocationListener {
     private val running = AtomicBoolean(false)
     private var lastQueryTime = 0L
     private var lastQueryLocation: Location? = null
+    private var lastSpokenTime = 0L
+    private var lastMotionLocation: Location? = null
+    private var lastMotionTime = 0L
     private val announced = LinkedHashMap<String, Long>()
     private var tts: TextToSpeech? = null
 
@@ -120,6 +124,7 @@ class NavigationPoiService : Service(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         if (!running.get()) return
+        if (Prefs.isNavigationMovingOnly(this) && !isMoving(location)) return
         val apiKey = Prefs.getNavigationApiKey(this)
         if (apiKey.isBlank()) return
         val categories = Prefs.getNavigationCategories(this)
@@ -129,9 +134,11 @@ class NavigationPoiService : Service(), LocationListener {
         if (categories.isEmpty()) return
 
         val now = System.currentTimeMillis()
+        val minIntervalMs = Prefs.getNavigationSpeakIntervalSec(this).toLong() * 1000L
+        val queryIntervalMs = minIntervalMs.coerceAtLeast(15_000L)
         val lastLoc = lastQueryLocation
         val moved = lastLoc == null || lastLoc.distanceTo(location) > 60f
-        if (!moved && now - lastQueryTime < 30_000L) return
+        if (!moved && now - lastQueryTime < queryIntervalMs) return
         lastQueryTime = now
         lastQueryLocation = location
         executor.execute {
@@ -142,10 +149,11 @@ class NavigationPoiService : Service(), LocationListener {
     }
 
     private fun fetchPlaces(type: String, location: Location, apiKey: String) {
+        val radius = Prefs.getNavigationRadius(this)
         val url = URL(
             "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
                 "?location=${location.latitude},${location.longitude}" +
-                "&radius=120&type=$type&key=$apiKey"
+                "&radius=$radius&type=$type&key=$apiKey"
         )
         val conn = (url.openConnection() as HttpURLConnection).apply {
             connectTimeout = 4000
@@ -164,8 +172,10 @@ class NavigationPoiService : Service(), LocationListener {
                 val lat = geom.optDouble("lat")
                 val lng = geom.optDouble("lng")
                 val distance = distanceMeters(location.latitude, location.longitude, lat, lng)
-                if (distance > 60) continue
+                val announceDistance = (radius * 0.6).toInt().coerceIn(30, 120)
+                if (distance > announceDistance) continue
                 if (isRecentlyAnnounced(placeId)) continue
+                if (!canSpeakNow()) continue
                 markAnnounced(placeId)
                 speakOnce("Mijasz: $name, ${labelForType(type)}")
                 break
@@ -226,6 +236,7 @@ class NavigationPoiService : Service(), LocationListener {
     }
 
     private fun speakOnce(text: String) {
+        lastSpokenTime = System.currentTimeMillis()
         val volume = Prefs.getSpeechVolume(this)
         val announcer = CallAnnouncer(this)
         announcer.speak(
@@ -243,6 +254,32 @@ class NavigationPoiService : Service(), LocationListener {
             PackageManager.PERMISSION_GRANTED ||
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun canSpeakNow(): Boolean {
+        val now = System.currentTimeMillis()
+        val minIntervalMs = Prefs.getNavigationSpeakIntervalSec(this).toLong() * 1000L
+        return now - lastSpokenTime >= minIntervalMs
+    }
+
+    private fun isMoving(location: Location): Boolean {
+        if (location.hasSpeed()) {
+            return location.speed >= 0.6f
+        }
+        val now = SystemClock.elapsedRealtime()
+        val prev = lastMotionLocation
+        return if (prev == null) {
+            lastMotionLocation = location
+            lastMotionTime = now
+            true
+        } else {
+            val distance = prev.distanceTo(location)
+            val dt = (now - lastMotionTime).coerceAtLeast(1L)
+            val speed = distance / (dt / 1000f)
+            lastMotionLocation = location
+            lastMotionTime = now
+            speed >= 0.6f
+        }
     }
 
     private fun buildNotification(): Notification {

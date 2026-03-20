@@ -51,6 +51,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/navigation_mode_walking" />
+
+            <RadioButton
+                android:id="@+id/navigationModeBicycling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_mode_bicycling" />
+
+            <RadioButton
+                android:id="@+id/navigationModeTransit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_mode_transit" />
         </RadioGroup>
 
         <Button
@@ -74,6 +86,41 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/navigation_tracking_enable" />
+
+        <TextView
+            android:id="@+id/navigationRadiusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/navigationRadiusSpinner"
+            android:text="@string/navigation_radius_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationRadiusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/navigationIntervalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/navigationIntervalSpinner"
+            android:text="@string/navigation_interval_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationIntervalSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationMovingOnlySwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_moving_only" />
 
         <Button
             android:id="@+id/navigationCategoriesButton"
