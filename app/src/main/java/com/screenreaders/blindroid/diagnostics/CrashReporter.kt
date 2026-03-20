@@ -3,10 +3,14 @@ package com.screenreaders.blindroid.diagnostics
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.core.content.FileProvider
 import com.screenreaders.blindroid.BuildConfig
 import com.screenreaders.blindroid.data.Prefs
 import java.io.File
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -14,8 +18,14 @@ import java.util.Locale
 object CrashReporter {
     private const val DIR_NAME = "crash_reports"
     private const val MAX_REPORTS = 5
+    private const val REPORT_ENDPOINT = "https://report.asteja.eu/"
+    private const val REPORT_HEADER = "X-Report-Token"
+    private const val REPORT_TOKEN = "47dc28661ef7d1ac07400827508b6aa9"
+    private const val CONNECT_TIMEOUT_MS = 5000
+    private const val READ_TIMEOUT_MS = 7000
     private var initialized = false
     private var defaultHandler: Thread.UncaughtExceptionHandler? = null
+    @Volatile private var uploadInProgress = false
 
     fun init(context: Context) {
         if (initialized) return
@@ -82,6 +92,31 @@ object CrashReporter {
         return Intent(Intent.ACTION_VIEW, Uri.parse(url))
     }
 
+    fun uploadPendingReports(context: Context) {
+        if (!Prefs.isCrashReportingEnabled(context)) return
+        if (uploadInProgress) return
+        val dir = File(context.filesDir, DIR_NAME)
+        val files = dir.listFiles()?.sortedBy { it.lastModified() } ?: return
+        if (files.isEmpty()) return
+        val appContext = context.applicationContext
+        uploadInProgress = true
+        Thread {
+            try {
+                if (!hasNetwork(appContext)) return@Thread
+                for (file in files) {
+                    val ok = uploadReport(file)
+                    if (ok) {
+                        file.delete()
+                    } else {
+                        break
+                    }
+                }
+            } finally {
+                uploadInProgress = false
+            }
+        }.start()
+    }
+
     private fun writeReport(context: Context, thread: Thread, throwable: Throwable) {
         val dir = File(context.filesDir, DIR_NAME)
         if (!dir.exists()) dir.mkdirs()
@@ -108,6 +143,32 @@ object CrashReporter {
         sb.appendLine("speaker=${Prefs.isAutoSpeakerEnabled(context)}")
         sb.appendLine("moduleShortcuts=${Prefs.isModuleShortcutsEnabled(context)}")
         return sb.toString()
+    }
+
+    private fun hasNetwork(context: Context): Boolean {
+        val cm = context.getSystemService(ConnectivityManager::class.java) ?: return false
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+
+    private fun uploadReport(file: File): Boolean {
+        return try {
+            val conn = (URL(REPORT_ENDPOINT).openConnection() as HttpURLConnection).apply {
+                requestMethod = "POST"
+                doOutput = true
+                connectTimeout = CONNECT_TIMEOUT_MS
+                readTimeout = READ_TIMEOUT_MS
+                setRequestProperty("Content-Type", "text/plain; charset=utf-8")
+                setRequestProperty(REPORT_HEADER, REPORT_TOKEN)
+            }
+            conn.outputStream.use { it.write(file.readBytes()) }
+            val code = conn.responseCode
+            code in 200..299
+        } catch (_: Exception) {
+            false
+        }
     }
 
     private fun trimOldReports(dir: File) {

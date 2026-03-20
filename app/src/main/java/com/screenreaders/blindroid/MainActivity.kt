@@ -215,6 +215,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         registerDownloadReceiverIfNeeded()
+        CrashReporter.uploadPendingReports(this)
     }
 
     override fun onStop() {
