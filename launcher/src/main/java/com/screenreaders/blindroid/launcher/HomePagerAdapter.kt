@@ -23,6 +23,8 @@ class HomePagerAdapter(
     private val onOpenBluetoothSettings: () -> Unit,
     private val onOpenNetworkSettings: () -> Unit,
     private val onOpenStorageSettings: () -> Unit,
+    private val onOpenDndSettings: () -> Unit,
+    private val onOpenSoundSettings: () -> Unit,
     private val onOpenAllApps: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
@@ -63,6 +65,8 @@ class HomePagerAdapter(
                 onOpenBluetoothSettings,
                 onOpenNetworkSettings,
                 onOpenStorageSettings,
+                onOpenDndSettings,
+                onOpenSoundSettings,
                 onOpenAllApps
             )
             return
@@ -183,6 +187,12 @@ class HomePagerAdapter(
         private val cardRam: LinearLayout = view.findViewById(R.id.cardRam)
         private val cardRamTitle: TextView = view.findViewById(R.id.cardRamTitle)
         private val cardRamText: TextView = view.findViewById(R.id.cardRamText)
+        private val cardDnd: LinearLayout = view.findViewById(R.id.cardDnd)
+        private val cardDndTitle: TextView = view.findViewById(R.id.cardDndTitle)
+        private val cardDndText: TextView = view.findViewById(R.id.cardDndText)
+        private val cardRinger: LinearLayout = view.findViewById(R.id.cardRinger)
+        private val cardRingerTitle: TextView = view.findViewById(R.id.cardRingerTitle)
+        private val cardRingerText: TextView = view.findViewById(R.id.cardRingerText)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
@@ -199,6 +209,8 @@ class HomePagerAdapter(
             onOpenBluetoothSettings: () -> Unit,
             onOpenNetworkSettings: () -> Unit,
             onOpenStorageSettings: () -> Unit,
+            onOpenDndSettings: () -> Unit,
+            onOpenSoundSettings: () -> Unit,
             onOpenAllApps: () -> Unit
         ) {
             title.setTextColor(colors.text)
@@ -225,6 +237,10 @@ class HomePagerAdapter(
             cardAirplaneText.setTextColor(colors.muted)
             cardRamTitle.setTextColor(colors.text)
             cardRamText.setTextColor(colors.muted)
+            cardDndTitle.setTextColor(colors.text)
+            cardDndText.setTextColor(colors.muted)
+            cardRingerTitle.setTextColor(colors.text)
+            cardRingerText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
             openButton.setTextColor(colors.text)
@@ -373,6 +389,26 @@ class HomePagerAdapter(
                 cardRam.setOnClickListener(null)
             }
 
+            if (data.showDnd) {
+                cardDnd.visibility = View.VISIBLE
+                cardDndText.text = data.dndText
+                    ?: itemView.context.getString(R.string.launcher_feed_dnd_off)
+                cardDnd.setOnClickListener { onOpenDndSettings() }
+            } else {
+                cardDnd.visibility = View.GONE
+                cardDnd.setOnClickListener(null)
+            }
+
+            if (data.showRinger) {
+                cardRinger.visibility = View.VISIBLE
+                cardRingerText.text = data.ringerText
+                    ?: itemView.context.getString(R.string.launcher_feed_ringer_sound)
+                cardRinger.setOnClickListener { onOpenSoundSettings() }
+            } else {
+                cardRinger.visibility = View.GONE
+                cardRinger.setOnClickListener(null)
+            }
+
             applyCardStyle(cardAlarm, colors)
             applyCardStyle(cardCalendar, colors)
             applyCardStyle(cardWeather, colors)
@@ -383,6 +419,8 @@ class HomePagerAdapter(
             applyCardStyle(cardTopApps, colors)
             applyCardStyle(cardAirplane, colors)
             applyCardStyle(cardRam, colors)
+            applyCardStyle(cardDnd, colors)
+            applyCardStyle(cardRinger, colors)
 
             nowCards.visibility = if (
                 data.showAlarm ||
@@ -394,7 +432,9 @@ class HomePagerAdapter(
                 data.showStorage ||
                 data.showTopApps ||
                 data.showAirplane ||
-                data.showRam
+                data.showRam ||
+                data.showDnd ||
+                data.showRinger
             ) {
                 View.VISIBLE
             } else {

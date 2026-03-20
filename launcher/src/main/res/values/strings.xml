@@ -17,6 +17,7 @@
     <string name="launcher_simple_favorites">Ulubione</string>
     <string name="launcher_suggested_apps">Sugerowane</string>
     <string name="launcher_category_all">Wszystkie</string>
+    <string name="launcher_category_recent">Ostatnie</string>
     <string name="launcher_category_frequent">Często używane</string>
     <string name="launcher_category_communication">Komunikacja</string>
     <string name="launcher_category_media">Multimedia</string>
@@ -24,6 +25,13 @@
     <string name="launcher_category_tools">Narzędzia</string>
     <string name="launcher_category_social">Społeczności</string>
     <string name="launcher_category_game">Gry</string>
+    <string name="launcher_category_maps">Mapy</string>
+    <string name="launcher_category_news">Wiadomości</string>
+    <string name="launcher_category_finance">Finanse</string>
+    <string name="launcher_category_travel">Podróże</string>
+    <string name="launcher_category_education">Edukacja</string>
+    <string name="launcher_category_health">Zdrowie</string>
+    <string name="launcher_category_weather">Pogoda</string>
     <string name="launcher_settings_button">Ustawienia</string>
     <string name="launcher_settings_title">Ustawienia launchera</string>
     <string name="launcher_settings_saved">Zapisano</string>
@@ -94,6 +102,8 @@
     <string name="launcher_settings_now_top_apps">Karta: ostatnio używane aplikacje</string>
     <string name="launcher_settings_now_airplane">Karta: tryb samolotowy</string>
     <string name="launcher_settings_now_ram">Karta: pamięć RAM</string>
+    <string name="launcher_settings_now_dnd">Karta: nie przeszkadzać</string>
+    <string name="launcher_settings_now_ringer">Karta: dzwonek</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
@@ -141,6 +151,15 @@
     <string name="launcher_feed_airplane_off">Wyłączony</string>
     <string name="launcher_feed_ram_title">Pamięć RAM</string>
     <string name="launcher_feed_ram_text">Wolne %1$s z %2$s</string>
+    <string name="launcher_feed_dnd_title">Nie przeszkadzać</string>
+    <string name="launcher_feed_dnd_on">Włączony</string>
+    <string name="launcher_feed_dnd_priority">Tylko priorytety</string>
+    <string name="launcher_feed_dnd_alarms">Tylko alarmy</string>
+    <string name="launcher_feed_dnd_off">Wyłączony</string>
+    <string name="launcher_feed_ringer_title">Dzwonek</string>
+    <string name="launcher_feed_ringer_sound">Dźwięk</string>
+    <string name="launcher_feed_ringer_vibrate">Wibracje</string>
+    <string name="launcher_feed_ringer_silent">Cisza</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>

@@ -20,6 +20,7 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.BatteryManager
 import android.app.ActivityManager
+import android.app.NotificationManager
 import android.os.Environment
 import android.os.StatFs
 import android.provider.AlarmClock
@@ -128,6 +129,8 @@ class LauncherActivity : AppCompatActivity() {
             ::openBluetoothSettings,
             ::openNetworkSettings,
             ::openStorageSettings,
+            ::openDndSettings,
+            ::openSoundSettings,
             ::openAllApps,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
@@ -136,11 +139,12 @@ class LauncherActivity : AppCompatActivity() {
         homePager.adapter = homeAdapter
         homePager.offscreenPageLimit = 2
         homePager.setPageTransformer { page, position ->
-            val scale = 0.9f + (1 - kotlin.math.abs(position)) * 0.1f
+            val absPos = kotlin.math.abs(position)
+            val scale = 0.92f + (1f - absPos) * 0.08f
             page.scaleX = scale
             page.scaleY = scale
-            page.alpha = 0.8f + (1 - kotlin.math.abs(position)) * 0.2f
-            page.translationX = -position * page.width * 0.04f
+            page.alpha = 0.6f + (1f - absPos) * 0.4f
+            page.translationX = -position * page.width * 0.08f
         }
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -150,6 +154,7 @@ class LauncherActivity : AppCompatActivity() {
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 updateWallpaperParallax(position, positionOffset)
+                updatePageIndicatorProgress(position, positionOffset)
             }
         })
 
@@ -478,6 +483,8 @@ class LauncherActivity : AppCompatActivity() {
         val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
         val showAirplane = LauncherPrefs.isNowAirplaneEnabled(this)
         val showRam = LauncherPrefs.isNowRamEnabled(this)
+        val showDnd = LauncherPrefs.isNowDndEnabled(this)
+        val showRinger = LauncherPrefs.isNowRingerEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
@@ -492,6 +499,8 @@ class LauncherActivity : AppCompatActivity() {
         val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
         val airplaneText = if (showAirplane) getAirplaneText() else null
         val ramText = if (showRam) getRamText() else null
+        val dndText = if (showDnd) getDndText() else null
+        val ringerText = if (showRinger) getRingerText() else null
         return FeedData(
             time = time,
             date = date,
@@ -519,7 +528,11 @@ class LauncherActivity : AppCompatActivity() {
             showAirplane = showAirplane,
             airplaneText = airplaneText,
             showRam = showRam,
-            ramText = ramText
+            ramText = ramText,
+            showDnd = showDnd,
+            dndText = dndText,
+            showRinger = showRinger,
+            ringerText = ringerText
         )
     }
 
@@ -698,6 +711,38 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
+    private fun getDndText(): String? {
+        return try {
+            val nm = getSystemService(NotificationManager::class.java)
+            when (nm.currentInterruptionFilter) {
+                NotificationManager.INTERRUPTION_FILTER_NONE ->
+                    getString(R.string.launcher_feed_dnd_on)
+                NotificationManager.INTERRUPTION_FILTER_PRIORITY ->
+                    getString(R.string.launcher_feed_dnd_priority)
+                NotificationManager.INTERRUPTION_FILTER_ALARMS ->
+                    getString(R.string.launcher_feed_dnd_alarms)
+                else -> getString(R.string.launcher_feed_dnd_off)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun getRingerText(): String? {
+        return try {
+            val audio = getSystemService(AudioManager::class.java)
+            when (audio.ringerMode) {
+                AudioManager.RINGER_MODE_SILENT ->
+                    getString(R.string.launcher_feed_ringer_silent)
+                AudioManager.RINGER_MODE_VIBRATE ->
+                    getString(R.string.launcher_feed_ringer_vibrate)
+                else -> getString(R.string.launcher_feed_ringer_sound)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     private fun formatDateTime(epochMillis: Long, allowTodayLabel: Boolean): String {
         val zone = ZoneId.systemDefault()
         val dateTime = Instant.ofEpochMilli(epochMillis).atZone(zone)
@@ -722,20 +767,62 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun updatePageIndicator() {
-        pageIndicator.removeAllViews()
         val count = homeAdapter.itemCount
-        if (count <= 1) return
-        val params = LinearLayout.LayoutParams(16, 16)
-        params.marginEnd = 8
-        val colors = LauncherPrefs.getThemeColors(this)
-        for (i in 0 until count) {
-            val dot = View(this)
-            dot.layoutParams = params
-            val selected = i == homePager.currentItem
-            dot.setBackgroundColor(if (selected) colors.text else colors.muted)
-            dot.alpha = if (selected) 1.0f else 0.6f
-            pageIndicator.addView(dot)
+        if (count <= 1) {
+            pageIndicator.removeAllViews()
+            return
         }
+        if (pageIndicator.childCount != count) {
+            pageIndicator.removeAllViews()
+            val size = dpToPx(6f)
+            val margin = dpToPx(6f)
+            val colors = LauncherPrefs.getThemeColors(this)
+            for (i in 0 until count) {
+                val dot = View(this)
+                val params = LinearLayout.LayoutParams(size, size)
+                params.marginEnd = margin
+                dot.layoutParams = params
+                val drawable = android.graphics.drawable.GradientDrawable().apply {
+                    shape = android.graphics.drawable.GradientDrawable.OVAL
+                    setColor(colors.muted)
+                }
+                dot.background = drawable
+                dot.tag = drawable
+                pageIndicator.addView(dot)
+            }
+        }
+        updatePageIndicatorProgress(homePager.currentItem, 0f)
+    }
+
+    private fun updatePageIndicatorProgress(position: Int, offset: Float) {
+        val count = pageIndicator.childCount
+        if (count == 0) return
+        val colors = LauncherPrefs.getThemeColors(this)
+        val total = (position + offset).coerceIn(0f, (count - 1).toFloat())
+        for (i in 0 until count) {
+            val dot = pageIndicator.getChildAt(i)
+            val distance = kotlin.math.abs(total - i.toFloat()).coerceAtMost(1f)
+            val focus = 1f - distance
+            val scale = 0.85f + focus * 0.45f
+            dot.scaleX = scale
+            dot.scaleY = scale
+            dot.alpha = 0.6f + focus * 0.4f
+            val color = blendColor(colors.muted, colors.text, focus)
+            val drawable = dot.tag as? android.graphics.drawable.GradientDrawable
+            drawable?.setColor(color)
+        }
+    }
+
+    private fun dpToPx(dp: Float): Int {
+        val density = resources.displayMetrics.density
+        return (dp * density).toInt().coerceAtLeast(1)
+    }
+
+    private fun blendColor(base: Int, overlay: Int, alpha: Float): Int {
+        val r = ((1 - alpha) * android.graphics.Color.red(base) + alpha * android.graphics.Color.red(overlay)).toInt()
+        val g = ((1 - alpha) * android.graphics.Color.green(base) + alpha * android.graphics.Color.green(overlay)).toInt()
+        val b = ((1 - alpha) * android.graphics.Color.blue(base) + alpha * android.graphics.Color.blue(overlay)).toInt()
+        return android.graphics.Color.rgb(r, g, b)
     }
 
     private fun maybeAutoOpenExternalFeed(position: Int) {
@@ -1284,6 +1371,27 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun openNetworkSettings() {
         val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openDndSettings() {
+        try {
+            startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
+        } catch (_: Exception) {
+            try {
+                startActivity(Intent(Settings.ACTION_SOUND_SETTINGS))
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun openSoundSettings() {
+        val intent = Intent(Settings.ACTION_SOUND_SETTINGS)
         try {
             startActivity(intent)
         } catch (_: Exception) {

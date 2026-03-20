@@ -341,14 +341,43 @@ object LauncherStore {
             val count = prefs.getInt(key, 0)
             val last = prefs.getLong(lastKey, 0L)
             val bucketCount = prefs.getInt(bucketKey, 0)
-            val hours = if (last > 0L) (now - last).toFloat() / 3_600_000f else 9999f
-            val recencyScore = (24f - hours).coerceAtLeast(0f) / 24f
-            val score = count + bucketCount * 1.5f + recencyScore * 2f
+            val minutes = if (last > 0L) (now - last).toFloat() / 60_000f else 999_999f
+            val days = minutes / (60f * 24f)
+            val recencyScore = (7f - days).coerceAtLeast(0f) / 7f
+            val recentBoost = when {
+                minutes <= 15f -> 3f
+                minutes <= 60f -> 2.2f
+                minutes <= 240f -> 1.2f
+                minutes <= 1440f -> 0.6f
+                else -> 0f
+            }
+            val score = count * 1.1f + bucketCount * 2.0f + recencyScore * 3.0f + recentBoost
             entry to score
         }
         return scored.sortedByDescending { it.second }
             .filter { it.second > 0f }
             .map { it.first }
+            .take(limit)
+    }
+
+    fun getRecentApps(
+        context: Context,
+        allApps: List<AppEntry>,
+        withinHours: Int = 48,
+        limit: Int = 20
+    ): List<AppEntry> {
+        val prefs = prefs(context)
+        val now = System.currentTimeMillis()
+        val cutoff = now - withinHours * 3_600_000L
+        val recent = allApps.mapNotNull { entry ->
+            val componentKey = entry.component.flattenToString()
+            val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
+            val last = prefs.getLong(lastKey, 0L)
+            if (last >= cutoff) entry to last else null
+        }
+        return recent.sortedByDescending { it.second }
+            .map { it.first }
+            .distinctBy { it.component.flattenToString() }
             .take(limit)
     }
 

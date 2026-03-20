@@ -36,6 +36,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowTopAppsSwitch: Switch
     private lateinit var nowAirplaneSwitch: Switch
     private lateinit var nowRamSwitch: Switch
+    private lateinit var nowDndSwitch: Switch
+    private lateinit var nowRingerSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -109,6 +111,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowTopAppsSwitch = findViewById(R.id.nowTopAppsSwitch)
         nowAirplaneSwitch = findViewById(R.id.nowAirplaneSwitch)
         nowRamSwitch = findViewById(R.id.nowRamSwitch)
+        nowDndSwitch = findViewById(R.id.nowDndSwitch)
+        nowRingerSwitch = findViewById(R.id.nowRingerSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -180,6 +184,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowTopAppsSwitch.isChecked = LauncherPrefs.isNowTopAppsEnabled(this)
         nowAirplaneSwitch.isChecked = LauncherPrefs.isNowAirplaneEnabled(this)
         nowRamSwitch.isChecked = LauncherPrefs.isNowRamEnabled(this)
+        nowDndSwitch.isChecked = LauncherPrefs.isNowDndEnabled(this)
+        nowRingerSwitch.isChecked = LauncherPrefs.isNowRingerEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -351,6 +357,16 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowRamSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowRamEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowDndSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowDndEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowRingerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowRingerEnabled(this, isChecked)
             toastSaved()
         }
 

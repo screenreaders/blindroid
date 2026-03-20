@@ -27,5 +27,9 @@ data class FeedData(
     val showAirplane: Boolean,
     val airplaneText: String?,
     val showRam: Boolean,
-    val ramText: String?
+    val ramText: String?,
+    val showDnd: Boolean,
+    val dndText: String?,
+    val showRinger: Boolean,
+    val ringerText: String?
 )

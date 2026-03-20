@@ -143,6 +143,20 @@
             android:text="@string/launcher_settings_now_ram" />
 
         <Switch
+            android:id="@+id/nowDndSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_dnd" />
+
+        <Switch
+            android:id="@+id/nowRingerSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_ringer" />
+
+        <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

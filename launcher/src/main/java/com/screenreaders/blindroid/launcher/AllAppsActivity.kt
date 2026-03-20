@@ -67,19 +67,30 @@ class AllAppsActivity : AppCompatActivity() {
     private var availableCategories: List<Category> = listOf(Category.ALL)
     private var currentTab: String = TAB_APPS
     private var draggingEntry: AppEntry? = null
+    private val categoryValueCache = mutableMapOf<String, Int?>()
 
     private val hostId = 2048
     private val requestPickWidget = 2001
     private val requestBindWidget = 2002
     private val requestConfigureWidget = 2003
 
-    private enum class Category(val labelRes: Int, val appCategory: Int?) {
-        ALL(R.string.launcher_category_all, null),
-        FREQUENT(R.string.launcher_category_frequent, null),
-        MEDIA(R.string.launcher_category_media, ApplicationInfo.CATEGORY_AUDIO),
-        PRODUCTIVITY(R.string.launcher_category_productivity, ApplicationInfo.CATEGORY_PRODUCTIVITY),
-        SOCIAL(R.string.launcher_category_social, ApplicationInfo.CATEGORY_SOCIAL),
-        GAME(R.string.launcher_category_game, ApplicationInfo.CATEGORY_GAME)
+    private enum class Category(val labelRes: Int, val categoryNames: List<String>) {
+        ALL(R.string.launcher_category_all, emptyList()),
+        RECENT(R.string.launcher_category_recent, emptyList()),
+        FREQUENT(R.string.launcher_category_frequent, emptyList()),
+        COMMUNICATION(R.string.launcher_category_communication, listOf("CATEGORY_COMMUNICATION")),
+        SOCIAL(R.string.launcher_category_social, listOf("CATEGORY_SOCIAL")),
+        PRODUCTIVITY(R.string.launcher_category_productivity, listOf("CATEGORY_PRODUCTIVITY")),
+        MEDIA(R.string.launcher_category_media, listOf("CATEGORY_AUDIO", "CATEGORY_VIDEO", "CATEGORY_IMAGE")),
+        TOOLS(R.string.launcher_category_tools, listOf("CATEGORY_TOOLS")),
+        MAPS(R.string.launcher_category_maps, listOf("CATEGORY_MAPS")),
+        NEWS(R.string.launcher_category_news, listOf("CATEGORY_NEWS")),
+        FINANCE(R.string.launcher_category_finance, listOf("CATEGORY_FINANCE")),
+        TRAVEL(R.string.launcher_category_travel, listOf("CATEGORY_TRAVEL_AND_LOCAL")),
+        EDUCATION(R.string.launcher_category_education, listOf("CATEGORY_EDUCATION")),
+        HEALTH(R.string.launcher_category_health, listOf("CATEGORY_HEALTH", "CATEGORY_HEALTH_AND_FITNESS")),
+        WEATHER(R.string.launcher_category_weather, listOf("CATEGORY_WEATHER")),
+        GAME(R.string.launcher_category_game, listOf("CATEGORY_GAME"))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -379,13 +390,20 @@ class AllAppsActivity : AppCompatActivity() {
         } else {
             emptySet()
         }
+        val recentKeys = if (currentCategory == Category.RECENT) {
+            LauncherStore.getRecentApps(this, allApps, 48, 40)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
         filteredApps = allApps.filter { entry ->
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
-            val matchesCategory = if (currentCategory == Category.FREQUENT) {
-                frequentKeys.contains(entry.component.flattenToString())
-            } else {
-                matchesCategory(currentCategory, category)
+            val matchesCategory = when (currentCategory) {
+                Category.FREQUENT -> frequentKeys.contains(entry.component.flattenToString())
+                Category.RECENT -> recentKeys.contains(entry.component.flattenToString())
+                else -> matchesCategory(currentCategory, category)
             }
             matchesQuery && matchesCategory
         }
@@ -402,13 +420,21 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun matchesCategory(category: Category, appCategory: Int?): Boolean {
-        return when (category) {
-            Category.ALL -> true
-            Category.FREQUENT -> true
-            Category.MEDIA -> appCategory == ApplicationInfo.CATEGORY_AUDIO ||
-                appCategory == ApplicationInfo.CATEGORY_VIDEO ||
-                appCategory == ApplicationInfo.CATEGORY_IMAGE
-            else -> appCategory == category.appCategory
+        if (category == Category.ALL || category == Category.FREQUENT || category == Category.RECENT) return true
+        if (appCategory == null) return false
+        return category.categoryNames.any { name ->
+            val value = resolveCategoryValue(name) ?: return@any false
+            appCategory == value
+        }
+    }
+
+    private fun resolveCategoryValue(name: String): Int? {
+        return categoryValueCache.getOrPut(name) {
+            try {
+                ApplicationInfo::class.java.getField(name).getInt(null)
+            } catch (_: Exception) {
+                null
+            }
         }
     }
 
@@ -417,12 +443,18 @@ class AllAppsActivity : AppCompatActivity() {
         allApps.forEach { entry ->
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
-                if (category != Category.ALL && category != Category.FREQUENT && matchesCategory(category, appCategory)) {
+                if (category != Category.ALL && category != Category.FREQUENT && category != Category.RECENT &&
+                    matchesCategory(category, appCategory)
+                ) {
                     present.add(category)
                 }
             }
         }
         val list = mutableListOf(Category.ALL)
+        val recent = LauncherStore.getRecentApps(this, allApps, 48, 12)
+        if (recent.isNotEmpty()) {
+            list.add(Category.RECENT)
+        }
         val frequent = LauncherStore.getSuggestedApps(this, allApps, 12)
         if (frequent.isNotEmpty()) {
             list.add(Category.FREQUENT)
