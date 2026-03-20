@@ -227,6 +227,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateNotificationAccessButton()
         updateCrashReportStatus()
+        updateCrashReportControls()
         if (Prefs.isChimeEnabled(this) && isExactAlarmAllowed()) {
             ChimeScheduler.schedule(this)
         }
@@ -234,8 +235,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun initCrashReportUi() {
         binding.crashReportSwitch.isChecked = Prefs.isCrashReportingEnabled(this)
+        binding.crashReportWifiSwitch.isChecked = Prefs.isCrashWifiOnly(this)
+        binding.crashReportForegroundSwitch.isChecked = Prefs.isCrashForegroundOnly(this)
+        binding.crashReportDeviceInfoSwitch.isChecked = Prefs.isCrashDeviceInfoEnabled(this)
         binding.crashReportSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashReportingEnabled(this, isChecked)
+            updateCrashReportControls()
+        }
+        binding.crashReportWifiSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCrashWifiOnly(this, isChecked)
+        }
+        binding.crashReportForegroundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCrashForegroundOnly(this, isChecked)
+        }
+        binding.crashReportDeviceInfoSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setCrashDeviceInfoEnabled(this, isChecked)
         }
 
         binding.crashReportShareButton.setOnClickListener {
@@ -251,14 +265,23 @@ class MainActivity : AppCompatActivity() {
             updateCrashReportStatus()
         }
 
+        updateCrashReportControls()
         updateCrashReportStatus()
     }
 
     private fun updateCrashReportStatus() {
         binding.crashReportStatus.text = CrashReporter.buildReportSummary(this)
-        val hasReport = CrashReporter.getLatestReport(this) != null
-        binding.crashReportShareButton.isEnabled = hasReport
-        binding.crashReportClearButton.isEnabled = hasReport
+    }
+
+    private fun updateCrashReportControls() {
+        val enabled = Prefs.isCrashReportingEnabled(this)
+        binding.crashReportWifiSwitch.isEnabled = enabled
+        binding.crashReportForegroundSwitch.isEnabled = enabled
+        binding.crashReportDeviceInfoSwitch.isEnabled = enabled
+        binding.crashReportShareButton.isEnabled =
+            enabled && CrashReporter.getLatestReport(this) != null
+        binding.crashReportClearButton.isEnabled =
+            enabled && CrashReporter.getLatestReport(this) != null
     }
 
     private fun shareCrashReport() {

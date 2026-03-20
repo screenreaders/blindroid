@@ -3,8 +3,12 @@ package com.screenreaders.blindroid.diagnostics
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.app.ActivityManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
+import android.os.Environment
+import android.os.StatFs
 import androidx.core.content.FileProvider
 import com.screenreaders.blindroid.BuildConfig
 import com.screenreaders.blindroid.data.Prefs
@@ -26,6 +30,7 @@ object CrashReporter {
     private var initialized = false
     private var defaultHandler: Thread.UncaughtExceptionHandler? = null
     @Volatile private var uploadInProgress = false
+    @Volatile private var appInForeground = false
 
     fun init(context: Context) {
         if (initialized) return
@@ -42,6 +47,10 @@ object CrashReporter {
             }
             defaultHandler?.uncaughtException(thread, throwable)
         }
+    }
+
+    fun setAppInForeground(value: Boolean) {
+        appInForeground = value
     }
 
     fun getLatestReport(context: Context): File? {
@@ -95,6 +104,7 @@ object CrashReporter {
     fun uploadPendingReports(context: Context) {
         if (!Prefs.isCrashReportingEnabled(context)) return
         if (uploadInProgress) return
+        if (Prefs.isCrashForegroundOnly(context) && !appInForeground) return
         val dir = File(context.filesDir, DIR_NAME)
         val files = dir.listFiles()?.sortedBy { it.lastModified() } ?: return
         if (files.isEmpty()) return
@@ -102,7 +112,7 @@ object CrashReporter {
         uploadInProgress = true
         Thread {
             try {
-                if (!hasNetwork(appContext)) return@Thread
+                if (!hasAllowedNetwork(appContext)) return@Thread
                 for (file in files) {
                     val ok = uploadReport(file)
                     if (ok) {
@@ -142,15 +152,44 @@ object CrashReporter {
         sb.appendLine("announce=${Prefs.isAnnounceEnabled(context)}")
         sb.appendLine("speaker=${Prefs.isAutoSpeakerEnabled(context)}")
         sb.appendLine("moduleShortcuts=${Prefs.isModuleShortcutsEnabled(context)}")
+        if (Prefs.isCrashDeviceInfoEnabled(context)) {
+            sb.appendLine()
+            sb.appendLine("DeviceInfo:")
+            sb.appendLine("brand=${Build.BRAND}")
+            sb.appendLine("device=${Build.DEVICE}")
+            sb.appendLine("product=${Build.PRODUCT}")
+            sb.appendLine("hardware=${Build.HARDWARE}")
+            sb.appendLine("cpu_abis=${Build.SUPPORTED_ABIS.joinToString()}")
+            sb.appendLine("locale=${context.resources.configuration.locales.toLanguageTags()}")
+            sb.appendLine("timezone=${java.util.TimeZone.getDefault().id}")
+            val am = context.getSystemService(ActivityManager::class.java)
+            if (am != null) {
+                val info = ActivityManager.MemoryInfo()
+                am.getMemoryInfo(info)
+                sb.appendLine("ram_total=${bytesToHuman(info.totalMem)}")
+                sb.appendLine("ram_avail=${bytesToHuman(info.availMem)}")
+            }
+            val storage = getStorageInfo()
+            if (storage != null) {
+                sb.appendLine("storage_avail=${storage.first}")
+                sb.appendLine("storage_total=${storage.second}")
+            }
+        }
         return sb.toString()
     }
 
-    private fun hasNetwork(context: Context): Boolean {
+    private fun hasAllowedNetwork(context: Context): Boolean {
         val cm = context.getSystemService(ConnectivityManager::class.java) ?: return false
         val network = cm.activeNetwork ?: return false
         val caps = cm.getNetworkCapabilities(network) ?: return false
-        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+        val validated = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
             caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        if (!validated) return false
+        return if (Prefs.isCrashWifiOnly(context)) {
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        } else {
+            true
+        }
     }
 
     private fun uploadReport(file: File): Boolean {
@@ -169,6 +208,30 @@ object CrashReporter {
         } catch (_: Exception) {
             false
         }
+    }
+
+    private fun getStorageInfo(): Pair<String, String>? {
+        return try {
+            val path = Environment.getDataDirectory()
+            val stat = StatFs(path.path)
+            val available = bytesToHuman(stat.availableBytes)
+            val total = bytesToHuman(stat.totalBytes)
+            available to total
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun bytesToHuman(bytes: Long): String {
+        if (bytes < 1024) return "${bytes}B"
+        var value = bytes.toDouble()
+        var exp = 0
+        while (value >= 1024.0 && exp < 6) {
+            value /= 1024.0
+            exp += 1
+        }
+        val pre = "KMGTPE"[exp - 1]
+        return String.format(Locale.US, "%.1f %sB", value, pre)
     }
 
     private fun trimOldReports(dir: File) {

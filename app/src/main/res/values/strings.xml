@@ -172,6 +172,9 @@
     <string name="light_direction_spoken">Kierunek: %1$s</string>
     <string name="crash_report_label">Raportowanie błędów</string>
     <string name="crash_report_enable">Zapisuj raporty awarii</string>
+    <string name="crash_report_wifi_only">Wysyłaj tylko przez Wi‑Fi</string>
+    <string name="crash_report_foreground_only">Wysyłaj tylko gdy aplikacja jest otwarta</string>
+    <string name="crash_report_device_info">Dołącz dane urządzenia (model/CPU/RAM)</string>
     <string name="crash_report_status_none">Brak raportów</string>
     <string name="crash_report_share">Udostępnij raport</string>
     <string name="crash_report_issue">Utwórz zgłoszenie na GitHub</string>

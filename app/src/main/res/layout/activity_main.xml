@@ -503,6 +503,27 @@
             android:layout_marginTop="8dp"
             android:text="@string/crash_report_enable" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/crashReportWifiSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_wifi_only" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/crashReportForegroundSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_foreground_only" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/crashReportDeviceInfoSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/crash_report_device_info" />
+
         <TextView
             android:id="@+id/crashReportStatus"
             android:layout_width="wrap_content"

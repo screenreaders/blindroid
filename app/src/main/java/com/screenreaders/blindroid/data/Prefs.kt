@@ -40,6 +40,9 @@ object Prefs {
     private const val KEY_DOC_AUTO = "doc_auto_capture"
     private const val KEY_DOC_SPEAK = "doc_speak_result"
     private const val KEY_CRASH_REPORTING = "crash_reporting"
+    private const val KEY_CRASH_WIFI_ONLY = "crash_wifi_only"
+    private const val KEY_CRASH_FOREGROUND_ONLY = "crash_foreground_only"
+    private const val KEY_CRASH_DEVICE_INFO = "crash_device_info"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -100,6 +103,27 @@ object Prefs {
 
     fun setRepeatCount(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_REPEAT_COUNT, value).apply()
+    }
+
+    fun isCrashWifiOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CRASH_WIFI_ONLY, true)
+
+    fun setCrashWifiOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CRASH_WIFI_ONLY, value).apply()
+    }
+
+    fun isCrashForegroundOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CRASH_FOREGROUND_ONLY, true)
+
+    fun setCrashForegroundOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CRASH_FOREGROUND_ONLY, value).apply()
+    }
+
+    fun isCrashDeviceInfoEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_CRASH_DEVICE_INFO, false)
+
+    fun setCrashDeviceInfoEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CRASH_DEVICE_INFO, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =
