@@ -97,6 +97,10 @@ object Prefs {
     private const val KEY_NAV_IMPORT_MAX_LON = "nav_import_max_lon"
     private const val KEY_NAV_OFFLINE_BASE_URL = "nav_offline_base_url"
     private const val KEY_NAV_OFFLINE_ZOOM = "nav_offline_zoom"
+    private const val KEY_NAV_AUTO_IMPORT = "nav_auto_import"
+    private const val KEY_NAV_AUTO_INTERVAL = "nav_auto_interval"
+    private const val KEY_NAV_AUTO_WIFI = "nav_auto_wifi"
+    private const val KEY_NAV_AUTO_CHARGING = "nav_auto_charging"
     private const val KEY_TYFLO_LAST_LINK = "tyflo_last_link"
 
     const val MODE_RING_AND_SPEECH = 0
@@ -562,6 +566,34 @@ object Prefs {
 
     fun setNavigationOfflineZoom(context: Context, value: Int) {
         prefs(context).edit().putInt(KEY_NAV_OFFLINE_ZOOM, value.coerceIn(10, 18)).apply()
+    }
+
+    fun isNavigationAutoImportEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_AUTO_IMPORT, false)
+
+    fun setNavigationAutoImportEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_AUTO_IMPORT, value).apply()
+    }
+
+    fun getNavigationAutoImportIntervalHours(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_AUTO_INTERVAL, 24).coerceIn(6, 48)
+
+    fun setNavigationAutoImportIntervalHours(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_AUTO_INTERVAL, value.coerceIn(6, 48)).apply()
+    }
+
+    fun isNavigationAutoImportWifiOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_AUTO_WIFI, true)
+
+    fun setNavigationAutoImportWifiOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_AUTO_WIFI, value).apply()
+    }
+
+    fun isNavigationAutoImportChargingOnly(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_AUTO_CHARGING, false)
+
+    fun setNavigationAutoImportChargingOnly(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_AUTO_CHARGING, value).apply()
     }
 
     fun getTyflomapLastLink(context: Context): String? =

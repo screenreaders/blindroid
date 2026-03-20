@@ -82,6 +82,9 @@ object OverpassPoiClient {
         val amenity = tags.optString("amenity")
         val shop = tags.optString("shop")
         val tourism = tags.optString("tourism")
+        val railway = tags.optString("railway")
+        val leisure = tags.optString("leisure")
+        val aeroway = tags.optString("aeroway")
         return when {
             amenity == "restaurant" -> "restaurant"
             amenity == "cafe" -> "cafe"
@@ -96,6 +99,23 @@ object OverpassPoiClient {
             amenity == "parking" -> "parking"
             tourism == "hotel" -> "lodging"
             tourism == "guest_house" -> "lodging"
+            amenity == "bus_station" -> "bus_station"
+            railway == "station" -> "train_station"
+            railway == "subway_entrance" -> "subway_station"
+            railway == "subway_station" -> "subway_station"
+            amenity == "school" -> "school"
+            amenity == "university" -> "university"
+            leisure == "park" -> "park"
+            amenity == "post_office" -> "post_office"
+            amenity == "library" -> "library"
+            amenity == "place_of_worship" -> "place_of_worship"
+            shop == "mall" -> "shopping_mall"
+            leisure == "fitness_centre" -> "gym"
+            amenity == "doctors" -> "doctor"
+            amenity == "dentist" -> "dentist"
+            shop == "bakery" -> "bakery"
+            aeroway == "aerodrome" -> "airport"
+            tourism == "attraction" -> "tourist_attraction"
             else -> null
         }
     }
@@ -115,6 +135,22 @@ object OverpassPoiClient {
         "supermarket" to listOf("shop" to "supermarket"),
         "police" to listOf("amenity" to "police"),
         "parking" to listOf("amenity" to "parking"),
-        "lodging" to listOf("tourism" to "hotel", "tourism" to "guest_house")
+        "lodging" to listOf("tourism" to "hotel", "tourism" to "guest_house"),
+        "bus_station" to listOf("amenity" to "bus_station"),
+        "train_station" to listOf("railway" to "station"),
+        "subway_station" to listOf("railway" to "subway_entrance", "railway" to "subway_station"),
+        "school" to listOf("amenity" to "school"),
+        "university" to listOf("amenity" to "university"),
+        "park" to listOf("leisure" to "park"),
+        "post_office" to listOf("amenity" to "post_office"),
+        "library" to listOf("amenity" to "library"),
+        "place_of_worship" to listOf("amenity" to "place_of_worship"),
+        "shopping_mall" to listOf("shop" to "mall"),
+        "gym" to listOf("leisure" to "fitness_centre"),
+        "doctor" to listOf("amenity" to "doctors"),
+        "dentist" to listOf("amenity" to "dentist"),
+        "bakery" to listOf("shop" to "bakery"),
+        "airport" to listOf("aeroway" to "aerodrome"),
+        "tourist_attraction" to listOf("tourism" to "attraction")
     )
 }

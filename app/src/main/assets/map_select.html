@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Wybór obszaru</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    #toolbar {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.9);
+      padding: 8px;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    #toolbar button { margin-top: 6px; width: 100%; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="toolbar">
+  <div>Dotknij 2 punkty, aby wybrać obszar.</div>
+  <button onclick="saveBox()">Zapisz obszar</button>
+  <button onclick="clearBox()">Wyczyść</button>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const minLat = parseFloat(params.get('minLat') || '0');
+  const minLon = parseFloat(params.get('minLon') || '0');
+  const maxLat = parseFloat(params.get('maxLat') || '0');
+  const maxLon = parseFloat(params.get('maxLon') || '0');
+  const hasBox = !(minLat === 0 && minLon === 0 && maxLat === 0 && maxLon === 0);
+  const centerLat = parseFloat(params.get('centerLat') || '52.23');
+  const centerLon = parseFloat(params.get('centerLon') || '21.01');
+
+  const map = L.map('map').setView([centerLat, centerLon], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+  }).addTo(map);
+
+  let firstPoint = null;
+  let rect = null;
+
+  function drawRect(p1, p2) {
+    const bounds = L.latLngBounds(p1, p2);
+    if (rect) rect.remove();
+    rect = L.rectangle(bounds, {color:'#0077ff', weight:2}).addTo(map);
+  }
+
+  if (hasBox) {
+    const p1 = L.latLng(minLat, minLon);
+    const p2 = L.latLng(maxLat, maxLon);
+    drawRect(p1, p2);
+    map.fitBounds(rect.getBounds());
+  }
+
+  map.on('click', function(e) {
+    if (!firstPoint) {
+      firstPoint = e.latlng;
+      drawRect(firstPoint, firstPoint);
+    } else {
+      drawRect(firstPoint, e.latlng);
+      firstPoint = null;
+    }
+  });
+
+  function clearBox() {
+    if (rect) rect.remove();
+    rect = null;
+    firstPoint = null;
+  }
+
+  function saveBox() {
+    if (!rect) {
+      alert('Najpierw wybierz obszar.');
+      return;
+    }
+    const b = rect.getBounds();
+    if (window.Android && Android.onBbox) {
+      Android.onBbox(b.getSouth(), b.getWest(), b.getNorth(), b.getEast());
+    }
+  }
+</script>
+</body>
+</html>

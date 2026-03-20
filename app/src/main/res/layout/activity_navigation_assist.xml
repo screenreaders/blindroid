@@ -72,6 +72,13 @@
             android:layout_marginTop="12dp"
             android:text="@string/navigation_start" />
 
+        <Button
+            android:id="@+id/navigationStartOfflineButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_route" />
+
         <TextView
             android:id="@+id/navigationTrackingLabel"
             android:layout_width="wrap_content"
@@ -265,6 +272,55 @@
             android:hint="@string/navigation_import_max_lon"
             android:inputType="numberDecimal|numberSigned"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/navigationMapSelectButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_map_select" />
+
+        <TextView
+            android:id="@+id/navigationAutoImportLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/navigation_auto_import_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationAutoImportSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_auto_import_enable" />
+
+        <TextView
+            android:id="@+id/navigationAutoImportIntervalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_auto_import_interval"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationAutoImportIntervalSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationAutoImportWifiSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_auto_import_wifi" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationAutoImportChargingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_auto_import_charging" />
 
         <TextView
             android:id="@+id/navigationRadiusLabel"

@@ -237,6 +237,12 @@ class NavigationPoiService : Service(), LocationListener {
             emptyList()
         }
         if (results.isEmpty()) return
+        try {
+            NavigationPoiStore.upsertAll(this, results)
+            Prefs.setNavigationOfflineUpdated(this, System.currentTimeMillis())
+            Prefs.setNavigationOfflineCount(this, NavigationPoiStore.count(this))
+        } catch (_: Exception) {
+        }
         val sorted = results.sortedBy {
             distanceMeters(location.latitude, location.longitude, it.lat, it.lon)
         }
@@ -267,6 +273,22 @@ class NavigationPoiService : Service(), LocationListener {
             "police" -> getString(R.string.navigation_category_police)
             "parking" -> getString(R.string.navigation_category_parking)
             "lodging" -> getString(R.string.navigation_category_hotel)
+            "bus_station" -> getString(R.string.navigation_category_bus_station)
+            "train_station" -> getString(R.string.navigation_category_train_station)
+            "subway_station" -> getString(R.string.navigation_category_subway_station)
+            "school" -> getString(R.string.navigation_category_school)
+            "university" -> getString(R.string.navigation_category_university)
+            "park" -> getString(R.string.navigation_category_park)
+            "post_office" -> getString(R.string.navigation_category_post_office)
+            "library" -> getString(R.string.navigation_category_library)
+            "place_of_worship" -> getString(R.string.navigation_category_worship)
+            "shopping_mall" -> getString(R.string.navigation_category_mall)
+            "gym" -> getString(R.string.navigation_category_gym)
+            "doctor" -> getString(R.string.navigation_category_doctor)
+            "dentist" -> getString(R.string.navigation_category_dentist)
+            "bakery" -> getString(R.string.navigation_category_bakery)
+            "airport" -> getString(R.string.navigation_category_airport)
+            "tourist_attraction" -> getString(R.string.navigation_category_attraction)
             else -> type
         }
     }

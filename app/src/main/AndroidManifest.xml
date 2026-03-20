@@ -78,6 +78,9 @@
         <activity
             android:name=".navigation.NavigationAssistActivity"
             android:exported="false" />
+        <activity
+            android:name=".navigation.MapSelectActivity"
+            android:exported="false" />
 
 
         <activity

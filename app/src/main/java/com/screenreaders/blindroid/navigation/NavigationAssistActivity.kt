@@ -32,7 +32,23 @@ class NavigationAssistActivity : AppCompatActivity() {
         Category("supermarket", R.string.navigation_category_grocery),
         Category("police", R.string.navigation_category_police),
         Category("parking", R.string.navigation_category_parking),
-        Category("lodging", R.string.navigation_category_hotel)
+        Category("lodging", R.string.navigation_category_hotel),
+        Category("bus_station", R.string.navigation_category_bus_station),
+        Category("train_station", R.string.navigation_category_train_station),
+        Category("subway_station", R.string.navigation_category_subway_station),
+        Category("school", R.string.navigation_category_school),
+        Category("university", R.string.navigation_category_university),
+        Category("park", R.string.navigation_category_park),
+        Category("post_office", R.string.navigation_category_post_office),
+        Category("library", R.string.navigation_category_library),
+        Category("place_of_worship", R.string.navigation_category_worship),
+        Category("shopping_mall", R.string.navigation_category_mall),
+        Category("gym", R.string.navigation_category_gym),
+        Category("doctor", R.string.navigation_category_doctor),
+        Category("dentist", R.string.navigation_category_dentist),
+        Category("bakery", R.string.navigation_category_bakery),
+        Category("airport", R.string.navigation_category_airport),
+        Category("tourist_attraction", R.string.navigation_category_attraction)
     )
     private val selected = BooleanArray(categories.size)
     private var pendingSharePin = false
@@ -49,6 +65,7 @@ class NavigationAssistActivity : AppCompatActivity() {
 
         restoreLastDestination()
         binding.navigationStartButton.setOnClickListener { startNavigation() }
+        binding.navigationStartOfflineButton.setOnClickListener { startOfflineNavigation() }
         binding.navigationTrackingSwitch.isChecked = Prefs.isNavigationTrackingEnabled(this)
         binding.navigationTrackingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNavigationTrackingEnabled(this, isChecked)
@@ -56,6 +73,7 @@ class NavigationAssistActivity : AppCompatActivity() {
         }
         setupPoiSourceControls()
         setupImportControls()
+        setupAutoImportControls()
         binding.navigationCategoriesButton.setOnClickListener { openCategoryDialog() }
         binding.navigationApiKeyInput.setText(Prefs.getNavigationApiKey(this))
         binding.navigationApiKeyInput.setOnFocusChangeListener { _, _ ->
@@ -117,6 +135,33 @@ class NavigationAssistActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
+    }
+
+    private fun startOfflineNavigation() {
+        val place = binding.navigationPlaceInput.text?.toString()?.trim().orEmpty()
+        val city = binding.navigationCityInput.text?.toString()?.trim().orEmpty()
+        if (city.isBlank()) {
+            Toast.makeText(this, R.string.navigation_city_required, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val destination = if (place.isBlank()) {
+            city
+        } else {
+            "$place, $city"
+        }
+        val uri = Uri.parse("geo:0,0?q=${Uri.encode(destination)}")
+        val osmAndPackages = listOf("net.osmand", "net.osmand.plus")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        val resolved = osmAndPackages.firstOrNull { pkg ->
+            intent.setPackage(pkg)
+            intent.resolveActivity(packageManager) != null
+        }
+        if (resolved != null) {
+            intent.setPackage(resolved)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, R.string.navigation_offline_route_missing, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -248,6 +293,7 @@ class NavigationAssistActivity : AppCompatActivity() {
 
     companion object {
         private const val REQ_LOCATION = 812
+        private const val REQ_MAP_SELECT = 813
     }
 
     private fun initPoiControls() {
@@ -440,6 +486,38 @@ class NavigationAssistActivity : AppCompatActivity() {
         }
     }
 
+    private fun openMapSelect() {
+        val intent = Intent(this, MapSelectActivity::class.java).apply {
+            putExtra(MapSelectActivity.EXTRA_MIN_LAT, Prefs.getNavigationImportMinLat(this@NavigationAssistActivity))
+            putExtra(MapSelectActivity.EXTRA_MIN_LON, Prefs.getNavigationImportMinLon(this@NavigationAssistActivity))
+            putExtra(MapSelectActivity.EXTRA_MAX_LAT, Prefs.getNavigationImportMaxLat(this@NavigationAssistActivity))
+            putExtra(MapSelectActivity.EXTRA_MAX_LON, Prefs.getNavigationImportMaxLon(this@NavigationAssistActivity))
+        }
+        startActivityForResult(intent, REQ_MAP_SELECT)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_MAP_SELECT && resultCode == RESULT_OK && data != null) {
+            val minLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LAT, Double.NaN)
+            val minLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LON, Double.NaN)
+            val maxLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LAT, Double.NaN)
+            val maxLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LON, Double.NaN)
+            if (minLat.isNaN() || minLon.isNaN() || maxLat.isNaN() || maxLon.isNaN()) return
+            Prefs.setNavigationImportMode(this, Prefs.NAV_IMPORT_MODE_MANUAL)
+            Prefs.setNavigationImportMinLat(this, minLat.toFloat())
+            Prefs.setNavigationImportMinLon(this, minLon.toFloat())
+            Prefs.setNavigationImportMaxLat(this, maxLat.toFloat())
+            Prefs.setNavigationImportMaxLon(this, maxLon.toFloat())
+            binding.navigationImportMinLatInput.setText(minLat.toString())
+            binding.navigationImportMinLonInput.setText(minLon.toString())
+            binding.navigationImportMaxLatInput.setText(maxLat.toString())
+            binding.navigationImportMaxLonInput.setText(maxLon.toString())
+            binding.navigationImportModeManual.isChecked = true
+            updateImportModeUi()
+        }
+    }
+
     private fun setupPoiSourceControls() {
         val source = Prefs.getNavigationPoiSource(this)
         binding.navigationPoiSourceGoogle.isChecked = source == Prefs.NAV_POI_SOURCE_GOOGLE
@@ -542,6 +620,89 @@ class NavigationAssistActivity : AppCompatActivity() {
             }
         }
         updateImportModeUi()
+        binding.navigationMapSelectButton.setOnClickListener { openMapSelect() }
+    }
+
+    private fun setupAutoImportControls() {
+        binding.navigationAutoImportSwitch.isChecked = Prefs.isNavigationAutoImportEnabled(this)
+        binding.navigationAutoImportWifiSwitch.isChecked = Prefs.isNavigationAutoImportWifiOnly(this)
+        binding.navigationAutoImportChargingSwitch.isChecked = Prefs.isNavigationAutoImportChargingOnly(this)
+
+        val intervals = listOf(6, 12, 24)
+        val labels = listOf(
+            getString(R.string.navigation_auto_import_6h),
+            getString(R.string.navigation_auto_import_12h),
+            getString(R.string.navigation_auto_import_24h)
+        )
+        val adapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            labels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationAutoImportIntervalSpinner.adapter = adapter
+        val index = intervals.indexOf(Prefs.getNavigationAutoImportIntervalHours(this)).let { if (it >= 0) it else 2 }
+        binding.navigationAutoImportIntervalSpinner.setSelection(index, false)
+        binding.navigationAutoImportIntervalSpinner.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val value = intervals.getOrElse(position) { 24 }
+                    Prefs.setNavigationAutoImportIntervalHours(this@NavigationAssistActivity, value)
+                    scheduleAutoImport()
+                }
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+            }
+
+        binding.navigationAutoImportSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationAutoImportEnabled(this, isChecked)
+            scheduleAutoImport()
+        }
+        binding.navigationAutoImportWifiSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationAutoImportWifiOnly(this, isChecked)
+            scheduleAutoImport()
+        }
+        binding.navigationAutoImportChargingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationAutoImportChargingOnly(this, isChecked)
+            scheduleAutoImport()
+        }
+        scheduleAutoImport()
+    }
+
+    private fun scheduleAutoImport() {
+        val enabled = Prefs.isNavigationAutoImportEnabled(this)
+        val workManager = androidx.work.WorkManager.getInstance(this)
+        if (!enabled) {
+            workManager.cancelUniqueWork(OfflineImportWorker.WORK_NAME)
+            return
+        }
+        val interval = Prefs.getNavigationAutoImportIntervalHours(this)
+        val constraints = androidx.work.Constraints.Builder()
+            .setRequiredNetworkType(
+                if (Prefs.isNavigationAutoImportWifiOnly(this)) {
+                    androidx.work.NetworkType.UNMETERED
+                } else {
+                    androidx.work.NetworkType.CONNECTED
+                }
+            )
+            .setRequiresCharging(Prefs.isNavigationAutoImportChargingOnly(this))
+            .build()
+        val request = androidx.work.PeriodicWorkRequestBuilder<OfflineImportWorker>(
+            interval.toLong(),
+            java.util.concurrent.TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+        workManager.enqueueUniquePeriodicWork(
+            OfflineImportWorker.WORK_NAME,
+            androidx.work.ExistingPeriodicWorkPolicy.UPDATE,
+            request
+        )
     }
 
     private fun updateImportModeUi() {

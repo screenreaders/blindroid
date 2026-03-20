@@ -69,6 +69,32 @@ object NavigationPoiStore {
         }
     }
 
+    fun upsertAll(context: Context, pois: List<OfflinePoi>) {
+        if (pois.isEmpty()) return
+        val db = helper(context).writableDatabase
+        db.beginTransaction()
+        try {
+            val stmt = db.compileStatement(
+                "INSERT OR REPLACE INTO $TABLE (osm_id, name, type, lat, lon, updated) VALUES (?, ?, ?, ?, ?, ?)"
+            )
+            val now = System.currentTimeMillis()
+            for (poi in pois) {
+                stmt.clearBindings()
+                stmt.bindString(1, poi.id)
+                stmt.bindString(2, poi.name)
+                stmt.bindString(3, poi.type)
+                stmt.bindDouble(4, poi.lat)
+                stmt.bindDouble(5, poi.lon)
+                stmt.bindLong(6, now)
+                stmt.executeInsert()
+            }
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
+    }
+
     fun clear(context: Context) {
         val db = helper(context).writableDatabase
         try {
