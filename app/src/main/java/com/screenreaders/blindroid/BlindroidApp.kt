@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.screenreaders.blindroid.diagnostics.AnrWatchdog
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import com.screenreaders.blindroid.update.UpdateScheduler
 
 class BlindroidApp : Application() {
     override fun onCreate() {
@@ -13,6 +14,7 @@ class BlindroidApp : Application() {
         CrashReporter.init(this)
         DiagnosticLog.log(this, "app_start")
         AnrWatchdog(this).start()
+        UpdateScheduler.schedule(this)
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             private var startedCount = 0
 

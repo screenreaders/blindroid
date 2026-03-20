@@ -43,6 +43,7 @@ import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.obstacle.ObstacleAssistActivity
 import com.screenreaders.blindroid.update.UpdateChecker
+import com.screenreaders.blindroid.update.UpdateScheduler
 import com.screenreaders.blindroid.util.LowVisionStyler
 import com.screenreaders.blindroid.util.QuietHours
 import org.json.JSONArray
@@ -277,6 +278,7 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 maybeAutoCheckUpdates()
             }
+            UpdateScheduler.schedule(this)
         }
 
         binding.updateCheckButton.setOnClickListener {

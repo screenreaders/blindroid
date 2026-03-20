@@ -23,6 +23,7 @@ object Prefs {
     private const val KEY_READ_UNLOCKED = "read_unlocked"
     private const val KEY_AUTO_UPDATE = "auto_update"
     private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
+    private const val KEY_LAST_UPDATE_NOTIFIED = "last_update_notified"
     private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
     private const val KEY_SPEAKER_OVERRIDE = "speaker_override"
     private const val KEY_END_CALL_KEY = "end_call_key"
@@ -477,6 +478,13 @@ object Prefs {
 
     fun setLastUpdateCheck(context: Context, value: Long) {
         prefs(context).edit().putLong(KEY_LAST_UPDATE_CHECK, value).apply()
+    }
+
+    fun getLastUpdateNotifiedVersion(context: Context): String? =
+        prefs(context).getString(KEY_LAST_UPDATE_NOTIFIED, null)
+
+    fun setLastUpdateNotifiedVersion(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_LAST_UPDATE_NOTIFIED, value).apply()
     }
 
     fun getUpdateDownloadId(context: Context): Long =

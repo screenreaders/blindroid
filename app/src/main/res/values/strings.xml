@@ -63,6 +63,9 @@
     <string name="update_download_started">Pobieranie aktualizacji rozpoczęte</string>
     <string name="update_download_complete">Pobieranie zakończone, rozpocznij instalację</string>
     <string name="update_no_download">Brak pliku APK w najnowszym wydaniu</string>
+    <string name="update_notification_channel">Aktualizacje Blindroid</string>
+    <string name="update_notification_title">Dostępna aktualizacja</string>
+    <string name="update_notification_text">Wersja %1$s jest gotowa do pobrania</string>
     <string name="chime_label">Zegarynka</string>
     <string name="chime_enable">Podawanie godziny</string>
     <string name="chime_interval">Interwał</string>
