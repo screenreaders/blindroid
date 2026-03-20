@@ -29,6 +29,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var nowAlarmSwitch: Switch
     private lateinit var nowCalendarSwitch: Switch
     private lateinit var nowWeatherSwitch: Switch
+    private lateinit var nowRemindersSwitch: Switch
+    private lateinit var nowHeadphonesSwitch: Switch
+    private lateinit var nowNetworkSwitch: Switch
     private lateinit var gnLayoutSwitch: Switch
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
@@ -94,6 +97,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowAlarmSwitch = findViewById(R.id.nowAlarmSwitch)
         nowCalendarSwitch = findViewById(R.id.nowCalendarSwitch)
         nowWeatherSwitch = findViewById(R.id.nowWeatherSwitch)
+        nowRemindersSwitch = findViewById(R.id.nowRemindersSwitch)
+        nowHeadphonesSwitch = findViewById(R.id.nowHeadphonesSwitch)
+        nowNetworkSwitch = findViewById(R.id.nowNetworkSwitch)
         gnLayoutSwitch = findViewById(R.id.gnLayoutSwitch)
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
@@ -157,6 +163,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         nowAlarmSwitch.isChecked = LauncherPrefs.isNowAlarmEnabled(this)
         nowCalendarSwitch.isChecked = LauncherPrefs.isNowCalendarEnabled(this)
         nowWeatherSwitch.isChecked = LauncherPrefs.isNowWeatherEnabled(this)
+        nowRemindersSwitch.isChecked = LauncherPrefs.isNowRemindersEnabled(this)
+        nowHeadphonesSwitch.isChecked = LauncherPrefs.isNowHeadphonesEnabled(this)
+        nowNetworkSwitch.isChecked = LauncherPrefs.isNowNetworkEnabled(this)
         gnLayoutSwitch.isChecked = LauncherPrefs.isGnLayoutEnabled(this)
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
@@ -290,6 +299,21 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         nowWeatherSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setNowWeatherEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowRemindersSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowRemindersEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowHeadphonesSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowHeadphonesEnabled(this, isChecked)
+            toastSaved()
+        }
+
+        nowNetworkSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setNowNetworkEnabled(this, isChecked)
             toastSaved()
         }
 

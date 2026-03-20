@@ -94,6 +94,27 @@
             android:text="@string/launcher_settings_now_weather" />
 
         <Switch
+            android:id="@+id/nowRemindersSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_reminders" />
+
+        <Switch
+            android:id="@+id/nowHeadphonesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_headphones" />
+
+        <Switch
+            android:id="@+id/nowNetworkSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_network" />
+
+        <Switch
             android:id="@+id/gnLayoutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

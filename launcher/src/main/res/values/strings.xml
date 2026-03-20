@@ -86,6 +86,9 @@
     <string name="launcher_settings_now_alarm">Karta: następny alarm</string>
     <string name="launcher_settings_now_calendar">Karta: kalendarz</string>
     <string name="launcher_settings_now_weather">Karta: pogoda</string>
+    <string name="launcher_settings_now_reminders">Karta: przypomnienia</string>
+    <string name="launcher_settings_now_headphones">Karta: słuchawki</string>
+    <string name="launcher_settings_now_network">Karta: sieć</string>
     <string name="launcher_settings_gn_layout">Układ Android 5 (4x5, stała siatka)</string>
     <string name="launcher_settings_wallpaper_parallax">Paralaksa tapety</string>
     <string name="launcher_settings_assistant">Asystent głosowy</string>
@@ -112,6 +115,14 @@
     <string name="launcher_feed_weather_title">Pogoda</string>
     <string name="launcher_feed_weather_open">Dotknij, aby otworzyć prognozę</string>
     <string name="launcher_feed_weather_query">pogoda</string>
+    <string name="launcher_feed_reminders_title">Przypomnienia</string>
+    <string name="launcher_feed_reminders_none">Brak przypomnień</string>
+    <string name="launcher_feed_headphones_title">Słuchawki</string>
+    <string name="launcher_feed_headphones_none">Brak podłączonych słuchawek</string>
+    <string name="launcher_feed_network_title">Sieć</string>
+    <string name="launcher_feed_network_none">Brak połączenia</string>
+    <string name="launcher_feed_network_settings">Dotknij, aby otworzyć ustawienia sieci</string>
+    <string name="launcher_feed_bluetooth_settings">Dotknij, aby otworzyć ustawienia Bluetooth</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>

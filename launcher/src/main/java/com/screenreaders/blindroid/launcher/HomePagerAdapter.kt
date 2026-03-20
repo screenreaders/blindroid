@@ -20,6 +20,8 @@ class HomePagerAdapter(
     private val onOpenCalendar: () -> Unit,
     private val onRequestCalendarPermission: () -> Unit,
     private val onOpenWeather: () -> Unit,
+    private val onOpenBluetoothSettings: () -> Unit,
+    private val onOpenNetworkSettings: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
     private val onMove: (Int, Int, Int) -> Unit
@@ -55,7 +57,9 @@ class HomePagerAdapter(
                 onOpenAlarms,
                 onOpenCalendar,
                 onRequestCalendarPermission,
-                onOpenWeather
+                onOpenWeather,
+                onOpenBluetoothSettings,
+                onOpenNetworkSettings
             )
             return
         }
@@ -154,6 +158,15 @@ class HomePagerAdapter(
         private val cardWeather: LinearLayout = view.findViewById(R.id.cardWeather)
         private val cardWeatherTitle: TextView = view.findViewById(R.id.cardWeatherTitle)
         private val cardWeatherText: TextView = view.findViewById(R.id.cardWeatherText)
+        private val cardReminders: LinearLayout = view.findViewById(R.id.cardReminders)
+        private val cardRemindersTitle: TextView = view.findViewById(R.id.cardRemindersTitle)
+        private val cardRemindersText: TextView = view.findViewById(R.id.cardRemindersText)
+        private val cardHeadphones: LinearLayout = view.findViewById(R.id.cardHeadphones)
+        private val cardHeadphonesTitle: TextView = view.findViewById(R.id.cardHeadphonesTitle)
+        private val cardHeadphonesText: TextView = view.findViewById(R.id.cardHeadphonesText)
+        private val cardNetwork: LinearLayout = view.findViewById(R.id.cardNetwork)
+        private val cardNetworkTitle: TextView = view.findViewById(R.id.cardNetworkTitle)
+        private val cardNetworkText: TextView = view.findViewById(R.id.cardNetworkText)
         private val notificationsLabel: TextView = view.findViewById(R.id.feedNotificationsLabel)
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
@@ -166,7 +179,9 @@ class HomePagerAdapter(
             onOpenAlarms: () -> Unit,
             onOpenCalendar: () -> Unit,
             onRequestCalendarPermission: () -> Unit,
-            onOpenWeather: () -> Unit
+            onOpenWeather: () -> Unit,
+            onOpenBluetoothSettings: () -> Unit,
+            onOpenNetworkSettings: () -> Unit
         ) {
             title.setTextColor(colors.text)
             time.setTextColor(colors.text)
@@ -178,6 +193,12 @@ class HomePagerAdapter(
             cardCalendarText.setTextColor(colors.muted)
             cardWeatherTitle.setTextColor(colors.text)
             cardWeatherText.setTextColor(colors.muted)
+            cardRemindersTitle.setTextColor(colors.text)
+            cardRemindersText.setTextColor(colors.muted)
+            cardHeadphonesTitle.setTextColor(colors.text)
+            cardHeadphonesText.setTextColor(colors.muted)
+            cardNetworkTitle.setTextColor(colors.text)
+            cardNetworkText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
             openButton.setTextColor(colors.text)
@@ -248,11 +269,56 @@ class HomePagerAdapter(
                 cardWeather.setOnClickListener(null)
             }
 
+            if (data.showReminders) {
+                cardReminders.visibility = View.VISIBLE
+                if (data.calendarPermissionGranted) {
+                    cardRemindersText.text = data.reminderText
+                        ?: itemView.context.getString(R.string.launcher_feed_reminders_none)
+                    cardReminders.setOnClickListener { onOpenCalendar() }
+                } else {
+                    cardRemindersText.text = itemView.context.getString(R.string.launcher_feed_calendar_permission)
+                    cardReminders.setOnClickListener { onRequestCalendarPermission() }
+                }
+            } else {
+                cardReminders.visibility = View.GONE
+                cardReminders.setOnClickListener(null)
+            }
+
+            if (data.showHeadphones) {
+                cardHeadphones.visibility = View.VISIBLE
+                cardHeadphonesText.text = data.headphonesText
+                    ?: itemView.context.getString(R.string.launcher_feed_headphones_none)
+                cardHeadphones.setOnClickListener { onOpenBluetoothSettings() }
+            } else {
+                cardHeadphones.visibility = View.GONE
+                cardHeadphones.setOnClickListener(null)
+            }
+
+            if (data.showNetwork) {
+                cardNetwork.visibility = View.VISIBLE
+                cardNetworkText.text = data.networkText
+                    ?: itemView.context.getString(R.string.launcher_feed_network_none)
+                cardNetwork.setOnClickListener { onOpenNetworkSettings() }
+            } else {
+                cardNetwork.visibility = View.GONE
+                cardNetwork.setOnClickListener(null)
+            }
+
             applyCardStyle(cardAlarm, colors)
             applyCardStyle(cardCalendar, colors)
             applyCardStyle(cardWeather, colors)
+            applyCardStyle(cardReminders, colors)
+            applyCardStyle(cardHeadphones, colors)
+            applyCardStyle(cardNetwork, colors)
 
-            nowCards.visibility = if (data.showAlarm || data.showCalendar || data.showWeather) {
+            nowCards.visibility = if (
+                data.showAlarm ||
+                data.showCalendar ||
+                data.showWeather ||
+                data.showReminders ||
+                data.showHeadphones ||
+                data.showNetwork
+            ) {
                 View.VISIBLE
             } else {
                 View.GONE

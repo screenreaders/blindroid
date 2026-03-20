@@ -25,6 +25,9 @@ object LauncherPrefs {
     private const val KEY_NOW_ALARM = "now_alarm"
     private const val KEY_NOW_CALENDAR = "now_calendar"
     private const val KEY_NOW_WEATHER = "now_weather"
+    private const val KEY_NOW_REMINDERS = "now_reminders"
+    private const val KEY_NOW_HEADPHONES = "now_headphones"
+    private const val KEY_NOW_NETWORK = "now_network"
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
@@ -208,6 +211,27 @@ object LauncherPrefs {
 
     fun setNowWeatherEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOW_WEATHER, enabled).apply()
+    }
+
+    fun isNowRemindersEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_REMINDERS, true)
+
+    fun setNowRemindersEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_REMINDERS, enabled).apply()
+    }
+
+    fun isNowHeadphonesEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_HEADPHONES, true)
+
+    fun setNowHeadphonesEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_HEADPHONES, enabled).apply()
+    }
+
+    fun isNowNetworkEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_NETWORK, true)
+
+    fun setNowNetworkEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_NETWORK, enabled).apply()
     }
 
     fun isSoundFeedbackEnabled(context: Context): Boolean =

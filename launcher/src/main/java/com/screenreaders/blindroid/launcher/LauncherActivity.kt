@@ -13,10 +13,15 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
+import android.media.AudioDeviceInfo
+import android.media.AudioManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.BatteryManager
 import android.provider.AlarmClock
 import android.provider.CalendarContract
+import android.provider.Settings
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -116,6 +121,8 @@ class LauncherActivity : AppCompatActivity() {
             ::openCalendar,
             ::requestCalendarPermission,
             ::openWeather,
+            ::openBluetoothSettings,
+            ::openNetworkSettings,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
             ::onHomeItemMoved
@@ -455,6 +462,9 @@ class LauncherActivity : AppCompatActivity() {
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
+        val showReminders = LauncherPrefs.isNowRemindersEnabled(this)
+        val showHeadphones = LauncherPrefs.isNowHeadphonesEnabled(this)
+        val showNetwork = LauncherPrefs.isNowNetworkEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
@@ -462,6 +472,9 @@ class LauncherActivity : AppCompatActivity() {
         val alarmText = if (showAlarm) getNextAlarmText() else null
         val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
         val weatherText = if (showWeather) getString(R.string.launcher_feed_weather_open) else null
+        val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
+        val headphonesText = if (showHeadphones) getHeadphonesText() else null
+        val networkText = if (showNetwork) getNetworkText() else null
         return FeedData(
             time = time,
             date = date,
@@ -475,7 +488,13 @@ class LauncherActivity : AppCompatActivity() {
             calendarText = calendarText,
             calendarPermissionGranted = calendarPermissionGranted,
             showWeather = showWeather,
-            weatherText = weatherText
+            weatherText = weatherText,
+            showReminders = showReminders,
+            reminderText = reminderText,
+            showHeadphones = showHeadphones,
+            headphonesText = headphonesText,
+            showNetwork = showNetwork,
+            networkText = networkText
         )
     }
 
@@ -532,6 +551,77 @@ class LauncherActivity : AppCompatActivity() {
             } else {
                 whenText
             }
+        }
+    }
+
+    private fun getNextReminderText(): String? {
+        val now = System.currentTimeMillis()
+        val weekAhead = now + 7L * 24L * 60L * 60L * 1000L
+        val projection = arrayOf(
+            CalendarContract.Instances.TITLE,
+            CalendarContract.Instances.BEGIN,
+            CalendarContract.Instances.ALL_DAY,
+            CalendarContract.Instances.HAS_ALARM
+        )
+        val uriBuilder = CalendarContract.Instances.CONTENT_URI.buildUpon()
+        ContentUris.appendId(uriBuilder, now)
+        ContentUris.appendId(uriBuilder, weekAhead)
+        val cursor = contentResolver.query(
+            uriBuilder.build(),
+            projection,
+            "${CalendarContract.Instances.BEGIN} >= ?",
+            arrayOf(now.toString()),
+            "${CalendarContract.Instances.BEGIN} ASC"
+        ) ?: return null
+        cursor.use {
+            while (it.moveToNext()) {
+                val hasAlarm = it.getInt(3) == 1
+                if (!hasAlarm) continue
+                val title = it.getString(0)?.trim().orEmpty()
+                val begin = it.getLong(1)
+                val allDay = it.getInt(2) == 1
+                val whenText = if (allDay) {
+                    formatDateOnly(begin, allowTodayLabel = true)
+                } else {
+                    formatDateTime(begin, allowTodayLabel = true)
+                }
+                return if (title.isNotBlank()) {
+                    "$title — $whenText"
+                } else {
+                    whenText
+                }
+            }
+        }
+        return null
+    }
+
+    private fun getHeadphonesText(): String? {
+        val audioManager = getSystemService(AudioManager::class.java)
+        val devices = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
+        val labels = mutableSetOf<String>()
+        for (device in devices) {
+            when (device.type) {
+                AudioDeviceInfo.TYPE_WIRED_HEADPHONES,
+                AudioDeviceInfo.TYPE_WIRED_HEADSET -> labels.add("Przewodowe")
+                AudioDeviceInfo.TYPE_USB_HEADSET -> labels.add("USB")
+                AudioDeviceInfo.TYPE_BLUETOOTH_A2DP,
+                AudioDeviceInfo.TYPE_BLUETOOTH_SCO -> labels.add("Bluetooth")
+            }
+        }
+        return if (labels.isEmpty()) null else labels.joinToString(", ")
+    }
+
+    private fun getNetworkText(): String? {
+        val cm = getSystemService(ConnectivityManager::class.java)
+        val network = cm.activeNetwork ?: return null
+        val caps = cm.getNetworkCapabilities(network) ?: return null
+        val hasInternet = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        val suffix = if (hasInternet) "" else " (bez internetu)"
+        return when {
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> "Wi‑Fi$suffix"
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> "Komórkowa$suffix"
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> "Ethernet$suffix"
+            else -> "Połączenie$suffix"
         }
     }
 
@@ -1107,6 +1197,24 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun openWeather() {
         launchSearch(getString(R.string.launcher_feed_weather_query))
+    }
+
+    private fun openBluetoothSettings() {
+        val intent = Intent(Settings.ACTION_BLUETOOTH_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openNetworkSettings() {
+        val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun requestCalendarPermission() {
