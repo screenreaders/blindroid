@@ -4,6 +4,7 @@
     <string name="launcher_all_apps">Wszystkie aplikacje</string>
     <string name="launcher_search_hint">Szukaj</string>
     <string name="launcher_search_apps_hint">Szukaj aplikacji</string>
+    <string name="launcher_show_hidden">Pokaż ukryte aplikacje</string>
     <string name="launcher_all_apps_button">Wszystkie aplikacje</string>
     <string name="launcher_widgets_button">Widgety</string>
     <string name="launcher_widgets_title">Widgety</string>
@@ -302,6 +303,8 @@
     <string name="launcher_action_move_to_hotseat">Przenieś do doku</string>
     <string name="launcher_action_create_folder">Utwórz folder</string>
     <string name="launcher_action_add_to_folder">Dodaj do folderu</string>
+    <string name="launcher_action_hide_app">Ukryj aplikację</string>
+    <string name="launcher_action_unhide_app">Przywróć aplikację</string>
     <string name="launcher_action_remove_from_hotseat">Usuń z doku</string>
     <string name="launcher_action_move_to_home">Przenieś na ekran główny</string>
     <string name="launcher_action_open_folder">Otwórz folder</string>

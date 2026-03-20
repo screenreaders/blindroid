@@ -21,6 +21,13 @@
             android:singleLine="true" />
     </LinearLayout>
 
+    <Switch
+        android:id="@+id/showHiddenSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/launcher_show_hidden" />
+
     <LinearLayout
         android:id="@+id/tabRow"
         android:layout_width="match_parent"

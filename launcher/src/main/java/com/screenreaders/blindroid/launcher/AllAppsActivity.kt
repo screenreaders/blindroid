@@ -32,6 +32,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private lateinit var searchInput: EditText
+    private lateinit var showHiddenSwitch: android.widget.Switch
     private lateinit var appsGrid: RecyclerView
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
@@ -61,6 +62,7 @@ class AllAppsActivity : AppCompatActivity() {
     private var pendingWidgetId: Int = AppWidgetManager.INVALID_APPWIDGET_ID
     private var pendingProvider: AppWidgetProviderInfo? = null
     private var allApps: List<AppEntry> = emptyList()
+    private var allAppsRaw: List<AppEntry> = emptyList()
     private var filteredApps: List<AppEntry> = emptyList()
     private var appCategories: Map<String, Int?> = emptyMap()
     private var targetPageIndex: Int = 0
@@ -103,6 +105,7 @@ class AllAppsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_apps)
         searchInput = findViewById(R.id.searchInput)
+        showHiddenSwitch = findViewById(R.id.showHiddenSwitch)
         appsGrid = findViewById(R.id.appsGrid)
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
@@ -130,6 +133,7 @@ class AllAppsActivity : AppCompatActivity() {
         if (targetFolderId != null) {
             tabRow.visibility = android.view.View.GONE
             currentTab = TAB_APPS
+            showHiddenSwitch.visibility = android.view.View.GONE
         }
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
@@ -168,6 +172,9 @@ class AllAppsActivity : AppCompatActivity() {
         gridWidgetsSwitch.setOnCheckedChangeListener { _, isChecked ->
             widgetsGrid.columnCount = if (isChecked) 2 else 1
             reloadWidgets()
+        }
+        showHiddenSwitch.setOnCheckedChangeListener { _, _ ->
+            refreshAppsForHidden()
         }
         widgetsGrid.setOnDragListener { _, event ->
             when (event.action) {
@@ -224,19 +231,28 @@ class AllAppsActivity : AppCompatActivity() {
     private fun loadApps() {
         Thread {
             val apps = LauncherStore.loadAllApps(this)
-            val categories = apps.associate { entry ->
-                entry.component.flattenToString() to getAppCategory(entry)
-            }
             runOnUiThread {
-                allApps = apps
-                appCategories = categories
-                availableCategories = buildAvailableCategories()
-                setupCategories()
-                applyFilters()
-                updateSuggested()
+                allAppsRaw = apps
+                refreshAppsForHidden()
                 updateUsageAccessUi()
             }
         }.start()
+    }
+
+    private fun refreshAppsForHidden() {
+        val hidden = LauncherStore.getHiddenAppKeys(this)
+        allApps = if (showHiddenSwitch.isChecked) {
+            allAppsRaw
+        } else {
+            allAppsRaw.filterNot { hidden.contains(it.component.flattenToString()) }
+        }
+        appCategories = allApps.associate { entry ->
+            entry.component.flattenToString() to getAppCategory(entry)
+        }
+        availableCategories = buildAvailableCategories()
+        setupCategories()
+        applyFilters()
+        updateSuggested()
     }
 
     private fun applyUiConfig() {
@@ -253,6 +269,7 @@ class AllAppsActivity : AppCompatActivity() {
         findViewById<android.view.View>(android.R.id.content).setBackgroundColor(colors.background)
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
+        showHiddenSwitch.setTextColor(colors.text)
         suggestedLabel.setTextColor(colors.text)
         usageAccessHint.setTextColor(colors.muted)
         usageAccessButton.setTextColor(colors.text)
@@ -920,6 +937,11 @@ class AllAppsActivity : AppCompatActivity() {
         }
         options += getString(R.string.launcher_action_add_to_folder) to {
             showFolderPicker(entry)
+        }
+        val isHidden = LauncherStore.isAppHidden(this, entry.component)
+        options += getString(if (isHidden) R.string.launcher_action_unhide_app else R.string.launcher_action_hide_app) to {
+            LauncherStore.setAppHidden(this, entry.component, !isHidden)
+            refreshAppsForHidden()
         }
         showOptionsDialog(getString(R.string.launcher_all_apps), options)
     }

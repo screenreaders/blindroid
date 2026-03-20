@@ -20,6 +20,7 @@ object LauncherStore {
     private const val KEY_PAGES = "pages"
     private const val KEY_HOTSEAT = "hotseat"
     private const val KEY_WIDGETS = "widgets"
+    private const val KEY_HIDDEN_APPS = "hidden_apps"
     private const val KEY_LAUNCH_PREFIX = "launch_"
     private const val KEY_LAUNCH_LAST_PREFIX = "launch_last_"
     private const val KEY_LAUNCH_BUCKET_PREFIX = "launch_bucket_"
@@ -50,6 +51,33 @@ object LauncherStore {
         }
         val collator = Collator.getInstance()
         return list.sortedWith(compareBy(collator) { it.label })
+    }
+
+    fun getHiddenAppKeys(context: Context): MutableSet<String> {
+        val prefs = prefs(context)
+        val raw = prefs.getString(KEY_HIDDEN_APPS, "") ?: ""
+        if (raw.isBlank()) return mutableSetOf()
+        return raw.split('|').filter { it.isNotBlank() }.toMutableSet()
+    }
+
+    fun isAppHidden(context: Context, component: ComponentName): Boolean {
+        return getHiddenAppKeys(context).contains(component.flattenToString())
+    }
+
+    fun setAppHidden(context: Context, component: ComponentName, hidden: Boolean) {
+        val prefs = prefs(context)
+        val set = getHiddenAppKeys(context)
+        val key = component.flattenToString()
+        if (hidden) {
+            set.add(key)
+        } else {
+            set.remove(key)
+        }
+        prefs.edit().putString(KEY_HIDDEN_APPS, set.joinToString("|")).apply()
+    }
+
+    fun clearHiddenApps(context: Context) {
+        prefs(context).edit().remove(KEY_HIDDEN_APPS).apply()
     }
 
     fun loadPages(context: Context, allApps: List<AppEntry>): List<List<HomeItem>> {
