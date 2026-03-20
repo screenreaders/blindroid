@@ -171,6 +171,7 @@
     <string name="face_hint">Pomaga ustawić telefon i twarz do rozpoznawania</string>
     <string name="face_title">Asystent FaceID</string>
     <string name="face_active">Aktywny</string>
+    <string name="face_sound_cues">Sygnały dźwiękowe</string>
     <string name="face_status_label">Wskazówki</string>
     <string name="face_status_idle">Wyłączony</string>
     <string name="face_status_searching">Szukam twarzy</string>
@@ -186,6 +187,16 @@
     <string name="face_guidance_move_closer">Przybliż telefon.</string>
     <string name="face_guidance_move_farther">Oddal telefon.</string>
     <string name="face_guidance_look_center">Spójrz prosto w ekran.</string>
+    <string name="face_pickup_enable">Uruchamiaj po podniesieniu telefonu</string>
+    <string name="face_shortcut_enable">Skrót FaceID na ekranie blokady</string>
+    <string name="answer_pickup_enable">Odbieraj połączenie po podniesieniu</string>
+    <string name="face_notification_title">Blindroid FaceID</string>
+    <string name="face_notification_ready">Skrót FaceID na ekranie blokady</string>
+    <string name="face_notification_pickup">Podniesienie uruchamia asystenta FaceID</string>
+    <string name="face_notification_channel">Asystent FaceID</string>
+    <string name="pickup_notification_title">Blindroid - podniesienie</string>
+    <string name="answer_pickup_notification">Podniesienie odbiera połączenie</string>
+    <string name="pickup_notification_idle">Blindroid gotowy</string>
     <string name="light_level_dark">ciemno</string>
     <string name="light_level_dim">średnio</string>
     <string name="light_level_bright">jasno</string>

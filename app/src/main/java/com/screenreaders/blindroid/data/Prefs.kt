@@ -53,6 +53,10 @@ object Prefs {
     private const val KEY_LOW_VISION_SCALE = "low_vision_scale"
     private const val KEY_LOW_VISION_PRESET = "low_vision_preset"
     private const val KEY_FACE_ASSIST = "face_assist_enabled"
+    private const val KEY_FACE_PICKUP = "face_pickup_enabled"
+    private const val KEY_FACE_SHORTCUT = "face_shortcut_enabled"
+    private const val KEY_FACE_SOUND = "face_sound_enabled"
+    private const val KEY_ANSWER_PICKUP = "answer_pickup_enabled"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -204,6 +208,34 @@ object Prefs {
 
     fun setFaceAssistEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_FACE_ASSIST, value).apply()
+    }
+
+    fun isFacePickupEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FACE_PICKUP, false)
+
+    fun setFacePickupEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FACE_PICKUP, value).apply()
+    }
+
+    fun isFaceShortcutEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FACE_SHORTCUT, true)
+
+    fun setFaceShortcutEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FACE_SHORTCUT, value).apply()
+    }
+
+    fun isFaceSoundEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FACE_SOUND, true)
+
+    fun setFaceSoundEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FACE_SOUND, value).apply()
+    }
+
+    fun isAnswerPickupEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_ANSWER_PICKUP, false)
+
+    fun setAnswerPickupEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_ANSWER_PICKUP, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

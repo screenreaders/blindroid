@@ -453,6 +453,27 @@
             android:layout_marginTop="8dp"
             android:text="@string/face_hint" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/facePickupSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/face_pickup_enable" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answerPickupSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/answer_pickup_enable" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/faceShortcutSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/face_shortcut_enable" />
+
         <TextView
             android:id="@+id/currencyLabel"
             android:layout_width="wrap_content"

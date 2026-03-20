@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.face.PickupService
 
 class ChimeBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -11,5 +12,6 @@ class ChimeBootReceiver : BroadcastReceiver() {
         if (Prefs.isChimeEnabled(context)) {
             ChimeScheduler.schedule(context)
         }
+        PickupService.sync(context)
     }
 }

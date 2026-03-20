@@ -38,6 +38,7 @@ import com.screenreaders.blindroid.document.DocumentAssistActivity
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.face.FaceAssistActivity
+import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.util.LowVisionStyler
@@ -131,7 +132,12 @@ class MainActivity : AppCompatActivity() {
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
         binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
         binding.faceSwitch.isChecked = Prefs.isFaceAssistEnabled(this)
+        binding.facePickupSwitch.isChecked = Prefs.isFacePickupEnabled(this)
+        binding.answerPickupSwitch.isChecked = Prefs.isAnswerPickupEnabled(this)
+        binding.faceShortcutSwitch.isChecked = Prefs.isFaceShortcutEnabled(this)
         binding.faceButton.isEnabled = binding.faceSwitch.isChecked
+        updateFaceControls()
+        PickupService.sync(this)
         initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
             startActivity(Intent(this, DiagnosticsActivity::class.java))
@@ -221,6 +227,32 @@ class MainActivity : AppCompatActivity() {
             Prefs.setFaceAssistEnabled(this, isChecked)
             logSettingChange("face_assist", isChecked)
             binding.faceButton.isEnabled = isChecked
+            if (!isChecked) {
+                Prefs.setFacePickupEnabled(this, false)
+                Prefs.setFaceShortcutEnabled(this, false)
+                binding.facePickupSwitch.isChecked = false
+                binding.faceShortcutSwitch.isChecked = false
+            }
+            updateFaceControls()
+            PickupService.sync(this)
+        }
+
+        binding.facePickupSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setFacePickupEnabled(this, isChecked)
+            logSettingChange("face_pickup", isChecked)
+            PickupService.sync(this)
+        }
+
+        binding.answerPickupSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setAnswerPickupEnabled(this, isChecked)
+            logSettingChange("answer_pickup", isChecked)
+            PickupService.sync(this)
+        }
+
+        binding.faceShortcutSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setFaceShortcutEnabled(this, isChecked)
+            logSettingChange("face_shortcut", isChecked)
+            PickupService.sync(this)
         }
 
         binding.updateAutoSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -481,6 +513,12 @@ class MainActivity : AppCompatActivity() {
     private fun applyLowVision() {
         updateLowVisionControls()
         LowVisionStyler.apply(this)
+    }
+
+    private fun updateFaceControls() {
+        val enabled = Prefs.isFaceAssistEnabled(this)
+        binding.facePickupSwitch.isEnabled = enabled
+        binding.faceShortcutSwitch.isEnabled = enabled
     }
 
     private fun applyLowVisionPreset(preset: LowVisionPreset) {

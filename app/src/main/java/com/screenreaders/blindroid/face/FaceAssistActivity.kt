@@ -9,6 +9,8 @@ import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.Size
 import android.view.WindowManager
+import android.media.AudioManager
+import android.media.ToneGenerator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -41,9 +43,15 @@ class FaceAssistActivity : AppCompatActivity() {
     private var lastGuidanceTime = 0L
     private var tts: TextToSpeech? = null
     private var active = false
+    private var soundEnabled = false
+    private var toneGenerator: ToneGenerator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!Prefs.isFaceAssistEnabled(this)) {
+            finish()
+            return
+        }
         binding = ActivityFaceAssistBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupLockScreen()
@@ -60,6 +68,13 @@ class FaceAssistActivity : AppCompatActivity() {
             if (status == TextToSpeech.SUCCESS) {
                 applyTtsSettings()
             }
+        }
+        toneGenerator = ToneGenerator(AudioManager.STREAM_ACCESSIBILITY, 80)
+        soundEnabled = Prefs.isFaceSoundEnabled(this)
+        binding.faceSoundSwitch.isChecked = soundEnabled
+        binding.faceSoundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setFaceSoundEnabled(this, isChecked)
+            soundEnabled = isChecked
         }
 
         binding.faceActiveSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -81,6 +96,7 @@ class FaceAssistActivity : AppCompatActivity() {
         super.onDestroy()
         tts?.shutdown()
         faceDetector?.close()
+        toneGenerator?.release()
         cameraExecutor.shutdown()
     }
 
@@ -236,6 +252,9 @@ class FaceAssistActivity : AppCompatActivity() {
         if (now - lastGuidanceTime < GUIDANCE_MIN_INTERVAL_MS) return
         lastGuidance = message
         lastGuidanceTime = now
+        if (soundEnabled) {
+            playSoundCue(message)
+        }
         speakText(message)
     }
 
@@ -245,6 +264,23 @@ class FaceAssistActivity : AppCompatActivity() {
             putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume)
         }
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "face")
+    }
+
+    private fun playSoundCue(message: String) {
+        val tone = when (message) {
+            getString(R.string.face_status_ready) -> ToneGenerator.TONE_PROP_BEEP2
+            getString(R.string.face_guidance_no_face) -> ToneGenerator.TONE_PROP_NACK
+            getString(R.string.face_guidance_too_dark) -> ToneGenerator.TONE_PROP_NACK
+            getString(R.string.face_guidance_move_left),
+            getString(R.string.face_guidance_move_right),
+            getString(R.string.face_guidance_move_up),
+            getString(R.string.face_guidance_move_down),
+            getString(R.string.face_guidance_move_closer),
+            getString(R.string.face_guidance_move_farther),
+            getString(R.string.face_guidance_look_center) -> ToneGenerator.TONE_PROP_BEEP
+            else -> ToneGenerator.TONE_PROP_BEEP
+        }
+        toneGenerator?.startTone(tone, 120)
     }
 
     private fun estimateBrightness(imageProxy: androidx.camera.core.ImageProxy): Int {
