@@ -86,6 +86,17 @@ object Prefs {
     private const val KEY_NAV_LAST_PLACE = "nav_last_place"
     private const val KEY_NAV_LAST_CITY = "nav_last_city"
     private const val KEY_NAV_LAST_MODE = "nav_last_mode"
+    private const val KEY_NAV_POI_SOURCE = "nav_poi_source"
+    private const val KEY_NAV_OFFLINE_COUNT = "nav_offline_count"
+    private const val KEY_NAV_OFFLINE_UPDATED = "nav_offline_updated"
+    private const val KEY_NAV_IMPORT_RADIUS = "nav_import_radius"
+    private const val KEY_NAV_IMPORT_MODE = "nav_import_mode"
+    private const val KEY_NAV_IMPORT_MIN_LAT = "nav_import_min_lat"
+    private const val KEY_NAV_IMPORT_MIN_LON = "nav_import_min_lon"
+    private const val KEY_NAV_IMPORT_MAX_LAT = "nav_import_max_lat"
+    private const val KEY_NAV_IMPORT_MAX_LON = "nav_import_max_lon"
+    private const val KEY_NAV_OFFLINE_BASE_URL = "nav_offline_base_url"
+    private const val KEY_NAV_OFFLINE_ZOOM = "nav_offline_zoom"
     private const val KEY_TYFLO_LAST_LINK = "tyflo_last_link"
 
     const val MODE_RING_AND_SPEECH = 0
@@ -103,6 +114,12 @@ object Prefs {
     const val CURRENCY_MODE_MODEL = 1
     const val CURRENCY_MODEL_SOURCE_FILE = 0
     const val CURRENCY_MODEL_SOURCE_BUILTIN = 1
+    const val NAV_POI_SOURCE_GOOGLE = 0
+    const val NAV_POI_SOURCE_OFFLINE = 1
+    const val NAV_POI_SOURCE_OSM = 2
+    const val NAV_POI_SOURCE_HYBRID = 3
+    const val NAV_IMPORT_MODE_RADIUS = 0
+    const val NAV_IMPORT_MODE_MANUAL = 1
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -466,6 +483,83 @@ object Prefs {
 
     fun setNavigationLastMode(context: Context, value: String) {
         prefs(context).edit().putString(KEY_NAV_LAST_MODE, value).apply()
+    }
+
+    fun getNavigationPoiSource(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_POI_SOURCE, NAV_POI_SOURCE_OFFLINE)
+
+    fun setNavigationPoiSource(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_POI_SOURCE, value).apply()
+    }
+
+    fun getNavigationOfflineCount(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_OFFLINE_COUNT, 0)
+
+    fun setNavigationOfflineCount(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_OFFLINE_COUNT, value.coerceAtLeast(0)).apply()
+    }
+
+    fun getNavigationOfflineUpdated(context: Context): Long =
+        prefs(context).getLong(KEY_NAV_OFFLINE_UPDATED, 0L)
+
+    fun setNavigationOfflineUpdated(context: Context, value: Long) {
+        prefs(context).edit().putLong(KEY_NAV_OFFLINE_UPDATED, value.coerceAtLeast(0L)).apply()
+    }
+
+    fun getNavigationImportRadius(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_IMPORT_RADIUS, 1000).coerceIn(200, 20_000)
+
+    fun setNavigationImportRadius(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_IMPORT_RADIUS, value.coerceIn(200, 20_000)).apply()
+    }
+
+    fun getNavigationImportMode(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_IMPORT_MODE, NAV_IMPORT_MODE_RADIUS)
+
+    fun setNavigationImportMode(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_IMPORT_MODE, value).apply()
+    }
+
+    fun getNavigationImportMinLat(context: Context): Float =
+        prefs(context).getFloat(KEY_NAV_IMPORT_MIN_LAT, 0f)
+
+    fun setNavigationImportMinLat(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NAV_IMPORT_MIN_LAT, value).apply()
+    }
+
+    fun getNavigationImportMinLon(context: Context): Float =
+        prefs(context).getFloat(KEY_NAV_IMPORT_MIN_LON, 0f)
+
+    fun setNavigationImportMinLon(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NAV_IMPORT_MIN_LON, value).apply()
+    }
+
+    fun getNavigationImportMaxLat(context: Context): Float =
+        prefs(context).getFloat(KEY_NAV_IMPORT_MAX_LAT, 0f)
+
+    fun setNavigationImportMaxLat(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NAV_IMPORT_MAX_LAT, value).apply()
+    }
+
+    fun getNavigationImportMaxLon(context: Context): Float =
+        prefs(context).getFloat(KEY_NAV_IMPORT_MAX_LON, 0f)
+
+    fun setNavigationImportMaxLon(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NAV_IMPORT_MAX_LON, value).apply()
+    }
+
+    fun getNavigationOfflineBaseUrl(context: Context): String =
+        prefs(context).getString(KEY_NAV_OFFLINE_BASE_URL, "") ?: ""
+
+    fun setNavigationOfflineBaseUrl(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_OFFLINE_BASE_URL, value.trim()).apply()
+    }
+
+    fun getNavigationOfflineZoom(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_OFFLINE_ZOOM, 15).coerceIn(10, 18)
+
+    fun setNavigationOfflineZoom(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_OFFLINE_ZOOM, value.coerceIn(10, 18)).apply()
     }
 
     fun getTyflomapLastLink(context: Context): String? =

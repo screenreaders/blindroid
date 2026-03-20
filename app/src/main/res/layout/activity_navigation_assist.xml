@@ -88,6 +88,185 @@
             android:text="@string/navigation_tracking_enable" />
 
         <TextView
+            android:id="@+id/navigationPoiSourceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/navigation_poi_source_label"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/navigationPoiSourceGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/navigationPoiSourceGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_poi_source_google" />
+
+            <RadioButton
+                android:id="@+id/navigationPoiSourceOffline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_poi_source_offline" />
+
+            <RadioButton
+                android:id="@+id/navigationPoiSourceOsm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_poi_source_osm" />
+
+            <RadioButton
+                android:id="@+id/navigationPoiSourceHybrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_poi_source_hybrid" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/navigationOfflineImportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_offline_import" />
+
+        <Button
+            android:id="@+id/navigationOfflineClearButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_clear" />
+
+        <TextView
+            android:id="@+id/navigationOfflineStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_offline_empty" />
+
+        <EditText
+            android:id="@+id/navigationOfflineBaseUrlInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/navigation_offline_base_url_hint"
+            android:inputType="textUri" />
+
+        <Button
+            android:id="@+id/navigationOfflineCheckButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/navigation_offline_check" />
+
+        <TextView
+            android:id="@+id/navigationOfflineBaseUrlHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_offline_base_url_info" />
+
+        <TextView
+            android:id="@+id/navigationOfflineZoomLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_offline_zoom_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationOfflineZoomSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/navigationImportRadiusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_import_radius_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationImportRadiusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/navigationImportModeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_import_mode_label"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/navigationImportModeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/navigationImportModeRadius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_import_mode_radius" />
+
+            <RadioButton
+                android:id="@+id/navigationImportModeManual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_import_mode_manual" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/navigationImportManualHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/navigation_import_manual_hint"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/navigationImportMinLatInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/navigation_import_min_lat"
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/navigationImportMinLonInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/navigation_import_min_lon"
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/navigationImportMaxLatInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/navigation_import_max_lat"
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/navigationImportMaxLonInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/navigation_import_max_lon"
+            android:inputType="numberDecimal|numberSigned"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/navigationRadiusLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -199,5 +378,41 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/navigation_hint" />
+
+        <TextView
+            android:id="@+id/navigationTyflomapLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tyflomap_label"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/navigationTyflomapCheckButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tyflomap_check" />
+
+        <TextView
+            android:id="@+id/navigationTyflomapStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/tyflomap_status_idle" />
+
+        <Button
+            android:id="@+id/navigationTyflomapOpenButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tyflomap_open_link" />
+
+        <Button
+            android:id="@+id/navigationTyflomapShareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/tyflomap_share_link" />
     </LinearLayout>
 </ScrollView>

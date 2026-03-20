@@ -124,12 +124,14 @@ class NavigationPoiService : Service(), LocationListener {
         if (Prefs.isNavigationMovingOnly(this) && !isMoving(location)) return
         maybeWriteTrack(location)
         val wantsPoi = Prefs.isNavigationTrackingEnabled(this)
+        val source = Prefs.getNavigationPoiSource(this)
         val apiKey = Prefs.getNavigationApiKey(this)
         val categories = Prefs.getNavigationCategories(this)
             .split(',')
             .map { it.trim() }
             .filter { it.isNotBlank() }
-        if (!wantsPoi || apiKey.isBlank() || categories.isEmpty()) return
+        if (!wantsPoi || categories.isEmpty()) return
+        if (source == Prefs.NAV_POI_SOURCE_GOOGLE && apiKey.isBlank()) return
 
         val now = System.currentTimeMillis()
         val minIntervalMs = Prefs.getNavigationSpeakIntervalSec(this).toLong() * 1000L
@@ -140,8 +142,25 @@ class NavigationPoiService : Service(), LocationListener {
         lastQueryTime = now
         lastQueryLocation = location
         executor.execute {
-            categories.forEach { type ->
-                fetchPlaces(type, location, apiKey)
+            when (source) {
+                Prefs.NAV_POI_SOURCE_GOOGLE -> {
+                    categories.forEach { type ->
+                        fetchPlaces(type, location, apiKey)
+                    }
+                }
+                Prefs.NAV_POI_SOURCE_OFFLINE -> {
+                    fetchOfflinePois(location, categories)
+                }
+                Prefs.NAV_POI_SOURCE_OSM -> {
+                    fetchOnlineOsm(location, categories)
+                }
+                Prefs.NAV_POI_SOURCE_HYBRID -> {
+                    val spoke = fetchOfflinePois(location, categories)
+                    if (!spoke) {
+                        fetchOnlineOsm(location, categories)
+                    }
+                }
+                else -> Unit
             }
         }
     }
@@ -183,6 +202,54 @@ class NavigationPoiService : Service(), LocationListener {
             // ignore network errors
         } finally {
             conn.disconnect()
+        }
+    }
+
+    private fun fetchOfflinePois(location: Location, categories: List<String>): Boolean {
+        val radius = Prefs.getNavigationRadius(this)
+        val pois = NavigationPoiStore.queryNearby(
+            this,
+            location.latitude,
+            location.longitude,
+            radius,
+            categories.toSet()
+        ).sortedBy { distanceMeters(location.latitude, location.longitude, it.lat, it.lon) }
+        if (pois.isEmpty()) return false
+        for (poi in pois) {
+            val distance = distanceMeters(location.latitude, location.longitude, poi.lat, poi.lon)
+            val announceDistance = (radius * 0.6).toInt().coerceIn(30, 120)
+            if (distance > announceDistance) continue
+            if (isRecentlyAnnounced(poi.id)) continue
+            if (!canSpeakNow()) continue
+            if (!passesMinDistance(location)) continue
+            markAnnounced(poi.id)
+            speakOnce("Mijasz: ${poi.name}, ${labelForType(poi.type)}")
+            return true
+        }
+        return false
+    }
+
+    private fun fetchOnlineOsm(location: Location, categories: List<String>) {
+        val radius = Prefs.getNavigationRadius(this)
+        val results = try {
+            OverpassPoiClient.fetch(location.latitude, location.longitude, radius, categories.toSet())
+        } catch (_: Exception) {
+            emptyList()
+        }
+        if (results.isEmpty()) return
+        val sorted = results.sortedBy {
+            distanceMeters(location.latitude, location.longitude, it.lat, it.lon)
+        }
+        for (poi in sorted) {
+            val distance = distanceMeters(location.latitude, location.longitude, poi.lat, poi.lon)
+            val announceDistance = (radius * 0.6).toInt().coerceIn(30, 120)
+            if (distance > announceDistance) continue
+            if (isRecentlyAnnounced(poi.id)) continue
+            if (!canSpeakNow()) continue
+            if (!passesMinDistance(location)) continue
+            markAnnounced(poi.id)
+            speakOnce("Mijasz: ${poi.name}, ${labelForType(poi.type)}")
+            break
         }
     }
 

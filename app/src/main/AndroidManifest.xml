@@ -79,9 +79,6 @@
             android:name=".navigation.NavigationAssistActivity"
             android:exported="false" />
 
-        <activity
-            android:name=".tyflomap.TyflomapActivity"
-            android:exported="false" />
 
         <activity
             android:name=".accessibility.TalkbackWizardActivity"

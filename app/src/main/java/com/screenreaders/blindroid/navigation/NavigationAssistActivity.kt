@@ -3,6 +3,7 @@ package com.screenreaders.blindroid.navigation
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +14,9 @@ import com.screenreaders.blindroid.R
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityNavigationAssistBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.concurrent.Executors
 
 class NavigationAssistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNavigationAssistBinding
@@ -32,6 +36,10 @@ class NavigationAssistActivity : AppCompatActivity() {
     )
     private val selected = BooleanArray(categories.size)
     private var pendingSharePin = false
+    private var pendingTyflomap = false
+    private var pendingOfflineImport = false
+    private var tyflomapLink: String? = null
+    private val executor = Executors.newSingleThreadExecutor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +53,8 @@ class NavigationAssistActivity : AppCompatActivity() {
             Prefs.setNavigationTrackingEnabled(this, isChecked)
             syncTrackingService()
         }
+        setupPoiSourceControls()
+        setupImportControls()
         binding.navigationCategoriesButton.setOnClickListener { openCategoryDialog() }
         binding.navigationApiKeyInput.setText(Prefs.getNavigationApiKey(this))
         binding.navigationApiKeyInput.setOnFocusChangeListener { _, _ ->
@@ -59,8 +69,16 @@ class NavigationAssistActivity : AppCompatActivity() {
         binding.navigationShareTrackButton.setOnClickListener { shareLastTrack() }
         binding.navigationShareGpxButton.setOnClickListener { shareLastTrackGpx() }
         binding.navigationSharePinButton.setOnClickListener { sharePin() }
+        setupTyflomapControls()
         loadSelectedCategories()
         updateCategorySummary()
+        updateOfflineStatus()
+        updatePoiSourceUi()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        executor.shutdown()
     }
 
     private fun startNavigation() {
@@ -195,10 +213,24 @@ class NavigationAssistActivity : AppCompatActivity() {
                 if (pendingSharePin) {
                     pendingSharePin = false
                     sharePin()
+                } else if (pendingTyflomap) {
+                    pendingTyflomap = false
+                    fetchTyflomap()
+                } else if (pendingOfflineImport) {
+                    pendingOfflineImport = false
+                    importOfflinePois()
                 } else {
                     syncTrackingService()
                 }
             } else {
+                if (pendingTyflomap) {
+                    Toast.makeText(this, R.string.tyflomap_permission_missing, Toast.LENGTH_SHORT).show()
+                } else if (pendingOfflineImport) {
+                    Toast.makeText(this, R.string.navigation_tracking_missing_location, Toast.LENGTH_SHORT).show()
+                }
+                pendingSharePin = false
+                pendingTyflomap = false
+                pendingOfflineImport = false
                 binding.navigationTrackingSwitch.isChecked = false
                 binding.navigationTrackLogSwitch.isChecked = false
             }
@@ -300,10 +332,14 @@ class NavigationAssistActivity : AppCompatActivity() {
             Prefs.setNavigationApiKey(this, apiKey)
             val selectedTypes = selectedTypes()
             Prefs.setNavigationCategories(this, selectedTypes.joinToString(","))
-            if (apiKey.isBlank()) {
-                Toast.makeText(this, R.string.navigation_tracking_missing_key, Toast.LENGTH_SHORT).show()
-            } else if (selectedTypes.isEmpty()) {
+            if (selectedTypes.isEmpty()) {
                 Toast.makeText(this, R.string.navigation_tracking_no_categories, Toast.LENGTH_SHORT).show()
+            } else if (Prefs.getNavigationPoiSource(this) == Prefs.NAV_POI_SOURCE_GOOGLE && apiKey.isBlank()) {
+                Toast.makeText(this, R.string.navigation_tracking_missing_key, Toast.LENGTH_SHORT).show()
+            } else if (Prefs.getNavigationPoiSource(this) == Prefs.NAV_POI_SOURCE_OFFLINE &&
+                NavigationPoiStore.count(this) == 0
+            ) {
+                Toast.makeText(this, R.string.navigation_offline_missing, Toast.LENGTH_SHORT).show()
             }
         }
         NavigationPoiService.start(this)
@@ -394,6 +430,408 @@ class NavigationAssistActivity : AppCompatActivity() {
             "bicycling" -> binding.navigationModeBicycling.isChecked = true
             "transit" -> binding.navigationModeTransit.isChecked = true
             else -> binding.navigationModeDriving.isChecked = true
+        }
+    }
+
+    private fun setupPoiSourceControls() {
+        val source = Prefs.getNavigationPoiSource(this)
+        binding.navigationPoiSourceGoogle.isChecked = source == Prefs.NAV_POI_SOURCE_GOOGLE
+        binding.navigationPoiSourceOffline.isChecked = source == Prefs.NAV_POI_SOURCE_OFFLINE
+        binding.navigationPoiSourceOsm.isChecked = source == Prefs.NAV_POI_SOURCE_OSM
+        binding.navigationPoiSourceHybrid.isChecked = source == Prefs.NAV_POI_SOURCE_HYBRID
+        binding.navigationPoiSourceGroup.setOnCheckedChangeListener { _, checkedId ->
+            val value = when (checkedId) {
+                R.id.navigationPoiSourceGoogle -> Prefs.NAV_POI_SOURCE_GOOGLE
+                R.id.navigationPoiSourceOsm -> Prefs.NAV_POI_SOURCE_OSM
+                R.id.navigationPoiSourceHybrid -> Prefs.NAV_POI_SOURCE_HYBRID
+                else -> Prefs.NAV_POI_SOURCE_OFFLINE
+            }
+            Prefs.setNavigationPoiSource(this, value)
+            updatePoiSourceUi()
+        }
+        binding.navigationOfflineImportButton.setOnClickListener { importOfflinePois() }
+        binding.navigationOfflineClearButton.setOnClickListener { clearOfflinePois() }
+    }
+
+    private fun setupImportControls() {
+        binding.navigationOfflineBaseUrlInput.setText(Prefs.getNavigationOfflineBaseUrl(this))
+        binding.navigationOfflineBaseUrlInput.setOnFocusChangeListener { _, _ ->
+            Prefs.setNavigationOfflineBaseUrl(this, binding.navigationOfflineBaseUrlInput.text?.toString().orEmpty())
+        }
+        binding.navigationOfflineCheckButton.setOnClickListener { checkOfflineBase() }
+
+        val zoomOptions = listOf(12, 13, 14, 15, 16, 17)
+        val zoomLabels = zoomOptions.map { getString(R.string.navigation_offline_zoom_value, it) }
+        val zoomAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            zoomLabels
+        )
+        zoomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationOfflineZoomSpinner.adapter = zoomAdapter
+        val zoomIndex = zoomOptions.indexOf(Prefs.getNavigationOfflineZoom(this)).let { if (it >= 0) it else 3 }
+        binding.navigationOfflineZoomSpinner.setSelection(zoomIndex, false)
+        binding.navigationOfflineZoomSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = zoomOptions.getOrElse(position) { 15 }
+                Prefs.setNavigationOfflineZoom(this@NavigationAssistActivity, value)
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+        }
+
+        val importRadiusOptions = listOf(200, 500, 1000, 2000, 5000, 10000)
+        val importRadiusLabels = importRadiusOptions.map { getString(R.string.navigation_import_radius_value, it) }
+        val importRadiusAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            importRadiusLabels
+        )
+        importRadiusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationImportRadiusSpinner.adapter = importRadiusAdapter
+        val importRadiusIndex = importRadiusOptions.indexOf(Prefs.getNavigationImportRadius(this)).let { if (it >= 0) it else 2 }
+        binding.navigationImportRadiusSpinner.setSelection(importRadiusIndex, false)
+        binding.navigationImportRadiusSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = importRadiusOptions.getOrElse(position) { 1000 }
+                Prefs.setNavigationImportRadius(this@NavigationAssistActivity, value)
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+        }
+
+        val mode = Prefs.getNavigationImportMode(this)
+        binding.navigationImportModeRadius.isChecked = mode == Prefs.NAV_IMPORT_MODE_RADIUS
+        binding.navigationImportModeManual.isChecked = mode == Prefs.NAV_IMPORT_MODE_MANUAL
+        binding.navigationImportModeGroup.setOnCheckedChangeListener { _, checkedId ->
+            val value = if (checkedId == R.id.navigationImportModeManual) {
+                Prefs.NAV_IMPORT_MODE_MANUAL
+            } else {
+                Prefs.NAV_IMPORT_MODE_RADIUS
+            }
+            Prefs.setNavigationImportMode(this, value)
+            updateImportModeUi()
+        }
+        binding.navigationImportMinLatInput.setText(Prefs.getNavigationImportMinLat(this).toString())
+        binding.navigationImportMinLonInput.setText(Prefs.getNavigationImportMinLon(this).toString())
+        binding.navigationImportMaxLatInput.setText(Prefs.getNavigationImportMaxLat(this).toString())
+        binding.navigationImportMaxLonInput.setText(Prefs.getNavigationImportMaxLon(this).toString())
+        binding.navigationImportMinLatInput.setOnFocusChangeListener { _, _ ->
+            binding.navigationImportMinLatInput.text?.toString()?.toFloatOrNull()?.let {
+                Prefs.setNavigationImportMinLat(this, it)
+            }
+        }
+        binding.navigationImportMinLonInput.setOnFocusChangeListener { _, _ ->
+            binding.navigationImportMinLonInput.text?.toString()?.toFloatOrNull()?.let {
+                Prefs.setNavigationImportMinLon(this, it)
+            }
+        }
+        binding.navigationImportMaxLatInput.setOnFocusChangeListener { _, _ ->
+            binding.navigationImportMaxLatInput.text?.toString()?.toFloatOrNull()?.let {
+                Prefs.setNavigationImportMaxLat(this, it)
+            }
+        }
+        binding.navigationImportMaxLonInput.setOnFocusChangeListener { _, _ ->
+            binding.navigationImportMaxLonInput.text?.toString()?.toFloatOrNull()?.let {
+                Prefs.setNavigationImportMaxLon(this, it)
+            }
+        }
+        updateImportModeUi()
+    }
+
+    private fun updateImportModeUi() {
+        val manual = Prefs.getNavigationImportMode(this) == Prefs.NAV_IMPORT_MODE_MANUAL
+        val visibility = if (manual) android.view.View.VISIBLE else android.view.View.GONE
+        binding.navigationImportMinLatInput.visibility = visibility
+        binding.navigationImportMinLonInput.visibility = visibility
+        binding.navigationImportMaxLatInput.visibility = visibility
+        binding.navigationImportMaxLonInput.visibility = visibility
+        binding.navigationImportManualHint.visibility = visibility
+        updatePoiSourceUi()
+    }
+
+    private fun updatePoiSourceUi() {
+        val source = Prefs.getNavigationPoiSource(this)
+        val isGoogle = source == Prefs.NAV_POI_SOURCE_GOOGLE
+        val isOfflineCapable = source == Prefs.NAV_POI_SOURCE_OFFLINE || source == Prefs.NAV_POI_SOURCE_HYBRID
+        binding.navigationApiKeyInput.isEnabled = isGoogle
+        binding.navigationApiKeyHint.alpha = if (isGoogle) 1f else 0.6f
+        binding.navigationApiKeyInput.alpha = if (isGoogle) 1f else 0.6f
+        binding.navigationOfflineImportButton.isEnabled = isOfflineCapable
+        binding.navigationOfflineClearButton.isEnabled = isOfflineCapable
+        binding.navigationOfflineStatus.alpha = if (isOfflineCapable) 1f else 0.6f
+        binding.navigationOfflineBaseUrlInput.isEnabled = isOfflineCapable
+        binding.navigationOfflineBaseUrlHint.alpha = if (isOfflineCapable) 1f else 0.6f
+        binding.navigationOfflineBaseUrlInput.alpha = if (isOfflineCapable) 1f else 0.6f
+        binding.navigationOfflineZoomSpinner.isEnabled = isOfflineCapable
+        binding.navigationImportRadiusSpinner.isEnabled = isOfflineCapable
+        binding.navigationImportModeGroup.isEnabled = isOfflineCapable
+        binding.navigationImportModeRadius.isEnabled = isOfflineCapable
+        binding.navigationImportModeManual.isEnabled = isOfflineCapable
+        binding.navigationOfflineCheckButton.isEnabled = isOfflineCapable
+        val manual = Prefs.getNavigationImportMode(this) == Prefs.NAV_IMPORT_MODE_MANUAL
+        val enabled = isOfflineCapable && manual
+        binding.navigationImportMinLatInput.isEnabled = enabled
+        binding.navigationImportMinLonInput.isEnabled = enabled
+        binding.navigationImportMaxLatInput.isEnabled = enabled
+        binding.navigationImportMaxLonInput.isEnabled = enabled
+    }
+
+    private fun updateOfflineStatus() {
+        val count = Prefs.getNavigationOfflineCount(this)
+        val updated = Prefs.getNavigationOfflineUpdated(this)
+        if (count <= 0 || updated <= 0L) {
+            binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_empty)
+            return
+        }
+        val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale("pl", "PL"))
+        binding.navigationOfflineStatus.text = getString(
+            R.string.navigation_offline_status,
+            count,
+            fmt.format(java.util.Date(updated))
+        )
+    }
+
+    private fun importOfflinePois() {
+        if (!hasLocationPermission()) {
+            pendingOfflineImport = true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        val categories = selectedTypes()
+        if (categories.isEmpty()) {
+            Toast.makeText(this, R.string.navigation_tracking_no_categories, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Prefs.setNavigationCategories(this, categories.joinToString(","))
+        val baseUrl = binding.navigationOfflineBaseUrlInput.text?.toString()?.trim().orEmpty()
+        if (baseUrl.isBlank()) {
+            Toast.makeText(this, R.string.navigation_offline_base_url_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Prefs.setNavigationOfflineBaseUrl(this, baseUrl)
+        val bbox = resolveImportBbox() ?: return
+        binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_importing)
+        executor.execute {
+            var tooMany = false
+            var noTiles = false
+            val result = try {
+                GithubTileClient.fetchTilesWithProgress(
+                    bbox = bbox,
+                    categories = categories.toSet(),
+                    config = GithubTileClient.Config(
+                        baseUrl = baseUrl,
+                        zoom = Prefs.getNavigationOfflineZoom(this)
+                    ),
+                    onProgress = { done, total ->
+                        runOnUiThread {
+                            binding.navigationOfflineStatus.text =
+                                getString(R.string.navigation_offline_progress, done, total)
+                        }
+                    }
+                )
+            } catch (e: IllegalArgumentException) {
+                if (e.message == "too_many_tiles") {
+                    tooMany = true
+                    emptyList()
+                } else if (e.message == "no_tiles") {
+                    noTiles = true
+                    emptyList()
+                } else {
+                    null
+                }
+            } catch (_: Exception) {
+                null
+            }
+            runOnUiThread {
+                if (tooMany) {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_too_many_tiles)
+                    Toast.makeText(this, R.string.navigation_offline_too_many_tiles, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+                if (noTiles) {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_check_failed)
+                    Toast.makeText(this, R.string.navigation_offline_check_failed, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+                if (result == null) {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_import_failed)
+                    Toast.makeText(this, R.string.navigation_offline_import_failed, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+                NavigationPoiStore.replaceAll(this, result)
+                Prefs.setNavigationOfflineCount(this, result.size)
+                Prefs.setNavigationOfflineUpdated(this, System.currentTimeMillis())
+                updateOfflineStatus()
+                Toast.makeText(this, R.string.navigation_offline_import_done, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun clearOfflinePois() {
+        try {
+            NavigationPoiStore.clear(this)
+            Prefs.setNavigationOfflineCount(this, 0)
+            Prefs.setNavigationOfflineUpdated(this, 0L)
+            updateOfflineStatus()
+            Toast.makeText(this, R.string.navigation_offline_clear_done, Toast.LENGTH_SHORT).show()
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.navigation_offline_clear_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupTyflomapControls() {
+        binding.navigationTyflomapCheckButton.setOnClickListener { fetchTyflomap() }
+        binding.navigationTyflomapOpenButton.setOnClickListener { openTyflomapLink() }
+        binding.navigationTyflomapShareButton.setOnClickListener { shareTyflomapLink() }
+        tyflomapLink = Prefs.getTyflomapLastLink(this)
+        updateTyflomapButtons()
+    }
+
+    private fun fetchTyflomap() {
+        if (!hasLocationPermission()) {
+            pendingTyflomap = true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        val location = getLastLocation() ?: run {
+            Toast.makeText(this, R.string.navigation_pin_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        binding.navigationTyflomapStatus.text = getString(R.string.tyflomap_status_loading)
+        executor.execute {
+            val outcome = try {
+                TyflomapClient.findMapLink(location.latitude, location.longitude)
+            } catch (_: Exception) {
+                "__error__"
+            }
+            runOnUiThread {
+                if (outcome == "__error__") {
+                    binding.navigationTyflomapStatus.text = getString(R.string.tyflomap_status_error)
+                } else if (outcome.isNullOrBlank()) {
+                    binding.navigationTyflomapStatus.text = getString(R.string.tyflomap_status_missing)
+                } else {
+                    tyflomapLink = outcome
+                    Prefs.setTyflomapLastLink(this, outcome)
+                    binding.navigationTyflomapStatus.text = getString(R.string.tyflomap_status_found)
+                }
+                updateTyflomapButtons()
+            }
+        }
+    }
+
+    private fun openTyflomapLink() {
+        val link = tyflomapLink ?: return
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+    }
+
+    private fun shareTyflomapLink() {
+        val link = tyflomapLink ?: return
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, link)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.tyflomap_share_link)))
+    }
+
+    private fun updateTyflomapButtons() {
+        val has = !tyflomapLink.isNullOrBlank()
+        binding.navigationTyflomapOpenButton.isEnabled = has
+        binding.navigationTyflomapShareButton.isEnabled = has
+    }
+
+    private fun getLastLocation(): android.location.Location? {
+        val manager = getSystemService(LocationManager::class.java)
+        val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+        return providers.mapNotNull { manager.getLastKnownLocation(it) }.maxByOrNull { it.time }
+    }
+
+    private fun resolveImportBbox(): GithubTileClient.Bbox? {
+        return if (Prefs.getNavigationImportMode(this) == Prefs.NAV_IMPORT_MODE_MANUAL) {
+            val minLat = binding.navigationImportMinLatInput.text?.toString()?.trim()?.toDoubleOrNull()
+            val minLon = binding.navigationImportMinLonInput.text?.toString()?.trim()?.toDoubleOrNull()
+            val maxLat = binding.navigationImportMaxLatInput.text?.toString()?.trim()?.toDoubleOrNull()
+            val maxLon = binding.navigationImportMaxLonInput.text?.toString()?.trim()?.toDoubleOrNull()
+            if (minLat == null || minLon == null || maxLat == null || maxLon == null) {
+                Toast.makeText(this, R.string.navigation_import_bounds_invalid, Toast.LENGTH_SHORT).show()
+                return null
+            }
+            Prefs.setNavigationImportMinLat(this, minLat.toFloat())
+            Prefs.setNavigationImportMinLon(this, minLon.toFloat())
+            Prefs.setNavigationImportMaxLat(this, maxLat.toFloat())
+            Prefs.setNavigationImportMaxLon(this, maxLon.toFloat())
+            GithubTileClient.Bbox(
+                minLat = minOf(minLat, maxLat),
+                minLon = minOf(minLon, maxLon),
+                maxLat = maxOf(minLat, maxLat),
+                maxLon = maxOf(minLon, maxLon)
+            )
+        } else {
+            val location = getLastLocation() ?: run {
+                Toast.makeText(this, R.string.navigation_pin_missing, Toast.LENGTH_SHORT).show()
+                return null
+            }
+            val radius = Prefs.getNavigationImportRadius(this)
+            val latDelta = radius / 111_000.0
+            val lonDelta = radius / (111_000.0 * kotlin.math.cos(Math.toRadians(location.latitude)).coerceAtLeast(0.1))
+            GithubTileClient.Bbox(
+                minLat = location.latitude - latDelta,
+                minLon = location.longitude - lonDelta,
+                maxLat = location.latitude + latDelta,
+                maxLon = location.longitude + lonDelta
+            )
+        }
+    }
+
+    private fun checkOfflineBase() {
+        val baseUrl = binding.navigationOfflineBaseUrlInput.text?.toString()?.trim().orEmpty()
+        if (baseUrl.isBlank()) {
+            Toast.makeText(this, R.string.navigation_offline_base_url_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Prefs.setNavigationOfflineBaseUrl(this, baseUrl)
+        val bbox = resolveImportBbox() ?: return
+        binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_checking)
+        executor.execute {
+            val zoom = Prefs.getNavigationOfflineZoom(this)
+            val tiles = GithubTileClient.listTiles(bbox, zoom)
+            val tooMany = tiles.size > GithubTileClient.Config(baseUrl, Prefs.getNavigationOfflineZoom(this)).maxTiles
+            if (tooMany) {
+                runOnUiThread {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_too_many_tiles)
+                    Toast.makeText(this, R.string.navigation_offline_too_many_tiles, Toast.LENGTH_SHORT).show()
+                }
+                return@execute
+            }
+            val tile = tiles.firstOrNull()
+            if (tile == null) {
+                runOnUiThread {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_check_failed)
+                    Toast.makeText(this, R.string.navigation_offline_check_failed, Toast.LENGTH_SHORT).show()
+                }
+                return@execute
+            }
+            val url = "${baseUrl.trimEnd('/')}/$zoom/${tile.x}/${tile.y}.json"
+            val pois = try {
+                GithubTileClient.fetchTile(url, emptySet())
+            } catch (_: Exception) {
+                null
+            }
+            runOnUiThread {
+                if (pois == null) {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_check_failed)
+                    Toast.makeText(this, R.string.navigation_offline_check_failed, Toast.LENGTH_SHORT).show()
+                } else {
+                    binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_check_ok)
+                    Toast.makeText(this, R.string.navigation_offline_check_ok, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
