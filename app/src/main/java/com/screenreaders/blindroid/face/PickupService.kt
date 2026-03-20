@@ -25,6 +25,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.screenreaders.blindroid.R
+import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
@@ -130,7 +131,7 @@ class PickupService : Service() {
     }
 
     private fun detectBackTap(now: Long, gForce: Float) {
-        if (gForce < 2.7f) return
+        if (gForce < backTapThreshold()) return
         tapTimes.addLast(now)
         while (tapTimes.size > 3) tapTimes.removeFirst()
         val window = if (tapTimes.size >= 3) now - (tapTimes.firstOrNull() ?: now) else Long.MAX_VALUE
@@ -142,7 +143,7 @@ class PickupService : Service() {
     }
 
     private fun detectShake(now: Long, gForce: Float) {
-        if (gForce < 3.2f) return
+        if (gForce < shakeThreshold()) return
         shakeTimes.addLast(now)
         while (shakeTimes.size > 4) shakeTimes.removeFirst()
         val window = if (shakeTimes.size >= 3) now - (shakeTimes.firstOrNull() ?: now) else Long.MAX_VALUE
@@ -154,9 +155,16 @@ class PickupService : Service() {
     }
 
     private fun handleMissedCallBack() {
-        val number = Prefs.getLastMissedCallNumber(this) ?: return
+        val number = Prefs.getLastMissedCallNumber(this)
+        if (number.isNullOrBlank()) {
+            announceMissedCallUnavailable()
+            return
+        }
         val age = System.currentTimeMillis() - Prefs.getLastMissedCallTime(this)
-        if (age > 24 * 60 * 60 * 1000L) return
+        if (age > 24 * 60 * 60 * 1000L) {
+            announceMissedCallUnavailable()
+            return
+        }
         val uri = Uri.fromParts("tel", number, null)
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)
             == PackageManager.PERMISSION_GRANTED
@@ -176,6 +184,35 @@ class PickupService : Service() {
         DiagnosticLog.log(this, "sos_shake")
         val intent = Intent(Intent.ACTION_DIAL, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    private fun announceMissedCallUnavailable() {
+        if (CallManager.getCall() != null) return
+        val announcer = CallAnnouncer(this)
+        announcer.speak(
+            text = getString(R.string.missed_call_back_missing),
+            repeatCount = 1,
+            rate = Prefs.getSpeechRate(this),
+            volume = Prefs.getSpeechVolume(this),
+            voiceName = Prefs.getVoiceName(this),
+            onComplete = { announcer.shutdown() }
+        )
+    }
+
+    private fun backTapThreshold(): Float {
+        return when (Prefs.getBackTapSensitivity(this)) {
+            0 -> 2.2f
+            2 -> 3.2f
+            else -> 2.7f
+        }
+    }
+
+    private fun shakeThreshold(): Float {
+        return when (Prefs.getSosShakeSensitivity(this)) {
+            0 -> 2.6f
+            2 -> 3.8f
+            else -> 3.2f
+        }
     }
 
     private fun isDeviceLockedOrScreenOff(): Boolean {

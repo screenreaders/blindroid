@@ -141,6 +141,20 @@
             android:text="@string/missed_call_back_enable" />
 
         <TextView
+            android:id="@+id/backTapSensitivityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/backTapSensitivitySpinner"
+            android:text="@string/back_tap_sensitivity"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/backTapSensitivitySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/endCallKeyLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -680,6 +694,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/sos_shake" />
+
+        <TextView
+            android:id="@+id/sosShakeSensitivityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/sosShakeSensitivitySpinner"
+            android:text="@string/shake_sensitivity"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/sosShakeSensitivitySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/chimeLabel"

@@ -205,6 +205,11 @@
     <string name="answer_pickup_enable">Odbieraj połączenie po podniesieniu</string>
     <string name="missed_call_back_enable">Oddzwaniaj po 3 stuknięciach w plecy</string>
     <string name="missed_call_back_missing">Brak nieodebranego połączenia</string>
+    <string name="back_tap_sensitivity">Czułość stuknięć</string>
+    <string name="shake_sensitivity">Czułość wstrząśnięcia</string>
+    <string name="sensitivity_high">Wysoka</string>
+    <string name="sensitivity_medium">Średnia</string>
+    <string name="sensitivity_low">Niska</string>
     <string name="face_notification_title">Blindroid FaceID</string>
     <string name="face_notification_ready">Skrót FaceID na ekranie blokady</string>
     <string name="face_notification_pickup">Podniesienie uruchamia asystenta FaceID</string>

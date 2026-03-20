@@ -61,9 +61,11 @@ object Prefs {
     private const val KEY_SOS_NUMBER = "sos_number"
     private const val KEY_SOS_MESSAGE = "sos_message"
     private const val KEY_SOS_SHAKE = "sos_shake"
+    private const val KEY_SOS_SHAKE_SENS = "sos_shake_sens"
     private const val KEY_MISSED_CALL_NUMBER = "missed_call_number"
     private const val KEY_MISSED_CALL_TIME = "missed_call_time"
     private const val KEY_MISSED_CALL_BACK = "missed_call_back"
+    private const val KEY_BACK_TAP_SENS = "back_tap_sens"
     private const val KEY_QUIET_ENABLED = "quiet_enabled"
     private const val KEY_QUIET_START = "quiet_start"
     private const val KEY_QUIET_END = "quiet_end"
@@ -280,6 +282,13 @@ object Prefs {
         prefs(context).edit().putBoolean(KEY_SOS_SHAKE, value).apply()
     }
 
+    fun getSosShakeSensitivity(context: Context): Int =
+        prefs(context).getInt(KEY_SOS_SHAKE_SENS, 1).coerceIn(0, 2)
+
+    fun setSosShakeSensitivity(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SOS_SHAKE_SENS, value.coerceIn(0, 2)).apply()
+    }
+
     fun setLastMissedCall(context: Context, number: String?) {
         val safe = number?.trim().orEmpty()
         val editor = prefs(context).edit()
@@ -303,6 +312,13 @@ object Prefs {
 
     fun setMissedCallBackEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_MISSED_CALL_BACK, value).apply()
+    }
+
+    fun getBackTapSensitivity(context: Context): Int =
+        prefs(context).getInt(KEY_BACK_TAP_SENS, 1).coerceIn(0, 2)
+
+    fun setBackTapSensitivity(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_BACK_TAP_SENS, value.coerceIn(0, 2)).apply()
     }
 
     fun isQuietEnabled(context: Context): Boolean =

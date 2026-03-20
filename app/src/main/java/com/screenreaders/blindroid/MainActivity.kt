@@ -145,6 +145,7 @@ class MainActivity : AppCompatActivity() {
         updateFaceControls()
         initNightUi()
         initSosUi()
+        initGestureCalibrationUi()
         PickupService.sync(this)
         initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
@@ -192,6 +193,7 @@ class MainActivity : AppCompatActivity() {
         binding.missedCallBackSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setMissedCallBackEnabled(this, isChecked)
             logSettingChange("missed_call_back", isChecked)
+            binding.backTapSensitivitySpinner.isEnabled = isChecked
             PickupService.sync(this)
         }
 
@@ -599,6 +601,7 @@ class MainActivity : AppCompatActivity() {
         binding.sosNumberInput.setText(Prefs.getSosNumber(this))
         binding.sosMessageInput.setText(Prefs.getSosMessage(this))
         binding.sosShakeSwitch.isChecked = Prefs.isSosShakeEnabled(this)
+        binding.sosShakeSensitivitySpinner.isEnabled = binding.sosShakeSwitch.isChecked
 
         binding.sosNumberInput.setOnFocusChangeListener { _, _ ->
             Prefs.setSosNumber(this, binding.sosNumberInput.text?.toString().orEmpty())
@@ -608,6 +611,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.sosShakeSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setSosShakeEnabled(this, isChecked)
+            binding.sosShakeSensitivitySpinner.isEnabled = isChecked
             PickupService.sync(this)
         }
         binding.sosCallButton.setOnClickListener {
@@ -649,6 +653,42 @@ class MainActivity : AppCompatActivity() {
             putExtra("sms_body", message)
         }
         startActivity(intent)
+    }
+
+    private fun initGestureCalibrationUi() {
+        val labels = listOf(
+            getString(R.string.sensitivity_high),
+            getString(R.string.sensitivity_medium),
+            getString(R.string.sensitivity_low)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.backTapSensitivitySpinner.adapter = adapter
+        binding.sosShakeSensitivitySpinner.adapter = adapter
+
+        val backTapIndex = Prefs.getBackTapSensitivity(this)
+        binding.backTapSensitivitySpinner.setSelection(backTapIndex.coerceIn(0, 2), false)
+        binding.backTapSensitivitySpinner.isEnabled = binding.missedCallBackSwitch.isChecked
+        binding.backTapSensitivitySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Prefs.setBackTapSensitivity(this@MainActivity, position)
+                logSettingChange("back_tap_sens", position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
+
+        val shakeIndex = Prefs.getSosShakeSensitivity(this)
+        binding.sosShakeSensitivitySpinner.setSelection(shakeIndex.coerceIn(0, 2), false)
+        binding.sosShakeSensitivitySpinner.isEnabled = binding.sosShakeSwitch.isChecked
+        binding.sosShakeSensitivitySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Prefs.setSosShakeSensitivity(this@MainActivity, position)
+                logSettingChange("sos_shake_sens", position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
     }
 
     private fun formatMinutes(value: Int): String {
