@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.BuildConfig
+import com.screenreaders.blindroid.accessibility.TalkbackWizardActivity
 import com.screenreaders.blindroid.chime.ChimeScheduler
 import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
@@ -40,8 +41,10 @@ import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.face.FaceAssistActivity
 import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
+import com.screenreaders.blindroid.obstacle.ObstacleAssistActivity
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.util.LowVisionStyler
+import com.screenreaders.blindroid.util.QuietHours
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Calendar
@@ -111,8 +114,10 @@ class MainActivity : AppCompatActivity() {
         binding.launcherSettingsButton.setOnClickListener { openHomeSettings() }
         binding.documentsButton.setOnClickListener { openDocumentModule() }
         binding.faceButton.setOnClickListener { openFaceModule() }
+        binding.obstacleButton.setOnClickListener { openObstacleModule() }
         binding.currencyButton.setOnClickListener { openCurrencyModule() }
         binding.lightButton.setOnClickListener { openLightModule() }
+        binding.talkbackWizardButton.setOnClickListener { openTalkbackWizard() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
@@ -121,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         binding.callVibrateSwitch.isChecked = Prefs.isCallStateVibrateEnabled(this)
         binding.endCallVibrateSwitch.isChecked = Prefs.isEndCallVibrateEnabled(this)
         binding.voiceCommandsSwitch.isChecked = Prefs.isVoiceCommandsEnabled(this)
+        binding.missedCallBackSwitch.isChecked = Prefs.isMissedCallBackEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
@@ -137,6 +143,8 @@ class MainActivity : AppCompatActivity() {
         binding.faceShortcutSwitch.isChecked = Prefs.isFaceShortcutEnabled(this)
         binding.faceButton.isEnabled = binding.faceSwitch.isChecked
         updateFaceControls()
+        initNightUi()
+        initSosUi()
         PickupService.sync(this)
         initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
@@ -179,6 +187,12 @@ class MainActivity : AppCompatActivity() {
         binding.voiceCommandsSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setVoiceCommandsEnabled(this, isChecked)
             logSettingChange("voice_commands", isChecked)
+        }
+
+        binding.missedCallBackSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setMissedCallBackEnabled(this, isChecked)
+            logSettingChange("missed_call_back", isChecked)
+            PickupService.sync(this)
         }
 
         binding.smsSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -521,6 +535,128 @@ class MainActivity : AppCompatActivity() {
         binding.faceShortcutSwitch.isEnabled = enabled
     }
 
+    private fun initNightUi() {
+        binding.nightSwitch.isChecked = Prefs.isQuietEnabled(this)
+        binding.nightMuteCallsSwitch.isChecked = Prefs.isQuietMuteCalls(this)
+        binding.nightMuteSmsSwitch.isChecked = Prefs.isQuietMuteSms(this)
+        binding.nightMuteNotificationsSwitch.isChecked = Prefs.isQuietMuteNotifications(this)
+        binding.nightMuteChimeSwitch.isChecked = Prefs.isQuietMuteChime(this)
+
+        binding.nightStartButton.text = formatMinutes(Prefs.getQuietStartMinutes(this))
+        binding.nightEndButton.text = formatMinutes(Prefs.getQuietEndMinutes(this))
+
+        binding.nightSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setQuietEnabled(this, isChecked)
+            updateNightControls()
+        }
+        binding.nightMuteCallsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setQuietMuteCalls(this, isChecked)
+        }
+        binding.nightMuteSmsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setQuietMuteSms(this, isChecked)
+        }
+        binding.nightMuteNotificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setQuietMuteNotifications(this, isChecked)
+        }
+        binding.nightMuteChimeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setQuietMuteChime(this, isChecked)
+        }
+
+        binding.nightStartButton.setOnClickListener {
+            val minutes = Prefs.getQuietStartMinutes(this)
+            val hour = minutes / 60
+            val minute = minutes % 60
+            TimePickerDialog(this, { _, h, m ->
+                val value = h * 60 + m
+                Prefs.setQuietStartMinutes(this, value)
+                binding.nightStartButton.text = formatMinutes(value)
+            }, hour, minute, true).show()
+        }
+        binding.nightEndButton.setOnClickListener {
+            val minutes = Prefs.getQuietEndMinutes(this)
+            val hour = minutes / 60
+            val minute = minutes % 60
+            TimePickerDialog(this, { _, h, m ->
+                val value = h * 60 + m
+                Prefs.setQuietEndMinutes(this, value)
+                binding.nightEndButton.text = formatMinutes(value)
+            }, hour, minute, true).show()
+        }
+        updateNightControls()
+    }
+
+    private fun updateNightControls() {
+        val enabled = Prefs.isQuietEnabled(this)
+        binding.nightStartButton.isEnabled = enabled
+        binding.nightEndButton.isEnabled = enabled
+        binding.nightMuteCallsSwitch.isEnabled = enabled
+        binding.nightMuteSmsSwitch.isEnabled = enabled
+        binding.nightMuteNotificationsSwitch.isEnabled = enabled
+        binding.nightMuteChimeSwitch.isEnabled = enabled
+    }
+
+    private fun initSosUi() {
+        binding.sosNumberInput.setText(Prefs.getSosNumber(this))
+        binding.sosMessageInput.setText(Prefs.getSosMessage(this))
+        binding.sosShakeSwitch.isChecked = Prefs.isSosShakeEnabled(this)
+
+        binding.sosNumberInput.setOnFocusChangeListener { _, _ ->
+            Prefs.setSosNumber(this, binding.sosNumberInput.text?.toString().orEmpty())
+        }
+        binding.sosMessageInput.setOnFocusChangeListener { _, _ ->
+            Prefs.setSosMessage(this, binding.sosMessageInput.text?.toString().orEmpty())
+        }
+        binding.sosShakeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setSosShakeEnabled(this, isChecked)
+            PickupService.sync(this)
+        }
+        binding.sosCallButton.setOnClickListener {
+            triggerSosCall()
+        }
+        binding.sosSmsButton.setOnClickListener {
+            triggerSosSms()
+        }
+    }
+
+    private fun triggerSosCall() {
+        val number = binding.sosNumberInput.text?.toString()?.trim().orEmpty()
+        if (number.isBlank()) {
+            Toast.makeText(this, R.string.sos_missing_number, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Prefs.setSosNumber(this, number)
+        val uri = Uri.fromParts("tel", number, null)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            getSystemService(TelecomManager::class.java).placeCall(uri, Bundle())
+        } else {
+            startActivity(Intent(Intent.ACTION_DIAL, uri))
+        }
+    }
+
+    private fun triggerSosSms() {
+        val number = binding.sosNumberInput.text?.toString()?.trim().orEmpty()
+        if (number.isBlank()) {
+            Toast.makeText(this, R.string.sos_missing_number, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Prefs.setSosNumber(this, number)
+        val message = binding.sosMessageInput.text?.toString().orEmpty()
+        Prefs.setSosMessage(this, message)
+        val uri = Uri.parse("smsto:$number")
+        val intent = Intent(Intent.ACTION_SENDTO, uri).apply {
+            putExtra("sms_body", message)
+        }
+        startActivity(intent)
+    }
+
+    private fun formatMinutes(value: Int): String {
+        val hour = value / 60
+        val minute = value % 60
+        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+    }
+
     private fun applyLowVisionPreset(preset: LowVisionPreset) {
         updatingLowVisionPreset = true
         Prefs.setLowVisionPreset(this, preset.id)
@@ -739,9 +875,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, FaceAssistActivity::class.java))
     }
 
+    private fun openObstacleModule() {
+        DiagnosticLog.log(this, "module_obstacle_open")
+        startActivity(Intent(this, ObstacleAssistActivity::class.java))
+    }
+
     private fun openLightModule() {
         DiagnosticLog.log(this, "module_light_open")
         startActivity(Intent(this, LightActivity::class.java))
+    }
+
+    private fun openTalkbackWizard() {
+        startActivity(Intent(this, TalkbackWizardActivity::class.java))
     }
 
     private fun requestContactsPermission() {

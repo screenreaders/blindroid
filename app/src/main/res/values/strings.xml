@@ -84,6 +84,10 @@
     <string name="section_camera">Kamera</string>
     <string name="section_documents">Dokumenty</string>
     <string name="section_face">FaceID - asystent</string>
+    <string name="section_obstacle">Przeszkody</string>
+    <string name="section_safety">Bezpieczeństwo</string>
+    <string name="section_night">Tryb nocny</string>
+    <string name="section_accessibility">Dostępność</string>
     <string name="currency_open">Uruchom rozpoznawanie walut</string>
     <string name="currency_title">Rozpoznawanie walut</string>
     <string name="currency_mode">Tryb rozpoznawania</string>
@@ -166,6 +170,15 @@
     <string name="light_direction_right">Światło z prawej</string>
     <string name="light_direction_even">Światło równomierne</string>
     <string name="light_hint">Tryb kierunku używa kamery i zużywa więcej baterii.</string>
+    <string name="obstacle_open">Uruchom asystenta przeszkód</string>
+    <string name="obstacle_title">Asystent przeszkód</string>
+    <string name="obstacle_active">Wykrywanie aktywne</string>
+    <string name="obstacle_sound">Sygnały dźwiękowe</string>
+    <string name="obstacle_status_label">Status</string>
+    <string name="obstacle_status_idle">Wyłączony</string>
+    <string name="obstacle_status_near">Przeszkoda blisko</string>
+    <string name="obstacle_status_clear">Droga wolna</string>
+    <string name="obstacle_status_no_sensor">Brak czujnika zbliżeniowego</string>
     <string name="face_enable">Włącz asystenta FaceID</string>
     <string name="face_open">Uruchom asystenta FaceID</string>
     <string name="face_hint">Pomaga ustawić telefon i twarz do rozpoznawania</string>
@@ -190,6 +203,8 @@
     <string name="face_pickup_enable">Uruchamiaj po podniesieniu telefonu</string>
     <string name="face_shortcut_enable">Skrót FaceID na ekranie blokady</string>
     <string name="answer_pickup_enable">Odbieraj połączenie po podniesieniu</string>
+    <string name="missed_call_back_enable">Oddzwaniaj po 3 stuknięciach w plecy</string>
+    <string name="missed_call_back_missing">Brak nieodebranego połączenia</string>
     <string name="face_notification_title">Blindroid FaceID</string>
     <string name="face_notification_ready">Skrót FaceID na ekranie blokady</string>
     <string name="face_notification_pickup">Podniesienie uruchamia asystenta FaceID</string>
@@ -197,6 +212,32 @@
     <string name="pickup_notification_title">Blindroid - podniesienie</string>
     <string name="answer_pickup_notification">Podniesienie odbiera połączenie</string>
     <string name="pickup_notification_idle">Blindroid gotowy</string>
+    <string name="pickup_notification_missed">Potrójne stuknięcie oddzwania</string>
+    <string name="pickup_notification_sos">Wstrząśnięcie uruchamia SOS</string>
+
+    <string name="sos_label">SOS</string>
+    <string name="sos_number">Numer SOS</string>
+    <string name="sos_message">Wiadomość SOS</string>
+    <string name="sos_call">SOS: zadzwoń</string>
+    <string name="sos_sms">SOS: SMS</string>
+    <string name="sos_shake">Wstrząśnij aby SOS</string>
+    <string name="sos_missing_number">Ustaw numer SOS</string>
+
+    <string name="night_enable">Włącz tryb nocny</string>
+    <string name="night_start">Od</string>
+    <string name="night_end">Do</string>
+    <string name="night_mute_calls">Wycisz mowę rozmów</string>
+    <string name="night_mute_sms">Wycisz SMS</string>
+    <string name="night_mute_notifications">Wycisz powiadomienia</string>
+    <string name="night_mute_chime">Wycisz zegarynkę</string>
+
+    <string name="talkback_wizard">Konfiguracja TalkBack</string>
+    <string name="talkback_wizard_title">Konfiguracja TalkBack</string>
+    <string name="talkback_status_on">TalkBack: włączony</string>
+    <string name="talkback_status_off">TalkBack: wyłączony</string>
+    <string name="talkback_open_settings">Otwórz ustawienia dostępności</string>
+    <string name="talkback_refresh">Sprawdź ponownie</string>
+    <string name="talkback_hint">Włącz TalkBack w ustawieniach dostępności i wróć tutaj, aby potwierdzić.</string>
     <string name="light_level_dark">ciemno</string>
     <string name="light_level_dim">średnio</string>
     <string name="light_level_bright">jasno</string>

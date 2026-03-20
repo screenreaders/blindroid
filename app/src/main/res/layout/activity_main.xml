@@ -133,6 +133,13 @@
             android:layout_marginTop="8dp"
             android:text="@string/switch_voice_commands" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/missedCallBackSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/missed_call_back_enable" />
+
         <TextView
             android:id="@+id/endCallKeyLabel"
             android:layout_width="wrap_content"
@@ -402,6 +409,94 @@
             android:text="@string/notification_access_button" />
 
         <TextView
+            android:id="@+id/nightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/section_night"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/nightSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_enable" />
+
+        <TextView
+            android:id="@+id/nightStartLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_start"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/nightStartButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="22:00" />
+
+        <TextView
+            android:id="@+id/nightEndLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_end"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/nightEndButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="07:00" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/nightMuteCallsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_mute_calls" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/nightMuteSmsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_mute_sms" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/nightMuteNotificationsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_mute_notifications" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/nightMuteChimeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/night_mute_chime" />
+
+        <TextView
+            android:id="@+id/accessibilityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/section_accessibility"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/talkbackWizardButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/talkback_wizard" />
+
+        <TextView
             android:id="@+id/cameraLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -475,6 +570,21 @@
             android:text="@string/face_shortcut_enable" />
 
         <TextView
+            android:id="@+id/obstacleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/section_obstacle"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/obstacleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/obstacle_open" />
+
+        <TextView
             android:id="@+id/currencyLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -517,6 +627,59 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/light_hint" />
+
+        <TextView
+            android:id="@+id/safetyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/section_safety"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sosLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sos_label"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/sosNumberInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/sos_number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/sosMessageInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/sos_message"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/sosCallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sos_call" />
+
+        <Button
+            android:id="@+id/sosSmsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sos_sms" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sosShakeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sos_shake" />
 
         <TextView
             android:id="@+id/chimeLabel"

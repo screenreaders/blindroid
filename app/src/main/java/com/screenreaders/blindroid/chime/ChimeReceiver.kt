@@ -6,6 +6,7 @@ import android.content.Intent
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.util.QuietHours
 import java.util.Calendar
 import java.util.concurrent.atomic.AtomicBoolean
 import android.os.Handler
@@ -14,6 +15,7 @@ import android.os.Looper
 class ChimeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         if (!Prefs.isChimeEnabled(context)) return
+        if (QuietHours.isActive(context) && Prefs.isQuietMuteChime(context)) return
 
         val nowMinutes = currentMinutes()
         val start = Prefs.getChimeStartMinutes(context)

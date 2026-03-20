@@ -57,6 +57,20 @@ object Prefs {
     private const val KEY_FACE_SHORTCUT = "face_shortcut_enabled"
     private const val KEY_FACE_SOUND = "face_sound_enabled"
     private const val KEY_ANSWER_PICKUP = "answer_pickup_enabled"
+    private const val KEY_OBSTACLE_SOUND = "obstacle_sound_enabled"
+    private const val KEY_SOS_NUMBER = "sos_number"
+    private const val KEY_SOS_MESSAGE = "sos_message"
+    private const val KEY_SOS_SHAKE = "sos_shake"
+    private const val KEY_MISSED_CALL_NUMBER = "missed_call_number"
+    private const val KEY_MISSED_CALL_TIME = "missed_call_time"
+    private const val KEY_MISSED_CALL_BACK = "missed_call_back"
+    private const val KEY_QUIET_ENABLED = "quiet_enabled"
+    private const val KEY_QUIET_START = "quiet_start"
+    private const val KEY_QUIET_END = "quiet_end"
+    private const val KEY_QUIET_MUTE_CALLS = "quiet_mute_calls"
+    private const val KEY_QUIET_MUTE_SMS = "quiet_mute_sms"
+    private const val KEY_QUIET_MUTE_NOTIFICATIONS = "quiet_mute_notifications"
+    private const val KEY_QUIET_MUTE_CHIME = "quiet_mute_chime"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -236,6 +250,108 @@ object Prefs {
 
     fun setAnswerPickupEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_ANSWER_PICKUP, value).apply()
+    }
+
+    fun isObstacleSoundEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_OBSTACLE_SOUND, true)
+
+    fun setObstacleSoundEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_OBSTACLE_SOUND, value).apply()
+    }
+
+    fun getSosNumber(context: Context): String =
+        prefs(context).getString(KEY_SOS_NUMBER, "") ?: ""
+
+    fun setSosNumber(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_SOS_NUMBER, value.trim()).apply()
+    }
+
+    fun getSosMessage(context: Context): String =
+        prefs(context).getString(KEY_SOS_MESSAGE, "Potrzebuję pomocy.") ?: "Potrzebuję pomocy."
+
+    fun setSosMessage(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_SOS_MESSAGE, value).apply()
+    }
+
+    fun isSosShakeEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SOS_SHAKE, false)
+
+    fun setSosShakeEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SOS_SHAKE, value).apply()
+    }
+
+    fun setLastMissedCall(context: Context, number: String?) {
+        val safe = number?.trim().orEmpty()
+        val editor = prefs(context).edit()
+        if (safe.isBlank()) {
+            editor.remove(KEY_MISSED_CALL_NUMBER).remove(KEY_MISSED_CALL_TIME).apply()
+        } else {
+            editor.putString(KEY_MISSED_CALL_NUMBER, safe)
+                .putLong(KEY_MISSED_CALL_TIME, System.currentTimeMillis())
+                .apply()
+        }
+    }
+
+    fun getLastMissedCallNumber(context: Context): String? =
+        prefs(context).getString(KEY_MISSED_CALL_NUMBER, null)
+
+    fun getLastMissedCallTime(context: Context): Long =
+        prefs(context).getLong(KEY_MISSED_CALL_TIME, 0L)
+
+    fun isMissedCallBackEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_MISSED_CALL_BACK, false)
+
+    fun setMissedCallBackEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_MISSED_CALL_BACK, value).apply()
+    }
+
+    fun isQuietEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_QUIET_ENABLED, false)
+
+    fun setQuietEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_QUIET_ENABLED, value).apply()
+    }
+
+    fun getQuietStartMinutes(context: Context): Int =
+        prefs(context).getInt(KEY_QUIET_START, 22 * 60)
+
+    fun setQuietStartMinutes(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_QUIET_START, value.coerceIn(0, 24 * 60 - 1)).apply()
+    }
+
+    fun getQuietEndMinutes(context: Context): Int =
+        prefs(context).getInt(KEY_QUIET_END, 7 * 60)
+
+    fun setQuietEndMinutes(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_QUIET_END, value.coerceIn(0, 24 * 60 - 1)).apply()
+    }
+
+    fun isQuietMuteCalls(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_QUIET_MUTE_CALLS, true)
+
+    fun setQuietMuteCalls(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_QUIET_MUTE_CALLS, value).apply()
+    }
+
+    fun isQuietMuteSms(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_QUIET_MUTE_SMS, true)
+
+    fun setQuietMuteSms(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_QUIET_MUTE_SMS, value).apply()
+    }
+
+    fun isQuietMuteNotifications(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_QUIET_MUTE_NOTIFICATIONS, true)
+
+    fun setQuietMuteNotifications(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_QUIET_MUTE_NOTIFICATIONS, value).apply()
+    }
+
+    fun isQuietMuteChime(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_QUIET_MUTE_CHIME, true)
+
+    fun setQuietMuteChime(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_QUIET_MUTE_CHIME, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

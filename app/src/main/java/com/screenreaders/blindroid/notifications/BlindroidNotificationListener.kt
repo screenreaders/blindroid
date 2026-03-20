@@ -8,6 +8,7 @@ import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.LockScreenUtils
+import com.screenreaders.blindroid.util.QuietHours
 
 class BlindroidNotificationListener : NotificationListenerService() {
     private lateinit var announcer: CallAnnouncer
@@ -24,6 +25,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         if (!Prefs.isNotificationsReadEnabled(this)) return
+        if (QuietHours.isActive(this) && Prefs.isQuietMuteNotifications(this)) return
         val locked = LockScreenUtils.isDeviceLocked(this)
         if (!locked && !Prefs.isReadWhenUnlockedEnabled(this)) return
         if (sbn.packageName == packageName) return

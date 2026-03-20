@@ -65,6 +65,17 @@
             android:turnScreenOn="true"
             android:excludeFromRecents="true" />
 
+        <activity
+            android:name=".obstacle.ObstacleAssistActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".accessibility.TalkbackWizardActivity"
+            android:exported="false" />
+
         <service
             android:name=".face.PickupService"
             android:exported="false" />

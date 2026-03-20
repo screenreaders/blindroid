@@ -13,6 +13,7 @@ import com.screenreaders.blindroid.audio.RingerController
 import com.screenreaders.blindroid.audio.ProximitySpeakerController
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
+import com.screenreaders.blindroid.util.QuietHours
 
 class BlindroidInCallService : InCallService() {
     private lateinit var announcer: CallAnnouncer
@@ -75,7 +76,9 @@ class BlindroidInCallService : InCallService() {
         if (previousState != state) {
             callStates[call] = state
             DiagnosticLog.log(this, "call_state $previousState->$state")
-            if (Prefs.isCallStateAnnounceEnabled(this)) {
+            if (Prefs.isCallStateAnnounceEnabled(this)
+                && !(QuietHours.isActive(this) && Prefs.isQuietMuteCalls(this))
+            ) {
                 announceCallState(call, state)
             }
             if (Prefs.isCallStateVibrateEnabled(this)) {
@@ -90,6 +93,7 @@ class BlindroidInCallService : InCallService() {
                 val hasActiveCall = CallManager.hasActiveCall(exclude = call)
                 if (!Prefs.isAnnounceEnabled(this)) return
                 if (hasActiveCall && !Prefs.isAnnounceDuringCallEnabled(this)) return
+                if (QuietHours.isActive(this) && Prefs.isQuietMuteCalls(this)) return
                 if (announcedCalls.add(call)) {
                     val name = CallerInfoResolver.displayName(this, call)
                     val mode = Prefs.getAnnounceMode(this)
@@ -126,6 +130,12 @@ class BlindroidInCallService : InCallService() {
                 announcer.shutdown()
                 RingerController.stop()
             }
+        }
+
+        if (previousState == Call.STATE_RINGING && state == Call.STATE_DISCONNECTED) {
+            val handle = call.details.handle
+            val number = handle?.schemeSpecificPart
+            Prefs.setLastMissedCall(this, number)
         }
     }
 

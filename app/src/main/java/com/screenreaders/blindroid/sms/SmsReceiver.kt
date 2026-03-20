@@ -12,11 +12,13 @@ import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.LockScreenUtils
+import com.screenreaders.blindroid.util.QuietHours
 
 class SmsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Telephony.Sms.Intents.SMS_RECEIVED_ACTION) return
         if (!Prefs.isSmsReadEnabled(context)) return
+        if (QuietHours.isActive(context) && Prefs.isQuietMuteSms(context)) return
         DiagnosticLog.log(context, "sms_received")
         val locked = LockScreenUtils.isDeviceLocked(context)
         if (!locked && !Prefs.isReadWhenUnlockedEnabled(context)) return
