@@ -495,9 +495,85 @@ class LauncherActivity : AppCompatActivity() {
             val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).orEmpty()
             val query = results.firstOrNull().orEmpty()
             if (query.isNotBlank()) {
-                launchSearch(query)
+                if (!handleVoiceCommand(query)) {
+                    launchSearch(query)
+                }
             }
         }
+    }
+
+    private fun handleVoiceCommand(raw: String): Boolean {
+        val text = normalizeCommand(raw)
+        if (text.isBlank()) return false
+        fun has(vararg keys: String): Boolean = keys.any { text.contains(it) }
+
+        return when {
+            has("telefon", "zadzwon", "zadzwonic", "polaczenie", "polaczenia", "call") -> {
+                openDialer(); true
+            }
+            has("wiadomosc", "wiadomosci", "sms", "message") -> {
+                openMessages(); true
+            }
+            has("aplikacje", "aplikacja", "apps", "app") -> {
+                openAllApps(); true
+            }
+            has("ustawienia", "settings") -> {
+                openSettings(); true
+            }
+            has("widzet", "widget") -> {
+                openWidgets(); true
+            }
+            has("feed", "discover", "wiadomosci google", "google now") -> {
+                openFeed(); true
+            }
+            has("gemini", "asystent") -> {
+                openGemini(); true
+            }
+            has("latarka", "flash") -> {
+                toggleFlashlight(); true
+            }
+            has("pogoda", "weather") -> {
+                openWeather(); true
+            }
+            has("nastepna", "dalej", "next") -> {
+                goToNextPage(); true
+            }
+            has("poprzednia", "wstecz", "cofnij", "back") -> {
+                goToPrevPage(); true
+            }
+            has("dok", "dock") -> {
+                toggleDockVisibility(); true
+            }
+            has("super prosty", "prosty", "tryb prosty", "simple mode") -> {
+                toggleSuperSimple(); true
+            }
+            has("zablokuj", "blokada", "lock") -> {
+                attemptLock(); true
+            }
+            has("glosniej", "glośniej", "volume up") -> {
+                adjustVolume(AudioManager.ADJUST_RAISE); true
+            }
+            has("ciszej", "volume down") -> {
+                adjustVolume(AudioManager.ADJUST_LOWER); true
+            }
+            has("wycisz", "mute") -> {
+                adjustVolume(AudioManager.ADJUST_MUTE); true
+            }
+            else -> false
+        }
+    }
+
+    private fun adjustVolume(direction: Int) {
+        val audio = getSystemService(AudioManager::class.java)
+        audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, direction, AudioManager.FLAG_SHOW_UI)
+    }
+
+    private fun normalizeCommand(text: String): String {
+        val normalized = java.text.Normalizer.normalize(text.lowercase(), java.text.Normalizer.Form.NFD)
+        return normalized.replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+            .replace("[^a-z0-9 ]".toRegex(), " ")
+            .replace("\\s+".toRegex(), " ")
+            .trim()
     }
 
     private fun handleSimpleFavoriteLongPress(entry: AppEntry) {
