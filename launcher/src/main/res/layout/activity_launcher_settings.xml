@@ -241,6 +241,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/voiceCommandHelpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_voice_commands_button" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -670,6 +677,25 @@
 
         <Spinner
             android:id="@+id/soundSchemeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/hapticFeedbackSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_settings_haptic_feedback" />
+
+        <TextView
+            android:id="@+id/hapticStrengthLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_haptic_strength" />
+
+        <Spinner
+            android:id="@+id/hapticStrengthSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

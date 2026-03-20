@@ -167,6 +167,9 @@
     <string name="launcher_settings_icon_style_circle">Okrągłe tło</string>
     <string name="launcher_settings_wallpaper">Ustaw tapetę</string>
     <string name="launcher_settings_voice_search">Wyszukiwanie głosowe</string>
+    <string name="launcher_voice_commands_button">Lista komend głosowych</string>
+    <string name="launcher_voice_commands_title">Komendy głosowe</string>
+    <string name="launcher_voice_commands_body">Przykłady: telefon, wiadomości, aplikacje, ustawienia, widgety, feed, gemini, latarka, pogoda, następna, poprzednia, dok, tryb prosty, zablokuj, głośniej, ciszej, wycisz.</string>
     <string name="launcher_feed_title">Feed</string>
     <string name="launcher_feed_title_google">Google Discover</string>
     <string name="launcher_feed_alarm_title">Następny alarm</string>
@@ -270,6 +273,11 @@
     <string name="launcher_settings_sound_feedback">Dźwięki gestów i akcji</string>
     <string name="launcher_settings_sound_volume">Głośność dźwięków launchera</string>
     <string name="launcher_settings_sound_scheme">Schemat dźwięków</string>
+    <string name="launcher_settings_haptic_feedback">Wibracje przy akcjach</string>
+    <string name="launcher_settings_haptic_strength">Siła wibracji</string>
+    <string name="launcher_haptic_light">Lekka</string>
+    <string name="launcher_haptic_medium">Średnia</string>
+    <string name="launcher_haptic_strong">Mocna</string>
     <string name="launcher_sound_scheme_classic">Klasyczny</string>
     <string name="launcher_sound_scheme_soft">Miękki</string>
     <string name="launcher_sound_scheme_sharp">Wyraźny</string>

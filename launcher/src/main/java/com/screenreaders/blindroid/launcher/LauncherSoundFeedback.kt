@@ -3,8 +3,12 @@ package com.screenreaders.blindroid.launcher
 import android.content.Context
 import android.media.AudioManager
 import android.media.ToneGenerator
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 
 class LauncherSoundFeedback(private val context: Context) {
     private val handler = Handler(Looper.getMainLooper())
@@ -14,18 +18,24 @@ class LauncherSoundFeedback(private val context: Context) {
     private data class ToneSpec(val tone: Int, val durationMs: Int)
 
     fun playTap() {
-        if (!LauncherPrefs.isSoundFeedbackEnabled(context)) return
-        if (LauncherPrefs.getSoundFeedbackVolume(context) <= 0) return
-        ensureToneGenerator()
-        playSequence(selectTapSequence())
+        if (LauncherPrefs.isSoundFeedbackEnabled(context) &&
+            LauncherPrefs.getSoundFeedbackVolume(context) > 0
+        ) {
+            ensureToneGenerator()
+            playSequence(selectTapSequence())
+        }
+        hapticTap()
     }
 
     fun playAction(action: Int) {
-        if (!LauncherPrefs.isSoundFeedbackEnabled(context)) return
-        if (LauncherPrefs.getSoundFeedbackVolume(context) <= 0) return
-        ensureToneGenerator()
-        val sequence = selectActionSequence(action)
-        playSequence(sequence)
+        if (LauncherPrefs.isSoundFeedbackEnabled(context) &&
+            LauncherPrefs.getSoundFeedbackVolume(context) > 0
+        ) {
+            ensureToneGenerator()
+            val sequence = selectActionSequence(action)
+            playSequence(sequence)
+        }
+        hapticAction(action)
     }
 
     private fun playSequence(sequence: List<ToneSpec>) {
@@ -35,6 +45,57 @@ class LauncherSoundFeedback(private val context: Context) {
                 toneGenerator.startTone(spec.tone, spec.durationMs)
             }, delay)
             delay += spec.durationMs + 40L
+        }
+    }
+
+    private fun hapticTap() {
+        if (!LauncherPrefs.isHapticFeedbackEnabled(context)) return
+        vibrateOnce(20L)
+    }
+
+    private fun hapticAction(action: Int) {
+        if (!LauncherPrefs.isHapticFeedbackEnabled(context)) return
+        val pulses = when (action) {
+            LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE -> listOf(30L, 60L, 30L)
+            LauncherPrefs.ACTION_TOGGLE_DOCK -> listOf(25L, 40L, 25L)
+            LauncherPrefs.ACTION_OPEN_SETTINGS -> listOf(45L)
+            LauncherPrefs.ACTION_OPEN_FEED -> listOf(35L, 35L)
+            else -> listOf(30L)
+        }
+        vibrateSequence(pulses)
+    }
+
+    private fun vibrateSequence(pulses: List<Long>) {
+        var delay = 0L
+        pulses.forEach { duration ->
+            handler.postDelayed({ vibrateOnce(duration) }, delay)
+            delay += duration + 40L
+        }
+    }
+
+    private fun vibrateOnce(durationMs: Long) {
+        val vibrator = getVibrator() ?: return
+        if (!vibrator.hasVibrator()) return
+        val amplitude = when (LauncherPrefs.getHapticStrength(context)) {
+            LauncherPrefs.HAPTIC_LIGHT -> 60
+            LauncherPrefs.HAPTIC_STRONG -> 220
+            else -> 140
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(durationMs, amplitude))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(durationMs)
+        }
+    }
+
+    private fun getVibrator(): Vibrator? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vm = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
+            vm?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         }
     }
 

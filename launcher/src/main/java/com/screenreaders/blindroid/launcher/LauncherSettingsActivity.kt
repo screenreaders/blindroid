@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class LauncherSettingsActivity : AppCompatActivity() {
@@ -51,6 +52,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var pageAnimationSpinner: Spinner
     private lateinit var assistantSpinner: Spinner
+    private lateinit var voiceCommandHelpButton: Button
     private lateinit var dockVisibleSwitch: Switch
     private lateinit var smartHotseatSwitch: Switch
     private lateinit var themeGroup: RadioGroup
@@ -62,6 +64,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var soundVolumeSeek: android.widget.SeekBar
     private lateinit var soundVolumeValue: TextView
     private lateinit var soundSchemeSpinner: Spinner
+    private lateinit var hapticFeedbackSwitch: Switch
+    private lateinit var hapticStrengthSpinner: Spinner
     private lateinit var backupButton: Button
     private lateinit var restoreButton: Button
     private lateinit var usageStatsSwitch: Switch
@@ -138,6 +142,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         pageAnimationSpinner = findViewById(R.id.pageAnimationSpinner)
         assistantSpinner = findViewById(R.id.assistantSpinner)
+        voiceCommandHelpButton = findViewById(R.id.voiceCommandHelpButton)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
         smartHotseatSwitch = findViewById(R.id.smartHotseatSwitch)
         themeGroup = findViewById(R.id.themeGroup)
@@ -149,6 +154,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundVolumeSeek = findViewById(R.id.soundVolumeSeek)
         soundVolumeValue = findViewById(R.id.soundVolumeValue)
         soundSchemeSpinner = findViewById(R.id.soundSchemeSpinner)
+        hapticFeedbackSwitch = findViewById(R.id.hapticFeedbackSwitch)
+        hapticStrengthSpinner = findViewById(R.id.hapticStrengthSpinner)
         backupButton = findViewById(R.id.backupButton)
         restoreButton = findViewById(R.id.restoreButton)
         usageStatsSwitch = findViewById(R.id.usageStatsSwitch)
@@ -167,6 +174,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         bindListeners()
 
         closeButton.setOnClickListener { finish() }
+        voiceCommandHelpButton.setOnClickListener { showVoiceCommandsHelp() }
     }
 
     private fun bindInitialState() {
@@ -241,6 +249,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundFeedbackSwitch.isChecked = LauncherPrefs.isSoundFeedbackEnabled(this)
         bindSoundVolume()
         bindSoundScheme()
+        hapticFeedbackSwitch.isChecked = LauncherPrefs.isHapticFeedbackEnabled(this)
+        bindHapticStrength()
         bindGestureSpinners()
         usageStatsSwitch.isChecked = LauncherPrefs.isUsageSuggestionsEnabled(this)
         applySuperSimpleState(superSimpleSwitch.isChecked)
@@ -573,6 +583,21 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        hapticFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setHapticFeedbackEnabled(this, isChecked)
+            hapticStrengthSpinner.isEnabled = isChecked
+            toastSaved()
+        }
+
+        hapticStrengthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                LauncherPrefs.setHapticStrength(this@LauncherSettingsActivity, position)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
+        }
+
         backupButton.setOnClickListener { backupLauncher() }
         restoreButton.setOnClickListener { restoreLauncher() }
     }
@@ -792,6 +817,19 @@ class LauncherSettingsActivity : AppCompatActivity() {
         }
     }
 
+    private fun bindHapticStrength() {
+        val labels = listOf(
+            getString(R.string.launcher_haptic_light),
+            getString(R.string.launcher_haptic_medium),
+            getString(R.string.launcher_haptic_strong)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        hapticStrengthSpinner.adapter = adapter
+        hapticStrengthSpinner.setSelection(LauncherPrefs.getHapticStrength(this).coerceIn(0, 2), false)
+        hapticStrengthSpinner.isEnabled = hapticFeedbackSwitch.isChecked
+    }
+
     private fun bindAssistantSpinner() {
         val labels = listOf(
             getString(R.string.launcher_assistant_gemini),
@@ -811,6 +849,14 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
+    }
+
+    private fun showVoiceCommandsHelp() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_voice_commands_title)
+            .setMessage(R.string.launcher_voice_commands_body)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     private val backupLauncherFile = registerForActivityResult(

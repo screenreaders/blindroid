@@ -51,6 +51,8 @@ object LauncherPrefs {
     private const val KEY_SOUND_FEEDBACK = "sound_feedback"
     private const val KEY_SOUND_FEEDBACK_VOLUME = "sound_feedback_volume"
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
+    private const val KEY_HAPTIC_FEEDBACK = "haptic_feedback"
+    private const val KEY_HAPTIC_STRENGTH = "haptic_strength"
     private const val KEY_GN_LAYOUT = "gn_layout"
     private const val KEY_WALLPAPER_PARALLAX = "wallpaper_parallax"
     private const val KEY_PAGE_ANIMATION = "page_animation"
@@ -100,6 +102,10 @@ object LauncherPrefs {
     const val SOUND_SCHEME_CLASSIC = 0
     const val SOUND_SCHEME_SOFT = 1
     const val SOUND_SCHEME_SHARP = 2
+
+    const val HAPTIC_LIGHT = 0
+    const val HAPTIC_MEDIUM = 1
+    const val HAPTIC_STRONG = 2
 
     const val ASSISTANT_VOICE = 0
     const val ASSISTANT_GEMINI = 1
@@ -426,6 +432,23 @@ object LauncherPrefs {
             KEY_SOUND_FEEDBACK_SCHEME,
             scheme.coerceIn(SOUND_SCHEME_CLASSIC, SOUND_SCHEME_SHARP)
         ).apply()
+    }
+
+    fun isHapticFeedbackEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_HAPTIC_FEEDBACK, true)
+
+    fun setHapticFeedbackEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_HAPTIC_FEEDBACK, enabled).apply()
+    }
+
+    fun getHapticStrength(context: Context): Int =
+        prefs(context).getInt(KEY_HAPTIC_STRENGTH, HAPTIC_MEDIUM)
+            .coerceIn(HAPTIC_LIGHT, HAPTIC_STRONG)
+
+    fun setHapticStrength(context: Context, strength: Int) {
+        prefs(context).edit()
+            .putInt(KEY_HAPTIC_STRENGTH, strength.coerceIn(HAPTIC_LIGHT, HAPTIC_STRONG))
+            .apply()
     }
 
     fun isGnLayoutEnabled(context: Context): Boolean =
