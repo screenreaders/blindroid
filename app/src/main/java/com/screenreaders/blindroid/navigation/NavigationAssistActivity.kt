@@ -38,6 +38,7 @@ class NavigationAssistActivity : AppCompatActivity() {
     private var pendingSharePin = false
     private var pendingTyflomap = false
     private var pendingOfflineImport = false
+    private var pendingOfflineCheck = false
     private var tyflomapLink: String? = null
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -219,6 +220,9 @@ class NavigationAssistActivity : AppCompatActivity() {
                 } else if (pendingOfflineImport) {
                     pendingOfflineImport = false
                     importOfflinePois()
+                } else if (pendingOfflineCheck) {
+                    pendingOfflineCheck = false
+                    checkOfflineBase()
                 } else {
                     syncTrackingService()
                 }
@@ -227,10 +231,13 @@ class NavigationAssistActivity : AppCompatActivity() {
                     Toast.makeText(this, R.string.tyflomap_permission_missing, Toast.LENGTH_SHORT).show()
                 } else if (pendingOfflineImport) {
                     Toast.makeText(this, R.string.navigation_tracking_missing_location, Toast.LENGTH_SHORT).show()
+                } else if (pendingOfflineCheck) {
+                    Toast.makeText(this, R.string.navigation_tracking_missing_location, Toast.LENGTH_SHORT).show()
                 }
                 pendingSharePin = false
                 pendingTyflomap = false
                 pendingOfflineImport = false
+                pendingOfflineCheck = false
                 binding.navigationTrackingSwitch.isChecked = false
                 binding.navigationTrackLogSwitch.isChecked = false
             }
@@ -591,8 +598,9 @@ class NavigationAssistActivity : AppCompatActivity() {
     }
 
     private fun importOfflinePois() {
-        if (!hasLocationPermission()) {
-            pendingOfflineImport = true
+        val needsLocation = Prefs.getNavigationImportMode(this) == Prefs.NAV_IMPORT_MODE_RADIUS
+        if (needsLocation && !hasLocationPermission()) {
+            pendingOfflineCheck = true
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
@@ -790,6 +798,16 @@ class NavigationAssistActivity : AppCompatActivity() {
     }
 
     private fun checkOfflineBase() {
+        val needsLocation = Prefs.getNavigationImportMode(this) == Prefs.NAV_IMPORT_MODE_RADIUS
+        if (needsLocation && !hasLocationPermission()) {
+            pendingOfflineImport = true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
         val baseUrl = binding.navigationOfflineBaseUrlInput.text?.toString()?.trim().orEmpty()
         if (baseUrl.isBlank()) {
             Toast.makeText(this, R.string.navigation_offline_base_url_missing, Toast.LENGTH_SHORT).show()

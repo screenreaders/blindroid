@@ -549,11 +549,13 @@ object Prefs {
     }
 
     fun getNavigationOfflineBaseUrl(context: Context): String =
-        prefs(context).getString(KEY_NAV_OFFLINE_BASE_URL, "") ?: ""
+        prefs(context).getString(KEY_NAV_OFFLINE_BASE_URL, DEFAULT_NAV_OFFLINE_URL) ?: DEFAULT_NAV_OFFLINE_URL
 
     fun setNavigationOfflineBaseUrl(context: Context, value: String) {
         prefs(context).edit().putString(KEY_NAV_OFFLINE_BASE_URL, value.trim()).apply()
     }
+
+    private const val DEFAULT_NAV_OFFLINE_URL = "https://maps.asteja.eu/tiles"
 
     fun getNavigationOfflineZoom(context: Context): Int =
         prefs(context).getInt(KEY_NAV_OFFLINE_ZOOM, 15).coerceIn(10, 18)
