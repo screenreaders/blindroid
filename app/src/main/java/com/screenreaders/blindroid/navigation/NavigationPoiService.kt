@@ -39,10 +39,13 @@ class NavigationPoiService : Service(), LocationListener {
     private var lastQueryTime = 0L
     private var lastQueryLocation: Location? = null
     private var lastSpokenTime = 0L
+    private var lastSpokenLocation: Location? = null
     private var lastMotionLocation: Location? = null
     private var lastMotionTime = 0L
     private val announced = LinkedHashMap<String, Long>()
     private var tts: TextToSpeech? = null
+    private var lastTrackWrite = 0L
+    private var trackFile: java.io.File? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -56,6 +59,10 @@ class NavigationPoiService : Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
+        if (!Prefs.isNavigationTrackingEnabled(this) && !Prefs.isNavigationTrackLogEnabled(this)) {
             stopSelf()
             return START_NOT_STICKY
         }
@@ -80,21 +87,7 @@ class NavigationPoiService : Service(), LocationListener {
             stopSelf()
             return
         }
-        val apiKey = Prefs.getNavigationApiKey(this)
-        if (apiKey.isBlank()) {
-            speakOnce(getString(R.string.navigation_tracking_missing_key))
-            stopSelf()
-            return
-        }
-        val categories = Prefs.getNavigationCategories(this)
-            .split(',')
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-        if (categories.isEmpty()) {
-            speakOnce(getString(R.string.navigation_tracking_no_categories))
-            stopSelf()
-            return
-        }
+        ensureTrackFile()
         val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
         for (provider in providers) {
             if (locationManager.isProviderEnabled(provider)) {
@@ -124,14 +117,19 @@ class NavigationPoiService : Service(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         if (!running.get()) return
+        if (!Prefs.isNavigationTrackingEnabled(this) && !Prefs.isNavigationTrackLogEnabled(this)) {
+            stopSelf()
+            return
+        }
         if (Prefs.isNavigationMovingOnly(this) && !isMoving(location)) return
+        maybeWriteTrack(location)
+        val wantsPoi = Prefs.isNavigationTrackingEnabled(this)
         val apiKey = Prefs.getNavigationApiKey(this)
-        if (apiKey.isBlank()) return
         val categories = Prefs.getNavigationCategories(this)
             .split(',')
             .map { it.trim() }
             .filter { it.isNotBlank() }
-        if (categories.isEmpty()) return
+        if (!wantsPoi || apiKey.isBlank() || categories.isEmpty()) return
 
         val now = System.currentTimeMillis()
         val minIntervalMs = Prefs.getNavigationSpeakIntervalSec(this).toLong() * 1000L
@@ -176,6 +174,7 @@ class NavigationPoiService : Service(), LocationListener {
                 if (distance > announceDistance) continue
                 if (isRecentlyAnnounced(placeId)) continue
                 if (!canSpeakNow()) continue
+                if (!passesMinDistance(location)) continue
                 markAnnounced(placeId)
                 speakOnce("Mijasz: $name, ${labelForType(type)}")
                 break
@@ -237,6 +236,7 @@ class NavigationPoiService : Service(), LocationListener {
 
     private fun speakOnce(text: String) {
         lastSpokenTime = System.currentTimeMillis()
+        lastSpokenLocation = lastQueryLocation
         val volume = Prefs.getSpeechVolume(this)
         val announcer = CallAnnouncer(this)
         announcer.speak(
@@ -262,6 +262,12 @@ class NavigationPoiService : Service(), LocationListener {
         return now - lastSpokenTime >= minIntervalMs
     }
 
+    private fun passesMinDistance(location: Location): Boolean {
+        val minDistance = Prefs.getNavigationMinDistance(this)
+        val last = lastSpokenLocation ?: return true
+        return last.distanceTo(location) >= minDistance
+    }
+
     private fun isMoving(location: Location): Boolean {
         if (location.hasSpeed()) {
             return location.speed >= 0.6f
@@ -279,6 +285,45 @@ class NavigationPoiService : Service(), LocationListener {
             lastMotionLocation = location
             lastMotionTime = now
             speed >= 0.6f
+        }
+    }
+
+    private fun ensureTrackFile() {
+        if (!Prefs.isNavigationTrackLogEnabled(this)) return
+        if (trackFile != null) return
+        val dir = java.io.File(filesDir, "tracks")
+        if (!dir.exists()) dir.mkdirs()
+        val name = "track_${java.text.SimpleDateFormat("yyyyMMdd_HHmmss", java.util.Locale.US).format(java.util.Date())}.csv"
+        val file = java.io.File(dir, name)
+        file.writeText("timestamp,lat,lon,accuracy,speed\n")
+        trackFile = file
+        Prefs.setNavigationLastTrack(this, file.absolutePath)
+    }
+
+    private fun maybeWriteTrack(location: Location) {
+        if (!Prefs.isNavigationTrackLogEnabled(this)) return
+        ensureTrackFile()
+        val now = System.currentTimeMillis()
+        if (now - lastTrackWrite < 5000L) return
+        lastTrackWrite = now
+        val file = trackFile ?: return
+        val line = buildString {
+            append(now)
+            append(',')
+            append(location.latitude)
+            append(',')
+            append(location.longitude)
+            append(',')
+            append(location.accuracy)
+            append(',')
+            append(location.speed)
+            append('\n')
+        }
+        executor.execute {
+            try {
+                file.appendText(line)
+            } catch (_: Exception) {
+            }
         }
     }
 

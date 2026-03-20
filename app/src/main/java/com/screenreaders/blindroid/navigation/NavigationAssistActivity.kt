@@ -31,23 +31,19 @@ class NavigationAssistActivity : AppCompatActivity() {
         Category("lodging", R.string.navigation_category_hotel)
     )
     private val selected = BooleanArray(categories.size)
+    private var pendingSharePin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNavigationAssistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.navigationModeDriving.isChecked = true
+        restoreLastDestination()
         binding.navigationStartButton.setOnClickListener { startNavigation() }
         binding.navigationTrackingSwitch.isChecked = Prefs.isNavigationTrackingEnabled(this)
         binding.navigationTrackingSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNavigationTrackingEnabled(this, isChecked)
-            if (isChecked) {
-                startTracking()
-            } else {
-                NavigationPoiService.stop(this)
-                Toast.makeText(this, R.string.navigation_tracking_stopped, Toast.LENGTH_SHORT).show()
-            }
+            syncTrackingService()
         }
         binding.navigationCategoriesButton.setOnClickListener { openCategoryDialog() }
         binding.navigationApiKeyInput.setText(Prefs.getNavigationApiKey(this))
@@ -55,6 +51,13 @@ class NavigationAssistActivity : AppCompatActivity() {
             Prefs.setNavigationApiKey(this, binding.navigationApiKeyInput.text?.toString().orEmpty())
         }
         initPoiControls()
+        binding.navigationTrackLogSwitch.isChecked = Prefs.isNavigationTrackLogEnabled(this)
+        binding.navigationTrackLogSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNavigationTrackLogEnabled(this, isChecked)
+            syncTrackingService()
+        }
+        binding.navigationShareTrackButton.setOnClickListener { shareLastTrack() }
+        binding.navigationSharePinButton.setOnClickListener { sharePin() }
         loadSelectedCategories()
         updateCategorySummary()
     }
@@ -78,8 +81,11 @@ class NavigationAssistActivity : AppCompatActivity() {
             else -> "transit"
         }
         speakConfirmation(destination, mode)
-        if (binding.navigationTrackingSwitch.isChecked) {
-            startTracking()
+        Prefs.setNavigationLastPlace(this, place)
+        Prefs.setNavigationLastCity(this, city)
+        Prefs.setNavigationLastMode(this, mode)
+        if (binding.navigationTrackingSwitch.isChecked || binding.navigationTrackLogSwitch.isChecked) {
+            syncTrackingService()
         }
         val uri = Uri.parse(
             "https://www.google.com/maps/dir/?api=1&destination=${Uri.encode(destination)}&travelmode=$mode"
@@ -97,17 +103,7 @@ class NavigationAssistActivity : AppCompatActivity() {
     private fun startTracking() {
         val apiKey = binding.navigationApiKeyInput.text?.toString()?.trim().orEmpty()
         Prefs.setNavigationApiKey(this, apiKey)
-        if (apiKey.isBlank()) {
-            Toast.makeText(this, R.string.navigation_tracking_missing_key, Toast.LENGTH_SHORT).show()
-            binding.navigationTrackingSwitch.isChecked = false
-            return
-        }
         val selectedTypes = selectedTypes()
-        if (selectedTypes.isEmpty()) {
-            Toast.makeText(this, R.string.navigation_tracking_no_categories, Toast.LENGTH_SHORT).show()
-            binding.navigationTrackingSwitch.isChecked = false
-            return
-        }
         Prefs.setNavigationCategories(this, selectedTypes.joinToString(","))
         if (!hasLocationPermission()) {
             ActivityCompat.requestPermissions(
@@ -194,10 +190,16 @@ class NavigationAssistActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQ_LOCATION) {
             val granted = grantResults.any { it == PackageManager.PERMISSION_GRANTED }
-            if (granted && binding.navigationTrackingSwitch.isChecked) {
-                NavigationPoiService.start(this)
+            if (granted) {
+                if (pendingSharePin) {
+                    pendingSharePin = false
+                    sharePin()
+                } else {
+                    syncTrackingService()
+                }
             } else {
                 binding.navigationTrackingSwitch.isChecked = false
+                binding.navigationTrackLogSwitch.isChecked = false
             }
         }
     }
@@ -251,9 +253,120 @@ class NavigationAssistActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
         }
 
+        val distanceOptions = listOf(50, 80, 120)
+        val distanceLabels = distanceOptions.map { getString(R.string.navigation_min_distance_value, it) }
+        val distanceAdapter = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            distanceLabels
+        )
+        distanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.navigationMinDistanceSpinner.adapter = distanceAdapter
+        val distIndex = distanceOptions.indexOf(Prefs.getNavigationMinDistance(this)).let { if (it >= 0) it else 1 }
+        binding.navigationMinDistanceSpinner.setSelection(distIndex, false)
+        binding.navigationMinDistanceSpinner.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                val value = distanceOptions.getOrElse(position) { 80 }
+                Prefs.setNavigationMinDistance(this@NavigationAssistActivity, value)
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) = Unit
+        }
+
         binding.navigationMovingOnlySwitch.isChecked = Prefs.isNavigationMovingOnly(this)
         binding.navigationMovingOnlySwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNavigationMovingOnly(this, isChecked)
+        }
+    }
+
+    private fun syncTrackingService() {
+        val wantsPoi = binding.navigationTrackingSwitch.isChecked
+        val wantsTrack = binding.navigationTrackLogSwitch.isChecked
+        if (!wantsPoi && !wantsTrack) {
+            NavigationPoiService.stop(this)
+            Toast.makeText(this, R.string.navigation_tracking_stopped, Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (!hasLocationPermission()) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        if (wantsPoi) {
+            val apiKey = binding.navigationApiKeyInput.text?.toString()?.trim().orEmpty()
+            Prefs.setNavigationApiKey(this, apiKey)
+            val selectedTypes = selectedTypes()
+            Prefs.setNavigationCategories(this, selectedTypes.joinToString(","))
+            if (apiKey.isBlank()) {
+                Toast.makeText(this, R.string.navigation_tracking_missing_key, Toast.LENGTH_SHORT).show()
+            } else if (selectedTypes.isEmpty()) {
+                Toast.makeText(this, R.string.navigation_tracking_no_categories, Toast.LENGTH_SHORT).show()
+            }
+        }
+        NavigationPoiService.start(this)
+        Toast.makeText(this, R.string.navigation_tracking_started, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun sharePin() {
+        if (!hasLocationPermission()) {
+            pendingSharePin = true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQ_LOCATION
+            )
+            return
+        }
+        val manager = getSystemService(android.location.LocationManager::class.java)
+        val providers = listOf(android.location.LocationManager.GPS_PROVIDER, android.location.LocationManager.NETWORK_PROVIDER)
+        val loc = providers.mapNotNull { manager.getLastKnownLocation(it) }.maxByOrNull { it.time }
+        if (loc == null) {
+            Toast.makeText(this, R.string.navigation_pin_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val link = "https://maps.google.com/?q=${loc.latitude},${loc.longitude}"
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, link)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.navigation_share_pin)))
+    }
+
+    private fun shareLastTrack() {
+        val path = Prefs.getNavigationLastTrack(this)
+        if (path.isNullOrBlank()) {
+            Toast.makeText(this, R.string.navigation_track_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val file = java.io.File(path)
+        if (!file.exists()) {
+            Toast.makeText(this, R.string.navigation_track_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uri = androidx.core.content.FileProvider.getUriForFile(
+            this,
+            "${packageName}.fileprovider",
+            file
+        )
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/csv"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_SUBJECT, "Blindroid ślad trasy")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.navigation_share_track)))
+    }
+
+    private fun restoreLastDestination() {
+        binding.navigationPlaceInput.setText(Prefs.getNavigationLastPlace(this))
+        binding.navigationCityInput.setText(Prefs.getNavigationLastCity(this))
+        when (Prefs.getNavigationLastMode(this)) {
+            "walking" -> binding.navigationModeWalking.isChecked = true
+            "bicycling" -> binding.navigationModeBicycling.isChecked = true
+            "transit" -> binding.navigationModeTransit.isChecked = true
+            else -> binding.navigationModeDriving.isChecked = true
         }
     }
 }

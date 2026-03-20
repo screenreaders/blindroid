@@ -80,6 +80,12 @@ object Prefs {
     private const val KEY_NAV_RADIUS = "nav_radius"
     private const val KEY_NAV_SPEAK_INTERVAL = "nav_speak_interval"
     private const val KEY_NAV_MOVING_ONLY = "nav_moving_only"
+    private const val KEY_NAV_MIN_DISTANCE = "nav_min_distance"
+    private const val KEY_NAV_TRACK_LOG = "nav_track_log"
+    private const val KEY_NAV_LAST_TRACK = "nav_last_track"
+    private const val KEY_NAV_LAST_PLACE = "nav_last_place"
+    private const val KEY_NAV_LAST_CITY = "nav_last_city"
+    private const val KEY_NAV_LAST_MODE = "nav_last_mode"
 
     const val MODE_RING_AND_SPEECH = 0
     const val MODE_SPEECH_ONLY = 1
@@ -417,6 +423,48 @@ object Prefs {
 
     fun setNavigationMovingOnly(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_NAV_MOVING_ONLY, value).apply()
+    }
+
+    fun getNavigationMinDistance(context: Context): Int =
+        prefs(context).getInt(KEY_NAV_MIN_DISTANCE, 80).coerceIn(30, 300)
+
+    fun setNavigationMinDistance(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NAV_MIN_DISTANCE, value.coerceIn(30, 300)).apply()
+    }
+
+    fun isNavigationTrackLogEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NAV_TRACK_LOG, false)
+
+    fun setNavigationTrackLogEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NAV_TRACK_LOG, value).apply()
+    }
+
+    fun getNavigationLastTrack(context: Context): String? =
+        prefs(context).getString(KEY_NAV_LAST_TRACK, null)
+
+    fun setNavigationLastTrack(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_NAV_LAST_TRACK, value).apply()
+    }
+
+    fun getNavigationLastPlace(context: Context): String =
+        prefs(context).getString(KEY_NAV_LAST_PLACE, "") ?: ""
+
+    fun setNavigationLastPlace(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_LAST_PLACE, value).apply()
+    }
+
+    fun getNavigationLastCity(context: Context): String =
+        prefs(context).getString(KEY_NAV_LAST_CITY, "") ?: ""
+
+    fun setNavigationLastCity(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_LAST_CITY, value).apply()
+    }
+
+    fun getNavigationLastMode(context: Context): String =
+        prefs(context).getString(KEY_NAV_LAST_MODE, "driving") ?: "driving"
+
+    fun setNavigationLastMode(context: Context, value: String) {
+        prefs(context).edit().putString(KEY_NAV_LAST_MODE, value).apply()
     }
 
     fun getAnnounceMode(context: Context): Int =

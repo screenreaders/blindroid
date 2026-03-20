@@ -196,6 +196,13 @@
     <string name="navigation_interval_normal">Normalnie (60 s)</string>
     <string name="navigation_interval_slow">Rzadko (180 s)</string>
     <string name="navigation_moving_only">Tylko gdy się poruszasz</string>
+    <string name="navigation_min_distance_label">Minimalny dystans między komunikatami</string>
+    <string name="navigation_min_distance_value">%1$d m</string>
+    <string name="navigation_track_log">Zapisuj ślad trasy</string>
+    <string name="navigation_share_track">Udostępnij ślad</string>
+    <string name="navigation_share_pin">Wyślij pinezkę z lokalizacją</string>
+    <string name="navigation_track_missing">Brak zapisanego śladu</string>
+    <string name="navigation_pin_missing">Brak lokalizacji</string>
     <string name="navigation_categories_button">Wybierz kategorie obiektów</string>
     <string name="navigation_categories_none">Brak wybranych kategorii</string>
     <string name="navigation_api_key_hint">Klucz API Google Places (opcjonalny)</string>

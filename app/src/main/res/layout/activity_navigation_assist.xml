@@ -115,12 +115,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/navigationMinDistanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/navigationMinDistanceSpinner"
+            android:text="@string/navigation_min_distance_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/navigationMinDistanceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/navigationMovingOnlySwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/navigation_moving_only" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/navigationTrackLogSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_track_log" />
+
+        <Button
+            android:id="@+id/navigationShareTrackButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_share_track" />
+
+        <Button
+            android:id="@+id/navigationSharePinButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/navigation_share_pin" />
 
         <Button
             android:id="@+id/navigationCategoriesButton"
