@@ -17,6 +17,9 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
+import android.net.Uri
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -49,6 +52,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import android.speech.RecognizerIntent
+import org.json.JSONObject
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -92,10 +96,12 @@ class LauncherActivity : AppCompatActivity() {
     private var flashlightCameraId: String? = null
     private var pendingFlashToggle = false
     private var soundFeedback: LauncherSoundFeedback? = null
+    private var weatherFetchInProgress = false
 
     private val flashPermissionRequestCode = 9201
     private val calendarPermissionRequestCode = 9202
     private val bluetoothPermissionRequestCode = 9203
+    private val weatherPermissionRequestCode = 9204
 
     private val voiceRequestCode = 4201
 
@@ -248,7 +254,20 @@ class LauncherActivity : AppCompatActivity() {
         } else {
             allPages
         }
-        hotseat = LauncherStore.loadHotseat(this, allApps)
+        val baseHotseat = LauncherStore.loadHotseat(this, allApps)
+        hotseat = if (LauncherPrefs.isSmartHotseatEnabled(this)) {
+            val maxSlots = LauncherPrefs.getColumns(this).coerceAtLeast(3)
+            val used = baseHotseat.filterIsInstance<HomeItem.App>()
+                .map { it.component.flattenToString() }
+                .toMutableSet()
+            val suggestions = LauncherStore.getSuggestedApps(this, allApps, maxSlots * 2)
+                .filter { used.add(it.component.flattenToString()) }
+                .map { HomeItem.app(it) }
+            val merged = baseHotseat + suggestions
+            if (merged.size > maxSlots) merged.take(maxSlots) else merged
+        } else {
+            baseHotseat
+        }
         homeAdapter.submitPages(pages)
         hotseatAdapter.submit(hotseat)
         updateSimpleFavorites()
@@ -479,7 +498,9 @@ class LauncherActivity : AppCompatActivity() {
         val batteryLevel = getBatteryLevel()
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val notifications = getRecentNotifications()
-        val externalMode = LauncherPrefs.getFeedMode(this) == LauncherPrefs.FEED_MODE_GOOGLE
+        val feedMode = LauncherPrefs.getFeedMode(this)
+        val externalMode = feedMode == LauncherPrefs.FEED_MODE_GOOGLE
+        val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED
         val externalAvailable = isGoogleAppAvailable()
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
@@ -504,7 +525,7 @@ class LauncherActivity : AppCompatActivity() {
         val bluetoothPermissionGranted = isBluetoothPermissionGranted()
         val alarmText = if (showAlarm) getNextAlarmText() else null
         val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
-        val weatherText = if (showWeather) getString(R.string.launcher_feed_weather_open) else null
+        val weatherText = if (showWeather) getWeatherText() else null
         val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
         val networkText = if (showNetwork) getNetworkText() else null
@@ -518,13 +539,20 @@ class LauncherActivity : AppCompatActivity() {
         val ramText = if (showRam) getRamText() else null
         val dndText = if (showDnd) getDndText() else null
         val ringerText = if (showRinger) getRingerText() else null
+        if (showWeather) {
+            maybeRefreshWeather()
+        }
+        val atGlanceText = buildAtGlance(alarmText, calendarText, reminderText, weatherText)
         return FeedData(
             time = time,
             date = date,
             battery = batteryText,
             notifications = notifications,
             externalMode = externalMode,
+            embeddedMode = embeddedMode,
             externalAvailable = externalAvailable,
+            embeddedUrl = if (embeddedMode) "https://www.google.com/discover?hl=pl&gl=PL" else null,
+            atGlanceText = atGlanceText,
             showAlarm = showAlarm,
             alarmText = alarmText,
             showCalendar = showCalendar,
@@ -580,6 +608,158 @@ class LauncherActivity : AppCompatActivity() {
         val alarmManager = getSystemService(AlarmManager::class.java)
         val next = alarmManager.nextAlarmClock ?: return null
         return formatDateTime(next.triggerTime, allowTodayLabel = true)
+    }
+
+    private fun getWeatherText(): String? {
+        val prefs = getSharedPreferences("blindroid_launcher_weather", Context.MODE_PRIVATE)
+        val text = prefs.getString("weather_text", null)
+        val ts = prefs.getLong("weather_ts", 0L)
+        val ageMs = System.currentTimeMillis() - ts
+        if (!text.isNullOrBlank() && ageMs in 0..(60 * 60 * 1000L)) {
+            return text
+        }
+        if (!hasLocationPermission()) {
+            return getString(R.string.launcher_feed_weather_permission)
+        }
+        if (!isLocationEnabled()) {
+            return getString(R.string.launcher_feed_weather_location_off)
+        }
+        if (!isNetworkAvailable()) {
+            return getString(R.string.launcher_feed_weather_wait)
+        }
+        return getString(R.string.launcher_feed_weather_wait)
+    }
+
+    private fun maybeRefreshWeather(force: Boolean = false) {
+        if (weatherFetchInProgress) return
+        if (!hasLocationPermission()) return
+        if (!isLocationEnabled()) return
+        if (!isNetworkAvailable()) return
+        val prefs = getSharedPreferences("blindroid_launcher_weather", Context.MODE_PRIVATE)
+        val ts = prefs.getLong("weather_ts", 0L)
+        val ageMs = System.currentTimeMillis() - ts
+        if (!force && ageMs in 0..(60 * 60 * 1000L)) return
+        weatherFetchInProgress = true
+        Thread {
+            val location = getLastKnownLocationSafe()
+            if (location == null) {
+                weatherFetchInProgress = false
+                return@Thread
+            }
+            val text = fetchOpenMeteoWeather(location)
+            if (!text.isNullOrBlank()) {
+                prefs.edit()
+                    .putString("weather_text", text)
+                    .putLong("weather_ts", System.currentTimeMillis())
+                    .apply()
+            }
+            weatherFetchInProgress = false
+            runOnUiThread {
+                refreshHome()
+                applyUiConfig()
+            }
+        }.start()
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val manager = getSystemService(LocationManager::class.java)
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+            manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val cm = getSystemService(ConnectivityManager::class.java)
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+
+    @Suppress("MissingPermission")
+    private fun getLastKnownLocationSafe(): Location? {
+        val manager = getSystemService(LocationManager::class.java)
+        val providers = listOf(LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER)
+        var best: Location? = null
+        providers.forEach { provider ->
+            try {
+                val loc = manager.getLastKnownLocation(provider) ?: return@forEach
+                if (best == null || (loc.time > (best?.time ?: 0L))) {
+                    best = loc
+                }
+            } catch (_: Exception) {
+                // ignore
+            }
+        }
+        return best
+    }
+
+    private fun fetchOpenMeteoWeather(location: Location): String? {
+        return try {
+            val url = "https://api.open-meteo.com/v1/forecast" +
+                "?latitude=${location.latitude}" +
+                "&longitude=${location.longitude}" +
+                "&current=temperature_2m,weather_code,wind_speed_10m" +
+                "&timezone=auto"
+            val conn = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            conn.connectTimeout = 5000
+            conn.readTimeout = 5000
+            conn.inputStream.use { input ->
+                val body = input.bufferedReader().readText()
+                val json = JSONObject(body)
+                val current = json.optJSONObject("current") ?: return null
+                val temp = current.optDouble("temperature_2m", Double.NaN)
+                val wind = current.optDouble("wind_speed_10m", Double.NaN)
+                val code = current.optInt("weather_code", -1)
+                val desc = weatherCodeToText(code)
+                val tempText = if (!temp.isNaN()) "${temp.toInt()}°C" else null
+                val windText = if (!wind.isNaN()) "${wind.toInt()} km/h" else null
+                listOfNotNull(tempText, desc, windText).joinToString(" • ").ifBlank { null }
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun weatherCodeToText(code: Int): String? {
+        return when (code) {
+            0 -> getString(R.string.launcher_weather_clear)
+            1, 2 -> getString(R.string.launcher_weather_partly_cloudy)
+            3 -> getString(R.string.launcher_weather_cloudy)
+            45, 48 -> getString(R.string.launcher_weather_fog)
+            51, 53, 55 -> getString(R.string.launcher_weather_drizzle)
+            61, 63, 65 -> getString(R.string.launcher_weather_rain)
+            71, 73, 75 -> getString(R.string.launcher_weather_snow)
+            80, 81, 82 -> getString(R.string.launcher_weather_showers)
+            95, 96, 99 -> getString(R.string.launcher_weather_thunder)
+            else -> null
+        }
+    }
+
+    private fun buildAtGlance(
+        alarmText: String?,
+        calendarText: String?,
+        reminderText: String?,
+        weatherText: String?
+    ): String? {
+        val parts = mutableListOf<String>()
+        if (!alarmText.isNullOrBlank()) {
+            parts.add(getString(R.string.launcher_at_glance_alarm, alarmText))
+        }
+        if (!calendarText.isNullOrBlank()) {
+            parts.add(getString(R.string.launcher_at_glance_event, calendarText))
+        } else if (!reminderText.isNullOrBlank()) {
+            parts.add(getString(R.string.launcher_at_glance_reminder, reminderText))
+        }
+        if (!weatherText.isNullOrBlank()) {
+            parts.add(getString(R.string.launcher_at_glance_weather, weatherText))
+        }
+        return parts.joinToString(" • ").ifBlank { null }
     }
 
     private fun getNextCalendarEventText(): String? {
@@ -1367,17 +1547,25 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun openExternalFeed(showError: Boolean = true): Boolean {
         LauncherDiagnosticLog.log(this, "launcher_external_feed")
-        val intent = packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox")
-        return if (intent != null) {
-            startActivity(intent)
-            lastExternalFeedLaunchMs = System.currentTimeMillis()
-            true
-        } else {
-            if (showError) {
-                Toast.makeText(this, R.string.launcher_feed_google_missing, Toast.LENGTH_SHORT).show()
+        val packageName = "com.google.android.googlequicksearchbox"
+        val intents = listOf(
+            Intent(Intent.ACTION_VIEW, Uri.parse("googleapp://discover")).setPackage(packageName),
+            Intent(Intent.ACTION_VIEW, Uri.parse("googleapp://feed")).setPackage(packageName),
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/discover")).setPackage(packageName),
+            packageManager.getLaunchIntentForPackage(packageName),
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/discover"))
+        ).filterNotNull()
+        for (intent in intents) {
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+                lastExternalFeedLaunchMs = System.currentTimeMillis()
+                return true
             }
-            false
         }
+        if (showError) {
+            Toast.makeText(this, R.string.launcher_feed_google_missing, Toast.LENGTH_SHORT).show()
+        }
+        return false
     }
 
     private fun isGoogleAppAvailable(): Boolean {
@@ -1412,7 +1600,23 @@ class LauncherActivity : AppCompatActivity() {
             ModuleShortcuts.ID_FACE -> openMainSection("face")
             ModuleShortcuts.ID_CHIME -> openMainSection("chime")
             ModuleShortcuts.ID_UPDATES -> openMainSection("updates")
+            ModuleShortcuts.ID_TILES -> openBlindroidComponent("com.screenreaders.blindroid.senior.ContactTilesActivity")
+            ModuleShortcuts.ID_SIMPLE_PHONE -> openBlindroidComponent("com.screenreaders.blindroid.phone.SimplePhoneActivity")
+            ModuleShortcuts.ID_SIMPLE_MESSAGES -> openBlindroidComponent("com.screenreaders.blindroid.sms.SimpleMessagesActivity")
+            ModuleShortcuts.ID_BRAILLE -> openBlindroidComponent("com.screenreaders.blindroid.braille.BrailleSettingsActivity")
             else -> Unit
+        }
+    }
+
+    private fun openBlindroidComponent(className: String) {
+        val intent = Intent().apply {
+            component = ComponentName("com.screenreaders.blindroid", className)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -1437,20 +1641,32 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openDialer() {
-        val intent = Intent(Intent.ACTION_DIAL)
+        val intent = Intent().apply {
+            component = ComponentName("com.screenreaders.blindroid", "com.screenreaders.blindroid.phone.SimplePhoneActivity")
+        }
         try {
             startActivity(intent)
         } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            try {
+                startActivity(Intent(Intent.ACTION_DIAL))
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun openMessages() {
-        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MESSAGING)
+        val intent = Intent().apply {
+            component = ComponentName("com.screenreaders.blindroid", "com.screenreaders.blindroid.sms.SimpleMessagesActivity")
+        }
         try {
             startActivity(intent)
         } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            try {
+                startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MESSAGING))
+            } catch (_: Exception) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -1473,6 +1689,22 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openWeather() {
+        if (!hasLocationPermission()) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                weatherPermissionRequestCode
+            )
+            return
+        }
+        if (!isLocationEnabled()) {
+            try {
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            } catch (_: Exception) {
+                // ignore
+            }
+        }
+        maybeRefreshWeather(force = true)
         launchSearch(getString(R.string.launcher_feed_weather_query))
     }
 
@@ -1681,6 +1913,15 @@ class LauncherActivity : AppCompatActivity() {
                 openBluetoothSettings()
             } else {
                 Toast.makeText(this, R.string.launcher_feed_bluetooth_permission, Toast.LENGTH_SHORT).show()
+            }
+        } else if (requestCode == weatherPermissionRequestCode) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (granted) {
+                maybeRefreshWeather(force = true)
+                refreshHome()
+                applyUiConfig()
+            } else {
+                Toast.makeText(this, R.string.launcher_feed_weather_permission, Toast.LENGTH_SHORT).show()
             }
         }
     }

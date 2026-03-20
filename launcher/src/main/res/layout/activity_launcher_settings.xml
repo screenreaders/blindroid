@@ -341,10 +341,22 @@
             android:text="@string/launcher_settings_dock_visible" />
 
         <Switch
+            android:id="@+id/smartHotseatSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_smart_hotseat" />
+
+        <Switch
             android:id="@+id/hideDockLabelsSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/launcher_settings_hide_dock_labels" />
+
+        <Switch
+            android:id="@+id/usageStatsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_usage_suggestions" />
 
         <TextView
             android:layout_width="match_parent"

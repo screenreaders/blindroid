@@ -324,6 +324,67 @@
     <string name="direction_south_west">na południowy zachód</string>
     <string name="direction_west">na zachód</string>
     <string name="direction_north_west">na północny zachód</string>
+
+    <string name="braille_title">Klawiatura brajlowska</string>
+    <string name="braille_hint">Włącz klawiaturę brajlowską w ustawieniach systemu, a potem wybierz ją jako aktywną klawiaturę.</string>
+    <string name="braille_open_settings">Otwórz ustawienia klawiatur</string>
+    <string name="braille_status_letters">Tryb liter</string>
+    <string name="braille_status_numbers">Tryb cyfr</string>
+    <string name="braille_status_caps">Tryb wielkich liter</string>
+    <string name="braille_write">Wpisz</string>
+    <string name="braille_space">Spacja</string>
+    <string name="braille_backspace">Cofnij</string>
+    <string name="braille_enter">Enter</string>
+    <string name="braille_clear">Wyczyść</string>
+    <string name="braille_caps">Wielkie</string>
+    <string name="braille_numbers">123</string>
+
+    <string name="contact_tiles_title">Duże kafle kontaktów</string>
+    <string name="contact_tiles_hint">Dotknij pusty kafel, aby dodać kontakt. Przytrzymaj kafel, aby edytować lub usunąć.</string>
+    <string name="contact_tiles_layout_3">3 kafle (1×3)</string>
+    <string name="contact_tiles_layout_6">6 kafli (2×3)</string>
+    <string name="contact_tiles_layout_8">8 kafli (2×4)</string>
+    <string name="contact_tiles_layout_15">15 kafli (3×5)</string>
+    <string name="contact_tile_empty">Dodaj kontakt</string>
+    <string name="contact_tile_edit">Zmień kontakt</string>
+    <string name="contact_tile_remove">Usuń kafel</string>
+    <string name="contact_tile_permission">Brak zgody na kontakty</string>
+    <string name="contact_tile_call_failed">Nie udało się wykonać połączenia</string>
+
+    <string name="simple_phone_title">Duży dialer</string>
+    <string name="simple_phone_tab_dialer">Dialer</string>
+    <string name="simple_phone_tab_contacts">Kontakty</string>
+    <string name="simple_phone_tab_recents">Ostatnie</string>
+    <string name="simple_phone_call">Zadzwoń</string>
+    <string name="simple_phone_backspace">Cofnij</string>
+    <string name="simple_phone_clear">Wyczyść</string>
+    <string name="simple_phone_search_contacts">Szukaj kontaktu</string>
+    <string name="simple_phone_call_failed">Nie udało się wykonać połączenia</string>
+    <string name="simple_phone_permission_contacts">Brak zgody na kontakty</string>
+    <string name="simple_phone_permission_calls">Brak zgody na historię połączeń</string>
+    <string name="simple_phone_call_incoming">Połączenie przychodzące</string>
+    <string name="simple_phone_call_outgoing">Połączenie wychodzące</string>
+    <string name="simple_phone_call_missed">Połączenie nieodebrane</string>
+    <string name="simple_phone_call_rejected">Połączenie odrzucone</string>
+    <string name="simple_phone_call_other">Połączenie</string>
+
+    <string name="simple_messages_title">Proste wiadomości</string>
+    <string name="simple_messages_tab_inbox">Odebrane</string>
+    <string name="simple_messages_tab_compose">Nowa</string>
+    <string name="simple_messages_number">Numer telefonu</string>
+    <string name="simple_messages_body">Treść wiadomości</string>
+    <string name="simple_messages_send">Wyślij</string>
+    <string name="simple_messages_missing">Podaj numer i treść</string>
+    <string name="simple_messages_sent">Wiadomość wysłana</string>
+    <string name="simple_messages_failed">Nie udało się wysłać</string>
+    <string name="simple_messages_permission_read">Brak zgody na odczyt SMS</string>
+    <string name="simple_messages_permission_send">Brak zgody na wysyłanie SMS</string>
+
+    <string name="simple_section_label">Telefon uproszczony</string>
+    <string name="contact_tiles_open">Otwórz kafle kontaktów</string>
+    <string name="simple_phone_open">Otwórz duży dialer</string>
+    <string name="simple_messages_open">Otwórz wiadomości</string>
+    <string name="braille_open">Ustawienia klawiatury brajlowskiej</string>
     <string name="navigation_category_restaurant">Restauracje</string>
     <string name="navigation_category_cafe">Kawiarnie</string>
     <string name="navigation_category_pharmacy">Apteki</string>

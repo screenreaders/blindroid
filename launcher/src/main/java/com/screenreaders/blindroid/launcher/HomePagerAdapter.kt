@@ -162,6 +162,11 @@ class HomePagerAdapter(
         private val time: TextView = view.findViewById(R.id.feedTime)
         private val date: TextView = view.findViewById(R.id.feedDate)
         private val battery: TextView = view.findViewById(R.id.feedBattery)
+        private val atGlanceCard: LinearLayout = view.findViewById(R.id.feedAtGlanceCard)
+        private val atGlanceTitle: TextView = view.findViewById(R.id.feedAtGlanceTitle)
+        private val atGlanceText: TextView = view.findViewById(R.id.feedAtGlanceText)
+        private val webHint: TextView = view.findViewById(R.id.feedWebHint)
+        private val webView: android.webkit.WebView = view.findViewById(R.id.feedWebView)
         private val nowCards: LinearLayout = view.findViewById(R.id.nowCardsContainer)
         private val cardAlarm: LinearLayout = view.findViewById(R.id.cardAlarm)
         private val cardAlarmTitle: TextView = view.findViewById(R.id.cardAlarmTitle)
@@ -238,6 +243,8 @@ class HomePagerAdapter(
             time.setTextColor(colors.text)
             date.setTextColor(colors.muted)
             battery.setTextColor(colors.muted)
+            atGlanceTitle.setTextColor(colors.text)
+            atGlanceText.setTextColor(colors.muted)
             cardAlarmTitle.setTextColor(colors.text)
             cardAlarmText.setTextColor(colors.muted)
             cardCalendarTitle.setTextColor(colors.text)
@@ -279,6 +286,14 @@ class HomePagerAdapter(
             time.text = data.time
             date.text = data.date
             battery.text = data.battery
+            atGlanceText.text = data.atGlanceText ?: itemView.context.getString(R.string.launcher_at_glance_empty)
+            atGlanceCard.setOnClickListener {
+                if (data.externalAvailable) {
+                    onOpenExternalFeed()
+                } else if (data.calendarPermissionGranted) {
+                    onOpenCalendar()
+                }
+            }
 
             if (data.externalMode) {
                 openHint.visibility = View.VISIBLE
@@ -286,22 +301,54 @@ class HomePagerAdapter(
                 openButton.isEnabled = data.externalAvailable
                 openButton.alpha = if (data.externalAvailable) 1.0f else 0.5f
                 openButton.setOnClickListener { onOpenExternalFeed() }
+                webHint.visibility = View.GONE
+                webView.visibility = View.GONE
                 notificationsLabel.visibility = View.GONE
                 container.visibility = View.GONE
                 nowCards.visibility = View.GONE
                 root.setOnClickListener { if (data.externalAvailable) onOpenExternalFeed() }
+                atGlanceCard.visibility = View.VISIBLE
+            } else if (data.embeddedMode) {
+                openHint.visibility = View.GONE
+                openButton.visibility = View.GONE
+                openButton.setOnClickListener(null)
+                root.setOnClickListener(null)
+                webHint.visibility = View.VISIBLE
+                webView.visibility = View.VISIBLE
+                notificationsLabel.visibility = View.GONE
+                container.visibility = View.GONE
+                nowCards.visibility = View.GONE
+                atGlanceCard.visibility = View.VISIBLE
+                val url = data.embeddedUrl ?: "https://www.google.com"
+                if (webView.tag != url) {
+                    webView.settings.javaScriptEnabled = true
+                    webView.settings.domStorageEnabled = true
+                    webView.settings.loadsImagesAutomatically = true
+                    webView.settings.useWideViewPort = true
+                    webView.settings.loadWithOverviewMode = true
+                    webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
+                    webView.settings.userAgentString = webView.settings.userAgentString + " BlindroidLauncher"
+                    android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+                    webView.webChromeClient = android.webkit.WebChromeClient()
+                    webView.webViewClient = android.webkit.WebViewClient()
+                    webView.loadUrl(url)
+                    webView.tag = url
+                }
             } else {
                 openHint.visibility = View.GONE
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
                 root.setOnClickListener(null)
+                webHint.visibility = View.GONE
+                webView.visibility = View.GONE
                 notificationsLabel.visibility = View.VISIBLE
                 container.visibility = View.VISIBLE
                 nowCards.visibility = View.VISIBLE
+                atGlanceCard.visibility = View.VISIBLE
             }
 
             container.removeAllViews()
-            if (data.externalMode) {
+            if (data.externalMode || data.embeddedMode) {
                 return
             }
 
@@ -500,6 +547,7 @@ class HomePagerAdapter(
             applyCardStyle(cardRam, colors)
             applyCardStyle(cardDnd, colors)
             applyCardStyle(cardRinger, colors)
+            applyCardStyle(atGlanceCard, colors)
 
             nowCards.visibility = if (
                 data.showAlarm ||

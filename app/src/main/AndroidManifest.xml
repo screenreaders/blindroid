@@ -3,8 +3,11 @@
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -85,6 +88,22 @@
             android:name=".navigation.MapPointSelectActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".braille.BrailleSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".senior.ContactTilesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".phone.SimplePhoneActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".sms.SimpleMessagesActivity"
+            android:exported="false" />
+
 
         <activity
             android:name=".accessibility.TalkbackWizardActivity"
@@ -159,6 +178,18 @@
             android:name=".navigation.NavigationRouteService"
             android:exported="false"
             android:foregroundServiceType="location" />
+
+        <service
+            android:name=".braille.BrailleKeyboardService"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/braille_ime" />
+        </service>
 
         <receiver
             android:name=".sms.SmsReceiver"

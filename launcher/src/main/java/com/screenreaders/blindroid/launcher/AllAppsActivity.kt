@@ -35,6 +35,8 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var appsGrid: RecyclerView
     private lateinit var suggestedGrid: RecyclerView
     private lateinit var suggestedLabel: TextView
+    private lateinit var usageAccessHint: TextView
+    private lateinit var usageAccessButton: Button
     private lateinit var categoryRow: LinearLayout
     private lateinit var tabRow: LinearLayout
     private lateinit var appsTabButton: Button
@@ -78,6 +80,10 @@ class AllAppsActivity : AppCompatActivity() {
         ALL(R.string.launcher_category_all, emptyList()),
         RECENT(R.string.launcher_category_recent, emptyList()),
         FREQUENT(R.string.launcher_category_frequent, emptyList()),
+        MORNING(R.string.launcher_category_morning, emptyList()),
+        DAY(R.string.launcher_category_day, emptyList()),
+        EVENING(R.string.launcher_category_evening, emptyList()),
+        NIGHT(R.string.launcher_category_night, emptyList()),
         COMMUNICATION(R.string.launcher_category_communication, listOf("CATEGORY_COMMUNICATION")),
         SOCIAL(R.string.launcher_category_social, listOf("CATEGORY_SOCIAL")),
         PRODUCTIVITY(R.string.launcher_category_productivity, listOf("CATEGORY_PRODUCTIVITY")),
@@ -100,6 +106,8 @@ class AllAppsActivity : AppCompatActivity() {
         appsGrid = findViewById(R.id.appsGrid)
         suggestedGrid = findViewById(R.id.suggestedGrid)
         suggestedLabel = findViewById(R.id.suggestedLabel)
+        usageAccessHint = findViewById(R.id.usageAccessHint)
+        usageAccessButton = findViewById(R.id.usageAccessButton)
         categoryRow = findViewById(R.id.categoryRow)
         tabRow = findViewById(R.id.tabRow)
         appsTabButton = findViewById(R.id.appsTabButton)
@@ -161,6 +169,25 @@ class AllAppsActivity : AppCompatActivity() {
             widgetsGrid.columnCount = if (isChecked) 2 else 1
             reloadWidgets()
         }
+        widgetsGrid.setOnDragListener { _, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DRAG_STARTED -> true
+                android.view.DragEvent.ACTION_DROP -> {
+                    val widgetId = event.localState as? Int ?: return@setOnDragListener true
+                    val list = LauncherStore.getWidgetIds(this)
+                    if (list.isNotEmpty()) {
+                        LauncherStore.moveWidgetTo(this, widgetId, list.size - 1)
+                        reloadWidgets()
+                    }
+                    true
+                }
+                else -> true
+            }
+        }
+        usageAccessButton.setOnClickListener {
+            soundFeedback?.playTap()
+            LauncherStore.openUsageAccessSettings(this)
+        }
 
         appsTabButton.setOnClickListener { switchTab(TAB_APPS) }
         widgetsTabButton.setOnClickListener { switchTab(TAB_WIDGETS) }
@@ -175,6 +202,7 @@ class AllAppsActivity : AppCompatActivity() {
         super.onResume()
         applyUiConfig()
         applyTheme()
+        updateUsageAccessUi()
     }
 
     override fun onStart() {
@@ -206,6 +234,7 @@ class AllAppsActivity : AppCompatActivity() {
                 setupCategories()
                 applyFilters()
                 updateSuggested()
+                updateUsageAccessUi()
             }
         }.start()
     }
@@ -225,6 +254,8 @@ class AllAppsActivity : AppCompatActivity() {
         searchInput.setTextColor(colors.text)
         searchInput.setHintTextColor(colors.muted)
         suggestedLabel.setTextColor(colors.text)
+        usageAccessHint.setTextColor(colors.muted)
+        usageAccessButton.setTextColor(colors.text)
         appsTabButton.setTextColor(colors.text)
         widgetsTabButton.setTextColor(colors.text)
         addWidgetButton.setTextColor(colors.text)
@@ -397,13 +428,45 @@ class AllAppsActivity : AppCompatActivity() {
         } else {
             emptySet()
         }
+        val morningKeys = if (currentCategory == Category.MORNING) {
+            LauncherStore.getSuggestedAppsForBucket(this, allApps, "morning", 40)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
+        val dayKeys = if (currentCategory == Category.DAY) {
+            LauncherStore.getSuggestedAppsForBucket(this, allApps, "day", 40)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
+        val eveningKeys = if (currentCategory == Category.EVENING) {
+            LauncherStore.getSuggestedAppsForBucket(this, allApps, "evening", 40)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
+        val nightKeys = if (currentCategory == Category.NIGHT) {
+            LauncherStore.getSuggestedAppsForBucket(this, allApps, "night", 40)
+                .map { it.component.flattenToString() }
+                .toSet()
+        } else {
+            emptySet()
+        }
         filteredApps = allApps.filter { entry ->
             val matchesQuery = query.isBlank() || entry.label.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
             val matchesCategory = when (currentCategory) {
                 Category.FREQUENT -> frequentKeys.contains(entry.component.flattenToString())
                 Category.RECENT -> recentKeys.contains(entry.component.flattenToString())
-                else -> matchesCategory(currentCategory, category)
+                Category.MORNING -> morningKeys.contains(entry.component.flattenToString())
+                Category.DAY -> dayKeys.contains(entry.component.flattenToString())
+                Category.EVENING -> eveningKeys.contains(entry.component.flattenToString())
+                Category.NIGHT -> nightKeys.contains(entry.component.flattenToString())
+                else -> matchesCategory(currentCategory, category, entry)
             }
             matchesQuery && matchesCategory
         }
@@ -419,13 +482,42 @@ class AllAppsActivity : AppCompatActivity() {
         }
     }
 
-    private fun matchesCategory(category: Category, appCategory: Int?): Boolean {
-        if (category == Category.ALL || category == Category.FREQUENT || category == Category.RECENT) return true
-        if (appCategory == null) return false
+    private fun matchesCategory(category: Category, appCategory: Int?, entry: AppEntry): Boolean {
+        if (category == Category.ALL ||
+            category == Category.FREQUENT ||
+            category == Category.RECENT ||
+            category == Category.MORNING ||
+            category == Category.DAY ||
+            category == Category.EVENING ||
+            category == Category.NIGHT
+        ) return true
+        if (appCategory == null) {
+            val inferred = inferCategory(entry)
+            return inferred == category
+        }
         return category.categoryNames.any { name ->
             val value = resolveCategoryValue(name) ?: return@any false
             appCategory == value
         }
+    }
+
+    private fun inferCategory(entry: AppEntry): Category? {
+        val text = (entry.label + " " + entry.component.packageName).lowercase()
+        val rules = listOf(
+            Category.COMMUNICATION to listOf("dialer", "phone", "contacts", "sms", "messaging", "whatsapp", "telegram", "signal", "viber", "messenger", "skype", "meet", "zoom"),
+            Category.SOCIAL to listOf("facebook", "instagram", "tiktok", "twitter", "x.com", "threads", "snapchat"),
+            Category.MEDIA to listOf("music", "spotify", "soundcloud", "radio", "podcast", "video", "youtube", "netflix", "player"),
+            Category.MAPS to listOf("maps", "gps", "navigation", "waze", "osm", "mapy"),
+            Category.NEWS to listOf("news", "gazeta", "wiadomosci", "rss"),
+            Category.FINANCE to listOf("bank", "wallet", "pay", "finance", "blik"),
+            Category.TRAVEL to listOf("trip", "booking", "uber", "bolt", "taxi"),
+            Category.EDUCATION to listOf("edu", "school", "learn", "duolingo", "kurs"),
+            Category.HEALTH to listOf("fit", "health", "fitness", "zdrowie"),
+            Category.WEATHER to listOf("weather", "pogoda", "meteo"),
+            Category.GAME to listOf("game", "gry"),
+            Category.TOOLS to listOf("calculator", "clock", "files", "settings", "notes")
+        )
+        return rules.firstOrNull { (_, keywords) -> keywords.any { text.contains(it) } }?.first
     }
 
     private fun resolveCategoryValue(name: String): Int? {
@@ -444,7 +536,7 @@ class AllAppsActivity : AppCompatActivity() {
             val appCategory = appCategories[entry.component.flattenToString()]
             Category.values().forEach { category ->
                 if (category != Category.ALL && category != Category.FREQUENT && category != Category.RECENT &&
-                    matchesCategory(category, appCategory)
+                    matchesCategory(category, appCategory, entry)
                 ) {
                     present.add(category)
                 }
@@ -458,6 +550,22 @@ class AllAppsActivity : AppCompatActivity() {
         val frequent = LauncherStore.getSuggestedApps(this, allApps, 12)
         if (frequent.isNotEmpty()) {
             list.add(Category.FREQUENT)
+        }
+        val morning = LauncherStore.getSuggestedAppsForBucket(this, allApps, "morning", 12)
+        if (morning.isNotEmpty()) {
+            list.add(Category.MORNING)
+        }
+        val day = LauncherStore.getSuggestedAppsForBucket(this, allApps, "day", 12)
+        if (day.isNotEmpty()) {
+            list.add(Category.DAY)
+        }
+        val evening = LauncherStore.getSuggestedAppsForBucket(this, allApps, "evening", 12)
+        if (evening.isNotEmpty()) {
+            list.add(Category.EVENING)
+        }
+        val night = LauncherStore.getSuggestedAppsForBucket(this, allApps, "night", 12)
+        if (night.isNotEmpty()) {
+            list.add(Category.NIGHT)
         }
         list.addAll(Category.values().filter { it != Category.ALL && present.contains(it) })
         if (!list.contains(currentCategory)) {
@@ -475,6 +583,18 @@ class AllAppsActivity : AppCompatActivity() {
             suggestedLabel.visibility = android.view.View.VISIBLE
             suggestedGrid.visibility = android.view.View.VISIBLE
             suggestedAdapter.submit(suggested)
+        }
+    }
+
+    private fun updateUsageAccessUi() {
+        val wantsUsage = LauncherPrefs.isUsageSuggestionsEnabled(this)
+        val hasUsage = LauncherStore.hasUsageStatsPermission(this)
+        if (wantsUsage && !hasUsage) {
+            usageAccessHint.visibility = android.view.View.VISIBLE
+            usageAccessButton.visibility = android.view.View.VISIBLE
+        } else {
+            usageAccessHint.visibility = android.view.View.GONE
+            usageAccessButton.visibility = android.view.View.GONE
         }
     }
 
@@ -599,10 +719,16 @@ class AllAppsActivity : AppCompatActivity() {
         controls.orientation = LinearLayout.HORIZONTAL
         val bigger = Button(this)
         val smaller = Button(this)
+        val moveUp = Button(this)
+        val moveDown = Button(this)
         bigger.text = getString(R.string.launcher_widget_bigger)
         smaller.text = getString(R.string.launcher_widget_smaller)
+        moveUp.text = getString(R.string.launcher_widget_move_up)
+        moveDown.text = getString(R.string.launcher_widget_move_down)
         controls.addView(bigger)
         controls.addView(smaller)
+        controls.addView(moveUp)
+        controls.addView(moveDown)
         wrapper.addView(controls)
         wrapper.addView(hostView)
 
@@ -611,6 +737,7 @@ class AllAppsActivity : AppCompatActivity() {
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
         params.setMargins(0, 0, 0, resources.getDimensionPixelSize(R.dimen.launcher_widget_margin))
         wrapper.layoutParams = params
+        wrapper.tag = widgetId
 
         val size = LauncherStore.getWidgetSize(this, widgetId)
         if (size != null) {
@@ -624,6 +751,38 @@ class AllAppsActivity : AppCompatActivity() {
 
         bigger.setOnClickListener { resizeWidget(widgetId, hostView, 30) }
         smaller.setOnClickListener { resizeWidget(widgetId, hostView, -30) }
+        moveUp.setOnClickListener {
+            LauncherStore.moveWidget(this, widgetId, -1)
+            reloadWidgets()
+        }
+        moveDown.setOnClickListener {
+            LauncherStore.moveWidget(this, widgetId, 1)
+            reloadWidgets()
+        }
+        wrapper.setOnLongClickListener { view ->
+            val clip = android.content.ClipData.newPlainText("widget", widgetId.toString())
+            view.startDragAndDrop(clip, android.view.View.DragShadowBuilder(view), widgetId, 0)
+            true
+        }
+        wrapper.setOnDragListener { view, event ->
+            when (event.action) {
+                android.view.DragEvent.ACTION_DRAG_STARTED -> true
+                android.view.DragEvent.ACTION_DROP -> {
+                    val fromId = event.localState as? Int ?: return@setOnDragListener true
+                    val toId = view.tag as? Int ?: return@setOnDragListener true
+                    if (fromId != toId) {
+                        val list = LauncherStore.getWidgetIds(this)
+                        val targetIndex = list.indexOf(toId)
+                        if (targetIndex >= 0) {
+                            LauncherStore.moveWidgetTo(this, fromId, targetIndex)
+                            reloadWidgets()
+                        }
+                    }
+                    true
+                }
+                else -> true
+            }
+        }
         hostView.setOnLongClickListener {
             confirmRemoveWidget(widgetId, wrapper)
             true

@@ -121,6 +121,18 @@ class MainActivity : AppCompatActivity() {
         binding.lightButton.setOnClickListener { openLightModule() }
         binding.navigationButton.setOnClickListener { openNavigationModule() }
         binding.talkbackWizardButton.setOnClickListener { openTalkbackWizard() }
+        binding.contactTilesButton.setOnClickListener {
+            startActivity(Intent(this, com.screenreaders.blindroid.senior.ContactTilesActivity::class.java))
+        }
+        binding.simplePhoneButton.setOnClickListener {
+            startActivity(Intent(this, com.screenreaders.blindroid.phone.SimplePhoneActivity::class.java))
+        }
+        binding.simpleMessagesButton.setOnClickListener {
+            startActivity(Intent(this, com.screenreaders.blindroid.sms.SimpleMessagesActivity::class.java))
+        }
+        binding.brailleButton.setOnClickListener {
+            startActivity(Intent(this, com.screenreaders.blindroid.braille.BrailleSettingsActivity::class.java))
+        }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)

@@ -14,9 +14,11 @@ object LauncherPrefs {
     private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
     private const val KEY_DOCK_VISIBLE = "dock_visible"
+    private const val KEY_SMART_HOTSEAT = "smart_hotseat"
     private const val KEY_FEED_ENABLED = "feed_enabled"
     private const val KEY_FEED_MODE = "feed_mode"
     private const val KEY_FEED_AUTO_OPEN = "feed_auto_open"
+    private const val KEY_USAGE_SUGGESTIONS = "usage_suggestions"
     private const val KEY_THEME = "launcher_theme"
     private const val KEY_INVERT_COLORS = "invert_colors"
     private const val KEY_ICON_STYLE = "icon_style"
@@ -65,6 +67,7 @@ object LauncherPrefs {
 
     const val FEED_MODE_LOCAL = 0
     const val FEED_MODE_GOOGLE = 1
+    const val FEED_MODE_EMBEDDED = 2
 
     private const val ICON_STYLE_NONE = 0
     private const val ICON_STYLE_CIRCLE = 1
@@ -149,6 +152,13 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_DOCK_VISIBLE, visible).apply()
     }
 
+    fun isSmartHotseatEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SMART_HOTSEAT, false)
+
+    fun setSmartHotseatEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SMART_HOTSEAT, enabled).apply()
+    }
+
     fun isFeedEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_FEED_ENABLED, true)
 
@@ -157,10 +167,10 @@ object LauncherPrefs {
     }
 
     fun getFeedMode(context: Context): Int =
-        prefs(context).getInt(KEY_FEED_MODE, FEED_MODE_LOCAL).coerceIn(FEED_MODE_LOCAL, FEED_MODE_GOOGLE)
+        prefs(context).getInt(KEY_FEED_MODE, FEED_MODE_LOCAL).coerceIn(FEED_MODE_LOCAL, FEED_MODE_EMBEDDED)
 
     fun setFeedMode(context: Context, mode: Int) {
-        prefs(context).edit().putInt(KEY_FEED_MODE, mode.coerceIn(FEED_MODE_LOCAL, FEED_MODE_GOOGLE)).apply()
+        prefs(context).edit().putInt(KEY_FEED_MODE, mode.coerceIn(FEED_MODE_LOCAL, FEED_MODE_EMBEDDED)).apply()
     }
 
     fun isFeedAutoOpenEnabled(context: Context): Boolean =
@@ -168,6 +178,13 @@ object LauncherPrefs {
 
     fun setFeedAutoOpenEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_FEED_AUTO_OPEN, enabled).apply()
+    }
+
+    fun isUsageSuggestionsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_USAGE_SUGGESTIONS, true)
+
+    fun setUsageSuggestionsEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_USAGE_SUGGESTIONS, enabled).apply()
     }
 
     fun getTheme(context: Context): Int =

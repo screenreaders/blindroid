@@ -46,6 +46,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var wallpaperParallaxSwitch: Switch
     private lateinit var assistantSpinner: Spinner
     private lateinit var dockVisibleSwitch: Switch
+    private lateinit var smartHotseatSwitch: Switch
     private lateinit var themeGroup: RadioGroup
     private lateinit var invertColorsSwitch: Switch
     private lateinit var iconStyleGroup: RadioGroup
@@ -57,6 +58,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var soundSchemeSpinner: Spinner
     private lateinit var backupButton: Button
     private lateinit var restoreButton: Button
+    private lateinit var usageStatsSwitch: Switch
     private lateinit var gestureTwoTapSpinner: Spinner
     private lateinit var gestureTwoUpSpinner: Spinner
     private lateinit var gestureTwoDownSpinner: Spinner
@@ -125,6 +127,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         wallpaperParallaxSwitch = findViewById(R.id.wallpaperParallaxSwitch)
         assistantSpinner = findViewById(R.id.assistantSpinner)
         dockVisibleSwitch = findViewById(R.id.dockVisibleSwitch)
+        smartHotseatSwitch = findViewById(R.id.smartHotseatSwitch)
         themeGroup = findViewById(R.id.themeGroup)
         invertColorsSwitch = findViewById(R.id.invertColorsSwitch)
         iconStyleGroup = findViewById(R.id.iconStyleGroup)
@@ -136,6 +139,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundSchemeSpinner = findViewById(R.id.soundSchemeSpinner)
         backupButton = findViewById(R.id.backupButton)
         restoreButton = findViewById(R.id.restoreButton)
+        usageStatsSwitch = findViewById(R.id.usageStatsSwitch)
         gestureTwoTapSpinner = findViewById(R.id.gestureTwoTapSpinner)
         gestureTwoUpSpinner = findViewById(R.id.gestureTwoUpSpinner)
         gestureTwoDownSpinner = findViewById(R.id.gestureTwoDownSpinner)
@@ -202,6 +206,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         wallpaperParallaxSwitch.isChecked = LauncherPrefs.isWallpaperParallaxEnabled(this)
         bindAssistantSpinner()
         dockVisibleSwitch.isChecked = LauncherPrefs.isDockVisible(this)
+        smartHotseatSwitch.isChecked = LauncherPrefs.isSmartHotseatEnabled(this)
         when (LauncherPrefs.getTheme(this)) {
             1 -> themeGroup.check(R.id.themeDark)
             2 -> themeGroup.check(R.id.themeBlack)
@@ -219,6 +224,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         bindSoundVolume()
         bindSoundScheme()
         bindGestureSpinners()
+        usageStatsSwitch.isChecked = LauncherPrefs.isUsageSuggestionsEnabled(this)
         applySuperSimpleState(superSimpleSwitch.isChecked)
         applyLayoutModeState()
         feedModeSpinner.isEnabled = feedEnabledSwitch.isChecked && !superSimpleSwitch.isChecked
@@ -274,6 +280,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         hideDockLabelsSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDockLabelsHidden(this, isChecked)
+            toastSaved()
+        }
+
+        smartHotseatSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setSmartHotseatEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -402,6 +413,14 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        usageStatsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setUsageSuggestionsEnabled(this, isChecked)
+            if (isChecked && !LauncherStore.hasUsageStatsPermission(this)) {
+                Toast.makeText(this, R.string.launcher_usage_access_missing, Toast.LENGTH_LONG).show()
+            }
+            toastSaved()
+        }
+
         gnLayoutSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setGnLayoutEnabled(this, isChecked)
             applyLayoutModeState()
@@ -515,12 +534,13 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private fun bindFeedModeSpinner(current: Int) {
         val labels = listOf(
             getString(R.string.launcher_feed_mode_local),
-            getString(R.string.launcher_feed_mode_google)
+            getString(R.string.launcher_feed_mode_google),
+            getString(R.string.launcher_feed_mode_embedded)
         )
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         feedModeSpinner.adapter = adapter
-        feedModeSpinner.setSelection(current.coerceIn(0, 1), false)
+        feedModeSpinner.setSelection(current.coerceIn(0, 2), false)
         feedModeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 LauncherPrefs.setFeedMode(this@LauncherSettingsActivity, position)

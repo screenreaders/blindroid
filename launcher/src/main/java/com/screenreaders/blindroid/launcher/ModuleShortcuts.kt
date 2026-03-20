@@ -19,6 +19,10 @@ object ModuleShortcuts {
     const val ID_FACE = "face"
     const val ID_CHIME = "chime"
     const val ID_UPDATES = "updates"
+    const val ID_TILES = "tiles"
+    const val ID_SIMPLE_PHONE = "simple_phone"
+    const val ID_SIMPLE_MESSAGES = "simple_messages"
+    const val ID_BRAILLE = "braille"
 
     val all = listOf(
         ShortcutInfo(ID_LAUNCHER, R.string.launcher_shortcut_launcher, android.R.drawable.ic_menu_manage),
@@ -30,7 +34,11 @@ object ModuleShortcuts {
         ShortcutInfo(ID_NAVIGATION, R.string.launcher_shortcut_navigation, android.R.drawable.ic_menu_directions),
         ShortcutInfo(ID_FACE, R.string.launcher_shortcut_face, android.R.drawable.ic_menu_camera),
         ShortcutInfo(ID_CHIME, R.string.launcher_shortcut_chime, android.R.drawable.ic_menu_recent_history),
-        ShortcutInfo(ID_UPDATES, R.string.launcher_shortcut_updates, android.R.drawable.ic_menu_rotate)
+        ShortcutInfo(ID_UPDATES, R.string.launcher_shortcut_updates, android.R.drawable.ic_menu_rotate),
+        ShortcutInfo(ID_TILES, R.string.launcher_shortcut_tiles, android.R.drawable.ic_menu_call),
+        ShortcutInfo(ID_SIMPLE_PHONE, R.string.launcher_shortcut_simple_phone, android.R.drawable.ic_menu_call),
+        ShortcutInfo(ID_SIMPLE_MESSAGES, R.string.launcher_shortcut_simple_messages, android.R.drawable.ic_dialog_email),
+        ShortcutInfo(ID_BRAILLE, R.string.launcher_shortcut_braille, android.R.drawable.ic_menu_edit)
     )
 
     fun getInfo(id: String): ShortcutInfo? = all.firstOrNull { it.id == id }

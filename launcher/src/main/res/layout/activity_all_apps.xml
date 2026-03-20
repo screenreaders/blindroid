@@ -81,6 +81,22 @@
             android:layout_marginTop="8dp"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/usageAccessHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_usage_access_hint"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/usageAccessButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_usage_access_open"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/appsGrid"
             android:layout_width="match_parent"

@@ -1,11 +1,15 @@
 package com.screenreaders.blindroid.launcher
 
+import android.app.AppOpsManager
+import android.app.usage.UsageStatsManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import android.provider.Settings
 import java.text.Collator
 import java.util.UUID
 
@@ -297,6 +301,30 @@ object LauncherStore {
         }
     }
 
+    fun moveWidget(context: Context, widgetId: Int, delta: Int) {
+        val prefs = prefs(context)
+        val list = getWidgetIds(context).toMutableList()
+        val index = list.indexOf(widgetId)
+        if (index == -1) return
+        val newIndex = (index + delta).coerceIn(0, list.size - 1)
+        if (newIndex == index) return
+        list.removeAt(index)
+        list.add(newIndex, widgetId)
+        prefs.edit().putString(KEY_WIDGETS, list.joinToString("|")) .apply()
+    }
+
+    fun moveWidgetTo(context: Context, widgetId: Int, index: Int) {
+        val prefs = prefs(context)
+        val list = getWidgetIds(context).toMutableList()
+        val current = list.indexOf(widgetId)
+        if (current == -1) return
+        val target = index.coerceIn(0, list.size - 1)
+        if (current == target) return
+        list.removeAt(current)
+        list.add(target, widgetId)
+        prefs.edit().putString(KEY_WIDGETS, list.joinToString("|")) .apply()
+    }
+
     fun setWidgetSize(context: Context, widgetId: Int, width: Int, height: Int) {
         val prefs = prefs(context)
         prefs.edit()
@@ -333,8 +361,11 @@ object LauncherStore {
         val prefs = prefs(context)
         val now = System.currentTimeMillis()
         val bucket = currentBucket()
+        val usageEnabled = LauncherPrefs.isUsageSuggestionsEnabled(context) && hasUsageStatsPermission(context)
+        val usageStats = if (usageEnabled) queryUsageStats(context, daysBack = 14) else emptyMap()
         val scored = allApps.map { entry ->
             val componentKey = entry.component.flattenToString()
+            val pkg = entry.component.packageName
             val key = "$KEY_LAUNCH_PREFIX$componentKey"
             val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
             val bucketKey = "$KEY_LAUNCH_BUCKET_PREFIX${bucket}_$componentKey"
@@ -351,7 +382,42 @@ object LauncherStore {
                 minutes <= 1440f -> 0.6f
                 else -> 0f
             }
-            val score = count * 1.1f + bucketCount * 2.0f + recencyScore * 3.0f + recentBoost
+            val usage = usageStats[pkg]
+            val usageMinutes = (usage?.totalTime ?: 0L).toFloat() / 60_000f
+            val usageDays = (usage?.lastTime ?: 0L).let { lastUsed ->
+                if (lastUsed > 0L) (now - lastUsed).toFloat() / (24f * 60f * 60_000f) else 999_999f
+            }
+            val usageRecency = (7f - usageDays).coerceAtLeast(0f) / 7f
+            val usageScore = if (usageEnabled) {
+                (kotlin.math.ln(usageMinutes + 1f) * 1.6f) + usageRecency * 2.5f
+            } else 0f
+            val score = count * 1.1f + bucketCount * 2.0f + recencyScore * 3.0f + recentBoost + usageScore
+            entry to score
+        }
+        return scored.sortedByDescending { it.second }
+            .filter { it.second > 0f }
+            .map { it.first }
+            .take(limit)
+    }
+
+    fun getSuggestedAppsForBucket(
+        context: Context,
+        allApps: List<AppEntry>,
+        bucket: String,
+        limit: Int = 6
+    ): List<AppEntry> {
+        val prefs = prefs(context)
+        val now = System.currentTimeMillis()
+        val scored = allApps.map { entry ->
+            val componentKey = entry.component.flattenToString()
+            val bucketKey = "$KEY_LAUNCH_BUCKET_PREFIX${bucket}_$componentKey"
+            val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
+            val last = prefs.getLong(lastKey, 0L)
+            val minutes = if (last > 0L) (now - last).toFloat() / 60_000f else 999_999f
+            val days = minutes / (60f * 24f)
+            val recencyScore = (7f - days).coerceAtLeast(0f) / 7f
+            val bucketCount = prefs.getInt(bucketKey, 0)
+            val score = bucketCount * 2.0f + recencyScore
             entry to score
         }
         return scored.sortedByDescending { it.second }
@@ -369,16 +435,62 @@ object LauncherStore {
         val prefs = prefs(context)
         val now = System.currentTimeMillis()
         val cutoff = now - withinHours * 3_600_000L
+        val usageEnabled = LauncherPrefs.isUsageSuggestionsEnabled(context) && hasUsageStatsPermission(context)
+        val usageStats = if (usageEnabled) queryUsageStats(context, daysBack = 7) else emptyMap()
         val recent = allApps.mapNotNull { entry ->
             val componentKey = entry.component.flattenToString()
             val lastKey = "$KEY_LAUNCH_LAST_PREFIX$componentKey"
-            val last = prefs.getLong(lastKey, 0L)
+            val localLast = prefs.getLong(lastKey, 0L)
+            val usageLast = usageStats[entry.component.packageName]?.lastTime ?: 0L
+            val last = maxOf(localLast, usageLast)
             if (last >= cutoff) entry to last else null
         }
         return recent.sortedByDescending { it.second }
             .map { it.first }
             .distinctBy { it.component.flattenToString() }
             .take(limit)
+    }
+
+    fun hasUsageStatsPermission(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return false
+        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as? AppOpsManager ?: return false
+        val mode = appOps.checkOpNoThrow(
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            android.os.Process.myUid(),
+            context.packageName
+        )
+        return mode == AppOpsManager.MODE_ALLOWED
+    }
+
+    fun openUsageAccessSettings(context: Context) {
+        try {
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } catch (_: Exception) {
+            // Ignore
+        }
+    }
+
+    private data class UsageInfo(val totalTime: Long, val lastTime: Long)
+
+    private fun queryUsageStats(context: Context, daysBack: Int): Map<String, UsageInfo> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return emptyMap()
+        val manager = context.getSystemService(Context.USAGE_STATS_SERVICE) as? UsageStatsManager
+            ?: return emptyMap()
+        val end = System.currentTimeMillis()
+        val start = end - daysBack * 24L * 60L * 60L * 1000L
+        val stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, start, end)
+        if (stats.isNullOrEmpty()) return emptyMap()
+        val aggregated = mutableMapOf<String, UsageInfo>()
+        stats.forEach { usage ->
+            val pkg = usage.packageName ?: return@forEach
+            val existing = aggregated[pkg]
+            val total = (existing?.totalTime ?: 0L) + usage.totalTimeInForeground
+            val last = maxOf(existing?.lastTime ?: 0L, usage.lastTimeUsed)
+            aggregated[pkg] = UsageInfo(total, last)
+        }
+        return aggregated
     }
 
     private fun ensurePages(context: Context): MutableList<MutableList<String>> {

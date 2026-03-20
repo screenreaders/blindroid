@@ -12,13 +12,22 @@
     <string name="launcher_widgets_grid">Widok siatki</string>
     <string name="launcher_widget_bigger">Większy</string>
     <string name="launcher_widget_smaller">Mniejszy</string>
+    <string name="launcher_widget_move_up">Przenieś wyżej</string>
+    <string name="launcher_widget_move_down">Przenieś niżej</string>
     <string name="launcher_no_widgets">Brak widgetów</string>
     <string name="launcher_voice_button">Mowa</string>
     <string name="launcher_simple_favorites">Ulubione</string>
     <string name="launcher_suggested_apps">Sugerowane</string>
+    <string name="launcher_usage_access_hint">Włącz dostęp do statystyk użycia, aby sugestie były pełniejsze.</string>
+    <string name="launcher_usage_access_open">Otwórz ustawienia użycia</string>
+    <string name="launcher_usage_access_missing">Włącz dostęp do statystyk użycia w ustawieniach systemu.</string>
     <string name="launcher_category_all">Wszystkie</string>
     <string name="launcher_category_recent">Ostatnie</string>
     <string name="launcher_category_frequent">Często używane</string>
+    <string name="launcher_category_morning">Rano</string>
+    <string name="launcher_category_day">W ciągu dnia</string>
+    <string name="launcher_category_evening">Wieczorem</string>
+    <string name="launcher_category_night">W nocy</string>
     <string name="launcher_category_communication">Komunikacja</string>
     <string name="launcher_category_media">Multimedia</string>
     <string name="launcher_category_productivity">Produktywność</string>
@@ -79,6 +88,7 @@
     <string name="launcher_lock_requires_admin">Wymagane uprawnienie administratora urządzenia</string>
     <string name="launcher_lock_enabled">Ekran zablokowany</string>
     <string name="launcher_settings_dock">Dok</string>
+    <string name="launcher_settings_smart_hotseat">Sugestie w doku (Smart)</string>
     <string name="launcher_settings_hide_dock_labels">Ukryj etykiety w doku</string>
     <string name="launcher_settings_modes">Tryby</string>
     <string name="launcher_settings_super_simple">Tryb super-prosty (duże ikony)</string>
@@ -87,6 +97,7 @@
     <string name="launcher_settings_feed_mode">Źródło feedu</string>
     <string name="launcher_feed_mode_local">Wbudowany feed</string>
     <string name="launcher_feed_mode_google">Google (jeśli zainstalowany)</string>
+    <string name="launcher_feed_mode_embedded">Google Discover (wbudowany WebView)</string>
     <string name="launcher_settings_feed_auto_open">Automatycznie otwieraj Google Discover po przesunięciu w lewo</string>
     <string name="launcher_settings_search_bar">Pasek wyszukiwania na ekranie głównym</string>
     <string name="launcher_settings_google_search">Wyszukiwanie przez aplikację Google (jeśli dostępna)</string>
@@ -114,6 +125,7 @@
     <string name="launcher_assistant_gemini">Gemini</string>
     <string name="launcher_assistant_voice">Wyszukiwanie głosowe</string>
     <string name="launcher_settings_dock_visible">Pokaż dok</string>
+    <string name="launcher_settings_usage_suggestions">Sugestie na podstawie użycia aplikacji</string>
     <string name="launcher_settings_theme">Motyw launchera</string>
     <string name="launcher_settings_theme_light">Jasny</string>
     <string name="launcher_settings_theme_dark">Ciemny</string>
@@ -136,6 +148,9 @@
     <string name="launcher_feed_calendar_permission">Brak dostępu do kalendarza. Dotknij, aby nadać dostęp.</string>
     <string name="launcher_feed_weather_title">Pogoda</string>
     <string name="launcher_feed_weather_open">Dotknij, aby otworzyć prognozę</string>
+    <string name="launcher_feed_weather_permission">Włącz lokalizację, aby zobaczyć pogodę.</string>
+    <string name="launcher_feed_weather_location_off">Włącz lokalizację w systemie.</string>
+    <string name="launcher_feed_weather_wait">Pobieranie pogody…</string>
     <string name="launcher_feed_weather_query">pogoda</string>
     <string name="launcher_feed_reminders_title">Przypomnienia</string>
     <string name="launcher_feed_reminders_none">Brak przypomnień</string>
@@ -182,6 +197,12 @@
     <string name="launcher_feed_battery">Bateria</string>
     <string name="launcher_feed_external_hint">Po lewej stronie możesz otworzyć Google Discover jednym gestem.</string>
     <string name="launcher_feed_open_google">Otwórz Google Discover</string>
+    <string name="launcher_at_glance_label">Na pierwszy rzut oka</string>
+    <string name="launcher_at_glance_alarm">Alarm: %1$s</string>
+    <string name="launcher_at_glance_event">Wydarzenie: %1$s</string>
+    <string name="launcher_at_glance_reminder">Przypomnienie: %1$s</string>
+    <string name="launcher_at_glance_weather">Pogoda: %1$s</string>
+    <string name="launcher_at_glance_empty">Brak informacji</string>
     <string name="launcher_feed_disabled">Feed jest wyłączony</string>
     <string name="launcher_feed_google_missing">Brak aplikacji Google</string>
     <string name="launcher_shortcut_launcher">Ustawienia launchera</string>
@@ -194,6 +215,10 @@
     <string name="launcher_shortcut_face">FaceID</string>
     <string name="launcher_shortcut_chime">Zegarynka</string>
     <string name="launcher_shortcut_updates">Aktualizacje</string>
+    <string name="launcher_shortcut_tiles">Kafle kontaktów</string>
+    <string name="launcher_shortcut_simple_phone">Duży dialer</string>
+    <string name="launcher_shortcut_simple_messages">Wiadomości</string>
+    <string name="launcher_shortcut_braille">Klawiatura brajlowska</string>
     <string name="launcher_shortcut_hint">Skróty modułów ustawisz w Blindroid</string>
     <string name="launcher_shortcut_unavailable">Nie można otworzyć modułu</string>
     <string name="launcher_gemini_missing">Brak aplikacji Gemini</string>
@@ -255,4 +280,13 @@
     <string name="launcher_search_missing">Brak aplikacji wyszukiwania</string>
     <string name="launcher_removed_from_folder">Usunięto z folderu</string>
     <string name="launcher_not_in_folder">Nie znaleziono w folderze</string>
+    <string name="launcher_weather_clear">bezchmurnie</string>
+    <string name="launcher_weather_partly_cloudy">częściowe zachmurzenie</string>
+    <string name="launcher_weather_cloudy">zachmurzenie</string>
+    <string name="launcher_weather_fog">mgła</string>
+    <string name="launcher_weather_drizzle">mżawka</string>
+    <string name="launcher_weather_rain">deszcz</string>
+    <string name="launcher_weather_snow">śnieg</string>
+    <string name="launcher_weather_showers">przelotne opady</string>
+    <string name="launcher_weather_thunder">burza</string>
 </resources>
