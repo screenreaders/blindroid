@@ -172,6 +172,8 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedSuggestedAppsLimit = 0
     private var cachedGoogleAppAvailable: Boolean? = null
     private var cachedGoogleAppTs = 0L
+    private var cachedBatteryLevel = -1
+    private var cachedBatteryLevelTs = 0L
     private val appLabelCache = LruCache<String, String>(128)
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
@@ -491,6 +493,8 @@ class LauncherActivity : AppCompatActivity() {
         cachedNotificationsAccessTs = 0L
         cachedRecentNotifications = emptyList()
         cachedRecentNotificationsTs = 0L
+        cachedBatteryLevel = -1
+        cachedBatteryLevelTs = 0L
     }
 
     @Synchronized
@@ -968,7 +972,14 @@ class LauncherActivity : AppCompatActivity() {
         val time = now.format(timeFormatter)
         val date = now.format(dateFormatterLong)
         val nowMs = SystemClock.uptimeMillis()
-        val batteryLevel = getBatteryLevel()
+        val batteryLevel = run {
+            val ttlMs = 30_000L
+            if (nowMs - cachedBatteryLevelTs > ttlMs || cachedBatteryLevel < 0) {
+                cachedBatteryLevel = getBatteryLevel()
+                cachedBatteryLevelTs = nowMs
+            }
+            cachedBatteryLevel
+        }
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val feedMode = LauncherPrefs.getFeedMode(this)
         val externalAvailable = isGoogleAppAvailable()
