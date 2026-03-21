@@ -38,6 +38,7 @@ import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.Settings
 import android.view.GestureDetector
+import android.util.LruCache
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -166,7 +167,7 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedNotificationsAccessTs = 0L
     private var cachedRecentNotifications: List<String> = emptyList()
     private var cachedRecentNotificationsTs = 0L
-    private val appLabelCache = java.util.concurrent.ConcurrentHashMap<String, String>()
+    private val appLabelCache = LruCache<String, String>(128)
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -191,6 +192,7 @@ class LauncherActivity : AppCompatActivity() {
     private val calendarPermissionRequestCode = 9202
     private val bluetoothPermissionRequestCode = 9203
     private val weatherPermissionRequestCode = 9204
+    private val trimMemoryRunningLowLevel = 10
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -343,7 +345,7 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
-        if (level >= android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) {
+        if (level >= trimMemoryRunningLowLevel) {
             clearFeedCaches()
         }
     }
@@ -366,7 +368,7 @@ class LauncherActivity : AppCompatActivity() {
                 allApps = apps
                 cachedTopApps = emptyList()
                 cachedTopAppsTs = 0L
-                appLabelCache.clear()
+                appLabelCache.evictAll()
                 scheduleHomeRefresh(force = true, applyUi = true)
             }
         }
@@ -1729,8 +1731,10 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun resolveAppLabel(packageName: String): String? {
-        val cached = appLabelCache[packageName]
-        if (cached != null) return cached
+        synchronized(appLabelCache) {
+            val cached = appLabelCache.get(packageName)
+            if (cached != null) return cached
+        }
         val label = try {
             val info = packageManager.getApplicationInfo(packageName, 0)
             packageManager.getApplicationLabel(info)?.toString()
@@ -1738,7 +1742,9 @@ class LauncherActivity : AppCompatActivity() {
             null
         }
         if (!label.isNullOrBlank()) {
-            appLabelCache[packageName] = label
+            synchronized(appLabelCache) {
+                appLabelCache.put(packageName, label)
+            }
         }
         return label
     }
