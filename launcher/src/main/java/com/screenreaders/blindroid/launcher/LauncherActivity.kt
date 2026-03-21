@@ -338,8 +338,7 @@ class LauncherActivity : AppCompatActivity() {
             return
         }
         scheduleHomeRefresh(force = true, applyUi = true)
-        startFeedTicker()
-        registerTimeReceiver()
+        updateFeedTickers()
     }
 
     override fun onPause() {
@@ -511,6 +510,16 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun shouldRunFeedTicker(): Boolean {
         return LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
+    }
+
+    private fun updateFeedTickers() {
+        if (shouldRunFeedTicker()) {
+            startFeedTicker()
+            registerTimeReceiver()
+        } else {
+            stopFeedTicker()
+            unregisterTimeReceiver()
+        }
     }
 
     private fun startFeedTicker() {
@@ -925,10 +934,8 @@ class LauncherActivity : AppCompatActivity() {
         val enabled = !LauncherPrefs.isFeedEnabled(this)
         LauncherPrefs.setFeedEnabled(this, enabled)
         applyUiConfig()
-        if (enabled) {
-            startFeedTicker()
-        } else {
-            stopFeedTicker()
+        updateFeedTickers()
+        if (!enabled) {
             clearFeedCaches()
         }
         val feedOffset = if (enabled && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
@@ -948,11 +955,7 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.setDockVisible(this, false)
         }
         scheduleHomeRefresh(force = true, applyUi = true)
-        if (enabled) {
-            stopFeedTicker()
-        } else {
-            startFeedTicker()
-        }
+        updateFeedTickers()
         Toast.makeText(
             this,
             if (enabled) R.string.launcher_super_simple_on else R.string.launcher_super_simple_off,
