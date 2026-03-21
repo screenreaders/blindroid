@@ -122,6 +122,7 @@ class HomePagerAdapter(
     }
 
     fun updateFeedData(data: FeedData?) {
+        if (feedData == data) return
         feedData = data
         if (hasFeed) {
             notifyItemChanged(0)

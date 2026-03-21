@@ -459,7 +459,9 @@ class LauncherActivity : AppCompatActivity() {
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
         if (!feedEnabled) return
-        feedData = buildFeedData()
+        val newData = buildFeedData()
+        if (feedData == newData) return
+        feedData = newData
         homeAdapter.updateFeedData(feedData)
     }
 
@@ -940,18 +942,20 @@ class LauncherActivity : AppCompatActivity() {
         val nowMs = SystemClock.uptimeMillis()
         val batteryLevel = getBatteryLevel()
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
-        val notifications = getRecentNotifications()
         val feedMode = LauncherPrefs.getFeedMode(this)
         val externalAvailable = isGoogleAppAvailable()
         val wantsGoogle = feedMode == LauncherPrefs.FEED_MODE_GOOGLE
         val externalMode = wantsGoogle && externalAvailable
         val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED || (wantsGoogle && !externalAvailable)
+        val notifications = if (externalMode || embeddedMode) emptyList() else getRecentNotifications()
         val quickActionsEnabled = LauncherPrefs.isFeedQuickActionsEnabled(this)
         val wifiEnabled = isWifiEnabled()
         val bluetoothEnabled = isBluetoothEnabled()
         val dndEnabled = isDndEnabled()
         val dndPolicyGranted = isDndPolicyGranted()
-        val notificationsAccessGranted = run {
+        val notificationsAccessGranted = if (externalMode || embeddedMode) {
+            true
+        } else {
             val ttlMs = 10_000L
             val cached = cachedNotificationsAccessGranted
             if (cached != null && nowMs - cachedNotificationsAccessTs <= ttlMs) {
@@ -967,25 +971,26 @@ class LauncherActivity : AppCompatActivity() {
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
-        val showBattery = LauncherPrefs.isNowBatteryEnabled(this)
+        val showNowCards = !(externalMode || embeddedMode)
+        val showBattery = showNowCards && LauncherPrefs.isNowBatteryEnabled(this)
         val showReminders = LauncherPrefs.isNowRemindersEnabled(this)
-        val showHeadphones = LauncherPrefs.isNowHeadphonesEnabled(this)
-        val showLocation = LauncherPrefs.isNowLocationEnabled(this)
-        val showNetwork = LauncherPrefs.isNowNetworkEnabled(this)
-        val showStorage = LauncherPrefs.isNowStorageEnabled(this)
-        val showScreenTime = LauncherPrefs.isNowScreenTimeEnabled(this)
-        val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
-        val showAirplane = LauncherPrefs.isNowAirplaneEnabled(this)
-        val showRam = LauncherPrefs.isNowRamEnabled(this)
-        val showDevice = LauncherPrefs.isNowDeviceEnabled(this)
-        val showRotation = LauncherPrefs.isNowRotationEnabled(this)
-        val showNfc = LauncherPrefs.isNowNfcEnabled(this)
-        val showDnd = LauncherPrefs.isNowDndEnabled(this)
-        val showRinger = LauncherPrefs.isNowRingerEnabled(this)
-        val showBluetooth = LauncherPrefs.isNowBluetoothEnabled(this)
-        val showBrightness = LauncherPrefs.isNowBrightnessEnabled(this)
-        val showVolume = LauncherPrefs.isNowVolumeEnabled(this)
-        val showPower = LauncherPrefs.isNowPowerEnabled(this)
+        val showHeadphones = showNowCards && LauncherPrefs.isNowHeadphonesEnabled(this)
+        val showLocation = showNowCards && LauncherPrefs.isNowLocationEnabled(this)
+        val showNetwork = showNowCards && LauncherPrefs.isNowNetworkEnabled(this)
+        val showStorage = showNowCards && LauncherPrefs.isNowStorageEnabled(this)
+        val showScreenTime = showNowCards && LauncherPrefs.isNowScreenTimeEnabled(this)
+        val showTopApps = showNowCards && LauncherPrefs.isNowTopAppsEnabled(this)
+        val showAirplane = showNowCards && LauncherPrefs.isNowAirplaneEnabled(this)
+        val showRam = showNowCards && LauncherPrefs.isNowRamEnabled(this)
+        val showDevice = showNowCards && LauncherPrefs.isNowDeviceEnabled(this)
+        val showRotation = showNowCards && LauncherPrefs.isNowRotationEnabled(this)
+        val showNfc = showNowCards && LauncherPrefs.isNowNfcEnabled(this)
+        val showDnd = showNowCards && LauncherPrefs.isNowDndEnabled(this)
+        val showRinger = showNowCards && LauncherPrefs.isNowRingerEnabled(this)
+        val showBluetooth = showNowCards && LauncherPrefs.isNowBluetoothEnabled(this)
+        val showBrightness = showNowCards && LauncherPrefs.isNowBrightnessEnabled(this)
+        val showVolume = showNowCards && LauncherPrefs.isNowVolumeEnabled(this)
+        val showPower = showNowCards && LauncherPrefs.isNowPowerEnabled(this)
         val calendarPermissionGranted = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.READ_CALENDAR
