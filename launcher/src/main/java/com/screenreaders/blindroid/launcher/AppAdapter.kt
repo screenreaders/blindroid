@@ -24,13 +24,14 @@ class AppAdapter(
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
         val item = items[position]
-        holder.label.text = item.label
+        holder.label.text = formatLabel(holder.itemView.context, item.label)
         holder.icon.setImageDrawable(item.icon)
         holder.icon.contentDescription = item.label
         applySizing(holder)
         holder.label.visibility = if (config.showLabels) View.VISIBLE else View.GONE
-        applyTheme(holder)
+        applyTheme(holder, position)
         applyIconStyle(holder)
+        applyIconTint(holder)
         holder.itemView.setOnClickListener { onClick(item) }
         holder.itemView.setOnLongClickListener {
             if (onLongClickView != null) {
@@ -69,9 +70,15 @@ class AppAdapter(
         }
     }
 
-    private fun applyTheme(holder: AppViewHolder) {
+    private fun applyTheme(holder: AppViewHolder, position: Int) {
         val colors = LauncherPrefs.getThemeColors(holder.itemView.context)
         holder.label.setTextColor(colors.text)
+        val context = holder.itemView.context
+        if (LauncherPrefs.isLabelBackgroundEnabled(context)) {
+            ThemeUtils.applyLabelPill(holder.label, colors, position % 2 == 1)
+        } else {
+            ThemeUtils.clearLabelBackground(holder.label)
+        }
     }
 
     private fun applyIconStyle(holder: AppViewHolder) {
@@ -83,6 +90,43 @@ class AppAdapter(
         } else {
             holder.icon.background = null
             holder.icon.setPadding(0, 0, 0, 0)
+        }
+    }
+
+    private fun applyIconTint(holder: AppViewHolder) {
+        val context = holder.itemView.context
+        when (LauncherPrefs.getIconTint(context)) {
+            1 -> {
+                val matrix = android.graphics.ColorMatrix().apply { setSaturation(0f) }
+                holder.icon.colorFilter = android.graphics.ColorMatrixColorFilter(matrix)
+            }
+            2 -> {
+                val matrix = android.graphics.ColorMatrix().apply {
+                    setSaturation(0f)
+                    val contrast = 1.4f
+                    val scale = contrast
+                    val translate = (-0.5f * scale + 0.5f) * 255f
+                    postConcat(
+                        android.graphics.ColorMatrix(
+                            floatArrayOf(
+                                scale, 0f, 0f, 0f, translate,
+                                0f, scale, 0f, 0f, translate,
+                                0f, 0f, scale, 0f, translate,
+                                0f, 0f, 0f, 1f, 0f
+                            )
+                        )
+                    )
+                }
+                holder.icon.colorFilter = android.graphics.ColorMatrixColorFilter(matrix)
+            }
+            else -> holder.icon.colorFilter = null
+        }
+    }
+
+    private fun formatLabel(context: android.content.Context, label: String): String {
+        return when (LauncherPrefs.getLabelStyle(context)) {
+            1 -> label.uppercase(java.util.Locale("pl", "PL"))
+            else -> label
         }
     }
 

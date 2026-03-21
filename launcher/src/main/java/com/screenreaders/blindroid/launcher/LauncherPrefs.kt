@@ -12,6 +12,7 @@ object LauncherPrefs {
     private const val KEY_LABEL_SIZE_SP = "label_size_sp"
     private const val KEY_DOUBLE_TAP_LOCK = "double_tap_lock"
     private const val KEY_HOME_EDIT_LOCK = "home_edit_lock"
+    private const val KEY_HIDE_HOME_LABELS = "hide_home_labels"
     private const val KEY_HIDE_DOCK_LABELS = "hide_dock_labels"
     private const val KEY_SUPER_SIMPLE = "super_simple_mode"
     private const val KEY_SUPER_SIMPLE_COLUMNS = "super_simple_columns"
@@ -23,15 +24,45 @@ object LauncherPrefs {
     private const val KEY_FEED_ENABLED = "feed_enabled"
     private const val KEY_FEED_MODE = "feed_mode"
     private const val KEY_FEED_AUTO_OPEN = "feed_auto_open"
+    private const val KEY_FEED_QUICK_ACTIONS = "feed_quick_actions"
     private const val KEY_USAGE_SUGGESTIONS = "usage_suggestions"
     private const val KEY_THEME = "launcher_theme"
     private const val KEY_INVERT_COLORS = "invert_colors"
     private const val KEY_ICON_STYLE = "icon_style"
+    private const val KEY_ICON_TINT = "icon_tint"
+    private const val KEY_LABEL_STYLE = "label_style"
+    private const val KEY_LABEL_BACKGROUND = "label_background"
+    private const val KEY_THEME_PRESET = "theme_preset"
+    private const val KEY_THEME_OVERRIDE = "theme_override"
+    const val KEY_THEME_BG = "theme_bg"
+    const val KEY_THEME_TEXT = "theme_text"
+    const val KEY_THEME_MUTED = "theme_muted"
+    const val KEY_THEME_ACCENT = "theme_accent"
+    const val KEY_THEME_ACCENT2 = "theme_accent2"
     private const val KEY_SEARCH_BAR = "search_bar"
     private const val KEY_GOOGLE_SEARCH = "google_search"
     private const val KEY_GOOGLE_VOICE = "google_voice"
     private const val KEY_APP_SORT = "app_sort"
+    private const val KEY_SUGGESTION_MODE = "suggestion_mode"
+    private const val KEY_SORT_DESC = "sort_desc"
     private const val KEY_SHOW_SYSTEM_APPS = "show_system_apps"
+    private const val KEY_SHOW_ALL_APPS_LABELS = "show_all_apps_labels"
+    private const val KEY_SHOW_FAVORITES_SECTION = "show_favorites_section"
+    private const val KEY_SHOW_SUGGESTED_SECTION = "show_suggested_section"
+    private const val KEY_SHOW_SUGGESTED_NOW_SECTION = "show_suggested_now_section"
+    private const val KEY_SHOW_RECENT_SECTION = "show_recent_section"
+    private const val KEY_SHOW_CATEGORIES_ROW = "show_categories_row"
+    private const val KEY_SHOW_SCROLL_BUTTONS = "show_scroll_buttons"
+    private const val KEY_SHOW_VOICE_SEARCH = "show_voice_search"
+    private const val KEY_SHOW_RESULTS_COUNT = "show_results_count"
+    private const val KEY_SHOW_PAGE_INDICATOR = "show_page_indicator"
+    private const val KEY_DEFAULT_HOME_PAGE = "default_home_page"
+    private const val KEY_ALL_APPS_COLUMNS = "all_apps_columns"
+    private const val KEY_ALL_APPS_DEFAULT_TAB = "all_apps_default_tab"
+    private const val KEY_SUGGESTED_COUNT = "suggested_count"
+    private const val KEY_SUGGESTED_NOW_COUNT = "suggested_now_count"
+    private const val KEY_RECENT_COUNT = "recent_count"
+    private const val KEY_FAVORITES_COUNT = "favorites_count"
     private const val KEY_PAGE_COUNT = "page_count"
     private const val KEY_NOW_ALARM = "now_alarm"
     private const val KEY_NOW_CALENDAR = "now_calendar"
@@ -46,6 +77,9 @@ object LauncherPrefs {
     private const val KEY_NOW_TOP_APPS = "now_top_apps"
     private const val KEY_NOW_AIRPLANE = "now_airplane"
     private const val KEY_NOW_RAM = "now_ram"
+    private const val KEY_NOW_DEVICE = "now_device"
+    private const val KEY_NOW_ROTATION = "now_rotation"
+    private const val KEY_NOW_NFC = "now_nfc"
     private const val KEY_NOW_DND = "now_dnd"
     private const val KEY_NOW_RINGER = "now_ringer"
     private const val KEY_NOW_BLUETOOTH = "now_bluetooth"
@@ -60,6 +94,12 @@ object LauncherPrefs {
     private const val KEY_GN_LAYOUT = "gn_layout"
     private const val KEY_WALLPAPER_PARALLAX = "wallpaper_parallax"
     private const val KEY_PAGE_ANIMATION = "page_animation"
+    private const val KEY_PAGE_ANIM_INTENSITY = "page_anim_intensity"
+    private const val KEY_WIDGET_SNAP = "widget_snap"
+    private const val KEY_WIDGET_STEP = "widget_step"
+    private const val KEY_WIDGET_SHOW_SIZE = "widget_show_size"
+    private const val KEY_ICON_PACK_ENABLED = "icon_pack_enabled"
+    private const val KEY_ICON_PACK_URI = "icon_pack_uri"
     private const val KEY_ASSISTANT_MODE = "assistant_mode"
     private const val KEY_GESTURE_TWO_TAP = "gesture_two_tap"
     private const val KEY_GESTURE_TWO_UP = "gesture_two_up"
@@ -85,6 +125,23 @@ object LauncherPrefs {
 
     private const val ICON_STYLE_NONE = 0
     private const val ICON_STYLE_CIRCLE = 1
+
+    private const val ICON_TINT_NONE = 0
+    private const val ICON_TINT_GRAYSCALE = 1
+    private const val ICON_TINT_CONTRAST = 2
+
+    private const val LABEL_STYLE_NORMAL = 0
+    private const val LABEL_STYLE_UPPER = 1
+
+    private const val THEME_PRESET_DEFAULT = 0
+    private const val THEME_PRESET_CONTRAST = 1
+    private const val THEME_PRESET_SOFT = 2
+    private const val THEME_PRESET_SOLAR = 3
+
+    const val CATEGORY_RANK_COUNT = 0
+    const val CATEGORY_RANK_USAGE = 1
+    const val CATEGORY_RANK_ALPHA = 2
+    private const val KEY_CATEGORY_RANKING = "category_ranking"
 
     const val ACTION_NONE = 0
     const val ACTION_TOGGLE_DOCK = 1
@@ -118,12 +175,21 @@ object LauncherPrefs {
     const val PAGE_ANIM_CAROUSEL = 1
     const val PAGE_ANIM_DEPTH = 2
     const val PAGE_ANIM_STACK = 3
+    const val PAGE_ANIM_ZOOM = 4
+    const val PAGE_ANIM_FLIP = 5
+    const val PAGE_ANIM_CUBE = 6
+    const val PAGE_ANIM_PARALLAX = 7
 
     const val SORT_ALPHA = 0
     const val SORT_RECENT = 1
     const val SORT_USAGE = 2
     const val SORT_INSTALL_NEWEST = 3
     const val SORT_UPDATE_NEWEST = 4
+
+    const val SUGGESTION_BALANCED = 0
+    const val SUGGESTION_RECENT = 1
+    const val SUGGESTION_FREQUENT = 2
+    const val SUGGESTION_TIME = 3
 
     fun getColumns(context: Context): Int =
         prefs(context).getInt(KEY_COLUMNS, 4).coerceIn(3, 6)
@@ -158,6 +224,13 @@ object LauncherPrefs {
 
     fun setDoubleTapLockEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_DOUBLE_TAP_LOCK, enabled).apply()
+    }
+
+    fun isHomeLabelsHidden(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_HIDE_HOME_LABELS, false)
+
+    fun setHomeLabelsHidden(context: Context, hidden: Boolean) {
+        prefs(context).edit().putBoolean(KEY_HIDE_HOME_LABELS, hidden).apply()
     }
 
     fun isHomeEditLocked(context: Context): Boolean =
@@ -244,6 +317,13 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_FEED_AUTO_OPEN, enabled).apply()
     }
 
+    fun isFeedQuickActionsEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FEED_QUICK_ACTIONS, true)
+
+    fun setFeedQuickActionsEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_FEED_QUICK_ACTIONS, enabled).apply()
+    }
+
     fun isUsageSuggestionsEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_USAGE_SUGGESTIONS, true)
 
@@ -272,6 +352,27 @@ object LauncherPrefs {
         prefs(context).edit().putInt(KEY_ICON_STYLE, style.coerceIn(ICON_STYLE_NONE, ICON_STYLE_CIRCLE)).apply()
     }
 
+    fun getIconTint(context: Context): Int =
+        prefs(context).getInt(KEY_ICON_TINT, ICON_TINT_NONE).coerceIn(ICON_TINT_NONE, ICON_TINT_CONTRAST)
+
+    fun setIconTint(context: Context, mode: Int) {
+        prefs(context).edit().putInt(KEY_ICON_TINT, mode.coerceIn(ICON_TINT_NONE, ICON_TINT_CONTRAST)).apply()
+    }
+
+    fun getLabelStyle(context: Context): Int =
+        prefs(context).getInt(KEY_LABEL_STYLE, LABEL_STYLE_NORMAL).coerceIn(LABEL_STYLE_NORMAL, LABEL_STYLE_UPPER)
+
+    fun setLabelStyle(context: Context, style: Int) {
+        prefs(context).edit().putInt(KEY_LABEL_STYLE, style.coerceIn(LABEL_STYLE_NORMAL, LABEL_STYLE_UPPER)).apply()
+    }
+
+    fun isLabelBackgroundEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_LABEL_BACKGROUND, false)
+
+    fun setLabelBackgroundEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_LABEL_BACKGROUND, enabled).apply()
+    }
+
     fun isSearchBarEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_SEARCH_BAR, true)
 
@@ -286,11 +387,147 @@ object LauncherPrefs {
         prefs(context).edit().putInt(KEY_APP_SORT, mode.coerceIn(SORT_ALPHA, SORT_UPDATE_NEWEST)).apply()
     }
 
+    fun getSuggestionMode(context: Context): Int =
+        prefs(context).getInt(KEY_SUGGESTION_MODE, SUGGESTION_BALANCED)
+            .coerceIn(SUGGESTION_BALANCED, SUGGESTION_TIME)
+
+    fun setSuggestionMode(context: Context, mode: Int) {
+        prefs(context).edit()
+            .putInt(KEY_SUGGESTION_MODE, mode.coerceIn(SUGGESTION_BALANCED, SUGGESTION_TIME))
+            .apply()
+    }
+
+    fun isSortDescending(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SORT_DESC, false)
+
+    fun setSortDescending(context: Context, desc: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SORT_DESC, desc).apply()
+    }
+
     fun isShowSystemApps(context: Context): Boolean =
         prefs(context).getBoolean(KEY_SHOW_SYSTEM_APPS, true)
 
     fun setShowSystemApps(context: Context, show: Boolean) {
         prefs(context).edit().putBoolean(KEY_SHOW_SYSTEM_APPS, show).apply()
+    }
+
+    fun isAllAppsLabelsShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_ALL_APPS_LABELS, true)
+
+    fun setAllAppsLabelsShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_ALL_APPS_LABELS, show).apply()
+    }
+
+    fun isFavoritesSectionShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_FAVORITES_SECTION, true)
+
+    fun setFavoritesSectionShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_FAVORITES_SECTION, show).apply()
+    }
+
+    fun isSuggestedSectionShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_SUGGESTED_SECTION, true)
+
+    fun setSuggestedSectionShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_SUGGESTED_SECTION, show).apply()
+    }
+
+    fun isSuggestedNowSectionShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_SUGGESTED_NOW_SECTION, true)
+
+    fun setSuggestedNowSectionShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_SUGGESTED_NOW_SECTION, show).apply()
+    }
+
+    fun isRecentSectionShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_RECENT_SECTION, true)
+
+    fun setRecentSectionShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_RECENT_SECTION, show).apply()
+    }
+
+    fun isCategoriesRowShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_CATEGORIES_ROW, true)
+
+    fun setCategoriesRowShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_CATEGORIES_ROW, show).apply()
+    }
+
+    fun isScrollButtonsShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_SCROLL_BUTTONS, true)
+
+    fun setScrollButtonsShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_SCROLL_BUTTONS, show).apply()
+    }
+
+    fun isVoiceSearchShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_VOICE_SEARCH, true)
+
+    fun setVoiceSearchShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_VOICE_SEARCH, show).apply()
+    }
+
+    fun isResultsCountShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_RESULTS_COUNT, true)
+
+    fun setResultsCountShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_RESULTS_COUNT, show).apply()
+    }
+
+    fun isPageIndicatorShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_PAGE_INDICATOR, true)
+
+    fun setPageIndicatorShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_PAGE_INDICATOR, show).apply()
+    }
+
+    fun getDefaultHomePage(context: Context): Int =
+        prefs(context).getInt(KEY_DEFAULT_HOME_PAGE, 1).coerceIn(1, 5)
+
+    fun setDefaultHomePage(context: Context, page: Int) {
+        prefs(context).edit().putInt(KEY_DEFAULT_HOME_PAGE, page.coerceIn(1, 5)).apply()
+    }
+
+    fun getAllAppsColumns(context: Context): Int =
+        prefs(context).getInt(KEY_ALL_APPS_COLUMNS, 0).coerceIn(0, 6)
+
+    fun setAllAppsColumns(context: Context, columns: Int) {
+        prefs(context).edit().putInt(KEY_ALL_APPS_COLUMNS, columns.coerceIn(0, 6)).apply()
+    }
+
+    fun getAllAppsDefaultTab(context: Context): Int =
+        prefs(context).getInt(KEY_ALL_APPS_DEFAULT_TAB, 0).coerceIn(0, 1)
+
+    fun setAllAppsDefaultTab(context: Context, tab: Int) {
+        prefs(context).edit().putInt(KEY_ALL_APPS_DEFAULT_TAB, tab.coerceIn(0, 1)).apply()
+    }
+
+    fun getSuggestedCount(context: Context): Int =
+        prefs(context).getInt(KEY_SUGGESTED_COUNT, 4).coerceIn(0, 24)
+
+    fun setSuggestedCount(context: Context, count: Int) {
+        prefs(context).edit().putInt(KEY_SUGGESTED_COUNT, count.coerceIn(0, 24)).apply()
+    }
+
+    fun getSuggestedNowCount(context: Context): Int =
+        prefs(context).getInt(KEY_SUGGESTED_NOW_COUNT, 4).coerceIn(0, 24)
+
+    fun setSuggestedNowCount(context: Context, count: Int) {
+        prefs(context).edit().putInt(KEY_SUGGESTED_NOW_COUNT, count.coerceIn(0, 24)).apply()
+    }
+
+    fun getRecentCount(context: Context): Int =
+        prefs(context).getInt(KEY_RECENT_COUNT, 8).coerceIn(0, 48)
+
+    fun setRecentCount(context: Context, count: Int) {
+        prefs(context).edit().putInt(KEY_RECENT_COUNT, count.coerceIn(0, 48)).apply()
+    }
+
+    fun getFavoritesCount(context: Context): Int =
+        prefs(context).getInt(KEY_FAVORITES_COUNT, 0).coerceIn(0, 48)
+
+    fun setFavoritesCount(context: Context, count: Int) {
+        prefs(context).edit().putInt(KEY_FAVORITES_COUNT, count.coerceIn(0, 48)).apply()
     }
 
     fun getPageCount(context: Context): Int =
@@ -405,6 +642,27 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_NOW_RAM, enabled).apply()
     }
 
+    fun isNowDeviceEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_DEVICE, true)
+
+    fun setNowDeviceEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_DEVICE, enabled).apply()
+    }
+
+    fun isNowRotationEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_ROTATION, true)
+
+    fun setNowRotationEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_ROTATION, enabled).apply()
+    }
+
+    fun isNowNfcEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOW_NFC, true)
+
+    fun setNowNfcEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOW_NFC, enabled).apply()
+    }
+
     fun isNowDndEnabled(context: Context): Boolean =
         prefs(context).getBoolean(KEY_NOW_DND, true)
 
@@ -504,11 +762,67 @@ object LauncherPrefs {
     }
 
     fun getPageAnimation(context: Context): Int =
-        prefs(context).getInt(KEY_PAGE_ANIMATION, PAGE_ANIM_DEFAULT).coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_STACK)
+        prefs(context).getInt(KEY_PAGE_ANIMATION, PAGE_ANIM_DEFAULT).coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_PARALLAX)
 
     fun setPageAnimation(context: Context, mode: Int) {
         prefs(context).edit()
-            .putInt(KEY_PAGE_ANIMATION, mode.coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_STACK))
+            .putInt(KEY_PAGE_ANIMATION, mode.coerceIn(PAGE_ANIM_DEFAULT, PAGE_ANIM_PARALLAX))
+            .apply()
+    }
+
+    fun getPageAnimationIntensity(context: Context): Int =
+        prefs(context).getInt(KEY_PAGE_ANIM_INTENSITY, 70).coerceIn(0, 100)
+
+    fun setPageAnimationIntensity(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_PAGE_ANIM_INTENSITY, value.coerceIn(0, 100)).apply()
+    }
+
+    fun isWidgetSnapEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_WIDGET_SNAP, true)
+
+    fun setWidgetSnapEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_WIDGET_SNAP, enabled).apply()
+    }
+
+    fun getWidgetResizeStepDp(context: Context): Int =
+        prefs(context).getInt(KEY_WIDGET_STEP, 20).coerceIn(8, 80)
+
+    fun setWidgetResizeStepDp(context: Context, step: Int) {
+        prefs(context).edit().putInt(KEY_WIDGET_STEP, step.coerceIn(8, 80)).apply()
+    }
+
+    fun isWidgetSizeShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_WIDGET_SHOW_SIZE, true)
+
+    fun setWidgetSizeShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_WIDGET_SHOW_SIZE, show).apply()
+    }
+
+    fun isIconPackEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_ICON_PACK_ENABLED, false)
+
+    fun setIconPackEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_ICON_PACK_ENABLED, enabled).apply()
+    }
+
+    fun getIconPackUri(context: Context): String? =
+        prefs(context).getString(KEY_ICON_PACK_URI, null)
+
+    fun setIconPackUri(context: Context, uri: String?) {
+        if (uri.isNullOrBlank()) {
+            prefs(context).edit().remove(KEY_ICON_PACK_URI).apply()
+        } else {
+            prefs(context).edit().putString(KEY_ICON_PACK_URI, uri).apply()
+        }
+    }
+
+    fun getCategoryRanking(context: Context): Int =
+        prefs(context).getInt(KEY_CATEGORY_RANKING, CATEGORY_RANK_COUNT)
+            .coerceIn(CATEGORY_RANK_COUNT, CATEGORY_RANK_ALPHA)
+
+    fun setCategoryRanking(context: Context, mode: Int) {
+        prefs(context).edit()
+            .putInt(KEY_CATEGORY_RANKING, mode.coerceIn(CATEGORY_RANK_COUNT, CATEGORY_RANK_ALPHA))
             .apply()
     }
 
@@ -614,13 +928,14 @@ object LauncherPrefs {
             gnLayout -> 12f
             else -> getLabelSizeSp(context)
         }
+        val showLabels = if (superSimple) true else !isHomeLabelsHidden(context)
         return LauncherUiConfig(
             columns = columns,
             rows = rows,
             iconSizePx = iconPx,
             labelSizeSp = labelSize,
             itemHeightPx = itemHeightPx,
-            showLabels = true
+            showLabels = showLabels
         )
     }
 
@@ -649,22 +964,112 @@ object LauncherPrefs {
         )
     }
 
-    data class ThemeColors(val background: Int, val text: Int, val muted: Int)
+    data class ThemeColors(val background: Int, val text: Int, val muted: Int, val accent: Int, val accentAlt: Int)
 
     fun getThemeColors(context: Context): ThemeColors {
+        val preset = getThemePreset(context)
         val base = when (getTheme(context)) {
-            THEME_DARK -> ThemeColors(0xFF202124.toInt(), 0xFFECEFF1.toInt(), 0xFFB0BEC5.toInt())
-            THEME_BLACK -> ThemeColors(0xFF000000.toInt(), 0xFFFFFFFF.toInt(), 0xFFB0BEC5.toInt())
-            THEME_BLUE -> ThemeColors(0xFFE3F2FD.toInt(), 0xFF0D47A1.toInt(), 0xFF1E88E5.toInt())
-            THEME_HIGH_CONTRAST -> ThemeColors(0xFFFFFFFF.toInt(), 0xFF000000.toInt(), 0xFF424242.toInt())
-            THEME_YELLOW -> ThemeColors(0xFF000000.toInt(), 0xFFFFEB3B.toInt(), 0xFFFFF59D.toInt())
-            else -> ThemeColors(0xFFF5F5F5.toInt(), 0xFF1F1F1F.toInt(), 0xFF616161.toInt())
+            THEME_DARK -> ThemeColors(
+                0xFF202124.toInt(), 0xFFECEFF1.toInt(), 0xFFB0BEC5.toInt(),
+                0xFF64B5F6.toInt(), 0xFF81C784.toInt()
+            )
+            THEME_BLACK -> ThemeColors(
+                0xFF000000.toInt(), 0xFFFFFFFF.toInt(), 0xFFB0BEC5.toInt(),
+                0xFF64B5F6.toInt(), 0xFFFFB74D.toInt()
+            )
+            THEME_BLUE -> ThemeColors(
+                0xFFE3F2FD.toInt(), 0xFF0D47A1.toInt(), 0xFF1E88E5.toInt(),
+                0xFF1565C0.toInt(), 0xFF43A047.toInt()
+            )
+            THEME_HIGH_CONTRAST -> ThemeColors(
+                0xFFFFFFFF.toInt(), 0xFF000000.toInt(), 0xFF424242.toInt(),
+                0xFF000000.toInt(), 0xFF1A237E.toInt()
+            )
+            THEME_YELLOW -> ThemeColors(
+                0xFF000000.toInt(), 0xFFFFEB3B.toInt(), 0xFFFFF59D.toInt(),
+                0xFFFFEB3B.toInt(), 0xFFFFC107.toInt()
+            )
+            else -> ThemeColors(
+                0xFFF5F5F5.toInt(), 0xFF1F1F1F.toInt(), 0xFF616161.toInt(),
+                0xFF1976D2.toInt(), 0xFF388E3C.toInt()
+            )
+        }
+        val presetAdjusted = when (preset) {
+            THEME_PRESET_CONTRAST -> base.copy(
+                background = base.background,
+                text = base.text,
+                muted = blendColor(base.muted, base.text, 0.4f),
+                accent = base.text,
+                accentAlt = base.accentAlt
+            )
+            THEME_PRESET_SOFT -> base.copy(
+                background = blendColor(base.background, 0xFFFFFFFF.toInt(), 0.2f),
+                muted = blendColor(base.muted, base.background, 0.2f),
+                accent = blendColor(base.accent, base.background, 0.2f),
+                accentAlt = blendColor(base.accentAlt, base.background, 0.2f)
+            )
+            THEME_PRESET_SOLAR -> base.copy(
+                background = 0xFFFDF6E3.toInt(),
+                text = 0xFF073642.toInt(),
+                muted = 0xFF586E75.toInt(),
+                accent = 0xFF268BD2.toInt(),
+                accentAlt = 0xFF2AA198.toInt()
+            )
+            else -> base
+        }
+        val override = if (isThemeOverrideEnabled(context)) {
+            ThemeColors(
+                getThemeColor(context, KEY_THEME_BG, presetAdjusted.background),
+                getThemeColor(context, KEY_THEME_TEXT, presetAdjusted.text),
+                getThemeColor(context, KEY_THEME_MUTED, presetAdjusted.muted),
+                getThemeColor(context, KEY_THEME_ACCENT, presetAdjusted.accent),
+                getThemeColor(context, KEY_THEME_ACCENT2, presetAdjusted.accentAlt)
+            )
+        } else {
+            presetAdjusted
         }
         return if (isInvertColorsEnabled(context)) {
-            ThemeColors(base.text, base.background, base.muted)
+            ThemeColors(override.text, override.background, override.muted, override.accent, override.accentAlt)
         } else {
-            base
+            override
         }
+    }
+
+    fun getThemePreset(context: Context): Int =
+        prefs(context).getInt(KEY_THEME_PRESET, THEME_PRESET_DEFAULT)
+            .coerceIn(THEME_PRESET_DEFAULT, THEME_PRESET_SOLAR)
+
+    fun setThemePreset(context: Context, preset: Int) {
+        prefs(context).edit()
+            .putInt(KEY_THEME_PRESET, preset.coerceIn(THEME_PRESET_DEFAULT, THEME_PRESET_SOLAR))
+            .apply()
+    }
+
+    fun isThemeOverrideEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_THEME_OVERRIDE, false)
+
+    fun setThemeOverrideEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_THEME_OVERRIDE, enabled).apply()
+    }
+
+    fun setThemeColor(context: Context, key: String, color: Int) {
+        prefs(context).edit().putInt(key, color).apply()
+    }
+
+    fun getThemeColor(context: Context, key: String, fallback: Int): Int {
+        return prefs(context).getInt(key, fallback)
+    }
+
+    fun getThemeColorHex(context: Context, key: String, fallback: Int): String {
+        val color = getThemeColor(context, key, fallback)
+        return String.format("#%06X", 0xFFFFFF and color)
+    }
+
+    fun setThemeColorHex(context: Context, key: String, hex: String) {
+        val cleaned = hex.trim().removePrefix("#")
+        if (cleaned.length != 6) return
+        val value = cleaned.toIntOrNull(16) ?: return
+        setThemeColor(context, key, (0xFF shl 24) or value)
     }
 
     private fun prefs(context: Context) =
@@ -676,5 +1081,13 @@ object LauncherPrefs {
 
     private fun setGestureAction(context: Context, key: String, action: Int) {
         prefs(context).edit().putInt(key, action).apply()
+    }
+
+    private fun blendColor(from: Int, to: Int, ratio: Float): Int {
+        val inverse = 1f - ratio
+        val r = ((from shr 16 and 0xFF) * inverse + (to shr 16 and 0xFF) * ratio).toInt()
+        val g = ((from shr 8 and 0xFF) * inverse + (to shr 8 and 0xFF) * ratio).toInt()
+        val b = ((from and 0xFF) * inverse + (to and 0xFF) * ratio).toInt()
+        return (0xFF shl 24) or (r shl 16) or (g shl 8) or b
     }
 }

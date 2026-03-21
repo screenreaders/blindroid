@@ -98,6 +98,9 @@ class LauncherActivity : AppCompatActivity() {
     private var pendingFlashToggle = false
     private var soundFeedback: LauncherSoundFeedback? = null
     private var weatherFetchInProgress = false
+    private var lastAppliedHomeTarget: Int? = null
+    private var lastCustomVersion: Long = 0L
+    private var lastIconPackVersion: Long = 0L
 
     private val flashPermissionRequestCode = 9201
     private val calendarPermissionRequestCode = 9202
@@ -123,6 +126,8 @@ class LauncherActivity : AppCompatActivity() {
         simpleFavoritesGrid = findViewById(R.id.simpleFavoritesGrid)
         pageIndicator = findViewById(R.id.pageIndicator)
         soundFeedback = LauncherSoundFeedback(this)
+        lastCustomVersion = LauncherStore.getCustomVersion(this)
+        lastIconPackVersion = LauncherStore.getIconPackVersion(this)
 
         val baseConfig = LauncherPrefs.getUiConfig(this)
         feedData = buildFeedData()
@@ -151,6 +156,7 @@ class LauncherActivity : AppCompatActivity() {
             ::openBatterySettings,
             ::openDndSettings,
             ::openSoundSettings,
+            ::openQuickSettings,
             ::openAllApps,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
@@ -228,6 +234,14 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val currentCustom = LauncherStore.getCustomVersion(this)
+        val currentIconPack = LauncherStore.getIconPackVersion(this)
+        if (currentCustom != lastCustomVersion || currentIconPack != lastIconPackVersion) {
+            lastCustomVersion = currentCustom
+            lastIconPackVersion = currentIconPack
+            loadApps()
+            return
+        }
         refreshHome()
         applyUiConfig()
     }
@@ -273,9 +287,11 @@ class LauncherActivity : AppCompatActivity() {
             baseHotseat
         }
         homeAdapter.submitPages(pages)
+        homePager.offscreenPageLimit = kotlin.math.min(2, homeAdapter.itemCount.coerceAtLeast(1))
         hotseatAdapter.submit(hotseat)
         updateSimpleFavorites()
         updatePageIndicator()
+        applyDefaultHomePage()
     }
 
     private fun applyUiConfig() {
@@ -283,7 +299,7 @@ class LauncherActivity : AppCompatActivity() {
         homePager.post {
             val rows = baseConfig.rows
             val itemHeight = if (rows > 0) homePager.height / rows else 0
-            val pageConfig = baseConfig.copy(itemHeightPx = itemHeight, showLabels = true)
+            val pageConfig = baseConfig.copy(itemHeightPx = itemHeight)
             homeAdapter.updateConfig(pageConfig)
             hotseatAdapter.updateConfig(LauncherPrefs.getDockConfig(this, 0))
             val editingEnabled = !LauncherPrefs.isHomeEditLocked(this)
@@ -308,21 +324,27 @@ class LauncherActivity : AppCompatActivity() {
 
         val colors = LauncherPrefs.getThemeColors(this)
         findViewById<View>(R.id.launcherRoot).setBackgroundColor(colors.background)
-        searchInput.setTextColor(colors.text)
-        searchInput.setHintTextColor(colors.muted)
-        allAppsButton.setTextColor(colors.text)
-        widgetsButton.setTextColor(colors.text)
-        settingsButton.setTextColor(colors.text)
-        voiceButton.setTextColor(colors.text)
+        ThemeUtils.tintEditText(searchInput, colors)
+        ThemeUtils.tintButton(allAppsButton, colors, false)
+        ThemeUtils.tintButton(widgetsButton, colors, true)
+        ThemeUtils.tintButton(settingsButton, colors, false)
+        ThemeUtils.tintButton(voiceButton, colors, true)
         simpleFavoritesLabel.setTextColor(colors.text)
+        ThemeUtils.applySurface(searchRow, colors)
+        ThemeUtils.applySurface(pageIndicator, colors)
+        ThemeUtils.applySurface(hotseatRow, colors)
+        ThemeUtils.applySurface(simpleFavoritesGrid, colors)
+        (allAppsButton.parent as? View)?.let { ThemeUtils.applySurface(it, colors) }
 
         feedData = buildFeedData()
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
         homeAdapter.updateFeed(feedEnabled, feedData, colors)
+        homePager.isUserInputEnabled = homeAdapter.itemCount > 1
         updatePageIndicator()
     }
 
     private fun applyPageTransformer() {
+        val intensity = (LauncherPrefs.getPageAnimationIntensity(this) / 100f).coerceIn(0.3f, 1.5f)
         when (LauncherPrefs.getPageAnimation(this)) {
             LauncherPrefs.PAGE_ANIM_CAROUSEL -> homePager.setPageTransformer { page, position ->
                 val absPos = kotlin.math.abs(position)
@@ -330,8 +352,8 @@ class LauncherActivity : AppCompatActivity() {
                 page.scaleX = scale
                 page.scaleY = scale
                 page.alpha = 0.5f + (1f - absPos) * 0.5f
-                page.translationX = -position * page.width * 0.2f
-                page.rotationY = position * -30f
+                page.translationX = -position * page.width * 0.2f * intensity
+                page.rotationY = position * -30f * intensity
             }
             LauncherPrefs.PAGE_ANIM_DEPTH -> homePager.setPageTransformer { page, position ->
                 if (position <= 0f) {
@@ -341,7 +363,7 @@ class LauncherActivity : AppCompatActivity() {
                     page.scaleY = 1f
                 } else if (position <= 1f) {
                     page.alpha = 1f - position
-                    page.translationX = page.width * -position
+                    page.translationX = page.width * -position * intensity
                     val scale = 0.75f + (1f - 0.75f) * (1f - position)
                     page.scaleX = scale
                     page.scaleY = scale
@@ -352,9 +374,9 @@ class LauncherActivity : AppCompatActivity() {
             }
             LauncherPrefs.PAGE_ANIM_STACK -> homePager.setPageTransformer { page, position ->
                 if (position >= 0f) {
-                    page.translationX = -position * page.width
-                    page.scaleX = 1f - 0.08f * position
-                    page.scaleY = 1f - 0.08f * position
+                    page.translationX = -position * page.width * intensity
+                    page.scaleX = 1f - 0.08f * position * intensity
+                    page.scaleY = 1f - 0.08f * position * intensity
                     page.alpha = 1f - 0.25f * position
                 } else {
                     page.translationX = 0f
@@ -364,13 +386,53 @@ class LauncherActivity : AppCompatActivity() {
                 }
                 page.rotationY = 0f
             }
+            LauncherPrefs.PAGE_ANIM_ZOOM -> homePager.setPageTransformer { page, position ->
+                val absPos = kotlin.math.abs(position)
+                val scale = 0.85f + (1f - absPos) * 0.15f
+                page.scaleX = scale
+                page.scaleY = scale
+                page.alpha = 0.4f + (1f - absPos) * 0.6f
+                page.translationX = -position * page.width * 0.1f * intensity
+                page.rotationY = 0f
+            }
+            LauncherPrefs.PAGE_ANIM_FLIP -> homePager.setPageTransformer { page, position ->
+                val absPos = kotlin.math.abs(position)
+                page.cameraDistance = page.width * 12f
+                page.translationX = -position * page.width * intensity
+                page.rotationY = -180f * position * intensity
+                page.alpha = (1f - absPos * 0.6f).coerceIn(0f, 1f)
+                page.scaleX = 0.9f + (1f - absPos) * 0.1f
+                page.scaleY = page.scaleX
+            }
+            LauncherPrefs.PAGE_ANIM_CUBE -> homePager.setPageTransformer { page, position ->
+                page.cameraDistance = page.width * 12f
+                page.translationX = -position * page.width * intensity
+                if (position < 0f) {
+                    page.pivotX = page.width.toFloat()
+                } else {
+                    page.pivotX = 0f
+                }
+                page.pivotY = page.height * 0.5f
+                page.rotationY = 90f * position * intensity
+                page.alpha = (1f - kotlin.math.abs(position) * 0.3f).coerceIn(0f, 1f)
+                page.scaleX = 1f
+                page.scaleY = 1f
+            }
+            LauncherPrefs.PAGE_ANIM_PARALLAX -> homePager.setPageTransformer { page, position ->
+                val absPos = kotlin.math.abs(position)
+                page.translationX = -position * page.width * 0.35f * intensity
+                page.alpha = 0.5f + (1f - absPos) * 0.5f
+                page.scaleX = 0.95f + (1f - absPos) * 0.05f
+                page.scaleY = page.scaleX
+                page.rotationY = 0f
+            }
             else -> homePager.setPageTransformer { page, position ->
                 val absPos = kotlin.math.abs(position)
                 val scale = 0.92f + (1f - absPos) * 0.08f
                 page.scaleX = scale
                 page.scaleY = scale
                 page.alpha = 0.6f + (1f - absPos) * 0.4f
-                page.translationX = -position * page.width * 0.08f
+                page.translationX = -position * page.width * 0.08f * intensity
                 page.rotationY = 0f
             }
         }
@@ -618,9 +680,13 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun toggleFeedEnabled() {
+        val currentHome = currentHomePageIndex()
         val enabled = !LauncherPrefs.isFeedEnabled(this)
         LauncherPrefs.setFeedEnabled(this, enabled)
         applyUiConfig()
+        val feedOffset = if (enabled && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
+        val target = (currentHome + feedOffset).coerceIn(0, homeAdapter.itemCount - 1)
+        homePager.setCurrentItem(target, false)
         Toast.makeText(
             this,
             if (enabled) R.string.launcher_feed_enabled else R.string.launcher_feed_disabled,
@@ -656,6 +722,7 @@ class LauncherActivity : AppCompatActivity() {
         val externalMode = feedMode == LauncherPrefs.FEED_MODE_GOOGLE
         val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED
         val externalAvailable = isGoogleAppAvailable()
+        val quickActionsEnabled = LauncherPrefs.isFeedQuickActionsEnabled(this)
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
@@ -669,6 +736,9 @@ class LauncherActivity : AppCompatActivity() {
         val showTopApps = LauncherPrefs.isNowTopAppsEnabled(this)
         val showAirplane = LauncherPrefs.isNowAirplaneEnabled(this)
         val showRam = LauncherPrefs.isNowRamEnabled(this)
+        val showDevice = LauncherPrefs.isNowDeviceEnabled(this)
+        val showRotation = LauncherPrefs.isNowRotationEnabled(this)
+        val showNfc = LauncherPrefs.isNowNfcEnabled(this)
         val showDnd = LauncherPrefs.isNowDndEnabled(this)
         val showRinger = LauncherPrefs.isNowRingerEnabled(this)
         val showBluetooth = LauncherPrefs.isNowBluetoothEnabled(this)
@@ -699,6 +769,9 @@ class LauncherActivity : AppCompatActivity() {
         val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
         val airplaneText = if (showAirplane) getAirplaneText() else null
         val ramText = if (showRam) getRamText() else null
+        val deviceText = if (showDevice) getDeviceText() else null
+        val rotationText = if (showRotation) getRotationText() else null
+        val nfcText = if (showNfc) getNfcText() else null
         val dndText = if (showDnd) getDndText() else null
         val ringerText = if (showRinger) getRingerText() else null
         if (showWeather) {
@@ -714,6 +787,7 @@ class LauncherActivity : AppCompatActivity() {
             embeddedMode = embeddedMode,
             externalAvailable = externalAvailable,
             embeddedUrl = if (embeddedMode) "https://www.google.com/discover?hl=pl&gl=PL" else null,
+            quickActionsEnabled = quickActionsEnabled,
             atGlanceText = atGlanceText,
             showAlarm = showAlarm,
             alarmText = alarmText,
@@ -753,11 +827,58 @@ class LauncherActivity : AppCompatActivity() {
             airplaneText = airplaneText,
             showRam = showRam,
             ramText = ramText,
+            showDevice = showDevice,
+            deviceText = deviceText,
+            showRotation = showRotation,
+            rotationText = rotationText,
+            showNfc = showNfc,
+            nfcText = nfcText,
             showDnd = showDnd,
             dndText = dndText,
             showRinger = showRinger,
             ringerText = ringerText
         )
+    }
+
+    private fun getDeviceText(): String {
+        val maker = android.os.Build.MANUFACTURER.orEmpty().replaceFirstChar { it.titlecase() }
+        val model = android.os.Build.MODEL.orEmpty()
+        val name = listOf(maker, model).filter { it.isNotBlank() }.joinToString(" ")
+        val release = android.os.Build.VERSION.RELEASE ?: "?"
+        val sdk = android.os.Build.VERSION.SDK_INT
+        val base = getString(R.string.launcher_feed_device_text, name.ifBlank { "Android" }, release, sdk)
+        val patch = android.os.Build.VERSION.SECURITY_PATCH
+        return if (!patch.isNullOrBlank()) {
+            "$base • " + getString(R.string.launcher_feed_device_patch, patch)
+        } else {
+            base
+        }
+    }
+
+    private fun getRotationText(): String? {
+        return try {
+            val enabled = android.provider.Settings.System.getInt(
+                contentResolver,
+                android.provider.Settings.System.ACCELEROMETER_ROTATION,
+                0
+            ) == 1
+            if (enabled) {
+                getString(R.string.launcher_feed_rotation_auto)
+            } else {
+                getString(R.string.launcher_feed_rotation_locked)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun getNfcText(): String? {
+        val adapter = android.nfc.NfcAdapter.getDefaultAdapter(this) ?: return getString(R.string.launcher_feed_nfc_missing)
+        return if (adapter.isEnabled) {
+            getString(R.string.launcher_feed_nfc_on)
+        } else {
+            getString(R.string.launcher_feed_nfc_off)
+        }
     }
 
     private fun getBatteryLevel(): Int {
@@ -1360,6 +1481,12 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun updatePageIndicator() {
+        if (!LauncherPrefs.isPageIndicatorShown(this)) {
+            pageIndicator.visibility = View.GONE
+            pageIndicator.removeAllViews()
+            return
+        }
+        pageIndicator.visibility = View.VISIBLE
         val count = homeAdapter.itemCount
         if (count <= 1) {
             pageIndicator.removeAllViews()
@@ -1390,6 +1517,18 @@ class LauncherActivity : AppCompatActivity() {
         updatePageIndicatorProgress(homePager.currentItem, 0f)
     }
 
+    private fun applyDefaultHomePage() {
+        if (pages.isEmpty()) return
+        val baseIndex = (LauncherPrefs.getDefaultHomePage(this) - 1).coerceIn(0, pages.lastIndex)
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
+        val target = if (feedEnabled) baseIndex + 1 else baseIndex
+        val bounded = target.coerceIn(0, homeAdapter.itemCount - 1)
+        if (homePager.currentItem != bounded || lastAppliedHomeTarget != bounded) {
+            homePager.setCurrentItem(bounded, false)
+            lastAppliedHomeTarget = bounded
+        }
+    }
+
     private fun updatePageIndicatorProgress(position: Int, offset: Float) {
         val count = pageIndicator.childCount
         if (count == 0) return
@@ -1408,7 +1547,7 @@ class LauncherActivity : AppCompatActivity() {
                 dot.layoutParams = params
             }
             dot.alpha = 0.55f + focus * 0.45f
-            val color = blendColor(colors.muted, colors.text, focus)
+            val color = blendColor(colors.muted, colors.accent, focus)
             meta.drawable.setColor(color)
         }
     }

@@ -47,6 +47,13 @@
             android:text="@string/launcher_settings_feed_auto_open" />
 
         <Switch
+            android:id="@+id/feedQuickActionsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_feed_quick_actions" />
+
+        <Switch
             android:id="@+id/searchBarSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,6 +73,166 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/launcher_settings_google_voice" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_all_apps_section" />
+
+        <Switch
+            android:id="@+id/allAppsLabelsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_all_apps_labels" />
+
+        <Switch
+            android:id="@+id/showFavoritesSectionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_favorites_section" />
+
+        <Switch
+            android:id="@+id/showSuggestedNowSectionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_suggested_now_section" />
+
+        <Switch
+            android:id="@+id/showSuggestedSectionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_suggested_section" />
+
+        <Switch
+            android:id="@+id/showRecentSectionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_recent_section" />
+
+        <Switch
+            android:id="@+id/showCategoriesRowSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_categories_row" />
+
+        <Switch
+            android:id="@+id/showScrollButtonsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_scroll_buttons" />
+
+        <Switch
+            android:id="@+id/showVoiceSearchSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_voice_search" />
+
+        <Switch
+            android:id="@+id/showResultsCountSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_results_count" />
+
+        <Switch
+            android:id="@+id/showSystemAppsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_system_apps" />
+
+        <Switch
+            android:id="@+id/sortDescendingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_sort_desc" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_suggestion_mode" />
+
+        <Spinner
+            android:id="@+id/suggestionModeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_all_apps_columns" />
+
+        <Spinner
+            android:id="@+id/allAppsColumnsSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_all_apps_default_tab" />
+
+        <Spinner
+            android:id="@+id/allAppsDefaultTabSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_favorites_count" />
+
+        <Spinner
+            android:id="@+id/favoritesCountSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_suggested_now_count" />
+
+        <Spinner
+            android:id="@+id/suggestedNowCountSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_suggested_count" />
+
+        <Spinner
+            android:id="@+id/suggestedCountSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_recent_count" />
+
+        <Spinner
+            android:id="@+id/recentCountSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_category_rank" />
+
+        <Spinner
+            android:id="@+id/categoryRankSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
@@ -164,6 +331,27 @@
             android:text="@string/launcher_settings_now_ram" />
 
         <Switch
+            android:id="@+id/nowDeviceSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_device" />
+
+        <Switch
+            android:id="@+id/nowRotationSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_rotation" />
+
+        <Switch
+            android:id="@+id/nowNfcSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_now_nfc" />
+
+        <Switch
             android:id="@+id/nowDndSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -229,6 +417,33 @@
             android:id="@+id/pageAnimationSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/pageAnimIntensityLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_page_anim_intensity" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/pageAnimIntensitySeek"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="100" />
+
+            <TextView
+                android:id="@+id/pageAnimIntensityValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="70%" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -382,6 +597,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="@string/launcher_settings_home_section" />
+
+        <Switch
+            android:id="@+id/hideHomeLabelsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_hide_home_labels" />
+
+        <Switch
+            android:id="@+id/showPageIndicatorSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_page_indicator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_default_home_page" />
+
+        <Spinner
+            android:id="@+id/defaultHomePageSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/resetLayoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_reset_layout" />
+
+        <Button
+            android:id="@+id/clearFavoritesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_clear_favorites" />
+
+        <Button
+            android:id="@+id/clearHiddenButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_clear_hidden" />
+
+        <Button
+            android:id="@+id/clearCustomButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_clear_customizations" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/launcher_settings_dock" />
 
         <Switch
@@ -491,6 +763,59 @@
                 android:text="@string/launcher_settings_theme_yellow" />
         </RadioGroup>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_theme_preset" />
+
+        <Spinner
+            android:id="@+id/themePresetSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/themeOverrideSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_theme_override" />
+
+        <EditText
+            android:id="@+id/themeBgInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/launcher_settings_theme_bg"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/themeTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/launcher_settings_theme_text"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/themeMutedInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/launcher_settings_theme_muted"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/themeAccentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/launcher_settings_theme_accent"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/themeAccent2Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/launcher_settings_theme_accent2"
+            android:inputType="text" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/invertColorsSwitch"
             android:layout_width="match_parent"
@@ -523,6 +848,91 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/launcher_settings_icon_style_circle" />
         </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_icon_tint" />
+
+        <Spinner
+            android:id="@+id/iconTintSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_label_style" />
+
+        <Spinner
+            android:id="@+id/labelStyleSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/labelBackgroundSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_label_background" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_icon_pack" />
+
+        <Switch
+            android:id="@+id/iconPackSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_icon_pack_enable" />
+
+        <Button
+            android:id="@+id/iconPackButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_icon_pack_choose" />
+
+        <TextView
+            android:id="@+id/iconPackPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/launcher_settings_icon_pack_none" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/launcher_settings_widgets" />
+
+        <Switch
+            android:id="@+id/widgetSnapSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_widget_snap" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_widget_step" />
+
+        <Spinner
+            android:id="@+id/widgetStepSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/widgetSizeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_widget_size" />
 
         <Button
             android:id="@+id/wallpaperButton"

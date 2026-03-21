@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
+import android.content.ComponentName
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
@@ -46,6 +47,7 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var clearHiddenButton: Button
     private lateinit var scrollTopButton: Button
     private lateinit var scrollBottomButton: Button
+    private lateinit var jumpLetterButton: Button
     private lateinit var sortRow: LinearLayout
     private lateinit var sortLabel: TextView
     private lateinit var sortSpinner: Spinner
@@ -61,6 +63,7 @@ class AllAppsActivity : AppCompatActivity() {
     private lateinit var usageAccessHint: TextView
     private lateinit var usageAccessButton: Button
     private lateinit var categoryRow: LinearLayout
+    private lateinit var categoryScroll: android.widget.HorizontalScrollView
     private lateinit var tabRow: LinearLayout
     private lateinit var appsTabButton: Button
     private lateinit var widgetsTabButton: Button
@@ -92,6 +95,7 @@ class AllAppsActivity : AppCompatActivity() {
     private var allApps: List<AppEntry> = emptyList()
     private var allAppsRaw: List<AppEntry> = emptyList()
     private var filteredApps: List<AppEntry> = emptyList()
+    private var displayedApps: List<AppEntry> = emptyList()
     private var appCategories: Map<String, Int?> = emptyMap()
     private var installTimes: Map<String, Long> = emptyMap()
     private var updateTimes: Map<String, Long> = emptyMap()
@@ -105,12 +109,34 @@ class AllAppsActivity : AppCompatActivity() {
     private var currentTab: String = TAB_APPS
     private var draggingEntry: AppEntry? = null
     private val categoryValueCache = mutableMapOf<String, Int?>()
+    private val labelCollator = java.text.Collator.getInstance(java.util.Locale("pl", "PL")).apply {
+        strength = java.text.Collator.PRIMARY
+    }
 
     private val hostId = 2048
     private val requestPickWidget = 2001
     private val requestBindWidget = 2002
     private val requestConfigureWidget = 2003
     private val requestVoiceSearch = 2104
+    private var pendingIconTarget: ComponentName? = null
+
+    private val pickIconFile = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        val component = pendingIconTarget ?: return@registerForActivityResult
+        pendingIconTarget = null
+        if (uri == null) return@registerForActivityResult
+        try {
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        } catch (_: Exception) {
+            // Ignore
+        }
+        LauncherStore.setCustomIcon(this, component, uri.toString())
+        loadApps()
+    }
 
     private enum class Category(val labelRes: Int, val categoryNames: List<String>) {
         ALL(R.string.launcher_category_all, emptyList()),
@@ -158,6 +184,7 @@ class AllAppsActivity : AppCompatActivity() {
         clearHiddenButton = findViewById(R.id.clearHiddenButton)
         scrollTopButton = findViewById(R.id.scrollTopButton)
         scrollBottomButton = findViewById(R.id.scrollBottomButton)
+        jumpLetterButton = findViewById(R.id.jumpLetterButton)
         sortRow = findViewById(R.id.sortRow)
         sortLabel = findViewById(R.id.sortLabel)
         sortSpinner = findViewById(R.id.sortSpinner)
@@ -173,6 +200,7 @@ class AllAppsActivity : AppCompatActivity() {
         usageAccessHint = findViewById(R.id.usageAccessHint)
         usageAccessButton = findViewById(R.id.usageAccessButton)
         categoryRow = findViewById(R.id.categoryRow)
+        categoryScroll = findViewById(R.id.categoryScroll)
         tabRow = findViewById(R.id.tabRow)
         appsTabButton = findViewById(R.id.appsTabButton)
         widgetsTabButton = findViewById(R.id.widgetsTabButton)
@@ -191,7 +219,8 @@ class AllAppsActivity : AppCompatActivity() {
 
         targetPageIndex = intent.getIntExtra(EXTRA_PAGE_INDEX, 0)
         targetFolderId = intent.getStringExtra(EXTRA_FOLDER_ID)
-        currentTab = intent.getStringExtra(EXTRA_TAB) ?: TAB_APPS
+        currentTab = intent.getStringExtra(EXTRA_TAB)
+            ?: if (LauncherPrefs.getAllAppsDefaultTab(this) == 1) TAB_WIDGETS else TAB_APPS
         if (targetFolderId != null) {
             tabRow.visibility = android.view.View.GONE
             currentTab = TAB_APPS
@@ -284,11 +313,22 @@ class AllAppsActivity : AppCompatActivity() {
         voiceSearchButton.setOnClickListener {
             startVoiceSearch()
         }
+        voiceSearchButton.visibility = if (LauncherPrefs.isVoiceSearchShown(this)) {
+            android.view.View.VISIBLE
+        } else {
+            android.view.View.GONE
+        }
         scrollTopButton.setOnClickListener { appsGrid.smoothScrollToPosition(0) }
         scrollBottomButton.setOnClickListener {
             val last = (adapter.itemCount - 1).coerceAtLeast(0)
             appsGrid.smoothScrollToPosition(last)
         }
+        jumpLetterButton.setOnClickListener { showLetterJumpDialog() }
+        appsGrid.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                updateScrollButtonsState()
+            }
+        })
         widgetsGrid.setOnDragListener { _, event ->
             when (event.action) {
                 android.view.DragEvent.ACTION_DRAG_STARTED -> true
@@ -320,9 +360,15 @@ class AllAppsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val wantsSystem = LauncherPrefs.isShowSystemApps(this)
+        if (showSystemSwitch.isChecked != wantsSystem) {
+            showSystemSwitch.isChecked = wantsSystem
+        }
+        refreshAppsForHidden()
         applyUiConfig()
         applyTheme()
         updateUsageAccessUi()
+        switchTab(currentTab, playSound = false)
     }
 
     override fun onStart() {
@@ -399,54 +445,68 @@ class AllAppsActivity : AppCompatActivity() {
 
     private fun applyUiConfig() {
         val baseConfig = LauncherPrefs.getUiConfig(this)
-        gridLayoutManager.spanCount = baseConfig.columns
-        suggestedLayoutManager.spanCount = baseConfig.columns
-        favoritesLayoutManager.spanCount = baseConfig.columns
-        suggestedNowLayoutManager.spanCount = baseConfig.columns
-        recentLayoutManager.spanCount = baseConfig.columns
-        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
-        suggestedAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
-        favoritesAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
-        suggestedNowAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
-        recentAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = true))
+        val columnsOverride = LauncherPrefs.getAllAppsColumns(this)
+        val columns = if (columnsOverride > 0) columnsOverride else baseConfig.columns
+        val showLabels = LauncherPrefs.isAllAppsLabelsShown(this)
+        gridLayoutManager.spanCount = columns
+        suggestedLayoutManager.spanCount = columns
+        favoritesLayoutManager.spanCount = columns
+        suggestedNowLayoutManager.spanCount = columns
+        recentLayoutManager.spanCount = columns
+        adapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = showLabels))
+        suggestedAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = showLabels))
+        favoritesAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = showLabels))
+        suggestedNowAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = showLabels))
+        recentAdapter.updateConfig(baseConfig.copy(itemHeightPx = 0, showLabels = showLabels))
         widgetsGrid.columnCount = if (gridWidgetsSwitch.isChecked) 2 else 1
     }
 
     private fun applyTheme() {
         val colors = LauncherPrefs.getThemeColors(this)
         findViewById<android.view.View>(android.R.id.content).setBackgroundColor(colors.background)
-        searchInput.setTextColor(colors.text)
-        searchInput.setHintTextColor(colors.muted)
-        clearSearchButton.setTextColor(colors.text)
-        voiceSearchButton.setTextColor(colors.text)
+        (searchInput.parent as? android.view.View)?.let { ThemeUtils.applySurface(it, colors) }
+        ThemeUtils.tintEditText(searchInput, colors)
+        ThemeUtils.tintButton(clearSearchButton, colors, true)
+        ThemeUtils.tintButton(voiceSearchButton, colors, false)
         resultsLabel.setTextColor(colors.muted)
-        showHiddenSwitch.setTextColor(colors.text)
-        showSystemSwitch.setTextColor(colors.text)
-        clearHiddenButton.setTextColor(colors.text)
+        ThemeUtils.tintSwitch(showHiddenSwitch, colors)
+        ThemeUtils.tintSwitch(showSystemSwitch, colors)
+        ThemeUtils.tintButton(clearHiddenButton, colors, true)
         sortLabel.setTextColor(colors.text)
+        ThemeUtils.tintSpinner(sortSpinner, colors)
+        ThemeUtils.applySurface(sortRow, colors)
         suggestedLabel.setTextColor(colors.text)
         favoritesLabel.setTextColor(colors.text)
         suggestedNowLabel.setTextColor(colors.text)
         recentLabel.setTextColor(colors.text)
-        scrollTopButton.setTextColor(colors.text)
-        scrollBottomButton.setTextColor(colors.text)
+        ThemeUtils.tintButton(scrollTopButton, colors, false)
+        ThemeUtils.tintButton(scrollBottomButton, colors, true)
+        ThemeUtils.tintButton(jumpLetterButton, colors, false)
         usageAccessHint.setTextColor(colors.muted)
-        usageAccessButton.setTextColor(colors.text)
-        appsTabButton.setTextColor(colors.text)
-        widgetsTabButton.setTextColor(colors.text)
-        addWidgetButton.setTextColor(colors.text)
-        listWidgetButton.setTextColor(colors.text)
-        gridWidgetsSwitch.setTextColor(colors.text)
+        ThemeUtils.tintButton(usageAccessButton, colors, false)
+        ThemeUtils.tintButton(appsTabButton, colors, false)
+        ThemeUtils.tintButton(widgetsTabButton, colors, true)
+        ThemeUtils.applySurface(tabRow, colors)
+        ThemeUtils.tintButton(addWidgetButton, colors, false)
+        ThemeUtils.tintButton(listWidgetButton, colors, true)
+        ThemeUtils.tintSwitch(gridWidgetsSwitch, colors)
+        ThemeUtils.applySurface(dragTargetsRow, colors)
         dragHomeTarget.setTextColor(colors.text)
         dragDockTarget.setTextColor(colors.text)
         dragOptionsTarget.setTextColor(colors.text)
-        for (i in 0 until categoryRow.childCount) {
-            val button = categoryRow.getChildAt(i) as android.widget.Button
-            button.setTextColor(colors.text)
-        }
+        ThemeUtils.applySurface(categoryScroll, colors)
+        updateCategoryButtons()
     }
 
     private fun setupSearch() {
+        searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                openFirstSearchResult()
+                true
+            } else {
+                false
+            }
+        }
         searchInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -456,6 +516,11 @@ class AllAppsActivity : AppCompatActivity() {
             }
         })
         clearSearchButton.visibility = if (searchInput.text.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE
+    }
+
+    private fun openFirstSearchResult() {
+        val entry = displayedApps.firstOrNull() ?: return
+        launchApp(entry)
     }
 
     private fun setupDragTargets() {
@@ -549,6 +614,11 @@ class AllAppsActivity : AppCompatActivity() {
         currentTab = tab
         val showApps = tab == TAB_APPS
         searchInput.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        voiceSearchButton.visibility = if (showApps && LauncherPrefs.isVoiceSearchShown(this)) {
+            android.view.View.VISIBLE
+        } else {
+            android.view.View.GONE
+        }
         val showControls = showApps && targetFolderId == null
         showHiddenSwitch.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         clearHiddenButton.visibility = if (showControls && LauncherStore.getHiddenAppKeys(this).isNotEmpty()) {
@@ -559,8 +629,10 @@ class AllAppsActivity : AppCompatActivity() {
         showSystemSwitch.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         sortRow.visibility = if (showControls) android.view.View.VISIBLE else android.view.View.GONE
         resultsLabel.visibility = if (showApps) resultsLabel.visibility else android.view.View.GONE
-        scrollTopButton.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
-        scrollBottomButton.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
+        val showScroll = showApps && LauncherPrefs.isScrollButtonsShown(this)
+        scrollTopButton.visibility = if (showScroll) android.view.View.VISIBLE else android.view.View.GONE
+        scrollBottomButton.visibility = if (showScroll) android.view.View.VISIBLE else android.view.View.GONE
+        jumpLetterButton.visibility = if (showScroll) android.view.View.VISIBLE else android.view.View.GONE
         appsContainer.visibility = if (showApps) android.view.View.VISIBLE else android.view.View.GONE
         widgetsContainer.visibility = if (showApps) android.view.View.GONE else android.view.View.VISIBLE
         appsTabButton.isEnabled = !showApps
@@ -575,9 +647,19 @@ class AllAppsActivity : AppCompatActivity() {
         if (!showApps) {
             reloadWidgets()
         }
+        if (showApps) {
+            updateScrollButtonsState()
+        }
     }
 
     private fun setupCategories() {
+        if (!LauncherPrefs.isCategoriesRowShown(this)) {
+            categoryScroll.visibility = android.view.View.GONE
+            categoryRow.removeAllViews()
+            currentCategory = Category.ALL
+            return
+        }
+        categoryScroll.visibility = android.view.View.VISIBLE
         categoryRow.removeAllViews()
         availableCategories.forEach { category ->
             val button = android.widget.Button(this)
@@ -599,17 +681,20 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun updateCategoryButtons() {
+        val colors = LauncherPrefs.getThemeColors(this)
         for (i in 0 until categoryRow.childCount) {
             val button = categoryRow.getChildAt(i) as android.widget.Button
             val category = availableCategories[i]
             val selected = category == currentCategory
-            button.alpha = if (selected) 1.0f else 0.5f
+            ThemeUtils.tintButton(button, colors, i % 2 == 1)
+            button.alpha = if (selected) 1.0f else 0.55f
             button.isEnabled = !selected
         }
     }
 
     private fun applyFilters() {
-        val query = searchInput.text?.toString()?.trim().orEmpty().lowercase()
+        val queryRaw = searchInput.text?.toString()?.trim().orEmpty()
+        val query = normalizeSearch(queryRaw)
         val now = System.currentTimeMillis()
         val newKeys = if (currentCategory == Category.NEW) {
             installTimes.filterValues { now - it <= 7L * 24L * 60L * 60L * 1000L }.keys
@@ -670,7 +755,7 @@ class AllAppsActivity : AppCompatActivity() {
         }
         filteredApps = allApps.filter { entry ->
             val matchesQuery = query.isBlank() ||
-                entry.label.lowercase().contains(query) ||
+                normalizeSearch(entry.label).contains(query) ||
                 entry.component.packageName.lowercase().contains(query)
             val category = appCategories[entry.component.flattenToString()]
             val matchesCategory = when (currentCategory) {
@@ -687,8 +772,11 @@ class AllAppsActivity : AppCompatActivity() {
             }
             matchesQuery && matchesCategory
         }
-        adapter.submit(sortApps(filteredApps))
-        if (query.isNotBlank() || currentCategory != Category.ALL) {
+        displayedApps = sortApps(filteredApps)
+        adapter.submit(displayedApps)
+        updateScrollButtonsState()
+        val showCount = LauncherPrefs.isResultsCountShown(this)
+        if (showCount) {
             resultsLabel.text = getString(R.string.launcher_results_count_format, filteredApps.size)
             resultsLabel.visibility = android.view.View.VISIBLE
         } else {
@@ -696,7 +784,60 @@ class AllAppsActivity : AppCompatActivity() {
         }
     }
 
+    private fun normalizeSearch(text: String): String {
+        if (text.isBlank()) return ""
+        val normalized = java.text.Normalizer.normalize(text.lowercase(), java.text.Normalizer.Form.NFD)
+        return normalized.replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+            .replace("\\s+".toRegex(), " ")
+            .trim()
+    }
+
+    private fun updateScrollButtonsState() {
+        if (!LauncherPrefs.isScrollButtonsShown(this) || currentTab != TAB_APPS) return
+        val canUp = appsGrid.canScrollVertically(-1)
+        val canDown = appsGrid.canScrollVertically(1)
+        if (!canUp && !canDown) {
+            scrollTopButton.visibility = android.view.View.GONE
+            scrollBottomButton.visibility = android.view.View.GONE
+            jumpLetterButton.visibility = android.view.View.GONE
+            return
+        }
+        scrollTopButton.visibility = android.view.View.VISIBLE
+        scrollBottomButton.visibility = android.view.View.VISIBLE
+        jumpLetterButton.visibility = android.view.View.VISIBLE
+        scrollTopButton.isEnabled = canUp
+        scrollTopButton.alpha = if (canUp) 1f else 0.4f
+        scrollBottomButton.isEnabled = canDown
+        scrollBottomButton.alpha = if (canDown) 1f else 0.4f
+    }
+
+    private fun showLetterJumpDialog() {
+        if (displayedApps.isEmpty()) {
+            Toast.makeText(this, R.string.launcher_no_apps, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val letters = mutableListOf<String>()
+        val indices = mutableListOf<Int>()
+        displayedApps.forEachIndexed { index, entry ->
+            val label = normalizeSearch(entry.label)
+            val letter = label.firstOrNull()?.uppercaseChar()?.toString() ?: "#"
+            if (letters.isEmpty() || letters.last() != letter) {
+                letters.add(letter)
+                indices.add(index)
+            }
+        }
+        if (letters.isEmpty()) return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_jump_letter)
+            .setItems(letters.toTypedArray()) { _, which ->
+                val target = indices.getOrNull(which) ?: return@setItems
+                appsGrid.scrollToPosition(target)
+            }
+            .show()
+    }
+
     private fun startVoiceSearch() {
+        if (!LauncherPrefs.isVoiceSearchShown(this)) return
         try {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -741,7 +882,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun inferCategory(entry: AppEntry): Category? {
-        val text = (entry.label + " " + entry.component.packageName).lowercase()
+        val text = normalizeSearch(entry.label + " " + entry.component.packageName)
         val rules = listOf(
             Category.COMMUNICATION to listOf("dialer", "phone", "contacts", "sms", "messaging", "whatsapp", "telegram", "signal", "viber", "messenger", "skype", "meet", "zoom"),
             Category.SOCIAL to listOf("facebook", "instagram", "tiktok", "twitter", "x.com", "threads", "snapchat"),
@@ -831,7 +972,35 @@ class AllAppsActivity : AppCompatActivity() {
             list.add(Category.NIGHT)
             counts[Category.NIGHT] = night.size
         }
-        val ranked = Category.values()
+        val rankingMode = LauncherPrefs.getCategoryRanking(this)
+        val usageRank = if (rankingMode == LauncherPrefs.CATEGORY_RANK_USAGE) {
+            val usageTop = LauncherStore.getSuggestedApps(this, allApps, 60)
+            val usageMap = mutableMapOf<Category, Int>()
+            usageTop.forEach { entry ->
+                val key = entry.component.flattenToString()
+                val appCategory = appCategories[key]
+                val inferred = appCategory?.let { cat ->
+                    Category.values().firstOrNull { catName ->
+                        catName.categoryNames.any { name ->
+                            val value = resolveCategoryValue(name) ?: return@any false
+                            cat == value
+                        }
+                    }
+                } ?: inferCategory(entry)
+                if (inferred != null && inferred != Category.ALL && inferred != Category.FAVORITES &&
+                    inferred != Category.NEW && inferred != Category.UPDATED && inferred != Category.FREQUENT &&
+                    inferred != Category.RECENT && inferred != Category.MORNING && inferred != Category.DAY &&
+                    inferred != Category.EVENING && inferred != Category.NIGHT
+                ) {
+                    usageMap[inferred] = (usageMap[inferred] ?: 0) + 1
+                }
+            }
+            usageMap
+        } else {
+            emptyMap()
+        }
+
+        val rankedBase = Category.values()
             .filter {
                 it != Category.ALL &&
                     it != Category.FAVORITES &&
@@ -845,7 +1014,17 @@ class AllAppsActivity : AppCompatActivity() {
                     it != Category.NIGHT
             }
             .filter { present.contains(it) }
-            .sortedByDescending { counts[it] ?: 0 }
+
+        val ranked = when (rankingMode) {
+            LauncherPrefs.CATEGORY_RANK_ALPHA -> rankedBase.sortedBy { getString(it.labelRes) }
+            LauncherPrefs.CATEGORY_RANK_USAGE -> rankedBase.sortedWith(
+                compareByDescending<Category> { usageRank[it] ?: 0 }
+                    .thenByDescending { counts[it] ?: 0 }
+                    .thenBy { getString(it.labelRes) }
+            )
+            else -> rankedBase.sortedByDescending { counts[it] ?: 0 }
+        }
+
         list.addAll(ranked)
         categoryCounts = counts
         if (!list.contains(currentCategory)) {
@@ -869,7 +1048,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun sortApps(input: List<AppEntry>): List<AppEntry> {
-        return when (LauncherPrefs.getAppSortMode(this)) {
+        val sorted = when (LauncherPrefs.getAppSortMode(this)) {
             LauncherPrefs.SORT_RECENT -> sortByOrder(input, LauncherStore.getRecentApps(this, allApps, 168, allApps.size))
             LauncherPrefs.SORT_USAGE -> sortByOrder(input, LauncherStore.getSuggestedApps(this, allApps, allApps.size))
             LauncherPrefs.SORT_INSTALL_NEWEST -> input.sortedWith(
@@ -880,8 +1059,9 @@ class AllAppsActivity : AppCompatActivity() {
                 compareByDescending<AppEntry> { updateTimes[it.component.flattenToString()] ?: 0L }
                     .thenBy { it.label.lowercase() }
             )
-            else -> input.sortedBy { it.label.lowercase() }
+            else -> input.sortedWith { a, b -> labelCollator.compare(a.label, b.label) }
         }
+        return if (LauncherPrefs.isSortDescending(this)) sorted.reversed() else sorted
     }
 
     private fun sortByOrder(input: List<AppEntry>, ordered: List<AppEntry>): List<AppEntry> {
@@ -889,10 +1069,12 @@ class AllAppsActivity : AppCompatActivity() {
         val orderMap = ordered.mapIndexed { index, entry ->
             entry.component.flattenToString() to index
         }.toMap()
-        return input.sortedWith(
-            compareBy<AppEntry> { orderMap[it.component.flattenToString()] ?: Int.MAX_VALUE }
-                .thenBy { it.label.lowercase() }
-        )
+        return input.sortedWith { a, b ->
+            val aIdx = orderMap[a.component.flattenToString()] ?: Int.MAX_VALUE
+            val bIdx = orderMap[b.component.flattenToString()] ?: Int.MAX_VALUE
+            val byOrder = aIdx.compareTo(bIdx)
+            if (byOrder != 0) byOrder else labelCollator.compare(a.label, b.label)
+        }
     }
 
     private data class AppMeta(
@@ -930,8 +1112,25 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun updateSuggested() {
-        val favoriteEntries = allApps.filter { favoriteKeys.contains(it.component.flattenToString()) }
-        if (favoriteEntries.isEmpty()) {
+        if (targetFolderId != null) {
+            favoritesLabel.visibility = android.view.View.GONE
+            favoritesGrid.visibility = android.view.View.GONE
+            suggestedNowLabel.visibility = android.view.View.GONE
+            suggestedNowGrid.visibility = android.view.View.GONE
+            suggestedLabel.visibility = android.view.View.GONE
+            suggestedGrid.visibility = android.view.View.GONE
+            recentLabel.visibility = android.view.View.GONE
+            recentGrid.visibility = android.view.View.GONE
+            return
+        }
+        val showFavorites = LauncherPrefs.isFavoritesSectionShown(this)
+        val showSuggestedNow = LauncherPrefs.isSuggestedNowSectionShown(this)
+        val showSuggested = LauncherPrefs.isSuggestedSectionShown(this)
+        val showRecent = LauncherPrefs.isRecentSectionShown(this)
+        val favoriteEntriesRaw = allApps.filter { favoriteKeys.contains(it.component.flattenToString()) }
+        val favoritesLimit = LauncherPrefs.getFavoritesCount(this)
+        val favoriteEntries = if (favoritesLimit > 0) favoriteEntriesRaw.take(favoritesLimit) else favoriteEntriesRaw
+        if (!showFavorites || favoriteEntries.isEmpty()) {
             favoritesLabel.visibility = android.view.View.GONE
             favoritesGrid.visibility = android.view.View.GONE
         } else {
@@ -939,8 +1138,14 @@ class AllAppsActivity : AppCompatActivity() {
             favoritesGrid.visibility = android.view.View.VISIBLE
             favoritesAdapter.submit(favoriteEntries)
         }
-        val suggestedNow = LauncherStore.getSuggestedAppsForBucket(this, allApps, currentBucket(), 4)
-        if (suggestedNow.isEmpty()) {
+        val suggestedNowCount = LauncherPrefs.getSuggestedNowCount(this).coerceAtLeast(0)
+        val suggestedNow = LauncherStore.getSuggestedAppsForBucket(
+            this,
+            allApps,
+            currentBucket(),
+            if (suggestedNowCount > 0) suggestedNowCount else allApps.size
+        )
+        if (!showSuggestedNow || suggestedNow.isEmpty()) {
             suggestedNowLabel.visibility = android.view.View.GONE
             suggestedNowGrid.visibility = android.view.View.GONE
         } else {
@@ -948,8 +1153,13 @@ class AllAppsActivity : AppCompatActivity() {
             suggestedNowGrid.visibility = android.view.View.VISIBLE
             suggestedNowAdapter.submit(suggestedNow)
         }
-        val suggested = LauncherStore.getSuggestedApps(this, allApps, 4)
-        if (suggested.isEmpty()) {
+        val suggestedCount = LauncherPrefs.getSuggestedCount(this).coerceAtLeast(0)
+        val suggested = LauncherStore.getSuggestedApps(
+            this,
+            allApps,
+            if (suggestedCount > 0) suggestedCount else allApps.size
+        )
+        if (!showSuggested || suggested.isEmpty()) {
             suggestedLabel.visibility = android.view.View.GONE
             suggestedGrid.visibility = android.view.View.GONE
         } else {
@@ -957,8 +1167,14 @@ class AllAppsActivity : AppCompatActivity() {
             suggestedGrid.visibility = android.view.View.VISIBLE
             suggestedAdapter.submit(suggested)
         }
-        val recent = LauncherStore.getRecentApps(this, allApps, 48, 8)
-        if (recent.isEmpty()) {
+        val recentCount = LauncherPrefs.getRecentCount(this).coerceAtLeast(0)
+        val recent = LauncherStore.getRecentApps(
+            this,
+            allApps,
+            48,
+            if (recentCount > 0) recentCount else allApps.size
+        )
+        if (!showRecent || recent.isEmpty()) {
             recentLabel.visibility = android.view.View.GONE
             recentGrid.visibility = android.view.View.GONE
         } else {
@@ -1131,19 +1347,29 @@ class AllAppsActivity : AppCompatActivity() {
 
         val controls = LinearLayout(this)
         controls.orientation = LinearLayout.HORIZONTAL
-        val bigger = Button(this)
-        val smaller = Button(this)
+        val wider = Button(this)
+        val narrower = Button(this)
+        val taller = Button(this)
+        val shorter = Button(this)
         val moveUp = Button(this)
         val moveDown = Button(this)
-        bigger.text = getString(R.string.launcher_widget_bigger)
-        smaller.text = getString(R.string.launcher_widget_smaller)
+        wider.text = getString(R.string.launcher_widget_wider)
+        narrower.text = getString(R.string.launcher_widget_narrower)
+        taller.text = getString(R.string.launcher_widget_taller)
+        shorter.text = getString(R.string.launcher_widget_shorter)
         moveUp.text = getString(R.string.launcher_widget_move_up)
         moveDown.text = getString(R.string.launcher_widget_move_down)
-        controls.addView(bigger)
-        controls.addView(smaller)
+        controls.addView(wider)
+        controls.addView(narrower)
+        controls.addView(taller)
+        controls.addView(shorter)
         controls.addView(moveUp)
         controls.addView(moveDown)
         wrapper.addView(controls)
+        val sizeLabel = TextView(this)
+        sizeLabel.setTextColor(LauncherPrefs.getThemeColors(this).muted)
+        sizeLabel.textSize = 12f
+        wrapper.addView(sizeLabel)
         wrapper.addView(hostView)
 
         val params = GridLayout.LayoutParams()
@@ -1163,8 +1389,10 @@ class AllAppsActivity : AppCompatActivity() {
             LauncherStore.setWidgetSize(this, widgetId, minWidth, minHeight)
         }
 
-        bigger.setOnClickListener { resizeWidget(widgetId, hostView, 30) }
-        smaller.setOnClickListener { resizeWidget(widgetId, hostView, -30) }
+        wider.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 0, deltaStep = 1) }
+        narrower.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 0, deltaStep = -1) }
+        taller.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 1, deltaStep = 1) }
+        shorter.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 1, deltaStep = -1) }
         moveUp.setOnClickListener {
             LauncherStore.moveWidget(this, widgetId, -1)
             reloadWidgets()
@@ -1202,18 +1430,38 @@ class AllAppsActivity : AppCompatActivity() {
             true
         }
 
+        updateWidgetSizeLabel(widgetId, sizeLabel)
+        sizeLabel.visibility = if (LauncherPrefs.isWidgetSizeShown(this)) View.VISIBLE else View.GONE
         widgetsGrid.addView(wrapper)
     }
 
-    private fun resizeWidget(widgetId: Int, view: android.view.View, deltaDp: Int) {
-        val deltaPx = dpToPx(deltaDp.toFloat())
+    private fun resizeWidget(widgetId: Int, view: android.view.View, label: TextView, axis: Int, deltaStep: Int) {
+        val stepDp = LauncherPrefs.getWidgetResizeStepDp(this)
+        val deltaPx = dpToPx((stepDp * deltaStep).toFloat())
         val size = LauncherStore.getWidgetSize(this, widgetId)
-        val width = (size?.first ?: view.width) + deltaPx
-        val height = (size?.second ?: view.height) + deltaPx
-        val newW = width.coerceAtLeast(dpToPx(60f))
-        val newH = height.coerceAtLeast(dpToPx(60f))
+        val width = size?.first ?: view.width
+        val height = size?.second ?: view.height
+        var newW = width + if (axis == 0) deltaPx else 0
+        var newH = height + if (axis == 1) deltaPx else 0
+        val minPx = dpToPx(60f)
+        val snapPx = dpToPx(stepDp.toFloat())
+        if (LauncherPrefs.isWidgetSnapEnabled(this)) {
+            newW = (kotlin.math.round(newW.toFloat() / snapPx) * snapPx).toInt()
+            newH = (kotlin.math.round(newH.toFloat() / snapPx) * snapPx).toInt()
+        }
+        newW = newW.coerceAtLeast(minPx)
+        newH = newH.coerceAtLeast(minPx)
         view.layoutParams = LinearLayout.LayoutParams(newW, newH)
         LauncherStore.setWidgetSize(this, widgetId, newW, newH)
+        updateWidgetSizeLabel(widgetId, label)
+    }
+
+    private fun updateWidgetSizeLabel(widgetId: Int, label: TextView) {
+        if (!LauncherPrefs.isWidgetSizeShown(this)) return
+        val size = LauncherStore.getWidgetSize(this, widgetId) ?: return
+        val wDp = (size.first / resources.displayMetrics.density).toInt()
+        val hDp = (size.second / resources.displayMetrics.density).toInt()
+        label.text = getString(R.string.launcher_widget_size_format, wDp, hDp)
     }
 
     private fun dpToPx(dp: Float): Int {
@@ -1368,6 +1616,27 @@ class AllAppsActivity : AppCompatActivity() {
             LauncherStore.setAppHidden(this, entry.component, !isHidden)
             refreshAppsForHidden()
         }
+        val customLabel = LauncherStore.getCustomLabel(this, entry.component)
+        options += getString(R.string.launcher_action_rename_app) to {
+            promptRenameApp(entry, customLabel)
+        }
+        if (!customLabel.isNullOrBlank()) {
+            options += getString(R.string.launcher_action_reset_label) to {
+                LauncherStore.setCustomLabel(this, entry.component, null)
+                loadApps()
+            }
+        }
+        val customIcon = LauncherStore.getCustomIcon(this, entry.component)
+        options += getString(R.string.launcher_action_change_icon) to {
+            pendingIconTarget = entry.component
+            pickIconFile.launch(arrayOf("image/*"))
+        }
+        if (!customIcon.isNullOrBlank()) {
+            options += getString(R.string.launcher_action_reset_icon) to {
+                LauncherStore.setCustomIcon(this, entry.component, null)
+                loadApps()
+            }
+        }
         options += getString(R.string.launcher_action_app_info) to {
             openAppInfo(entry)
         }
@@ -1428,6 +1697,27 @@ class AllAppsActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            .show()
+    }
+
+    private fun promptRenameApp(entry: AppEntry, current: String?) {
+        val input = EditText(this)
+        input.setText(current ?: entry.label)
+        input.setSelection(input.text?.length ?: 0)
+        input.hint = getString(R.string.launcher_rename_app_hint)
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.launcher_rename_app_title, entry.label))
+            .setView(input)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val label = input.text?.toString()?.trim().orEmpty()
+                if (label.isBlank() || label == entry.label) {
+                    LauncherStore.setCustomLabel(this, entry.component, null)
+                } else {
+                    LauncherStore.setCustomLabel(this, entry.component, label)
+                }
+                loadApps()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 

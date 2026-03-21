@@ -65,6 +65,14 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:text="@string/launcher_scroll_bottom" />
+
+        <Button
+            android:id="@+id/jumpLetterButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/launcher_jump_letter_button" />
     </LinearLayout>
 
     <Switch

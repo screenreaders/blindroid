@@ -21,6 +21,10 @@ object LauncherStore {
     private const val KEY_HOTSEAT = "hotseat"
     private const val KEY_WIDGETS = "widgets"
     private const val KEY_HIDDEN_APPS = "hidden_apps"
+    private const val KEY_CUSTOM_LABEL_PREFIX = "custom_label_"
+    private const val KEY_CUSTOM_ICON_PREFIX = "custom_icon_"
+    private const val KEY_CUSTOM_VERSION = "custom_version"
+    private const val KEY_ICON_PACK_VERSION = "icon_pack_version"
     private const val KEY_LAUNCH_PREFIX = "launch_"
     private const val KEY_LAUNCH_LAST_PREFIX = "launch_last_"
     private const val KEY_LAUNCH_BUCKET_PREFIX = "launch_bucket_"
@@ -36,17 +40,25 @@ object LauncherStore {
     private const val MODULE_PREFS_NAME = "blindroid_prefs"
     private const val KEY_MODULE_SHORTCUTS = "module_shortcuts"
 
+    private var iconPackCacheUri: String? = null
+    private var iconPackCacheMap: Map<String, Uri> = emptyMap()
+
     fun loadAllApps(context: Context): List<AppEntry> {
         val pm = context.packageManager
         val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
         val resolveInfos = pm.queryIntentActivities(intent, 0)
         val currentPackage = context.packageName
+        val iconPackMap = getIconPackMap(context)
         val list = resolveInfos.mapNotNull { info ->
             val packageName = info.activityInfo.packageName
             if (packageName == currentPackage) return@mapNotNull null
             val component = ComponentName(packageName, info.activityInfo.name)
-            val label = info.loadLabel(pm)?.toString() ?: packageName
-            val icon = info.loadIcon(pm)
+            val baseLabel = info.loadLabel(pm)?.toString() ?: packageName
+            val label = getCustomLabel(context, component) ?: baseLabel
+            val baseIcon = info.loadIcon(pm)
+            val icon = loadCustomIcon(context, component)
+                ?: loadIconPackIcon(context, iconPackMap, packageName)
+                ?: baseIcon
             AppEntry(label, component, icon)
         }
         val collator = Collator.getInstance()
@@ -78,6 +90,159 @@ object LauncherStore {
 
     fun clearHiddenApps(context: Context) {
         prefs(context).edit().remove(KEY_HIDDEN_APPS).apply()
+    }
+
+    fun clearFavorites(context: Context) {
+        prefs(context).edit().remove(KEY_FAVORITES).apply()
+    }
+
+    fun setCustomLabel(context: Context, component: ComponentName, label: String?) {
+        val prefs = prefs(context)
+        val key = "$KEY_CUSTOM_LABEL_PREFIX${component.flattenToString()}"
+        if (label.isNullOrBlank()) {
+            prefs.edit().remove(key).apply()
+        } else {
+            prefs.edit().putString(key, label).apply()
+        }
+        bumpCustomVersion(context)
+    }
+
+    fun getCustomLabel(context: Context, component: ComponentName): String? {
+        val key = "$KEY_CUSTOM_LABEL_PREFIX${component.flattenToString()}"
+        return prefs(context).getString(key, null)
+    }
+
+    fun setCustomIcon(context: Context, component: ComponentName, uriString: String?) {
+        val prefs = prefs(context)
+        val key = "$KEY_CUSTOM_ICON_PREFIX${component.flattenToString()}"
+        if (uriString.isNullOrBlank()) {
+            prefs.edit().remove(key).apply()
+        } else {
+            prefs.edit().putString(key, uriString).apply()
+        }
+        bumpCustomVersion(context)
+    }
+
+    fun getCustomIcon(context: Context, component: ComponentName): String? {
+        val key = "$KEY_CUSTOM_ICON_PREFIX${component.flattenToString()}"
+        return prefs(context).getString(key, null)
+    }
+
+    fun getCustomVersion(context: Context): Long {
+        return prefs(context).getLong(KEY_CUSTOM_VERSION, 0L)
+    }
+
+    private fun bumpCustomVersion(context: Context) {
+        val prefs = prefs(context)
+        prefs.edit().putLong(KEY_CUSTOM_VERSION, System.currentTimeMillis()).apply()
+    }
+
+    private fun loadCustomIcon(context: Context, component: ComponentName): android.graphics.drawable.Drawable? {
+        val uriString = getCustomIcon(context, component) ?: return null
+        return loadIconFromUri(context, Uri.parse(uriString))
+    }
+
+    private fun calculateInSampleSize(options: android.graphics.BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val (height, width) = options.outHeight to options.outWidth
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+            var halfHeight = height / 2
+            var halfWidth = width / 2
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize.coerceAtLeast(1)
+    }
+
+    fun setIconPack(context: Context, enabled: Boolean, uri: String?) {
+        LauncherPrefs.setIconPackEnabled(context, enabled)
+        LauncherPrefs.setIconPackUri(context, uri)
+        iconPackCacheUri = null
+        iconPackCacheMap = emptyMap()
+        bumpIconPackVersion(context)
+    }
+
+    fun getIconPackVersion(context: Context): Long {
+        return prefs(context).getLong(KEY_ICON_PACK_VERSION, 0L)
+    }
+
+    private fun bumpIconPackVersion(context: Context) {
+        prefs(context).edit().putLong(KEY_ICON_PACK_VERSION, System.currentTimeMillis()).apply()
+    }
+
+    private fun getIconPackMap(context: Context): Map<String, Uri> {
+        if (!LauncherPrefs.isIconPackEnabled(context)) return emptyMap()
+        val uriString = LauncherPrefs.getIconPackUri(context) ?: return emptyMap()
+        if (iconPackCacheUri == uriString && iconPackCacheMap.isNotEmpty()) {
+            return iconPackCacheMap
+        }
+        val uri = Uri.parse(uriString)
+        val root = androidx.documentfile.provider.DocumentFile.fromTreeUri(context, uri) ?: return emptyMap()
+        val map = mutableMapOf<String, Uri>()
+        root.listFiles().forEach { file ->
+            if (!file.isFile) return@forEach
+            val name = file.name?.lowercase()?.trim().orEmpty()
+            if (name.isBlank()) return@forEach
+            val base = name.substringBeforeLast('.', name)
+            map[base] = file.uri
+        }
+        iconPackCacheUri = uriString
+        iconPackCacheMap = map
+        return map
+    }
+
+    private fun loadIconPackIcon(context: Context, map: Map<String, Uri>, packageName: String): android.graphics.drawable.Drawable? {
+        if (map.isEmpty()) return null
+        val direct = map[packageName.lowercase()] ?: map["$packageName.png"] ?: map["$packageName.webp"]
+        val target = direct ?: return null
+        return loadIconFromUri(context, target)
+    }
+
+    private fun loadIconFromUri(context: Context, uri: Uri): android.graphics.drawable.Drawable? {
+        return try {
+            val resolver = context.contentResolver
+            val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            resolver.openInputStream(uri)?.use { input ->
+                android.graphics.BitmapFactory.decodeStream(input, null, bounds)
+            }
+            if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
+            val target = 192
+            val sample = calculateInSampleSize(bounds, target, target)
+            val options = android.graphics.BitmapFactory.Options().apply { inSampleSize = sample }
+            val bitmap = resolver.openInputStream(uri)?.use { input ->
+                android.graphics.BitmapFactory.decodeStream(input, null, options)
+            } ?: return null
+            android.graphics.drawable.BitmapDrawable(context.resources, bitmap)
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    fun resetLayout(context: Context) {
+        val prefs = prefs(context)
+        val editor = prefs.edit()
+        editor.remove(KEY_PAGES)
+        editor.remove(KEY_HOTSEAT)
+        editor.remove(KEY_WIDGETS)
+        prefs.all.keys.forEach { key ->
+            if (key.startsWith(FOLDER_PREFIX) || key.startsWith(KEY_WIDGET_SIZE_PREFIX)) {
+                editor.remove(key)
+            }
+        }
+        editor.apply()
+    }
+
+    fun clearCustomizations(context: Context) {
+        val prefs = prefs(context)
+        val editor = prefs.edit()
+        prefs.all.keys.forEach { key ->
+            if (key.startsWith(KEY_CUSTOM_LABEL_PREFIX) || key.startsWith(KEY_CUSTOM_ICON_PREFIX)) {
+                editor.remove(key)
+            }
+        }
+        editor.apply()
+        bumpCustomVersion(context)
     }
 
     fun loadPages(context: Context, allApps: List<AppEntry>): List<List<HomeItem>> {
@@ -423,6 +588,7 @@ object LauncherStore {
         val prefs = prefs(context)
         val now = System.currentTimeMillis()
         val bucket = currentBucket()
+        val mode = LauncherPrefs.getSuggestionMode(context)
         val usageEnabled = LauncherPrefs.isUsageSuggestionsEnabled(context) && hasUsageStatsPermission(context)
         val usageStats = if (usageEnabled) queryUsageStats(context, daysBack = 14) else emptyMap()
         val scored = allApps.map { entry ->
@@ -453,7 +619,16 @@ object LauncherStore {
             val usageScore = if (usageEnabled) {
                 (kotlin.math.ln(usageMinutes + 1f) * 1.6f) + usageRecency * 2.5f
             } else 0f
-            val score = count * 1.1f + bucketCount * 2.0f + recencyScore * 3.0f + recentBoost + usageScore
+            val score = when (mode) {
+                LauncherPrefs.SUGGESTION_RECENT ->
+                    count * 0.6f + bucketCount * 0.6f + recencyScore * 4.5f + recentBoost * 2.0f + usageScore * 0.8f
+                LauncherPrefs.SUGGESTION_FREQUENT ->
+                    count * 2.2f + bucketCount * 1.0f + recencyScore * 1.4f + recentBoost + usageScore * 1.6f
+                LauncherPrefs.SUGGESTION_TIME ->
+                    count * 0.9f + bucketCount * 3.0f + recencyScore * 2.2f + recentBoost * 1.2f + usageScore * 0.9f
+                else ->
+                    count * 1.1f + bucketCount * 2.0f + recencyScore * 3.0f + recentBoost + usageScore
+            }
             entry to score
         }
         return scored.sortedByDescending { it.second }
@@ -470,6 +645,7 @@ object LauncherStore {
     ): List<AppEntry> {
         val prefs = prefs(context)
         val now = System.currentTimeMillis()
+        val mode = LauncherPrefs.getSuggestionMode(context)
         val scored = allApps.map { entry ->
             val componentKey = entry.component.flattenToString()
             val bucketKey = "$KEY_LAUNCH_BUCKET_PREFIX${bucket}_$componentKey"
@@ -479,7 +655,12 @@ object LauncherStore {
             val days = minutes / (60f * 24f)
             val recencyScore = (7f - days).coerceAtLeast(0f) / 7f
             val bucketCount = prefs.getInt(bucketKey, 0)
-            val score = bucketCount * 2.0f + recencyScore
+            val score = when (mode) {
+                LauncherPrefs.SUGGESTION_TIME -> bucketCount * 3.0f + recencyScore * 1.4f
+                LauncherPrefs.SUGGESTION_RECENT -> bucketCount * 1.0f + recencyScore * 2.2f
+                LauncherPrefs.SUGGESTION_FREQUENT -> bucketCount * 2.2f + recencyScore * 0.8f
+                else -> bucketCount * 2.0f + recencyScore
+            }
             entry to score
         }
         return scored.sortedByDescending { it.second }
@@ -596,7 +777,18 @@ object LauncherStore {
             when (parts[0]) {
                 TYPE_APP -> {
                     val entry = appMap[parts[1]] ?: return@mapNotNull null
-                    HomeItem.app(entry)
+                    val customLabel = getCustomLabel(context, entry.component)
+                    val customIcon = loadCustomIcon(context, entry.component)
+                    if (customLabel != null || customIcon != null) {
+                        val updated = AppEntry(
+                            customLabel ?: entry.label,
+                            entry.component,
+                            customIcon ?: entry.icon
+                        )
+                        HomeItem.app(updated)
+                    } else {
+                        HomeItem.app(entry)
+                    }
                 }
                 TYPE_FOLDER -> {
                     val label = getFolderLabel(context, parts[1])

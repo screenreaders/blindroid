@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -68,9 +69,9 @@ class WidgetsActivity : AppCompatActivity() {
     private fun applyTheme() {
         val colors = LauncherPrefs.getThemeColors(this)
         findViewById<View>(android.R.id.content).setBackgroundColor(colors.background)
-        addButton.setTextColor(colors.text)
-        listButton.setTextColor(colors.text)
-        gridSwitch.setTextColor(colors.text)
+        ThemeUtils.tintButton(addButton, colors, false)
+        ThemeUtils.tintButton(listButton, colors, true)
+        ThemeUtils.tintSwitch(gridSwitch, colors)
     }
 
     private fun loadWidgets() {
@@ -188,13 +189,23 @@ class WidgetsActivity : AppCompatActivity() {
 
         val controls = LinearLayout(this)
         controls.orientation = LinearLayout.HORIZONTAL
-        val bigger = Button(this)
-        val smaller = Button(this)
-        bigger.text = getString(R.string.launcher_widget_bigger)
-        smaller.text = getString(R.string.launcher_widget_smaller)
-        controls.addView(bigger)
-        controls.addView(smaller)
+        val wider = Button(this)
+        val narrower = Button(this)
+        val taller = Button(this)
+        val shorter = Button(this)
+        wider.text = getString(R.string.launcher_widget_wider)
+        narrower.text = getString(R.string.launcher_widget_narrower)
+        taller.text = getString(R.string.launcher_widget_taller)
+        shorter.text = getString(R.string.launcher_widget_shorter)
+        controls.addView(wider)
+        controls.addView(narrower)
+        controls.addView(taller)
+        controls.addView(shorter)
         wrapper.addView(controls)
+        val sizeLabel = TextView(this)
+        sizeLabel.setTextColor(LauncherPrefs.getThemeColors(this).muted)
+        sizeLabel.textSize = 12f
+        wrapper.addView(sizeLabel)
         wrapper.addView(hostView)
 
         val params = GridLayout.LayoutParams()
@@ -213,30 +224,48 @@ class WidgetsActivity : AppCompatActivity() {
             LauncherStore.setWidgetSize(this, widgetId, minWidth, minHeight)
         }
 
-        bigger.setOnClickListener {
-            resizeWidget(widgetId, hostView, 30)
-        }
-        smaller.setOnClickListener {
-            resizeWidget(widgetId, hostView, -30)
-        }
+        wider.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 0, deltaStep = 1) }
+        narrower.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 0, deltaStep = -1) }
+        taller.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 1, deltaStep = 1) }
+        shorter.setOnClickListener { resizeWidget(widgetId, hostView, sizeLabel, axis = 1, deltaStep = -1) }
 
         hostView.setOnLongClickListener {
             confirmRemoveWidget(widgetId, wrapper)
             true
         }
 
+        updateWidgetSizeLabel(widgetId, sizeLabel)
+        sizeLabel.visibility = if (LauncherPrefs.isWidgetSizeShown(this)) View.VISIBLE else View.GONE
         container.addView(wrapper)
     }
 
-    private fun resizeWidget(widgetId: Int, view: View, deltaDp: Int) {
-        val deltaPx = dpToPx(deltaDp.toFloat())
+    private fun resizeWidget(widgetId: Int, view: View, label: TextView, axis: Int, deltaStep: Int) {
+        val stepDp = LauncherPrefs.getWidgetResizeStepDp(this)
+        val deltaPx = dpToPx((stepDp * deltaStep).toFloat())
         val size = LauncherStore.getWidgetSize(this, widgetId)
-        val width = (size?.first ?: view.width) + deltaPx
-        val height = (size?.second ?: view.height) + deltaPx
-        val newW = width.coerceAtLeast(dpToPx(60f))
-        val newH = height.coerceAtLeast(dpToPx(60f))
+        val width = size?.first ?: view.width
+        val height = size?.second ?: view.height
+        var newW = width + if (axis == 0) deltaPx else 0
+        var newH = height + if (axis == 1) deltaPx else 0
+        val minPx = dpToPx(60f)
+        val snapPx = dpToPx(stepDp.toFloat())
+        if (LauncherPrefs.isWidgetSnapEnabled(this)) {
+            newW = (kotlin.math.round(newW.toFloat() / snapPx) * snapPx).toInt()
+            newH = (kotlin.math.round(newH.toFloat() / snapPx) * snapPx).toInt()
+        }
+        newW = newW.coerceAtLeast(minPx)
+        newH = newH.coerceAtLeast(minPx)
         view.layoutParams = LinearLayout.LayoutParams(newW, newH)
         LauncherStore.setWidgetSize(this, widgetId, newW, newH)
+        updateWidgetSizeLabel(widgetId, label)
+    }
+
+    private fun updateWidgetSizeLabel(widgetId: Int, label: TextView) {
+        if (!LauncherPrefs.isWidgetSizeShown(this)) return
+        val size = LauncherStore.getWidgetSize(this, widgetId) ?: return
+        val wDp = (size.first / resources.displayMetrics.density).toInt()
+        val hDp = (size.second / resources.displayMetrics.density).toInt()
+        label.text = getString(R.string.launcher_widget_size_format, wDp, hDp)
     }
 
     private fun dpToPx(dp: Float): Int {

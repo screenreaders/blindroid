@@ -3,6 +3,7 @@ package com.screenreaders.blindroid.launcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,7 @@ class HomePagerAdapter(
     private val onOpenBatterySettings: () -> Unit,
     private val onOpenDndSettings: () -> Unit,
     private val onOpenSoundSettings: () -> Unit,
+    private val onOpenQuickSettings: () -> Unit,
     private val onOpenAllApps: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
@@ -82,6 +84,7 @@ class HomePagerAdapter(
                 onOpenBatterySettings,
                 onOpenDndSettings,
                 onOpenSoundSettings,
+                onOpenQuickSettings,
                 onOpenAllApps
             )
             return
@@ -248,6 +251,15 @@ class HomePagerAdapter(
         private val cardRam: LinearLayout = view.findViewById(R.id.cardRam)
         private val cardRamTitle: TextView = view.findViewById(R.id.cardRamTitle)
         private val cardRamText: TextView = view.findViewById(R.id.cardRamText)
+        private val cardDevice: LinearLayout = view.findViewById(R.id.cardDevice)
+        private val cardDeviceTitle: TextView = view.findViewById(R.id.cardDeviceTitle)
+        private val cardDeviceText: TextView = view.findViewById(R.id.cardDeviceText)
+        private val cardRotation: LinearLayout = view.findViewById(R.id.cardRotation)
+        private val cardRotationTitle: TextView = view.findViewById(R.id.cardRotationTitle)
+        private val cardRotationText: TextView = view.findViewById(R.id.cardRotationText)
+        private val cardNfc: LinearLayout = view.findViewById(R.id.cardNfc)
+        private val cardNfcTitle: TextView = view.findViewById(R.id.cardNfcTitle)
+        private val cardNfcText: TextView = view.findViewById(R.id.cardNfcText)
         private val cardDnd: LinearLayout = view.findViewById(R.id.cardDnd)
         private val cardDndTitle: TextView = view.findViewById(R.id.cardDndTitle)
         private val cardDndText: TextView = view.findViewById(R.id.cardDndText)
@@ -258,6 +270,11 @@ class HomePagerAdapter(
         private val container: LinearLayout = view.findViewById(R.id.notificationsContainer)
         private val openHint: TextView = view.findViewById(R.id.feedOpenHint)
         private val openButton: android.widget.Button = view.findViewById(R.id.feedOpenButton)
+        private val quickActionsRow: LinearLayout = view.findViewById(R.id.feedQuickActions)
+        private val quickSettingsButton: Button = view.findViewById(R.id.feedQuickSettingsButton)
+        private val wifiButton: Button = view.findViewById(R.id.feedWifiButton)
+        private val bluetoothButton: Button = view.findViewById(R.id.feedBluetoothButton)
+        private val dndButton: Button = view.findViewById(R.id.feedDndButton)
 
         fun bind(
             data: FeedData?,
@@ -279,8 +296,10 @@ class HomePagerAdapter(
             onOpenBatterySettings: () -> Unit,
             onOpenDndSettings: () -> Unit,
             onOpenSoundSettings: () -> Unit,
+            onOpenQuickSettings: () -> Unit,
             onOpenAllApps: () -> Unit
         ) {
+            root.setBackgroundColor(colors.background)
             title.setTextColor(colors.text)
             time.setTextColor(colors.text)
             date.setTextColor(colors.muted)
@@ -321,13 +340,29 @@ class HomePagerAdapter(
             cardAirplaneText.setTextColor(colors.muted)
             cardRamTitle.setTextColor(colors.text)
             cardRamText.setTextColor(colors.muted)
+            cardDeviceTitle.setTextColor(colors.text)
+            cardDeviceText.setTextColor(colors.muted)
+            cardRotationTitle.setTextColor(colors.text)
+            cardRotationText.setTextColor(colors.muted)
+            cardNfcTitle.setTextColor(colors.text)
+            cardNfcText.setTextColor(colors.muted)
             cardDndTitle.setTextColor(colors.text)
             cardDndText.setTextColor(colors.muted)
             cardRingerTitle.setTextColor(colors.text)
             cardRingerText.setTextColor(colors.muted)
             notificationsLabel.setTextColor(colors.text)
             openHint.setTextColor(colors.muted)
-            openButton.setTextColor(colors.text)
+            ThemeUtils.tintButton(openButton, colors, false)
+            ThemeUtils.applySurface(quickActionsRow, colors)
+            ThemeUtils.tintButton(quickSettingsButton, colors, false)
+            ThemeUtils.tintButton(wifiButton, colors, true)
+            ThemeUtils.tintButton(bluetoothButton, colors, false)
+            ThemeUtils.tintButton(dndButton, colors, true)
+
+            quickSettingsButton.setOnClickListener { onOpenQuickSettings() }
+            wifiButton.setOnClickListener { onOpenNetworkSettings() }
+            bluetoothButton.setOnClickListener { onOpenBluetoothSettings() }
+            dndButton.setOnClickListener { onOpenDndSettings() }
 
             if (data == null) return
             title.setText(if (data.externalMode) R.string.launcher_feed_title_google else R.string.launcher_feed_title)
@@ -360,6 +395,7 @@ class HomePagerAdapter(
                 openButton.isEnabled = data.externalAvailable
                 openButton.alpha = if (data.externalAvailable) 1.0f else 0.5f
                 openButton.setOnClickListener { onOpenExternalFeed() }
+                quickActionsRow.visibility = View.GONE
                 webHint.visibility = View.GONE
                 webView.visibility = View.GONE
                 notificationsLabel.visibility = View.GONE
@@ -372,6 +408,7 @@ class HomePagerAdapter(
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
                 root.setOnClickListener(null)
+                quickActionsRow.visibility = View.GONE
                 webHint.visibility = View.VISIBLE
                 webView.visibility = View.VISIBLE
                 notificationsLabel.visibility = View.GONE
@@ -398,6 +435,7 @@ class HomePagerAdapter(
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
                 root.setOnClickListener(null)
+                quickActionsRow.visibility = if (data.quickActionsEnabled) View.VISIBLE else View.GONE
                 webHint.visibility = View.GONE
                 webView.visibility = View.GONE
                 notificationsLabel.visibility = View.VISIBLE
@@ -612,6 +650,36 @@ class HomePagerAdapter(
                 cardRam.setOnClickListener(null)
             }
 
+            if (data.showDevice) {
+                cardDevice.visibility = View.VISIBLE
+                cardDeviceText.text = data.deviceText
+                    ?: itemView.context.getString(R.string.launcher_feed_device_title)
+                cardDevice.setOnClickListener { onOpenAllApps() }
+            } else {
+                cardDevice.visibility = View.GONE
+                cardDevice.setOnClickListener(null)
+            }
+
+            if (data.showRotation) {
+                cardRotation.visibility = View.VISIBLE
+                cardRotationText.text = data.rotationText
+                    ?: itemView.context.getString(R.string.launcher_feed_rotation_locked)
+                cardRotation.setOnClickListener { onOpenDisplaySettings() }
+            } else {
+                cardRotation.visibility = View.GONE
+                cardRotation.setOnClickListener(null)
+            }
+
+            if (data.showNfc) {
+                cardNfc.visibility = View.VISIBLE
+                cardNfcText.text = data.nfcText
+                    ?: itemView.context.getString(R.string.launcher_feed_nfc_off)
+                cardNfc.setOnClickListener { onOpenNetworkSettings() }
+            } else {
+                cardNfc.visibility = View.GONE
+                cardNfc.setOnClickListener(null)
+            }
+
             if (data.showDnd) {
                 cardDnd.visibility = View.VISIBLE
                 cardDndText.text = data.dndText
@@ -632,26 +700,29 @@ class HomePagerAdapter(
                 cardRinger.setOnClickListener(null)
             }
 
-            applyCardStyle(cardAlarm, colors)
-            applyCardStyle(cardCalendar, colors)
-            applyCardStyle(cardWeather, colors)
-            applyCardStyle(cardBattery, colors)
-            applyCardStyle(cardReminders, colors)
-            applyCardStyle(cardHeadphones, colors)
-            applyCardStyle(cardLocation, colors)
-            applyCardStyle(cardNetwork, colors)
-            applyCardStyle(cardStorage, colors)
-            applyCardStyle(cardScreenTime, colors)
-            applyCardStyle(cardBluetooth, colors)
-            applyCardStyle(cardBrightness, colors)
-            applyCardStyle(cardVolume, colors)
-            applyCardStyle(cardPower, colors)
-            applyCardStyle(cardTopApps, colors)
-            applyCardStyle(cardAirplane, colors)
-            applyCardStyle(cardRam, colors)
-            applyCardStyle(cardDnd, colors)
-            applyCardStyle(cardRinger, colors)
-            applyCardStyle(atGlanceCard, colors)
+            applyCardStyle(cardAlarm, colors, false)
+            applyCardStyle(cardCalendar, colors, true)
+            applyCardStyle(cardWeather, colors, false)
+            applyCardStyle(cardBattery, colors, true)
+            applyCardStyle(cardReminders, colors, false)
+            applyCardStyle(cardHeadphones, colors, true)
+            applyCardStyle(cardLocation, colors, false)
+            applyCardStyle(cardNetwork, colors, true)
+            applyCardStyle(cardStorage, colors, false)
+            applyCardStyle(cardScreenTime, colors, true)
+            applyCardStyle(cardBluetooth, colors, false)
+            applyCardStyle(cardBrightness, colors, true)
+            applyCardStyle(cardVolume, colors, false)
+            applyCardStyle(cardPower, colors, true)
+            applyCardStyle(cardTopApps, colors, false)
+            applyCardStyle(cardAirplane, colors, true)
+            applyCardStyle(cardRam, colors, false)
+            applyCardStyle(cardDevice, colors, true)
+            applyCardStyle(cardRotation, colors, false)
+            applyCardStyle(cardNfc, colors, true)
+            applyCardStyle(cardDnd, colors, true)
+            applyCardStyle(cardRinger, colors, false)
+            applyCardStyle(atGlanceCard, colors, true)
 
             nowCards.visibility = if (
                 data.showAlarm ||
@@ -668,6 +739,9 @@ class HomePagerAdapter(
                 data.showTopApps ||
                 data.showAirplane ||
                 data.showRam ||
+                data.showDevice ||
+                data.showRotation ||
+                data.showNfc ||
                 data.showDnd ||
                 data.showRinger
             ) {
@@ -692,20 +766,8 @@ class HomePagerAdapter(
             }
         }
 
-        private fun applyCardStyle(view: View, colors: LauncherPrefs.ThemeColors) {
-            val background = android.graphics.drawable.GradientDrawable().apply {
-                cornerRadius = 24f
-                setColor(blend(colors.background, colors.muted, 0.12f))
-                setStroke(2, blend(colors.muted, colors.text, 0.12f))
-            }
-            view.background = background
-        }
-
-        private fun blend(base: Int, overlay: Int, alpha: Float): Int {
-            val r = ((1 - alpha) * android.graphics.Color.red(base) + alpha * android.graphics.Color.red(overlay)).toInt()
-            val g = ((1 - alpha) * android.graphics.Color.green(base) + alpha * android.graphics.Color.green(overlay)).toInt()
-            val b = ((1 - alpha) * android.graphics.Color.blue(base) + alpha * android.graphics.Color.blue(overlay)).toInt()
-            return android.graphics.Color.rgb(r, g, b)
+        private fun applyCardStyle(view: View, colors: LauncherPrefs.ThemeColors, alt: Boolean) {
+            ThemeUtils.applyCard(view, colors, alt)
         }
     }
 }

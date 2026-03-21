@@ -80,8 +80,8 @@ class FolderActivity : AppCompatActivity() {
         val colors = LauncherPrefs.getThemeColors(this)
         findViewById<android.view.View>(android.R.id.content).setBackgroundColor(colors.background)
         folderTitle.setTextColor(colors.text)
-        renameButton.setTextColor(colors.text)
-        addButton.setTextColor(colors.text)
+        ThemeUtils.tintButton(renameButton, colors, false)
+        ThemeUtils.tintButton(addButton, colors, true)
     }
 
     private fun refreshFolder() {
