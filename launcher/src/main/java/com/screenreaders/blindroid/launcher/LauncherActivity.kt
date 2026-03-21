@@ -167,6 +167,9 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedNotificationsAccessTs = 0L
     private var cachedRecentNotifications: List<String> = emptyList()
     private var cachedRecentNotificationsTs = 0L
+    private var cachedSuggestedApps: List<AppEntry> = emptyList()
+    private var cachedSuggestedAppsTs = 0L
+    private var cachedSuggestedAppsLimit = 0
     private val appLabelCache = LruCache<String, String>(128)
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
@@ -369,6 +372,9 @@ class LauncherActivity : AppCompatActivity() {
                 cachedTopApps = emptyList()
                 cachedTopAppsTs = 0L
                 appLabelCache.evictAll()
+                cachedSuggestedApps = emptyList()
+                cachedSuggestedAppsTs = 0L
+                cachedSuggestedAppsLimit = 0
                 scheduleHomeRefresh(force = true, applyUi = true)
             }
         }
@@ -392,7 +398,7 @@ class LauncherActivity : AppCompatActivity() {
                 val used = baseHotseat.filterIsInstance<HomeItem.App>()
                     .map { it.component.flattenToString() }
                     .toMutableSet()
-                val suggestions = LauncherStore.getSuggestedApps(this, appsSnapshot, maxSlots * 2)
+                val suggestions = getSuggestedAppsCached(appsSnapshot, maxSlots * 2)
                     .filter { used.add(it.component.flattenToString()) }
                     .map { HomeItem.app(it) }
                 val merged = baseHotseat + suggestions
@@ -409,7 +415,7 @@ class LauncherActivity : AppCompatActivity() {
                 if (favorites.isNotEmpty()) {
                     favorites
                 } else {
-                    LauncherStore.getSuggestedApps(this, appsSnapshot, slots)
+                    getSuggestedAppsCached(appsSnapshot, slots)
                 }
             } else {
                 null
@@ -484,6 +490,21 @@ class LauncherActivity : AppCompatActivity() {
         cachedNotificationsAccessTs = 0L
         cachedRecentNotifications = emptyList()
         cachedRecentNotificationsTs = 0L
+    }
+
+    @Synchronized
+    private fun getSuggestedAppsCached(apps: List<AppEntry>, limit: Int): List<AppEntry> {
+        if (limit <= 0) return emptyList()
+        val now = SystemClock.uptimeMillis()
+        val expired = now - cachedSuggestedAppsTs > 60_000L
+        if (!expired && cachedSuggestedApps.isNotEmpty() && cachedSuggestedAppsLimit >= limit) {
+            return cachedSuggestedApps.take(limit)
+        }
+        val fresh = LauncherStore.getSuggestedApps(this, apps, limit)
+        cachedSuggestedApps = fresh
+        cachedSuggestedAppsTs = now
+        cachedSuggestedAppsLimit = limit
+        return fresh
     }
 
     private fun shouldRunFeedTicker(): Boolean {
