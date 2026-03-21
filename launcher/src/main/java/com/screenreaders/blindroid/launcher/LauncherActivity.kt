@@ -153,6 +153,17 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedTopAppsTs = 0L
     private var cachedRamText: String? = null
     private var cachedRamTs = 0L
+    private var cachedLocationText: String? = null
+    private var cachedLocationTs = 0L
+    private var cachedNetworkText: String? = null
+    private var cachedNetworkTs = 0L
+    private var cachedStorageText: String? = null
+    private var cachedStorageTs = 0L
+    private var cachedBatteryDetailsText: String? = null
+    private var cachedBatteryDetailsTs = 0L
+    private var cachedNotificationsAccessGranted: Boolean? = null
+    private var cachedNotificationsAccessTs = 0L
+    private val appLabelCache = java.util.concurrent.ConcurrentHashMap<String, String>()
 
     private val voiceSearchLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -319,6 +330,18 @@ class LauncherActivity : AppCompatActivity() {
         stopFeedTicker()
     }
 
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        if (level >= android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) {
+            clearFeedCaches()
+        }
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        clearFeedCaches()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         soundFeedback?.release()
@@ -332,6 +355,7 @@ class LauncherActivity : AppCompatActivity() {
                 allApps = apps
                 cachedTopApps = emptyList()
                 cachedTopAppsTs = 0L
+                appLabelCache.clear()
                 scheduleHomeRefresh(force = true, applyUi = true)
             }
         }
@@ -424,6 +448,25 @@ class LauncherActivity : AppCompatActivity() {
         if (!feedEnabled) return
         feedData = buildFeedData()
         homeAdapter.updateFeedData(feedData)
+    }
+
+    private fun clearFeedCaches() {
+        cachedScreenTimeText = null
+        cachedScreenTimeTs = 0L
+        cachedTopApps = emptyList()
+        cachedTopAppsTs = 0L
+        cachedRamText = null
+        cachedRamTs = 0L
+        cachedLocationText = null
+        cachedLocationTs = 0L
+        cachedNetworkText = null
+        cachedNetworkTs = 0L
+        cachedStorageText = null
+        cachedStorageTs = 0L
+        cachedBatteryDetailsText = null
+        cachedBatteryDetailsTs = 0L
+        cachedNotificationsAccessGranted = null
+        cachedNotificationsAccessTs = 0L
     }
 
     private fun shouldRunFeedTicker(): Boolean {
@@ -826,6 +869,7 @@ class LauncherActivity : AppCompatActivity() {
             startFeedTicker()
         } else {
             stopFeedTicker()
+            clearFeedCaches()
         }
         val feedOffset = if (enabled && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
         val target = (currentHome + feedOffset).coerceIn(0, homeAdapter.itemCount - 1)
@@ -874,8 +918,19 @@ class LauncherActivity : AppCompatActivity() {
         val bluetoothEnabled = isBluetoothEnabled()
         val dndEnabled = isDndEnabled()
         val dndPolicyGranted = isDndPolicyGranted()
-        val notificationsAccessGranted = NotificationManagerCompat.getEnabledListenerPackages(this)
-            .contains(packageName)
+        val notificationsAccessGranted = run {
+            val ttlMs = 10_000L
+            val cached = cachedNotificationsAccessGranted
+            if (cached != null && nowMs - cachedNotificationsAccessTs <= ttlMs) {
+                cached
+            } else {
+                val granted = NotificationManagerCompat.getEnabledListenerPackages(this)
+                    .contains(packageName)
+                cachedNotificationsAccessGranted = granted
+                cachedNotificationsAccessTs = nowMs
+                granted
+            }
+        }
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
@@ -906,13 +961,55 @@ class LauncherActivity : AppCompatActivity() {
         val alarmText = if (showAlarm) getNextAlarmText() else null
         val calendarText = if (showCalendar && calendarPermissionGranted) getNextCalendarEventText() else null
         val weatherText = if (showWeather) getWeatherText() else null
-        val batteryDetailsText = if (showBattery) getBatteryDetailsText() else null
+        val batteryDetailsText = if (showBattery) {
+            val ttlMs = 30_000L
+            if (nowMs - cachedBatteryDetailsTs > ttlMs || cachedBatteryDetailsText == null) {
+                cachedBatteryDetailsText = getBatteryDetailsText()
+                cachedBatteryDetailsTs = nowMs
+            }
+            cachedBatteryDetailsText
+        } else {
+            null
+        }
         val reminderText = if (showReminders && calendarPermissionGranted) getNextReminderText() else null
         val headphonesText = if (showHeadphones) getHeadphonesText() else null
         val locationPermissionGranted = hasLocationPermission()
-        val locationText = if (showLocation) getLocationText(locationPermissionGranted) else null
-        val networkText = if (showNetwork) getNetworkText() else null
-        val storageText = if (showStorage) getStorageText() else null
+        val locationText = if (showLocation) {
+            if (!locationPermissionGranted) {
+                cachedLocationText = null
+                cachedLocationTs = 0L
+                getLocationText(false)
+            } else {
+                val ttlMs = 30_000L
+                if (nowMs - cachedLocationTs > ttlMs || cachedLocationText == null) {
+                    cachedLocationText = getLocationText(true)
+                    cachedLocationTs = nowMs
+                }
+                cachedLocationText
+            }
+        } else {
+            null
+        }
+        val networkText = if (showNetwork) {
+            val ttlMs = 15_000L
+            if (nowMs - cachedNetworkTs > ttlMs || cachedNetworkText == null) {
+                cachedNetworkText = getNetworkText()
+                cachedNetworkTs = nowMs
+            }
+            cachedNetworkText
+        } else {
+            null
+        }
+        val storageText = if (showStorage) {
+            val ttlMs = 60_000L
+            if (nowMs - cachedStorageTs > ttlMs || cachedStorageText == null) {
+                cachedStorageText = getStorageText()
+                cachedStorageTs = nowMs
+            }
+            cachedStorageText
+        } else {
+            null
+        }
         val usagePermissionGranted = LauncherStore.hasUsageStatsPermission(this)
         val screenTimeText = if (showScreenTime) {
             if (!usagePermissionGranted) {
@@ -1569,12 +1666,18 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun resolveAppLabel(packageName: String): String? {
-        return try {
+        val cached = appLabelCache[packageName]
+        if (cached != null) return cached
+        val label = try {
             val info = packageManager.getApplicationInfo(packageName, 0)
             packageManager.getApplicationLabel(info)?.toString()
         } catch (_: Exception) {
             null
         }
+        if (!label.isNullOrBlank()) {
+            appLabelCache[packageName] = label
+        }
+        return label
     }
 
     private fun formatDuration(durationMs: Long): String {

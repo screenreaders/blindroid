@@ -291,6 +291,24 @@ class HomePagerAdapter(
         private val bluetoothButton: Button = view.findViewById(R.id.feedBluetoothButton)
         private val dndButton: Button = view.findViewById(R.id.feedDndButton)
 
+        private fun pauseWebView() {
+            try {
+                webView.onPause()
+                webView.pauseTimers()
+            } catch (_: Exception) {
+                // Ignore
+            }
+        }
+
+        private fun resumeWebView() {
+            try {
+                webView.onResume()
+                webView.resumeTimers()
+            } catch (_: Exception) {
+                // Ignore
+            }
+        }
+
         fun bind(
             data: FeedData?,
             colors: LauncherPrefs.ThemeColors,
@@ -415,6 +433,7 @@ class HomePagerAdapter(
             }
 
             if (data.externalMode) {
+                pauseWebView()
                 openHint.visibility = View.VISIBLE
                 openButton.visibility = View.VISIBLE
                 openButton.isEnabled = data.externalAvailable
@@ -429,6 +448,7 @@ class HomePagerAdapter(
                 root.setOnClickListener { if (data.externalAvailable) onOpenExternalFeed() }
                 atGlanceCard.visibility = View.VISIBLE
             } else if (data.embeddedMode) {
+                resumeWebView()
                 openHint.visibility = View.GONE
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
@@ -448,7 +468,10 @@ class HomePagerAdapter(
                     webView.settings.useWideViewPort = true
                     webView.settings.loadWithOverviewMode = true
                     webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
-                    webView.settings.userAgentString = webView.settings.userAgentString + " BlindroidLauncher Mobile"
+                    val ua = webView.settings.userAgentString
+                    if (!ua.contains("BlindroidLauncher")) {
+                        webView.settings.userAgentString = ua + " BlindroidLauncher Mobile"
+                    }
                     android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
                     webView.webChromeClient = android.webkit.WebChromeClient()
                     webView.webViewClient = android.webkit.WebViewClient()
@@ -456,6 +479,7 @@ class HomePagerAdapter(
                     webView.tag = url
                 }
             } else {
+                pauseWebView()
                 openHint.visibility = View.GONE
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
