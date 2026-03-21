@@ -727,9 +727,10 @@ class LauncherActivity : AppCompatActivity() {
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val notifications = getRecentNotifications()
         val feedMode = LauncherPrefs.getFeedMode(this)
-        val externalMode = feedMode == LauncherPrefs.FEED_MODE_GOOGLE
-        val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED
         val externalAvailable = isGoogleAppAvailable()
+        val wantsGoogle = feedMode == LauncherPrefs.FEED_MODE_GOOGLE
+        val externalMode = wantsGoogle && externalAvailable
+        val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED || (wantsGoogle && !externalAvailable)
         val quickActionsEnabled = LauncherPrefs.isFeedQuickActionsEnabled(this)
         val wifiEnabled = isWifiEnabled()
         val bluetoothEnabled = isBluetoothEnabled()

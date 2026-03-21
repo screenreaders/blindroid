@@ -374,7 +374,13 @@ class HomePagerAdapter(
             dndButton.setOnClickListener { onToggleDnd() }
 
             if (data == null) return
-            title.setText(if (data.externalMode) R.string.launcher_feed_title_google else R.string.launcher_feed_title)
+            title.setText(
+                if (data.externalMode || data.embeddedMode) {
+                    R.string.launcher_feed_title_google
+                } else {
+                    R.string.launcher_feed_title
+                }
+            )
             time.text = data.time
             date.text = data.date
             battery.text = data.battery
@@ -753,10 +759,13 @@ class HomePagerAdapter(
                 data.showAlarm ||
                 data.showCalendar ||
                 data.showWeather ||
+                data.showBattery ||
                 data.showReminders ||
                 data.showHeadphones ||
+                data.showLocation ||
                 data.showNetwork ||
                 data.showStorage ||
+                data.showScreenTime ||
                 data.showBluetooth ||
                 data.showBrightness ||
                 data.showVolume ||
