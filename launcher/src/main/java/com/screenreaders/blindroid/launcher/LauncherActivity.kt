@@ -6,6 +6,7 @@ import android.app.SearchManager
 import android.app.admin.DevicePolicyManager
 import android.bluetooth.BluetoothProfile
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.ContentUris
 import android.content.Context
@@ -164,6 +165,12 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedNotificationsAccessGranted: Boolean? = null
     private var cachedNotificationsAccessTs = 0L
     private val appLabelCache = java.util.concurrent.ConcurrentHashMap<String, String>()
+    private var timeReceiverRegistered = false
+    private val timeReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            scheduleHomeRefresh(refreshFeed = true, refreshHome = false)
+        }
+    }
 
     private val voiceSearchLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -323,11 +330,13 @@ class LauncherActivity : AppCompatActivity() {
         }
         scheduleHomeRefresh(force = true, applyUi = true)
         startFeedTicker()
+        registerTimeReceiver()
     }
 
     override fun onPause() {
         super.onPause()
         stopFeedTicker()
+        unregisterTimeReceiver()
     }
 
     override fun onTrimMemory(level: Int) {
@@ -486,6 +495,29 @@ class LauncherActivity : AppCompatActivity() {
     private fun stopFeedTicker() {
         feedTickerRunning = false
         feedTickerHandler.removeCallbacks(feedTickerRunnable)
+    }
+
+    private fun registerTimeReceiver() {
+        if (timeReceiverRegistered) return
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_TIME_TICK)
+            addAction(Intent.ACTION_TIME_CHANGED)
+            addAction(Intent.ACTION_TIMEZONE_CHANGED)
+            addAction(Intent.ACTION_DATE_CHANGED)
+        }
+        registerReceiver(timeReceiver, filter)
+        timeReceiverRegistered = true
+    }
+
+    private fun unregisterTimeReceiver() {
+        if (!timeReceiverRegistered) return
+        try {
+            unregisterReceiver(timeReceiver)
+        } catch (_: Exception) {
+            // Ignore
+        } finally {
+            timeReceiverRegistered = false
+        }
     }
 
     private fun applyUiConfig() {
@@ -1312,7 +1344,30 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openNotificationAccessSettings() {
-        startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+        safeStart(
+            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS),
+            Intent(Settings.ACTION_SETTINGS)
+        )
+    }
+
+    private fun safeStart(primary: Intent, fallback: Intent? = null, showToast: Boolean = true): Boolean {
+        return try {
+            startActivity(primary)
+            true
+        } catch (_: Exception) {
+            if (fallback != null) {
+                try {
+                    startActivity(fallback)
+                    return true
+                } catch (_: Exception) {
+                    // ignore
+                }
+            }
+            if (showToast) {
+                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
+            }
+            false
+        }
     }
 
     private fun getNextAlarmText(): String? {
@@ -2688,11 +2743,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openLocationSettings() {
-        try {
-            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-        } catch (_: Exception) {
-            // ignore
-        }
+        safeStart(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), Intent(Settings.ACTION_SETTINGS), false)
     }
 
     private fun openScreenTime() {
@@ -2709,77 +2760,34 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openBluetoothSettings() {
-        val intent = Intent(Settings.ACTION_BLUETOOTH_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-        }
+        safeStart(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
     }
 
     private fun openNetworkSettings() {
-        val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-        }
+        safeStart(Intent(Settings.ACTION_WIRELESS_SETTINGS))
     }
 
     private fun openDisplaySettings() {
-        val intent = Intent(Settings.ACTION_DISPLAY_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-        }
+        safeStart(Intent(Settings.ACTION_DISPLAY_SETTINGS))
     }
 
     private fun openBatterySettings() {
-        val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            try {
-                startActivity(Intent(Settings.ACTION_SETTINGS))
-            } catch (_: Exception) {
-                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-            }
-        }
+        safeStart(Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS), Intent(Settings.ACTION_SETTINGS))
     }
 
     private fun openDndSettings() {
-        try {
-            startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
-        } catch (_: Exception) {
-            try {
-                startActivity(Intent(Settings.ACTION_SOUND_SETTINGS))
-            } catch (_: Exception) {
-                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-            }
-        }
+        safeStart(
+            Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS),
+            Intent(Settings.ACTION_SOUND_SETTINGS)
+        )
     }
 
     private fun openSoundSettings() {
-        val intent = Intent(Settings.ACTION_SOUND_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-        }
+        safeStart(Intent(Settings.ACTION_SOUND_SETTINGS))
     }
 
     private fun openStorageSettings() {
-        val intent = Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            try {
-                startActivity(Intent(Settings.ACTION_SETTINGS))
-            } catch (_: Exception) {
-                Toast.makeText(this, R.string.launcher_shortcut_unavailable, Toast.LENGTH_SHORT).show()
-            }
-        }
+        safeStart(Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS), Intent(Settings.ACTION_SETTINGS))
     }
 
     private fun requestCalendarPermission() {
