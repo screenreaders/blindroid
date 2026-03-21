@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.AlarmManager
 import android.app.SearchManager
 import android.app.admin.DevicePolicyManager
-import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
@@ -20,6 +19,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.location.Location
 import android.location.LocationManager
+import android.net.wifi.WifiManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -27,6 +27,8 @@ import android.os.Bundle
 import android.os.BatteryManager
 import android.app.ActivityManager
 import android.app.NotificationManager
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.os.Environment
 import android.os.PowerManager
 import android.os.StatFs
@@ -170,6 +172,9 @@ class LauncherActivity : AppCompatActivity() {
             ::openDndSettings,
             ::openSoundSettings,
             ::openQuickSettings,
+            ::toggleWifiFromFeed,
+            ::toggleBluetoothFromFeed,
+            ::toggleDndFromFeed,
             ::openAllApps,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
@@ -726,6 +731,9 @@ class LauncherActivity : AppCompatActivity() {
         val embeddedMode = feedMode == LauncherPrefs.FEED_MODE_EMBEDDED
         val externalAvailable = isGoogleAppAvailable()
         val quickActionsEnabled = LauncherPrefs.isFeedQuickActionsEnabled(this)
+        val wifiEnabled = isWifiEnabled()
+        val bluetoothEnabled = isBluetoothEnabled()
+        val dndEnabled = isDndEnabled()
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
@@ -791,6 +799,9 @@ class LauncherActivity : AppCompatActivity() {
             externalAvailable = externalAvailable,
             embeddedUrl = if (embeddedMode) "https://www.google.com/discover?hl=pl&gl=PL" else null,
             quickActionsEnabled = quickActionsEnabled,
+            wifiEnabled = wifiEnabled,
+            bluetoothEnabled = bluetoothEnabled,
+            dndEnabled = dndEnabled,
             atGlanceText = atGlanceText,
             showAlarm = showAlarm,
             alarmText = alarmText,
@@ -927,6 +938,98 @@ class LauncherActivity : AppCompatActivity() {
         val raw = prefs.getString("recent_notifications", "") ?: ""
         if (raw.isBlank()) return emptyList()
         return raw.split("|").filter { it.isNotBlank() }.take(5)
+    }
+
+    private fun isWifiEnabled(): Boolean {
+        return try {
+            val wifi = applicationContext.getSystemService(WifiManager::class.java) ?: return false
+            @Suppress("DEPRECATION")
+            wifi.isWifiEnabled
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun getBluetoothAdapter(): BluetoothAdapter? {
+        return try {
+            val manager = getSystemService(BluetoothManager::class.java)
+            manager?.adapter
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun isBluetoothEnabled(): Boolean {
+        return try {
+            getBluetoothAdapter()?.isEnabled == true
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun isDndEnabled(): Boolean {
+        val nm = getSystemService(NotificationManager::class.java)
+        return nm.currentInterruptionFilter != NotificationManager.INTERRUPTION_FILTER_ALL
+    }
+
+    private fun toggleWifiFromFeed() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            openNetworkSettings()
+            return
+        }
+        try {
+            val wifi = applicationContext.getSystemService(WifiManager::class.java) ?: return
+            @Suppress("DEPRECATION")
+            val target = !wifi.isWifiEnabled
+            @Suppress("DEPRECATION")
+            wifi.isWifiEnabled = target
+            refreshHome()
+        } catch (_: Exception) {
+            openNetworkSettings()
+        }
+    }
+
+    private fun toggleBluetoothFromFeed() {
+        if (!isBluetoothPermissionGranted()) {
+            requestBluetoothPermission()
+            return
+        }
+        val adapter = getBluetoothAdapter()
+        if (adapter == null) {
+            openBluetoothSettings()
+            return
+        }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                openBluetoothSettings()
+                return
+            }
+            val enabled = adapter.isEnabled
+            if (enabled) {
+                @Suppress("DEPRECATION")
+                adapter.disable()
+            } else {
+                @Suppress("DEPRECATION")
+                adapter.enable()
+            }
+            refreshHome()
+        } catch (_: Exception) {
+            openBluetoothSettings()
+        }
+    }
+
+    private fun toggleDndFromFeed() {
+        val nm = getSystemService(NotificationManager::class.java)
+        if (!nm.isNotificationPolicyAccessGranted) {
+            openDndSettings()
+            return
+        }
+        val enabled = nm.currentInterruptionFilter != NotificationManager.INTERRUPTION_FILTER_ALL
+        nm.setInterruptionFilter(
+            if (enabled) NotificationManager.INTERRUPTION_FILTER_ALL
+            else NotificationManager.INTERRUPTION_FILTER_NONE
+        )
+        refreshHome()
     }
 
     private fun getNextAlarmText(): String? {

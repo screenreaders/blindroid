@@ -376,6 +376,12 @@
     <string name="launcher_feed_bluetooth_off">Wyłączony</string>
     <string name="launcher_feed_bluetooth_connected">Połączono: %1$s</string>
     <string name="launcher_feed_bluetooth_permission">Brak uprawnienia Bluetooth</string>
+    <string name="launcher_feed_quick_wifi_on">Wi‑Fi: Włączone</string>
+    <string name="launcher_feed_quick_wifi_off">Wi‑Fi: Wyłączone</string>
+    <string name="launcher_feed_quick_bluetooth_on">Bluetooth: Włączony</string>
+    <string name="launcher_feed_quick_bluetooth_off">Bluetooth: Wyłączony</string>
+    <string name="launcher_feed_quick_dnd_on">Nie przeszkadzać: Włączone</string>
+    <string name="launcher_feed_quick_dnd_off">Nie przeszkadzać: Wyłączone</string>
     <string name="launcher_feed_brightness_title">Jasność ekranu</string>
     <string name="launcher_feed_brightness_auto">Automatyczna</string>
     <string name="launcher_feed_brightness_text">Ustawienie: %1$d%%</string>

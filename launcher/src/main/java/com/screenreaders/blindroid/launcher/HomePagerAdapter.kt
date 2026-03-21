@@ -35,6 +35,9 @@ class HomePagerAdapter(
     private val onOpenDndSettings: () -> Unit,
     private val onOpenSoundSettings: () -> Unit,
     private val onOpenQuickSettings: () -> Unit,
+    private val onToggleWifi: () -> Unit,
+    private val onToggleBluetooth: () -> Unit,
+    private val onToggleDnd: () -> Unit,
     private val onOpenAllApps: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
@@ -85,6 +88,9 @@ class HomePagerAdapter(
                 onOpenDndSettings,
                 onOpenSoundSettings,
                 onOpenQuickSettings,
+                onToggleWifi,
+                onToggleBluetooth,
+                onToggleDnd,
                 onOpenAllApps
             )
             return
@@ -297,6 +303,9 @@ class HomePagerAdapter(
             onOpenDndSettings: () -> Unit,
             onOpenSoundSettings: () -> Unit,
             onOpenQuickSettings: () -> Unit,
+            onToggleWifi: () -> Unit,
+            onToggleBluetooth: () -> Unit,
+            onToggleDnd: () -> Unit,
             onOpenAllApps: () -> Unit
         ) {
             root.setBackgroundColor(colors.background)
@@ -360,9 +369,9 @@ class HomePagerAdapter(
             ThemeUtils.tintButton(dndButton, colors, true)
 
             quickSettingsButton.setOnClickListener { onOpenQuickSettings() }
-            wifiButton.setOnClickListener { onOpenNetworkSettings() }
-            bluetoothButton.setOnClickListener { onOpenBluetoothSettings() }
-            dndButton.setOnClickListener { onOpenDndSettings() }
+            wifiButton.setOnClickListener { onToggleWifi() }
+            bluetoothButton.setOnClickListener { onToggleBluetooth() }
+            dndButton.setOnClickListener { onToggleDnd() }
 
             if (data == null) return
             title.setText(if (data.externalMode) R.string.launcher_feed_title_google else R.string.launcher_feed_title)
@@ -395,7 +404,7 @@ class HomePagerAdapter(
                 openButton.isEnabled = data.externalAvailable
                 openButton.alpha = if (data.externalAvailable) 1.0f else 0.5f
                 openButton.setOnClickListener { onOpenExternalFeed() }
-                quickActionsRow.visibility = View.GONE
+                quickActionsRow.visibility = if (data.quickActionsEnabled) View.VISIBLE else View.GONE
                 webHint.visibility = View.GONE
                 webView.visibility = View.GONE
                 notificationsLabel.visibility = View.GONE
@@ -408,7 +417,7 @@ class HomePagerAdapter(
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
                 root.setOnClickListener(null)
-                quickActionsRow.visibility = View.GONE
+                quickActionsRow.visibility = if (data.quickActionsEnabled) View.VISIBLE else View.GONE
                 webHint.visibility = View.VISIBLE
                 webView.visibility = View.VISIBLE
                 notificationsLabel.visibility = View.GONE
@@ -423,7 +432,7 @@ class HomePagerAdapter(
                     webView.settings.useWideViewPort = true
                     webView.settings.loadWithOverviewMode = true
                     webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
-                    webView.settings.userAgentString = webView.settings.userAgentString + " BlindroidLauncher"
+                    webView.settings.userAgentString = webView.settings.userAgentString + " BlindroidLauncher Mobile"
                     android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
                     webView.webChromeClient = android.webkit.WebChromeClient()
                     webView.webViewClient = android.webkit.WebViewClient()
@@ -447,6 +456,22 @@ class HomePagerAdapter(
             container.removeAllViews()
             if (data.externalMode || data.embeddedMode) {
                 return
+            }
+
+            wifiButton.text = if (data.wifiEnabled) {
+                itemView.context.getString(R.string.launcher_feed_quick_wifi_on)
+            } else {
+                itemView.context.getString(R.string.launcher_feed_quick_wifi_off)
+            }
+            bluetoothButton.text = if (data.bluetoothEnabled) {
+                itemView.context.getString(R.string.launcher_feed_quick_bluetooth_on)
+            } else {
+                itemView.context.getString(R.string.launcher_feed_quick_bluetooth_off)
+            }
+            dndButton.text = if (data.dndEnabled) {
+                itemView.context.getString(R.string.launcher_feed_quick_dnd_on)
+            } else {
+                itemView.context.getString(R.string.launcher_feed_quick_dnd_off)
             }
 
             if (data.showAlarm) {
