@@ -53,6 +53,7 @@ import org.json.JSONObject
 import java.util.Calendar
 import java.util.Locale
 import java.util.concurrent.Executors
+import java.security.MessageDigest
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -86,7 +87,25 @@ class MainActivity : AppCompatActivity() {
             if (id <= 0 || id != downloadId) return
             val dm = getSystemService(DownloadManager::class.java)
             val uri = dm.getUriForDownloadedFile(id) ?: return
+            val expectedSha = Prefs.getUpdateDownloadSha(this@MainActivity)
+            if (!expectedSha.isNullOrBlank()) {
+                val actual = computeSha256(uri)
+                if (actual == null || !actual.equals(expectedSha, ignoreCase = true)) {
+                    dm.remove(id)
+                    Prefs.setUpdateDownloadId(this@MainActivity, 0L)
+                    Prefs.setUpdateDownloadSha(this@MainActivity, null)
+                    downloadId = 0L
+                    updateStatusText(getString(R.string.update_download_checksum_failed))
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.update_download_checksum_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
+                }
+            }
             Prefs.setUpdateDownloadId(this@MainActivity, 0L)
+            Prefs.setUpdateDownloadSha(this@MainActivity, null)
             downloadId = 0L
             showInstallPrompt(uri)
         }
@@ -1495,6 +1514,7 @@ class MainActivity : AppCompatActivity() {
             updateStatusText(getString(R.string.update_no_download))
             return
         }
+        Prefs.setUpdateDownloadSha(this, info.sha256)
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle("Blindroid ${info.version}")
             .setDescription(getString(R.string.update_download_started))
@@ -1511,6 +1531,28 @@ class MainActivity : AppCompatActivity() {
         Prefs.setUpdateDownloadId(this, downloadId)
         updateStatusText(getString(R.string.update_download_started))
         registerDownloadReceiverIfNeeded()
+    }
+
+    private fun computeSha256(uri: Uri): String? {
+        return try {
+            val md = MessageDigest.getInstance("SHA-256")
+            contentResolver.openInputStream(uri)?.use { input ->
+                val buffer = ByteArray(8192)
+                var read = input.read(buffer)
+                while (read > 0) {
+                    md.update(buffer, 0, read)
+                    read = input.read(buffer)
+                }
+            } ?: return null
+            val digest = md.digest()
+            val sb = StringBuilder(digest.size * 2)
+            for (b in digest) {
+                sb.append(String.format(Locale.US, "%02x", b))
+            }
+            sb.toString()
+        } catch (_: Exception) {
+            null
+        }
     }
 
     private fun registerDownloadReceiverIfNeeded() {

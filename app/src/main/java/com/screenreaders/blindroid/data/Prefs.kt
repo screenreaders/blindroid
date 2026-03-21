@@ -25,6 +25,7 @@ object Prefs {
     private const val KEY_LAST_UPDATE_CHECK = "last_update_check"
     private const val KEY_LAST_UPDATE_NOTIFIED = "last_update_notified"
     private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
+    private const val KEY_UPDATE_DOWNLOAD_SHA = "update_download_sha"
     private const val KEY_SPEAKER_OVERRIDE = "speaker_override"
     private const val KEY_END_CALL_KEY = "end_call_key"
     private const val KEY_CHIME_ENABLED = "chime_enabled"
@@ -828,6 +829,13 @@ object Prefs {
 
     fun setUpdateDownloadId(context: Context, value: Long) {
         prefs(context).edit().putLong(KEY_UPDATE_DOWNLOAD_ID, value).apply()
+    }
+
+    fun getUpdateDownloadSha(context: Context): String? =
+        prefs(context).getString(KEY_UPDATE_DOWNLOAD_SHA, null)
+
+    fun setUpdateDownloadSha(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_UPDATE_DOWNLOAD_SHA, value).apply()
     }
 
     fun isChimeEnabled(context: Context): Boolean =
