@@ -42,6 +42,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
@@ -102,12 +103,24 @@ class LauncherActivity : AppCompatActivity() {
     private var lastCustomVersion: Long = 0L
     private var lastIconPackVersion: Long = 0L
 
+    private val voiceSearchLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val results = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).orEmpty()
+        val query = results.firstOrNull().orEmpty()
+        if (query.isNotBlank()) {
+            if (!handleVoiceCommand(query)) {
+                launchSearch(query)
+            }
+        }
+    }
+
     private val flashPermissionRequestCode = 9201
     private val calendarPermissionRequestCode = 9202
     private val bluetoothPermissionRequestCode = 9203
     private val weatherPermissionRequestCode = 9204
 
-    private val voiceRequestCode = 4201
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -544,7 +557,7 @@ class LauncherActivity : AppCompatActivity() {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_settings_voice_search))
         try {
-            startActivityForResult(intent, voiceRequestCode)
+            voiceSearchLauncher.launch(intent)
         } catch (_: Exception) {
             if (preferGoogle) {
                 val fallback = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -552,26 +565,13 @@ class LauncherActivity : AppCompatActivity() {
                     putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_settings_voice_search))
                 }
                 try {
-                    startActivityForResult(fallback, voiceRequestCode)
+                    voiceSearchLauncher.launch(fallback)
                     return
                 } catch (_: Exception) {
                     // fall through
                 }
             }
             Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == voiceRequestCode && resultCode == RESULT_OK) {
-            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).orEmpty()
-            val query = results.firstOrNull().orEmpty()
-            if (query.isNotBlank()) {
-                if (!handleVoiceCommand(query)) {
-                    launchSearch(query)
-                }
-            }
         }
     }
 
@@ -712,7 +712,10 @@ class LauncherActivity : AppCompatActivity() {
     private fun buildFeedData(): FeedData {
         val now = java.time.LocalDateTime.now()
         val timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm")
-        val dateFormatter = java.time.format.DateTimeFormatter.ofPattern("EEEE, d MMMM", java.util.Locale("pl", "PL"))
+        val dateFormatter = java.time.format.DateTimeFormatter.ofPattern(
+            "EEEE, d MMMM",
+            java.util.Locale.forLanguageTag("pl-PL")
+        )
         val time = now.format(timeFormatter)
         val date = now.format(dateFormatter)
         val batteryLevel = getBatteryLevel()
@@ -1201,9 +1204,15 @@ class LauncherActivity : AppCompatActivity() {
         return when {
             caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                 val ssid = try {
-                    val wifi = applicationContext.getSystemService(android.net.wifi.WifiManager::class.java)
-                    val raw = wifi.connectionInfo?.ssid?.trim('"')
-                    raw?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
+                    val raw = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        (caps.transportInfo as? android.net.wifi.WifiInfo)?.ssid
+                    } else {
+                        @Suppress("DEPRECATION")
+                        applicationContext.getSystemService(android.net.wifi.WifiManager::class.java)
+                            .connectionInfo?.ssid
+                    }
+                    val cleaned = raw?.trim('"')
+                    cleaned?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
                 } catch (_: Exception) {
                     null
                 }
@@ -1389,7 +1398,7 @@ class LauncherActivity : AppCompatActivity() {
             exp += 1
         }
         val pre = "KMGTPE"[exp - 1]
-        return String.format(java.util.Locale("pl", "PL"), "%.1f %sB", value, pre)
+        return String.format(java.util.Locale.forLanguageTag("pl-PL"), "%.1f %sB", value, pre)
     }
 
     private fun getAirplaneText(): String {
@@ -1465,7 +1474,12 @@ class LauncherActivity : AppCompatActivity() {
         return if (allowTodayLabel && date == today) {
             "Dziś ${dateTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))}"
         } else {
-            dateTime.format(java.time.format.DateTimeFormatter.ofPattern("d MMM, HH:mm", java.util.Locale("pl", "PL")))
+            dateTime.format(
+                java.time.format.DateTimeFormatter.ofPattern(
+                    "d MMM, HH:mm",
+                    java.util.Locale.forLanguageTag("pl-PL")
+                )
+            )
         }
     }
 
@@ -1476,7 +1490,12 @@ class LauncherActivity : AppCompatActivity() {
         return if (allowTodayLabel && date == today) {
             "Dziś"
         } else {
-            date.format(java.time.format.DateTimeFormatter.ofPattern("d MMM", java.util.Locale("pl", "PL")))
+            date.format(
+                java.time.format.DateTimeFormatter.ofPattern(
+                    "d MMM",
+                    java.util.Locale.forLanguageTag("pl-PL")
+                )
+            )
         }
     }
 

@@ -155,7 +155,7 @@ class HomeItemAdapter(
 
     private fun formatLabel(context: android.content.Context, label: String): String {
         return when (LauncherPrefs.getLabelStyle(context)) {
-            1 -> label.uppercase(java.util.Locale("pl", "PL"))
+            1 -> label.uppercase(java.util.Locale.forLanguageTag("pl-PL"))
             else -> label
         }
     }

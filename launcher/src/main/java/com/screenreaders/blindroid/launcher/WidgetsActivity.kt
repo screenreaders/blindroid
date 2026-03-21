@@ -13,14 +13,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.gridlayout.widget.GridLayout
 
 class WidgetsActivity : AppCompatActivity() {
     companion object {
         private const val HOST_ID = 1024
-        private const val REQUEST_PICK_WIDGET = 1001
-        private const val REQUEST_BIND_WIDGET = 1002
-        private const val REQUEST_CONFIGURE_WIDGET = 1003
     }
 
     private lateinit var addButton: Button
@@ -32,6 +30,48 @@ class WidgetsActivity : AppCompatActivity() {
 
     private var pendingWidgetId: Int = AppWidgetManager.INVALID_APPWIDGET_ID
     private var pendingProvider: AppWidgetProviderInfo? = null
+
+    private val pickWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        handleWidgetPicked(appWidgetId)
+    }
+
+    private val bindWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        handleWidgetBound(appWidgetId)
+    }
+
+    private val configureWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        completeAddWidget(appWidgetId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +129,7 @@ class WidgetsActivity : AppCompatActivity() {
         pendingWidgetId = appWidgetHost.allocateAppWidgetId()
         val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, pendingWidgetId)
-        startActivityForResult(intent, REQUEST_PICK_WIDGET)
+        pickWidgetLauncher.launch(intent)
     }
 
     private fun showWidgetList() {
@@ -98,7 +138,9 @@ class WidgetsActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.launcher_no_widgets, Toast.LENGTH_SHORT).show()
             return
         }
-        val labels = providers.map { it.label ?: it.provider.className }.toTypedArray()
+        val labels = providers.map { info ->
+            info.loadLabel(packageManager)?.toString() ?: info.provider.className
+        }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle(R.string.launcher_widgets_list)
             .setItems(labels) { _, which ->
@@ -108,25 +150,6 @@ class WidgetsActivity : AppCompatActivity() {
                 bindWidgetFromProvider(info, pendingWidgetId)
             }
             .show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val appWidgetId = data?.getIntExtra(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            pendingWidgetId
-        ) ?: pendingWidgetId
-
-        if (resultCode != RESULT_OK) {
-            cleanupWidgetId(appWidgetId)
-            return
-        }
-
-        when (requestCode) {
-            REQUEST_PICK_WIDGET -> handleWidgetPicked(appWidgetId)
-            REQUEST_BIND_WIDGET -> handleWidgetBound(appWidgetId)
-            REQUEST_CONFIGURE_WIDGET -> completeAddWidget(appWidgetId)
-        }
     }
 
     private fun handleWidgetPicked(appWidgetId: Int) {
@@ -144,14 +167,14 @@ class WidgetsActivity : AppCompatActivity() {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, info.provider)
-            startActivityForResult(intent, REQUEST_BIND_WIDGET)
+            bindWidgetLauncher.launch(intent)
             return
         }
         if (info.configure != null) {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
             intent.component = info.configure
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            startActivityForResult(intent, REQUEST_CONFIGURE_WIDGET)
+            configureWidgetLauncher.launch(intent)
         } else {
             completeAddWidget(appWidgetId)
         }
@@ -167,7 +190,7 @@ class WidgetsActivity : AppCompatActivity() {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
             intent.component = info.configure
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            startActivityForResult(intent, REQUEST_CONFIGURE_WIDGET)
+            configureWidgetLauncher.launch(intent)
         } else {
             completeAddWidget(appWidgetId)
         }

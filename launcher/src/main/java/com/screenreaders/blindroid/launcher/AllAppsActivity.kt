@@ -25,6 +25,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.gridlayout.widget.GridLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,16 +110,66 @@ class AllAppsActivity : AppCompatActivity() {
     private var currentTab: String = TAB_APPS
     private var draggingEntry: AppEntry? = null
     private val categoryValueCache = mutableMapOf<String, Int?>()
-    private val labelCollator = java.text.Collator.getInstance(java.util.Locale("pl", "PL")).apply {
+    private val labelCollator = java.text.Collator.getInstance(java.util.Locale.forLanguageTag("pl-PL")).apply {
         strength = java.text.Collator.PRIMARY
     }
 
     private val hostId = 2048
-    private val requestPickWidget = 2001
-    private val requestBindWidget = 2002
-    private val requestConfigureWidget = 2003
-    private val requestVoiceSearch = 2104
     private var pendingIconTarget: ComponentName? = null
+
+    private val voiceSearchLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val results = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+        val text = results?.firstOrNull().orEmpty()
+        if (text.isNotBlank()) {
+            searchInput.setText(text)
+            searchInput.setSelection(text.length)
+        }
+    }
+
+    private val pickWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        handleWidgetPicked(appWidgetId)
+    }
+
+    private val bindWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        handleWidgetBound(appWidgetId)
+    }
+
+    private val configureWidgetLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val appWidgetId = result.data?.getIntExtra(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            pendingWidgetId
+        ) ?: pendingWidgetId
+        if (result.resultCode != RESULT_OK) {
+            cleanupWidgetId(appWidgetId)
+            return@registerForActivityResult
+        }
+        completeAddWidget(appWidgetId)
+    }
 
     private val pickIconFile = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
@@ -844,7 +895,7 @@ class AllAppsActivity : AppCompatActivity() {
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pl-PL")
                 putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.launcher_voice_search_prompt))
             }
-            startActivityForResult(intent, requestVoiceSearch)
+            voiceSearchLauncher.launch(intent)
         } catch (_: Exception) {
             Toast.makeText(this, R.string.launcher_search_missing, Toast.LENGTH_SHORT).show()
         }
@@ -1210,7 +1261,7 @@ class AllAppsActivity : AppCompatActivity() {
         pendingWidgetId = appWidgetHost.allocateAppWidgetId()
         val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, pendingWidgetId)
-        startActivityForResult(intent, requestPickWidget)
+        pickWidgetLauncher.launch(intent)
     }
 
     private fun showWidgetList() {
@@ -1224,7 +1275,7 @@ class AllAppsActivity : AppCompatActivity() {
         val recycler = dialogView.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.widgetListRecycler)
         recycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         val entries = providers.map { info ->
-            val label = info.label ?: info.provider.className
+            val label = info.loadLabel(packageManager)?.toString() ?: info.provider.className
             val sizeText = getString(R.string.launcher_widget_size_format, info.minWidth, info.minHeight)
             val searchText = (label + " " + info.provider.packageName).lowercase()
             WidgetProviderEntry(info, label, sizeText, searchText, loadWidgetPreview(info))
@@ -1252,34 +1303,6 @@ class AllAppsActivity : AppCompatActivity() {
             .show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == requestVoiceSearch && resultCode == RESULT_OK) {
-            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            val text = results?.firstOrNull().orEmpty()
-            if (text.isNotBlank()) {
-                searchInput.setText(text)
-                searchInput.setSelection(text.length)
-            }
-            return
-        }
-        val appWidgetId = data?.getIntExtra(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            pendingWidgetId
-        ) ?: pendingWidgetId
-
-        if (resultCode != RESULT_OK) {
-            cleanupWidgetId(appWidgetId)
-            return
-        }
-
-        when (requestCode) {
-            requestPickWidget -> handleWidgetPicked(appWidgetId)
-            requestBindWidget -> handleWidgetBound(appWidgetId)
-            requestConfigureWidget -> completeAddWidget(appWidgetId)
-        }
-    }
-
     private fun handleWidgetPicked(appWidgetId: Int) {
         val info = appWidgetManager.getAppWidgetInfo(appWidgetId)
         if (info == null) {
@@ -1295,14 +1318,14 @@ class AllAppsActivity : AppCompatActivity() {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, info.provider)
-            startActivityForResult(intent, requestBindWidget)
+            bindWidgetLauncher.launch(intent)
             return
         }
         if (info.configure != null) {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
             intent.component = info.configure
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            startActivityForResult(intent, requestConfigureWidget)
+            configureWidgetLauncher.launch(intent)
         } else {
             completeAddWidget(appWidgetId)
         }
@@ -1318,7 +1341,7 @@ class AllAppsActivity : AppCompatActivity() {
             val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
             intent.component = info.configure
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            startActivityForResult(intent, requestConfigureWidget)
+            configureWidgetLauncher.launch(intent)
         } else {
             completeAddWidget(appWidgetId)
         }
