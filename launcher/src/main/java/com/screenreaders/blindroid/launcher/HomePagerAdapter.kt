@@ -472,12 +472,16 @@ class HomePagerAdapter(
             } else {
                 itemView.context.getString(R.string.launcher_feed_quick_wifi_off)
             }
-            bluetoothButton.text = if (data.bluetoothEnabled) {
+            bluetoothButton.text = if (!data.bluetoothPermissionGranted) {
+                itemView.context.getString(R.string.launcher_feed_quick_bluetooth_permission)
+            } else if (data.bluetoothEnabled) {
                 itemView.context.getString(R.string.launcher_feed_quick_bluetooth_on)
             } else {
                 itemView.context.getString(R.string.launcher_feed_quick_bluetooth_off)
             }
-            dndButton.text = if (data.dndEnabled) {
+            dndButton.text = if (!data.dndPolicyGranted) {
+                itemView.context.getString(R.string.launcher_feed_quick_dnd_permission)
+            } else if (data.dndEnabled) {
                 itemView.context.getString(R.string.launcher_feed_quick_dnd_on)
             } else {
                 itemView.context.getString(R.string.launcher_feed_quick_dnd_off)

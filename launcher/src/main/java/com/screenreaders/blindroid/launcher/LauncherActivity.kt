@@ -737,6 +737,7 @@ class LauncherActivity : AppCompatActivity() {
         val wifiEnabled = isWifiEnabled()
         val bluetoothEnabled = isBluetoothEnabled()
         val dndEnabled = isDndEnabled()
+        val dndPolicyGranted = isDndPolicyGranted()
         val notificationsAccessGranted = NotificationManagerCompat.getEnabledListenerPackages(this)
             .contains(packageName)
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
@@ -807,6 +808,7 @@ class LauncherActivity : AppCompatActivity() {
             wifiEnabled = wifiEnabled,
             bluetoothEnabled = bluetoothEnabled,
             dndEnabled = dndEnabled,
+            dndPolicyGranted = dndPolicyGranted,
             notificationsAccessGranted = notificationsAccessGranted,
             atGlanceText = atGlanceText,
             showAlarm = showAlarm,
@@ -976,6 +978,11 @@ class LauncherActivity : AppCompatActivity() {
     private fun isDndEnabled(): Boolean {
         val nm = getSystemService(NotificationManager::class.java)
         return nm.currentInterruptionFilter != NotificationManager.INTERRUPTION_FILTER_ALL
+    }
+
+    private fun isDndPolicyGranted(): Boolean {
+        val nm = getSystemService(NotificationManager::class.java)
+        return nm.isNotificationPolicyAccessGranted
     }
 
     private fun toggleWifiFromFeed() {
