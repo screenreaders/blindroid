@@ -486,6 +486,8 @@ class HomePagerAdapter(
             } else {
                 itemView.context.getString(R.string.launcher_feed_quick_dnd_off)
             }
+            bluetoothButton.alpha = if (data.bluetoothPermissionGranted) 1f else 0.7f
+            dndButton.alpha = if (data.dndPolicyGranted) 1f else 0.7f
 
             if (data.showAlarm) {
                 cardAlarm.visibility = View.VISIBLE

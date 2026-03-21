@@ -14,8 +14,8 @@ android {
         applicationId = "com.screenreaders.blindroid"
         minSdk = 29
         targetSdk = 36
-        versionCode = 77
-        versionName = "077"
+        versionCode = 78
+        versionName = "078"
     }
 
     val keystorePropsFile = rootProject.file("keystore.properties")

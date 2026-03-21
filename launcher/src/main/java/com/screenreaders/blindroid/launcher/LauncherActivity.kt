@@ -60,6 +60,7 @@ import org.json.JSONObject
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class LauncherActivity : AppCompatActivity() {
     private lateinit var searchInput: EditText
@@ -105,6 +106,10 @@ class LauncherActivity : AppCompatActivity() {
     private var lastAppliedHomeTarget: Int? = null
     private var lastCustomVersion: Long = 0L
     private var lastIconPackVersion: Long = 0L
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val dateFormatterLong = DateTimeFormatter.ofPattern("EEEE, d MMMM", java.util.Locale.forLanguageTag("pl-PL"))
+    private val dateTimeFormatterShort = DateTimeFormatter.ofPattern("d MMM, HH:mm", java.util.Locale.forLanguageTag("pl-PL"))
+    private val dateFormatterShort = DateTimeFormatter.ofPattern("d MMM", java.util.Locale.forLanguageTag("pl-PL"))
 
     private val voiceSearchLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -273,14 +278,14 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun loadApps() {
-        Thread {
+        LauncherExecutors.io.execute {
             val apps = LauncherStore.loadAllApps(this)
             runOnUiThread {
                 allApps = apps
                 refreshHome()
                 applyUiConfig()
             }
-        }.start()
+        }
     }
 
     private fun refreshHome() {
@@ -718,13 +723,8 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun buildFeedData(): FeedData {
         val now = java.time.LocalDateTime.now()
-        val timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm")
-        val dateFormatter = java.time.format.DateTimeFormatter.ofPattern(
-            "EEEE, d MMMM",
-            java.util.Locale.forLanguageTag("pl-PL")
-        )
         val time = now.format(timeFormatter)
-        val date = now.format(dateFormatter)
+        val date = now.format(dateFormatterLong)
         val batteryLevel = getBatteryLevel()
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val notifications = getRecentNotifications()
@@ -1085,11 +1085,11 @@ class LauncherActivity : AppCompatActivity() {
         val ageMs = System.currentTimeMillis() - ts
         if (!force && ageMs in 0..(60 * 60 * 1000L)) return
         weatherFetchInProgress = true
-        Thread {
+        LauncherExecutors.io.execute {
             val location = getLastKnownLocationSafe()
             if (location == null) {
                 weatherFetchInProgress = false
-                return@Thread
+                return@execute
             }
             val text = fetchOpenMeteoWeather(location)
             if (!text.isNullOrBlank()) {
@@ -1103,7 +1103,7 @@ class LauncherActivity : AppCompatActivity() {
                 refreshHome()
                 applyUiConfig()
             }
-        }.start()
+        }
     }
 
     private fun hasLocationPermission(): Boolean {
@@ -1592,14 +1592,9 @@ class LauncherActivity : AppCompatActivity() {
         val date = dateTime.toLocalDate()
         val today = LocalDate.now(zone)
         return if (allowTodayLabel && date == today) {
-            "Dziś ${dateTime.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))}"
+            "Dziś ${dateTime.format(timeFormatter)}"
         } else {
-            dateTime.format(
-                java.time.format.DateTimeFormatter.ofPattern(
-                    "d MMM, HH:mm",
-                    java.util.Locale.forLanguageTag("pl-PL")
-                )
-            )
+            dateTime.format(dateTimeFormatterShort)
         }
     }
 
@@ -1610,12 +1605,7 @@ class LauncherActivity : AppCompatActivity() {
         return if (allowTodayLabel && date == today) {
             "Dziś"
         } else {
-            date.format(
-                java.time.format.DateTimeFormatter.ofPattern(
-                    "d MMM",
-                    java.util.Locale.forLanguageTag("pl-PL")
-                )
-            )
+            date.format(dateFormatterShort)
         }
     }
 

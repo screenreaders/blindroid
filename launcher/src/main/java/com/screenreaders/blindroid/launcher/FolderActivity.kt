@@ -61,13 +61,13 @@ class FolderActivity : AppCompatActivity() {
     }
 
     private fun loadApps() {
-        Thread {
+        LauncherExecutors.io.execute {
             val apps = LauncherStore.loadAllApps(this)
             runOnUiThread {
                 allApps = apps
                 refreshFolder()
             }
-        }.start()
+        }
     }
 
     private fun applyUiConfig() {

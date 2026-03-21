@@ -439,7 +439,7 @@ class AllAppsActivity : AppCompatActivity() {
     }
 
     private fun loadApps() {
-        Thread {
+        LauncherExecutors.io.execute {
             val apps = LauncherStore.loadAllApps(this)
             val meta = buildAppMeta(apps)
             runOnUiThread {
@@ -451,7 +451,7 @@ class AllAppsActivity : AppCompatActivity() {
                 refreshAppsForHidden()
                 updateUsageAccessUi()
             }
-        }.start()
+        }
     }
 
     private fun refreshAppsForHidden() {
