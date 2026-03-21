@@ -45,6 +45,8 @@ class HomePagerAdapter(
     private val onMove: (Int, Int, Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var feedVisible = true
+
     companion object {
         private const val VIEW_TYPE_FEED = 0
         private const val VIEW_TYPE_PAGE = 1
@@ -71,6 +73,7 @@ class HomePagerAdapter(
             holder.bind(
                 feedData,
                 feedColors,
+                feedVisible,
                 onOpenExternalFeed,
                 onOpenAlarms,
                 onOpenCalendar,
@@ -118,12 +121,21 @@ class HomePagerAdapter(
         hasFeed = enabled
         feedData = data
         feedColors = colors
+        feedVisible = feedVisible && enabled
         notifyDataSetChanged()
     }
 
     fun updateFeedData(data: FeedData?) {
         if (feedData == data) return
         feedData = data
+        if (hasFeed) {
+            notifyItemChanged(0)
+        }
+    }
+
+    fun setFeedVisible(visible: Boolean) {
+        if (feedVisible == visible) return
+        feedVisible = visible
         if (hasFeed) {
             notifyItemChanged(0)
         }
@@ -313,6 +325,7 @@ class HomePagerAdapter(
         fun bind(
             data: FeedData?,
             colors: LauncherPrefs.ThemeColors,
+            feedVisible: Boolean,
             onOpenExternalFeed: () -> Unit,
             onOpenAlarms: () -> Unit,
             onOpenCalendar: () -> Unit,
@@ -449,20 +462,24 @@ class HomePagerAdapter(
                 root.setOnClickListener { if (data.externalAvailable) onOpenExternalFeed() }
                 atGlanceCard.visibility = View.VISIBLE
             } else if (data.embeddedMode) {
-                resumeWebView()
+                if (feedVisible) {
+                    resumeWebView()
+                } else {
+                    pauseWebView()
+                }
                 openHint.visibility = View.GONE
                 openButton.visibility = View.GONE
                 openButton.setOnClickListener(null)
                 root.setOnClickListener(null)
                 quickActionsRow.visibility = if (data.quickActionsEnabled) View.VISIBLE else View.GONE
                 webHint.visibility = View.VISIBLE
-                webView.visibility = View.VISIBLE
+                webView.visibility = if (feedVisible) View.VISIBLE else View.INVISIBLE
                 notificationsLabel.visibility = View.GONE
                 container.visibility = View.GONE
                 nowCards.visibility = View.GONE
                 atGlanceCard.visibility = View.VISIBLE
                 val url = data.embeddedUrl ?: "https://www.google.com"
-                if (webView.tag != url) {
+                if (feedVisible && webView.tag != url) {
                     webView.settings.javaScriptEnabled = true
                     webView.settings.domStorageEnabled = true
                     webView.settings.loadsImagesAutomatically = true

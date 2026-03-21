@@ -265,6 +265,9 @@ class LauncherActivity : AppCompatActivity() {
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 updatePageIndicator()
+                val feedEnabled = LauncherPrefs.isFeedEnabled(this@LauncherActivity) &&
+                    !LauncherPrefs.isSuperSimpleEnabled(this@LauncherActivity)
+                homeAdapter.setFeedVisible(feedEnabled && position == 0)
                 maybeAutoOpenExternalFeed(position)
             }
 
@@ -273,6 +276,8 @@ class LauncherActivity : AppCompatActivity() {
                 updatePageIndicatorProgress(position, positionOffset)
             }
         })
+        val initialFeedEnabled = LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
+        homeAdapter.setFeedVisible(initialFeedEnabled && homePager.currentItem == 0)
 
         hotseatAdapter = HomeItemAdapter(
             hotseat.toMutableList(),
@@ -609,6 +614,7 @@ class LauncherActivity : AppCompatActivity() {
         feedData = buildFeedData()
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
         homeAdapter.updateFeed(feedEnabled, feedData, colors)
+        homeAdapter.setFeedVisible(feedEnabled && homePager.currentItem == 0)
         homePager.isUserInputEnabled = homeAdapter.itemCount > 1
         updatePageIndicator()
     }
