@@ -97,9 +97,10 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
             return
         }
         val displayName = CallerInfoResolver.displayName(this, call)
+        val state = call.details.state
         binding.callerText.text = displayName
-        binding.stateText.text = stateLabel(call.state)
-        updateButtons(call.state)
+        binding.stateText.text = stateLabel(state)
+        updateButtons(state)
     }
 
     private fun updateButtons(state: Int) {
@@ -448,6 +449,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                 return
             }
         }
+        @Suppress("DEPRECATION")
         audioManager.isSpeakerphoneOn = true
     }
 
@@ -462,6 +464,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
             audioManager.clearCommunicationDevice()
             return
         }
+        @Suppress("DEPRECATION")
         audioManager.isSpeakerphoneOn = false
     }
 
