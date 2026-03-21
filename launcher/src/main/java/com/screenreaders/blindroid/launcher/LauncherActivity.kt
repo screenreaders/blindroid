@@ -170,6 +170,8 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedSuggestedApps: List<AppEntry> = emptyList()
     private var cachedSuggestedAppsTs = 0L
     private var cachedSuggestedAppsLimit = 0
+    private var cachedGoogleAppAvailable: Boolean? = null
+    private var cachedGoogleAppTs = 0L
     private val appLabelCache = LruCache<String, String>(128)
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
@@ -769,7 +771,9 @@ class LauncherActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.launcher_feed_disabled, Toast.LENGTH_SHORT).show()
             return
         }
-        if (LauncherPrefs.getFeedMode(this) == LauncherPrefs.FEED_MODE_GOOGLE) {
+        val mode = LauncherPrefs.getFeedMode(this)
+        val googleAvailable = isGoogleAppAvailable()
+        if (mode == LauncherPrefs.FEED_MODE_GOOGLE && googleAvailable) {
             openExternalFeed(showError = true)
         } else {
             homePager.currentItem = 0
@@ -2635,7 +2639,15 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun isGoogleAppAvailable(): Boolean {
-        return packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+        val now = SystemClock.uptimeMillis()
+        val cached = cachedGoogleAppAvailable
+        if (cached != null && now - cachedGoogleAppTs <= 30_000L) {
+            return cached
+        }
+        val available = packageManager.getLaunchIntentForPackage("com.google.android.googlequicksearchbox") != null
+        cachedGoogleAppAvailable = available
+        cachedGoogleAppTs = now
+        return available
     }
 
     private fun updateWallpaperParallax(position: Int, offset: Float) {
