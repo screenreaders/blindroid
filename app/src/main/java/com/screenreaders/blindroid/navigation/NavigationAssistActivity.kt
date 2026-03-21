@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.screenreaders.blindroid.R
@@ -59,6 +60,48 @@ class NavigationAssistActivity : AppCompatActivity() {
     private var pendingRouteStart = false
     private var tyflomapLink: String? = null
     private val executor = Executors.newSingleThreadExecutor()
+    private val gpxPickLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) handleGpxPicked(uri)
+    }
+    private val mapPointLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val data = result.data ?: return@registerForActivityResult
+        val lat = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LAT, Double.NaN)
+        val lon = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LON, Double.NaN)
+        if (!lat.isNaN() && !lon.isNaN()) {
+            val coordText = "%.6f, %.6f".format(Locale.US, lat, lon)
+            binding.navigationPlaceInput.setText(coordText)
+            if (binding.navigationOfflineGuidanceSwitch.isChecked) {
+                beginOfflineGuidance(coordText, lat, lon)
+            }
+        }
+    }
+    private val mapSelectLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val data = result.data ?: return@registerForActivityResult
+        val minLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LAT, Double.NaN)
+        val minLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LON, Double.NaN)
+        val maxLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LAT, Double.NaN)
+        val maxLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LON, Double.NaN)
+        if (minLat.isNaN() || minLon.isNaN() || maxLat.isNaN() || maxLon.isNaN()) return@registerForActivityResult
+        Prefs.setNavigationImportMode(this, Prefs.NAV_IMPORT_MODE_MANUAL)
+        Prefs.setNavigationImportMinLat(this, minLat.toFloat())
+        Prefs.setNavigationImportMinLon(this, minLon.toFloat())
+        Prefs.setNavigationImportMaxLat(this, maxLat.toFloat())
+        Prefs.setNavigationImportMaxLon(this, maxLon.toFloat())
+        binding.navigationImportMinLatInput.setText(minLat.toString())
+        binding.navigationImportMinLonInput.setText(minLon.toString())
+        binding.navigationImportMaxLatInput.setText(maxLat.toString())
+        binding.navigationImportMaxLonInput.setText(maxLon.toString())
+        binding.navigationImportModeManual.isChecked = true
+        updateImportModeUi()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -290,16 +333,10 @@ class NavigationAssistActivity : AppCompatActivity() {
     }
 
     private fun pickGpxFile() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
-            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/gpx+xml", "text/xml", "application/octet-stream"))
-        }
-        startActivityForResult(intent, REQ_GPX_PICK)
+        gpxPickLauncher.launch(arrayOf("application/gpx+xml", "text/xml", "application/octet-stream"))
     }
 
-    private fun handleGpxPicked(data: Intent) {
-        val uri = data.data ?: return
+    private fun handleGpxPicked(uri: Uri) {
         val dir = java.io.File(filesDir, "gpx")
         if (!dir.exists()) dir.mkdirs()
         val dest = java.io.File(dir, "route_${System.currentTimeMillis()}.gpx")
@@ -351,7 +388,7 @@ class NavigationAssistActivity : AppCompatActivity() {
                 putExtra(MapPointSelectActivity.EXTRA_LON, coord.second.toFloat())
             }
         }
-        startActivityForResult(intent, REQ_MAP_POINT)
+        mapPointLauncher.launch(intent)
     }
 
     private fun parseCoordinates(input: String): Pair<Double, Double>? {
@@ -500,9 +537,6 @@ class NavigationAssistActivity : AppCompatActivity() {
 
     companion object {
         private const val REQ_LOCATION = 812
-        private const val REQ_MAP_SELECT = 813
-        private const val REQ_GPX_PICK = 814
-        private const val REQ_MAP_POINT = 815
     }
 
     private fun initPoiControls() {
@@ -702,41 +736,7 @@ class NavigationAssistActivity : AppCompatActivity() {
             putExtra(MapSelectActivity.EXTRA_MAX_LAT, Prefs.getNavigationImportMaxLat(this@NavigationAssistActivity))
             putExtra(MapSelectActivity.EXTRA_MAX_LON, Prefs.getNavigationImportMaxLon(this@NavigationAssistActivity))
         }
-        startActivityForResult(intent, REQ_MAP_SELECT)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_MAP_SELECT && resultCode == RESULT_OK && data != null) {
-            val minLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LAT, Double.NaN)
-            val minLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MIN_LON, Double.NaN)
-            val maxLat = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LAT, Double.NaN)
-            val maxLon = data.getDoubleExtra(MapSelectActivity.EXTRA_MAX_LON, Double.NaN)
-            if (minLat.isNaN() || minLon.isNaN() || maxLat.isNaN() || maxLon.isNaN()) return
-            Prefs.setNavigationImportMode(this, Prefs.NAV_IMPORT_MODE_MANUAL)
-            Prefs.setNavigationImportMinLat(this, minLat.toFloat())
-            Prefs.setNavigationImportMinLon(this, minLon.toFloat())
-            Prefs.setNavigationImportMaxLat(this, maxLat.toFloat())
-            Prefs.setNavigationImportMaxLon(this, maxLon.toFloat())
-            binding.navigationImportMinLatInput.setText(minLat.toString())
-            binding.navigationImportMinLonInput.setText(minLon.toString())
-            binding.navigationImportMaxLatInput.setText(maxLat.toString())
-            binding.navigationImportMaxLonInput.setText(maxLon.toString())
-            binding.navigationImportModeManual.isChecked = true
-            updateImportModeUi()
-        } else if (requestCode == REQ_MAP_POINT && resultCode == RESULT_OK && data != null) {
-            val lat = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LAT, Double.NaN)
-            val lon = data.getDoubleExtra(MapPointSelectActivity.EXTRA_LON, Double.NaN)
-            if (!lat.isNaN() && !lon.isNaN()) {
-                val coordText = "%.6f, %.6f".format(Locale.US, lat, lon)
-                binding.navigationPlaceInput.setText(coordText)
-                if (binding.navigationOfflineGuidanceSwitch.isChecked) {
-                    beginOfflineGuidance(coordText, lat, lon)
-                }
-            }
-        } else if (requestCode == REQ_GPX_PICK && resultCode == RESULT_OK && data != null) {
-            handleGpxPicked(data)
-        }
+        mapSelectLauncher.launch(intent)
     }
 
     private fun setupPoiSourceControls() {

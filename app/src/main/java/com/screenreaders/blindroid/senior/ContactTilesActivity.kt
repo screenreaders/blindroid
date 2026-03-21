@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +24,13 @@ class ContactTilesActivity : AppCompatActivity() {
     private lateinit var adapter: ContactTileAdapter
     private var tiles: MutableList<ContactTile?> = mutableListOf()
     private var pendingIndex: Int = -1
+    private val pickContactLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val uri = result.data?.data ?: return@registerForActivityResult
+        handleContactPicked(uri)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +119,7 @@ class ContactTilesActivity : AppCompatActivity() {
         }
         pendingIndex = index
         val intent = Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)
-        startActivityForResult(intent, REQ_PICK_CONTACT)
+        pickContactLauncher.launch(intent)
     }
 
     private fun callNumber(number: String) {
@@ -128,29 +136,25 @@ class ContactTilesActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_PICK_CONTACT && resultCode == RESULT_OK && data != null) {
-            val uri = data.data ?: return
-            val cursor = contentResolver.query(
-                uri,
-                arrayOf(
-                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                    ContactsContract.CommonDataKinds.Phone.NUMBER
-                ),
-                null,
-                null,
-                null
-            ) ?: return
-            cursor.use {
-                if (it.moveToFirst()) {
-                    val name = it.getString(0) ?: ""
-                    val phone = it.getString(1) ?: ""
-                    if (pendingIndex in tiles.indices) {
-                        tiles[pendingIndex] = ContactTile(name, phone)
-                        ContactTileStore.saveTiles(this, tiles)
-                        adapter.submit(tiles)
-                    }
+    private fun handleContactPicked(uri: Uri) {
+        val cursor = contentResolver.query(
+            uri,
+            arrayOf(
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            ),
+            null,
+            null,
+            null
+        ) ?: return
+        cursor.use {
+            if (it.moveToFirst()) {
+                val name = it.getString(0) ?: ""
+                val phone = it.getString(1) ?: ""
+                if (pendingIndex in tiles.indices) {
+                    tiles[pendingIndex] = ContactTile(name, phone)
+                    ContactTileStore.saveTiles(this, tiles)
+                    adapter.submit(tiles)
                 }
             }
         }
@@ -178,7 +182,6 @@ class ContactTilesActivity : AppCompatActivity() {
     private data class PresetItem(val id: Int, val label: String, val count: Int, val columns: Int)
 
     companion object {
-        private const val REQ_PICK_CONTACT = 1101
         private const val REQ_CONTACTS = 1102
         private const val REQ_CALL = 1103
     }

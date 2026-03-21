@@ -26,6 +26,7 @@ import android.telecom.TelecomManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
@@ -63,6 +64,21 @@ class MainActivity : AppCompatActivity() {
     private var downloadId: Long = 0L
     private var downloadReceiverRegistered = false
     private var checkingUpdates = false
+    private val exportSettingsLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        if (uri != null) exportSettingsToUri(uri)
+    }
+    private val importSettingsLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) importSettingsFromUri(uri)
+    }
+    private val roleRequestLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updateRoleButton()
+    }
     private val downloadReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action != DownloadManager.ACTION_DOWNLOAD_COMPLETE) return
@@ -747,20 +763,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun exportSettings() {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/json"
-            putExtra(Intent.EXTRA_TITLE, "blindroid-settings.json")
-        }
-        startActivityForResult(intent, REQ_EXPORT_SETTINGS)
+        exportSettingsLauncher.launch("blindroid-settings.json")
     }
 
     private fun importSettings() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/json"
-        }
-        startActivityForResult(intent, REQ_IMPORT_SETTINGS)
+        importSettingsLauncher.launch(arrayOf("application/json"))
     }
 
     private fun exportSettingsToUri(uri: Uri) {
@@ -877,7 +884,7 @@ class MainActivity : AppCompatActivity() {
             && !roleManager.isRoleHeld(RoleManager.ROLE_DIALER)
         ) {
             val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
-            startActivityForResult(intent, REQ_ROLE)
+            roleRequestLauncher.launch(intent)
         }
     }
 
@@ -1052,20 +1059,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun openNotificationAccessSettings() {
         startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_ROLE) {
-            updateRoleButton()
-        }
-        if (resultCode != RESULT_OK || data?.data == null) return
-        val uri = data.data ?: return
-        when (requestCode) {
-            REQ_EXPORT_SETTINGS -> exportSettingsToUri(uri)
-            REQ_IMPORT_SETTINGS -> importSettingsFromUri(uri)
-        }
     }
 
     override fun onDestroy() {
@@ -1565,12 +1558,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQ_ROLE = 100
         private const val REQ_CALL_PHONE = 101
         private const val REQ_CONTACTS = 102
         private const val REQ_SMS = 103
-        private const val REQ_EXPORT_SETTINGS = 301
-        private const val REQ_IMPORT_SETTINGS = 302
         const val EXTRA_SECTION = "extra_section"
         const val EXTRA_CHECK_UPDATES = "extra_check_updates"
         const val SECTION_LAUNCHER = "launcher"
