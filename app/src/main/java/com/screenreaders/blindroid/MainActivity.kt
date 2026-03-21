@@ -87,6 +87,24 @@ class MainActivity : AppCompatActivity() {
             if (id <= 0 || id != downloadId) return
             val dm = getSystemService(DownloadManager::class.java)
             val uri = dm.getUriForDownloadedFile(id) ?: return
+            val expectedSize = Prefs.getUpdateDownloadSize(this@MainActivity)
+            if (expectedSize > 0L) {
+                val actualSize = getDownloadedSize(dm, id, uri)
+                if (actualSize == null || actualSize <= 0L || actualSize != expectedSize) {
+                    dm.remove(id)
+                    Prefs.setUpdateDownloadId(this@MainActivity, 0L)
+                    Prefs.setUpdateDownloadSha(this@MainActivity, null)
+                    Prefs.setUpdateDownloadSize(this@MainActivity, 0L)
+                    downloadId = 0L
+                    updateStatusText(getString(R.string.update_download_size_failed))
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.update_download_size_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
+                }
+            }
             val expectedSha = Prefs.getUpdateDownloadSha(this@MainActivity)
             if (!expectedSha.isNullOrBlank()) {
                 val actual = computeSha256(uri)
@@ -94,6 +112,7 @@ class MainActivity : AppCompatActivity() {
                     dm.remove(id)
                     Prefs.setUpdateDownloadId(this@MainActivity, 0L)
                     Prefs.setUpdateDownloadSha(this@MainActivity, null)
+                    Prefs.setUpdateDownloadSize(this@MainActivity, 0L)
                     downloadId = 0L
                     updateStatusText(getString(R.string.update_download_checksum_failed))
                     Toast.makeText(
@@ -106,6 +125,7 @@ class MainActivity : AppCompatActivity() {
             }
             Prefs.setUpdateDownloadId(this@MainActivity, 0L)
             Prefs.setUpdateDownloadSha(this@MainActivity, null)
+            Prefs.setUpdateDownloadSize(this@MainActivity, 0L)
             downloadId = 0L
             showInstallPrompt(uri)
         }
@@ -1532,6 +1552,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         Prefs.setUpdateDownloadSha(this, info.sha256)
+        Prefs.setUpdateDownloadSize(this, info.sizeBytes ?: 0L)
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle("Blindroid ${info.version}")
             .setDescription(getString(R.string.update_download_started))
@@ -1567,6 +1588,35 @@ class MainActivity : AppCompatActivity() {
                 sb.append(String.format(Locale.US, "%02x", b))
             }
             sb.toString()
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun getDownloadedSize(
+        dm: DownloadManager,
+        id: Long,
+        uri: Uri
+    ): Long? {
+        val query = DownloadManager.Query().setFilterById(id)
+        try {
+            dm.query(query)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val idx = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
+                    if (idx >= 0) {
+                        val total = cursor.getLong(idx)
+                        if (total > 0L) return total
+                    }
+                }
+            }
+        } catch (_: Exception) {
+            // Ignore and fall back to file descriptor size
+        }
+        return try {
+            contentResolver.openFileDescriptor(uri, "r")?.use { pfd ->
+                val stat = pfd.statSize
+                if (stat > 0L) stat else null
+            }
         } catch (_: Exception) {
             null
         }

@@ -66,6 +66,7 @@
     <string name="update_download_complete">Pobieranie zakończone, rozpocznij instalację</string>
     <string name="update_no_download">Brak pliku APK w najnowszym wydaniu</string>
     <string name="update_download_checksum_failed">Błąd pobierania — plik uszkodzony. Spróbuj ponownie.</string>
+    <string name="update_download_size_failed">Błąd pobierania — rozmiar nieprawidłowy. Spróbuj ponownie.</string>
     <string name="update_notification_channel">Aktualizacje Blindroid</string>
     <string name="update_notification_title">Dostępna aktualizacja</string>
     <string name="update_notification_text">Wersja %1$s jest gotowa do pobrania</string>
