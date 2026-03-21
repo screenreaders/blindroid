@@ -32,6 +32,7 @@ import android.bluetooth.BluetoothManager
 import android.os.Environment
 import android.os.PowerManager
 import android.os.StatFs
+import android.os.SystemClock
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.Settings
@@ -110,6 +111,24 @@ class LauncherActivity : AppCompatActivity() {
     private val dateFormatterLong = DateTimeFormatter.ofPattern("EEEE, d MMMM", java.util.Locale.forLanguageTag("pl-PL"))
     private val dateTimeFormatterShort = DateTimeFormatter.ofPattern("d MMM, HH:mm", java.util.Locale.forLanguageTag("pl-PL"))
     private val dateFormatterShort = DateTimeFormatter.ofPattern("d MMM", java.util.Locale.forLanguageTag("pl-PL"))
+    private val refreshHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var refreshScheduled = false
+    private var refreshUiConfigPending = false
+    private var refreshFeedPending = false
+    private var lastHomeRefreshMs = 0L
+    private val refreshRunnable = Runnable {
+        refreshScheduled = false
+        lastHomeRefreshMs = SystemClock.uptimeMillis()
+        refreshHomeInternal()
+        if (refreshUiConfigPending) {
+            refreshUiConfigPending = false
+            refreshFeedPending = false
+            applyUiConfig()
+        } else if (refreshFeedPending) {
+            refreshFeedPending = false
+            refreshFeedData()
+        }
+    }
 
     private val voiceSearchLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -267,8 +286,7 @@ class LauncherActivity : AppCompatActivity() {
             loadApps()
             return
         }
-        refreshHome()
-        applyUiConfig()
+        scheduleHomeRefresh(force = true, applyUi = true)
     }
 
     override fun onDestroy() {
@@ -282,13 +300,12 @@ class LauncherActivity : AppCompatActivity() {
             val apps = LauncherStore.loadAllApps(this)
             runOnUiThread {
                 allApps = apps
-                refreshHome()
-                applyUiConfig()
+                scheduleHomeRefresh(force = true, applyUi = true)
             }
         }
     }
 
-    private fun refreshHome() {
+    private fun refreshHomeInternal() {
         if (allApps.isEmpty()) return
         LauncherStore.syncModuleShortcuts(this, LauncherStore.isModuleShortcutsEnabled(this))
         val allPages = LauncherStore.loadPages(this, allApps)
@@ -317,6 +334,35 @@ class LauncherActivity : AppCompatActivity() {
         updateSimpleFavorites()
         updatePageIndicator()
         applyDefaultHomePage()
+    }
+
+    private fun scheduleHomeRefresh(
+        force: Boolean = false,
+        applyUi: Boolean = false,
+        refreshFeed: Boolean = false
+    ) {
+        refreshUiConfigPending = refreshUiConfigPending || applyUi
+        refreshFeedPending = refreshFeedPending || refreshFeed
+        if (force) {
+            refreshHandler.removeCallbacks(refreshRunnable)
+            refreshScheduled = false
+            refreshRunnable.run()
+            return
+        }
+        if (refreshScheduled) return
+        val now = SystemClock.uptimeMillis()
+        val minGap = 120L
+        val delay = (lastHomeRefreshMs + minGap - now).coerceAtLeast(0L)
+        refreshScheduled = true
+        refreshHandler.postDelayed(refreshRunnable, delay)
+    }
+
+    private fun refreshFeedData() {
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        if (!feedEnabled) return
+        feedData = buildFeedData()
+        homeAdapter.updateFeedData(feedData)
     }
 
     private fun applyUiConfig() {
@@ -712,8 +758,7 @@ class LauncherActivity : AppCompatActivity() {
         if (enabled) {
             LauncherPrefs.setDockVisible(this, false)
         }
-        refreshHome()
-        applyUiConfig()
+        scheduleHomeRefresh(force = true, applyUi = true)
         Toast.makeText(
             this,
             if (enabled) R.string.launcher_super_simple_on else R.string.launcher_super_simple_off,
@@ -996,7 +1041,7 @@ class LauncherActivity : AppCompatActivity() {
             val target = !wifi.isWifiEnabled
             @Suppress("DEPRECATION")
             wifi.isWifiEnabled = target
-            refreshHome()
+            scheduleHomeRefresh(force = true, refreshFeed = true)
         } catch (_: Exception) {
             openNetworkSettings()
         }
@@ -1025,7 +1070,7 @@ class LauncherActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 adapter.enable()
             }
-            refreshHome()
+            scheduleHomeRefresh(force = true, refreshFeed = true)
         } catch (_: Exception) {
             openBluetoothSettings()
         }
@@ -1042,7 +1087,7 @@ class LauncherActivity : AppCompatActivity() {
             if (enabled) NotificationManager.INTERRUPTION_FILTER_ALL
             else NotificationManager.INTERRUPTION_FILTER_NONE
         )
-        refreshHome()
+        scheduleHomeRefresh(force = true, refreshFeed = true)
     }
 
     private fun openNotificationAccessSettings() {
@@ -1100,8 +1145,7 @@ class LauncherActivity : AppCompatActivity() {
             }
             weatherFetchInProgress = false
             runOnUiThread {
-                refreshHome()
-                applyUiConfig()
+                scheduleHomeRefresh(refreshFeed = true)
             }
         }
     }
@@ -1935,13 +1979,13 @@ class LauncherActivity : AppCompatActivity() {
         val options = mutableListOf<Pair<String, () -> Unit>>()
         options += getString(R.string.launcher_action_remove_from_home) to {
             LauncherStore.removeFromPage(this, pageIndex, appKey(app))
-            refreshHome()
+            scheduleHomeRefresh(force = true)
         }
         options += getString(R.string.launcher_action_move_to_hotseat) to {
             val added = LauncherStore.addToHotseat(this, app.component)
             if (added) {
                 LauncherStore.removeFromPage(this, pageIndex, appKey(app))
-                refreshHome()
+                scheduleHomeRefresh(force = true)
                 Toast.makeText(this, R.string.launcher_added_to_hotseat, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, R.string.launcher_already_in_hotseat, Toast.LENGTH_SHORT).show()
@@ -1980,14 +2024,14 @@ class LauncherActivity : AppCompatActivity() {
         val options = mutableListOf<Pair<String, () -> Unit>>()
         options += getString(R.string.launcher_action_remove_from_hotseat) to {
             LauncherStore.removeFromHotseat(this, appKey(app))
-            refreshHome()
+            scheduleHomeRefresh(force = true)
         }
         options += getString(R.string.launcher_action_move_to_home) to {
             val pageIndex = currentHomePageIndex()
             val added = LauncherStore.addToPage(this, pageIndex, app.component)
             if (added) {
                 LauncherStore.removeFromHotseat(this, appKey(app))
-                refreshHome()
+                scheduleHomeRefresh(force = true)
                 Toast.makeText(this, R.string.launcher_added_to_home, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, R.string.launcher_already_on_home, Toast.LENGTH_SHORT).show()
@@ -2029,7 +2073,7 @@ class LauncherActivity : AppCompatActivity() {
                 .setMessage(R.string.launcher_delete_folder_message)
                 .setPositiveButton(R.string.launcher_action_delete_folder) { _, _ ->
                     LauncherStore.removeFolderFromPage(this, pageIndex, folder.id, true)
-                    refreshHome()
+                    scheduleHomeRefresh(force = true)
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
@@ -2052,7 +2096,7 @@ class LauncherActivity : AppCompatActivity() {
             .setItems(labels) { _, which ->
                 val second = candidates[which]
                 LauncherStore.createFolderOnPage(this, pageIndex, first.component, second.component)
-                refreshHome()
+                scheduleHomeRefresh(force = true)
             }
             .show()
     }
@@ -2065,7 +2109,7 @@ class LauncherActivity : AppCompatActivity() {
             .setView(input)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 LauncherStore.setFolderLabel(this, folder.id, input.text.toString())
-                refreshHome()
+                scheduleHomeRefresh(force = true)
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
@@ -2124,7 +2168,7 @@ class LauncherActivity : AppCompatActivity() {
                 val label = input.text?.toString().orEmpty()
                 val folderId = LauncherStore.createEmptyFolderOnPage(this, currentHomePageIndex(), label)
                 if (folderId.isNotEmpty()) {
-                    refreshHome()
+                    scheduleHomeRefresh(force = true)
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -2630,15 +2674,13 @@ class LauncherActivity : AppCompatActivity() {
         } else if (requestCode == calendarPermissionRequestCode) {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                refreshHome()
-                applyUiConfig()
+                scheduleHomeRefresh(force = true, refreshFeed = true)
                 openCalendar()
             }
         } else if (requestCode == bluetoothPermissionRequestCode) {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                refreshHome()
-                applyUiConfig()
+                scheduleHomeRefresh(force = true, refreshFeed = true)
                 openBluetoothSettings()
             } else {
                 Toast.makeText(this, R.string.launcher_feed_bluetooth_permission, Toast.LENGTH_SHORT).show()
@@ -2647,8 +2689,7 @@ class LauncherActivity : AppCompatActivity() {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 maybeRefreshWeather(force = true)
-                refreshHome()
-                applyUiConfig()
+                scheduleHomeRefresh(force = true, refreshFeed = true)
             } else {
                 Toast.makeText(this, R.string.launcher_feed_weather_permission, Toast.LENGTH_SHORT).show()
             }

@@ -121,6 +121,13 @@ class HomePagerAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateFeedData(data: FeedData?) {
+        feedData = data
+        if (hasFeed) {
+            notifyItemChanged(0)
+        }
+    }
+
     fun setEditingEnabled(enabled: Boolean) {
         if (editingEnabled == enabled) return
         editingEnabled = enabled
