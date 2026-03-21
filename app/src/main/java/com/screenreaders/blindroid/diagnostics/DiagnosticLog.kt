@@ -11,7 +11,7 @@ object DiagnosticLog {
     private const val PREFS = "blindroid_diag"
     private const val KEY_EVENTS = "events"
     private const val MAX_EVENTS = 30
-    private val formatter = SimpleDateFormat("HH:mm:ss", Locale("pl", "PL"))
+    private val formatter = SimpleDateFormat("HH:mm:ss", Locale.forLanguageTag("pl-PL"))
 
     fun log(context: Context, message: String) {
         if (!Prefs.isDiagnosticsEnabled(context)) return

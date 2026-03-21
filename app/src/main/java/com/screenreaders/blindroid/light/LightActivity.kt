@@ -353,7 +353,7 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
                 return
             }
         }
-        tts?.language = Locale("pl", "PL")
+        tts?.language = Locale.forLanguageTag("pl-PL")
     }
 
     companion object {

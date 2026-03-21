@@ -159,7 +159,7 @@ data class MessageEntry(
 ) {
     fun format(context: android.content.Context): String {
         val preview = if (body.length > 80) body.substring(0, 80) + "…" else body
-        val whenText = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale("pl", "PL"))
+        val whenText = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.forLanguageTag("pl-PL"))
             .format(java.util.Date(date))
         return "${preview}\n$whenText"
     }

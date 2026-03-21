@@ -3,10 +3,12 @@ package com.screenreaders.blindroid.navigation
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
 import android.location.Geocoder
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Build
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
@@ -276,24 +278,46 @@ class NavigationAssistActivity : AppCompatActivity() {
         val geocoder = Geocoder(this, Locale.getDefault())
         Toast.makeText(this, R.string.navigation_offline_guidance_lookup, Toast.LENGTH_SHORT).show()
         executor.execute {
+            val applyResult: (Address?) -> Unit = { result ->
+                runOnUiThread {
+                    if (!binding.navigationOfflineGuidanceSwitch.isChecked) {
+                        return@runOnUiThread
+                    }
+                    if (result == null) {
+                        Toast.makeText(this, R.string.navigation_offline_guidance_missing, Toast.LENGTH_SHORT).show()
+                        binding.navigationOfflineGuidanceSwitch.isChecked = false
+                        Prefs.setNavigationRouteEnabled(this, false)
+                    } else {
+                        beginOfflineGuidance(destination, result.latitude, result.longitude)
+                    }
+                }
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                try {
+                    geocoder.getFromLocationName(
+                        destination,
+                        1,
+                        object : Geocoder.GeocodeListener {
+                            override fun onGeocode(addresses: MutableList<Address>) {
+                                applyResult(addresses.firstOrNull())
+                            }
+
+                            override fun onError(errorMessage: String?) {
+                                applyResult(null)
+                            }
+                        }
+                    )
+                } catch (_: Exception) {
+                    applyResult(null)
+                }
+                return@execute
+            }
             val result = try {
-                val list = geocoder.getFromLocationName(destination, 1)
-                list?.firstOrNull()
+                geocoder.getFromLocationName(destination, 1)?.firstOrNull()
             } catch (_: Exception) {
                 null
             }
-            runOnUiThread {
-                if (!binding.navigationOfflineGuidanceSwitch.isChecked) {
-                    return@runOnUiThread
-                }
-                if (result == null) {
-                    Toast.makeText(this, R.string.navigation_offline_guidance_missing, Toast.LENGTH_SHORT).show()
-                    binding.navigationOfflineGuidanceSwitch.isChecked = false
-                    Prefs.setNavigationRouteEnabled(this, false)
-                } else {
-                    beginOfflineGuidance(destination, result.latitude, result.longitude)
-                }
-            }
+            applyResult(result)
         }
     }
 
@@ -1023,7 +1047,7 @@ class NavigationAssistActivity : AppCompatActivity() {
             binding.navigationOfflineStatus.text = getString(R.string.navigation_offline_empty)
             return
         }
-        val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale("pl", "PL"))
+        val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.forLanguageTag("pl-PL"))
         binding.navigationOfflineStatus.text = getString(
             R.string.navigation_offline_status,
             count,

@@ -496,7 +496,7 @@ class CurrencyActivity : AppCompatActivity() {
                 return
             }
         }
-        tts?.language = Locale("pl", "PL")
+        tts?.language = Locale.forLanguageTag("pl-PL")
     }
 
     private fun prepareModel() {

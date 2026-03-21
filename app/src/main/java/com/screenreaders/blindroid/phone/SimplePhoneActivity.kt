@@ -264,7 +264,7 @@ data class PhoneContact(val name: String, val number: String)
 
 data class RecentCall(val name: String, val number: String, val time: Long, val type: Int) {
     fun format(context: android.content.Context): String {
-        val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale("pl", "PL")).format(java.util.Date(time))
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.forLanguageTag("pl-PL")).format(java.util.Date(time))
         val typeText = when (type) {
             CallLog.Calls.INCOMING_TYPE -> context.getString(R.string.simple_phone_call_incoming)
             CallLog.Calls.OUTGOING_TYPE -> context.getString(R.string.simple_phone_call_outgoing)

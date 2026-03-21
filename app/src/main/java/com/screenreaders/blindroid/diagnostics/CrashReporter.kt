@@ -72,7 +72,7 @@ object CrashReporter {
     fun buildReportSummary(context: Context): String {
         val file = getLatestReport(context) ?: return "Brak raportów"
         val date = Date(file.lastModified())
-        val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale("pl", "PL"))
+        val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.forLanguageTag("pl-PL"))
         return "Ostatni raport: ${fmt.format(date)}"
     }
 

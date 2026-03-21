@@ -53,7 +53,7 @@ class NavigationPoiService : Service(), LocationListener {
         super.onCreate()
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                tts?.language = Locale("pl", "PL")
+                tts?.language = Locale.forLanguageTag("pl-PL")
                 tts?.setSpeechRate(Prefs.getSpeechRate(this))
             }
         }
