@@ -2,6 +2,7 @@ package com.screenreaders.blindroid.sms
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
 import android.telephony.SmsManager
@@ -105,7 +106,12 @@ class SimpleMessagesActivity : AppCompatActivity() {
             return
         }
         try {
-            val manager = SmsManager.getDefault()
+            val manager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                getSystemService(SmsManager::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                SmsManager.getDefault()
+            } ?: throw IllegalStateException("SmsManager unavailable")
             val parts = manager.divideMessage(body)
             manager.sendMultipartTextMessage(number, null, parts, null, null)
             Toast.makeText(this, R.string.simple_messages_sent, Toast.LENGTH_SHORT).show()

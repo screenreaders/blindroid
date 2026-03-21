@@ -312,6 +312,7 @@ class NavigationAssistActivity : AppCompatActivity() {
                 }
                 return@execute
             }
+            @Suppress("DEPRECATION")
             val result = try {
                 geocoder.getFromLocationName(destination, 1)?.firstOrNull()
             } catch (_: Exception) {
