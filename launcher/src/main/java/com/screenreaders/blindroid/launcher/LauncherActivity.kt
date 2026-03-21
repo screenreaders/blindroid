@@ -115,11 +115,18 @@ class LauncherActivity : AppCompatActivity() {
     private var refreshScheduled = false
     private var refreshUiConfigPending = false
     private var refreshFeedPending = false
+    private var refreshHomePending = false
     private var lastHomeRefreshMs = 0L
+    private var refreshGeneration = 0
+    private val feedTickerHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var feedTickerRunning = false
     private val refreshRunnable = Runnable {
         refreshScheduled = false
         lastHomeRefreshMs = SystemClock.uptimeMillis()
-        refreshHomeInternal()
+        if (refreshHomePending) {
+            refreshHomePending = false
+            refreshHomeInternal()
+        }
         if (refreshUiConfigPending) {
             refreshUiConfigPending = false
             refreshFeedPending = false
@@ -129,6 +136,23 @@ class LauncherActivity : AppCompatActivity() {
             refreshFeedData()
         }
     }
+    private val feedTickerRunnable = object : Runnable {
+        override fun run() {
+            if (!feedTickerRunning) return
+            if (!shouldRunFeedTicker()) {
+                stopFeedTicker()
+                return
+            }
+            scheduleHomeRefresh(refreshFeed = true, refreshHome = false)
+            feedTickerHandler.postDelayed(this, 60_000)
+        }
+    }
+    private var cachedScreenTimeText: String? = null
+    private var cachedScreenTimeTs = 0L
+    private var cachedTopApps: List<String> = emptyList()
+    private var cachedTopAppsTs = 0L
+    private var cachedRamText: String? = null
+    private var cachedRamTs = 0L
 
     private val voiceSearchLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -287,6 +311,12 @@ class LauncherActivity : AppCompatActivity() {
             return
         }
         scheduleHomeRefresh(force = true, applyUi = true)
+        startFeedTicker()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopFeedTicker()
     }
 
     override fun onDestroy() {
@@ -300,6 +330,8 @@ class LauncherActivity : AppCompatActivity() {
             val apps = LauncherStore.loadAllApps(this)
             runOnUiThread {
                 allApps = apps
+                cachedTopApps = emptyList()
+                cachedTopAppsTs = 0L
                 scheduleHomeRefresh(force = true, applyUi = true)
             }
         }
@@ -307,42 +339,71 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun refreshHomeInternal() {
         if (allApps.isEmpty()) return
-        LauncherStore.syncModuleShortcuts(this, LauncherStore.isModuleShortcutsEnabled(this))
-        val allPages = LauncherStore.loadPages(this, allApps)
-        pages = if (LauncherPrefs.isSuperSimpleEnabled(this)) {
-            listOf(allPages.firstOrNull() ?: emptyList())
-        } else {
-            allPages
+        val appsSnapshot = allApps
+        val generation = ++refreshGeneration
+        LauncherExecutors.io.execute {
+            LauncherStore.syncModuleShortcuts(this, LauncherStore.isModuleShortcutsEnabled(this))
+            val allPages = LauncherStore.loadPages(this, appsSnapshot)
+            val computedPages = if (LauncherPrefs.isSuperSimpleEnabled(this)) {
+                listOf(allPages.firstOrNull() ?: emptyList())
+            } else {
+                allPages
+            }
+            val baseHotseat = LauncherStore.loadHotseat(this, appsSnapshot)
+            val computedHotseat = if (LauncherPrefs.isSmartHotseatEnabled(this)) {
+                val maxSlots = LauncherPrefs.getColumns(this).coerceAtLeast(3)
+                val used = baseHotseat.filterIsInstance<HomeItem.App>()
+                    .map { it.component.flattenToString() }
+                    .toMutableSet()
+                val suggestions = LauncherStore.getSuggestedApps(this, appsSnapshot, maxSlots * 2)
+                    .filter { used.add(it.component.flattenToString()) }
+                    .map { HomeItem.app(it) }
+                val merged = baseHotseat + suggestions
+                if (merged.size > maxSlots) merged.take(maxSlots) else merged
+            } else {
+                baseHotseat
+            }
+            val simpleFavoritesList = if (LauncherPrefs.isSuperSimpleEnabled(this)) {
+                val slots = LauncherPrefs.getSimpleFavoritesColumns(this) *
+                    LauncherPrefs.getSimpleFavoritesRows(this)
+                val favorites = computedHotseat.filterIsInstance<HomeItem.App>()
+                    .take(slots)
+                    .map { AppEntry(it.label, it.component, it.icon) }
+                if (favorites.isNotEmpty()) {
+                    favorites
+                } else {
+                    LauncherStore.getSuggestedApps(this, appsSnapshot, slots)
+                }
+            } else {
+                null
+            }
+            runOnUiThread {
+                if (generation != refreshGeneration) return@runOnUiThread
+                pages = computedPages
+                hotseat = computedHotseat
+                homeAdapter.submitPages(pages)
+                homePager.offscreenPageLimit = kotlin.math.min(2, homeAdapter.itemCount.coerceAtLeast(1))
+                hotseatAdapter.submit(hotseat)
+                if (simpleFavoritesList != null) {
+                    simpleFavoritesAdapter.submit(simpleFavoritesList)
+                } else {
+                    updateSimpleFavorites()
+                }
+                updatePageIndicator()
+                applyDefaultHomePage()
+            }
         }
-        val baseHotseat = LauncherStore.loadHotseat(this, allApps)
-        hotseat = if (LauncherPrefs.isSmartHotseatEnabled(this)) {
-            val maxSlots = LauncherPrefs.getColumns(this).coerceAtLeast(3)
-            val used = baseHotseat.filterIsInstance<HomeItem.App>()
-                .map { it.component.flattenToString() }
-                .toMutableSet()
-            val suggestions = LauncherStore.getSuggestedApps(this, allApps, maxSlots * 2)
-                .filter { used.add(it.component.flattenToString()) }
-                .map { HomeItem.app(it) }
-            val merged = baseHotseat + suggestions
-            if (merged.size > maxSlots) merged.take(maxSlots) else merged
-        } else {
-            baseHotseat
-        }
-        homeAdapter.submitPages(pages)
-        homePager.offscreenPageLimit = kotlin.math.min(2, homeAdapter.itemCount.coerceAtLeast(1))
-        hotseatAdapter.submit(hotseat)
-        updateSimpleFavorites()
-        updatePageIndicator()
-        applyDefaultHomePage()
     }
 
     private fun scheduleHomeRefresh(
         force: Boolean = false,
         applyUi: Boolean = false,
-        refreshFeed: Boolean = false
+        refreshFeed: Boolean = false,
+        refreshHome: Boolean = true
     ) {
         refreshUiConfigPending = refreshUiConfigPending || applyUi
         refreshFeedPending = refreshFeedPending || refreshFeed
+        refreshHomePending = refreshHomePending || refreshHome
         if (force) {
             refreshHandler.removeCallbacks(refreshRunnable)
             refreshScheduled = false
@@ -363,6 +424,25 @@ class LauncherActivity : AppCompatActivity() {
         if (!feedEnabled) return
         feedData = buildFeedData()
         homeAdapter.updateFeedData(feedData)
+    }
+
+    private fun shouldRunFeedTicker(): Boolean {
+        return LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)
+    }
+
+    private fun startFeedTicker() {
+        if (feedTickerRunning) return
+        if (!shouldRunFeedTicker()) return
+        feedTickerRunning = true
+        feedTickerHandler.removeCallbacks(feedTickerRunnable)
+        val now = System.currentTimeMillis()
+        val delay = 60_000 - (now % 60_000)
+        feedTickerHandler.postDelayed(feedTickerRunnable, delay)
+    }
+
+    private fun stopFeedTicker() {
+        feedTickerRunning = false
+        feedTickerHandler.removeCallbacks(feedTickerRunnable)
     }
 
     private fun applyUiConfig() {
@@ -742,6 +822,11 @@ class LauncherActivity : AppCompatActivity() {
         val enabled = !LauncherPrefs.isFeedEnabled(this)
         LauncherPrefs.setFeedEnabled(this, enabled)
         applyUiConfig()
+        if (enabled) {
+            startFeedTicker()
+        } else {
+            stopFeedTicker()
+        }
         val feedOffset = if (enabled && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
         val target = (currentHome + feedOffset).coerceIn(0, homeAdapter.itemCount - 1)
         homePager.setCurrentItem(target, false)
@@ -759,6 +844,11 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.setDockVisible(this, false)
         }
         scheduleHomeRefresh(force = true, applyUi = true)
+        if (enabled) {
+            stopFeedTicker()
+        } else {
+            startFeedTicker()
+        }
         Toast.makeText(
             this,
             if (enabled) R.string.launcher_super_simple_on else R.string.launcher_super_simple_off,
@@ -770,6 +860,7 @@ class LauncherActivity : AppCompatActivity() {
         val now = java.time.LocalDateTime.now()
         val time = now.format(timeFormatter)
         val date = now.format(dateFormatterLong)
+        val nowMs = SystemClock.uptimeMillis()
         val batteryLevel = getBatteryLevel()
         val batteryText = getString(R.string.launcher_feed_battery) + ": ${batteryLevel}%"
         val notifications = getRecentNotifications()
@@ -823,14 +914,47 @@ class LauncherActivity : AppCompatActivity() {
         val networkText = if (showNetwork) getNetworkText() else null
         val storageText = if (showStorage) getStorageText() else null
         val usagePermissionGranted = LauncherStore.hasUsageStatsPermission(this)
-        val screenTimeText = if (showScreenTime) getScreenTimeText(usagePermissionGranted) else null
+        val screenTimeText = if (showScreenTime) {
+            if (!usagePermissionGranted) {
+                cachedScreenTimeText = null
+                cachedScreenTimeTs = 0L
+                getScreenTimeText(false)
+            } else {
+                val ttlMs = 5 * 60_000L
+                if (nowMs - cachedScreenTimeTs > ttlMs || cachedScreenTimeText == null) {
+                    cachedScreenTimeText = getScreenTimeText(true)
+                    cachedScreenTimeTs = nowMs
+                }
+                cachedScreenTimeText
+            }
+        } else {
+            null
+        }
         val bluetoothText = if (showBluetooth) getBluetoothText(bluetoothPermissionGranted) else null
         val brightnessText = if (showBrightness) getBrightnessText() else null
         val volumeText = if (showVolume) getVolumeText() else null
         val powerText = if (showPower) getPowerText() else null
-        val topApps = if (showTopApps) LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label } else emptyList()
+        val topApps = if (showTopApps) {
+            val ttlMs = 60_000L
+            if (nowMs - cachedTopAppsTs > ttlMs || cachedTopApps.isEmpty()) {
+                cachedTopApps = LauncherStore.getSuggestedApps(this, allApps, 4).map { it.label }
+                cachedTopAppsTs = nowMs
+            }
+            cachedTopApps
+        } else {
+            emptyList()
+        }
         val airplaneText = if (showAirplane) getAirplaneText() else null
-        val ramText = if (showRam) getRamText() else null
+        val ramText = if (showRam) {
+            val ttlMs = 10_000L
+            if (nowMs - cachedRamTs > ttlMs || cachedRamText == null) {
+                cachedRamText = getRamText()
+                cachedRamTs = nowMs
+            }
+            cachedRamText
+        } else {
+            null
+        }
         val deviceText = if (showDevice) getDeviceText() else null
         val rotationText = if (showRotation) getRotationText() else null
         val nfcText = if (showNfc) getNfcText() else null
@@ -1041,7 +1165,7 @@ class LauncherActivity : AppCompatActivity() {
             val target = !wifi.isWifiEnabled
             @Suppress("DEPRECATION")
             wifi.isWifiEnabled = target
-            scheduleHomeRefresh(force = true, refreshFeed = true)
+            scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
         } catch (_: Exception) {
             openNetworkSettings()
         }
@@ -1070,7 +1194,7 @@ class LauncherActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 adapter.enable()
             }
-            scheduleHomeRefresh(force = true, refreshFeed = true)
+            scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
         } catch (_: Exception) {
             openBluetoothSettings()
         }
@@ -1087,7 +1211,7 @@ class LauncherActivity : AppCompatActivity() {
             if (enabled) NotificationManager.INTERRUPTION_FILTER_ALL
             else NotificationManager.INTERRUPTION_FILTER_NONE
         )
-        scheduleHomeRefresh(force = true, refreshFeed = true)
+        scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
     }
 
     private fun openNotificationAccessSettings() {
@@ -1145,7 +1269,7 @@ class LauncherActivity : AppCompatActivity() {
             }
             weatherFetchInProgress = false
             runOnUiThread {
-                scheduleHomeRefresh(refreshFeed = true)
+                scheduleHomeRefresh(refreshFeed = true, refreshHome = false)
             }
         }
     }
@@ -2674,13 +2798,13 @@ class LauncherActivity : AppCompatActivity() {
         } else if (requestCode == calendarPermissionRequestCode) {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                scheduleHomeRefresh(force = true, refreshFeed = true)
+                scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
                 openCalendar()
             }
         } else if (requestCode == bluetoothPermissionRequestCode) {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                scheduleHomeRefresh(force = true, refreshFeed = true)
+                scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
                 openBluetoothSettings()
             } else {
                 Toast.makeText(this, R.string.launcher_feed_bluetooth_permission, Toast.LENGTH_SHORT).show()
@@ -2689,7 +2813,7 @@ class LauncherActivity : AppCompatActivity() {
             val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 maybeRefreshWeather(force = true)
-                scheduleHomeRefresh(force = true, refreshFeed = true)
+                scheduleHomeRefresh(force = true, refreshFeed = true, refreshHome = false)
             } else {
                 Toast.makeText(this, R.string.launcher_feed_weather_permission, Toast.LENGTH_SHORT).show()
             }
