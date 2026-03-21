@@ -72,6 +72,7 @@ class ProximitySpeakerController(context: Context) : SensorEventListener {
                 return
             }
         }
+        @Suppress("DEPRECATION")
         audioManager.isSpeakerphoneOn = true
     }
 
@@ -86,6 +87,7 @@ class ProximitySpeakerController(context: Context) : SensorEventListener {
             audioManager.clearCommunicationDevice()
             return
         }
+        @Suppress("DEPRECATION")
         audioManager.isSpeakerphoneOn = false
     }
 
