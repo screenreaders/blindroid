@@ -1493,6 +1493,11 @@ class MainActivity : AppCompatActivity() {
         val message = buildString {
             append("Wersja: ")
             append(info.version)
+            val size = info.sizeBytes
+            if (size != null && size > 0L) {
+                append("\nRozmiar: ")
+                append(formatBytes(size))
+            }
             if (!info.notes.isNullOrBlank()) {
                 append("\n\n")
                 append(info.notes)
@@ -1506,6 +1511,18 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(getString(R.string.update_dialog_later), null)
             .show()
+    }
+
+    private fun formatBytes(bytes: Long): String {
+        val kb = bytes / 1024f
+        val mb = kb / 1024f
+        return if (mb >= 1f) {
+            String.format(Locale.US, "%.1f MB", mb)
+        } else if (kb >= 1f) {
+            String.format(Locale.US, "%.0f KB", kb)
+        } else {
+            "$bytes B"
+        }
     }
 
     private fun startUpdateDownload(info: UpdateChecker.UpdateInfo) {

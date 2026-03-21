@@ -1,12 +1,13 @@
 {
-  "tag_name": "v094",
-  "name": "v094",
+  "tag_name": "v095",
+  "name": "v095",
   "body": "Update channel switched to LFS raw downloads.",
   "assets": [
     {
-      "name": "blindroid-094.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-094.apk",
-      "sha256": "56916a033a45d27b4d95f78868a1ebc0327f794e548a0ad131e18e2b1d53c2a2"
+      "name": "blindroid-095.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-095.apk",
+      "sha256": "085ff48d029fa84ad7029efc36096c571c16ca70759abba398a8f298e2e87e5e",
+      "size": 68904592
     }
   ]
 }

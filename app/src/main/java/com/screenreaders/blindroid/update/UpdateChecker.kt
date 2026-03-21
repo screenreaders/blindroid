@@ -11,7 +11,8 @@ object UpdateChecker {
         val version: String,
         val apkUrl: String?,
         val notes: String?,
-        val sha256: String?
+        val sha256: String?,
+        val sizeBytes: Long?
     )
 
     fun fetchLatest(): UpdateInfo? {
@@ -32,6 +33,7 @@ object UpdateChecker {
             val assets = json.optJSONArray("assets")
             var apkUrl: String? = null
             var sha256: String? = null
+            var sizeBytes: Long? = null
             if (assets != null) {
                 for (i in 0 until assets.length()) {
                     val asset = assets.getJSONObject(i)
@@ -40,11 +42,19 @@ object UpdateChecker {
                     if (name.endsWith(".apk") && url.startsWith("https://")) {
                         apkUrl = url
                         sha256 = asset.optString("sha256").ifBlank { null }
+                        val sizeValue = asset.optLong("size", -1L)
+                        sizeBytes = if (sizeValue > 0L) sizeValue else null
                         break
                     }
                 }
             }
-            UpdateInfo(version = version, apkUrl = apkUrl, notes = notes, sha256 = sha256)
+            UpdateInfo(
+                version = version,
+                apkUrl = apkUrl,
+                notes = notes,
+                sha256 = sha256,
+                sizeBytes = sizeBytes
+            )
         }
     }
 
