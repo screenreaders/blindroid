@@ -5,7 +5,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object UpdateChecker {
-    private const val API_URL = "https://api.github.com/repos/screenreaders/blindroid/releases/latest"
+    private const val API_URL = "https://raw.githubusercontent.com/screenreaders/blindroid/main/update.json"
 
     data class UpdateInfo(
         val version: String,
