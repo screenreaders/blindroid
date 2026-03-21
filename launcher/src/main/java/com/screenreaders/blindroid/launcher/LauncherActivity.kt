@@ -47,6 +47,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -175,6 +176,7 @@ class LauncherActivity : AppCompatActivity() {
             ::toggleWifiFromFeed,
             ::toggleBluetoothFromFeed,
             ::toggleDndFromFeed,
+            ::openNotificationAccessSettings,
             ::openAllApps,
             ::onHomeItemClick,
             ::onHomeItemLongClick,
@@ -735,6 +737,8 @@ class LauncherActivity : AppCompatActivity() {
         val wifiEnabled = isWifiEnabled()
         val bluetoothEnabled = isBluetoothEnabled()
         val dndEnabled = isDndEnabled()
+        val notificationsAccessGranted = NotificationManagerCompat.getEnabledListenerPackages(this)
+            .contains(packageName)
         val showAlarm = LauncherPrefs.isNowAlarmEnabled(this)
         val showCalendar = LauncherPrefs.isNowCalendarEnabled(this)
         val showWeather = LauncherPrefs.isNowWeatherEnabled(this)
@@ -803,6 +807,7 @@ class LauncherActivity : AppCompatActivity() {
             wifiEnabled = wifiEnabled,
             bluetoothEnabled = bluetoothEnabled,
             dndEnabled = dndEnabled,
+            notificationsAccessGranted = notificationsAccessGranted,
             atGlanceText = atGlanceText,
             showAlarm = showAlarm,
             alarmText = alarmText,
@@ -1031,6 +1036,10 @@ class LauncherActivity : AppCompatActivity() {
             else NotificationManager.INTERRUPTION_FILTER_NONE
         )
         refreshHome()
+    }
+
+    private fun openNotificationAccessSettings() {
+        startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
     }
 
     private fun getNextAlarmText(): String? {
@@ -1699,6 +1708,7 @@ class LauncherActivity : AppCompatActivity() {
         if (!feedEnabled) return
         if (LauncherPrefs.getFeedMode(this) != LauncherPrefs.FEED_MODE_GOOGLE) return
         if (!LauncherPrefs.isFeedAutoOpenEnabled(this)) return
+        if (!isGoogleAppAvailable()) return
         if (position != 0) return
         val now = System.currentTimeMillis()
         if (now - lastExternalFeedLaunchMs < 1200L) return

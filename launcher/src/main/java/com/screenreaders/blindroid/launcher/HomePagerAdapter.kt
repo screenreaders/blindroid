@@ -38,6 +38,7 @@ class HomePagerAdapter(
     private val onToggleWifi: () -> Unit,
     private val onToggleBluetooth: () -> Unit,
     private val onToggleDnd: () -> Unit,
+    private val onOpenNotificationAccess: () -> Unit,
     private val onOpenAllApps: () -> Unit,
     private val onClick: (Int, HomeItem) -> Unit,
     private val onLongClick: (Int, HomeItem) -> Unit,
@@ -91,6 +92,7 @@ class HomePagerAdapter(
                 onToggleWifi,
                 onToggleBluetooth,
                 onToggleDnd,
+                onOpenNotificationAccess,
                 onOpenAllApps
             )
             return
@@ -306,6 +308,7 @@ class HomePagerAdapter(
             onToggleWifi: () -> Unit,
             onToggleBluetooth: () -> Unit,
             onToggleDnd: () -> Unit,
+            onOpenNotificationAccess: () -> Unit,
             onOpenAllApps: () -> Unit
         ) {
             root.setBackgroundColor(colors.background)
@@ -786,8 +789,14 @@ class HomePagerAdapter(
 
             if (data.notifications.isEmpty()) {
                 val empty = TextView(container.context)
-                empty.text = container.context.getString(R.string.launcher_feed_no_notifications)
-                empty.setTextColor(colors.muted)
+                if (data.notificationsAccessGranted) {
+                    empty.text = container.context.getString(R.string.launcher_feed_no_notifications)
+                    empty.setTextColor(colors.muted)
+                } else {
+                    empty.text = container.context.getString(R.string.launcher_feed_notifications_permission)
+                    empty.setTextColor(colors.text)
+                    empty.setOnClickListener { onOpenNotificationAccess() }
+                }
                 container.addView(empty)
             } else {
                 data.notifications.forEach { message ->

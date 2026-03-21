@@ -392,6 +392,7 @@
     <string name="launcher_feed_power_off">Wyłączone</string>
     <string name="launcher_feed_notifications">Ostatnie powiadomienia</string>
     <string name="launcher_feed_no_notifications">Brak nowych powiadomień</string>
+    <string name="launcher_feed_notifications_permission">Dotknij, aby włączyć dostęp do powiadomień</string>
     <string name="launcher_feed_battery">Bateria</string>
     <string name="launcher_feed_external_hint">Po lewej stronie możesz otworzyć Google Discover jednym gestem.</string>
     <string name="launcher_feed_open_google">Otwórz Google Discover</string>

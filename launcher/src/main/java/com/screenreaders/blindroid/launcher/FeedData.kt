@@ -13,6 +13,7 @@ data class FeedData(
     val wifiEnabled: Boolean,
     val bluetoothEnabled: Boolean,
     val dndEnabled: Boolean,
+    val notificationsAccessGranted: Boolean,
     val atGlanceText: String?,
     val showAlarm: Boolean,
     val alarmText: String?,
