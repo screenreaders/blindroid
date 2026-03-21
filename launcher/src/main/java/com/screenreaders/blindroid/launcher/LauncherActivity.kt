@@ -164,6 +164,8 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedBatteryDetailsTs = 0L
     private var cachedNotificationsAccessGranted: Boolean? = null
     private var cachedNotificationsAccessTs = 0L
+    private var cachedRecentNotifications: List<String> = emptyList()
+    private var cachedRecentNotificationsTs = 0L
     private val appLabelCache = java.util.concurrent.ConcurrentHashMap<String, String>()
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
@@ -476,6 +478,8 @@ class LauncherActivity : AppCompatActivity() {
         cachedBatteryDetailsTs = 0L
         cachedNotificationsAccessGranted = null
         cachedNotificationsAccessTs = 0L
+        cachedRecentNotifications = emptyList()
+        cachedRecentNotificationsTs = 0L
     }
 
     private fun shouldRunFeedTicker(): Boolean {
@@ -730,12 +734,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun openQuickSettings() {
-        val intent = Intent("android.settings.QUICK_SETTINGS")
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            startActivity(Intent(android.provider.Settings.ACTION_SETTINGS))
-        }
+        safeStart(Intent("android.settings.QUICK_SETTINGS"), Intent(Settings.ACTION_SETTINGS))
     }
 
     private fun openFeed() {
@@ -1240,10 +1239,19 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun getRecentNotifications(): List<String> {
+        val now = SystemClock.uptimeMillis()
+        if (now - cachedRecentNotificationsTs <= 5_000L) {
+            return cachedRecentNotifications
+        }
         val prefs = getSharedPreferences("blindroid_prefs", Context.MODE_PRIVATE)
         val raw = prefs.getString("recent_notifications", "") ?: ""
-        if (raw.isBlank()) return emptyList()
-        return raw.split("|").filter { it.isNotBlank() }.take(5)
+        cachedRecentNotifications = if (raw.isBlank()) {
+            emptyList()
+        } else {
+            raw.split("|").filter { it.isNotBlank() }.take(5)
+        }
+        cachedRecentNotificationsTs = now
+        return cachedRecentNotifications
     }
 
     private fun isWifiEnabled(): Boolean {
