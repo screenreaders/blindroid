@@ -9,10 +9,11 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 
 ## Soft Braille Keyboard Reactivation
 - [x] Locate Soft Braille Keyboard repo: https://github.com/danieldalton10/Soft-Braille-Keyboard
-- [ ] Clone repo locally into `external/soft-braille-keyboard`
-- [ ] Build current source and document build steps
-- [ ] Update target/compile SDK to latest Android (16)
-- [ ] Update IME manifest/service configuration for modern Android
+- [x] Clone repo locally into `external/soft-braille-keyboard`
+- [x] Create `braillekeyboard` module inside Blindroid using Soft Braille sources
+- [ ] Build module and document steps
+- [x] Update target/compile SDK to latest Android (16)
+- [x] Update IME manifest/service configuration for modern Android
 - [ ] Validate on Android 13/14/15/16 (emulators) with checklist
 - [ ] Integrate/ship inside Blindroid (module or separate app + installer flow)
 

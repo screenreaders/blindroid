@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application>
+        <activity
+            android:name="com.screenreaders.blindroid.braillekeyboard.PreferenceIME"
+            android:exported="false"
+            android:label="@string/settings_name" />
+        <activity
+            android:name="com.screenreaders.blindroid.braillekeyboard.IntentActivity"
+            android:exported="false" />
+        <service
+            android:name="com.screenreaders.blindroid.braillekeyboard.BrailleIME"
+            android:exported="true"
+            android:label="@string/braille_ime"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

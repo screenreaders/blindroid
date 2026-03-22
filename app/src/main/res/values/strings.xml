@@ -330,6 +330,7 @@
     <string name="braille_title">Klawiatura brajlowska</string>
     <string name="braille_hint">Włącz klawiaturę brajlowską w ustawieniach systemu, a potem wybierz ją jako aktywną klawiaturę.</string>
     <string name="braille_open_settings">Otwórz ustawienia klawiatur</string>
+    <string name="braille_open_keyboard_settings">Ustawienia klawiatury brajlowskiej</string>
     <string name="braille_status_letters">Tryb liter</string>
     <string name="braille_status_numbers">Tryb cyfr</string>
     <string name="braille_status_caps">Tryb wielkich liter</string>
