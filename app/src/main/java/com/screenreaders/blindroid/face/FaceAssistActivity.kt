@@ -44,9 +44,12 @@ class FaceAssistActivity : AppCompatActivity() {
     private var lastGuidance = ""
     private var lastGuidanceTime = 0L
     private var tts: TextToSpeech? = null
+    private var ttsReady = false
+    private var pendingSpeech: String? = null
     private var active = false
     private var soundEnabled = false
     private var toneGenerator: ToneGenerator? = null
+    private val ttsShutdownRunnable = Runnable { shutdownTts() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +69,6 @@ class FaceAssistActivity : AppCompatActivity() {
                 .build()
         )
 
-        tts = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                applyTtsSettings()
-            }
-        }
         toneGenerator = ToneGenerator(AudioManager.STREAM_ACCESSIBILITY, 80)
         soundEnabled = Prefs.isFaceSoundEnabled(this)
         binding.faceSoundSwitch.isChecked = soundEnabled
@@ -92,11 +90,12 @@ class FaceAssistActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         stopAssistant()
+        shutdownTts()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        tts?.shutdown()
+        shutdownTts()
         faceDetector?.close()
         toneGenerator?.release()
         cameraExecutor.shutdown()
@@ -269,11 +268,49 @@ class FaceAssistActivity : AppCompatActivity() {
     }
 
     private fun speakText(text: String) {
+        ensureTts()
+        if (!ttsReady) {
+            pendingSpeech = text
+            return
+        }
+        speakInternal(text)
+    }
+
+    private fun speakInternal(text: String) {
         val volume = Prefs.getSpeechVolume(this)
         val params = Bundle().apply {
             putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume)
         }
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "face")
+        scheduleTtsShutdown()
+    }
+
+    private fun ensureTts() {
+        if (tts != null) return
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                ttsReady = true
+                applyTtsSettings()
+                pendingSpeech?.let {
+                    pendingSpeech = null
+                    speakInternal(it)
+                }
+            }
+        }
+    }
+
+    private fun scheduleTtsShutdown() {
+        mainHandler.removeCallbacks(ttsShutdownRunnable)
+        mainHandler.postDelayed(ttsShutdownRunnable, 30_000)
+    }
+
+    private fun shutdownTts() {
+        mainHandler.removeCallbacks(ttsShutdownRunnable)
+        ttsReady = false
+        pendingSpeech = null
+        tts?.stop()
+        tts?.shutdown()
+        tts = null
     }
 
     private fun playSoundCue(message: String) {

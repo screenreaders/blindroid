@@ -1,13 +1,13 @@
 {
-  "tag_name": "v096",
-  "name": "v096",
-  "body": "Update download size validation added.",
+  "tag_name": "v097",
+  "name": "v097",
+  "body": "Performance audit: reuse announcers and lazy TTS initialization.",
   "assets": [
     {
-      "name": "blindroid-096.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-096.apk",
-      "sha256": "b95d2ffd6083a69d80b787ae4ace0ae9f7cdbb5a5ed64e48aaba0d9832768e47",
-      "size": 68905056
+      "name": "blindroid-097.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-097.apk",
+      "sha256": "92577404c957f3bbc58ed28ff7f9e592be959c8a35e5092cda314d23aeaf1c61",
+      "size": 68905060
     }
   ]
 }

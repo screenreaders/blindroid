@@ -62,6 +62,7 @@ class NavigationAssistActivity : AppCompatActivity() {
     private var pendingRouteStart = false
     private var tyflomapLink: String? = null
     private val executor = Executors.newSingleThreadExecutor()
+    private var announcer: CallAnnouncer? = null
     private val gpxPickLauncher = registerForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -176,6 +177,8 @@ class NavigationAssistActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         executor.shutdown()
+        announcer?.shutdown()
+        announcer = null
     }
 
     private fun startNavigation() {
@@ -498,14 +501,13 @@ class NavigationAssistActivity : AppCompatActivity() {
             "bicycling" -> getString(R.string.navigation_confirm_bicycling, destination)
             else -> getString(R.string.navigation_confirm_transit, destination)
         }
-        val announcer = CallAnnouncer(this)
-        announcer.speak(
+        val engine = announcer ?: CallAnnouncer(this).also { announcer = it }
+        engine.speak(
             text = text,
             repeatCount = 1,
             rate = Prefs.getSpeechRate(this),
             volume = Prefs.getSpeechVolume(this),
-            voiceName = Prefs.getVoiceName(this),
-            onComplete = { announcer.shutdown() }
+            voiceName = Prefs.getVoiceName(this)
         )
     }
 

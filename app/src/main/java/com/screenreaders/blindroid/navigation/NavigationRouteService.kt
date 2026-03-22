@@ -28,6 +28,7 @@ import kotlin.math.sqrt
 
 class NavigationRouteService : Service(), LocationListener {
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
+    private var announcer: CallAnnouncer? = null
     private var running = false
     private var lastLocation: Location? = null
     private var lastHeading: Float? = null
@@ -59,6 +60,8 @@ class NavigationRouteService : Service(), LocationListener {
         super.onDestroy()
         stopTracking()
         Prefs.setNavigationRouteEnabled(this, false)
+        announcer?.shutdown()
+        announcer = null
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -270,14 +273,13 @@ class NavigationRouteService : Service(), LocationListener {
     }
 
     private fun speakOnce(text: String) {
-        val announcer = CallAnnouncer(this)
-        announcer.speak(
+        val engine = announcer ?: CallAnnouncer(this).also { announcer = it }
+        engine.speak(
             text = text,
             repeatCount = 1,
             rate = Prefs.getSpeechRate(this),
             volume = Prefs.getSpeechVolume(this),
-            voiceName = Prefs.getVoiceName(this),
-            onComplete = { announcer.shutdown() }
+            voiceName = Prefs.getVoiceName(this)
         )
     }
 

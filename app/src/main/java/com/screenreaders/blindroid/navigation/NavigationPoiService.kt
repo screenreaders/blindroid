@@ -14,7 +14,6 @@ import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
-import android.speech.tts.TextToSpeech
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.screenreaders.blindroid.R
@@ -24,7 +23,6 @@ import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.Locale
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.atan2
@@ -45,19 +43,9 @@ class NavigationPoiService : Service(), LocationListener {
     private var lastHeading: Float? = null
     private var lastLocation: Location? = null
     private val announced = LinkedHashMap<String, Long>()
-    private var tts: TextToSpeech? = null
+    private var announcer: CallAnnouncer? = null
     private var lastTrackWrite = 0L
     private var trackFile: java.io.File? = null
-
-    override fun onCreate() {
-        super.onCreate()
-        tts = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                tts?.language = Locale.forLanguageTag("pl-PL")
-                tts?.setSpeechRate(Prefs.getSpeechRate(this))
-            }
-        }
-    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
@@ -77,7 +65,8 @@ class NavigationPoiService : Service(), LocationListener {
         super.onDestroy()
         stopTracking()
         executor.shutdown()
-        tts?.shutdown()
+        announcer?.shutdown()
+        announcer = null
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -378,14 +367,13 @@ class NavigationPoiService : Service(), LocationListener {
         lastSpokenTime = System.currentTimeMillis()
         lastSpokenLocation = lastQueryLocation
         val volume = Prefs.getSpeechVolume(this)
-        val announcer = CallAnnouncer(this)
-        announcer.speak(
+        val engine = announcer ?: CallAnnouncer(this).also { announcer = it }
+        engine.speak(
             text = text,
             repeatCount = 1,
             rate = Prefs.getSpeechRate(this),
             volume = volume,
-            voiceName = Prefs.getVoiceName(this),
-            onComplete = { announcer.shutdown() }
+            voiceName = Prefs.getVoiceName(this)
         )
     }
 

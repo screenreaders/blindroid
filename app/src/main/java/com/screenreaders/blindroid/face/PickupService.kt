@@ -34,6 +34,7 @@ class PickupService : Service() {
     private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
     private val powerManager by lazy { getSystemService(PowerManager::class.java) }
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
+    private var announcer: CallAnnouncer? = null
     private var pickupSensor: Sensor? = null
     private var accelSensor: Sensor? = null
     private var triggerActive = false
@@ -104,6 +105,8 @@ class PickupService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         cancelPickupTrigger()
+        announcer?.shutdown()
+        announcer = null
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -188,14 +191,13 @@ class PickupService : Service() {
 
     private fun announceMissedCallUnavailable() {
         if (CallManager.getCall() != null) return
-        val announcer = CallAnnouncer(this)
-        announcer.speak(
+        val engine = announcer ?: CallAnnouncer(this).also { announcer = it }
+        engine.speak(
             text = getString(R.string.missed_call_back_missing),
             repeatCount = 1,
             rate = Prefs.getSpeechRate(this),
             volume = Prefs.getSpeechVolume(this),
-            voiceName = Prefs.getVoiceName(this),
-            onComplete = { announcer.shutdown() }
+            voiceName = Prefs.getVoiceName(this)
         )
     }
 

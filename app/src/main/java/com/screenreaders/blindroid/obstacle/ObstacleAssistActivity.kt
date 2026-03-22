@@ -24,9 +24,12 @@ class ObstacleAssistActivity : AppCompatActivity(), SensorEventListener {
     private var proximitySensor: Sensor? = null
     private var active = false
     private var tts: TextToSpeech? = null
+    private var ttsReady = false
+    private var pendingSpeech: String? = null
     private var toneGenerator: ToneGenerator? = null
     private var soundEnabled = false
     private val handler = Handler(Looper.getMainLooper())
+    private val ttsShutdownRunnable = Runnable { shutdownTts() }
     private var lastSpoken = 0L
     private var lastStateNear = false
 
@@ -37,11 +40,6 @@ class ObstacleAssistActivity : AppCompatActivity(), SensorEventListener {
         setupLockScreen()
 
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
-        tts = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                applyTtsSettings()
-            }
-        }
         toneGenerator = ToneGenerator(AudioManager.STREAM_ACCESSIBILITY, 80)
         soundEnabled = Prefs.isObstacleSoundEnabled(this)
         binding.obstacleSoundSwitch.isChecked = soundEnabled
@@ -60,11 +58,12 @@ class ObstacleAssistActivity : AppCompatActivity(), SensorEventListener {
     override fun onStop() {
         super.onStop()
         setActive(false)
+        shutdownTts()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        tts?.shutdown()
+        shutdownTts()
         toneGenerator?.release()
     }
 
@@ -121,10 +120,48 @@ class ObstacleAssistActivity : AppCompatActivity(), SensorEventListener {
         val now = System.currentTimeMillis()
         if (now - lastSpoken < 1500L) return
         lastSpoken = now
+        ensureTts()
+        if (!ttsReady) {
+            pendingSpeech = message
+            return
+        }
+        speakInternal(message)
+    }
+
+    private fun speakInternal(message: String) {
         val params = Bundle().apply {
             putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, Prefs.getSpeechVolume(this@ObstacleAssistActivity))
         }
         tts?.speak(message, TextToSpeech.QUEUE_FLUSH, params, "obstacle")
+        scheduleTtsShutdown()
+    }
+
+    private fun ensureTts() {
+        if (tts != null) return
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                ttsReady = true
+                applyTtsSettings()
+                pendingSpeech?.let {
+                    pendingSpeech = null
+                    speakInternal(it)
+                }
+            }
+        }
+    }
+
+    private fun scheduleTtsShutdown() {
+        handler.removeCallbacks(ttsShutdownRunnable)
+        handler.postDelayed(ttsShutdownRunnable, 30_000)
+    }
+
+    private fun shutdownTts() {
+        handler.removeCallbacks(ttsShutdownRunnable)
+        ttsReady = false
+        pendingSpeech = null
+        tts?.stop()
+        tts?.shutdown()
+        tts = null
     }
 
     private fun applyTtsSettings() {

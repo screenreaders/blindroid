@@ -36,7 +36,10 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
     private var lightSensor: Sensor? = null
     private var tts: TextToSpeech? = null
+    private var ttsReady = false
+    private var pendingSpeech: String? = null
     private val mainHandler = Handler(Looper.getMainLooper())
+    private val ttsShutdownRunnable = Runnable { shutdownTts() }
 
     private val cameraExecutor = Executors.newSingleThreadExecutor()
     private var cameraProvider: ProcessCameraProvider? = null
@@ -61,11 +64,6 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
         setupLockScreen()
 
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
-        tts = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                applyTtsSettings()
-            }
-        }
         toneGenerator = ToneGenerator(AudioManager.STREAM_ACCESSIBILITY, 80)
 
         binding.lightActiveSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -105,11 +103,12 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     override fun onStop() {
         super.onStop()
         setActive(false)
+        shutdownTts()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        tts?.shutdown()
+        shutdownTts()
         toneGenerator?.release()
         cameraExecutor.shutdown()
     }
@@ -338,11 +337,49 @@ class LightActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun speak(text: String) {
+        ensureTts()
+        if (!ttsReady) {
+            pendingSpeech = text
+            return
+        }
+        speakInternal(text)
+    }
+
+    private fun speakInternal(text: String) {
         val volume = Prefs.getSpeechVolume(this)
         val params = Bundle().apply {
             putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume)
         }
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "light")
+        scheduleTtsShutdown()
+    }
+
+    private fun ensureTts() {
+        if (tts != null) return
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                ttsReady = true
+                applyTtsSettings()
+                pendingSpeech?.let {
+                    pendingSpeech = null
+                    speakInternal(it)
+                }
+            }
+        }
+    }
+
+    private fun scheduleTtsShutdown() {
+        mainHandler.removeCallbacks(ttsShutdownRunnable)
+        mainHandler.postDelayed(ttsShutdownRunnable, 30_000)
+    }
+
+    private fun shutdownTts() {
+        mainHandler.removeCallbacks(ttsShutdownRunnable)
+        ttsReady = false
+        pendingSpeech = null
+        tts?.stop()
+        tts?.shutdown()
+        tts = null
     }
 
     private fun ensureCameraPermission(): Boolean {
