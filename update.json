@@ -1,13 +1,13 @@
 {
-  "tag_name": "v099",
-  "name": "v099",
-  "body": "Launcher extended: A11y announcements, gesture actions, layout presets, profiles.",
+  "tag_name": "v100",
+  "name": "v100",
+  "body": "Braille keyboard module with liblouis translation, clean build warnings.",
   "assets": [
     {
-      "name": "blindroid-099.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-099.apk",
-      "sha256": "f1c15003611ae96cc8d0eda8ba72dddb145595e182052261b363a31e156f349e",
-      "size": 68959164
+      "name": "blindroid-100.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-100.apk",
+      "sha256": "d6c7e896871f1b640aa9094df03264e98d6028d0c917f50e22e84ae2f4ecb651",
+      "size": 62524451
     }
   ]
 }
