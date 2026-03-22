@@ -33,7 +33,7 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Validate on Android 14 (API 34) with checklist (see VALIDATION.md)
 - [x] Validate on Android 15 (API 35) with checklist (see VALIDATION.md)
 - [x] Validate on Android 16 (API 36) with checklist (see VALIDATION.md)
-- [ ] Validate on Android 13 (API 33) with checklist (see VALIDATION.md)
+- [x] Validate on Android 13 (API 33) with checklist (see VALIDATION.md)
 - [x] Integrate/ship inside Blindroid (bundled module + settings entry)
 
 ## Android IME Compatibility Checklist

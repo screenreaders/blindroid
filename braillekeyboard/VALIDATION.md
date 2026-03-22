@@ -3,7 +3,7 @@
 Mark each device/API once verified.
 
 ## Devices / API levels
-- [ ] Android 13 (API 33)
+- [x] Android 13 (API 33)
 - [x] Android 14 (API 34)
 - [x] Android 15 (API 35)
 - [x] Android 16 (API 36)
@@ -22,5 +22,5 @@ Mark each device/API once verified.
 7. Export report and verify upload (optional).
 
 ## Notes
-- Tested on emulators on 2026-03-22. For API 34, enabling IME requires the short component name:
+- Tested on emulators on 2026-03-22. For API 33 and API 34, enabling IME requires the short component name:
   `com.screenreaders.blindroid/.braillekeyboard.BrailleIME`.
