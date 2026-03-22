@@ -200,6 +200,9 @@ public class Speech {
      */
     public void speak(Context context, String format, CharSequence text,
             int mode) {
+        if (!canSpeak || tts == null) {
+            return;
+        }
         if (text != null) {
             if (text.equals(" ")) {
                 // say "space
@@ -232,6 +235,9 @@ public class Speech {
      *            The password to be spoken as asterisks.
      */
     public void speakPassword(Context context, String text) {
+        if (!canSpeak || tts == null) {
+            return;
+        }
         speakPassword(context, "%s", text, QUEUE_FLUSH);
     }
 
@@ -249,6 +255,9 @@ public class Speech {
      */
     public void speakPassword(Context context, String formatter, String text,
             int mode) {
+        if (!canSpeak || tts == null || text == null) {
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             sb.append('*');

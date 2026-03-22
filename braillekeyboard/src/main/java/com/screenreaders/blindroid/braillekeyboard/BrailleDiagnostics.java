@@ -1,10 +1,20 @@
 package com.screenreaders.blindroid.braillekeyboard;
 
+import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.Settings;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class BrailleDiagnostics {
     public static final class CheckResult {
@@ -69,5 +79,81 @@ public final class BrailleDiagnostics {
             }
         }
         return out.toString();
+    }
+
+    public static String buildReport(Context context) {
+        StringBuilder report = new StringBuilder();
+        report.append("Blindroid Braille Diagnostics\n");
+        report.append("Generated: ");
+        report.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date()));
+        report.append("\n\n");
+
+        report.append("App: ");
+        report.append(getVersionLine(context));
+        report.append("\n");
+        report.append("Package: ");
+        report.append(context.getPackageName());
+        report.append("\n");
+        report.append("Device: ");
+        report.append(Build.MANUFACTURER);
+        report.append(" ");
+        report.append(Build.MODEL);
+        report.append(" (");
+        report.append(Build.DEVICE);
+        report.append(")\n");
+        report.append("Android: ");
+        report.append(Build.VERSION.RELEASE);
+        report.append(" (SDK ");
+        report.append(Build.VERSION.SDK_INT);
+        report.append(")\n");
+        report.append("Locale: ");
+        report.append(Locale.getDefault().toString());
+        report.append("\n");
+        report.append("Memory max: ");
+        report.append(Runtime.getRuntime().maxMemory() / (1024 * 1024));
+        report.append(" MB\n");
+        report.append("Record audio permission: ");
+        boolean recordGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_GRANTED;
+        report.append(recordGranted);
+        report.append("\n\n");
+
+        String imeId = new ComponentName(context, BrailleIME.class).flattenToShortString();
+        String enabled = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ENABLED_INPUT_METHODS);
+        String defaultIme = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.DEFAULT_INPUT_METHOD);
+        boolean imeEnabled = enabled != null && enabled.contains(imeId);
+        boolean imeDefault = defaultIme != null && defaultIme.equals(imeId);
+        report.append("IME enabled: ");
+        report.append(imeEnabled);
+        report.append("\n");
+        report.append("IME default: ");
+        report.append(imeDefault);
+        report.append("\n\n");
+
+        List<CheckResult> results = run(context);
+        report.append("Checks:\n");
+        report.append(format(context, results));
+        report.append("\n");
+
+        return report.toString();
+    }
+
+    private static String getVersionLine(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            String versionName = info.versionName == null ? "?" : info.versionName;
+            long versionCode;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                versionCode = info.getLongVersionCode();
+            } else {
+                versionCode = info.versionCode;
+            }
+            return versionName + " (" + versionCode + ")";
+        } catch (PackageManager.NameNotFoundException e) {
+            return "?";
+        }
     }
 }

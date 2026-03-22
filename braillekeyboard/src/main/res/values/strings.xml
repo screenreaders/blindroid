@@ -73,7 +73,11 @@
     <string name="braille_ime">Soft Braille Keyboard</string>
     <string name="braille_diagnostics_title">Braille diagnostics</string>
     <string name="braille_diagnostics_run">Run tests</string>
+    <string name="braille_diagnostics_export">Export report</string>
     <string name="braille_diagnostics_running">Running...</string>
+    <string name="braille_diagnostics_exporting">Generating report...</string>
+    <string name="braille_diagnostics_share">Share report</string>
+    <string name="braille_diagnostics_export_failed">Could not export report.</string>
     <string name="braille_diagnostics_ok">OK</string>
     <string name="braille_diagnostics_fail">FAIL</string>
     <string name="button_choose_default_keyboard">Set Soft Braille Keyboard as the default keyboard</string>
