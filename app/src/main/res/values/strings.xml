@@ -484,11 +484,19 @@
 
     <string name="talkback_wizard">Konfiguracja TalkBack</string>
     <string name="talkback_wizard_title">Konfiguracja TalkBack</string>
+    <string name="talkback_system_title">Systemowy czytnik ekranu</string>
     <string name="talkback_status_on">TalkBack: włączony</string>
     <string name="talkback_status_off">TalkBack: wyłączony</string>
     <string name="talkback_open_settings">Otwórz ustawienia dostępności</string>
+    <string name="talkback_open_shortcut">Ustaw skrót czytnika</string>
     <string name="talkback_refresh">Sprawdź ponownie</string>
     <string name="talkback_hint">Włącz TalkBack w ustawieniach dostępności i wróć tutaj, aby potwierdzić.</string>
+    <string name="talkback_backup_title">Zapasowy czytnik Blindroid</string>
+    <string name="talkback_backup_status_on">Zapasowy czytnik: włączony</string>
+    <string name="talkback_backup_status_off">Zapasowy czytnik: wyłączony</string>
+    <string name="talkback_backup_status_missing">Zapasowy czytnik: nie zainstalowany</string>
+    <string name="talkback_backup_hint">Jeśli systemowy czytnik nie działa, włącz zapasowy czytnik Blindroid.</string>
+    <string name="talkback_backup_open_settings">Otwórz ustawienia zapasowego czytnika</string>
     <string name="light_level_dark">ciemno</string>
     <string name="light_level_dim">średnio</string>
     <string name="light_level_bright">jasno</string>

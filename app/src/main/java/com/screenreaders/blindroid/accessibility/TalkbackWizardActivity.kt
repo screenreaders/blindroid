@@ -16,7 +16,13 @@ class TalkbackWizardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.talkbackSettingsButton.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            openAccessibilitySettings()
+        }
+        binding.talkbackShortcutButton.setOnClickListener {
+            openAccessibilityShortcutSettings()
+        }
+        binding.backupSettingsButton.setOnClickListener {
+            openBackupTalkBackSettings()
         }
         binding.talkbackRefreshButton.setOnClickListener {
             updateStatus()
@@ -34,5 +40,39 @@ class TalkbackWizardActivity : AppCompatActivity() {
         binding.talkbackStatus.text = getString(
             if (enabled) R.string.talkback_status_on else R.string.talkback_status_off
         )
+        val backupInstalled = TalkbackUtils.isBackupTalkBackInstalled(this)
+        val backupEnabled = backupInstalled && TalkbackUtils.isBackupTalkBackEnabled(this)
+        val backupStatusRes = when {
+            !backupInstalled -> R.string.talkback_backup_status_missing
+            backupEnabled -> R.string.talkback_backup_status_on
+            else -> R.string.talkback_backup_status_off
+        }
+        binding.backupStatus.text = getString(backupStatusRes)
+        binding.backupSettingsButton.isEnabled = backupInstalled
+    }
+
+    private fun openAccessibilitySettings() {
+        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+    }
+
+    private fun openAccessibilityShortcutSettings() {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SHORTCUT_SETTINGS)
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            openAccessibilitySettings()
+        }
+    }
+
+    private fun openBackupTalkBackSettings() {
+        val component = TalkbackUtils.getBackupTalkBackComponent()
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_DETAILS_SETTINGS).apply {
+            putExtra(Settings.EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME, component.flattenToString())
+        }
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            openAccessibilitySettings()
+        }
     }
 }
