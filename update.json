@@ -1,13 +1,13 @@
 {
-  "tag_name": "v102",
-  "name": "v102",
-  "body": "IME edge-to-edge insets handling, onboarding installer intent update, IME validation results, performance audit notes.",
+  "tag_name": "v103",
+  "name": "v103",
+  "body": "BlindReader installer flow in wizard, bundled BlindReader APK asset, TalkBack build fixes, API 33 IME validation.",
   "assets": [
     {
-      "name": "blindroid-102.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-102.apk",
-      "sha256": "18be939c46aed6703c35fc27edeb525222761619e0111d4df4500cbe7f25627b",
-      "size": 96470391
+      "name": "blindroid-103.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-103.apk",
+      "sha256": "638c505f793ee8e46c946303b3245395d90fa3ca873fbf79bcc0d6b2a3f37cd5",
+      "size": 123065715
     }
   ]
 }
