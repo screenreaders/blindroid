@@ -9,7 +9,7 @@ external/rhvoice/src/android/.gradle/
 external/rhvoice/src/android/**/build/
 external/rhvoice/bin/
 *.apk
-!blindroid-101.apk
+!blindroid-102.apk
 !app/src/main/assets/*.apk
 data/
 tools/

@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -34,6 +35,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityManager;
 
 import com.screenreaders.blindroid.braillekeyboard.Options.KeyboardFeedback;
@@ -136,6 +138,10 @@ public class BrailleView extends View {
     private long requiredTouchTime = 0;
     private boolean shrinkKeyboard;
     private Speech speech;
+    private int insetLeft = 0;
+    private int insetTop = 0;
+    private int insetRight = 0;
+    private int insetBottom = 0;
 
     public BrailleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -176,7 +182,7 @@ public class BrailleView extends View {
         }
 
         if (displayParams != null) {
-            loadDefaultPad(getWidth(), getHeight());
+            loadDefaultPad(getContentWidth(), getContentHeight());
             invalidate();
             requestLayout();
         }
@@ -204,8 +210,10 @@ public class BrailleView extends View {
     @Override
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        setDisplayParams(w, h);
-        loadDefaultPad(w, h);
+        int contentW = getContentWidth();
+        int contentH = getContentHeight();
+        setDisplayParams(contentW, contentH);
+        loadDefaultPad(contentW, contentH);
     }
 
     @Override
@@ -231,26 +239,32 @@ public class BrailleView extends View {
                 setContentDescription(null);
             }
 
+            canvas.save();
+            canvas.translate(getPaddingLeft(), getPaddingTop());
             List<Coords> keys = getKeys();
             // For each dot draw a circle on the screen at it's position and
             // write the corresponding dot number in the circle.
             for (int i = 0; i < keys.size(); i++) {
-                int x = displayParams.autoRotate || getWidth() >= getHeight() ? keys
+                int x = displayParams.autoRotate || getContentWidth() >= getContentHeight() ? keys
                         .get(i).x : keys.get(i).y;
-                int y = displayParams.autoRotate || getWidth() >= getHeight() ? keys
+                int y = displayParams.autoRotate || getContentWidth() >= getContentHeight() ? keys
                         .get(i).y : keys.get(i).x;
                 String text = String.valueOf(i + 1);
                 paint.getTextBounds(text, 0, text.length(), circleTextBounds);
                 canvas.drawCircle(x, y, displayParams.radius, circlePaint);
                 canvas.drawText(text, x, y, paint);
             }
+            canvas.restore();
         } else if (shrinkKeyboard) {
             String text = getContext().getString(R.string.expand_keyboard);
             if (accessibilityManager.isTouchExplorationEnabled()) {
                 text = getContext()
                         .getString(R.string.expand_keyboard_talkback);
             }
+            canvas.save();
+            canvas.translate(getPaddingLeft(), getPaddingTop());
             canvas.drawText(text, displayParams.x, displayParams.y, paint);
+            canvas.restore();
             setContentDescription(text);
         }
         setPrivacy();
@@ -311,6 +325,8 @@ public class BrailleView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         super.onTouchEvent(motionEvent);
+        int contentW = getContentWidth();
+        int contentH = getContentHeight();
         // Get the height and width of the keyboard.
         // If autoRotate is enabled then the standard dimenssions are correct.
         // If autoRotate is disabled the width is the maximum of the height and
@@ -319,21 +335,21 @@ public class BrailleView extends View {
         // screen might be fixed to portrate mode. It makes more sense to use
         // the keyboard in landscape mode and the user doesn't care about
         // orientation of the screen.
-        int width = displayParams.autoRotate ? getWidth() : Math.max(
-                getWidth(), getHeight());
-        int height = displayParams.autoRotate ? getHeight() : Math.min(
-                getWidth(), getHeight());
+        int width = displayParams.autoRotate ? contentW : Math.max(
+                contentW, contentH);
+        int height = displayParams.autoRotate ? contentH : Math.min(
+                contentW, contentH);
         int action = motionEvent.getActionMasked();
         int index = motionEvent.getActionIndex();
         int id = motionEvent.getPointerId(index);
-        int x = (int) motionEvent.getX(index);
-        int y = (int) motionEvent.getY(index);
+        int x = (int) motionEvent.getX(index) - getPaddingLeft();
+        int y = (int) motionEvent.getY(index) - getPaddingTop();
 
         // Swap x and y if the view is being used perpendicular to it's intended
         // purpose see above.
         int tempX = x;
-        x = displayParams.autoRotate || getWidth() >= getHeight() ? x : y;
-        y = displayParams.autoRotate || getWidth() >= getHeight() ? y : tempX;
+        x = displayParams.autoRotate || contentW >= contentH ? x : y;
+        y = displayParams.autoRotate || contentW >= contentH ? y : tempX;
         Swipe swipe;
         switch (action) {
         case MotionEvent.ACTION_DOWN:
@@ -364,7 +380,7 @@ public class BrailleView extends View {
                     if (!handledSwipe) {
                         // single finger flicks
                         if ((swipe = handledSwipeAction(dotsDown,
-                                getHeight() > getWidth()
+                                contentH > contentW
                                         && !displayParams.autoRotate)) != Swipe.NONE) {
                             actionHandler.handleSwipe(getContext(), swipe);
                         } else { // all swipe attempts failed so resort to
@@ -379,7 +395,7 @@ public class BrailleView extends View {
 
             if (pad != null) {
                 pad.updateKeys(!displayParams.autoRotate
-                        && getHeight() > getWidth());
+                        && contentH > contentW);
             }
 
             if (Options.getBooleanPreference(
@@ -400,7 +416,7 @@ public class BrailleView extends View {
                 updatePointer(dotsDown, id, x, y, false);
                 setDots();
                 if ((swipe = handledSwipeAction(dotsDown,
-                        getHeight() > getWidth() && !displayParams.autoRotate)) != Swipe.NONE) {
+                        contentH > contentW && !displayParams.autoRotate)) != Swipe.NONE) {
                     // Hold one finger while swiping with another
                     handledSwipe = true;
                     actionHandler.handleSwipe(getContext(), swipe);
@@ -537,7 +553,7 @@ public class BrailleView extends View {
                         R.string.pref_use_eight_dots_default)));
         try {
             pad = PadUtilities.selectPad(getContext(), dots, width, height,
-                    !displayParams.autoRotate && getHeight() > getWidth(),
+                    !displayParams.autoRotate && getContentHeight() > getContentWidth(),
                     useEightDots);
             return true;
         } catch (IllegalArgumentException e) {
@@ -736,8 +752,53 @@ public class BrailleView extends View {
 
         FontMetrics metrics = paint.getFontMetrics();
         float height = Math.abs(metrics.top - metrics.bottom);
-        displayParams.x = getWidth() / 2;
-        displayParams.y = (getHeight() / 2) + (height / 2);
+        displayParams.x = w / 2f;
+        displayParams.y = (h / 2f) + (height / 2f);
+    }
+
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            android.graphics.Insets sys = insets.getInsets(
+                    WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+            insetLeft = sys.left;
+            insetTop = sys.top;
+            insetRight = sys.right;
+            insetBottom = sys.bottom;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            insetLeft = insets.getSystemWindowInsetLeft();
+            insetTop = insets.getSystemWindowInsetTop();
+            insetRight = insets.getSystemWindowInsetRight();
+            insetBottom = insets.getSystemWindowInsetBottom();
+        }
+        updateContentPadding();
+        return insets;
+    }
+
+    private void updateContentPadding() {
+        if (getPaddingLeft() == insetLeft
+                && getPaddingTop() == insetTop
+                && getPaddingRight() == insetRight
+                && getPaddingBottom() == insetBottom) {
+            return;
+        }
+        setPadding(insetLeft, insetTop, insetRight, insetBottom);
+        if (displayParams != null) {
+            int contentW = getContentWidth();
+            int contentH = getContentHeight();
+            setDisplayParams(contentW, contentH);
+            loadDefaultPad(contentW, contentH);
+            invalidate();
+            requestLayout();
+        }
+    }
+
+    private int getContentWidth() {
+        return Math.max(1, getWidth() - getPaddingLeft() - getPaddingRight());
+    }
+
+    private int getContentHeight() {
+        return Math.max(1, getHeight() - getPaddingTop() - getPaddingBottom());
     }
 
     private boolean handleVoiceInput() {

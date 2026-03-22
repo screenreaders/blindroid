@@ -24,5 +24,5 @@
 
 ## Backlog (do uzupełnienia)
 - [x] Usunięte/wyjaśnione TODO z upstream (PreferenceIME/Speech/MyTranslatorClient)
-- [ ] Audyt wydajności TTS + screenreader (profiling)
+- [x] Audyt wydajności TTS + screenreader (profiling)
 - [x] Dalsze polerowanie UX launchera na podstawie feedbacku

@@ -30,7 +30,10 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Build module and document steps (BUILD.md)
 - [x] Update target/compile SDK to latest Android (16)
 - [x] Update IME manifest/service configuration for modern Android
-- [ ] Validate on Android 13/14/15/16 (emulators) with checklist (see VALIDATION.md)
+- [x] Validate on Android 14 (API 34) with checklist (see VALIDATION.md)
+- [x] Validate on Android 15 (API 35) with checklist (see VALIDATION.md)
+- [x] Validate on Android 16 (API 36) with checklist (see VALIDATION.md)
+- [ ] Validate on Android 13 (API 33) with checklist (see VALIDATION.md)
 - [x] Integrate/ship inside Blindroid (bundled module + settings entry)
 
 ## Android IME Compatibility Checklist
@@ -38,8 +41,8 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Review Android 15 behavior changes (all apps + targeting) — edge‑to‑edge enforced; predictive back animations for opted‑in apps
 - [x] Review Android 14 behavior changes (all apps + targeting)
 - [x] Verify InputMethodService API usage per Android docs
-- [ ] Verify window insets / edge‑to‑edge handling in IME UI
-- [ ] Verify predictive back behavior for IME UI
+- [x] Verify window insets / edge‑to‑edge handling in IME UI
+- [x] Verify predictive back behavior for IME UI (no custom back handling in IME)
 - [x] Verify permissions/exported flags for IME service
 
 ## Reference Links (Android Docs)

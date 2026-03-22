@@ -1,12 +1,12 @@
 {
-  "tag_name": "v101",
-  "name": "v101",
-  "body": "Launcher A11y toggles (page announcements + gesture haptics), page announce throttle, braille build docs.",
+  "tag_name": "v102",
+  "name": "v102",
+  "body": "IME edge-to-edge insets handling, onboarding installer intent update, IME validation results, performance audit notes.",
   "assets": [
     {
-      "name": "blindroid-101.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-101.apk",
-      "sha256": "5107b9507630e42cbede36703066eb3d03d596e9fb46321e1a106390d7ae3300",
+      "name": "blindroid-102.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-102.apk",
+      "sha256": "18be939c46aed6703c35fc27edeb525222761619e0111d4df4500cbe7f25627b",
       "size": 96470391
     }
   ]

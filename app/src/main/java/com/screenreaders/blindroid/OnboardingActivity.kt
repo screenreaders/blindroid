@@ -248,10 +248,11 @@ class OnboardingActivity : AppCompatActivity() {
             return
         }
         val uri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", apk)
-        val intent = Intent(Intent.ACTION_INSTALL_PACKAGE).apply {
-            data = uri
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/vnd.android.package-archive")
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
+            putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, packageName)
         }
         Toast.makeText(this, R.string.onboard_tts_install_started, Toast.LENGTH_SHORT).show()
         startActivity(intent)
