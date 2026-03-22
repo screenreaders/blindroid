@@ -34,13 +34,13 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Integrate/ship inside Blindroid (bundled module + settings entry)
 
 ## Android IME Compatibility Checklist
-- [ ] Review Android 16 behavior changes (all apps + targeting)
-- [ ] Review Android 15 behavior changes (all apps + targeting)
-- [ ] Review Android 14 behavior changes (all apps + targeting)
-- [ ] Verify InputMethodService API usage per Android docs
+- [x] Review Android 16 behavior changes (all apps + targeting) — edge‑to‑edge opt‑out removed; predictive back requires migration
+- [x] Review Android 15 behavior changes (all apps + targeting) — edge‑to‑edge enforced; predictive back animations for opted‑in apps
+- [x] Review Android 14 behavior changes (all apps + targeting)
+- [x] Verify InputMethodService API usage per Android docs
 - [ ] Verify window insets / edge‑to‑edge handling in IME UI
 - [ ] Verify predictive back behavior for IME UI
-- [ ] Verify permissions/exported flags for IME service
+- [x] Verify permissions/exported flags for IME service
 
 ## Reference Links (Android Docs)
 - Android 16 behavior changes (all apps): https://developer.android.com/about/versions/16/behavior-changes-all
