@@ -11,6 +11,7 @@
 - [x] Tłumaczenie brajla z fallbackiem
 - [x] Diagnostyka IME (self-test liblouis + tablice)
 - [x] Eksport raportu diagnostycznego (udostępnianie)
+- [x] Wysyłka raportu diagnostycznego na serwer
 - [ ] Testy funkcjonalne IME na urządzeniach
 - [ ] Testy zgodności Android (14/15/16) i stabilność długich sesji
 

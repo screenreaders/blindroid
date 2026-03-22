@@ -31,4 +31,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/braille_diagnostics_export" />
+
+    <Button
+        android:id="@+id/brailleDiagnosticsSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/braille_diagnostics_send" />
 </LinearLayout>

@@ -19,6 +19,7 @@ public class BrailleDiagnosticsActivity extends Activity {
     private TextView resultView;
     private Button runButton;
     private Button exportButton;
+    private Button sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,17 @@ public class BrailleDiagnosticsActivity extends Activity {
         resultView = findViewById(R.id.brailleDiagnosticsResult);
         runButton = findViewById(R.id.brailleDiagnosticsRun);
         exportButton = findViewById(R.id.brailleDiagnosticsExport);
+        sendButton = findViewById(R.id.brailleDiagnosticsSend);
 
         runButton.setOnClickListener(v -> runDiagnostics());
         exportButton.setOnClickListener(v -> exportReport());
+        sendButton.setOnClickListener(v -> sendReport());
     }
 
     private void runDiagnostics() {
         runButton.setEnabled(false);
         exportButton.setEnabled(false);
+        sendButton.setEnabled(false);
         resultView.setText(getString(R.string.braille_diagnostics_running));
         new Thread(() -> {
             List<BrailleDiagnostics.CheckResult> results = BrailleDiagnostics.run(getApplicationContext());
@@ -44,6 +48,7 @@ public class BrailleDiagnosticsActivity extends Activity {
                 resultView.setText(text);
                 runButton.setEnabled(true);
                 exportButton.setEnabled(true);
+                sendButton.setEnabled(true);
             });
         }).start();
     }
@@ -51,6 +56,7 @@ public class BrailleDiagnosticsActivity extends Activity {
     private void exportReport() {
         runButton.setEnabled(false);
         exportButton.setEnabled(false);
+        sendButton.setEnabled(false);
         resultView.setText(getString(R.string.braille_diagnostics_exporting));
         new Thread(() -> {
             String report = BrailleDiagnostics.buildReport(getApplicationContext());
@@ -58,6 +64,7 @@ public class BrailleDiagnosticsActivity extends Activity {
             runOnUiThread(() -> {
                 runButton.setEnabled(true);
                 exportButton.setEnabled(true);
+                sendButton.setEnabled(true);
                 if (reportFile == null) {
                     Toast.makeText(this, R.string.braille_diagnostics_export_failed, Toast.LENGTH_LONG).show();
                     return;
@@ -74,6 +81,21 @@ public class BrailleDiagnosticsActivity extends Activity {
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.braille_diagnostics_share)));
             });
         }).start();
+    }
+
+    private void sendReport() {
+        runButton.setEnabled(false);
+        exportButton.setEnabled(false);
+        sendButton.setEnabled(false);
+        resultView.setText(getString(R.string.braille_diagnostics_sending));
+        final String report = BrailleDiagnostics.buildReport(getApplicationContext());
+        BrailleReportUploader.uploadAsync(getApplicationContext(), report, success -> runOnUiThread(() -> {
+            runButton.setEnabled(true);
+            exportButton.setEnabled(true);
+            sendButton.setEnabled(true);
+            int message = success ? R.string.braille_diagnostics_send_ok : R.string.braille_diagnostics_send_fail;
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }));
     }
 
     private File writeReport(String report) {

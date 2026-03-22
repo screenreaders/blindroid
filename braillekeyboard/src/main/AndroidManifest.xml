@@ -29,7 +29,7 @@
             </intent-filter>
         </service>
         <provider
-            android:name="androidx.core.content.FileProvider"
+            android:name="com.screenreaders.blindroid.braillekeyboard.BrailleFileProvider"
             android:authorities="${applicationId}.braillekeyboard.files"
             android:exported="false"
             android:grantUriPermissions="true">
