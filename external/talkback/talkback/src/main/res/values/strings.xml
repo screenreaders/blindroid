@@ -418,8 +418,8 @@
     <string name="pref_verbosity_preset_change"><xliff:g id="preset_name" example="High">%1$s</xliff:g> verbosity is now active.</string>
 
     <!-- Gesture set id. [CHAR LIMIT=40] -->
-    <string name="pref_gesture_set_entry_0">0</string>
-    <string name="pref_gesture_set_entry_1">1</string>
+    <string name="pref_gesture_set_entry_0">Android (standard)</string>
+    <string name="pref_gesture_set_entry_1">iOS (VoiceOver)</string>
 
     <!-- Keyboard key map changes items. -->
     <!-- TalkBack keyboard shortcut keymap changes. The title for Activity and Notification to notify user there is another keymap support more shortcut actions worth to try. [CHAR LIMIT=60] -->

@@ -585,6 +585,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     mediaControlShortcut = context.getString(R.string.shortcut_value_media_control);
     prefs = SharedPreferencesUtils.getSharedPreferences(context);
     prefs.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    applyIosGestureSetDefaultsIfNeeded();
     loadGestureIdToActionKeyMap();
     gestureSetEnabled =
         isGestureSetEnabled(
@@ -600,6 +601,127 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
                 R.string.pref_gesture_set_key,
                 R.string.pref_gesture_set_value_default)
             : 0;
+  }
+
+  private void applyIosGestureSetDefaultsIfNeeded() {
+    if (!FeatureFlagReader.useMultipleGestureSet(context)) {
+      return;
+    }
+    final int iosGestureSet = 1;
+    SharedPreferences.Editor editor = prefs.edit();
+
+    applyDefaultIfAbsent(
+        editor, R.string.pref_shortcut_right_key, R.string.shortcut_value_next, iosGestureSet);
+    applyDefaultIfAbsent(
+        editor, R.string.pref_shortcut_left_key, R.string.shortcut_value_previous, iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_1finger_2tap_key,
+        R.string.shortcut_value_perform_click_action,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_1finger_2tap_hold_key,
+        R.string.shortcut_value_pass_through_next_gesture,
+        iosGestureSet);
+
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_swipe_right_key,
+        R.string.shortcut_value_next_container,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_swipe_left_key,
+        R.string.shortcut_value_prev_container,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_swipe_up_key,
+        R.string.shortcut_value_read_from_top,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_swipe_down_key,
+        R.string.shortcut_value_read_from_current,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_1tap_key,
+        R.string.shortcut_value_pause_or_resume_feedback,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_2tap_key,
+        R.string.shortcut_value_media_control,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_3tap_key,
+        R.string.shortcut_value_screen_search,
+        iosGestureSet);
+
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_1tap_key,
+        R.string.shortcut_value_talkback_breakout,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_swipe_up_key,
+        R.string.shortcut_value_scroll_down,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_swipe_down_key,
+        R.string.shortcut_value_scroll_up,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_swipe_left_key,
+        R.string.shortcut_value_scroll_right,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_swipe_right_key,
+        R.string.shortcut_value_scroll_left,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_2tap_key,
+        R.string.shortcut_value_toggle_voice_feedback,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_3finger_3tap_key,
+        R.string.shortcut_value_show_hide_screen,
+        iosGestureSet);
+
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_1tap_key,
+        R.string.shortcut_value_first_in_screen,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_2tap_key,
+        R.string.shortcut_value_last_in_screen,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_3tap_key,
+        R.string.shortcut_value_describe_image,
+        iosGestureSet);
+
+    editor.apply();
+  }
+
+  private void applyDefaultIfAbsent(
+      SharedPreferences.Editor editor, int keyResId, int actionResId, int gestureSet) {
+    String key = getPrefKeyWithGestureSet(context.getString(keyResId), gestureSet);
+    if (!prefs.contains(key)) {
+      editor.putString(key, context.getString(actionResId));
+    }
   }
 
   public void onConfigurationChanged(Configuration newConfig) {

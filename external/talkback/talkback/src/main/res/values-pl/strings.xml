@@ -112,8 +112,8 @@
   <string name="pref_verbosity_preset_entry_low">Niska</string>
   <string name="pref_verbosity_category_preset_settings_title">Informacje o szczegółowości</string>
   <string name="pref_verbosity_preset_change">%1$s szczegółowość jest teraz aktywna.</string>
-  <string name="pref_gesture_set_entry_0">0</string>
-  <string name="pref_gesture_set_entry_1">1</string>
+  <string name="pref_gesture_set_entry_0">Android (standardowe)</string>
+  <string name="pref_gesture_set_entry_1">iOS (VoiceOver)</string>
   <string name="keycombo_keymap_changes_instruction_title">Zaktualizuj mapę klawiszy TalkBack</string>
   <string name="keycombo_keymap_changes_activity_content">Aby nadal korzystać ze skrótów klawiszowych, otwórz Ustawienia i przełącz klasyczną mapę klawiszy na domyślną.
       &lt;br&gt;&lt;br&gt;&lt;b&gt;Co wyróżnia domyślną mapę klawiszy?&lt;/b&gt;

@@ -29,7 +29,7 @@ public final class FeatureFlagReader {
   }
 
   public static boolean useMultipleGestureSet(Context context) {
-    return false;
+    return true;
   }
 
   public static boolean enableImageDescription(Context context) {

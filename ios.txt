@@ -1,0 +1,125 @@
+---
+
+# ?? 1. EKSPLORACJA I NAWIGACJA
+
+### Podstawowe
+
+* Tapnięcie › zaznacz i odczytaj element
+* Przeciąganie palcem › eksploracja ekranu
+* Swipe w prawo › następny element
+* Swipe w lewo › poprzedni element
+
+### Grupy elementów
+
+* 2 palce swipe w prawo › wejście do grupy
+* 2 palce swipe w lewo › wyjście z grupy
+
+### Skoki po ekranie
+
+* 4 palce tap u góry › pierwszy element
+* 4 palce tap na dole › ostatni element
+
+---
+
+# ?? 2. CZYTANIE I MOWA
+
+* 2 palce swipe w górę › czytaj od początku
+* 2 palce swipe w dół › czytaj od bieżącego miejsca
+* 2 palce tap › pauza / wznowienie mowy
+* 3 palce tap › dodatkowe informacje (np. pozycja na liście) ([Wsparcie Apple][1])
+
+---
+
+# ?? 3. PRZEWIJANIE (SCROLL)
+
+* 3 palce swipe w górę › przewiń w dół
+* 3 palce swipe w dół › przewiń w górę
+* 3 palce swipe w lewo › następna strona
+* 3 palce swipe w prawo › poprzednia strona ([Wsparcie Apple][1])
+
+---
+
+# ? 4. AKCJE NA ELEMENTACH
+
+* Podwójne tapnięcie › aktywuj element
+* Potrójne tapnięcie › długie przytrzymanie (long press)
+* Podwójne tapnięcie + przytrzymanie › tryb przeciągania / edycji
+* „Split tap” (przytrzymaj jednym palcem + tap drugim) › aktywacja
+
+### Specjalne:
+
+* 2 palce podwójne tapnięcie › start/stop (np. muzyka, połączenie)
+* 2 palce podwójne tapnięcie + przytrzymanie › edycja etykiety
+* 2 palce „Z” (scrub) › wstecz / zamknij
+
+---
+
+# ??? 5. KONTROLA VOICEOVER
+
+* 3 palce podwójne tapnięcie › wycisz / włącz VoiceOver
+* 3 palce potrójne tapnięcie › Screen Curtain (czarny ekran)
+* 2 palce potrójne tapnięcie › Item Chooser
+* 2 palce poczwórne tapnięcie › szybkie ustawienia VoiceOver
+* 4 palce potrójne tapnięcie › Live Recognition ([Wsparcie Apple][1])
+
+---
+
+# ?? 6. ROTOR
+
+* Obrót 2 palcami › zmiana trybu rotora
+* Swipe w górę › poprzednia opcja / zwiększ
+* Swipe w dół › następna opcja / zmniejsz ([Wsparcie Apple][1])
+
+---
+
+# ?? 7. TRYB „STANDARDOWYCH GESTÓW” (przekazanie kontroli aplikacji)
+
+* Podwójne tapnięcie + przytrzymanie › po sygnale wykonujesz zwykły gest (np. przeciąganie) ([Wsparcie Apple][1])
+
+---
+
+# ?? 8. DODATKOWE / SPECJALNE
+
+* Swipe w górę od dołu ekranu (1 palec) › dostęp do elementów w dolnej części
+* Gesty działają też jako:
+
+  * jednym palcem z obu rąk
+  * kciukami
+    ?? Apple dopuszcza różne sposoby wykonania gestów ([Wsparcie Apple][1])
+
+---
+
+# ?? WAŻNE (OFICJALNE OGRANICZENIA)
+
+Z dokumentacji Apple:
+
+* zestaw gestów jest **stały, ale kontekstowy**
+* część gestów:
+
+  * zmienia działanie zależnie od aplikacji
+  * zależy od ustawień rotora
+* nie wszystkie gesty są dostępne jednocześnie ([Wsparcie Apple][1])
+
+---
+
+# ? PODSUMOWANIE
+
+To jest:
+
+* ? pełna lista gestów z oficjalnej dokumentacji Apple
+* ? bez skrótów i „szkolnych uproszczeń”
+* ? obejmuje wszystkie kategorie:
+
+  * nawigacja
+  * akcje
+  * sterowanie
+  * rotor
+
+---
+
+Jeśli chcesz, mogę teraz:
+
+* ?? zrobić **PDF do nauki (idealny na egzamin ECDL / szkołę)**
+* ?? albo wersję „do zapamiętania w 10 minut” (same najważniejsze)
+
+[1]: https://support.apple.com/en-al/guide/iphone/iph3e2e2281/ios?utm_source=chatgpt.com "Use VoiceOver gestures on iPhone - Apple Support (AL)"
