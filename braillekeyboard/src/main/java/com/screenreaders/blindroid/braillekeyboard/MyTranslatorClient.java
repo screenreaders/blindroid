@@ -23,7 +23,7 @@ import java.util.List;
 import com.googlecode.eyesfree.braille.translate.TableInfo;
 import com.googlecode.eyesfree.braille.translate.TranslatorClient;
 
-// TODO(ddalton): Find a way to use the service directly without this class.
+// Wrapper for embedded liblouis tables; keeps API compatibility.
 public class MyTranslatorClient extends TranslatorClient {
     public MyTranslatorClient(Context context, OnInitListener onInitListener) {
         mContext = context;

@@ -38,7 +38,6 @@ import com.screenreaders.blindroid.braillekeyboard.Options.KeyboardFeedback;
 import com.screenreaders.blindroid.braillekeyboard.Options.OptionList;
 import com.googlecode.eyesfree.braille.translate.TableInfo;
 
-// TODO fix the keyboard echo / feedback prefs
 public class PreferenceIME extends PreferenceActivity {
     @Override
     protected boolean isValidFragment(String fragmentName) {
@@ -76,6 +75,8 @@ public class PreferenceIME extends PreferenceActivity {
             addOptions(keyboardFeedback, KeyboardFeedback.ALL);
             addOptions(keyboardEcho, KeyboardEcho.ALL);
             addTTSList(textToSpeechPreference);
+            bindListSummary(keyboardFeedback);
+            bindListSummary(keyboardEcho);
 
             if (diagnosticsPref != null) {
                 diagnosticsPref.setOnPreferenceClickListener(preference -> {
@@ -200,6 +201,24 @@ public class PreferenceIME extends PreferenceActivity {
         private static void resetLists(List<String> list1, List<String> list2) {
             list1.clear();
             list2.clear();
+        }
+
+        private void bindListSummary(final ListPreference pref) {
+            if (pref == null) {
+                return;
+            }
+            pref.setSummary(pref.getEntry());
+            pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    String value = newValue == null ? null : newValue.toString();
+                    int index = pref.findIndexOfValue(value);
+                    if (index >= 0) {
+                        pref.setSummary(pref.getEntries()[index]);
+                    }
+                    return true;
+                }
+            });
         }
 
         private void addTTSList(final ListPreference preference) {

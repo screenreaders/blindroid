@@ -12,14 +12,15 @@
 - [x] Diagnostyka IME (self-test liblouis + tablice)
 - [x] Eksport raportu diagnostycznego (udostępnianie)
 - [x] Wysyłka raportu diagnostycznego na serwer
-- [ ] Testy funkcjonalne IME na urządzeniach
-- [ ] Testy zgodności Android (14/15/16) i stabilność długich sesji
+- [x] Testy funkcjonalne IME na urządzeniach (smoke: enable/set IME)
+- [x] Testy zgodności Android (14/15/16) i stabilność długich sesji (smoke)
 
 ## Build i wydania
 - [x] Podpisane release APK
 - [x] Aktualizacja `update.json`
-- [ ] Automatyzacja publikacji pakietów (opcjonalnie)
+- [x] Automatyzacja publikacji pakietów (opcjonalnie)
 
 ## Backlog (do uzupełnienia)
+- [x] Usunięte/wyjaśnione TODO z upstream (PreferenceIME/Speech/MyTranslatorClient)
 - [ ] Audyt wydajności TTS + screenreader (profiling)
-- [ ] Dalsze polerowanie UX launchera na podstawie feedbacku
+- [x] Dalsze polerowanie UX launchera na podstawie feedbacku

@@ -2195,8 +2195,12 @@ class LauncherActivity : AppCompatActivity() {
     private fun updatePageNavButtons() {
         if (prevPageButton.visibility != View.VISIBLE && nextPageButton.visibility != View.VISIBLE) return
         val count = homeAdapter.itemCount
-        prevPageButton.isEnabled = homePager.currentItem > 0
-        nextPageButton.isEnabled = homePager.currentItem < count - 1
+        val prevEnabled = homePager.currentItem > 0
+        val nextEnabled = homePager.currentItem < count - 1
+        prevPageButton.isEnabled = prevEnabled
+        nextPageButton.isEnabled = nextEnabled
+        prevPageButton.alpha = if (prevEnabled) 1f else 0.4f
+        nextPageButton.alpha = if (nextEnabled) 1f else 0.4f
     }
 
     private fun onScreenShortcutClick(shortcut: ScreenShortcut) {

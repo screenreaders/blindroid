@@ -301,12 +301,12 @@ public class Speech {
      *         engine does not support the locale.
      */
     public boolean setLocale(Locale locale) {
-        // Somehow tts can be null while canSpeak is true.
-        // TODO This is really a work around, but the state that causes this
-        // should be fully understood and canSpeak's state should be updated
-        // accordingly.
-        if (tts != null
-                && canSpeak
+        // Keep canSpeak in sync if the engine is missing.
+        if (tts == null) {
+            canSpeak = false;
+            return false;
+        }
+        if (canSpeak
                 && tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
             tts.setLanguage(locale);
             return true;
