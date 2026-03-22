@@ -71,10 +71,19 @@ public class PreferenceIME extends PreferenceActivity {
             ListPreference keyboardEcho = (ListPreference) findPreference(getString(R.string.pref_echo_feedback_key));
             ListPreference keyboardFeedback = (ListPreference) findPreference(getString(R.string.pref_keyboard_feedback_key));
             ListPreference textToSpeechPreference = (ListPreference) findPreference(getString(R.string.pref_text_to_speech_engine_key));
+            Preference diagnosticsPref = findPreference(getString(R.string.pref_braille_diagnostics_key));
 
             addOptions(keyboardFeedback, KeyboardFeedback.ALL);
             addOptions(keyboardEcho, KeyboardEcho.ALL);
             addTTSList(textToSpeechPreference);
+
+            if (diagnosticsPref != null) {
+                diagnosticsPref.setOnPreferenceClickListener(preference -> {
+                    Intent intent = new Intent(getActivity(), BrailleDiagnosticsActivity.class);
+                    startActivity(intent);
+                    return true;
+                });
+            }
 
             Preference preference = findPreference(getActivity().getString(
                     R.string.pref_app_version_key));

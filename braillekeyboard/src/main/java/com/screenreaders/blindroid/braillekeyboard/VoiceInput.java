@@ -19,10 +19,14 @@ package com.screenreaders.blindroid.braillekeyboard;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import androidx.core.content.ContextCompat;
 
 /**
  * Acts as a layer of abstraction between the Android speech to text engine.
@@ -152,10 +156,20 @@ public class VoiceInput {
      *         if voice input can't be started or isn't available.
      */
     public boolean start(Context context, TextReadyListener textReadyListener) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (textReadyListener != null) {
+                textReadyListener.onError(SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS);
+            }
+            return false;
+        }
         if (prepareIfNecessary(context)) {
             if (!isListening) {
                 this.textReadyListener = textReadyListener;
-                recognizer.startListening(new Intent());
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                recognizer.startListening(intent);
                 isListening = true;
             }
             return true;

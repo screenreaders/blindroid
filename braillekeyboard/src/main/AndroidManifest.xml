@@ -12,6 +12,10 @@
         <activity
             android:name="com.screenreaders.blindroid.braillekeyboard.IntentActivity"
             android:exported="false" />
+        <activity
+            android:name="com.screenreaders.blindroid.braillekeyboard.BrailleDiagnosticsActivity"
+            android:exported="false"
+            android:label="@string/braille_diagnostics_title" />
         <service
             android:name="com.screenreaders.blindroid.braillekeyboard.BrailleIME"
             android:exported="true"

@@ -19,6 +19,7 @@
     <string name="pref_braille_table_auto">auto</string>
     <string name="pref_braille_type_default">0</string>
     <string name="pref_braille_type_key">BRAILLE_GRADE_KEY</string>
+    <string name="pref_braille_diagnostics_key">BRAILLE_DIAGNOSTICS</string>
     <string name="pref_category_braille_key">BRAILLE_CATEGORY_KEY</string>
     <string name="pref_category_feedback_key">KEYBOARD_FEEDBACK_Category</string>
     <string name="pref_category_keyboard_key">KEYBOARD_CATEGORY</string>
@@ -70,6 +71,11 @@
     <string name="auto_caps_enabled">Auto-capitalisation</string>
     <string name="blank">Blank</string>
     <string name="braille_ime">Soft Braille Keyboard</string>
+    <string name="braille_diagnostics_title">Braille diagnostics</string>
+    <string name="braille_diagnostics_run">Run tests</string>
+    <string name="braille_diagnostics_running">Running...</string>
+    <string name="braille_diagnostics_ok">OK</string>
+    <string name="braille_diagnostics_fail">FAIL</string>
     <string name="button_choose_default_keyboard">Set Soft Braille Keyboard as the default keyboard</string>
     <string name="button_keyboard_settings">Enable Soft Braille Keyboard</string>
     <string name="button_more_info">Read the quick start guide</string>
@@ -129,6 +135,8 @@
     <string name="pref_auto_match_keyboard_summary">When enabled the keyboard is selected based on the position of your fingers when you manually calibrate the keyboard.</string>
     <string name="pref_auto_match_keyboard_title">Automatically select keyboard layout based on the position of your fingers</string>
     <string name="pref_braille_grade_summary">Sets the preferred Braille grade.</string>
+    <string name="pref_braille_diagnostics_title">Braille diagnostics</string>
+    <string name="pref_braille_diagnostics_summary">Run internal checks for liblouis and tables.</string>
     <string name="pref_category_braille_title">Braille Table Settings</string>
     <string name="pref_category_feedback_title">Keyboard Feedback Settings</string>
     <string name="pref_category_keyboard_title">Keyboard Settings</string>

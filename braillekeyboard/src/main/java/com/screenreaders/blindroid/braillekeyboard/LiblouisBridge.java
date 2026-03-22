@@ -36,6 +36,14 @@ public final class LiblouisBridge {
         }
     }
 
+    public static boolean isInitialized() {
+        return initialized;
+    }
+
+    public static File getTablesDir() {
+        return tablesDir;
+    }
+
     public static String backTranslate(String tableId, byte[] cells) {
         if (!initialized) {
             return null;

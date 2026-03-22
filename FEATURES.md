@@ -9,6 +9,7 @@
 - [x] Moduł IME włączony w Blindroidzie
 - [x] Integracja liblouis (JNI + tablice w assets)
 - [x] Tłumaczenie brajla z fallbackiem
+- [x] Diagnostyka IME (self-test liblouis + tablice)
 - [ ] Testy funkcjonalne IME na urządzeniach
 - [ ] Testy zgodności Android (14/15/16) i stabilność długich sesji
 
