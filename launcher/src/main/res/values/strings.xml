@@ -99,6 +99,8 @@
     <string name="launcher_action_add_app">Dodaj aplikację</string>
     <string name="launcher_action_add_widget">Dodaj widget</string>
     <string name="launcher_action_add_folder">Dodaj folder</string>
+    <string name="launcher_action_add_screen_shortcut">Dodaj skrót ekranu</string>
+    <string name="launcher_action_manage_screen_shortcuts">Zarządzaj skrótami ekranów</string>
     <string name="launcher_action_toggle_feed">Włącz/wyłącz feed</string>
     <string name="launcher_action_toggle_dock">Pokaż/ukryj dock</string>
     <string name="launcher_action_open_settings">Ustawienia launchera</string>

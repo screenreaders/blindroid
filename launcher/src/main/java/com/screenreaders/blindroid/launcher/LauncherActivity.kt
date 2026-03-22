@@ -43,8 +43,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import android.view.accessibility.AccessibilityManager
@@ -320,8 +322,14 @@ class LauncherActivity : AppCompatActivity() {
         screenShortcutRow.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         screenShortcutRow.adapter = screenShortcutAdapter
 
-        prevPageButton.setOnClickListener { goToPrevPage() }
-        nextPageButton.setOnClickListener { goToNextPage() }
+        prevPageButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_PREV_PAGE)
+            goToPrevPage()
+        }
+        nextPageButton.setOnClickListener {
+            soundFeedback?.playAction(LauncherPrefs.ACTION_NEXT_PAGE)
+            goToNextPage()
+        }
 
         allAppsButton.setOnClickListener {
             soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_ALL_APPS)
@@ -2585,6 +2593,17 @@ class LauncherActivity : AppCompatActivity() {
             options += getString(R.string.launcher_action_add_widget) to { openWidgets() }
             options += getString(R.string.launcher_action_add_folder) to { promptCreateEmptyFolder() }
         }
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        val pageCount = LauncherPrefs.getPageCount(this)
+        if (!simple && pageCount > 1) {
+            options += getString(R.string.launcher_action_add_screen_shortcut) to {
+                val defaultPage = (currentHomePageIndex() + 1).coerceIn(1, pageCount)
+                showAddScreenShortcutDialog(pageCount, defaultPage)
+            }
+            options += getString(R.string.launcher_action_manage_screen_shortcuts) to {
+                openScreenShortcutsManager()
+            }
+        }
         options += getString(
             if (locked) R.string.launcher_action_unlock_edit else R.string.launcher_action_lock_edit
         ) to { toggleHomeEditLock() }
@@ -2592,6 +2611,98 @@ class LauncherActivity : AppCompatActivity() {
         options += getString(R.string.launcher_action_toggle_dock) to { toggleDockVisibility() }
         options += getString(R.string.launcher_action_open_settings) to { openSettings() }
         showOptionsDialog(getString(R.string.launcher_home_quick_menu), options)
+    }
+
+    private fun openScreenShortcutsManager() {
+        val pageCount = LauncherPrefs.getPageCount(this)
+        val shortcuts = LauncherPrefs.getScreenShortcuts(this)
+        if (shortcuts.isEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.launcher_screen_shortcuts_title)
+                .setMessage(R.string.launcher_screen_shortcuts_empty)
+                .setPositiveButton(R.string.launcher_screen_shortcuts_add) { _, _ ->
+                    val defaultPage = (currentHomePageIndex() + 1).coerceIn(1, pageCount)
+                    showAddScreenShortcutDialog(pageCount, defaultPage)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+            return
+        }
+        val items = shortcuts.map {
+            getString(R.string.launcher_screen_shortcut_item_format, it.label, it.page)
+        }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_title)
+            .setMessage(R.string.launcher_screen_shortcuts_tap_remove)
+            .setItems(items) { _, index ->
+                confirmRemoveScreenShortcut(shortcuts, index)
+            }
+            .setPositiveButton(R.string.launcher_screen_shortcuts_add) { _, _ ->
+                val defaultPage = (currentHomePageIndex() + 1).coerceIn(1, pageCount)
+                showAddScreenShortcutDialog(pageCount, defaultPage)
+            }
+            .setNeutralButton(R.string.launcher_screen_shortcuts_clear) { _, _ ->
+                LauncherPrefs.setScreenShortcuts(this, emptyList())
+                updateScreenShortcuts()
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun confirmRemoveScreenShortcut(shortcuts: List<ScreenShortcut>, index: Int) {
+        val item = shortcuts.getOrNull(index) ?: return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_remove_title)
+            .setMessage(getString(R.string.launcher_screen_shortcuts_remove_message, item.label))
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val updated = shortcuts.toMutableList()
+                updated.removeAt(index)
+                LauncherPrefs.setScreenShortcuts(this, updated)
+                updateScreenShortcuts()
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun showAddScreenShortcutDialog(pageCount: Int, preselectPage: Int) {
+        if (pageCount <= 0) return
+        val view = layoutInflater.inflate(R.layout.dialog_screen_shortcut_add, null)
+        val nameInput = view.findViewById<EditText>(R.id.shortcutNameInput)
+        val pageSpinner = view.findViewById<Spinner>(R.id.shortcutPageSpinner)
+        val pageLabels = (1..pageCount).map {
+            getString(R.string.launcher_screen_shortcut_page_value, it)
+        }
+        pageSpinner.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            pageLabels
+        )
+        pageSpinner.setSelection(preselectPage.coerceIn(1, pageCount) - 1, false)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_add)
+            .setView(view)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val name = nameInput.text?.toString()?.trim().orEmpty()
+                val page = pageSpinner.selectedItemPosition + 1
+                if (name.isBlank()) {
+                    Toast.makeText(this, R.string.launcher_screen_shortcut_name_missing, Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                val trimmed = if (name.length > 30) name.substring(0, 30) else name
+                val updated = LauncherPrefs.getScreenShortcuts(this).toMutableList()
+                updated.add(ScreenShortcut(page = page, label = trimmed))
+                LauncherPrefs.setScreenShortcuts(this, updated)
+                updateScreenShortcuts()
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun toastSaved() {
+        Toast.makeText(this, R.string.launcher_settings_saved, Toast.LENGTH_SHORT).show()
     }
 
     private fun toggleHomeEditLock() {
