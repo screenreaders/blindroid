@@ -6,4 +6,7 @@
     <files-path
         name="tracks"
         path="tracks/" />
+    <files-path
+        name="tts_installer"
+        path="tts_installer/" />
 </paths>

@@ -10,7 +10,7 @@ object TalkbackUtils {
         "com.google.android.marvin.talkback",
         "com.android.talkback"
     )
-    private const val BACKUP_TALKBACK_PACKAGE = "com.screenreaders.blindroid.talkback"
+    private const val BACKUP_TALKBACK_PACKAGE = "com.screenreaders.blindreader"
     private const val BACKUP_TALKBACK_SERVICE = "com.google.android.accessibility.talkback.TalkBackService"
 
     fun isTalkBackEnabled(context: Context): Boolean {

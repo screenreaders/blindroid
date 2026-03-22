@@ -157,6 +157,35 @@
             android:text="@string/onboard_exact_alarm_button" />
 
         <TextView
+            android:id="@+id/onboardTtsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_tts_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/onboardTtsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/onboard_status_unknown" />
+
+        <Button
+            android:id="@+id/onboardTtsSettingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_tts_button_settings" />
+
+        <Button
+            android:id="@+id/onboardTtsInstallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/onboard_tts_button_install" />
+
+        <TextView
             android:id="@+id/onboardUpdatesLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

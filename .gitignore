@@ -8,7 +8,13 @@ app/build/
 *.apk
 data/
 tools/
-external/
+external/*
+!external/talkback/
+!external/talkback/**
+!external/rhvoice/
+!external/rhvoice/**
+external/talkback/.git_backup/
+external/rhvoice/.git_backup/
 **/.cxx/
 braillekeyboard/src/main/cpp/liblouis/.git/
 braillekeyboard/src/main/cpp/liblouis/.git_submodule/
