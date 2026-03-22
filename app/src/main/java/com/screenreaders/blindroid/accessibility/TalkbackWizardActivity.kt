@@ -56,7 +56,7 @@ class TalkbackWizardActivity : AppCompatActivity() {
     }
 
     private fun openAccessibilityShortcutSettings() {
-        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SHORTCUT_SETTINGS)
+        val intent = Intent(ACTION_ACCESSIBILITY_SHORTCUT_SETTINGS)
         try {
             startActivity(intent)
         } catch (_: Exception) {
@@ -66,13 +66,22 @@ class TalkbackWizardActivity : AppCompatActivity() {
 
     private fun openBackupTalkBackSettings() {
         val component = TalkbackUtils.getBackupTalkBackComponent()
-        val intent = Intent(Settings.ACTION_ACCESSIBILITY_DETAILS_SETTINGS).apply {
-            putExtra(Settings.EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME, component.flattenToString())
+        val intent = Intent(ACTION_ACCESSIBILITY_DETAILS_SETTINGS).apply {
+            putExtra(EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME, component.flattenToString())
         }
         try {
             startActivity(intent)
         } catch (_: Exception) {
             openAccessibilitySettings()
         }
+    }
+
+    companion object {
+        private const val ACTION_ACCESSIBILITY_SHORTCUT_SETTINGS =
+            "android.settings.ACCESSIBILITY_SHORTCUT_SETTINGS"
+        private const val ACTION_ACCESSIBILITY_DETAILS_SETTINGS =
+            "android.settings.ACCESSIBILITY_DETAILS_SETTINGS"
+        private const val EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME =
+            "android.provider.extra.ACCESSIBILITY_SERVICE_COMPONENT_NAME"
     }
 }

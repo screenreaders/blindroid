@@ -1,0 +1,2549 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
+<!-- Copyright © 1991-2025 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+SPDX-License-Identifier: Unicode-3.0
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+-->
+<ldml>
+	<identity>
+		<version number="$Revision$"/>
+		<language type="tg"/>
+	</identity>
+	<annotations>
+		<annotation cp="🏻">навъи 1–2 | ранги пӯст | ранги равшани пӯст</annotation>
+		<annotation cp="🏻" type="tts">ранги равшани пӯст</annotation>
+		<annotation cp="🏼">навъи 3 | ранги пӯст | ранги равшании миёнаи пӯст</annotation>
+		<annotation cp="🏼" type="tts">ранги равшании миёнаи пӯст</annotation>
+		<annotation cp="🏽">навъи 4 | ранги миёнаи пӯст | ранги пӯст</annotation>
+		<annotation cp="🏽" type="tts">ранги миёнаи пӯст</annotation>
+		<annotation cp="🏾">навъи 5 | ранги пӯст | ранги торики миёнаи пӯст</annotation>
+		<annotation cp="🏾" type="tts">ранги торики миёнаи пӯст</annotation>
+		<annotation cp="🏿">навъи 6 | ранги пӯст | ранги торики пӯст</annotation>
+		<annotation cp="🏿" type="tts">ранги торики пӯст</annotation>
+		<annotation cp="‾">барзиёд</annotation>
+		<annotation cp="‾" type="tts">барзиёд</annotation>
+		<annotation cp="‽">interrobang</annotation>
+		<annotation cp="‽" type="tts">interrobang</annotation>
+		<annotation cp="‸">карате</annotation>
+		<annotation cp="‸" type="tts">карате</annotation>
+		<annotation cp="⁂">астеризм</annotation>
+		<annotation cp="⁂" type="tts">астеризм</annotation>
+		<annotation cp="😀">рӯи хандон | рӯй | фарох табассум кардан</annotation>
+		<annotation cp="😀" type="tts">рӯи хандон</annotation>
+		<annotation cp="😃">даҳон | кушода | рӯи хандон бо даҳони кушода | рӯй | табассум</annotation>
+		<annotation cp="😃" type="tts">рӯи хандон бо даҳони кушода</annotation>
+		<annotation cp="😄">даҳон | кушода | рӯи хандон бо даҳони кушода ва чашмони хандон | рӯй | табассум | чашм</annotation>
+		<annotation cp="😄" type="tts">рӯи хандон бо даҳони кушода ва чашмони хандон</annotation>
+		<annotation cp="😁">рӯй | табассум кардан | фарох табассум кардан | чашм | чеҳраи писхандкунанда бо чашмони табассумкунанда</annotation>
+		<annotation cp="😁" type="tts">чеҳраи писхандкунанда бо чашмони табассумкунанда</annotation>
+		<annotation cp="😆">даҳон | кушода | қонеъ | рӯи хандон бо даҳони кушода ва чашмони пӯшида | рӯй | табассум | ханда</annotation>
+		<annotation cp="😆" type="tts">рӯи хандон бо даҳони кушода ва чашмони пӯшида</annotation>
+		<annotation cp="😅">арақ | кушода | рӯи хандон бо даҳони кушода ва арақи хунук | рӯй | табассум | хунук</annotation>
+		<annotation cp="😅" type="tts">рӯи хандон бо даҳони кушода ва арақи хунук</annotation>
+		<annotation cp="🤣">аз ханда рӯдакан шудан | даврзананда | рӯй | фарш | хандидан</annotation>
+		<annotation cp="🤣" type="tts">аз ханда рӯдакан шудан</annotation>
+		<annotation cp="😂">ашк | рӯи бо ашкҳои хурсандӣ | рӯй | хандидан | хурсандӣ</annotation>
+		<annotation cp="😂" type="tts">рӯи бо ашкҳои хурсандӣ</annotation>
+		<annotation cp="🙂">рӯй | табассум | тӯи каме хандон</annotation>
+		<annotation cp="🙂" type="tts">тӯи каме хандон</annotation>
+		<annotation cp="🙃">рӯи сарчаппа | Рӯй | сарчаппа</annotation>
+		<annotation cp="🙃" type="tts">рӯи сарчаппа</annotation>
+		<annotation cp="😉">рӯи чашмакзананда | рӯй | чашмакзанӣ</annotation>
+		<annotation cp="😉" type="tts">рӯи чашмакзананда</annotation>
+		<annotation cp="😊">рӯи хандон бо чашмони хандон | рӯй | табассум | хиҷолат | чашм</annotation>
+		<annotation cp="😊" type="tts">рӯи хандон бо чашмони хандон</annotation>
+		<annotation cp="😇">афсона | бегуноҳ | малоика | рӯи хандон бо ҳола | рӯй | табассум | тахайюлот | ҳола</annotation>
+		<annotation cp="😇" type="tts">рӯи хандон бо ҳола</annotation>
+		<annotation cp="😍">муҳаббат | рӯи хандон бо чашмони дилмонанд | рӯй | табассум | чашм</annotation>
+		<annotation cp="😍" type="tts">рӯи хандон бо чашмони дилмонанд</annotation>
+		<annotation cp="🤩">дарди ситорашавӣ | писханда | рӯй | ситора | чашмҳо</annotation>
+		<annotation cp="🤩" type="tts">дарди ситорашавӣ</annotation>
+		<annotation cp="😘">бӯса | рӯи бӯсаи ҳавоӣ равонкунанда | рӯй</annotation>
+		<annotation cp="😘" type="tts">рӯи бӯсаи ҳавоӣ равонкунанда</annotation>
+		<annotation cp="😗">бӯса | рӯи бӯсакунанда | рӯй</annotation>
+		<annotation cp="😗" type="tts">рӯи бӯсакунанда</annotation>
+		<annotation cp="☺">ором | рӯи табассумкунанда | рӯй | табассум | хаткашида</annotation>
+		<annotation cp="☺" type="tts">рӯи табассумкунанда</annotation>
+		<annotation cp="😚">бӯса | пӯшида | рӯи бӯсакунанда бо чашмони пӯшида | рӯй | чашм</annotation>
+		<annotation cp="😚" type="tts">рӯи бӯсакунанда бо чашмони пӯшида</annotation>
+		<annotation cp="😙">бӯса | рӯи бӯсакунанда бо чашмони хандон | рӯй | табассум | чашм</annotation>
+		<annotation cp="😙" type="tts">рӯи бӯсакунанда бо чашмони хандон</annotation>
+		<annotation cp="😋">бомаза | ки ғизои бомазаро маза карда хӯрда истодааст | маза карда хӯрдан | ммм | ням | рӯе | рӯе, ки ғизои бомазаро маза карда хӯрда истодааст | рӯй | табассум</annotation>
+		<annotation cp="😋" type="tts">рӯе, ки ғизои бомазаро маза карда хӯрда истодааст</annotation>
+		<annotation cp="😛">забон | рӯй | рӯй бо забони баровардашуда</annotation>
+		<annotation cp="😛" type="tts">рӯй бо забони баровардашуда</annotation>
+		<annotation cp="😜">забон | рӯй | рӯй бо забони баровардашуда ва чашми чашмакизананда | чашм | чашмакизанӣ | шӯхӣ</annotation>
+		<annotation cp="😜" type="tts">рӯй бо забони баровардашуда ва чашми чашмакизананда</annotation>
+		<annotation cp="🤪">калон | рӯи девона | хурд | чашм</annotation>
+		<annotation cp="🤪" type="tts">рӯи девона</annotation>
+		<annotation cp="😝">даҳшатнок | забон | маза | рӯй | рӯй бо забони баровардашуда ва чашмони пӯшида | чашм</annotation>
+		<annotation cp="😝" type="tts">рӯй бо забони баровардашуда ва чашмони пӯшида</annotation>
+		<annotation cp="🤑">даҳон | пул | рӯи дорои даҳони пулӣ | рӯй</annotation>
+		<annotation cp="🤑" type="tts">рӯи дорои даҳони пулӣ</annotation>
+		<annotation cp="🤗">оғӯш кардан | оғӯшкунанда | рӯи оғӯшкунанда | рӯй</annotation>
+		<annotation cp="🤗" type="tts">рӯи оғӯшкунанда</annotation>
+		<annotation cp="🤭">рӯй бо даст дар болои даҳон | ҳоп</annotation>
+		<annotation cp="🤭" type="tts">рӯй бо даст дар болои даҳон</annotation>
+		<annotation cp="🤫">ором кардан | рӯи хомӯшкунанда | хомӯш</annotation>
+		<annotation cp="🤫" type="tts">рӯи хомӯшкунанда</annotation>
+		<annotation cp="🤔">андешакунӣ | рӯи аднешакунанда | рӯй</annotation>
+		<annotation cp="🤔" type="tts">рӯи аднешакунанда</annotation>
+		<annotation cp="🤐">даҳон | занҷирак | рӯи дорои даҳони заҷиракдор | рӯй</annotation>
+		<annotation cp="🤐" type="tts">рӯи дорои даҳони заҷиракдор</annotation>
+		<annotation cp="🤨">ки қошҳояш бардошта шудааст | нобоварӣ | рӯе | рӯе, ки қошҳояш бардошта шудааст | шаккок</annotation>
+		<annotation cp="🤨" type="tts">рӯе, ки қошҳояш бардошта шудааст</annotation>
+		<annotation cp="😐">нейтралӣ | рӯи карахт | рӯи нейтралӣ | рӯй</annotation>
+		<annotation cp="😐" type="tts">рӯи нейтралӣ</annotation>
+		<annotation cp="😑">беифода | нобурро | ногуфтанӣ | рӯи беифода | рӯй</annotation>
+		<annotation cp="😑" type="tts">рӯи беифода</annotation>
+		<annotation cp="😶">бесадо | даҳон | рӯи бедаҳон | рӯй | хомӯш</annotation>
+		<annotation cp="😶" type="tts">рӯи бедаҳон</annotation>
+		<annotation cp="😏">писханда | рӯи писхандакунанда | рӯй</annotation>
+		<annotation cp="😏" type="tts">рӯи писхандакунанда</annotation>
+		<annotation cp="😒">зиқ | норозӣ | рӯи норозӣ | рӯй</annotation>
+		<annotation cp="😒" type="tts">рӯи норозӣ</annotation>
+		<annotation cp="🙄">даврзанӣ | рӯй | рӯй бо чашмони даврзананда | чашмҳо</annotation>
+		<annotation cp="🙄" type="tts">рӯй бо чашмони даврзананда</annotation>
+		<annotation cp="😬">рӯи туршкунанда | рӯй | рӯй туршкунӣ</annotation>
+		<annotation cp="😬" type="tts">рӯи туршкунанда</annotation>
+		<annotation cp="🤥">пиноккио | рӯи дурӯғгӯ | рӯй | хобидан</annotation>
+		<annotation cp="🤥" type="tts">рӯи дурӯғгӯ</annotation>
+		<annotation cp="😌">бароҳат | рӯи бароҳат | рӯй</annotation>
+		<annotation cp="😌" type="tts">рӯи бароҳат</annotation>
+		<annotation cp="😔">андуҳгин | ғамзада | рӯи андуҳгин | рӯй</annotation>
+		<annotation cp="😔" type="tts">рӯи андуҳгин</annotation>
+		<annotation cp="😪">рӯи хоболуд | рӯй | хоб кардан</annotation>
+		<annotation cp="😪" type="tts">рӯи хоболуд</annotation>
+		<annotation cp="🤤">оби даҳон чакидаистода | рӯи оби даҳон чакидаистода | рӯй</annotation>
+		<annotation cp="🤤" type="tts">рӯи оби даҳон чакидаистода</annotation>
+		<annotation cp="😴">рӯи хуфта | рӯй | хоб кардан | ххх</annotation>
+		<annotation cp="😴" type="tts">рӯи хуфта</annotation>
+		<annotation cp="😷">дору | духтур | касал | ниқоб | рӯй | рӯй бо ниқоби тиббӣ | хунук</annotation>
+		<annotation cp="😷" type="tts">рӯй бо ниқоби тиббӣ</annotation>
+		<annotation cp="🤒">бемор | касал | рӯй | рӯй бо ҳароратсанҷ | ҳароратсанҷ</annotation>
+		<annotation cp="🤒" type="tts">рӯй бо ҳароратсанҷ</annotation>
+		<annotation cp="🤕">бандина | зарар расондан | осеб | рӯй | рӯй бо бандинаи сар</annotation>
+		<annotation cp="🤕" type="tts">рӯй бо бандинаи сар</annotation>
+		<annotation cp="🤢">дилбеҳузуршуда | партофтан | рӯи дилбеҳузурӣ | рӯй</annotation>
+		<annotation cp="🤢" type="tts">рӯи дилбеҳузурӣ</annotation>
+		<annotation cp="🤮">бемор | партофтан | рӯи партофта истода</annotation>
+		<annotation cp="🤮" type="tts">рӯи партофта истода</annotation>
+		<annotation cp="🤧">атса задан | Рӯи атсазананда | рӯй | саломат бошед</annotation>
+		<annotation cp="🤧" type="tts">Рӯи атсазананда</annotation>
+		<annotation cp="😵">рӯи сарчархзанӣ | рӯй | сарчархзанӣ</annotation>
+		<annotation cp="😵" type="tts">рӯи сарчархзанӣ</annotation>
+		<annotation cp="🤯">сари тарканда | шигифтазада</annotation>
+		<annotation cp="🤯" type="tts">сари тарканда</annotation>
+		<annotation cp="🤠">ковбой | кулоҳ | рӯи дорои кулоҳи ковбой | рӯй | чӯпондухтар</annotation>
+		<annotation cp="🤠" type="tts">рӯи дорои кулоҳи ковбой</annotation>
+		<annotation cp="😎">айнак | айнаки муҳофизатӣ | айнаки офтобӣ | офтоб | равшан | рӯи хандон бо айнаки офтобӣ | рӯй | салқин | табассум | чашм</annotation>
+		<annotation cp="😎" type="tts">рӯи хандон бо айнаки офтобӣ</annotation>
+		<annotation cp="🤓">доно | рӯи соддалавҳ | рӯй | соддалавҳ</annotation>
+		<annotation cp="🤓" type="tts">рӯи соддалавҳ</annotation>
+		<annotation cp="🧐">нафасгир | рӯй бо айнаки якчашма</annotation>
+		<annotation cp="🧐" type="tts">рӯй бо айнаки якчашма</annotation>
+		<annotation cp="😕">ошуфта | рӯи ошуфта | рӯй</annotation>
+		<annotation cp="😕" type="tts">рӯи ошуфта</annotation>
+		<annotation cp="😟">мушавваш | рӯи мушавваш | рӯй</annotation>
+		<annotation cp="😟" type="tts">рӯи мушавваш</annotation>
+		<annotation cp="🙁">қавоқ андохтан | рӯи каме қавоқандохта | рӯй</annotation>
+		<annotation cp="🙁" type="tts">рӯи каме қавоқандохта</annotation>
+		<annotation cp="☹">қавоқ андохтан | рӯи қавоқандохта | рӯй</annotation>
+		<annotation cp="☹" type="tts">рӯи қавоқандохта</annotation>
+		<annotation cp="😮">даҳон | кушода | рӯй | рӯй бо даҳони кушода | ҳусни таваҷҷуҳ</annotation>
+		<annotation cp="😮" type="tts">рӯй бо даҳони кушода</annotation>
+		<annotation cp="😯">рӯи хомӯш | рӯй | хомӯшшуда | ҳайрон | шах шудамонда</annotation>
+		<annotation cp="😯" type="tts">рӯи хомӯш</annotation>
+		<annotation cp="😲">баҳайратафтода | рӯи ҳайрон | рӯй | тамоман | ҳайрон</annotation>
+		<annotation cp="😲" type="tts">рӯи ҳайрон</annotation>
+		<annotation cp="😳">мабҳут | рӯи сурхшуда | рӯй | сурхшуда</annotation>
+		<annotation cp="😳" type="tts">рӯи сурхшуда</annotation>
+		<annotation cp="😦">даҳон | кушода | қавоқ андохтан | рӯи турш бо даҳони кушода | рӯй</annotation>
+		<annotation cp="😦" type="tts">рӯи турш бо даҳони кушода</annotation>
+		<annotation cp="😧">дилтанг | рӯи дилтанг | рӯй</annotation>
+		<annotation cp="😧" type="tts">рӯи дилтанг</annotation>
+		<annotation cp="😨">рӯи тарсон | рӯй | тарс | тарсон | ҳаросида</annotation>
+		<annotation cp="😨" type="tts">рӯи тарсон</annotation>
+		<annotation cp="😰">даҳон | кабуд | кушода | рӯи бо даҳони кушода ва арақи хунук | рӯй | саросема | хунук</annotation>
+		<annotation cp="😰" type="tts">рӯи бо даҳони кушода ва арақи хунук</annotation>
+		<annotation cp="😥">бароҳат | вале рӯи бароҳат | ғамгин | ғамгин, вале рӯи бароҳат | рӯй | фуҳ</annotation>
+		<annotation cp="😥" type="tts">ғамгин, вале рӯи бароҳат</annotation>
+		<annotation cp="😢">ашк | гиря | зиқ | рӯи гирён | рӯй</annotation>
+		<annotation cp="😢" type="tts">рӯи гирён</annotation>
+		<annotation cp="😭">ашк | гиря | зиқ | рӯи баланд гириста истода | рӯй | ҳиқ-ҳиқ карда гиря кардан</annotation>
+		<annotation cp="😭" type="tts">рӯи баланд гириста истода</annotation>
+		<annotation cp="😱">дод задан | рӯи аз тарс дод задаистода | рӯй | тарс | тарсон | ҳаросида | чалп-чалп хӯрдан</annotation>
+		<annotation cp="😱" type="tts">рӯи аз тарс дод задаистода</annotation>
+		<annotation cp="😖">рӯи хиҷил | рӯй | хиҷил</annotation>
+		<annotation cp="😖" type="tts">рӯи хиҷил</annotation>
+		<annotation cp="😣">истодагарӣ кардан | рӯи истодагарикунанда | рӯй</annotation>
+		<annotation cp="😣" type="tts">рӯи истодагарикунанда</annotation>
+		<annotation cp="😞">ғамгин | рӯи ғамгин | рӯй</annotation>
+		<annotation cp="😞" type="tts">рӯи ғамгин</annotation>
+		<annotation cp="😓">арақ | рӯй | рӯй бо арақи хунук | хунук</annotation>
+		<annotation cp="😓" type="tts">рӯй бо арақи хунук</annotation>
+		<annotation cp="😩">афгор | рӯи афгор | рӯй | хаста</annotation>
+		<annotation cp="😩" type="tts">рӯи афгор</annotation>
+		<annotation cp="😫">рӯи хаста | рӯй | хаста</annotation>
+		<annotation cp="😫" type="tts">рӯи хаста</annotation>
+		<annotation cp="😤">бурд | музаффарият | рӯй | рӯй бо дуд аз бинӣ</annotation>
+		<annotation cp="😤" type="tts">рӯй бо дуд аз бинӣ</annotation>
+		<annotation cp="😡">бадқавоқ | девона | рӯи бадқавоқ | рӯй | сурх | хашм | хашмгин</annotation>
+		<annotation cp="😡" type="tts">рӯи бадқавоқ</annotation>
+		<annotation cp="😠">девона | рӯи хашмгин | рӯй | хашмгин</annotation>
+		<annotation cp="😠" type="tts">рӯи хашмгин</annotation>
+		<annotation cp="🤬">қасам хӯрда истода | рӯй бо аломатҳо дар болои даҳон</annotation>
+		<annotation cp="🤬" type="tts">рӯй бо аломатҳо дар болои даҳон</annotation>
+		<annotation cp="😈">афсона | рӯи хандон бо шохҳо | рӯй | табассум | тахайюлот | шохҳо</annotation>
+		<annotation cp="😈" type="tts">рӯи хандон бо шохҳо</annotation>
+		<annotation cp="👿">афсона | дев | рӯи хашмгин бо шохҳо | рӯй | тахайюлот | шайтон | шайтонча</annotation>
+		<annotation cp="👿" type="tts">рӯи хашмгин бо шохҳо</annotation>
+		<annotation cp="💀">афсона | аъҷуба | косахонаи сар | марг | рӯй</annotation>
+		<annotation cp="💀" type="tts">косахонаи сар</annotation>
+		<annotation cp="☠">аъҷуба | косахонаи сар | косахонаи сар ва устухонҳо дар шакли салиб | марг | рӯй | устухонҳо дар шакли салиб</annotation>
+		<annotation cp="☠" type="tts">косахонаи сар ва устухонҳо дар шакли салиб</annotation>
+		<annotation cp="💩">ахлот | аъҷуба | гуҳ | мазҳакавӣ | пору | рӯй | тӯдаи гуҳ</annotation>
+		<annotation cp="💩" type="tts">тӯдаи гуҳ</annotation>
+		<annotation cp="🤡">масхарабоз | рӯи масхарабоз | рӯй</annotation>
+		<annotation cp="🤡" type="tts">рӯи масхарабоз</annotation>
+		<annotation cp="👹">афсона | аъҷуба | махлуқ | одамхӯр | рӯй | тахайюлот</annotation>
+		<annotation cp="👹" type="tts">одамхӯр</annotation>
+		<annotation cp="👺">афсона | аҷинаи хона | аъҷуба | махлуқ | рӯй | тахайюлот</annotation>
+		<annotation cp="👺" type="tts">аҷинаи хона</annotation>
+		<annotation cp="👻">афсона | аъҷуба | махлуқ | рӯй | руҳ | тахайюлот</annotation>
+		<annotation cp="👻" type="tts">руҳ</annotation>
+		<annotation cp="👽">афсона | аъҷуба | бегона | берун аз Замин | лаълии паррон | махлуқ | рӯй | тахайюлот</annotation>
+		<annotation cp="👽" type="tts">бегона</annotation>
+		<annotation cp="👾">афсона | аъҷуба | аъҷубаи бегона | бегона | берун аз Замин | лаълии паррон | махлуқ | рӯй | тахайюлот</annotation>
+		<annotation cp="👾" type="tts">аъҷубаи бегона</annotation>
+		<annotation cp="🤖">аъҷуба | робот | рӯи робот | рӯй</annotation>
+		<annotation cp="🤖" type="tts">рӯи робот</annotation>
+		<annotation cp="😺">гурба | даҳон | кушода | рӯи гурбаи хандон бо даҳони кушода | рӯй | табассум</annotation>
+		<annotation cp="😺" type="tts">рӯи гурбаи хандон бо даҳони кушода</annotation>
+		<annotation cp="😸">гурба | рӯи писхандакунандаи гурба бо чашмони хандон | рӯй | табассум кардан | фарох табассум кардан</annotation>
+		<annotation cp="😸" type="tts">рӯи писхандакунандаи гурба бо чашмони хандон</annotation>
+		<annotation cp="😹">ашк | гурба | рӯи гурба бо ашки хурсандӣ | рӯй | хурсандӣ</annotation>
+		<annotation cp="😹" type="tts">рӯи гурба бо ашки хурсандӣ</annotation>
+		<annotation cp="😻">гурба | муҳаббат | рӯи хандони гурба бо чашмони дилмонанд | рӯй | табассум | чашм</annotation>
+		<annotation cp="😻" type="tts">рӯи хандони гурба бо чашмони дилмонанд</annotation>
+		<annotation cp="😼">гурба | истеҳзоомез | каҷ | рӯи гурба бо табассуми каҷ | рӯй | табассум</annotation>
+		<annotation cp="😼" type="tts">рӯи гурба бо табассуми каҷ</annotation>
+		<annotation cp="😽">бӯса | гурба | рӯи бӯсакунандаи гурба бо чашмони пӯшида | рӯй | чашм</annotation>
+		<annotation cp="😽" type="tts">рӯи бӯсакунандаи гурба бо чашмони пӯшида</annotation>
+		<annotation cp="🙀">афгор | гурба | оҳ | рӯи афгори гурба | рӯй | ҳайрон</annotation>
+		<annotation cp="🙀" type="tts">рӯи афгори гурба</annotation>
+		<annotation cp="😿">ашк | гиря | гурба | зиқ | рӯи гирёни гурба | рӯй</annotation>
+		<annotation cp="😿" type="tts">рӯи гирёни гурба</annotation>
+		<annotation cp="😾">бадқавоқ | гурба | рӯи бадқавоқи гурба | рӯй</annotation>
+		<annotation cp="😾" type="tts">рӯи бадқавоқи гурба</annotation>
+		<annotation cp="🙈">бад | дидан | имову ишора | ки бадиро намебинад | маймун | маймуне | маймуне, ки бадиро намебинад | мамнуъ | манъшуда | не | рӯй</annotation>
+		<annotation cp="🙈" type="tts">маймуне, ки бадиро намебинад</annotation>
+		<annotation cp="🙉">бад | имову ишора | ки бадиро намешунавад | маймун | маймуне | маймуне, ки бадиро намешунавад | мамнуъ | манъшуда | не | рӯй | шунидан</annotation>
+		<annotation cp="🙉" type="tts">маймуне, ки бадиро намешунавад</annotation>
+		<annotation cp="🙊">бад | гап задан | имову ишора | ки гапи бад намезанад | маймун | маймуне | маймуне, ки гапи бад намезанад | мамнуъ | манъшуда | не | рӯй</annotation>
+		<annotation cp="🙊" type="tts">маймуне, ки гапи бад намезанад</annotation>
+		<annotation cp="💌">дил | мактуб | мактуби ошиқӣ | муҳаббат | почта</annotation>
+		<annotation cp="💌" type="tts">мактуби ошиқӣ</annotation>
+		<annotation cp="💘">амур | дил бо тир | тир</annotation>
+		<annotation cp="💘" type="tts">дил бо тир</annotation>
+		<annotation cp="💝">валентин | дил бо лента | лента</annotation>
+		<annotation cp="💝" type="tts">дил бо лента</annotation>
+		<annotation cp="💖">дили ҷилодор | ҳаяҷон | ҷило додан</annotation>
+		<annotation cp="💖" type="tts">дили ҷилодор</annotation>
+		<annotation cp="💗">асабӣ | дили афзоянда | калон шуда истода | набз | ҳаяҷон</annotation>
+		<annotation cp="💗" type="tts">дили афзоянда</annotation>
+		<annotation cp="💓">дили тапишзананда | тапидан | тапишзанӣ | тапиши дил</annotation>
+		<annotation cp="💓" type="tts">дили тапишзананда</annotation>
+		<annotation cp="💞">даврзананда | дилҳои даврзананда</annotation>
+		<annotation cp="💞" type="tts">дилҳои даврзананда</annotation>
+		<annotation cp="💕">ду дил | муҳаббат</annotation>
+		<annotation cp="💕" type="tts">ду дил</annotation>
+		<annotation cp="💟">дил | ороиши дил</annotation>
+		<annotation cp="💟" type="tts">ороиши дил</annotation>
+		<annotation cp="❣">аломат | аломатҳои китобатӣ | хитоб | хитоби дили вазнин</annotation>
+		<annotation cp="❣" type="tts">хитоби дили вазнин</annotation>
+		<annotation cp="💔">дили шикаста | шикаста | шикастан</annotation>
+		<annotation cp="💔" type="tts">дили шикаста</annotation>
+		<annotation cp="❤">дил | дили сурх</annotation>
+		<annotation cp="❤" type="tts">дили сурх</annotation>
+		<annotation cp="🧡">дили норанҷӣ | норанҷӣ</annotation>
+		<annotation cp="🧡" type="tts">дили норанҷӣ</annotation>
+		<annotation cp="💛">дили зард | зард</annotation>
+		<annotation cp="💛" type="tts">дили зард</annotation>
+		<annotation cp="💚">дили сабз | сабз</annotation>
+		<annotation cp="💚" type="tts">дили сабз</annotation>
+		<annotation cp="💙">дили кабуд | кабуд</annotation>
+		<annotation cp="💙" type="tts">дили кабуд</annotation>
+		<annotation cp="💜">арғувонӣ | дили арғувонӣ</annotation>
+		<annotation cp="💜" type="tts">дили арғувонӣ</annotation>
+		<annotation cp="🖤">бад | дили сиёҳ | сиёҳ | шарир</annotation>
+		<annotation cp="🖤" type="tts">дили сиёҳ</annotation>
+		<annotation cp="💋">бӯса | лабҳо | нишонаи бӯса</annotation>
+		<annotation cp="💋" type="tts">нишонаи бӯса</annotation>
+		<annotation cp="💯">100 | пурра | сад | хол</annotation>
+		<annotation cp="💯" type="tts">сад хол</annotation>
+		<annotation cp="💢">аломати ғазаб | девона | мазҳакавӣ | хашмгин</annotation>
+		<annotation cp="💢" type="tts">аломати ғазаб</annotation>
+		<annotation cp="💥">бархӯрд | бум | мазҳакавӣ</annotation>
+		<annotation cp="💥" type="tts">бархӯрд</annotation>
+		<annotation cp="💫">мазҳакавӣ | сархчархзанӣ | ситора</annotation>
+		<annotation cp="💫" type="tts">сархчархзанӣ</annotation>
+		<annotation cp="💦">арақ | қатраҳои арақ | мазҳакавӣ | пош хӯрдаистода</annotation>
+		<annotation cp="💦" type="tts">қатраҳои арақ</annotation>
+		<annotation cp="💨">гурехтан | давидаистода | мазҳакавӣ | тез гурехтан</annotation>
+		<annotation cp="💨" type="tts">тез гурехтан</annotation>
+		<annotation cp="🕳">сурох</annotation>
+		<annotation cp="🕳" type="tts">сурох</annotation>
+		<annotation cp="💬">балон | мазҳакавӣ | муколама | нутқ | ҳубоб | ҳубоби нутқ</annotation>
+		<annotation cp="💬" type="tts">ҳубоби нутқ</annotation>
+		<annotation cp="👁‍🗨">ҳуббоби гуфтугӯ | чашм | чашм дар ҳуббоби гуфтугӯ | шоҳид</annotation>
+		<annotation cp="👁‍🗨" type="tts">чашм дар ҳуббоби гуфтугӯ</annotation>
+		<annotation cp="🗨">муколама | нутқ | ҳубоби чапи гуфтугӯ</annotation>
+		<annotation cp="🗨" type="tts">ҳубоби чапи гуфтугӯ</annotation>
+		<annotation cp="🗯">балон | девона | хашмгин | ҳубоб | ҳубоби рости ғазаб</annotation>
+		<annotation cp="🗯" type="tts">ҳубоби рости ғазаб</annotation>
+		<annotation cp="💭">балон | мазҳакавӣ | фикр | ҳубоб | ҳубоби андеша</annotation>
+		<annotation cp="💭" type="tts">ҳубоби андеша</annotation>
+		<annotation cp="💤">мазҳакавӣ | хоб кардан | ххх</annotation>
+		<annotation cp="💤" type="tts">ххх</annotation>
+		<annotation cp="👋">даст | мавҷ | ҳаракати пешу қафо | ҳаракати пешу қафои даст</annotation>
+		<annotation cp="👋" type="tts">ҳаракати пешу қафои даст</annotation>
+		<annotation cp="🤚">бардошташуда | пушти даст | пушти дасти бардошташуда</annotation>
+		<annotation cp="🤚" type="tts">пушти дасти бардошташуда</annotation>
+		<annotation cp="🖐">ангушт | даст | дасти бардошта бо ангуштони паҳнкарда | паҳнкарда</annotation>
+		<annotation cp="🖐" type="tts">дасти бардошта бо ангуштони паҳнкарда</annotation>
+		<annotation cp="✋">даст | дасти бардошта</annotation>
+		<annotation cp="✋" type="tts">дасти бардошта</annotation>
+		<annotation cp="🖖">аланга | ангушт | даст | ишораи спок | саломдиҳии вулқонӣ</annotation>
+		<annotation cp="🖖" type="tts">саломдиҳии вулқонӣ</annotation>
+		<annotation cp="👌">даст | Дасти ОК | ОК</annotation>
+		<annotation cp="👌" type="tts">Дасти ОК</annotation>
+		<annotation cp="✌">v | даст | дасти зафар | зафар</annotation>
+		<annotation cp="✌" type="tts">дасти зафар</annotation>
+		<annotation cp="🤞">ангушт | ангуштони ба ҳам гузошташуда | даст | муваффақият | салиб</annotation>
+		<annotation cp="🤞" type="tts">ангуштони ба ҳам гузошташуда</annotation>
+		<annotation cp="🤟">ILY | даст | имову ишораи &quot;Туро дӯст медорам&quot;</annotation>
+		<annotation cp="🤟" type="tts">имову ишораи &quot;Туро дӯст медорам&quot;</annotation>
+		<annotation cp="🤘">ангушт | даст | ишораи ду шох | ишораи шохҳо | шохҳо</annotation>
+		<annotation cp="🤘" type="tts">ишораи шохҳо</annotation>
+		<annotation cp="🤙">ба ман занг занед | даст | занг</annotation>
+		<annotation cp="🤙" type="tts">ба ман занг занед</annotation>
+		<annotation cp="👈">ангушт | ангушти ишорат ба тарафи чап ишора карда истода | даст | нишондиҳанда | нуқта | пушти даст</annotation>
+		<annotation cp="👈" type="tts">ангушти ишорат ба тарафи чап ишора карда истода</annotation>
+		<annotation cp="👉">ангушт | ангушти ишорат ба тарафи рост ишора карда истода | даст | нишондиҳанда | нуқта | пушти даст</annotation>
+		<annotation cp="👉" type="tts">ангушти ишорат ба тарафи рост ишора карда истода</annotation>
+		<annotation cp="👆">ангушт | боло | даст | нишондиҳанда | пушти даст | пушти даст ангушти ишорат ба боло ишора карда истода</annotation>
+		<annotation cp="👆" type="tts">пушти даст ангушти ишорат ба боло ишора карда истода</annotation>
+		<annotation cp="🖕">ангушт | ангушти байн | даст</annotation>
+		<annotation cp="🖕" type="tts">ангушти байн</annotation>
+		<annotation cp="👇">ангушт | ангушти ишорат ба поён ишора карда истода | даст | нишондиҳанда | нуқта | поён | пушти даст</annotation>
+		<annotation cp="👇" type="tts">ангушти ишорат ба поён ишора карда истода</annotation>
+		<annotation cp="☝">ангушт | ангушти ишорат ба боло ишора карда истода | боло | даст | нишондиҳанда | нуқта</annotation>
+		<annotation cp="☝" type="tts">ангушти ишорат ба боло ишора карда истода</annotation>
+		<annotation cp="👍">+1 | боло | даст | нарангушт | хуб</annotation>
+		<annotation cp="👍" type="tts">хуб</annotation>
+		<annotation cp="👎">-1 | бад | даст | нарангушт | поён</annotation>
+		<annotation cp="👎" type="tts">бад</annotation>
+		<annotation cp="✊">даст | мушт | мушт задан | мушти бардошта | фушурдашуда</annotation>
+		<annotation cp="✊" type="tts">мушти бардошта</annotation>
+		<annotation cp="👊">даст | мушт | мушт задан | мушти муқобил | фушурдашуда</annotation>
+		<annotation cp="👊" type="tts">мушти муқобил</annotation>
+		<annotation cp="🤛">ба тарафи чап | мушт | мушт аз тарафи чап</annotation>
+		<annotation cp="🤛" type="tts">мушт аз тарафи чап</annotation>
+		<annotation cp="🤜">ба тарафи рост | мушт | мушти тарафи рост</annotation>
+		<annotation cp="🤜" type="tts">мушти тарафи рост</annotation>
+		<annotation cp="👏">даст | дастҳои қарсакзананда | қарсак задан</annotation>
+		<annotation cp="👏" type="tts">дастҳои қарсакзананда</annotation>
+		<annotation cp="🙌">бардошта | даст | дастҳои бардоштаистода | имову ишора | ура | ҷашн</annotation>
+		<annotation cp="🙌" type="tts">дастҳои бардоштаистода</annotation>
+		<annotation cp="👐">даст | дастҳои кушода | кушода</annotation>
+		<annotation cp="👐" type="tts">дастҳои кушода</annotation>
+		<annotation cp="🤲">дастҳо якҷоя боло | дуо</annotation>
+		<annotation cp="🤲" type="tts">дастҳо якҷоя боло</annotation>
+		<annotation cp="🤝">вохӯрӣ | даст | дастфишурӣ | дастфишӯрӣ | созишнома | фишурдан</annotation>
+		<annotation cp="🤝" type="tts">дастфишӯрӣ</annotation>
+		<annotation cp="🙏">даст | дастҳои қат кардашуда | дуо кардан | имову ишора | қат кардашуда | лутфан | пурсидан | ташаккур | хам шудан</annotation>
+		<annotation cp="🙏" type="tts">дастҳои қат кардашуда</annotation>
+		<annotation cp="✍">даст | дасти навишта истода | навиштан</annotation>
+		<annotation cp="✍" type="tts">дасти навишта истода</annotation>
+		<annotation cp="💅">ғамхорӣ | косметика | лок | лок барои нохунҳо | маникюр | нохун</annotation>
+		<annotation cp="💅" type="tts">лок барои нохунҳо</annotation>
+		<annotation cp="🤳">камера | селфи | телефон</annotation>
+		<annotation cp="🤳" type="tts">селфи</annotation>
+		<annotation cp="💪">битсепс | қат кардан | мазҳакавӣ | мушак | мушаки битсепси қат кардашуда</annotation>
+		<annotation cp="💪" type="tts">мушаки битсепси қат кардашуда</annotation>
+		<annotation cp="👂">бадан | гуш</annotation>
+		<annotation cp="👂" type="tts">гуш</annotation>
+		<annotation cp="👃">бадан | бинӣ</annotation>
+		<annotation cp="👃" type="tts">бинӣ</annotation>
+		<annotation cp="🧠">доно | майнаи сар</annotation>
+		<annotation cp="🧠" type="tts">майнаи сар</annotation>
+		<annotation cp="👀">рӯй | чашм | чашмон</annotation>
+		<annotation cp="👀" type="tts">чашмон</annotation>
+		<annotation cp="👁">бадан | чашм</annotation>
+		<annotation cp="👁" type="tts">чашм</annotation>
+		<annotation cp="👅">бадан | забон</annotation>
+		<annotation cp="👅" type="tts">забон</annotation>
+		<annotation cp="👄">даҳон | лабҳо</annotation>
+		<annotation cp="👄" type="tts">даҳон</annotation>
+		<annotation cp="👶">кӯдак | тифл | ҷавон</annotation>
+		<annotation cp="👶" type="tts">тифл</annotation>
+		<annotation cp="🧒">баробарии ҷинсҳо | кӯдак | ҷавон</annotation>
+		<annotation cp="🧒" type="tts">кӯдак</annotation>
+		<annotation cp="👦">писар | ҷавон</annotation>
+		<annotation cp="👦" type="tts">писар</annotation>
+		<annotation cp="👧">бурҷи дувоздаҳгона | духтар | Сунбула | ҷавон</annotation>
+		<annotation cp="👧" type="tts">духтар</annotation>
+		<annotation cp="🧑">баробарии ҷинсҳо | калонсол</annotation>
+		<annotation cp="🧑" type="tts">калонсол</annotation>
+		<annotation cp="👱">зардинамӯй | шахси зардинамӯй</annotation>
+		<annotation cp="👱" type="tts">шахси зардинамӯй</annotation>
+		<annotation cp="👨">мард</annotation>
+		<annotation cp="👨" type="tts">мард</annotation>
+		<annotation cp="🧔">риш | шахси ришдор</annotation>
+		<annotation cp="🧔" type="tts">шахси ришдор</annotation>
+		<annotation cp="👱‍♂">зардинамӯй | мард | марди зардинамӯй</annotation>
+		<annotation cp="👱‍♂" type="tts">марди зардинамӯй</annotation>
+		<annotation cp="👩">зан</annotation>
+		<annotation cp="👩" type="tts">зан</annotation>
+		<annotation cp="👱‍♀">зан | зани зардинамӯй | зардинамӯй</annotation>
+		<annotation cp="👱‍♀" type="tts">зани зардинамӯй</annotation>
+		<annotation cp="🧓">баробарии ҷинсҳо | калонсоли пир | пир</annotation>
+		<annotation cp="🧓" type="tts">калонсоли пир</annotation>
+		<annotation cp="👴">мард | марди пир | пир</annotation>
+		<annotation cp="👴" type="tts">марди пир</annotation>
+		<annotation cp="👵">зан | зани пир | пир</annotation>
+		<annotation cp="👵" type="tts">зани пир</annotation>
+		<annotation cp="🙍">имову ишора | ки қавоқ андохта истодааст | қавоқ андохтан | шахсе | шахсе, ки қавоқ андохта истодааст</annotation>
+		<annotation cp="🙍" type="tts">шахсе, ки қавоқ андохта истодааст</annotation>
+		<annotation cp="🙍‍♂">имову ишора | ки қавоқ андохта истодааст | қавоқандозӣ | мард | марде | марде, ки қавоқ андохта истодааст</annotation>
+		<annotation cp="🙍‍♂" type="tts">марде, ки қавоқ андохта истодааст</annotation>
+		<annotation cp="🙍‍♀">зан | зане | зане, ки қавоқ андохта истодааст | имову ишора | ки қавоқ андохта истодааст | қавоқандозӣ</annotation>
+		<annotation cp="🙍‍♀" type="tts">зане, ки қавоқ андохта истодааст</annotation>
+		<annotation cp="🙎">имову ишора | каҷкунии лаб | ки лабҳояшро каҷ карда истодааст | шахсе | шахсе, ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙎" type="tts">шахсе, ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙎‍♂">имову ишора | каҷкунии лаб | ки лабҳояшро каҷ карда истодааст | мард | марде | марде, ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙎‍♂" type="tts">марде, ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙎‍♀">зан | зане | зане, ки лабҳояшро каҷ карда истодааст | имову ишора | каҷкунии лаб | ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙎‍♀" type="tts">зане, ки лабҳояшро каҷ карда истодааст</annotation>
+		<annotation cp="🙅">даст | имову ишора | ки &quot;НЕ&quot; ишора карда истодааст | мамнуъ | манъшуда | не | шахсе | шахсе, ки &quot;НЕ&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙅" type="tts">шахсе, ки &quot;НЕ&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙅‍♂">даст | имову ишора | ки &quot;НЕ&quot; ишора карда истодааст | мамнуъ | манъшуда | мард | марде | марде, ки &quot;НЕ&quot; ишора карда истодааст | не</annotation>
+		<annotation cp="🙅‍♂" type="tts">марде, ки &quot;НЕ&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙅‍♀">даст | зан | зане | зане, ки &quot;НЕ&quot; ишора карда истодааст | имову ишора | ки &quot;НЕ&quot; ишора карда истодааст | мамнуъ | манъшуда | не</annotation>
+		<annotation cp="🙅‍♀" type="tts">зане, ки &quot;НЕ&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙆">даст | имову ишора | ки &quot;ОК&quot; ишора карда истодааст | ОК | шахсе | шахсе, ки &quot;ОК&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙆" type="tts">шахсе, ки &quot;ОК&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙆‍♂">даст | имову ишора | ки &quot;ОК&quot; ишора карда истодааст | мард | марде | марде, ки &quot;ОК&quot; ишора карда истодааст | ОК</annotation>
+		<annotation cp="🙆‍♂" type="tts">марде, ки &quot;ОК&quot; ишора карда истодааст</annotation>
+		<annotation cp="🙆‍♀">даст | зан | зане | зане, ки &quot;ОК&quot; ишора карда истодааст | имову ишора | ки &quot;ОК&quot; ишора карда истодааст | ОК</annotation>
+		<annotation cp="🙆‍♀" type="tts">зане, ки &quot;ОК&quot; ишора карда истодааст</annotation>
+		<annotation cp="💁">густох | даст | ки бо дасташ ишора карда истодааст | кӯмак | маълумот | чаппакунӣ | шахсе | шахсе, ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="💁" type="tts">шахсе, ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="💁‍♂">густох | дасти ишоракунанда | ки бо дасташ ишора карда истодааст | мард | марде | марде, ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="💁‍♂" type="tts">марде, ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="💁‍♀">густох | дасти ишоракунанда | зан | зане | зане, ки бо дасташ ишора карда истодааст | ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="💁‍♀" type="tts">зане, ки бо дасташ ишора карда истодааст</annotation>
+		<annotation cp="🙋">бардошта | даст | имову ишора | ки дасташро бардошта истодааст | хурсанд | шахсе | шахсе, ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙋" type="tts">шахсе, ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙋‍♂">дасти бардошта | имову ишора | ки дасташро бардошта истодааст | мард | марде | марде, ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙋‍♂" type="tts">марде, ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙋‍♀">дасти бардошта | зан | зане | зане, ки дасташро бардошта истодааст | имову ишора | ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙋‍♀" type="tts">зане, ки дасташро бардошта истодааст</annotation>
+		<annotation cp="🙇">бахшиш | имову ишора | ки хам шуда истодааст | узр | хам шудан | шахсе | шахсе, ки хам шуда истодааст</annotation>
+		<annotation cp="🙇" type="tts">шахсе, ки хам шуда истодааст</annotation>
+		<annotation cp="🙇‍♂">бахшиш | имову ишора | ки хам шуда истодааст | лутф | мард | марде | марде, ки хам шуда истодааст | узр | хам шуда истода</annotation>
+		<annotation cp="🙇‍♂" type="tts">марде, ки хам шуда истодааст</annotation>
+		<annotation cp="🙇‍♀">бахшиш | зан | зане | зане, ки хам шуда истодааст | имову ишора | ки хам шуда истодааст | лутф | узр | хам шуда истода</annotation>
+		<annotation cp="🙇‍♀" type="tts">зане, ки хам шуда истодааст</annotation>
+		<annotation cp="🤦">кафи даст | ки рӯяшро бо дастонаш пӯшида истодааст | нобоварӣ | рӯй | хашмгинӣ | шахсе | шахсе, ки рӯяшро бо дастонаш пӯшида истодааст</annotation>
+		<annotation cp="🤦" type="tts">шахсе, ки рӯяшро бо дастонаш пӯшида истодааст</annotation>
+		<annotation cp="🤦‍♂">ки рӯяшро бо дастонаш пӯшида истодааст | мард | марде | марде, ки рӯяшро бо дастонаш пӯшида истодааст | нобоварӣ | пӯшидани рӯй бо дастон | хашмгинӣ</annotation>
+		<annotation cp="🤦‍♂" type="tts">марде, ки рӯяшро бо дастонаш пӯшида истодааст</annotation>
+		<annotation cp="🤦‍♀">зан | зане | зане, ки рӯяшро бо дастонаш пӯшида истодааст | ки рӯяшро бо дастонаш пӯшида истодааст | нобоварӣ | пӯшидани рӯй бо дастон | хашмгинӣ</annotation>
+		<annotation cp="🤦‍♀" type="tts">зане, ки рӯяшро бо дастонаш пӯшида истодааст</annotation>
+		<annotation cp="🤷">бепарвоӣ | ки китф афшонда истодааст | китф афшондан | нодонӣ | шахсе | шахсе, ки китф афшонда истодааст | шубҳа</annotation>
+		<annotation cp="🤷" type="tts">шахсе, ки китф афшонда истодааст</annotation>
+		<annotation cp="🤷‍♂">бепарвоӣ | ки китф афшонда истодааст | китф афшондан | мард | марде | марде, ки китф афшонда истодааст | нодонӣ | шубҳа</annotation>
+		<annotation cp="🤷‍♂" type="tts">марде, ки китф афшонда истодааст</annotation>
+		<annotation cp="🤷‍♀">бепарвоӣ | зан | зане | зане, ки китф афшонда истодааст | ки китф афшонда истодааст | китф афшондан | нодонӣ | шубҳа</annotation>
+		<annotation cp="🤷‍♀" type="tts">зане, ки китф афшонда истодааст</annotation>
+		<annotation cp="👨‍⚕">духтур | мард | марди корманди тандурустӣ | нигоҳдории тандурустӣ | терапевт | ҳамшираи шавқат</annotation>
+		<annotation cp="👨‍⚕" type="tts">марди корманди тандурустӣ</annotation>
+		<annotation cp="👩‍⚕">духтур | зан | зани корманди тандурустӣ | нигоҳдории тандурустӣ | терапевт | ҳамшираи шавқат</annotation>
+		<annotation cp="👩‍⚕" type="tts">зани корманди тандурустӣ</annotation>
+		<annotation cp="👨‍🎓">донишҷӯ | мард | марди донишҷӯ | хатмкунанда</annotation>
+		<annotation cp="👨‍🎓" type="tts">марди донишҷӯ</annotation>
+		<annotation cp="👩‍🎓">донишҷӯ | зан | зани донишҷӯ | хатмкунанда</annotation>
+		<annotation cp="👩‍🎓" type="tts">зани донишҷӯ</annotation>
+		<annotation cp="👨‍🏫">дастурдиҳанда | мард | марди муаллим | муаллим | профессор</annotation>
+		<annotation cp="👨‍🏫" type="tts">марди муаллим</annotation>
+		<annotation cp="👩‍🏫">дастурдиҳанда | зан | зани муаллим | муаллим | профессор</annotation>
+		<annotation cp="👩‍🏫" type="tts">зани муаллим</annotation>
+		<annotation cp="👨‍⚖">адолат | мард | марди судя | тарозу</annotation>
+		<annotation cp="👨‍⚖" type="tts">марди судя</annotation>
+		<annotation cp="👩‍⚖">зан | зани судя | судя | тарозу</annotation>
+		<annotation cp="👩‍⚖" type="tts">зани судя</annotation>
+		<annotation cp="👨‍🌾">боғбон | мард | марди фермер | соҳиби фермаи чорво | фермер</annotation>
+		<annotation cp="👨‍🌾" type="tts">марди фермер</annotation>
+		<annotation cp="👩‍🌾">боғбон | зан | зани фермер | соҳиби фермаи чорво | фермер</annotation>
+		<annotation cp="👩‍🌾" type="tts">зани фермер</annotation>
+		<annotation cp="👨‍🍳">мард | марди ошпаз | ошпаз | сардори ошпазон</annotation>
+		<annotation cp="👨‍🍳" type="tts">марди ошпаз</annotation>
+		<annotation cp="👩‍🍳">зан | зани ошпаз | ошпаз | сардори ошпазон</annotation>
+		<annotation cp="👩‍🍳" type="tts">зани ошпаз</annotation>
+		<annotation cp="👨‍🔧">водопроводчӣ | мард | марди механик | механик | савдогар | устои барқ</annotation>
+		<annotation cp="👨‍🔧" type="tts">марди механик</annotation>
+		<annotation cp="👩‍🔧">водопроводчӣ | зан | зани механик | механик | савдогар | устои барқ</annotation>
+		<annotation cp="👩‍🔧" type="tts">зани механик</annotation>
+		<annotation cp="👨‍🏭">ассамблея | коргар | мард | марди коргари фабрика | саноатӣ | фабрика</annotation>
+		<annotation cp="👨‍🏭" type="tts">марди коргари фабрика</annotation>
+		<annotation cp="👩‍🏭">ассамблея | зан | зани коргари фабрика | коргар | саноатӣ | фабрика</annotation>
+		<annotation cp="👩‍🏭" type="tts">зани коргари фабрика</annotation>
+		<annotation cp="👨‍💼">идора | корманди илмӣ | мард | марди корманди идора | меъмор | мудир | соҳибкорӣ</annotation>
+		<annotation cp="👨‍💼" type="tts">марди корманди идора</annotation>
+		<annotation cp="👩‍💼">зан | зани корманди идора | идора | корманди илмӣ | меъмор | мудир | соҳибкорӣ</annotation>
+		<annotation cp="👩‍💼" type="tts">зани корманди идора</annotation>
+		<annotation cp="👨‍🔬">биолог | кимиёшинос | мард | марди олим | математик | муҳандис | олим | физик</annotation>
+		<annotation cp="👨‍🔬" type="tts">марди олим</annotation>
+		<annotation cp="👩‍🔬">биолог | зан | зани олим | кимиёшинос | математик | муҳандис | олим | физик</annotation>
+		<annotation cp="👩‍🔬" type="tts">зани олим</annotation>
+		<annotation cp="👨‍💻">барномасоз | ихтироъкор | ман | марди технолог | нармафзор | таҳиягар | технолог</annotation>
+		<annotation cp="👨‍💻" type="tts">марди технолог</annotation>
+		<annotation cp="👩‍💻">барномасоз | зан | зани технолог | ихтироъкор | нармафзор | таҳиягар | технолог</annotation>
+		<annotation cp="👩‍💻" type="tts">зани технолог</annotation>
+		<annotation cp="👨‍🎤">корманди санъат | мард | марди сароянда | рок | сароянда | ситора | ҳунарманд</annotation>
+		<annotation cp="👨‍🎤" type="tts">марди сароянда</annotation>
+		<annotation cp="👩‍🎤">зан | зани сароянда | корманди санъат | рок | сароянда | ситора | ҳунарманд</annotation>
+		<annotation cp="👩‍🎤" type="tts">зани сароянда</annotation>
+		<annotation cp="👨‍🎨">лавҳачаи рассомӣ | мард | марди рассом | рассом</annotation>
+		<annotation cp="👨‍🎨" type="tts">марди рассом</annotation>
+		<annotation cp="👩‍🎨">зан | зани рассом | лавҳачаи рассомӣ | рассом</annotation>
+		<annotation cp="👩‍🎨" type="tts">зани рассом</annotation>
+		<annotation cp="👨‍✈">мард | марди халабон | халабон | ҳавопаймо</annotation>
+		<annotation cp="👨‍✈" type="tts">марди халабон</annotation>
+		<annotation cp="👩‍✈">зан | зани халабон | халабон | ҳавопаймо</annotation>
+		<annotation cp="👩‍✈" type="tts">зани халабон</annotation>
+		<annotation cp="👨‍🚀">кайҳоннавард | мард | марди кайҳоннавард | ракета</annotation>
+		<annotation cp="👨‍🚀" type="tts">марди кайҳоннавард</annotation>
+		<annotation cp="👩‍🚀">зан | зани кайҳоннавард | кайҳоннавард | ракета</annotation>
+		<annotation cp="👩‍🚀" type="tts">зани кайҳоннавард</annotation>
+		<annotation cp="👨‍🚒">мард | марди сӯхторхомӯшкун | мошини сӯхторхомӯшкунӣ | сӯхторхомӯшкун</annotation>
+		<annotation cp="👨‍🚒" type="tts">марди сӯхторхомӯшкун</annotation>
+		<annotation cp="👩‍🚒">зан | зани сӯхторхомӯшкун | мошини сухторхомӯшкунӣ | сӯхторхомӯшкун</annotation>
+		<annotation cp="👩‍🚒" type="tts">зани сӯхторхомӯшкун</annotation>
+		<annotation cp="👮">афсар | афсари пулис | милиса | пулис</annotation>
+		<annotation cp="👮" type="tts">афсари пулис</annotation>
+		<annotation cp="👮‍♂">афсар | мард | марди афсари пулис | милиса | пулис</annotation>
+		<annotation cp="👮‍♂" type="tts">марди афсари пулис</annotation>
+		<annotation cp="👮‍♀">афсар | зан | зани афсари пулис | милиса | пулис</annotation>
+		<annotation cp="👮‍♀" type="tts">зани афсари пулис</annotation>
+		<annotation cp="🕵">детектив | ҷосус | ҷӯянда</annotation>
+		<annotation cp="🕵" type="tts">детектив</annotation>
+		<annotation cp="🕵‍♂">детектив | мард | марди детектив | ҷосус | ҷӯянда</annotation>
+		<annotation cp="🕵‍♂" type="tts">марди детектив</annotation>
+		<annotation cp="🕵‍♀">детектив | зан | зани детектив | ҷосус | ҷӯянда</annotation>
+		<annotation cp="🕵‍♀" type="tts">зани детектив</annotation>
+		<annotation cp="💂">посбон</annotation>
+		<annotation cp="💂" type="tts">посбон</annotation>
+		<annotation cp="💂‍♂">мард | марди посбон | посбон</annotation>
+		<annotation cp="💂‍♂" type="tts">марди посбон</annotation>
+		<annotation cp="💂‍♀">зан | зани посбон | посбон</annotation>
+		<annotation cp="💂‍♀" type="tts">зани посбон</annotation>
+		<annotation cp="👷">коргар | коргари сохтмон | сарпӯш | сохтмон</annotation>
+		<annotation cp="👷" type="tts">коргари сохтмон</annotation>
+		<annotation cp="👷‍♂">коргар | мард | марди коргари сохтмон | сохтмон</annotation>
+		<annotation cp="👷‍♂" type="tts">марди коргари сохтмон</annotation>
+		<annotation cp="👷‍♀">зан | зани коргари сохтмон | коргар | сохтмон</annotation>
+		<annotation cp="👷‍♀" type="tts">зани коргари сохтмон</annotation>
+		<annotation cp="🤴">шоҳзода</annotation>
+		<annotation cp="🤴" type="tts">шоҳзода</annotation>
+		<annotation cp="👸">афсона | тахайюлот | шоҳдухтар</annotation>
+		<annotation cp="👸" type="tts">шоҳдухтар</annotation>
+		<annotation cp="👳">ки дар сар салла дорад | салла | шахсе | шахсе, ки дар сар салла дорад</annotation>
+		<annotation cp="👳" type="tts">шахсе, ки дар сар салла дорад</annotation>
+		<annotation cp="👳‍♂">ки дар сар салла дорад | мард | марде | марде, ки дар сар салла дорад | салла</annotation>
+		<annotation cp="👳‍♂" type="tts">марде, ки дар сар салла дорад</annotation>
+		<annotation cp="👳‍♀">зан | зане | зане, ки дар сар салла дорад | ки дар сар салла дорад | салла</annotation>
+		<annotation cp="👳‍♀" type="tts">зане, ки дар сар салла дорад</annotation>
+		<annotation cp="👲">гуа пи мао | мард | мард бо сарпӯши хитоӣ | сарпӯш</annotation>
+		<annotation cp="👲" type="tts">мард бо сарпӯши хитоӣ</annotation>
+		<annotation cp="🧕">зан бо рӯймол | мантиля | рӯймол | тикл | ҳиҷоб</annotation>
+		<annotation cp="🧕" type="tts">зан бо рӯймол</annotation>
+		<annotation cp="🤵">домод | мард | мард бо смокинг | смокинг</annotation>
+		<annotation cp="🤵" type="tts">мард бо смокинг</annotation>
+		<annotation cp="👰">арӯс | арӯс бо сарандоз | сарандоз | тӯй</annotation>
+		<annotation cp="👰" type="tts">арӯс бо сарандоз</annotation>
+		<annotation cp="🤰">зан | зани ҳомила | ҳомила</annotation>
+		<annotation cp="🤰" type="tts">зани ҳомила</annotation>
+		<annotation cp="🤱">сина | синамакконӣ | тифл | ширмакконӣ</annotation>
+		<annotation cp="🤱" type="tts">синамакконӣ</annotation>
+		<annotation cp="👼">афсона | кӯдак | кӯдаки фаришта | малоика | рӯй | тахайюлот</annotation>
+		<annotation cp="👼" type="tts">кӯдаки фаришта</annotation>
+		<annotation cp="🎅">бобои барфӣ | клаус | мавлуди Исо | падар | санта | ҷашн</annotation>
+		<annotation cp="🎅" type="tts">бобои барфӣ</annotation>
+		<annotation cp="🤶">клаус | Мавлуди Исо | модар | хонум | ҷашн</annotation>
+		<annotation cp="🤶" type="tts">Хонум Клаус</annotation>
+		<annotation cp="🧙">зани афсунгар | коҳин | марди афсунгар | соҳир | ҷодугар</annotation>
+		<annotation cp="🧙" type="tts">коҳин</annotation>
+		<annotation cp="🧙‍♂">марди афсунгар | марди коҳин | соҳир</annotation>
+		<annotation cp="🧙‍♂" type="tts">марди коҳин</annotation>
+		<annotation cp="🧙‍♀">зани афсунгар | зани коҳин | ҷодугар</annotation>
+		<annotation cp="🧙‍♀" type="tts">зани коҳин</annotation>
+		<annotation cp="🧚">Оберон | парӣ | Парии бад | Титания</annotation>
+		<annotation cp="🧚" type="tts">парӣ</annotation>
+		<annotation cp="🧚‍♂">Оберон | Парии бад | парии мард</annotation>
+		<annotation cp="🧚‍♂" type="tts">парии мард</annotation>
+		<annotation cp="🧚‍♀">парии зан | Титания</annotation>
+		<annotation cp="🧚‍♀" type="tts">парии зан</annotation>
+		<annotation cp="🧛">вампир | вампирҳо | Дракула</annotation>
+		<annotation cp="🧛" type="tts">вампир</annotation>
+		<annotation cp="🧛‍♂">вампирҳо | Дракула | мардии вампир</annotation>
+		<annotation cp="🧛‍♂" type="tts">мардии вампир</annotation>
+		<annotation cp="🧛‍♀">вампирҳо | зани вампир</annotation>
+		<annotation cp="🧛‍♀" type="tts">зани вампир</annotation>
+		<annotation cp="🧜">марди обӣ | парии обӣ | шахси обӣ</annotation>
+		<annotation cp="🧜" type="tts">шахси обӣ</annotation>
+		<annotation cp="🧜‍♂">марди обӣ | Самандар</annotation>
+		<annotation cp="🧜‍♂" type="tts">марди обӣ</annotation>
+		<annotation cp="🧜‍♀">парии обӣ</annotation>
+		<annotation cp="🧜‍♀" type="tts">парии обӣ</annotation>
+		<annotation cp="🧝">пакана | соҳирӣ</annotation>
+		<annotation cp="🧝" type="tts">пакана</annotation>
+		<annotation cp="🧝‍♂">марди пакана | соҳирӣ</annotation>
+		<annotation cp="🧝‍♂" type="tts">марди пакана</annotation>
+		<annotation cp="🧝‍♀">зани пакана | соҳирӣ</annotation>
+		<annotation cp="🧝‍♀" type="tts">зани пакана</annotation>
+		<annotation cp="🧞">ҷин</annotation>
+		<annotation cp="🧞" type="tts">ҷин</annotation>
+		<annotation cp="🧞‍♂">марди ҷин | ҷин</annotation>
+		<annotation cp="🧞‍♂" type="tts">марди ҷин</annotation>
+		<annotation cp="🧞‍♀">зани ҷин | ҷин</annotation>
+		<annotation cp="🧞‍♀" type="tts">зани ҷин</annotation>
+		<annotation cp="🧟">вампирҳо | зомби | мурдаҳои роҳгард</annotation>
+		<annotation cp="🧟" type="tts">зомби</annotation>
+		<annotation cp="🧟‍♂">вампирҳо | марди зомби | мурдаҳои роҳгард</annotation>
+		<annotation cp="🧟‍♂" type="tts">марди зомби</annotation>
+		<annotation cp="🧟‍♀">вампирҳо | зани зомби | мурдаҳои роҳгард</annotation>
+		<annotation cp="🧟‍♀" type="tts">зани зомби</annotation>
+		<annotation cp="💆">ки паём гирифта истодааст | паём | рӯй | толор | шахсе | шахсе, ки паём гирифта истодааст</annotation>
+		<annotation cp="💆" type="tts">шахсе, ки паём гирифта истодааст</annotation>
+		<annotation cp="💆‍♂">ки паём гирифта истодааст | мард | марде | марде, ки паём гирифта истодааст | паём | рӯй</annotation>
+		<annotation cp="💆‍♂" type="tts">марде, ки паём гирифта истодааст</annotation>
+		<annotation cp="💆‍♀">зан | зане | зане, ки паём гирифта истодааст | ки паём гирифта истодааст | паём | рӯй</annotation>
+		<annotation cp="💆‍♀" type="tts">зане, ки паём гирифта истодааст</annotation>
+		<annotation cp="💇">кабинет | ки мӯи сарашро гирифта истодааст | мӯйгирӣ | сартарош | ҳусн | шахсе | шахсе, ки мӯи сарашро гирифта истодааст</annotation>
+		<annotation cp="💇" type="tts">шахсе, ки мӯи сарашро гирифта истодааст</annotation>
+		<annotation cp="💇‍♂">ки мӯи сарашро гирифта истодааст | мард | марде | марде, ки мӯи сарашро гирифта истодааст | мӯйгирӣ</annotation>
+		<annotation cp="💇‍♂" type="tts">марде, ки мӯи сарашро гирифта истодааст</annotation>
+		<annotation cp="💇‍♀">зан | зане | зане, ки мӯи сарашро гирифта истодааст | ки мӯи сарашро гирифта истодааст | мӯйгирӣ</annotation>
+		<annotation cp="💇‍♀" type="tts">зане, ки мӯи сарашро гирифта истодааст</annotation>
+		<annotation cp="🚶">ки роҳ гашта истодааст | роҳ гаштан | роҳгардӣ | саёҳат кардан | шахсе | шахсе, ки роҳ гашта истодааст</annotation>
+		<annotation cp="🚶" type="tts">шахсе, ки роҳ гашта истодааст</annotation>
+		<annotation cp="🚶‍♂">мард | марде | марде, роҳ гашта истодааст | роҳ гашта истодааст | роҳ гаштан | саёҳат кардан</annotation>
+		<annotation cp="🚶‍♂" type="tts">марде, роҳ гашта истодааст</annotation>
+		<annotation cp="🚶‍♀">зан | зане | зане, роҳ гашта истодааст | роҳ гашта истодааст | роҳ гаштан | саёҳат кардан</annotation>
+		<annotation cp="🚶‍♀" type="tts">зане, роҳ гашта истодааст</annotation>
+		<annotation cp="🏃">давида истода | ки давида истодааст | марафон | шахсе | шахсе, ки давида истодааст</annotation>
+		<annotation cp="🏃" type="tts">шахсе, ки давида истодааст</annotation>
+		<annotation cp="🏃‍♂">давида истода | ки давида истодааст | марафон | мард | марде | марде, ки давида истодааст | пойга</annotation>
+		<annotation cp="🏃‍♂" type="tts">марде, ки давида истодааст</annotation>
+		<annotation cp="🏃‍♀">давида истода | зан | зане | зане, ки давида истодааст | ки давида истодааст | марафон | пойга</annotation>
+		<annotation cp="🏃‍♀" type="tts">зане, ки давида истодааст</annotation>
+		<annotation cp="💃">зане | зане, ки рақс карда истодааст | ки рақс карда истодааст | рақс кардан</annotation>
+		<annotation cp="💃" type="tts">зане, ки рақс карда истодааст</annotation>
+		<annotation cp="🕺">ки рақс карда истодааст | мард | марде | марде, ки рақс карда истодааст | рақс</annotation>
+		<annotation cp="🕺" type="tts">марде, ки рақс карда истодааст</annotation>
+		<annotation cp="🕴">ки бо костюми корӣ баланд шуда истодааст | костюм | мард | марде | марде, ки бо костюми корӣ баланд шуда истодааст | соҳибкорӣ</annotation>
+		<annotation cp="🕴" type="tts">марде, ки бо костюми корӣ баланд шуда истодааст</annotation>
+		<annotation cp="👯">гӯшҳои харгӯш | нафарони бо гӯшҳои харгӯш хурсандӣ карда истода | раққос | хурсандӣ кардан</annotation>
+		<annotation cp="👯" type="tts">нафарони бо гӯшҳои харгӯш хурсандӣ карда истода</annotation>
+		<annotation cp="👯‍♂">гӯшҳои харгӯш | мардон | мардони бо гӯшҳои харгӯш хурсандӣ карда истода | раққос | хурсандӣ кардан</annotation>
+		<annotation cp="👯‍♂" type="tts">мардони бо гӯшҳои харгӯш хурсандӣ карда истода</annotation>
+		<annotation cp="👯‍♀">гӯшҳои харгӯш | занони бо гӯшҳои харгӯш хурсандӣ карда истода | занҳо | раққос | хурсандӣ кардан</annotation>
+		<annotation cp="👯‍♀" type="tts">занони бо гӯшҳои харгӯш хурсандӣ карда истода</annotation>
+		<annotation cp="🧖">сауна | ҳуҷраи буғ | шахсе дар ҳуҷраи буғ</annotation>
+		<annotation cp="🧖" type="tts">шахсе дар ҳуҷраи буғ</annotation>
+		<annotation cp="🧖‍♂">марде дар ҳуҷраи буғ | сауна | ҳуҷраи буғ</annotation>
+		<annotation cp="🧖‍♂" type="tts">марде дар ҳуҷраи буғ</annotation>
+		<annotation cp="🧖‍♀">зане дар ҳуҷраи буғ | сауна | ҳуҷраи буғ</annotation>
+		<annotation cp="🧖‍♀" type="tts">зане дар ҳуҷраи буғ</annotation>
+		<annotation cp="🧗">ки баромада истодааст | кӯҳнавард | шахсе | шахсе, ки баромада истодааст</annotation>
+		<annotation cp="🧗" type="tts">шахсе, ки баромада истодааст</annotation>
+		<annotation cp="🧗‍♂">ки баромада истодааст | кӯҳнавард | марде | марде, ки баромада истодааст</annotation>
+		<annotation cp="🧗‍♂" type="tts">марде, ки баромада истодааст</annotation>
+		<annotation cp="🧗‍♀">зане | зане, ки баромада истодааст | ки баромада истодааст | кӯҳнавард</annotation>
+		<annotation cp="🧗‍♀" type="tts">зане, ки баромада истодааст</annotation>
+		<annotation cp="🤺">шамшер | шамшербоз | шамшербозӣ | шахси шамшербозӣ карда истода</annotation>
+		<annotation cp="🤺" type="tts">шахси шамшербозӣ карда истода</annotation>
+		<annotation cp="🏇">асп | аспдавонӣ | аспи пойга | пойга | човандоз</annotation>
+		<annotation cp="🏇" type="tts">аспдавонӣ</annotation>
+		<annotation cp="⛷">барф | лижа | лижарон</annotation>
+		<annotation cp="⛷" type="tts">лижарон</annotation>
+		<annotation cp="🏂">барф | лижа | сноуборд | сноубордист</annotation>
+		<annotation cp="🏂" type="tts">сноубордист</annotation>
+		<annotation cp="🏌">голф | ки голф бозӣ карда истодааст | тӯбча | шахсе | шахсе, ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏌" type="tts">шахсе, ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏌‍♂">голф | ки голф бозӣ карда истодааст | мард | марде | марде, ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏌‍♂" type="tts">марде, ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏌‍♀">голф | зан | зане | зане, ки голф бозӣ карда истодааст | ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏌‍♀" type="tts">зане, ки голф бозӣ карда истодааст</annotation>
+		<annotation cp="🏄">серфинг | шахси серфинг карда истода</annotation>
+		<annotation cp="🏄" type="tts">шахси серфинг карда истода</annotation>
+		<annotation cp="🏄‍♂">ки серфинг карда истодаастмард | мард | марде | марде, ки серфинг карда истодаастмард | серфинг</annotation>
+		<annotation cp="🏄‍♂" type="tts">марде, ки серфинг карда истодаастмард</annotation>
+		<annotation cp="🏄‍♀">зан | зане | зане, ки серфинг карда истодааст | ки серфинг карда истодааст | серфинг</annotation>
+		<annotation cp="🏄‍♀" type="tts">зане, ки серфинг карда истодааст</annotation>
+		<annotation cp="🚣">қаиқ | қаиқи белдор | шахси қаиқронӣ карда истода</annotation>
+		<annotation cp="🚣" type="tts">шахси қаиқронӣ карда истода</annotation>
+		<annotation cp="🚣‍♂">қаиқ | қаиқи белдор | мард | марди қаиқронӣ карда истода</annotation>
+		<annotation cp="🚣‍♂" type="tts">марди қаиқронӣ карда истода</annotation>
+		<annotation cp="🚣‍♀">зан | зани қаиқронӣ карда истода | қаиқ | қаиқи белдор</annotation>
+		<annotation cp="🚣‍♀" type="tts">зани қаиқронӣ карда истода</annotation>
+		<annotation cp="🏊">шахси шино карда истода | шино кардан</annotation>
+		<annotation cp="🏊" type="tts">шахси шино карда истода</annotation>
+		<annotation cp="🏊‍♂">мард | марди шино карда истода | шино кардан</annotation>
+		<annotation cp="🏊‍♂" type="tts">марди шино карда истода</annotation>
+		<annotation cp="🏊‍♀">зан | зани шино карда истода | шино кардан</annotation>
+		<annotation cp="🏊‍♀" type="tts">зани шино карда истода</annotation>
+		<annotation cp="⛹">ки тӯбро ба замин зада истодааст | тӯб | шахсе | шахсе, ки тӯбро ба замин зада истодааст</annotation>
+		<annotation cp="⛹" type="tts">шахсе, ки тӯбро ба замин зада истодааст</annotation>
+		<annotation cp="⛹‍♂">ки тӯбро ба замин зада истодааст | мард | марде | марде, ки тӯбро ба замин зада истодааст | тӯб</annotation>
+		<annotation cp="⛹‍♂" type="tts">марде, ки тӯбро ба замин зада истодааст</annotation>
+		<annotation cp="⛹‍♀">зан | зане | зане, ки тӯбро ба замин зада истодааст | ки тӯбро ба замин зада истодааст | тӯб</annotation>
+		<annotation cp="⛹‍♀" type="tts">зане, ки тӯбро ба замин зада истодааст</annotation>
+		<annotation cp="🏋">борбардор | вазн | ки бор мебардорад | шахсе | шахсе, ки бор мебардорад</annotation>
+		<annotation cp="🏋" type="tts">шахсе, ки бор мебардорад</annotation>
+		<annotation cp="🏋‍♂">борбардор | ки бор мебардорад | мард | марде | марде, ки бор мебардорад</annotation>
+		<annotation cp="🏋‍♂" type="tts">марде, ки бор мебардорад</annotation>
+		<annotation cp="🏋‍♀">борбардор | зан | зане | зане, ки бор мебардорад | ки бор мебардорад</annotation>
+		<annotation cp="🏋‍♀" type="tts">зане, ки бор мебардорад</annotation>
+		<annotation cp="🚴">велосипед | велосипедрон | велосипедронӣ | шахси велосипедронӣ карда истода</annotation>
+		<annotation cp="🚴" type="tts">шахси велосипедронӣ карда истода</annotation>
+		<annotation cp="🚴‍♂">велосипед | велосипедрон | велосипедронӣ | мард | марди велосипедронӣ карда истода</annotation>
+		<annotation cp="🚴‍♂" type="tts">марди велосипедронӣ карда истода</annotation>
+		<annotation cp="🚴‍♀">велосипед | велосипедрон | велосипедронӣ | зан | зани велосипедронӣ карда истода</annotation>
+		<annotation cp="🚴‍♀" type="tts">зани велосипедронӣ карда истода</annotation>
+		<annotation cp="🚵">велосипед | велосипедрон | куҳ | шахси дар куҳ велосипедронӣ карда истода</annotation>
+		<annotation cp="🚵" type="tts">шахси дар куҳ велосипедронӣ карда истода</annotation>
+		<annotation cp="🚵‍♂">велосипед | велосипедрон | куҳ | мард | марди дар куҳ велосипедронӣ карда истода</annotation>
+		<annotation cp="🚵‍♂" type="tts">марди дар куҳ велосипедронӣ карда истода</annotation>
+		<annotation cp="🚵‍♀">велосипед | велосипедрон | велосипедронӣ | зан | зани дар куҳ велосипедронӣ карда истода | куҳ</annotation>
+		<annotation cp="🚵‍♀" type="tts">зани дар куҳ велосипедронӣ карда истода</annotation>
+		<annotation cp="🤸">гимнастика | чарх | шахси чарх зада истода</annotation>
+		<annotation cp="🤸" type="tts">шахси чарх зада истода</annotation>
+		<annotation cp="🤸‍♂">гимнастика | мард | марди чарх зада истода | чарх</annotation>
+		<annotation cp="🤸‍♂" type="tts">марди чарх зада истода</annotation>
+		<annotation cp="🤸‍♀">гимнастика | зан | зани чарх зада истода | чарх</annotation>
+		<annotation cp="🤸‍♀" type="tts">зани чарх зада истода</annotation>
+		<annotation cp="🤼">гуштин | гуштингир | нафарони гуштингирӣ карда истода</annotation>
+		<annotation cp="🤼" type="tts">нафарони гуштингирӣ карда истода</annotation>
+		<annotation cp="🤼‍♂">гуштин | мардон | мардон гуштингирӣ карда истодаанд</annotation>
+		<annotation cp="🤼‍♂" type="tts">мардон гуштингирӣ карда истодаанд</annotation>
+		<annotation cp="🤼‍♀">гуштин | занон | занон гуштингирӣ карда истодаанд</annotation>
+		<annotation cp="🤼‍♀" type="tts">занон гуштингирӣ карда истодаанд</annotation>
+		<annotation cp="🤽">об | поло | шахси ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤽" type="tts">шахси ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤽‍♂">ватерполо | мард | марди ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤽‍♂" type="tts">марди ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤽‍♀">ватерполо | зан | зани ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤽‍♀" type="tts">зани ватерполо бозӣ карда истода</annotation>
+		<annotation cp="🤾">гандбол | тӯб | шахси гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤾" type="tts">шахси гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤾‍♂">гандбол | мард | марди гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤾‍♂" type="tts">марди гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤾‍♀">гандбол | зан | зани гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤾‍♀" type="tts">зани гандбол бозӣ карда истода</annotation>
+		<annotation cp="🤹">бисёрвазифавӣ | жонглёрӣ кардан | малака | тавозун | шахси жонглёрӣ карда истода</annotation>
+		<annotation cp="🤹" type="tts">шахси жонглёрӣ карда истода</annotation>
+		<annotation cp="🤹‍♂">бисёрвазифавӣ | жонглёрӣ карда истода | мард | марди жонглёрӣ карда истода</annotation>
+		<annotation cp="🤹‍♂" type="tts">марди жонглёрӣ карда истода</annotation>
+		<annotation cp="🤹‍♀">бисёрвазифавӣ | жонглёрӣ карда истода | зан | зани жонглёрӣ карда истода</annotation>
+		<annotation cp="🤹‍♀" type="tts">зани жонглёрӣ карда истода</annotation>
+		<annotation cp="🧘">йога | медитатсия | шахси дар ҳолати лотус</annotation>
+		<annotation cp="🧘" type="tts">шахси дар ҳолати лотус</annotation>
+		<annotation cp="🧘‍♂">йога | марди дар ҳолати лотус | медитатсия</annotation>
+		<annotation cp="🧘‍♂" type="tts">марди дар ҳолати лотус</annotation>
+		<annotation cp="🧘‍♀">зани дар ҳолати лотус | йога | медитатсия</annotation>
+		<annotation cp="🧘‍♀" type="tts">зани дар ҳолати лотус</annotation>
+		<annotation cp="🛀">ванна | ки душ карда истодааст | нафаре | нафаре, ки душ карда истодааст</annotation>
+		<annotation cp="🛀" type="tts">нафаре, ки душ карда истодааст</annotation>
+		<annotation cp="🛌">меҳмонхона | одам дар бистар | хоб кардан</annotation>
+		<annotation cp="🛌" type="tts">одам дар бистар</annotation>
+		<annotation cp="👭">даст | доштан | ду зане | ду зане, ки дастҳои якдигарро дошта истодаанд | зан | ки дастҳои якдигарро дошта истодаанд | ҷуфт</annotation>
+		<annotation cp="👭" type="tts">ду зане, ки дастҳои якдигарро дошта истодаанд</annotation>
+		<annotation cp="👫">даст | доштан | зан | ки дастҳои якдигарро дошта истодаанд | мард | мард ва зане | мард ва зане, ки дастҳои якдигарро дошта истодаанд | ҷуфт</annotation>
+		<annotation cp="👫" type="tts">мард ва зане, ки дастҳои якдигарро дошта истодаанд</annotation>
+		<annotation cp="👬">бурҷи дувоздаҳгона | даст | доштан | ду марде | ду марде, ки дастҳои якдигарро дошта истодаанд | дугоник | ки дастҳои якдигарро дошта истодаанд | мард | Ҷавзо | ҷуфт</annotation>
+		<annotation cp="👬" type="tts">ду марде, ки дастҳои якдигарро дошта истодаанд</annotation>
+		<annotation cp="💏">бӯса | ҷуфт</annotation>
+		<annotation cp="💏" type="tts">бӯса</annotation>
+		<annotation cp="💑">муҳаббат | ҷуфт | ҷуфт бо дил</annotation>
+		<annotation cp="💑" type="tts">ҷуфт бо дил</annotation>
+		<annotation cp="🗣">гап зада истода | гап задан | рӯй | сар | сари гап зада истода | суроб</annotation>
+		<annotation cp="🗣" type="tts">сари гап зада истода</annotation>
+		<annotation cp="👤">нимпайкара | нимпайкара дар суроб | суроб</annotation>
+		<annotation cp="👤" type="tts">нимпайкара дар суроб</annotation>
+		<annotation cp="👥">нимпайкара | нимпайкараҳо дар суроб | суроб</annotation>
+		<annotation cp="👥" type="tts">нимпайкараҳо дар суроб</annotation>
+		<annotation cp="👪">оила</annotation>
+		<annotation cp="👪" type="tts">оила</annotation>
+		<annotation cp="👣">изи пой | изҳои пой | либос | чоп кардан</annotation>
+		<annotation cp="👣" type="tts">изҳои пой</annotation>
+		<annotation cp="🐵">маймун | рӯи маймун | рӯй</annotation>
+		<annotation cp="🐵" type="tts">рӯи маймун</annotation>
+		<annotation cp="🐒">маймун</annotation>
+		<annotation cp="🐒" type="tts">маймун</annotation>
+		<annotation cp="🦍">горилла</annotation>
+		<annotation cp="🦍" type="tts">горилла</annotation>
+		<annotation cp="🐶">афти саг | рӯй | саг | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐶" type="tts">афти саг</annotation>
+		<annotation cp="🐕">саг | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐕" type="tts">саг</annotation>
+		<annotation cp="🐩">пудел | саг</annotation>
+		<annotation cp="🐩" type="tts">пудел</annotation>
+		<annotation cp="🐺">афти гург | гург | рӯй</annotation>
+		<annotation cp="🐺" type="tts">афти гург</annotation>
+		<annotation cp="🦊">афти рӯбоҳ | рӯбоҳ | рӯй</annotation>
+		<annotation cp="🦊" type="tts">афти рӯбоҳ</annotation>
+		<annotation cp="🐱">афти гурба | гурба | рӯй | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐱" type="tts">афти гурба</annotation>
+		<annotation cp="🐈">гурба | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐈" type="tts">гурба</annotation>
+		<annotation cp="🦁">Асад | афти шер | бурҷи дувоздаҳгона | рӯй | шер</annotation>
+		<annotation cp="🦁" type="tts">афти шер</annotation>
+		<annotation cp="🐯">афти паланг | паланг | рӯй</annotation>
+		<annotation cp="🐯" type="tts">афти паланг</annotation>
+		<annotation cp="🐅">паланг</annotation>
+		<annotation cp="🐅" type="tts">паланг</annotation>
+		<annotation cp="🐆">леопард</annotation>
+		<annotation cp="🐆" type="tts">леопард</annotation>
+		<annotation cp="🐴">асп | афти асп | рӯй</annotation>
+		<annotation cp="🐴" type="tts">афти асп</annotation>
+		<annotation cp="🐎">асп | аспакӣ | аспи пойга | пойга</annotation>
+		<annotation cp="🐎" type="tts">асп</annotation>
+		<annotation cp="🦄">афти якшоха | рӯй | якшоха</annotation>
+		<annotation cp="🦄" type="tts">афти якшоха</annotation>
+		<annotation cp="🦓">гӯрхар | рах</annotation>
+		<annotation cp="🦓" type="tts">гӯрхар</annotation>
+		<annotation cp="🦌">оҳу</annotation>
+		<annotation cp="🦌" type="tts">оҳу</annotation>
+		<annotation cp="🐮">афти гов | гов | рӯй</annotation>
+		<annotation cp="🐮" type="tts">афти гов</annotation>
+		<annotation cp="🐂">буққа | бурҷи дувоздаҳгона | Савр</annotation>
+		<annotation cp="🐂" type="tts">буққа</annotation>
+		<annotation cp="🐃">говмеш | говмеши обӣ | об</annotation>
+		<annotation cp="🐃" type="tts">говмеши обӣ</annotation>
+		<annotation cp="🐄">гов</annotation>
+		<annotation cp="🐄" type="tts">гов</annotation>
+		<annotation cp="🐷">афти хук | рӯй | хук</annotation>
+		<annotation cp="🐷" type="tts">афти хук</annotation>
+		<annotation cp="🐖">коштан | хук</annotation>
+		<annotation cp="🐖" type="tts">хук</annotation>
+		<annotation cp="🐗">хук | хуки ваҳшӣ</annotation>
+		<annotation cp="🐗" type="tts">хуки ваҳшӣ</annotation>
+		<annotation cp="🐽">бинӣ | бинии хук | рӯй | хук</annotation>
+		<annotation cp="🐽" type="tts">бинии хук</annotation>
+		<annotation cp="🐏">бурҷи дувоздаҳгона | гӯсфанд | қӯшқор | мард | Ҳамал</annotation>
+		<annotation cp="🐏" type="tts">қӯшқор</annotation>
+		<annotation cp="🐑">гӯсфанд | зан | меш</annotation>
+		<annotation cp="🐑" type="tts">меш</annotation>
+		<annotation cp="🐐">буз | бурҷи дувоздаҳгона | Ҷадӣ</annotation>
+		<annotation cp="🐐" type="tts">буз</annotation>
+		<annotation cp="🐪">куҳон | шутур | яккуҳона</annotation>
+		<annotation cp="🐪" type="tts">шутур</annotation>
+		<annotation cp="🐫">дукуҳона | куҳон | шутур | шутури дукуҳона</annotation>
+		<annotation cp="🐫" type="tts">шутури дукуҳона</annotation>
+		<annotation cp="🦒">зарофа | нуқтаҳо</annotation>
+		<annotation cp="🦒" type="tts">зарофа</annotation>
+		<annotation cp="🐘">фил</annotation>
+		<annotation cp="🐘" type="tts">фил</annotation>
+		<annotation cp="🦏">карк</annotation>
+		<annotation cp="🦏" type="tts">карк</annotation>
+		<annotation cp="🐭">афти муш | муш | рӯй</annotation>
+		<annotation cp="🐭" type="tts">афти муш</annotation>
+		<annotation cp="🐁">муш</annotation>
+		<annotation cp="🐁" type="tts">муш</annotation>
+		<annotation cp="🐀">каламуш</annotation>
+		<annotation cp="🐀" type="tts">каламуш</annotation>
+		<annotation cp="🐹">афти миримушон | миримушон | рӯй | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐹" type="tts">афти миримушон</annotation>
+		<annotation cp="🐰">афти заргӯш | заргӯш | рӯй | харгӯш | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐰" type="tts">афти заргӯш</annotation>
+		<annotation cp="🐇">заргӯш | харгӯш | ҳайвони хонагӣ</annotation>
+		<annotation cp="🐇" type="tts">заргӯш</annotation>
+		<annotation cp="🐿">бурундуқ</annotation>
+		<annotation cp="🐿" type="tts">бурундуқ</annotation>
+		<annotation cp="🦔">халанда | хорпушт</annotation>
+		<annotation cp="🦔" type="tts">хорпушт</annotation>
+		<annotation cp="🦇">вампир | муши паррон</annotation>
+		<annotation cp="🦇" type="tts">муши паррон</annotation>
+		<annotation cp="🐻">афти хирс | рӯй | хирс</annotation>
+		<annotation cp="🐻" type="tts">афти хирс</annotation>
+		<annotation cp="🐨">коала | хирс</annotation>
+		<annotation cp="🐨" type="tts">коала</annotation>
+		<annotation cp="🐼">афти панда | панда | рӯй</annotation>
+		<annotation cp="🐼" type="tts">афти панда</annotation>
+		<annotation cp="🐾">из | изҳои панҷа | панҷа | пойҳо</annotation>
+		<annotation cp="🐾" type="tts">изҳои панҷа</annotation>
+		<annotation cp="🦃">мурғи марҷон | парранда</annotation>
+		<annotation cp="🦃" type="tts">мурғи марҷон</annotation>
+		<annotation cp="🐔">парранда | чӯҷа</annotation>
+		<annotation cp="🐔" type="tts">чӯҷа</annotation>
+		<annotation cp="🐓">парранда | хурӯс</annotation>
+		<annotation cp="🐓" type="tts">хурӯс</annotation>
+		<annotation cp="🐣">аз тухм баромадан | кӯдак | парранда | чӯҷа | чӯҷаи аз тухм баромада истода</annotation>
+		<annotation cp="🐣" type="tts">чӯҷаи аз тухм баромада истода</annotation>
+		<annotation cp="🐤">кӯдак | парранда | чӯҷа | чӯҷаи хурд</annotation>
+		<annotation cp="🐤" type="tts">чӯҷаи хурд</annotation>
+		<annotation cp="🐥">кӯдак | парранда | чӯҷа | чӯҷаи хурди ба тарафи пеш нигоҳ карда истода</annotation>
+		<annotation cp="🐥" type="tts">чӯҷаи хурди ба тарафи пеш нигоҳ карда истода</annotation>
+		<annotation cp="🐦">парранда</annotation>
+		<annotation cp="🐦" type="tts">парранда</annotation>
+		<annotation cp="🐧">парранда | пингвин</annotation>
+		<annotation cp="🐧" type="tts">пингвин</annotation>
+		<annotation cp="🕊">кафтар | паридан | парранда | сулҳ</annotation>
+		<annotation cp="🕊" type="tts">кафтар</annotation>
+		<annotation cp="🦅">парранда | уқоб</annotation>
+		<annotation cp="🦅" type="tts">уқоб</annotation>
+		<annotation cp="🦆">мурғобӣ | парранда</annotation>
+		<annotation cp="🦆" type="tts">мурғобӣ</annotation>
+		<annotation cp="🦉">бум | парранда | хирадманд</annotation>
+		<annotation cp="🦉" type="tts">бум</annotation>
+		<annotation cp="🐸">афти қурбоққа | қурбоққа | рӯй</annotation>
+		<annotation cp="🐸" type="tts">афти қурбоққа</annotation>
+		<annotation cp="🐊">тимсоҳ</annotation>
+		<annotation cp="🐊" type="tts">тимсоҳ</annotation>
+		<annotation cp="🐢">сангпушт | сангпушт обӣ | сангпушти даштӣ | сангпушти обӣ</annotation>
+		<annotation cp="🐢" type="tts">сангпушти обӣ</annotation>
+		<annotation cp="🦎">калтакалос | хазанда</annotation>
+		<annotation cp="🦎" type="tts">калтакалос</annotation>
+		<annotation cp="🐍">бурҷи дувоздаҳгона | доранда | мор | Ҳаввоъ</annotation>
+		<annotation cp="🐍" type="tts">мор</annotation>
+		<annotation cp="🐲">аждаҳор | афсона | афти аждаҳор | рӯй</annotation>
+		<annotation cp="🐲" type="tts">афти аждаҳор</annotation>
+		<annotation cp="🐉">аждаҳор | афсона</annotation>
+		<annotation cp="🐉" type="tts">аждаҳор</annotation>
+		<annotation cp="🦕">брахиозавр | бронтозавр | динозаври завропод | диплодок</annotation>
+		<annotation cp="🦕" type="tts">динозаври завропод</annotation>
+		<annotation cp="🦖">Т-Рекс | Тираннозавр Рекс</annotation>
+		<annotation cp="🦖" type="tts">Т-Рекс</annotation>
+		<annotation cp="🐳">наҳанг | наҳанги фаввора зада истода | рӯй | фаввора зада истода</annotation>
+		<annotation cp="🐳" type="tts">наҳанги фаввора зада истода</annotation>
+		<annotation cp="🐋">наҳанг</annotation>
+		<annotation cp="🐋" type="tts">наҳанг</annotation>
+		<annotation cp="🐬">делфин | қаноти моҳӣ</annotation>
+		<annotation cp="🐬" type="tts">делфин</annotation>
+		<annotation cp="🐟">бурҷи дувоздаҳгона | моҳӣ | Ҳут</annotation>
+		<annotation cp="🐟" type="tts">моҳӣ</annotation>
+		<annotation cp="🐠">моҳӣ | моҳии тропикӣ | тропикӣ</annotation>
+		<annotation cp="🐠" type="tts">моҳии тропикӣ</annotation>
+		<annotation cp="🐡">моҳӣ | сагмоҳӣ</annotation>
+		<annotation cp="🐡" type="tts">сагмоҳӣ</annotation>
+		<annotation cp="🦈">кӯсамоҳӣ | моҳӣ</annotation>
+		<annotation cp="🦈" type="tts">кӯсамоҳӣ</annotation>
+		<annotation cp="🐙">ҳаштпо</annotation>
+		<annotation cp="🐙" type="tts">ҳаштпо</annotation>
+		<annotation cp="🐚">морпеч | садаф | садафи морпеч</annotation>
+		<annotation cp="🐚" type="tts">садафи морпеч</annotation>
+		<annotation cp="🦀">бурҷи дувоздаҳгона | Саратон | харчанг</annotation>
+		<annotation cp="🦀" type="tts">харчанг</annotation>
+		<annotation cp="🦐">гамбусак | гамбусакча | ғизо | моллюскҳо | хурд</annotation>
+		<annotation cp="🦐" type="tts">гамбусакча</annotation>
+		<annotation cp="🦑">ғизо | калмар | моллюск</annotation>
+		<annotation cp="🦑" type="tts">калмар</annotation>
+		<annotation cp="🐌">тӯқумшуллуқ</annotation>
+		<annotation cp="🐌" type="tts">тӯқумшуллуқ</annotation>
+		<annotation cp="🦋">зебо | ҳашарот | шапалак</annotation>
+		<annotation cp="🦋" type="tts">шапалак</annotation>
+		<annotation cp="🐛">гамбуск | ҳашарот</annotation>
+		<annotation cp="🐛" type="tts">гамбуск</annotation>
+		<annotation cp="🐜">мурча | ҳашарот</annotation>
+		<annotation cp="🐜" type="tts">мурча</annotation>
+		<annotation cp="🐝">занбур | занбури асал | ҳашарот</annotation>
+		<annotation cp="🐝" type="tts">занбури асал</annotation>
+		<annotation cp="🐞">какана | нонхӯрак | халилихӯак | ҳасанак | ҳашарот</annotation>
+		<annotation cp="🐞" type="tts">ҳасанак</annotation>
+		<annotation cp="🦗">крикет | малах</annotation>
+		<annotation cp="🦗" type="tts">крикет</annotation>
+		<annotation cp="🕷">тортанак | ҳашарот</annotation>
+		<annotation cp="🕷" type="tts">тортанак</annotation>
+		<annotation cp="🕸">тори тортанак | тортанак</annotation>
+		<annotation cp="🕸" type="tts">тори тортанак</annotation>
+		<annotation cp="🦂">Ақраб | бурҷи дувоздаҳгона | каждум</annotation>
+		<annotation cp="🦂" type="tts">каждум</annotation>
+		<annotation cp="💐">гул | Гулдаста</annotation>
+		<annotation cp="💐" type="tts">Гулдаста</annotation>
+		<annotation cp="🌸">гелос | гул | гул кардан | гули гелос</annotation>
+		<annotation cp="🌸" type="tts">гули гелос</annotation>
+		<annotation cp="💮">гул | гули сафед</annotation>
+		<annotation cp="💮" type="tts">гули сафед</annotation>
+		<annotation cp="🏵">гулдоира | растанӣ</annotation>
+		<annotation cp="🏵" type="tts">гулдоира</annotation>
+		<annotation cp="🌹">гул | садбарг</annotation>
+		<annotation cp="🌹" type="tts">садбарг</annotation>
+		<annotation cp="🥀">гул | гули пажмурда | пажмурда</annotation>
+		<annotation cp="🥀" type="tts">гули пажмурда</annotation>
+		<annotation cp="🌺">гибискус | гул</annotation>
+		<annotation cp="🌺" type="tts">гибискус</annotation>
+		<annotation cp="🌻">гул | офтоб | офтобпараст</annotation>
+		<annotation cp="🌻" type="tts">офтобпараст</annotation>
+		<annotation cp="🌼">гул | гул кардан</annotation>
+		<annotation cp="🌼" type="tts">гул кардан</annotation>
+		<annotation cp="🌷">гул | лола</annotation>
+		<annotation cp="🌷" type="tts">лола</annotation>
+		<annotation cp="🌱">навниҳол | ҷавон</annotation>
+		<annotation cp="🌱" type="tts">навниҳол</annotation>
+		<annotation cp="🌲">дарахт | дарахти ҳамешасабз</annotation>
+		<annotation cp="🌲" type="tts">дарахти ҳамешасабз</annotation>
+		<annotation cp="🌳">дарахт | дарахти паҳнбарг | паҳнбарг | резиш</annotation>
+		<annotation cp="🌳" type="tts">дарахти паҳнбарг</annotation>
+		<annotation cp="🌴">дарахт | дарахти нахл | нахл</annotation>
+		<annotation cp="🌴" type="tts">дарахти нахл</annotation>
+		<annotation cp="🌵">гули ханҷарӣ | растанӣ</annotation>
+		<annotation cp="🌵" type="tts">гули ханҷарӣ</annotation>
+		<annotation cp="🌾">биринҷ | гӯш | дарзаи биринҷ | дона</annotation>
+		<annotation cp="🌾" type="tts">дарзаи биринҷ</annotation>
+		<annotation cp="🌿">алаф | барг</annotation>
+		<annotation cp="🌿" type="tts">алаф</annotation>
+		<annotation cp="☘">растанӣ | себарга</annotation>
+		<annotation cp="☘" type="tts">себарга</annotation>
+		<annotation cp="🍀">4 | барг | беда | бедаи чорбарга | чор</annotation>
+		<annotation cp="🍀" type="tts">бедаи чорбарга</annotation>
+		<annotation cp="🍁">афтидан | барг | барги заранг | заранг</annotation>
+		<annotation cp="🍁" type="tts">барги заранг</annotation>
+		<annotation cp="🍂">афтидан | барг | барги хазон</annotation>
+		<annotation cp="🍂" type="tts">барги хазон</annotation>
+		<annotation cp="🍃">барг | барги дар шамол лаппида истода | лаппидан | пуф кардан | шамол</annotation>
+		<annotation cp="🍃" type="tts">барги дар шамол лаппида истода</annotation>
+		<annotation cp="🍄">занбӯруғ | маргимагас</annotation>
+		<annotation cp="🍄" type="tts">занбӯруғ</annotation>
+		<annotation cp="🍇">ангур | мева</annotation>
+		<annotation cp="🍇" type="tts">ангур</annotation>
+		<annotation cp="🍈">мева | харбуза</annotation>
+		<annotation cp="🍈" type="tts">харбуза</annotation>
+		<annotation cp="🍉">мева | тарбуз</annotation>
+		<annotation cp="🍉" type="tts">тарбуз</annotation>
+		<annotation cp="🍊">апелсин | мандарин | мева</annotation>
+		<annotation cp="🍊" type="tts">мандарин</annotation>
+		<annotation cp="🍋">лиму | мева | ситрусӣ</annotation>
+		<annotation cp="🍋" type="tts">лиму</annotation>
+		<annotation cp="🍌">банан | мева</annotation>
+		<annotation cp="🍌" type="tts">банан</annotation>
+		<annotation cp="🍍">ананас | мева</annotation>
+		<annotation cp="🍍" type="tts">ананас</annotation>
+		<annotation cp="🍎">мева | себ | себи сурх | сурх</annotation>
+		<annotation cp="🍎" type="tts">себи сурх</annotation>
+		<annotation cp="🍏">мева | сабз | себ | себи сабз</annotation>
+		<annotation cp="🍏" type="tts">себи сабз</annotation>
+		<annotation cp="🍐">мева | нок</annotation>
+		<annotation cp="🍐" type="tts">нок</annotation>
+		<annotation cp="🍑">мева | шафтолу</annotation>
+		<annotation cp="🍑" type="tts">шафтолу</annotation>
+		<annotation cp="🍒">гелос | мева</annotation>
+		<annotation cp="🍒" type="tts">гелос</annotation>
+		<annotation cp="🍓">буттамева | мева | тути заминӣ</annotation>
+		<annotation cp="🍓" type="tts">тути заминӣ</annotation>
+		<annotation cp="🥝">ғизо | киви | мева | меваи киви</annotation>
+		<annotation cp="🥝" type="tts">меваи киви</annotation>
+		<annotation cp="🍅">ғизо | помидор | сабзавот</annotation>
+		<annotation cp="🍅" type="tts">помидор</annotation>
+		<annotation cp="🥥">нахл | норҷил | пина колада</annotation>
+		<annotation cp="🥥" type="tts">норҷил</annotation>
+		<annotation cp="🥑">авакадо | ғизо | мева</annotation>
+		<annotation cp="🥑" type="tts">авакадо</annotation>
+		<annotation cp="🍆">бодимҷон | бодинҷон | сабзавот</annotation>
+		<annotation cp="🍆" type="tts">бодимҷон</annotation>
+		<annotation cp="🥔">ғизо | картошка | сабзавот</annotation>
+		<annotation cp="🥔" type="tts">картошка</annotation>
+		<annotation cp="🥕">ғизо | сабзавот | сабзӣ</annotation>
+		<annotation cp="🥕" type="tts">сабзӣ</annotation>
+		<annotation cp="🌽">гӯш | лабиринт | сӯтаи ҷуворимакка | ҷуворӣ | ҷуворимакка</annotation>
+		<annotation cp="🌽" type="tts">сӯтаи ҷуворимакка</annotation>
+		<annotation cp="🌶">гарм | қаланфур | қаланфури тез</annotation>
+		<annotation cp="🌶" type="tts">қаланфури тез</annotation>
+		<annotation cp="🥒">бодиринг | ғизо | парварда | сабзавот</annotation>
+		<annotation cp="🥒" type="tts">бодиринг</annotation>
+		<annotation cp="🥦">брокколи | карами ёбоӣ</annotation>
+		<annotation cp="🥦" type="tts">брокколи</annotation>
+		<annotation cp="🥜">ғизо | сабзавот | чормағз | чормағзи заминӣ</annotation>
+		<annotation cp="🥜" type="tts">чормағзи заминӣ</annotation>
+		<annotation cp="🌰">кастона | растанӣ</annotation>
+		<annotation cp="🌰" type="tts">кастона</annotation>
+		<annotation cp="🍞">буханка | нон</annotation>
+		<annotation cp="🍞" type="tts">нон</annotation>
+		<annotation cp="🥐">ғизо | картошка бирён | кулчақанди &quot;Рогалик&quot; | кулчақанди рогалик | нон | рогалик</annotation>
+		<annotation cp="🥐" type="tts">кулчақанди &quot;Рогалик&quot;</annotation>
+		<annotation cp="🥖">батон | ғизо | картошкаи бирён | нон | нони дарози фаронсавӣ</annotation>
+		<annotation cp="🥖" type="tts">батон</annotation>
+		<annotation cp="🥨">каҷ | кулчаи қоқи ҳалқашакл</annotation>
+		<annotation cp="🥨" type="tts">кулчаи қоқи ҳалқашакл</annotation>
+		<annotation cp="🥞">ғизо | пироги гарм | чалпак | чалпаки тунук</annotation>
+		<annotation cp="🥞" type="tts">чалпак</annotation>
+		<annotation cp="🧀">панир | пораи фонашакли панир</annotation>
+		<annotation cp="🧀" type="tts">пораи фонашакли панир</annotation>
+		<annotation cp="🍖">гушт | гушт дар устухон | устухон</annotation>
+		<annotation cp="🍖" type="tts">гушт дар устухон</annotation>
+		<annotation cp="🍗">линги мурғ | мурғ | пой | устухон | чӯҷа</annotation>
+		<annotation cp="🍗" type="tts">линги мурғ</annotation>
+		<annotation cp="🥩">бурида | буридаи гушт | буридаи гушти баррача | буридаи гушти хук</annotation>
+		<annotation cp="🥩" type="tts">буридаи гушт</annotation>
+		<annotation cp="🥓">гушт | гушти хук | ғизо</annotation>
+		<annotation cp="🥓" type="tts">гушти хук</annotation>
+		<annotation cp="🍔">бургер | гамбургер</annotation>
+		<annotation cp="🍔" type="tts">гамбургер</annotation>
+		<annotation cp="🍟">бирён | картошка бирён | фаронсавӣ</annotation>
+		<annotation cp="🍟" type="tts">картошка бирён</annotation>
+		<annotation cp="🍕">панир | питса | порча</annotation>
+		<annotation cp="🍕" type="tts">питса</annotation>
+		<annotation cp="🌭">хот дог | хотдог | ҳасиб | ҳасибча</annotation>
+		<annotation cp="🌭" type="tts">хот дог</annotation>
+		<annotation cp="🥪">нон | сендвич</annotation>
+		<annotation cp="🥪" type="tts">сендвич</annotation>
+		<annotation cp="🌮">мехиклӣ | тако</annotation>
+		<annotation cp="🌮" type="tts">тако</annotation>
+		<annotation cp="🌯">буритто | мехисоӣ | печондан</annotation>
+		<annotation cp="🌯" type="tts">буритто</annotation>
+		<annotation cp="🥙">гирос | ғизо | кабоб | қима андохташуда | нони қима андохташуда | нони чапотӣ | фалафел</annotation>
+		<annotation cp="🥙" type="tts">нони қима андохташуда</annotation>
+		<annotation cp="🥚">ғизо | тухм</annotation>
+		<annotation cp="🥚" type="tts">тухм</annotation>
+		<annotation cp="🍳">бирён шудаистода | дег | пухта истодааст | тухм</annotation>
+		<annotation cp="🍳" type="tts">пухта истодааст</annotation>
+		<annotation cp="🥘">ғизо | дегча | дегчаи хурди ғизо | паеля | пастоб | тоба</annotation>
+		<annotation cp="🥘" type="tts">дегчаи хурди ғизо</annotation>
+		<annotation cp="🍲">дег | деги ғизо | пазондан</annotation>
+		<annotation cp="🍲" type="tts">деги ғизо</annotation>
+		<annotation cp="🥣">наҳорӣ | табақ бо қошуқ | шӯла | шӯлаи биринҷӣ</annotation>
+		<annotation cp="🥣" type="tts">табақ бо қошуқ</annotation>
+		<annotation cp="🥗">ғизо | сабз | хӯриш | хӯриши сабз</annotation>
+		<annotation cp="🥗" type="tts">хӯриши сабз</annotation>
+		<annotation cp="🍿">ҷуворипақак</annotation>
+		<annotation cp="🍿" type="tts">ҷуворипақак</annotation>
+		<annotation cp="🥫">қуттӣ | маҳсулоти консервагӣ</annotation>
+		<annotation cp="🥫" type="tts">маҳсулоти консервагӣ</annotation>
+		<annotation cp="🍱">бенто | қуттӣ | қуттии бенто</annotation>
+		<annotation cp="🍱" type="tts">қуттии бенто</annotation>
+		<annotation cp="🍘">биринҷ | брекери биринҷӣ | крекер</annotation>
+		<annotation cp="🍘" type="tts">брекери биринҷӣ</annotation>
+		<annotation cp="🍙">биринҷ | курачаи биринҷӣ | тӯб | ҷопонӣ</annotation>
+		<annotation cp="🍙" type="tts">курачаи биринҷӣ</annotation>
+		<annotation cp="🍚">биринҷ | биринҷи пухташуда | пухташуда</annotation>
+		<annotation cp="🍚" type="tts">биринҷи пухташуда</annotation>
+		<annotation cp="🍛">биринҷ | биринҷ бо карри | карри</annotation>
+		<annotation cp="🍛" type="tts">биринҷ бо карри</annotation>
+		<annotation cp="🍜">дар об пӯхтан | зарф барои ҷӯшондан | коса | макарон | рамен</annotation>
+		<annotation cp="🍜" type="tts">зарф барои ҷӯшондан</annotation>
+		<annotation cp="🍝">маҳсулоти макаронӣ | спагетти</annotation>
+		<annotation cp="🍝" type="tts">спагетти</annotation>
+		<annotation cp="🍠">картошка | картошкаи ширини пухташуда | пухташуда | ширин</annotation>
+		<annotation cp="🍠" type="tts">картошкаи ширини пухташуда</annotation>
+		<annotation cp="🍢">кабоб | маҳсулоти баҳрӣ | оден | сихкабоб | чӯб</annotation>
+		<annotation cp="🍢" type="tts">оден</annotation>
+		<annotation cp="🍣">суши</annotation>
+		<annotation cp="🍣" type="tts">суши</annotation>
+		<annotation cp="🍤">бирён | креветка | креветкаи хурди бирён | криветкаи хурд | темпура</annotation>
+		<annotation cp="🍤" type="tts">креветкаи хурди бирён</annotation>
+		<annotation cp="🍥">гирдоб | маҳсулоти қаннодӣ | моҳӣ | торт | торт аз моҳӣ бо гирдоб</annotation>
+		<annotation cp="🍥" type="tts">торт аз моҳӣ бо гирдоб</annotation>
+		<annotation cp="🍡">данго | десерт | сихкабоб | чӯб | ҷопонӣ | ширин</annotation>
+		<annotation cp="🍡" type="tts">данго</annotation>
+		<annotation cp="🥟">гиёза | ғелаккабоб | пирог | тушбера | чалпаки гуштдор | ҷиёза</annotation>
+		<annotation cp="🥟" type="tts">ғелаккабоб</annotation>
+		<annotation cp="🥠">кулчаҳои қандини туҳфадор | пешгӯӣ</annotation>
+		<annotation cp="🥠" type="tts">кулчаҳои қандини туҳфадор</annotation>
+		<annotation cp="🥡">зарфи хӯрокхӯрии садафак | қуттии хӯроки бо худ гирифташаванда</annotation>
+		<annotation cp="🥡" type="tts">қуттии хӯроки бо худ гирифташаванда</annotation>
+		<annotation cp="🍦">десерт | крем | мулоим | ширин | ях | яхмос | яхмоси мулоим</annotation>
+		<annotation cp="🍦" type="tts">яхмоси мулоим</annotation>
+		<annotation cp="🍧">десерт | тарошаи ях | тарошида | ширин | ях</annotation>
+		<annotation cp="🍧" type="tts">тарошаи ях</annotation>
+		<annotation cp="🍨">десерт | крем | ширин | ях | яхмос</annotation>
+		<annotation cp="🍨" type="tts">яхмос</annotation>
+		<annotation cp="🍩">десерт | кулча | ширин</annotation>
+		<annotation cp="🍩" type="tts">кулча</annotation>
+		<annotation cp="🍪">десерт | кулчақанд | ширин</annotation>
+		<annotation cp="🍪" type="tts">кулчақанд</annotation>
+		<annotation cp="🎂">десерт | маҳсулоти қаннодӣ | рӯзи таваллуд | торт | торти зодрӯзӣ | ҷашн | ширин</annotation>
+		<annotation cp="🎂" type="tts">торти зодрӯзӣ</annotation>
+		<annotation cp="🍰">десерт | кулчақанди регак-регак | маҳсулоти қаннодӣ | порча | торт | ширин</annotation>
+		<annotation cp="🍰" type="tts">кулчақанди регак-регак</annotation>
+		<annotation cp="🥧">адвия | қаннодӣ | пирог</annotation>
+		<annotation cp="🥧" type="tts">пирог</annotation>
+		<annotation cp="🍫">десерт | тахтача | ширин | шоколад | як тахтача шоколад</annotation>
+		<annotation cp="🍫" type="tts">як тахтача шоколад</annotation>
+		<annotation cp="🍬">десерт | конфет | ширин</annotation>
+		<annotation cp="🍬" type="tts">конфет</annotation>
+		<annotation cp="🍭">десерт | конфет | оби дандон | ширин</annotation>
+		<annotation cp="🍭" type="tts">оби дандон</annotation>
+		<annotation cp="🍮">десерт | крем | пудинг | ширин</annotation>
+		<annotation cp="🍮" type="tts">крем</annotation>
+		<annotation cp="🍯">асал | дег | кӯзаи асал | ширин</annotation>
+		<annotation cp="🍯" type="tts">кӯзаи асал</annotation>
+		<annotation cp="🍼">кӯдак | нӯшидан | шир | шиша | шишаи кӯдак</annotation>
+		<annotation cp="🍼" type="tts">шишаи кӯдак</annotation>
+		<annotation cp="🥛">нӯшидан | стакан | стакани шир | шир</annotation>
+		<annotation cp="🥛" type="tts">стакани шир</annotation>
+		<annotation cp="☕">гарм | қаҳва | нӯшидан | нӯшокӣ | нӯшокии гарм | чой | ҷӯшондан</annotation>
+		<annotation cp="☕" type="tts">нӯшокии гарм</annotation>
+		<annotation cp="🍵">нӯшидан | нӯшокӣ | пиёла | пиёлаи чой | пиёлаи чой бе даста | чой</annotation>
+		<annotation cp="🍵" type="tts">пиёлаи чой бе даста</annotation>
+		<annotation cp="🍶">бар | нӯшидан | нӯшокӣ | пиёла | саке | шиша</annotation>
+		<annotation cp="🍶" type="tts">саке</annotation>
+		<annotation cp="🍾">бар | нӯшидан | парида рафтан | пӯка | шиша | шиша бо пӯкаи он парида рафта истода</annotation>
+		<annotation cp="🍾" type="tts">шиша бо пӯкаи он парида рафта истода</annotation>
+		<annotation cp="🍷">бар | май | нӯшидан | нӯшокӣ | стакан | стакани май</annotation>
+		<annotation cp="🍷" type="tts">стакани май</annotation>
+		<annotation cp="🍸">бар | коктейл | нӯшидан | стакан | стакани коктейл</annotation>
+		<annotation cp="🍸" type="tts">стакани коктейл</annotation>
+		<annotation cp="🍹">бар | нӯшидан | нӯшокии тропикӣ | тропикӣ</annotation>
+		<annotation cp="🍹" type="tts">нӯшокии тропикӣ</annotation>
+		<annotation cp="🍺">бар | дӯлча | дӯлчаи пиво | нӯшидан | пиво</annotation>
+		<annotation cp="🍺" type="tts">дӯлчаи пиво</annotation>
+		<annotation cp="🍻">бар | дӯлча | нӯшидан | пиво | ҷиринго задан | ҷирингос задани дӯлчаҳои пиво</annotation>
+		<annotation cp="🍻" type="tts">ҷирингос задани дӯлчаҳои пиво</annotation>
+		<annotation cp="🥂">нӯшидан | стакан | ҷашн гирифтан | ҷирингос задан | ҷирингос задани стаканҳо</annotation>
+		<annotation cp="🥂" type="tts">ҷирингос задани стаканҳо</annotation>
+		<annotation cp="🥃">виски | ликёр | стакан | стакан барои нӯшокиҳои спиртӣ | стакани хурд | тирпаронӣ</annotation>
+		<annotation cp="🥃" type="tts">стакан барои нӯшокиҳои спиртӣ</annotation>
+		<annotation cp="🥤">оби газдор | пиёла бо чӯбак | шарбат</annotation>
+		<annotation cp="🥤" type="tts">пиёла бо чӯбак</annotation>
+		<annotation cp="🥢">ҳаши | чӯбҳои хӯрокхӯрӣ</annotation>
+		<annotation cp="🥢" type="tts">чӯбҳои хӯрокхӯрӣ</annotation>
+		<annotation cp="🍽">корд | пухтан | табақча | чангол | чангол ва корд бо табақча</annotation>
+		<annotation cp="🍽" type="tts">чангол ва корд бо табақча</annotation>
+		<annotation cp="🍴">корд | пухтан | чангол | чангол ва корд</annotation>
+		<annotation cp="🍴" type="tts">чангол ва корд</annotation>
+		<annotation cp="🥄">зарфҳои хӯрокхӯрӣ | қошуқ</annotation>
+		<annotation cp="🥄" type="tts">қошуқ</annotation>
+		<annotation cp="🔪">асбоб | корд | корди ошхона | пухтан | силоҳ | ҳочо</annotation>
+		<annotation cp="🔪" type="tts">корди ошхона</annotation>
+		<annotation cp="🏺">амфора | асбоб | бурҷи дувоздаҳгона | Далв | қадаҳи дастадор | нӯшидан | пухта истода | силоҳ</annotation>
+		<annotation cp="🏺" type="tts">амфора</annotation>
+		<annotation cp="🌍">Аврупо | Африка | глобус | глобусе | глобусе, ки Аврупо-Африкаро намоиш медиҳад | замин | ки Аврупо-Африкаро намоиш медиҳад | ҷаҳон</annotation>
+		<annotation cp="🌍" type="tts">глобусе, ки Аврупо-Африкаро намоиш медиҳад</annotation>
+		<annotation cp="🌎">Америкаҳо | глобус | глобусе | глобусе, ки Америкаҳоро намоиш медиҳад | замин | ки Америкаҳоро намоиш медиҳад | ҷаҳон</annotation>
+		<annotation cp="🌎" type="tts">глобусе, ки Америкаҳоро намоиш медиҳад</annotation>
+		<annotation cp="🌏">Австралия | глобус | глобусе | глобусе, ки Осиё-Австралияро намоиш медиҳад | замин | ки Осиё-Австралияро намоиш медиҳад | Осиё | ҷаҳон</annotation>
+		<annotation cp="🌏" type="tts">глобусе, ки Осиё-Австралияро намоиш медиҳад</annotation>
+		<annotation cp="🌐">глобус | глобус бо меридианаҳо | замин | меридианҳо | ҷаҳон</annotation>
+		<annotation cp="🌐" type="tts">глобус бо меридианаҳо</annotation>
+		<annotation cp="🗺">харита | харитаи ҷаҳон | ҷаҳон</annotation>
+		<annotation cp="🗺" type="tts">харитаи ҷаҳон</annotation>
+		<annotation cp="🗾">харита | харитаи Ҷопон | Ҷопон</annotation>
+		<annotation cp="🗾" type="tts">харитаи Ҷопон</annotation>
+		<annotation cp="🏔">барф | куҳ | куҳи бо барф пӯшида | хунук</annotation>
+		<annotation cp="🏔" type="tts">куҳи бо барф пӯшида</annotation>
+		<annotation cp="⛰">куҳ</annotation>
+		<annotation cp="⛰" type="tts">куҳ</annotation>
+		<annotation cp="🌋">вулқон | куҳ | оташфишонӣ</annotation>
+		<annotation cp="🌋" type="tts">вулқон</annotation>
+		<annotation cp="🗻">куҳ | теппаи Фуҷи | фуҷи</annotation>
+		<annotation cp="🗻" type="tts">теппаи Фуҷи</annotation>
+		<annotation cp="🏕">хаймазанӣ</annotation>
+		<annotation cp="🏕" type="tts">хаймазанӣ</annotation>
+		<annotation cp="🏖">соҳил | соҳил бо чатр | чатр</annotation>
+		<annotation cp="🏖" type="tts">соҳил бо чатр</annotation>
+		<annotation cp="🏜">биёбон</annotation>
+		<annotation cp="🏜" type="tts">биёбон</annotation>
+		<annotation cp="🏝">биёбон | ҷазира | ҷазираи биёбон</annotation>
+		<annotation cp="🏝" type="tts">ҷазираи биёбон</annotation>
+		<annotation cp="🏞">парк | парки миллӣ</annotation>
+		<annotation cp="🏞" type="tts">парки миллӣ</annotation>
+		<annotation cp="🏟">варзишгоҳ</annotation>
+		<annotation cp="🏟" type="tts">варзишгоҳ</annotation>
+		<annotation cp="🏛">бинои классикӣ | классикӣ</annotation>
+		<annotation cp="🏛" type="tts">бинои классикӣ</annotation>
+		<annotation cp="🏗">сохтмон | сохтмони бино</annotation>
+		<annotation cp="🏗" type="tts">сохтмони бино</annotation>
+		<annotation cp="🏘">хонаҳо</annotation>
+		<annotation cp="🏘" type="tts">хонаҳо</annotation>
+		<annotation cp="🏚">бесоҳиб | хона | хонаи бесоҳиб</annotation>
+		<annotation cp="🏚" type="tts">хонаи бесоҳиб</annotation>
+		<annotation cp="🏠">хона</annotation>
+		<annotation cp="🏠" type="tts">хона</annotation>
+		<annotation cp="🏡">боғ | хона | хона бо боғ</annotation>
+		<annotation cp="🏡" type="tts">хона бо боғ</annotation>
+		<annotation cp="🏢">бино | бинои идора</annotation>
+		<annotation cp="🏢" type="tts">бинои идора</annotation>
+		<annotation cp="🏣">идораи почтаи ҷопонӣ | почта | ҷопонӣ</annotation>
+		<annotation cp="🏣" type="tts">идораи почтаи ҷопонӣ</annotation>
+		<annotation cp="🏤">аврупоӣ | идораи почта | почта</annotation>
+		<annotation cp="🏤" type="tts">идораи почта</annotation>
+		<annotation cp="🏥">беморхона | дору | духтур</annotation>
+		<annotation cp="🏥" type="tts">беморхона</annotation>
+		<annotation cp="🏦">бино | бонк</annotation>
+		<annotation cp="🏦" type="tts">бонк</annotation>
+		<annotation cp="🏨">бино | меҳмонхона</annotation>
+		<annotation cp="🏨" type="tts">меҳмонхона</annotation>
+		<annotation cp="🏩">меҳмонхона | меҳмонхонаи муҳаббат | муҳаббат</annotation>
+		<annotation cp="🏩" type="tts">меҳмонхонаи муҳаббат</annotation>
+		<annotation cp="🏪">мағоза | мағозаи шабонарӯзӣ | шароит</annotation>
+		<annotation cp="🏪" type="tts">мағозаи шабонарӯзӣ</annotation>
+		<annotation cp="🏫">бино | мактаб</annotation>
+		<annotation cp="🏫" type="tts">мактаб</annotation>
+		<annotation cp="🏬">бахш | магазин | универмаг</annotation>
+		<annotation cp="🏬" type="tts">универмаг</annotation>
+		<annotation cp="🏭">бино | фабрика</annotation>
+		<annotation cp="🏭" type="tts">фабрика</annotation>
+		<annotation cp="🏯">қалъа | қалъаи ҷопонӣ | ҷопонӣ</annotation>
+		<annotation cp="🏯" type="tts">қалъаи ҷопонӣ</annotation>
+		<annotation cp="🏰">аврупоӣ | қалъа</annotation>
+		<annotation cp="🏰" type="tts">қалъа</annotation>
+		<annotation cp="💒">калисои хурд | роман | тӯй</annotation>
+		<annotation cp="💒" type="tts">тӯй</annotation>
+		<annotation cp="🗼">бурҷ | бурҷи Токио | Токио</annotation>
+		<annotation cp="🗼" type="tts">бурҷи Токио</annotation>
+		<annotation cp="🗽">озодӣ | ҳайкал | ҳайкали Озодӣ</annotation>
+		<annotation cp="🗽" type="tts">ҳайкали Озодӣ</annotation>
+		<annotation cp="⛪">дин | калисо | Насронӣ | салиб</annotation>
+		<annotation cp="⛪" type="tts">калисо</annotation>
+		<annotation cp="🕌">дин | Ислом | масҷид | мусулмон</annotation>
+		<annotation cp="🕌" type="tts">масҷид</annotation>
+		<annotation cp="🕍">дин | каниса | маъбад | яҳуд | яҳудӣ</annotation>
+		<annotation cp="🕍" type="tts">каниса</annotation>
+		<annotation cp="⛩">дин | синто | ҷои муқаддас | ҷои муқаддаси синто</annotation>
+		<annotation cp="⛩" type="tts">ҷои муқаддаси синто</annotation>
+		<annotation cp="🕋">дин | Ислом | каъба | мусулмон</annotation>
+		<annotation cp="🕋" type="tts">каъба</annotation>
+		<annotation cp="⛲">фаввора</annotation>
+		<annotation cp="⛲" type="tts">фаввора</annotation>
+		<annotation cp="⛺">хайма | хаймазанӣ</annotation>
+		<annotation cp="⛺" type="tts">хайма</annotation>
+		<annotation cp="🌁">туман | тумандор</annotation>
+		<annotation cp="🌁" type="tts">тумандор</annotation>
+		<annotation cp="🌃">ситора | шаб | шаби ситорадор</annotation>
+		<annotation cp="🌃" type="tts">шаби ситорадор</annotation>
+		<annotation cp="🏙">манзараи шаҳр | шаҳр</annotation>
+		<annotation cp="🏙" type="tts">манзараи шаҳр</annotation>
+		<annotation cp="🌄">куҳ | офтоб | саҳар | тулӯи офтоб | Тулӯи офтоб аз болои куҳҳо</annotation>
+		<annotation cp="🌄" type="tts">Тулӯи офтоб аз болои куҳҳо</annotation>
+		<annotation cp="🌅">офтоб | саҳар | тулӯъ</annotation>
+		<annotation cp="🌅" type="tts">тулӯъ</annotation>
+		<annotation cp="🌆">бегоҳ | ғуруби офтоб | манзара | манзараи шаҳр дар шом | офтоб | шаҳр | шом</annotation>
+		<annotation cp="🌆" type="tts">манзараи шаҳр дар шом</annotation>
+		<annotation cp="🌇">ғуруб | офтоб | шом</annotation>
+		<annotation cp="🌇" type="tts">ғуруб</annotation>
+		<annotation cp="🌉">кӯпрук | кӯпрук дар шаб | шаб</annotation>
+		<annotation cp="🌉" type="tts">кӯпрук дар шаб</annotation>
+		<annotation cp="♨">гарм | чашмаҳо | чашмаҳои гарм | ҷӯшидаистода</annotation>
+		<annotation cp="♨" type="tts">чашмаҳои гарм</annotation>
+		<annotation cp="🎠">аспак | аспаки чархуфалак | чархуфалак</annotation>
+		<annotation cp="🎠" type="tts">аспаки чархуфалак</annotation>
+		<annotation cp="🎡">парки фароғатӣ | феррис | чарх | чархуфалак</annotation>
+		<annotation cp="🎡" type="tts">чархуфалак</annotation>
+		<annotation cp="🎢">каток | лағжишбозӣ | парки фароғатӣ | роҳи оҳани лағжишбозӣ</annotation>
+		<annotation cp="🎢" type="tts">роҳи оҳани лағжишбозӣ</annotation>
+		<annotation cp="💈">қутб | мӯйгирӣ | сартарош | сутун бо ранги сурху сафеди морпеч</annotation>
+		<annotation cp="💈" type="tts">сутун бо ранги сурху сафеди морпеч</annotation>
+		<annotation cp="🎪">сирк | хайма | хаймаи сирк</annotation>
+		<annotation cp="🎪" type="tts">хаймаи сирк</annotation>
+		<annotation cp="🚂">буғ | қатора | локомотив | муҳаррик | роҳи оҳан</annotation>
+		<annotation cp="🚂" type="tts">локомотив</annotation>
+		<annotation cp="🚃">вагони роҳи оҳан | қатора | мошин | роҳи оҳан | трамвай | троллейбус | электрикӣ</annotation>
+		<annotation cp="🚃" type="tts">вагони роҳи оҳан</annotation>
+		<annotation cp="🚄">қатора | қатораи баландсуръат | роҳи оҳан | синкансен | суръат</annotation>
+		<annotation cp="🚄" type="tts">қатораи баландсуръат</annotation>
+		<annotation cp="🚅">қатора | қатораи баландсуръат бо нӯги тирмонанд | роҳи оҳан | синкансен | суръат | тир</annotation>
+		<annotation cp="🚅" type="tts">қатораи баландсуръат бо нӯги тирмонанд</annotation>
+		<annotation cp="🚆">қатора | роҳи оҳан</annotation>
+		<annotation cp="🚆" type="tts">қатора</annotation>
+		<annotation cp="🚇">метро</annotation>
+		<annotation cp="🚇" type="tts">метро</annotation>
+		<annotation cp="🚈">метрои сабук | роҳи оҳан</annotation>
+		<annotation cp="🚈" type="tts">метрои сабук</annotation>
+		<annotation cp="🚉">истгоҳ | қатора | роҳи оҳан</annotation>
+		<annotation cp="🚉" type="tts">истгоҳ</annotation>
+		<annotation cp="🚊">трамвай | троллейбус</annotation>
+		<annotation cp="🚊" type="tts">трамвай</annotation>
+		<annotation cp="🚝">нақлиёт | якрелса</annotation>
+		<annotation cp="🚝" type="tts">якрелса</annotation>
+		<annotation cp="🚞">куҳ | мошин | роҳи оҳан | роҳи оҳани куҳӣ</annotation>
+		<annotation cp="🚞" type="tts">роҳи оҳани куҳӣ</annotation>
+		<annotation cp="🚋">вагони трамвай | мошин | трамвай | троллейбус</annotation>
+		<annotation cp="🚋" type="tts">вагони трамвай</annotation>
+		<annotation cp="🚌">автобус | нақлиёт</annotation>
+		<annotation cp="🚌" type="tts">автобус</annotation>
+		<annotation cp="🚍">автобус | автобуси самти муқобил | самти муқобил</annotation>
+		<annotation cp="🚍" type="tts">автобуси самти муқобил</annotation>
+		<annotation cp="🚎">автобус | трамвай | троллейбус</annotation>
+		<annotation cp="🚎" type="tts">троллейбус</annotation>
+		<annotation cp="🚐">автобус | микроавтобус</annotation>
+		<annotation cp="🚐" type="tts">микроавтобус</annotation>
+		<annotation cp="🚑">мошини ёрии таъҷилӣ | нақлиёт</annotation>
+		<annotation cp="🚑" type="tts">мошини ёрии таъҷилӣ</annotation>
+		<annotation cp="🚒">мошини боркаш | мошини сӯхторхомӯшкунӣ | муҳаррик | оташ</annotation>
+		<annotation cp="🚒" type="tts">мошини сӯхторхомӯшкунӣ</annotation>
+		<annotation cp="🚓">мошин | мошини пулис | посбон | пулис</annotation>
+		<annotation cp="🚓" type="tts">мошини пулис</annotation>
+		<annotation cp="🚔">аз самти муқобил | мошин | мошини пулис аз самти муқобил | пулис</annotation>
+		<annotation cp="🚔" type="tts">мошини пулис аз самти муқобил</annotation>
+		<annotation cp="🚕">нақлиёт | такси</annotation>
+		<annotation cp="🚕" type="tts">такси</annotation>
+		<annotation cp="🚖">аз самти муқобил | такси | такси аз самти муқобил</annotation>
+		<annotation cp="🚖" type="tts">такси аз самти муқобил</annotation>
+		<annotation cp="🚗">автомобил | мошин</annotation>
+		<annotation cp="🚗" type="tts">автомобил</annotation>
+		<annotation cp="🚘">автомобил | автомобили самти муқобил | мошин | самти муқобил</annotation>
+		<annotation cp="🚘" type="tts">автомобили самти муқобил</annotation>
+		<annotation cp="🚙">кроссовер | мошини варзишии ҳамаҷогард | фароғатӣ</annotation>
+		<annotation cp="🚙" type="tts">кроссовер</annotation>
+		<annotation cp="🚚">автомобили боркаш | бурдарасонӣ | мошини боркаш</annotation>
+		<annotation cp="🚚" type="tts">автомобили боркаш</annotation>
+		<annotation cp="🚛">боркаш | мошини боркаш | нақлиёти боркаш | ним</annotation>
+		<annotation cp="🚛" type="tts">нақлиёти боркаш</annotation>
+		<annotation cp="🚜">нақлиёт | трактор</annotation>
+		<annotation cp="🚜" type="tts">трактор</annotation>
+		<annotation cp="🏎">автомобили пойга | мошин | пойга</annotation>
+		<annotation cp="🏎" type="tts">автомобили пойга</annotation>
+		<annotation cp="🏍">мотосикл | пойга</annotation>
+		<annotation cp="🏍" type="tts">мотосикл</annotation>
+		<annotation cp="🛵">муҳаррик | скутер</annotation>
+		<annotation cp="🛵" type="tts">скутер</annotation>
+		<annotation cp="🚲">велосипед | дучарха</annotation>
+		<annotation cp="🚲" type="tts">дучарха</annotation>
+		<annotation cp="🛴">ба по задан | самокат | скутер</annotation>
+		<annotation cp="🛴" type="tts">самокат</annotation>
+		<annotation cp="🚏">автобус | истгоҳ | истгоҳи автобус | истгоҳи автобусҳо</annotation>
+		<annotation cp="🚏" type="tts">истгоҳи автобусҳо</annotation>
+		<annotation cp="🛣">роҳ | роҳи автомобилгард | шоҳроҳ</annotation>
+		<annotation cp="🛣" type="tts">роҳи автомобилгард</annotation>
+		<annotation cp="🛤">қатора | роҳи оҳан</annotation>
+		<annotation cp="🛤" type="tts">роҳи оҳан</annotation>
+		<annotation cp="🛢">нақора | нафт | чалаки нафт</annotation>
+		<annotation cp="🛢" type="tts">чалаки нафт</annotation>
+		<annotation cp="⛽">газ | истгоҳ | насос | насоси сӯзишворӣ | сӯзишворӣ</annotation>
+		<annotation cp="⛽" type="tts">насоси сӯзишворӣ</annotation>
+		<annotation cp="🚨">даврзананда | мино | мошин | пулис | рӯшноӣ | рӯшноии мошини пулис</annotation>
+		<annotation cp="🚨" type="tts">рӯшноии мошини пулис</annotation>
+		<annotation cp="🚥">рӯшноӣ | сигнал | ҳаракат | чароғи раҳнамои уфуқӣ</annotation>
+		<annotation cp="🚥" type="tts">чароғи раҳнамои уфуқӣ</annotation>
+		<annotation cp="🚦">рӯшноӣ | сигнал | ҳаракат | чароғи раҳнамои амудӣ</annotation>
+		<annotation cp="🚦" type="tts">чароғи раҳнамои амудӣ</annotation>
+		<annotation cp="🛑">аломат | аломати &quot;Ист&quot; | ист | ҳашткунҷа</annotation>
+		<annotation cp="🛑" type="tts">аломати &quot;Ист&quot;</annotation>
+		<annotation cp="🚧">монеа | сохтмон</annotation>
+		<annotation cp="🚧" type="tts">сохтмон</annotation>
+		<annotation cp="⚓">асбоб | киштӣ | лангар</annotation>
+		<annotation cp="⚓" type="tts">лангар</annotation>
+		<annotation cp="⛵">баҳр | заврақи бодбондор | киштӣ | курорт | қаиқ</annotation>
+		<annotation cp="⛵" type="tts">заврақи бодбондор</annotation>
+		<annotation cp="🛶">заврақ | қаиқ</annotation>
+		<annotation cp="🛶" type="tts">заврақ</annotation>
+		<annotation cp="🚤">катери тезгард | қаиқ</annotation>
+		<annotation cp="🚤" type="tts">катери тезгард</annotation>
+		<annotation cp="🛳">киштӣ | киштии мусофиркаш | мусофир</annotation>
+		<annotation cp="🛳" type="tts">киштии мусофиркаш</annotation>
+		<annotation cp="⛴">киштии гузора | қаиқ | мусофир</annotation>
+		<annotation cp="⛴" type="tts">киштии гузора</annotation>
+		<annotation cp="🛥">қаиқ | қаиқи муҳаррикдор</annotation>
+		<annotation cp="🛥" type="tts">қаиқи муҳаррикдор</annotation>
+		<annotation cp="🚢">киштӣ | қаиқ | мусофир</annotation>
+		<annotation cp="🚢" type="tts">киштӣ</annotation>
+		<annotation cp="✈">тайёра | ҳавопаймо</annotation>
+		<annotation cp="✈" type="tts">тайёра</annotation>
+		<annotation cp="🛩">тайёра | тайёраи хурд | ҳавопаймо</annotation>
+		<annotation cp="🛩" type="tts">тайёраи хурд</annotation>
+		<annotation cp="🛫">бақайдгирӣ | парвоз | парвози тайёра | парвозҳо | тайёра | ҳавопаймо</annotation>
+		<annotation cp="🛫" type="tts">парвози тайёра</annotation>
+		<annotation cp="🛬">нишастан | омадаистода | омадан | омадани тайёра | тайёра | ҳавопаймо</annotation>
+		<annotation cp="🛬" type="tts">омадани тайёра</annotation>
+		<annotation cp="💺">курсӣ | ҷои нишаст</annotation>
+		<annotation cp="💺" type="tts">ҷои нишаст</annotation>
+		<annotation cp="🚁">нақлиёт | чархбол</annotation>
+		<annotation cp="🚁" type="tts">чархбол</annotation>
+		<annotation cp="🚟">овеза | роҳи оҳан | роҳи оҳани овезон</annotation>
+		<annotation cp="🚟" type="tts">роҳи оҳани овезон</annotation>
+		<annotation cp="🚠">гондола | куҳ | ноқил | фуникулёр</annotation>
+		<annotation cp="🚠" type="tts">фуникулёр</annotation>
+		<annotation cp="🚡">гондола | мошин | ноқил | трамваи ҳавоӣ | трамвай | ҳавоӣ</annotation>
+		<annotation cp="🚡" type="tts">трамваи ҳавоӣ</annotation>
+		<annotation cp="🛰">моҳвора | фазо</annotation>
+		<annotation cp="🛰" type="tts">моҳвора</annotation>
+		<annotation cp="🚀">ракета | фазо</annotation>
+		<annotation cp="🚀" type="tts">ракета</annotation>
+		<annotation cp="🛸">лаълии паррон</annotation>
+		<annotation cp="🛸" type="tts">лаълии паррон</annotation>
+		<annotation cp="🛎">зангула | зангулаи хизматгори меҳмонхона | меҳмонхона | хизматгори меҳмонхона</annotation>
+		<annotation cp="🛎" type="tts">зангулаи хизматгори меҳмонхона</annotation>
+		<annotation cp="⌛">вақтсанҷ | рег | соати регӣ</annotation>
+		<annotation cp="⌛" type="tts">соати регӣ</annotation>
+		<annotation cp="⏳">вақтсанҷ | рег | соати регӣ | соати регӣ бо ҷорӣ шудани рег</annotation>
+		<annotation cp="⏳" type="tts">соати регӣ бо ҷорӣ шудани рег</annotation>
+		<annotation cp="⌚">соати дастӣ | соати деворӣ</annotation>
+		<annotation cp="⌚" type="tts">соати дастӣ</annotation>
+		<annotation cp="⏰">соат | соати зангдор | ҳушдор</annotation>
+		<annotation cp="⏰" type="tts">соати зангдор</annotation>
+		<annotation cp="⏱">соати деворӣ | сониясанҷ</annotation>
+		<annotation cp="⏱" type="tts">сониясанҷ</annotation>
+		<annotation cp="⏲">вақтсанҷ | соати вақтсанҷ | соати деворӣ</annotation>
+		<annotation cp="⏲" type="tts">соати вақтсанҷ</annotation>
+		<annotation cp="🕰">соати деворӣ | соати сангӣ</annotation>
+		<annotation cp="🕰" type="tts">соати сангӣ</annotation>
+		<annotation cp="🕛">00 | 12 | 12:00 | дувоздаҳ | соат</annotation>
+		<annotation cp="🕛" type="tts">соат дувоздаҳ</annotation>
+		<annotation cp="🕧">12 | 12:30 | 30 | дувоздаҳ | дувоздаҳу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕧" type="tts">дувоздаҳу сӣ</annotation>
+		<annotation cp="🕐">00 | 1 | 1:00 | соат | як</annotation>
+		<annotation cp="🕐" type="tts">соат як</annotation>
+		<annotation cp="🕜">1 | 1:30 | 30 | сӣ | соат | як | яку сӣ</annotation>
+		<annotation cp="🕜" type="tts">яку сӣ</annotation>
+		<annotation cp="🕑">00 | 2 | 2:00 | ду | соат</annotation>
+		<annotation cp="🕑" type="tts">соат ду</annotation>
+		<annotation cp="🕝">2 | 2:30 | 30 | ду | дую сӣ | сӣ | соат</annotation>
+		<annotation cp="🕝" type="tts">дую сӣ</annotation>
+		<annotation cp="🕒">00 | 3 | 3:00 | се | соат</annotation>
+		<annotation cp="🕒" type="tts">соат се</annotation>
+		<annotation cp="🕞">3 | 3:30 | 30 | се | севу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕞" type="tts">севу сӣ</annotation>
+		<annotation cp="🕓">00 | 4 | 4:00 | соат | чор</annotation>
+		<annotation cp="🕓" type="tts">соат чор</annotation>
+		<annotation cp="🕟">30 | 4 | 4:30 | сӣ | соат | чор | чору сӣ</annotation>
+		<annotation cp="🕟" type="tts">чору сӣ</annotation>
+		<annotation cp="🕔">00 | 5 | 5:00 | панҷ | соат</annotation>
+		<annotation cp="🕔" type="tts">соат панҷ</annotation>
+		<annotation cp="🕠">30 | 5 | 5:30 | панҷ | панҷу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕠" type="tts">панҷу сӣ</annotation>
+		<annotation cp="🕕">00 | 6 | 6:00 | соат | шаш</annotation>
+		<annotation cp="🕕" type="tts">соат шаш</annotation>
+		<annotation cp="🕡">30 | 6 | 6:30 | сӣ | соат | шаш | шашу сӣ</annotation>
+		<annotation cp="🕡" type="tts">шашу сӣ</annotation>
+		<annotation cp="🕖">00 | 7 | 7:00 | соат | ҳафт</annotation>
+		<annotation cp="🕖" type="tts">соат ҳафт</annotation>
+		<annotation cp="🕢">30 | 7 | 7:30 | сӣ | соат | ҳафт | ҳафту сӣ</annotation>
+		<annotation cp="🕢" type="tts">ҳафту сӣ</annotation>
+		<annotation cp="🕗">00 | 8 | 8:00 | соат | ҳашт</annotation>
+		<annotation cp="🕗" type="tts">соат ҳашт</annotation>
+		<annotation cp="🕣">30 | 8 | 8:30 | сӣ | соат | ҳашт | ҳашту сӣ</annotation>
+		<annotation cp="🕣" type="tts">ҳашту сӣ</annotation>
+		<annotation cp="🕘">00 | 9 | 9:00 | нуҳ | соат</annotation>
+		<annotation cp="🕘" type="tts">соат нуҳ</annotation>
+		<annotation cp="🕤">30 | 9 | 9:30 | нуҳ | нуҳу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕤" type="tts">нуҳу сӣ</annotation>
+		<annotation cp="🕙">00 | 10 | 10:00 | даҳ | соат</annotation>
+		<annotation cp="🕙" type="tts">соат даҳ</annotation>
+		<annotation cp="🕥">10 | 10:30 | 30 | даҳ | даҳу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕥" type="tts">даҳу сӣ</annotation>
+		<annotation cp="🕚">00 | 11 | 11:00 | ёздаҳ | соат</annotation>
+		<annotation cp="🕚" type="tts">соат ёздаҳ</annotation>
+		<annotation cp="🕦">11 | 11:30 | 30 | ёздаҳ | ёздаҳу сӣ | сӣ | соат</annotation>
+		<annotation cp="🕦" type="tts">ёздаҳу сӣ</annotation>
+		<annotation cp="🌑">моҳ | моҳи нав | торик</annotation>
+		<annotation cp="🌑" type="tts">моҳи нав</annotation>
+		<annotation cp="🌒">калон шудани моҳ | моҳ | ҳилол | ҳилоли нав</annotation>
+		<annotation cp="🌒" type="tts">ҳилоли нав</annotation>
+		<annotation cp="🌓">марҳилаи чоряки якуми моҳ | моҳ | чоряк</annotation>
+		<annotation cp="🌓" type="tts">марҳилаи чоряки якуми моҳ</annotation>
+		<annotation cp="🌔">калон шудани моҳ | марҳилаи калон шудани моҳ | марҳилаи моҳ | моҳ</annotation>
+		<annotation cp="🌔" type="tts">марҳилаи калон шудани моҳ</annotation>
+		<annotation cp="🌕">моҳи пурра | пурра</annotation>
+		<annotation cp="🌕" type="tts">моҳи пурра</annotation>
+		<annotation cp="🌖">марҳилаи моҳ | марҳилаи хурд шудани моҳ | моҳ | хурд шудани моҳ</annotation>
+		<annotation cp="🌖" type="tts">марҳилаи хурд шудани моҳ</annotation>
+		<annotation cp="🌗">марҳилаи чоряки охири моҳ | моҳ | чоряк</annotation>
+		<annotation cp="🌗" type="tts">марҳилаи чоряки охири моҳ</annotation>
+		<annotation cp="🌘">марҳилаи хурд шудани ҳилол | моҳ | хурд шудани моҳ | ҳилол</annotation>
+		<annotation cp="🌘" type="tts">марҳилаи хурд шудани ҳилол</annotation>
+		<annotation cp="🌙">моҳ | ҳилол</annotation>
+		<annotation cp="🌙" type="tts">ҳилол</annotation>
+		<annotation cp="🌚">моҳ | рӯй | чеҳраи моҳи нав</annotation>
+		<annotation cp="🌚" type="tts">чеҳраи моҳи нав</annotation>
+		<annotation cp="🌛">моҳ | рӯй | чоряк | чоряки якуми моҳ бо чеҳра</annotation>
+		<annotation cp="🌛" type="tts">чоряки якуми моҳ бо чеҳра</annotation>
+		<annotation cp="🌜">моҳ | рӯй | чоряк | чоряки охири моҳ бо чеҳра</annotation>
+		<annotation cp="🌜" type="tts">чоряки охири моҳ бо чеҳра</annotation>
+		<annotation cp="🌡">обу ҳаво | ҳароратсанҷ</annotation>
+		<annotation cp="🌡" type="tts">ҳароратсанҷ</annotation>
+		<annotation cp="☀">офтоб | офтобӣ | равшан | шуоъ</annotation>
+		<annotation cp="☀" type="tts">офтоб</annotation>
+		<annotation cp="🌝">моҳ | моҳи пурра бо чеҳра | пурра | равшан | рӯй</annotation>
+		<annotation cp="🌝" type="tts">моҳи пурра бо чеҳра</annotation>
+		<annotation cp="🌞">офтоб | офтоб бо чеҳра | равшан | рӯй</annotation>
+		<annotation cp="🌞" type="tts">офтоб бо чеҳра</annotation>
+		<annotation cp="⭐">ситора | ситораи миёнаи сафед</annotation>
+		<annotation cp="⭐" type="tts">ситораи миёнаи сафед</annotation>
+		<annotation cp="🌟">дурахшидан | дурахшон | пурҷило | ситора | ситораи дурахшон | ялаққос задан</annotation>
+		<annotation cp="🌟" type="tts">ситораи дурахшон</annotation>
+		<annotation cp="🌠">афтидан | парондан | ситора | ситораи думдор</annotation>
+		<annotation cp="🌠" type="tts">ситораи думдор</annotation>
+		<annotation cp="🌌">роҳи Каҳкашон | фазо</annotation>
+		<annotation cp="🌌" type="tts">роҳи Каҳкашон</annotation>
+		<annotation cp="☁">абр | обу ҳаво</annotation>
+		<annotation cp="☁" type="tts">абр</annotation>
+		<annotation cp="⛅">абр | офтоб | офтоб паси абр</annotation>
+		<annotation cp="⛅" type="tts">офтоб паси абр</annotation>
+		<annotation cp="⛈">абр | абр бо чароғак ва борон | борон | тундар</annotation>
+		<annotation cp="⛈" type="tts">абр бо чароғак ва борон</annotation>
+		<annotation cp="🌤">абр | офтоб | офтоб паси абри хурд</annotation>
+		<annotation cp="🌤" type="tts">офтоб паси абри хурд</annotation>
+		<annotation cp="🌥">абр | офтоб | офтоб паси абри калон</annotation>
+		<annotation cp="🌥" type="tts">офтоб паси абри калон</annotation>
+		<annotation cp="🌦">абр | борон | офтоб | офтоб паси абри боронӣ</annotation>
+		<annotation cp="🌦" type="tts">офтоб паси абри боронӣ</annotation>
+		<annotation cp="🌧">абр | абр бо борон | борон</annotation>
+		<annotation cp="🌧" type="tts">абр бо борон</annotation>
+		<annotation cp="🌨">абр | абр бо барф | барф | хунук</annotation>
+		<annotation cp="🌨" type="tts">абр бо барф</annotation>
+		<annotation cp="🌩">абр | абр бо чароғак | чароғак</annotation>
+		<annotation cp="🌩" type="tts">абр бо чароғак</annotation>
+		<annotation cp="🌪">абр | гирдбод | торнадо</annotation>
+		<annotation cp="🌪" type="tts">торнадо</annotation>
+		<annotation cp="🌫">абр | туман</annotation>
+		<annotation cp="🌫" type="tts">туман</annotation>
+		<annotation cp="🌬">абр | вазидан | рӯи шамол | рӯй | шамол</annotation>
+		<annotation cp="🌬" type="tts">рӯи шамол</annotation>
+		<annotation cp="🌀">сарчархзанӣ | сиклон | тундбод | туфон</annotation>
+		<annotation cp="🌀" type="tts">сиклон</annotation>
+		<annotation cp="🌈">борон | тирукамон</annotation>
+		<annotation cp="🌈" type="tts">тирукамон</annotation>
+		<annotation cp="🌂">борон | либос | чатр | чатри пӯшида</annotation>
+		<annotation cp="🌂" type="tts">чатри пӯшида</annotation>
+		<annotation cp="☂">борон | либос | чатр</annotation>
+		<annotation cp="☂" type="tts">чатр</annotation>
+		<annotation cp="☔">борон | қатра | либос | чатр | чатр бо қатраҳои борон</annotation>
+		<annotation cp="☔" type="tts">чатр бо қатраҳои борон</annotation>
+		<annotation cp="⛱">борон | офтоб | чатр | чатр дар замин</annotation>
+		<annotation cp="⛱" type="tts">чатр дар замин</annotation>
+		<annotation cp="⚡">барқ | қувва | хатар | чароғак | шиддат | шиддати баланд | электрикӣ</annotation>
+		<annotation cp="⚡" type="tts">шиддати баланд</annotation>
+		<annotation cp="❄">абр | барф | зарраи барф</annotation>
+		<annotation cp="❄" type="tts">зарраи барф</annotation>
+		<annotation cp="☃">абр | барф | одами барфӣ</annotation>
+		<annotation cp="☃" type="tts">одами барфӣ</annotation>
+		<annotation cp="⛄">барф | одами барфӣ | одами барфӣ бе барф | хунук</annotation>
+		<annotation cp="⛄" type="tts">одами барфӣ бе барф</annotation>
+		<annotation cp="☄">комета | фазо</annotation>
+		<annotation cp="☄" type="tts">комета</annotation>
+		<annotation cp="🔥">аланга | асбоб | оташ</annotation>
+		<annotation cp="🔥" type="tts">оташ</annotation>
+		<annotation cp="💧">арақ | қатра | мазҳакавӣ | хунук</annotation>
+		<annotation cp="💧" type="tts">қатра</annotation>
+		<annotation cp="🌊">мавҷ | мавҷи об | об | уқёнус</annotation>
+		<annotation cp="🌊" type="tts">мавҷи об</annotation>
+		<annotation cp="🎃">бинӣ ва чашмон | сурохӣ | хеллоуин | чароғ | чароғак аз каду бо сӯрохиҳои даҳон | чароғак аз каду бо сӯрохиҳои даҳон, бинӣ ва чашмон | ҷашн</annotation>
+		<annotation cp="🎃" type="tts">чароғак аз каду бо сӯрохиҳои даҳон, бинӣ ва чашмон</annotation>
+		<annotation cp="🎄">дарахт | дарахти Мавлуди Исо | мавлуди Исо | ҷашн</annotation>
+		<annotation cp="🎄" type="tts">дарахти Мавлуди Исо</annotation>
+		<annotation cp="🎆">оташфаввора | ҷашн</annotation>
+		<annotation cp="🎆" type="tts">оташфаввора</annotation>
+		<annotation cp="🎇">мушаки маҳтобӣ | оташфаввора | ҷашн | ялаққос задан</annotation>
+		<annotation cp="🎇" type="tts">мушаки маҳтобӣ</annotation>
+		<annotation cp="✨">ситора | шарора | ялаққос задан</annotation>
+		<annotation cp="✨" type="tts">шарора</annotation>
+		<annotation cp="🎈">ҳубоб | ҷашн</annotation>
+		<annotation cp="🎈" type="tts">ҳубоб</annotation>
+		<annotation cp="🎉">маводи тарфгарӣ (хлопушка) | тада | хлопушка | ҷашн | шабнишинӣ</annotation>
+		<annotation cp="🎉" type="tts">маводи тарфгарӣ (хлопушка)</annotation>
+		<annotation cp="🎊">конфетти | кӯраи конфетти | тӯб | ҷашн</annotation>
+		<annotation cp="🎊" type="tts">кӯраи конфетти</annotation>
+		<annotation cp="🎋">баннер | дарахт | дарахти Танабата | ҷашн | ҷопонӣ</annotation>
+		<annotation cp="🎋" type="tts">дарахти Танабата</annotation>
+		<annotation cp="🎍">бамбук | дарахти санавбаар | ороиши дарахти санавбар | ҷашн | ҷопонӣ</annotation>
+		<annotation cp="🎍" type="tts">ороиши дарахти санавбар</annotation>
+		<annotation cp="🎎">лухтак | лухтакҳои ҷопонӣ | фестивал | ҷашн | ҷопонӣ</annotation>
+		<annotation cp="🎎" type="tts">лухтакҳои ҷопонӣ</annotation>
+		<annotation cp="🎏">зағорамоҳӣ | лентаи борик | летнаи ҳиллиросзанандаи ба шакли зағорамоҳӣ | ҷашн</annotation>
+		<annotation cp="🎏" type="tts">летнаи ҳиллиросзанандаи ба шакли зағорамоҳӣ</annotation>
+		<annotation cp="🎐">зангула | мусиқӣ | мусиқии шамол | ҷашн | шамол</annotation>
+		<annotation cp="🎐" type="tts">мусиқии шамол</annotation>
+		<annotation cp="🎑">маросим | маросими тамошои моҳтоб | моҳ | ҷашн</annotation>
+		<annotation cp="🎑" type="tts">маросими тамошои моҳтоб</annotation>
+		<annotation cp="🎀">лента | ҷашн</annotation>
+		<annotation cp="🎀" type="tts">лента</annotation>
+		<annotation cp="🎁">қуттӣ | печондашуда | туҳфа | туҳфаи печондашуда | ҷашн</annotation>
+		<annotation cp="🎁" type="tts">туҳфаи печондашуда</annotation>
+		<annotation cp="🎗">ёдрасон | лента | лентаи ёдрасон | ҷашн</annotation>
+		<annotation cp="🎗" type="tts">лентаи ёдрасон</annotation>
+		<annotation cp="🎟">қабул | чипта | чиптаҳои қабул</annotation>
+		<annotation cp="🎟" type="tts">чиптаҳои қабул</annotation>
+		<annotation cp="🎫">қабул | чипта</annotation>
+		<annotation cp="🎫" type="tts">чипта</annotation>
+		<annotation cp="🎖">медал | медали ҳарбӣ | ҳарбӣ | ҷашн</annotation>
+		<annotation cp="🎖" type="tts">медали ҳарбӣ</annotation>
+		<annotation cp="🏆">мукофот | ҷоиза</annotation>
+		<annotation cp="🏆" type="tts">мукофот</annotation>
+		<annotation cp="🏅">медал | медали варзишӣ</annotation>
+		<annotation cp="🏅" type="tts">медали варзишӣ</annotation>
+		<annotation cp="🥇">медал | медал барои ҷои 1-ум | тилло | якум</annotation>
+		<annotation cp="🥇" type="tts">медал барои ҷои 1-ум</annotation>
+		<annotation cp="🥈">дуюм | медал | медал барои ҷои 2-юм | нуқра</annotation>
+		<annotation cp="🥈" type="tts">медал барои ҷои 2-юм</annotation>
+		<annotation cp="🥉">биринҷӣ | медал | медал барои ҷои 3-юм | сеюм</annotation>
+		<annotation cp="🥉" type="tts">медал барои ҷои 3-юм</annotation>
+		<annotation cp="⚽">тӯб | тӯби футбол | футбол</annotation>
+		<annotation cp="⚽" type="tts">тӯби футбол</annotation>
+		<annotation cp="⚾">бейсбол | тӯб</annotation>
+		<annotation cp="⚾" type="tts">бейсбол</annotation>
+		<annotation cp="🏀">баскетбол | тӯб | ҳалқа</annotation>
+		<annotation cp="🏀" type="tts">баскетбол</annotation>
+		<annotation cp="🏐">бозӣ | волейбол | саққа</annotation>
+		<annotation cp="🏐" type="tts">волейбол</annotation>
+		<annotation cp="🏈">амрикоӣ | тӯб | футбол | футболи амрикоӣ</annotation>
+		<annotation cp="🏈" type="tts">футболи амрикоӣ</annotation>
+		<annotation cp="🏉">регби | тӯб | футбол</annotation>
+		<annotation cp="🏉" type="tts">регби</annotation>
+		<annotation cp="🎾">ракетка | тенис | тӯб</annotation>
+		<annotation cp="🎾" type="tts">тенис</annotation>
+		<annotation cp="🎳">бозӣ | боулинг | саққа</annotation>
+		<annotation cp="🎳" type="tts">боулинг</annotation>
+		<annotation cp="🏏">бозӣ | бозии крикет | саққо | тӯб</annotation>
+		<annotation cp="🏏" type="tts">бозии крикет</annotation>
+		<annotation cp="🏑">бозӣ | майдон | майдони хоккей | тӯб | хоккей | чавгон</annotation>
+		<annotation cp="🏑" type="tts">майдони хоккей</annotation>
+		<annotation cp="🏒">бозӣ | хоккей | хоккей дар рӯи ях | чавгон | шайба | ях</annotation>
+		<annotation cp="🏒" type="tts">хоккей дар рӯи ях</annotation>
+		<annotation cp="🏓">бозӣ | пинг понг | ракетка | саққо | тенниси рӯи миз | тӯб</annotation>
+		<annotation cp="🏓" type="tts">пинг понг</annotation>
+		<annotation cp="🏸">бадминтон | бозӣ | волан | ракетка</annotation>
+		<annotation cp="🏸" type="tts">бадминтон</annotation>
+		<annotation cp="🥊">бокс | дастпӯшак | дастпӯшак барои бокс</annotation>
+		<annotation cp="🥊" type="tts">дастпӯшак барои бокс</annotation>
+		<annotation cp="🥋">дзюдо | каратэ | либоси санъати ҳарбӣ | либоси ягона | санъати ҳарбӣ | таэквондо</annotation>
+		<annotation cp="🥋" type="tts">либоси санъати ҳарбӣ</annotation>
+		<annotation cp="🥅">гол | тӯри дарвозаи футбол</annotation>
+		<annotation cp="🥅" type="tts">тӯри дарвозаи футбол</annotation>
+		<annotation cp="⛳">байрақ дар сӯрохӣ | голф | сурохӣ</annotation>
+		<annotation cp="⛳" type="tts">байрақ дар сӯрохӣ</annotation>
+		<annotation cp="⛸">скейт | ях | яхмолак</annotation>
+		<annotation cp="⛸" type="tts">яхмолак</annotation>
+		<annotation cp="🎣">қутб | моҳӣ | шаст</annotation>
+		<annotation cp="🎣" type="tts">шаст</annotation>
+		<annotation cp="🎽">варзиши сабук | давидан | курта | курта барои давидан | тасмаи орден</annotation>
+		<annotation cp="🎽" type="tts">курта барои давидан</annotation>
+		<annotation cp="🎿">барф | лижа</annotation>
+		<annotation cp="🎿" type="tts">лижа</annotation>
+		<annotation cp="🛷">чана</annotation>
+		<annotation cp="🛷" type="tts">чана</annotation>
+		<annotation cp="🥌">бозӣ | санги бозии кёрлинг | харсанг</annotation>
+		<annotation cp="🥌" type="tts">санги бозии кёрлинг</annotation>
+		<annotation cp="🎯">бозӣ | буққа | дарт | задан | нишона | рост рафта расидан | ҳадаф | чашм</annotation>
+		<annotation cp="🎯" type="tts">рост рафта расидан</annotation>
+		<annotation cp="🔫">асбоб | револвер | силоҳ | таппонча | яроқ | яроқи дастӣ</annotation>
+		<annotation cp="🔫" type="tts">таппонча</annotation>
+		<annotation cp="🎱">8 | билярд | билярди 8 саққадор | бозӣ | саққа | ҳашт</annotation>
+		<annotation cp="🎱" type="tts">билярди 8 саққадор</annotation>
+		<annotation cp="🔮">асбоб | афсона | булӯр | кура | кураи булӯрӣ | тақдир | тахайюлот</annotation>
+		<annotation cp="🔮" type="tts">кураи булӯрӣ</annotation>
+		<annotation cp="🎮">бозӣ | бозии видеоӣ | танзимгар</annotation>
+		<annotation cp="🎮" type="tts">бозии видеоӣ</annotation>
+		<annotation cp="🕹">бозӣ | бозии видеоӣ | ҷойстик</annotation>
+		<annotation cp="🕹" type="tts">ҷойстик</annotation>
+		<annotation cp="🎰">бозӣ | ковокӣ | мошинаи қиморбозӣ</annotation>
+		<annotation cp="🎰" type="tts">мошинаи қиморбозӣ</annotation>
+		<annotation cp="🎲">бозӣ | бозии зарикҳо | зарик | зарикҳо</annotation>
+		<annotation cp="🎲" type="tts">бозии зарикҳо</annotation>
+		<annotation cp="♠">бозӣ | корт | қарамашшоқ</annotation>
+		<annotation cp="♠" type="tts">қарамашшоқ</annotation>
+		<annotation cp="♥">бозӣ | корт | таппон</annotation>
+		<annotation cp="♥" type="tts">таппон</annotation>
+		<annotation cp="♦">бозӣ | корт | хиштхол</annotation>
+		<annotation cp="♦" type="tts">хиштхол</annotation>
+		<annotation cp="♣">бозӣ | корт | чилликхол</annotation>
+		<annotation cp="♣" type="tts">чилликхол</annotation>
+		<annotation cp="🃏">аломатҳои ивазкунӣ | бозӣ | корт | ҳазлбоз</annotation>
+		<annotation cp="🃏" type="tts">ҳазлбоз</annotation>
+		<annotation cp="🀄">аждаҳори сурхи маҳҷонг | бозӣ | маҳҷонг | сурх</annotation>
+		<annotation cp="🀄" type="tts">аждаҳори сурхи маҳҷонг</annotation>
+		<annotation cp="🎴">бозӣ | бозикунӣ | гул | корт | кортҳои бозии &quot;Гул&quot; | ҷопонӣ</annotation>
+		<annotation cp="🎴" type="tts">кортҳои бозии &quot;Гул&quot;</annotation>
+		<annotation cp="🎭">иҷро кардан | намдуҳои санъати иҷро | ниқоб | санъат | театр</annotation>
+		<annotation cp="🎭" type="tts">намдуҳои санъати иҷро</annotation>
+		<annotation cp="🖼">осорхона | расм | санъат | сурат | сурати чорчӯбадор | чорчӯба</annotation>
+		<annotation cp="🖼" type="tts">сурати чорчӯбадор</annotation>
+		<annotation cp="🎨">лавҳачаи рассомӣ | лавҳачаи рассомии рассом | осорхона | расм | санъат</annotation>
+		<annotation cp="🎨" type="tts">лавҳачаи рассомии рассом</annotation>
+		<annotation cp="👓">айнак | айнаки муҳофизатӣ | либос | чашм</annotation>
+		<annotation cp="👓" type="tts">айнак</annotation>
+		<annotation cp="🕶">айнак | айнаки муҳофизатӣ | айнаки офтобӣ | торик | чашм</annotation>
+		<annotation cp="🕶" type="tts">айнаки офтобӣ</annotation>
+		<annotation cp="👔">галстук | пӯшок</annotation>
+		<annotation cp="👔" type="tts">галстук</annotation>
+		<annotation cp="👕">курта | либос | футболка</annotation>
+		<annotation cp="👕" type="tts">футболка</annotation>
+		<annotation cp="👖">либос | ҷинс | шим</annotation>
+		<annotation cp="👖" type="tts">ҷинс</annotation>
+		<annotation cp="🧣">гардан | шарф</annotation>
+		<annotation cp="🧣" type="tts">шарф</annotation>
+		<annotation cp="🧤">даст | дастпӯшак</annotation>
+		<annotation cp="🧤" type="tts">дастпӯшак</annotation>
+		<annotation cp="🧥">палто | пиҷак</annotation>
+		<annotation cp="🧥" type="tts">палто</annotation>
+		<annotation cp="🧦">ҷуроб | ҷуроби дароз</annotation>
+		<annotation cp="🧦" type="tts">ҷуроб</annotation>
+		<annotation cp="👗">куртаи занона | пӯшок</annotation>
+		<annotation cp="👗" type="tts">куртаи занона</annotation>
+		<annotation cp="👘">кимоно | пӯшок</annotation>
+		<annotation cp="👘" type="tts">кимоно</annotation>
+		<annotation cp="👙">либоси оббозӣ | оббозӣ кардан | пӯшок</annotation>
+		<annotation cp="👙" type="tts">либоси оббозӣ</annotation>
+		<annotation cp="👚">зан | либосҳои занона | пӯшок</annotation>
+		<annotation cp="👚" type="tts">либосҳои занона</annotation>
+		<annotation cp="👛">либос | танга | ҳамён</annotation>
+		<annotation cp="👛" type="tts">ҳамён</annotation>
+		<annotation cp="👜">либос | сумка | ҳамён</annotation>
+		<annotation cp="👜" type="tts">сумка</annotation>
+		<annotation cp="👝">клатч | либос | сумка | сумкача</annotation>
+		<annotation cp="👝" type="tts">клатч</annotation>
+		<annotation cp="🛍">меҳмонхона | сумка | сумкаҳо барои харид кардан | харид</annotation>
+		<annotation cp="🛍" type="tts">сумкаҳо барои харид кардан</annotation>
+		<annotation cp="🎒">борхалтаи мактабӣ | мактаб | сумка | ҷузъдон</annotation>
+		<annotation cp="🎒" type="tts">борхалтаи мактабӣ</annotation>
+		<annotation cp="👞">либос | мард | пойафзол | пойафзоли мардона</annotation>
+		<annotation cp="👞" type="tts">пойафзоли мардона</annotation>
+		<annotation cp="👟">варзишӣ | либос | пойафзол | пойафзол барои давидан | пойафзоли варзишӣ</annotation>
+		<annotation cp="👟" type="tts">пойафзол барои давидан</annotation>
+		<annotation cp="👠">зан | либос | пойафзол | пойафзоли пошнабаланд | пошна</annotation>
+		<annotation cp="👠" type="tts">пойафзоли пошнабаланд</annotation>
+		<annotation cp="👡">зан | кафши сабук | кафши сабуки занона | либос | пойафзол</annotation>
+		<annotation cp="👡" type="tts">кафши сабуки занона</annotation>
+		<annotation cp="👢">ботинка | зан | либос | мӯзаи занона | пойафзол</annotation>
+		<annotation cp="👢" type="tts">мӯзаи занона</annotation>
+		<annotation cp="👑">либос | малика | тоҷ | шоҳ</annotation>
+		<annotation cp="👑" type="tts">тоҷ</annotation>
+		<annotation cp="👒">зан | кулоҳ | кулоҳи занона | либос</annotation>
+		<annotation cp="👒" type="tts">кулоҳи занона</annotation>
+		<annotation cp="🎩">боло | кулоҳ | кулоҳи баланд | либос</annotation>
+		<annotation cp="🎩" type="tts">кулоҳи баланд</annotation>
+		<annotation cp="🎓">кепка | конфедератка | кулоҳ | либос | хатм | ҷашн</annotation>
+		<annotation cp="🎓" type="tts">конфедератка</annotation>
+		<annotation cp="🧢">бейсболка | кепкаи лапардор</annotation>
+		<annotation cp="🧢" type="tts">кепкаи лапардор</annotation>
+		<annotation cp="⛑">кӯмак | рӯй сарпӯш | салиб | тоскулоҳ | тоскулоҳи корманди наҷотдиҳӣ</annotation>
+		<annotation cp="⛑" type="tts">тоскулоҳи корманди наҷотдиҳӣ</annotation>
+		<annotation cp="📿">гарданбанд | дин | дуо | либос | тасбеҳ | шабаи майда</annotation>
+		<annotation cp="📿" type="tts">тасбеҳ</annotation>
+		<annotation cp="💄">косметика | лабсурхкунак | макияж</annotation>
+		<annotation cp="💄" type="tts">лабсурхкунак</annotation>
+		<annotation cp="💍">алмос | ангуштарин</annotation>
+		<annotation cp="💍" type="tts">ангуштарин</annotation>
+		<annotation cp="💎">алмос | нақрасанг | санги қиматбаҳо | ҷавоҳирот</annotation>
+		<annotation cp="💎" type="tts">санги қиматбаҳо</annotation>
+		<annotation cp="🔇">баландгӯяк | баландгӯяки хомӯш | бесадо кардан | хомӯш</annotation>
+		<annotation cp="🔇" type="tts">баландгӯяки хомӯш</annotation>
+		<annotation cp="🔈">мулоим | садои пасти баландгӯяк</annotation>
+		<annotation cp="🔈" type="tts">садои пасти баландгӯяк</annotation>
+		<annotation cp="🔉">миёна | садои миёнаи баландгӯяк</annotation>
+		<annotation cp="🔉" type="tts">садои миёнаи баландгӯяк</annotation>
+		<annotation cp="🔊">баланд | садои баланди баландгӯяк</annotation>
+		<annotation cp="🔊" type="tts">садои баланди баландгӯяк</annotation>
+		<annotation cp="📢">баланд | баландгӯяк | суроғаи ошкор</annotation>
+		<annotation cp="📢" type="tts">баландгӯяк</annotation>
+		<annotation cp="📣">кафкӯбӣ | мегафон</annotation>
+		<annotation cp="📣" type="tts">мегафон</annotation>
+		<annotation cp="📯">почта | почтавӣ | сурнаи почта | сурнай</annotation>
+		<annotation cp="📯" type="tts">сурнаи почта</annotation>
+		<annotation cp="🔔">зангӯлача</annotation>
+		<annotation cp="🔔" type="tts">зангӯлача</annotation>
+		<annotation cp="🔕">бесадо | зангула | зангӯлача бо хати каср | мамнуъ | манъшуда | не | хомӯш</annotation>
+		<annotation cp="🔕" type="tts">зангӯлача бо хати каср</annotation>
+		<annotation cp="🎼">мусиқӣ | нота | партитура</annotation>
+		<annotation cp="🎼" type="tts">партитура</annotation>
+		<annotation cp="🎵">мусиқӣ | нота | нотаи мусиқӣ</annotation>
+		<annotation cp="🎵" type="tts">нотаи мусиқӣ</annotation>
+		<annotation cp="🎶">мусиқӣ | нота | нотаҳо | нотаҳои мусиқӣ</annotation>
+		<annotation cp="🎶" type="tts">нотаҳои мусиқӣ</annotation>
+		<annotation cp="🎙">мик | микрофон | микрофони студия | мусиқӣ | студия</annotation>
+		<annotation cp="🎙" type="tts">микрофони студия</annotation>
+		<annotation cp="🎚">василаи лағжанда | василаи лағжандаи сатҳ | мусиқӣ | сатҳ</annotation>
+		<annotation cp="🎚" type="tts">василаи лағжандаи сатҳ</annotation>
+		<annotation cp="🎛">дастаҳо | дастаҳои идора | идора | мусиқӣ</annotation>
+		<annotation cp="🎛" type="tts">дастаҳои идора</annotation>
+		<annotation cp="🎤">караоке | мик | микрофон</annotation>
+		<annotation cp="🎤" type="tts">микрофон</annotation>
+		<annotation cp="🎧">гӯшмонак | гӯшмонаки хурд</annotation>
+		<annotation cp="🎧" type="tts">гӯшмонак</annotation>
+		<annotation cp="📻">видео | радио</annotation>
+		<annotation cp="📻" type="tts">радио</annotation>
+		<annotation cp="🎷">асбоб | мусиқӣ | саксофон</annotation>
+		<annotation cp="🎷" type="tts">саксофон</annotation>
+		<annotation cp="🎺">асбоб | карнай | мусиқӣ</annotation>
+		<annotation cp="🎺" type="tts">карнай</annotation>
+		<annotation cp="🎸">асбоб | гитар | мусиқӣ</annotation>
+		<annotation cp="🎸" type="tts">гитар</annotation>
+		<annotation cp="🎹">асбоб | клавиатура | клавиатураи мусиқӣ | мусиқӣ | пианино</annotation>
+		<annotation cp="🎹" type="tts">клавиатураи мусиқӣ</annotation>
+		<annotation cp="🎻">асбоб | ғиҷҷак | мусиқӣ</annotation>
+		<annotation cp="🎻" type="tts">ғиҷҷак</annotation>
+		<annotation cp="🥁">мусиқӣ | нақора | чӯбҳои нақора</annotation>
+		<annotation cp="🥁" type="tts">нақора</annotation>
+		<annotation cp="📱">телефон | телефони мобилӣ</annotation>
+		<annotation cp="📱" type="tts">телефони мобилӣ</annotation>
+		<annotation cp="📲">занг | қабул кардан | телефон | телефони мобилӣ | телефони мобилӣ бо тир | тир</annotation>
+		<annotation cp="📲" type="tts">телефони мобилӣ бо тир</annotation>
+		<annotation cp="☎">телефон</annotation>
+		<annotation cp="☎" type="tts">телефон</annotation>
+		<annotation cp="📞">гӯшаки телефон | телефон</annotation>
+		<annotation cp="📞" type="tts">гӯшаки телефон</annotation>
+		<annotation cp="📟">пейҷер</annotation>
+		<annotation cp="📟" type="tts">пейҷер</annotation>
+		<annotation cp="📠">дастгоҳи факс | факс</annotation>
+		<annotation cp="📠" type="tts">дастгоҳи факс</annotation>
+		<annotation cp="🔋">батарея</annotation>
+		<annotation cp="🔋" type="tts">батарея</annotation>
+		<annotation cp="🔌">барқ | барқӣ | васлак | васлаки электрикӣ</annotation>
+		<annotation cp="🔌" type="tts">васлаки электрикӣ</annotation>
+		<annotation cp="💻">компютер | компютери лэптоп | шахсӣ</annotation>
+		<annotation cp="💻" type="tts">компютери лэптоп</annotation>
+		<annotation cp="🖥">компютер | компютери рӯимизӣ | рӯимизӣ</annotation>
+		<annotation cp="🖥" type="tts">компютери рӯимизӣ</annotation>
+		<annotation cp="🖨">компютер | принтер</annotation>
+		<annotation cp="🖨" type="tts">принтер</annotation>
+		<annotation cp="⌨">клавиатура | компютер</annotation>
+		<annotation cp="⌨" type="tts">клавиатура</annotation>
+		<annotation cp="🖱">компютер | муши компютер</annotation>
+		<annotation cp="🖱" type="tts">муши компютер</annotation>
+		<annotation cp="🖲">компютер | трекбол</annotation>
+		<annotation cp="🖲" type="tts">трекбол</annotation>
+		<annotation cp="💽">диск | диски компютер | компютер | минидиск | оптикӣ</annotation>
+		<annotation cp="💽" type="tts">диски компютер</annotation>
+		<annotation cp="💾">диск | диски нарм | компютер | нарм</annotation>
+		<annotation cp="💾" type="tts">диски нарм</annotation>
+		<annotation cp="💿">cd | диск | диски оптикӣ | компютер | оптикӣ</annotation>
+		<annotation cp="💿" type="tts">диски оптикӣ</annotation>
+		<annotation cp="📀">blu-ray | dvd | диск | компютер | оптикӣ</annotation>
+		<annotation cp="📀" type="tts">dvd</annotation>
+		<annotation cp="🎥">камера | камераи киногирӣ | кино | синамо</annotation>
+		<annotation cp="🎥" type="tts">камераи киногирӣ</annotation>
+		<annotation cp="🎞">кадр | кадрҳои навор | кино | навор | синамо</annotation>
+		<annotation cp="🎞" type="tts">кадрҳои навор</annotation>
+		<annotation cp="📽">видео | кино | проектор | проектори филм | синамо | филм</annotation>
+		<annotation cp="📽" type="tts">проектори филм</annotation>
+		<annotation cp="🎬">кино | нумератор | хлопушка</annotation>
+		<annotation cp="🎬" type="tts">нумератор</annotation>
+		<annotation cp="📺">видео | тв | телевизор</annotation>
+		<annotation cp="📺" type="tts">телевизор</annotation>
+		<annotation cp="📷">видео | камера</annotation>
+		<annotation cp="📷" type="tts">камера</annotation>
+		<annotation cp="📸">видео | дурахш | камера | камера бо дурахш</annotation>
+		<annotation cp="📸" type="tts">камера бо дурахш</annotation>
+		<annotation cp="📹">видео | видеокамера | камера</annotation>
+		<annotation cp="📹" type="tts">видеокамера</annotation>
+		<annotation cp="📼">видео | видеосистемаи хонагӣ | кассетаи видео | навор</annotation>
+		<annotation cp="📼" type="tts">кассетаи видео</annotation>
+		<annotation cp="🔍">асбоб | бузургкунӣ | пурбини ба тарафи чап ишоракунанда | ҷустуҷӯ | шиша</annotation>
+		<annotation cp="🔍" type="tts">пурбини ба тарафи чап ишоракунанда</annotation>
+		<annotation cp="🔎">асбоб | бузургкунӣ | пурбини ба тарфи рост ишоракунанда | ҷустуҷӯ | шиша</annotation>
+		<annotation cp="🔎" type="tts">пурбини ба тарфи рост ишоракунанда</annotation>
+		<annotation cp="🕯">рӯшноӣ | шамъ</annotation>
+		<annotation cp="🕯" type="tts">шамъ</annotation>
+		<annotation cp="💡">барқӣ | идея | мазҳакавӣ | рӯшноӣ | фурӯзонак | чароғак</annotation>
+		<annotation cp="💡" type="tts">чароғак</annotation>
+		<annotation cp="🔦">асбоб | барқӣ | машъал | рӯшноӣ | фонус</annotation>
+		<annotation cp="🔦" type="tts">фонус</annotation>
+		<annotation cp="🏮">бар | рӯшноӣ | сурх | чароғ | чароғ аз қозаи сурх</annotation>
+		<annotation cp="🏮" type="tts">чароғ аз қозаи сурх</annotation>
+		<annotation cp="📔">дафтар | дафтар бо муқоваи ороишӣ | китоб | муқова | ороишдода</annotation>
+		<annotation cp="📔" type="tts">дафтар бо муқоваи ороишӣ</annotation>
+		<annotation cp="📕">китоб | китоби пӯшида | пӯшида</annotation>
+		<annotation cp="📕" type="tts">китоби пӯшида</annotation>
+		<annotation cp="📖">китоб | китоби кушода | кушода</annotation>
+		<annotation cp="📖" type="tts">китоби кушода</annotation>
+		<annotation cp="📗">китоб | китоби сабз | сабз</annotation>
+		<annotation cp="📗" type="tts">китоби сабз</annotation>
+		<annotation cp="📘">кабуд | китоб | китоби кабуд</annotation>
+		<annotation cp="📘" type="tts">китоби кабуд</annotation>
+		<annotation cp="📙">китоб | китоби норанҷӣ | норанҷӣ</annotation>
+		<annotation cp="📙" type="tts">китоби норанҷӣ</annotation>
+		<annotation cp="📚">китоб | китобҳо</annotation>
+		<annotation cp="📚" type="tts">китобҳо</annotation>
+		<annotation cp="📓">дафтар</annotation>
+		<annotation cp="📓" type="tts">дафтар</annotation>
+		<annotation cp="📒">дафтар | дафтари бухғалтерӣ</annotation>
+		<annotation cp="📒" type="tts">дафтари бухғалтерӣ</annotation>
+		<annotation cp="📃">қатшавӣ | саҳифа | саҳифа бо қатшавӣ | ҳуҷҷат</annotation>
+		<annotation cp="📃" type="tts">саҳифа бо қатшавӣ</annotation>
+		<annotation cp="📜">қоғаз | навори ҳаракат</annotation>
+		<annotation cp="📜" type="tts">навори ҳаракат</annotation>
+		<annotation cp="📄">саҳифа | саҳифа бо рӯйгардонкунӣ | ҳуҷҷат</annotation>
+		<annotation cp="📄" type="tts">саҳифа бо рӯйгардонкунӣ</annotation>
+		<annotation cp="📰">газета | қоғаз | хабарҳо</annotation>
+		<annotation cp="📰" type="tts">газета</annotation>
+		<annotation cp="🗞">газета | газетаи гардондашуда | гардондашуда | қоғаз | хабарҳо</annotation>
+		<annotation cp="🗞" type="tts">газетаи гардондашуда</annotation>
+		<annotation cp="📑">аломат | варақаҳо | варақаҳои хатбарак | маркер | хатбарак</annotation>
+		<annotation cp="📑" type="tts">варақаҳои хатбарак</annotation>
+		<annotation cp="🔖">аломат | хатбарак</annotation>
+		<annotation cp="🔖" type="tts">хатбарак</annotation>
+		<annotation cp="🏷">тамға</annotation>
+		<annotation cp="🏷" type="tts">тамға</annotation>
+		<annotation cp="💰">доллар | пул | сумка | халтаи пул</annotation>
+		<annotation cp="💰" type="tts">халтаи пул</annotation>
+		<annotation cp="💴">асъор | бонк | йен | қоғази пул | қоғази пули йен | пул</annotation>
+		<annotation cp="💴" type="tts">қоғази пули йен</annotation>
+		<annotation cp="💵">асъор | бонк | доллар | қоғази пул | қоғази пули доллар | пул</annotation>
+		<annotation cp="💵" type="tts">қоғази пули доллар</annotation>
+		<annotation cp="💶">асъор | бонк | евро | қоғази пул | қоғази пули евро | пул</annotation>
+		<annotation cp="💶" type="tts">қоғази пули евро</annotation>
+		<annotation cp="💷">асъор | бонк | қоғази пул | қоғази пули фунт | пул | фунт</annotation>
+		<annotation cp="💷" type="tts">қоғази пули фунт</annotation>
+		<annotation cp="💸">асъор | бонк | қанотҳо | қоғази пул | пул | пул бо қанотҳо</annotation>
+		<annotation cp="💸" type="tts">пул бо қанотҳо</annotation>
+		<annotation cp="💳">бонк | корт | корти кредитӣ | қарз | пул</annotation>
+		<annotation cp="💳" type="tts">корти кредитӣ</annotation>
+		<annotation cp="💹">асъор | афзоиш | бозор | боло | боло рафтан | бонк | график | диаграмма | диаграммаи афзоиш бо йен | йен | пул | тамоюл</annotation>
+		<annotation cp="💹" type="tts">диаграммаи афзоиш бо йен</annotation>
+		<annotation cp="✉">лифофа | мактуб | номаи электронӣ</annotation>
+		<annotation cp="✉" type="tts">лифофа</annotation>
+		<annotation cp="📧">мактуб | номаи электронӣ | почта | почтаи электронӣ</annotation>
+		<annotation cp="📧" type="tts">почтаи электронӣ</annotation>
+		<annotation cp="📨">воридшаванда | қабул кардан | лифофа | лифофаи воридотӣ | мактуб | номаи электронӣ | почта | почтаи электронӣ</annotation>
+		<annotation cp="📨" type="tts">лифофаи воридотӣ</annotation>
+		<annotation cp="📩">ирсол шуд | лифофа | лифофа бо тир | мактуб | номаи электронӣ | поён | почта | почтаи электронӣ | содиротӣ | тир</annotation>
+		<annotation cp="📩" type="tts">лифофа бо тир</annotation>
+		<annotation cp="📤">ирсол шуд | қуттӣ | лавҳа | лавҳаи паёмдони баромад | мактуб | паёмдони баромад | почта</annotation>
+		<annotation cp="📤" type="tts">лавҳаи паёмдони баромад</annotation>
+		<annotation cp="📥">қабул кардан | қуттӣ | лавҳа | лавҳаи паёмдони даромад | мактуб | паёмдони даромад | почта</annotation>
+		<annotation cp="📥" type="tts">лавҳаи паёмдони даромад</annotation>
+		<annotation cp="📦">баста | қуттӣ | пакет</annotation>
+		<annotation cp="📦" type="tts">баста</annotation>
+		<annotation cp="📫">қуттии почта | қуттии почтаи пӯшида бо байрақчаи бардошаташуда | почта | пӯшида</annotation>
+		<annotation cp="📫" type="tts">қуттии почтаи пӯшида бо байрақчаи бардошаташуда</annotation>
+		<annotation cp="📪">қутии почтаи пӯшида бо байрақчаи паст кардашуда | қуттии почта | пастшуда | почта | пӯшида</annotation>
+		<annotation cp="📪" type="tts">қутии почтаи пӯшида бо байрақчаи паст кардашуда</annotation>
+		<annotation cp="📬">кушода | қуттии почта | қуттии почтаи кушода бо байрақчаи бардошаташуда | почта</annotation>
+		<annotation cp="📬" type="tts">қуттии почтаи кушода бо байрақчаи бардошаташуда</annotation>
+		<annotation cp="📭">кушода | қуттии почта | қуттии почтаи кушода бо байрақчаи паст кардашуда | пастшуда | почта</annotation>
+		<annotation cp="📭" type="tts">қуттии почтаи кушода бо байрақчаи паст кардашуда</annotation>
+		<annotation cp="📮">қуттии почта | почта</annotation>
+		<annotation cp="📮" type="tts">қуттии почта</annotation>
+		<annotation cp="🗳">бюллетен | қуттӣ | қуттии бюллетенҳо бо бюллетен</annotation>
+		<annotation cp="🗳" type="tts">қуттии бюллетенҳо бо бюллетен</annotation>
+		<annotation cp="✏">қалам</annotation>
+		<annotation cp="✏" type="tts">қалам</annotation>
+		<annotation cp="✒">нӯг | нӯги сиёҳ | ручка</annotation>
+		<annotation cp="✒" type="tts">нӯги сиёҳ</annotation>
+		<annotation cp="🖋">авторучка | ручка | фаввора</annotation>
+		<annotation cp="🖋" type="tts">авторучка</annotation>
+		<annotation cp="🖊">ручка | ручкаи саққочадор</annotation>
+		<annotation cp="🖊" type="tts">ручка</annotation>
+		<annotation cp="🖌">мӯқаллам | расм</annotation>
+		<annotation cp="🖌" type="tts">мӯқаллам</annotation>
+		<annotation cp="🖍">пастел</annotation>
+		<annotation cp="🖍" type="tts">пастел</annotation>
+		<annotation cp="📝">қалам | мемо</annotation>
+		<annotation cp="📝" type="tts">мемо</annotation>
+		<annotation cp="💼">ҷузвгир</annotation>
+		<annotation cp="💼" type="tts">ҷузвгир</annotation>
+		<annotation cp="📁">файл | ҷузвдон | ҷузвдони файлҳо</annotation>
+		<annotation cp="📁" type="tts">ҷузвдони файлҳо</annotation>
+		<annotation cp="📂">кушода | кушодани ҷузвдони фалҳо | файл | ҷузвдон</annotation>
+		<annotation cp="📂" type="tts">кушодани ҷузвдони фалҳо</annotation>
+		<annotation cp="🗂">корт | нишондиҳанда | тақсимкунандаҳо | тақсимкунандаҳои индекси кортҳо</annotation>
+		<annotation cp="🗂" type="tts">тақсимкунандаҳои индекси кортҳо</annotation>
+		<annotation cp="📅">сана | тақвим</annotation>
+		<annotation cp="📅" type="tts">тақвим</annotation>
+		<annotation cp="📆">тақвим | тақвими дарондашаванда</annotation>
+		<annotation cp="📆" type="tts">тақвими дарондашаванда</annotation>
+		<annotation cp="🗒">дафтари ёддошт | дафтари ёддошти печдор | печдор | тавзеҳ</annotation>
+		<annotation cp="🗒" type="tts">дафтари ёддошти печдор</annotation>
+		<annotation cp="🗓">дафтари ёддошт | печдор | тақвим | тақвими печдор</annotation>
+		<annotation cp="🗓" type="tts">тақвими печдор</annotation>
+		<annotation cp="📇">индекси корт | картотека | корт | нишондиҳанда</annotation>
+		<annotation cp="📇" type="tts">индекси корт</annotation>
+		<annotation cp="📈">афзоиш | боло | график | диаграмма | диаграммаи афзоишёбанда | тамоюл</annotation>
+		<annotation cp="📈" type="tts">диаграммаи афзоишёбанда</annotation>
+		<annotation cp="📉">график | диаграмма | диаграммаи коҳишёбанда | поён | тамоюл</annotation>
+		<annotation cp="📉" type="tts">диаграммаи коҳишёбанда</annotation>
+		<annotation cp="📊">бар | график | диаграмма | диаграммаи хаттӣ</annotation>
+		<annotation cp="📊" type="tts">диаграммаи хаттӣ</annotation>
+		<annotation cp="📋">ҳофизаи муваққатӣ</annotation>
+		<annotation cp="📋" type="tts">ҳофизаи муваққатӣ</annotation>
+		<annotation cp="📌">сӯзан | тугмачаи сӯзандор</annotation>
+		<annotation cp="📌" type="tts">тугмачаи сӯзандор</annotation>
+		<annotation cp="📍">сӯзан | тугмачаи сӯзандор | тугмачаи сӯзандори даврашакл</annotation>
+		<annotation cp="📍" type="tts">тугмачаи сӯзандори даврашакл</annotation>
+		<annotation cp="📎">бандак</annotation>
+		<annotation cp="📎" type="tts">бандак</annotation>
+		<annotation cp="🖇">бандак | бандаки пайвандшуда | пайванд</annotation>
+		<annotation cp="🖇" type="tts">бандаки пайвандшуда</annotation>
+		<annotation cp="📏">ҷадвал | ҷадвали рост</annotation>
+		<annotation cp="📏" type="tts">ҷадвали рост</annotation>
+		<annotation cp="📐">маҷмӯъ | секунҷа | ҷадвал | ҷадвали секунҷа</annotation>
+		<annotation cp="📐" type="tts">ҷадвали секунҷа</annotation>
+		<annotation cp="✂">абзор | буридан | қайчӣ</annotation>
+		<annotation cp="✂" type="tts">қайчӣ</annotation>
+		<annotation cp="🗃">корт | қуттӣ | қуттии файли кортҳо | файл</annotation>
+		<annotation cp="🗃" type="tts">қуттии файли кортҳо</annotation>
+		<annotation cp="🗄">кабинет | кабинети файлҳо | файл | ҳуҷҷатдорӣ</annotation>
+		<annotation cp="🗄" type="tts">кабинети файлҳо</annotation>
+		<annotation cp="🗑">сабади партовҳо</annotation>
+		<annotation cp="🗑" type="tts">сабади партовҳо</annotation>
+		<annotation cp="🔒">қулфшуда | пӯшида</annotation>
+		<annotation cp="🔒" type="tts">қулфшуда</annotation>
+		<annotation cp="🔓">кушода | кушодан | кушодашуда | қулф</annotation>
+		<annotation cp="🔓" type="tts">кушодашуда</annotation>
+		<annotation cp="🔏">бо қалам қулф шудааст | қулф | махфият | нӯг | ручка | сиёҳӣ</annotation>
+		<annotation cp="🔏" type="tts">бо қалам қулф шудааст</annotation>
+		<annotation cp="🔐">бехатар | бо калид қулф шудааст | калид | қулф | пӯшида</annotation>
+		<annotation cp="🔐" type="tts">бо калид қулф шудааст</annotation>
+		<annotation cp="🔑">калид | қулф | парол</annotation>
+		<annotation cp="🔑" type="tts">калид</annotation>
+		<annotation cp="🗝">калид | калиди куҳна | куҳна | қулф</annotation>
+		<annotation cp="🗝" type="tts">калиди куҳна</annotation>
+		<annotation cp="🔨">асбоб | болға</annotation>
+		<annotation cp="🔨" type="tts">болға</annotation>
+		<annotation cp="⛏">асбоб | зоғнӯл | саноати куҳӣ</annotation>
+		<annotation cp="⛏" type="tts">зоғнӯл</annotation>
+		<annotation cp="⚒">асбоб | болға | болға ва зоғнӯл | зоғнӯл</annotation>
+		<annotation cp="⚒" type="tts">болға ва зоғнӯл</annotation>
+		<annotation cp="🛠">асбоб | болға | болға ва калиди гайкатобӣ | калид | калиди гайкатобӣ</annotation>
+		<annotation cp="🛠" type="tts">болға ва калиди гайкатобӣ</annotation>
+		<annotation cp="🗡">корд | силоҳ | ханҷар</annotation>
+		<annotation cp="🗡" type="tts">ханҷар</annotation>
+		<annotation cp="⚔">силоҳ | чиллик гузошташуда | шамшер | шамшерҳои ба ҳам гузошташуда</annotation>
+		<annotation cp="⚔" type="tts">шамшерҳои ба ҳам гузошташуда</annotation>
+		<annotation cp="💣">бомба | мазҳакавӣ</annotation>
+		<annotation cp="💣" type="tts">бомба</annotation>
+		<annotation cp="🏹">асбоб | бурҷи дувоздаҳгона | камон | камон ва тир | камонвар | камонварӣ | Қавс | силоҳ | тир</annotation>
+		<annotation cp="🏹" type="tts">камон ва тир</annotation>
+		<annotation cp="🛡">силоҳ | сипар</annotation>
+		<annotation cp="🛡" type="tts">сипар</annotation>
+		<annotation cp="🔧">асбоб | калид | калиди гайкатобӣ</annotation>
+		<annotation cp="🔧" type="tts">калиди гайкатобӣ</annotation>
+		<annotation cp="🔩">асбоб | гайка | гайка ва мурват | мурват</annotation>
+		<annotation cp="🔩" type="tts">гайка ва мурват</annotation>
+		<annotation cp="⚙">асбоб | чархи дандонадор</annotation>
+		<annotation cp="⚙" type="tts">чархи дандонадор</annotation>
+		<annotation cp="🗜">асбоб | исканҷа | фишурдан | хамут</annotation>
+		<annotation cp="🗜" type="tts">хамут</annotation>
+		<annotation cp="⚖">адолат | асбоб | бурҷи дувоздаҳгона | вазн | Мизон | тавозун | тарозу</annotation>
+		<annotation cp="⚖" type="tts">тарозу</annotation>
+		<annotation cp="🔗">пайванд</annotation>
+		<annotation cp="🔗" type="tts">пайванд</annotation>
+		<annotation cp="⛓">занҷир | занҷирҳо</annotation>
+		<annotation cp="⛓" type="tts">занҷирҳо</annotation>
+		<annotation cp="⚗">аламбик | асбоб | кимиё</annotation>
+		<annotation cp="⚗" type="tts">аламбик</annotation>
+		<annotation cp="🔬">асбоб | илм | микроскоп</annotation>
+		<annotation cp="🔬" type="tts">микроскоп</annotation>
+		<annotation cp="🔭">асбоб | илм | телескоп</annotation>
+		<annotation cp="🔭" type="tts">телескоп</annotation>
+		<annotation cp="📡">антенна | антеннаи моҳвораӣ | моҳвора | табақ</annotation>
+		<annotation cp="📡" type="tts">антеннаи моҳвораӣ</annotation>
+		<annotation cp="💉">асбоб | бемор | дору | духтур | сӯзан | сӯзандору | сӯзанзанӣ</annotation>
+		<annotation cp="💉" type="tts">сӯзандору</annotation>
+		<annotation cp="💊">бемор | дору | духтур</annotation>
+		<annotation cp="💊" type="tts">дору</annotation>
+		<annotation cp="🚪">дар</annotation>
+		<annotation cp="🚪" type="tts">дар</annotation>
+		<annotation cp="🛏">бистар | меҳмонхона | хоб кардан</annotation>
+		<annotation cp="🛏" type="tts">бистар</annotation>
+		<annotation cp="🛋">диван | диван ва чароғ | меҳмонхона | чароғ</annotation>
+		<annotation cp="🛋" type="tts">диван ва чароғ</annotation>
+		<annotation cp="🚽">ҳоҷатхона</annotation>
+		<annotation cp="🚽" type="tts">ҳоҷатхона</annotation>
+		<annotation cp="🚿">душ | об</annotation>
+		<annotation cp="🚿" type="tts">душ</annotation>
+		<annotation cp="🛁">ванна | ҳаммом</annotation>
+		<annotation cp="🛁" type="tts">ванна</annotation>
+		<annotation cp="🛒">ароба | аробача | аробача барои харид кардан | харид</annotation>
+		<annotation cp="🛒" type="tts">аробача барои харид кардан</annotation>
+		<annotation cp="🚬">сигор | тамоку кашидан</annotation>
+		<annotation cp="🚬" type="tts">сигор</annotation>
+		<annotation cp="⚰">марг | тобут</annotation>
+		<annotation cp="⚰" type="tts">тобут</annotation>
+		<annotation cp="⚱">марг | устадон | устадони ҷаноза | хокистар | ҷаноза</annotation>
+		<annotation cp="⚱" type="tts">устадони ҷаноза</annotation>
+		<annotation cp="🗿">моаи | мояи | рӯй | ҳайкал</annotation>
+		<annotation cp="🗿" type="tts">моаи</annotation>
+		<annotation cp="🏧">аломати &quot;Банкомат&quot; | банкомат | бонк | гӯянда | худкор</annotation>
+		<annotation cp="🏧" type="tts">аломати &quot;Банкомат&quot;</annotation>
+		<annotation cp="🚮">аломати &quot;Партов ба қуттӣ&quot; | қуттии партовҳо | партов</annotation>
+		<annotation cp="🚮" type="tts">аломати &quot;Партов ба қуттӣ&quot;</annotation>
+		<annotation cp="🚰">нӯшидан | нӯшокӣ | об | оби нӯшокӣ</annotation>
+		<annotation cp="🚰" type="tts">оби нӯшокӣ</annotation>
+		<annotation cp="♿">аломати &quot;Курсии чархдор&quot; | дастрасӣ</annotation>
+		<annotation cp="♿" type="tts">аломати &quot;Курсии чархдор&quot;</annotation>
+		<annotation cp="🚹">мард | ҳоҷатхона | ҳоҷатхона барои мардон</annotation>
+		<annotation cp="🚹" type="tts">ҳоҷатхона барои мардон</annotation>
+		<annotation cp="🚺">зан | ҳоҷатхона | ҳоҷатхона барои занон</annotation>
+		<annotation cp="🚺" type="tts">ҳоҷатхона барои занон</annotation>
+		<annotation cp="🚻">ташноб | ҳоҷатхона | ҳоҷтхона</annotation>
+		<annotation cp="🚻" type="tts">ташноб</annotation>
+		<annotation cp="🚼">аломати &quot;Кӯдак&quot; | кӯдак | тағйир додан</annotation>
+		<annotation cp="🚼" type="tts">аломати &quot;Кӯдак&quot;</annotation>
+		<annotation cp="🚾">мабраз | об | обхона | ташноб | ҳоҷатхона</annotation>
+		<annotation cp="🚾" type="tts">мабраз</annotation>
+		<annotation cp="🛂">назорат | назорати шиносномаҳо | шиноснома</annotation>
+		<annotation cp="🛂" type="tts">назорати шиносномаҳо</annotation>
+		<annotation cp="🛃">гумрук</annotation>
+		<annotation cp="🛃" type="tts">гумрук</annotation>
+		<annotation cp="🛄">бағоч | гирифтан | гирифтани бағочҳо</annotation>
+		<annotation cp="🛄" type="tts">гирифтани бағочҳо</annotation>
+		<annotation cp="🛅">бағоч | бағочхона | бағочҳои боқимонда</annotation>
+		<annotation cp="🛅" type="tts">бағочҳои боқимонда</annotation>
+		<annotation cp="⚠">огоҳӣ</annotation>
+		<annotation cp="⚠" type="tts">огоҳӣ</annotation>
+		<annotation cp="🚸">гузариши кӯдакон | гузаштан | кӯдак | пиёдарав | ҳаракат</annotation>
+		<annotation cp="🚸" type="tts">гузариши кӯдакон</annotation>
+		<annotation cp="⛔">ворид шудан манъ аст | вуруд | мамнуъ | манъшуда | не | нест | ҳаракат</annotation>
+		<annotation cp="⛔" type="tts">ворид шудан манъ аст</annotation>
+		<annotation cp="🚫">вуруд | манъ аст | манъшуда | не | нест</annotation>
+		<annotation cp="🚫" type="tts">манъ аст</annotation>
+		<annotation cp="🚳">велосипед | мамнуъ | манъшуда | не | нест | ҳаракат | ҳаракати велосипедҳо манъ аст</annotation>
+		<annotation cp="🚳" type="tts">ҳаракати велосипедҳо манъ аст</annotation>
+		<annotation cp="🚭">мамнуъ | манъшуда | не | нест | тамоку кашидан манъ аст | тамокукашӣ</annotation>
+		<annotation cp="🚭" type="tts">тамоку кашидан манъ аст</annotation>
+		<annotation cp="🚯">мамнуъ | манъшуда | не | нест | партов | партов партофтан манъ аст</annotation>
+		<annotation cp="🚯" type="tts">партов партофтан манъ аст</annotation>
+		<annotation cp="🚱">ғайринӯшокӣ | об | оби ғайринӯшокӣ</annotation>
+		<annotation cp="🚱" type="tts">оби ғайринӯшокӣ</annotation>
+		<annotation cp="🚷">мамнуъ | манъшуда | не | нест | пиёдарав | ҳаракати пиёдагардон манъ аст</annotation>
+		<annotation cp="🚷" type="tts">ҳаракати пиёдагардон манъ аст</annotation>
+		<annotation cp="📵">истифодаи телефонҳои мобилӣ манъ аст | мамнуъ | манъшуда | не | нест | телефон | телефони мобилӣ</annotation>
+		<annotation cp="📵" type="tts">истифодаи телефонҳои мобилӣ манъ аст</annotation>
+		<annotation cp="🔞">18 | мамнуъ | манъшуда | маҳдудияти синну сол | не | нест | ноболиғ | ҳаждаҳ | шахсони аз синни ҳаждаҳ манъ аст</annotation>
+		<annotation cp="🔞" type="tts">шахсони аз синни ҳаждаҳ манъ аст</annotation>
+		<annotation cp="☢">аломат | радиоактивӣ</annotation>
+		<annotation cp="☢" type="tts">радиоактивӣ</annotation>
+		<annotation cp="☣">аломат | хатари биологӣ</annotation>
+		<annotation cp="☣" type="tts">хатари биологӣ</annotation>
+		<annotation cp="⬆">асосӣ | самт | тир | тири &quot;боло&quot; | шимол</annotation>
+		<annotation cp="⬆" type="tts">тири &quot;боло&quot;</annotation>
+		<annotation cp="↗">мобайнӣ | самт | тир | тири болову рост | шимолу шарқ</annotation>
+		<annotation cp="↗" type="tts">тири болову рост</annotation>
+		<annotation cp="➡">асосӣ | самт | тир | тири рост | шарқ</annotation>
+		<annotation cp="➡" type="tts">тири рост</annotation>
+		<annotation cp="↘">мобайнӣ | самт | тир | тири поёну рост | ҷанубу шарқ</annotation>
+		<annotation cp="↘" type="tts">тири поёну рост</annotation>
+		<annotation cp="⬇">асосӣ | поён | самт | тир | тири поён | ҷануб</annotation>
+		<annotation cp="⬇" type="tts">тири поён</annotation>
+		<annotation cp="↙">мобайнӣ | самт | тир | тири поёну чап | ҷанубу ғарб</annotation>
+		<annotation cp="↙" type="tts">тири поёну чап</annotation>
+		<annotation cp="⬅">асосӣ | ғарб | самт | тир | тири чап</annotation>
+		<annotation cp="⬅" type="tts">тири чап</annotation>
+		<annotation cp="↖">мобайнӣ | самт | тир | тири болову чап | шимолу ғарб</annotation>
+		<annotation cp="↖" type="tts">тири болову чап</annotation>
+		<annotation cp="↕">тир | тири поёну боло</annotation>
+		<annotation cp="↕" type="tts">тири поёну боло</annotation>
+		<annotation cp="↔">тир | тири чапу рост</annotation>
+		<annotation cp="↔" type="tts">тири чапу рост</annotation>
+		<annotation cp="↩">тир | тири рости ба тарафи чап каҷшаванда</annotation>
+		<annotation cp="↩" type="tts">тири рости ба тарафи чап каҷшаванда</annotation>
+		<annotation cp="↪">тир | тири чапи ба тарафи рост каҷшаванда</annotation>
+		<annotation cp="↪" type="tts">тири чапи ба тарафи рост каҷшаванда</annotation>
+		<annotation cp="⤴">тир | тири рости ба тарафи боло каҷшаванда</annotation>
+		<annotation cp="⤴" type="tts">тири рости ба тарафи боло каҷшаванда</annotation>
+		<annotation cp="⤵">поён | тир | тири рости ба тарафи поён каҷшаванда</annotation>
+		<annotation cp="⤵" type="tts">тири рости ба тарафи поён каҷшаванда</annotation>
+		<annotation cp="🔃">аз нав бор кардан | самти ҳаракати ақрабҳо соат | тир | тирҳои амудии самти ҳаракати ақрабҳои соат</annotation>
+		<annotation cp="🔃" type="tts">тирҳои амудии самти ҳаракати ақрабҳои соат</annotation>
+		<annotation cp="🔄">муқобили самти ҳаракати ақрабҳои соат | муқобили ҳаракати офтоб | тир | Тугмаи &quot;Тирҳои самти муқобили ҳаракати ақрабҳои соат&quot;</annotation>
+		<annotation cp="🔄" type="tts">Тугмаи &quot;Тирҳои самти муқобили ҳаракати ақрабҳои соат&quot;</annotation>
+		<annotation cp="🔙">қафо | тир | тири &quot;бозгашт&quot;</annotation>
+		<annotation cp="🔙" type="tts">тири &quot;бозгашт&quot;</annotation>
+		<annotation cp="🔚">охир | тир | тири &quot;охир&quot;</annotation>
+		<annotation cp="🔚" type="tts">тири &quot;охир&quot;</annotation>
+		<annotation cp="🔛">нишона | тир | тири &quot;фаъол!&quot; | фаъол</annotation>
+		<annotation cp="🔛" type="tts">тири &quot;фаъол!&quot;</annotation>
+		<annotation cp="🔜">ба қарибӣ | тир | тири &quot;ба қарибӣ&quot;</annotation>
+		<annotation cp="🔜" type="tts">тири &quot;ба қарибӣ&quot;</annotation>
+		<annotation cp="🔝">боло | тир | тири &quot;БОЛОЙ&quot;</annotation>
+		<annotation cp="🔝" type="tts">тири &quot;БОЛОЙ&quot;</annotation>
+		<annotation cp="🛐">дин | ибодат | ҷои ибодат</annotation>
+		<annotation cp="🛐" type="tts">ҷои ибодат</annotation>
+		<annotation cp="⚛">аломати &quot;атом&quot; | атеист | атом</annotation>
+		<annotation cp="⚛" type="tts">аломати &quot;атом&quot;</annotation>
+		<annotation cp="🕉">дин | ом | Ҳинду</annotation>
+		<annotation cp="🕉" type="tts">ом</annotation>
+		<annotation cp="✡">Дейвид | дин | ситора | ситораи Дейвид | яҳуд | яҳудӣ</annotation>
+		<annotation cp="✡" type="tts">ситораи Дейвид</annotation>
+		<annotation cp="☸">Буддист | дарма | дин | чарх | чархи дарма</annotation>
+		<annotation cp="☸" type="tts">чархи дарма</annotation>
+		<annotation cp="☯">дин | йин | тао | таоист | янг</annotation>
+		<annotation cp="☯" type="tts">йин янг</annotation>
+		<annotation cp="✝">дин | Насронӣ | салиб | салиби лотинӣ</annotation>
+		<annotation cp="✝" type="tts">салиби лотинӣ</annotation>
+		<annotation cp="☦">дин | Насронӣ | салиб | салиби православӣ</annotation>
+		<annotation cp="☦" type="tts">салиби православӣ</annotation>
+		<annotation cp="☪">дин | Ислом | мусулмон | ситора ва салиб</annotation>
+		<annotation cp="☪" type="tts">ситора ва салиб</annotation>
+		<annotation cp="☮">аломати &quot;сулҳ&quot; | сулҳ</annotation>
+		<annotation cp="☮" type="tts">аломати &quot;сулҳ&quot;</annotation>
+		<annotation cp="🕎">дин | қандил | менораҳ | шамъдон</annotation>
+		<annotation cp="🕎" type="tts">менораҳ</annotation>
+		<annotation cp="🔯">ситора | ситораи холдори шашгӯша | тақдир</annotation>
+		<annotation cp="🔯" type="tts">ситораи холдори шашгӯша</annotation>
+		<annotation cp="♈">бурҷи дувоздаҳгона | қӯшқор | Ҳамал</annotation>
+		<annotation cp="♈" type="tts">Ҳамал</annotation>
+		<annotation cp="♉">буққа | бурҷи дувоздаҳгона | Савр</annotation>
+		<annotation cp="♉" type="tts">Савр</annotation>
+		<annotation cp="♊">бурҷи дувоздаҳгона | дугоник | Ҷавзо</annotation>
+		<annotation cp="♊" type="tts">Ҷавзо</annotation>
+		<annotation cp="♋">ақраб | бурҷи дувоздаҳгона | Саратон</annotation>
+		<annotation cp="♋" type="tts">Саратон</annotation>
+		<annotation cp="♌">Асад | бурҷи дувоздаҳгона | шер</annotation>
+		<annotation cp="♌" type="tts">Асад</annotation>
+		<annotation cp="♍">бурҷи дувоздаҳгона | Сунбула</annotation>
+		<annotation cp="♍" type="tts">Сунбула</annotation>
+		<annotation cp="♎">адолат | бурҷи дувоздаҳгона | Мизон | тавозун | тарозу</annotation>
+		<annotation cp="♎" type="tts">Мизон</annotation>
+		<annotation cp="♏">Ақраб | бурҷи дувоздаҳгона | каждум</annotation>
+		<annotation cp="♏" type="tts">Ақраб</annotation>
+		<annotation cp="♐">бурҷи дувоздаҳгона | Қавс</annotation>
+		<annotation cp="♐" type="tts">Қавс</annotation>
+		<annotation cp="♑">бурҷи дувоздаҳгона | Ҷадӣ</annotation>
+		<annotation cp="♑" type="tts">Ҷадӣ</annotation>
+		<annotation cp="♒">бурҷи дувоздаҳгона | Далв | доранда | об</annotation>
+		<annotation cp="♒" type="tts">Далв</annotation>
+		<annotation cp="♓">бурҷи дувоздаҳгона | Ҳут</annotation>
+		<annotation cp="♓" type="tts">Ҳут</annotation>
+		<annotation cp="⛎">Ophiuchus | бурҷи дувоздаҳгона | доранда | мор</annotation>
+		<annotation cp="⛎" type="tts">Ophiuchus</annotation>
+		<annotation cp="🔀">тир | тугмаи &quot;Аралаш кардани суруд&quot; | чиллик гузошташуда</annotation>
+		<annotation cp="🔀" type="tts">тугмаи &quot;Аралаш кардани суруд&quot;</annotation>
+		<annotation cp="🔁">самти ҳаракати ақрабҳои соат | такрор | тир | тугмаи &quot;Такрор&quot;</annotation>
+		<annotation cp="🔁" type="tts">тугмаи &quot;Такрор&quot;</annotation>
+		<annotation cp="🔂">самти ҳаракати ақрабҳои соат | тир | тугмаи &quot;Такрори ягона&quot; | як бор</annotation>
+		<annotation cp="🔂" type="tts">тугмаи &quot;Такрори ягона&quot;</annotation>
+		<annotation cp="▶">пахш | рост | секунҷа | тир | тугмаи &quot;пахш&quot;</annotation>
+		<annotation cp="▶" type="tts">тугмаи &quot;пахш&quot;</annotation>
+		<annotation cp="⏩">дутарафа | пеш | тез | тир | тугмаи &quot;Гузариш ба пеш&quot;</annotation>
+		<annotation cp="⏩" type="tts">тугмаи &quot;Гузариш ба пеш&quot;</annotation>
+		<annotation cp="⏭">саҳнаи навбатӣ | секунҷа | суруди навбатӣ | тир | тугмаи &quot;Суруди навбатӣ&quot;</annotation>
+		<annotation cp="⏭" type="tts">тугмаи &quot;Суруди навбатӣ&quot;</annotation>
+		<annotation cp="⏯">пахш | рост | секунҷа | таваққуф | тир | тугмаи &quot;Пахш ё таваққуф&quot;</annotation>
+		<annotation cp="⏯" type="tts">тугмаи &quot;Пахш ё таваққуф&quot;</annotation>
+		<annotation cp="◀">гузариш ба қафо | секунҷа | тир | тугмаи &quot;Гузариш ба қафо&quot; | чап</annotation>
+		<annotation cp="◀" type="tts">тугмаи &quot;Гузариш ба қафо&quot;</annotation>
+		<annotation cp="⏪">ба ақиб бурдан | дутога | тир | тугмаи &quot;Гузариши зуд ба қафо&quot;</annotation>
+		<annotation cp="⏪" type="tts">тугмаи &quot;Гузариши зуд ба қафо&quot;</annotation>
+		<annotation cp="⏮">саҳнаи қаблӣ | секунҷа | суруди қаблӣ | тир | тугмаи &quot;Суруди охирин&quot;</annotation>
+		<annotation cp="⏮" type="tts">тугмаи &quot;Суруди охирин&quot;</annotation>
+		<annotation cp="🔼">сурх | тир | тугма | тугмаи &quot;Боло&quot;</annotation>
+		<annotation cp="🔼" type="tts">тугмаи &quot;Боло&quot;</annotation>
+		<annotation cp="⏫">дутарафа | тир | тугмаи &quot;Зуд ба боло&quot;</annotation>
+		<annotation cp="⏫" type="tts">тугмаи &quot;Зуд ба боло&quot;</annotation>
+		<annotation cp="🔽">поён | сурх | тир | тугма | тугмаи &quot;Поён&quot;</annotation>
+		<annotation cp="🔽" type="tts">тугмаи &quot;Поён&quot;</annotation>
+		<annotation cp="⏬">дутога | поён | тир | тугмаи &quot;Зуд ба поён&quot;</annotation>
+		<annotation cp="⏬" type="tts">тугмаи &quot;Зуд ба поён&quot;</annotation>
+		<annotation cp="⏸">амудӣ | дутарафа | навор | таваққуф | Тугмаи &quot;Таваққуф&quot;</annotation>
+		<annotation cp="⏸" type="tts">Тугмаи &quot;Таваққуф&quot;</annotation>
+		<annotation cp="⏹">ист | тугмаи &quot;Ист&quot; | чоркунҷа</annotation>
+		<annotation cp="⏹" type="tts">тугмаи &quot;Ист&quot;</annotation>
+		<annotation cp="⏺">давра | сабт | тугмаи &quot;Сабт&quot;</annotation>
+		<annotation cp="⏺" type="tts">тугмаи &quot;Сабт&quot;</annotation>
+		<annotation cp="⏏">баровардан | тугмаи &quot;Баровардан&quot;</annotation>
+		<annotation cp="⏏" type="tts">тугмаи &quot;Баровардан&quot;</annotation>
+		<annotation cp="🎦">камера | кино | филм</annotation>
+		<annotation cp="🎦" type="tts">кино</annotation>
+		<annotation cp="🔅">камнур | паст | рӯшноӣ | тугмаи &quot;Камнуршавӣ&quot;</annotation>
+		<annotation cp="🔅" type="tts">тугмаи &quot;Камнуршавӣ&quot;</annotation>
+		<annotation cp="🔆">равшан | рӯшноӣ | тугмаи &quot;Рӯшноӣ&quot;</annotation>
+		<annotation cp="🔆" type="tts">тугмаи &quot;Рӯшноӣ&quot;</annotation>
+		<annotation cp="📶">антенна | навор | сигнал | телефон | телефони мобилӣ | хатҳои антенна</annotation>
+		<annotation cp="📶" type="tts">хатҳои антенна</annotation>
+		<annotation cp="📳">ларзиш | реҷа | реҷаи ларзиш | телефон | телефони мобилӣ</annotation>
+		<annotation cp="📳" type="tts">реҷаи ларзиш</annotation>
+		<annotation cp="📴">телефон | телефони мобилӣ | хомӯш | хомӯш кардани телефони мобилӣ</annotation>
+		<annotation cp="📴" type="tts">хомӯш кардани телефони мобилӣ</annotation>
+		<annotation cp="♀">аломати зан | зан</annotation>
+		<annotation cp="♀" type="tts">аломати зан</annotation>
+		<annotation cp="♂">аломати мард | мард</annotation>
+		<annotation cp="♂" type="tts">аломати мард</annotation>
+		<annotation cp="✖">бекор кардан | зарб задан | зарбзанӣ | зарбзании вазнин х | х</annotation>
+		<annotation cp="✖" type="tts">зарбзании вазнин х</annotation>
+		<annotation cp="➕">аломати вазнини ҷамъ | риёзӣ | ҷамъ</annotation>
+		<annotation cp="➕" type="tts">аломати вазнини ҷамъ</annotation>
+		<annotation cp="➖">аломати вазнини тарҳ | риёзӣ | тарҳ</annotation>
+		<annotation cp="➖" type="tts">аломати вазнини тарҳ</annotation>
+		<annotation cp="➗">аломати вазнини тақсим | риёзӣ | тақсим</annotation>
+		<annotation cp="➗" type="tts">аломати вазнини тақсим</annotation>
+		<annotation cp="‼">аломат | аломати хитоби дукарата | аломатҳои китобатӣ | банг-банг | хитоб</annotation>
+		<annotation cp="‼" type="tts">аломати хитоби дукарата</annotation>
+		<annotation cp="⁉">аломат | аломати китобатӣ | аломати хитобу савол | интерробанг | савол | хитоб</annotation>
+		<annotation cp="⁉" type="tts">аломати хитобу савол</annotation>
+		<annotation cp="❓">аломат | аломати китобатӣ | аломати савол | савол</annotation>
+		<annotation cp="❓" type="tts">аломати савол</annotation>
+		<annotation cp="❔">аломат | аломати китобатӣ | аломати саволи сафед | баёншуда | савол</annotation>
+		<annotation cp="❔" type="tts">аломати саволи сафед</annotation>
+		<annotation cp="❕">аломат | аломати хитоби сафед | аломатҳои китобатӣ | баёншуда | хитоб</annotation>
+		<annotation cp="❕" type="tts">аломати хитоби сафед</annotation>
+		<annotation cp="❗">аломат | аломати хитоб | аломатҳои китобатӣ | хитоб</annotation>
+		<annotation cp="❗" type="tts">аломати хитоб</annotation>
+		<annotation cp="〰">аломати китобатӣ | мавҷдор | тире | тиреи мавҷдор</annotation>
+		<annotation cp="〰" type="tts">тиреи мавҷдор</annotation>
+		<annotation cp="💱">асъор | бонк | мубодила | мубодилаи асъор | пул</annotation>
+		<annotation cp="💱" type="tts">мубодилаи асъор</annotation>
+		<annotation cp="💲">аломати доллари вазнин | асъор | доллар | пул</annotation>
+		<annotation cp="💲" type="tts">аломати доллари вазнин</annotation>
+		<annotation cp="⚕">аломати тиббӣ | дору | кормандон | табиб</annotation>
+		<annotation cp="⚕" type="tts">аломати тиббӣ</annotation>
+		<annotation cp="♻">аз нав коркард кардан | аломати &quot;азнавкоркардкунӣ&quot;</annotation>
+		<annotation cp="♻" type="tts">аломати &quot;азнавкоркардкунӣ&quot;</annotation>
+		<annotation cp="⚜">савсан</annotation>
+		<annotation cp="⚜" type="tts">савсан</annotation>
+		<annotation cp="🔱">асбоб | киштӣ | лангар | нишон | нишони Соскан | соскан</annotation>
+		<annotation cp="🔱" type="tts">нишони Соскан</annotation>
+		<annotation cp="📛">нишона | нишонаи ном | ном</annotation>
+		<annotation cp="📛" type="tts">нишонаи ном</annotation>
+		<annotation cp="🔰">аломати ҷопонӣ барои навомӯз | асбоб | барг | зард | навомӯз | сабз | ҷопонӣ | шеврон</annotation>
+		<annotation cp="🔰" type="tts">аломати ҷопонӣ барои навомӯз</annotation>
+		<annotation cp="⭕">давра | давраи калони вазнин | о</annotation>
+		<annotation cp="⭕" type="tts">давраи калони вазнин</annotation>
+		<annotation cp="✅">аломат | аломати вазнини қайди сафед | қайд</annotation>
+		<annotation cp="✅" type="tts">аломати вазнини қайди сафед</annotation>
+		<annotation cp="☑">бюллетен | қайд | қуттӣ | қуттии бюллетенҳо бо қайд</annotation>
+		<annotation cp="☑" type="tts">қуттии бюллетенҳо бо қайд</annotation>
+		<annotation cp="✔">аломат | аломати вазнини қайд | қайд</annotation>
+		<annotation cp="✔" type="tts">аломати вазнини қайд</annotation>
+		<annotation cp="❌">аломат | аломати салиб | бекор кардан | зарб задан | зарбзанӣ | х</annotation>
+		<annotation cp="❌" type="tts">аломати салиб</annotation>
+		<annotation cp="❎">аломат | тугмаи &quot;Аломати салиб&quot; | чоркунҷа</annotation>
+		<annotation cp="❎" type="tts">тугмаи &quot;Аломати салиб&quot;</annotation>
+		<annotation cp="➰">печ | ҳалқа | ҳалқаи пурпечутоб</annotation>
+		<annotation cp="➰" type="tts">ҳалқаи пурпечутоб</annotation>
+		<annotation cp="➿">дутарфа | печ | ҳалқа | ҳалқаи дутарафа пурпечутоб</annotation>
+		<annotation cp="➿" type="tts">ҳалқаи дутарафа пурпечутоб</annotation>
+		<annotation cp="〽">аломат | аломати тағйирёбии қисм | қисм</annotation>
+		<annotation cp="〽" type="tts">аломати тағйирёбии қисм</annotation>
+		<annotation cp="✳">ситорача | ситорачаи ҳашт паррадор</annotation>
+		<annotation cp="✳" type="tts">ситорачаи ҳашт паррадор</annotation>
+		<annotation cp="✴">ситора | ситораи ҳашт нӯгдор</annotation>
+		<annotation cp="✴" type="tts">ситораи ҳашт нӯгдор</annotation>
+		<annotation cp="❇">ялаққос задан</annotation>
+		<annotation cp="❇" type="tts">ялаққос задан</annotation>
+		<annotation cp="©">ҳуқуқи муааллиф</annotation>
+		<annotation cp="©" type="tts">ҳуқуқи муааллиф</annotation>
+		<annotation cp="®">ба қайд гирифташуда</annotation>
+		<annotation cp="®" type="tts">ба қайд гирифташуда</annotation>
+		<annotation cp="™">аломат | тамғаи савдо</annotation>
+		<annotation cp="™" type="tts">тамғаи савдо</annotation>
+		<annotation cp="🔠">ABCD | вуруд | лотинӣ | ҳарфҳо | ҳарфҳои калон | ҳарфҳои калони вуруди лотинӣ</annotation>
+		<annotation cp="🔠" type="tts">ҳарфҳои калони вуруди лотинӣ</annotation>
+		<annotation cp="🔡">abcd | вуруд | лотинӣ | ҳарфҳо | ҳарфҳои хурд | ҳарфҳои хурди вуруди лотинӣ</annotation>
+		<annotation cp="🔡" type="tts">ҳарфҳои хурди вуруди лотинӣ</annotation>
+		<annotation cp="🔢">1234 | вуруд | рақамҳо | рақамҳои вуруд</annotation>
+		<annotation cp="🔢" type="tts">рақамҳои вуруд</annotation>
+		<annotation cp="🔣">〒♪&amp;% | аломатҳои вуруд | вуруд</annotation>
+		<annotation cp="🔣" type="tts">аломатҳои вуруд</annotation>
+		<annotation cp="🔤">abc | алфавит | вуруд | лотинӣ | ҳарфҳо | ҳарфҳои вуруди лотинӣ</annotation>
+		<annotation cp="🔤" type="tts">ҳарфҳои вуруди лотинӣ</annotation>
+		<annotation cp="🅰">а | гуруҳи хун | тугмаи &quot;А&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🅰" type="tts">тугмаи &quot;А&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🆎">аb | гуруҳи хун | тугмаи &quot;АВ&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🆎" type="tts">тугмаи &quot;АВ&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🅱">b | гуруҳи хун | тугмаи &quot;В&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🅱" type="tts">тугмаи &quot;В&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🆑">cl | тугмаи &quot;CL&quot;</annotation>
+		<annotation cp="🆑" type="tts">тугмаи &quot;CL&quot;</annotation>
+		<annotation cp="🆒">салқин | тугмаи &quot;ЗӮР&quot;</annotation>
+		<annotation cp="🆒" type="tts">тугмаи &quot;ЗӮР&quot;</annotation>
+		<annotation cp="🆓">озод | тугмаи &quot;ОЗОД&quot;</annotation>
+		<annotation cp="🆓" type="tts">тугмаи &quot;ОЗОД&quot;</annotation>
+		<annotation cp="ℹ">i | маълумот</annotation>
+		<annotation cp="ℹ" type="tts">маълумот</annotation>
+		<annotation cp="🆔">id | тугмаи &quot;ID&quot; | шахсият</annotation>
+		<annotation cp="🆔" type="tts">тугмаи &quot;ID&quot;</annotation>
+		<annotation cp="Ⓜ">m | давра | М бо давра қайд шуд</annotation>
+		<annotation cp="Ⓜ" type="tts">М бо давра қайд шуд</annotation>
+		<annotation cp="🆕">нав | тугмаи &quot;НАВ&quot;</annotation>
+		<annotation cp="🆕" type="tts">тугмаи &quot;НАВ&quot;</annotation>
+		<annotation cp="🆖">ng | тугмаи &quot;NG&quot;</annotation>
+		<annotation cp="🆖" type="tts">тугмаи &quot;NG&quot;</annotation>
+		<annotation cp="🅾">гуруҳи хун | о | тугмаи &quot;О&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🅾" type="tts">тугмаи &quot;О&quot; (гуруҳи хун)</annotation>
+		<annotation cp="🆗">OK | тугмаи &quot;OK&quot;</annotation>
+		<annotation cp="🆗" type="tts">тугмаи &quot;OK&quot;</annotation>
+		<annotation cp="🅿">таваққуф кардан | тугмаи &quot;P&quot;</annotation>
+		<annotation cp="🅿" type="tts">тугмаи &quot;P&quot;</annotation>
+		<annotation cp="🆘">sos | кӯмак | тугмаи &quot;SOS&quot;</annotation>
+		<annotation cp="🆘" type="tts">тугмаи &quot;SOS&quot;</annotation>
+		<annotation cp="🆚">vs | бар зидди | тугмаи &quot;VS&quot;</annotation>
+		<annotation cp="🆚" type="tts">тугмаи &quot;VS&quot;</annotation>
+		<annotation cp="🈁">&quot;инҷо&quot; | катакана | тугмаи &quot;инҷо&quot;-и ҷопонӣ | ҷопонӣ | ココ</annotation>
+		<annotation cp="🈁" type="tts">тугмаи &quot;инҷо&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈂">&quot;маблағи хизматрасонӣ&quot; | катакана | тугмаи &quot;Маблағи хизматрасонӣ&quot;-и ҷопонӣ | ҷопонӣ | サ</annotation>
+		<annotation cp="🈂" type="tts">тугмаи &quot;Маблағи хизматрасонӣ&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈷">&quot;арзиши моҳона&quot; | идеограмма | тугмаи &quot;арзиши моҳона&quot;-и ҷопонӣ | ҷопонӣ | 月</annotation>
+		<annotation cp="🈷" type="tts">тугмаи &quot;арзиши моҳона&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈶">&quot;ройгон&quot; | идеограмма | тугмаи &quot;Ройгон нест&quot;-и ҷопонӣ | ҷопонӣ | 有</annotation>
+		<annotation cp="🈶" type="tts">тугмаи &quot;Ройгон нест&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈯">&quot;нигоҳ дошташуда&quot; | идеограмма | тугмаи &quot;нигоҳ дошташуда&quot;-и ҷопонӣ | ҷопонӣ | 指</annotation>
+		<annotation cp="🈯" type="tts">тугмаи &quot;нигоҳ дошташуда&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🉐">&quot;хариду фурӯш&quot; | идеограмма | тугмаи &quot;Хариду фурӯш&quot;-и ҷопонӣ | ҷопонӣ | 得</annotation>
+		<annotation cp="🉐" type="tts">тугмаи &quot;Хариду фурӯш&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈹">&quot;тахфиф&quot; | идеограмма | тугмаи &quot;Тахфиф&quot;-и ҷопонӣ | ҷопонӣ | 割</annotation>
+		<annotation cp="🈹" type="tts">тугмаи &quot;Тахфиф&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈚">&quot;ройгон&quot; | идеограмма | тугмаи &quot;Ройгон&quot;-и ҷопонӣ | ҷопонӣ | 無</annotation>
+		<annotation cp="🈚" type="tts">тугмаи &quot;Ройгон&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈲">&quot;манъшуда&quot; | идеограмма | тугмаи &quot;манъ аст&quot;-и ҷопонӣ | ҷопонӣ | 禁</annotation>
+		<annotation cp="🈲" type="tts">тугмаи &quot;манъ аст&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🉑">&quot;қобили қабул&quot; | идеограмма | тугмаи &quot;Қобили қабул&quot;-и ҷопонӣ | ҷопонӣ | 可</annotation>
+		<annotation cp="🉑" type="tts">тугмаи &quot;Қобили қабул&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈸">&quot;барнома&quot; | идеограмма | тугмаи &quot;барномаи&quot;-и ҷопонӣ | ҷопонӣ | 申</annotation>
+		<annotation cp="🈸" type="tts">тугмаи &quot;барномаи&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈴">&quot;баҳои гузариш&quot; | идеограмма | тугмаи &quot;Баҳои гузариш&quot;-и ҷопонӣ | ҷопонӣ | 合</annotation>
+		<annotation cp="🈴" type="tts">тугмаи &quot;Баҳои гузариш&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈳">&quot;ҷои кори холӣ&quot; | идеограмма | тугмаи &quot;Ҷои кори холӣ&quot;-и ҷопонӣ | ҷопонӣ | 空</annotation>
+		<annotation cp="🈳" type="tts">тугмаи &quot;Ҷои кори холӣ&quot;-и ҷопонӣ</annotation>
+		<annotation cp="㊗">&quot;табрик&quot; | идеограмма | тугмаи &quot;Табрик&quot;-и ҷопонӣ | ҷопонӣ | 祝</annotation>
+		<annotation cp="㊗" type="tts">тугмаи &quot;Табрик&quot;-и ҷопонӣ</annotation>
+		<annotation cp="㊙">&quot;махфӣ&quot; | идеограмма | тугмаи &quot;Махфӣ&quot;-и ҷопонӣ | ҷопонӣ | 秘</annotation>
+		<annotation cp="㊙" type="tts">тугмаи &quot;Махфӣ&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈺">&quot;барои тиҷорат кушода аст&quot; | идеограмма | тугмаи &quot;Барои тиҷорат кушода аст&quot;-и ҷопонӣ | ҷопонӣ | 営</annotation>
+		<annotation cp="🈺" type="tts">тугмаи &quot;Барои тиҷорат кушода аст&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🈵">&quot;ҷои кори холӣ нест&quot; | идеограмма | тугмаи &quot;Ҷои кори холӣ нест&quot;-и ҷопонӣ | ҷопонӣ | 満</annotation>
+		<annotation cp="🈵" type="tts">тугмаи &quot;Ҷои кори холӣ нест&quot;-и ҷопонӣ</annotation>
+		<annotation cp="🔴">геометрӣ | доира | доираи сурх | сурх</annotation>
+		<annotation cp="🔴" type="tts">доираи сурх</annotation>
+		<annotation cp="🔵">геометрӣ | доира | доираи кабуд | кабуд</annotation>
+		<annotation cp="🔵" type="tts">доираи кабуд</annotation>
+		<annotation cp="⚫">геометрӣ | доира | доираи сиёҳ</annotation>
+		<annotation cp="⚫" type="tts">доираи сиёҳ</annotation>
+		<annotation cp="⚪">геометрӣ | доира | доираи сафед</annotation>
+		<annotation cp="⚪" type="tts">доираи сафед</annotation>
+		<annotation cp="⬛">геометрӣ | чоркунҷа | чоркунҷаи калони сиёҳ</annotation>
+		<annotation cp="⬛" type="tts">чоркунҷаи калони сиёҳ</annotation>
+		<annotation cp="⬜">геометрӣ | чоркунҷа | чоркунҷаи калони сафед</annotation>
+		<annotation cp="⬜" type="tts">чоркунҷаи калони сафед</annotation>
+		<annotation cp="◼">геометрӣ | чоркунҷа | чоркунҷаи миёнаи сиёҳ</annotation>
+		<annotation cp="◼" type="tts">чоркунҷаи миёнаи сиёҳ</annotation>
+		<annotation cp="◻">геометрӣ | чоркунҷа | чоркунҷаи миёнаи сафед</annotation>
+		<annotation cp="◻" type="tts">чоркунҷаи миёнаи сафед</annotation>
+		<annotation cp="◾">геометрӣ | чоркунҷа | чоркунҷаи хурди миёнаи сиёҳ</annotation>
+		<annotation cp="◾" type="tts">чоркунҷаи хурди миёнаи сиёҳ</annotation>
+		<annotation cp="◽">геометрӣ | чоркунҷа | чоркунҷаи хурди миёнаи сафед</annotation>
+		<annotation cp="◽" type="tts">чоркунҷаи хурди миёнаи сафед</annotation>
+		<annotation cp="▪">геометрӣ | чоркунҷа | чоркунҷаи хурди сиёҳ</annotation>
+		<annotation cp="▪" type="tts">чоркунҷаи хурди сиёҳ</annotation>
+		<annotation cp="▫">геометрӣ | чоркунҷа | чоркунҷаи хурди сафед</annotation>
+		<annotation cp="▫" type="tts">чоркунҷаи хурди сафед</annotation>
+		<annotation cp="🔶">алмос | алмоси калони норинҷӣ | геометрӣ | норанҷӣ</annotation>
+		<annotation cp="🔶" type="tts">алмоси калони норинҷӣ</annotation>
+		<annotation cp="🔷">алмос | алмоси калони кабуд | геометрӣ | кабуд</annotation>
+		<annotation cp="🔷" type="tts">алмоси калони кабуд</annotation>
+		<annotation cp="🔸">алмос | алмоси хурди норинҷӣ | геометрӣ | норанҷӣ</annotation>
+		<annotation cp="🔸" type="tts">алмоси хурди норинҷӣ</annotation>
+		<annotation cp="🔹">алмос | алмоси хурди кабуд | геометрӣ | кабуд</annotation>
+		<annotation cp="🔹" type="tts">алмоси хурди кабуд</annotation>
+		<annotation cp="🔺">геометрӣ | секунҷаи сурхи ба боло равонашуда | сурх</annotation>
+		<annotation cp="🔺" type="tts">секунҷаи сурхи ба боло равонашуда</annotation>
+		<annotation cp="🔻">геометрӣ | поён | секунҷаи сурхи ба поён равонашуда | сурх</annotation>
+		<annotation cp="🔻" type="tts">секунҷаи сурхи ба поён равонашуда</annotation>
+		<annotation cp="💠">алмос | алмос бо як нуқта | геометрӣ | дарун | мазҳакавӣ</annotation>
+		<annotation cp="💠" type="tts">алмос бо як нуқта</annotation>
+		<annotation cp="🔘">геометрӣ | радио | тугма | тугмаи &quot;Радио&quot;</annotation>
+		<annotation cp="🔘" type="tts">тугмаи &quot;Радио&quot;</annotation>
+		<annotation cp="🔳">геометрӣ | тугма | тугмаи &quot;Чоркунҷаи сафед&quot; | ҳошиядор | чоркунҷа</annotation>
+		<annotation cp="🔳" type="tts">тугмаи &quot;Чоркунҷаи сафед&quot;</annotation>
+		<annotation cp="🔲">геометрӣ | тугма | тугмаи &quot;Чоркунҷаи сиёҳ&quot; | чоркунҷа</annotation>
+		<annotation cp="🔲" type="tts">тугмаи &quot;Чоркунҷаи сиёҳ&quot;</annotation>
+		<annotation cp="🏁">байрақи чорхона | катакчадор | пойга | чорхона</annotation>
+		<annotation cp="🏁" type="tts">байрақи чорхона</annotation>
+		<annotation cp="🚩">байрақи секунҷа | сутун</annotation>
+		<annotation cp="🚩" type="tts">байрақи секунҷа</annotation>
+		<annotation cp="🎌">байрақҳои чиллик гузошташуда | салиб | чиллик гузошташуда | ҷашн | ҷопонӣ</annotation>
+		<annotation cp="🎌" type="tts">байрақҳои чиллик гузошташуда</annotation>
+		<annotation cp="🏴">байрақи сиёҳ | мавҷ задан</annotation>
+		<annotation cp="🏴" type="tts">байрақи сиёҳ</annotation>
+		<annotation cp="🏳">байрақи сафед | мавҷ задан</annotation>
+		<annotation cp="🏳" type="tts">байрақи сафед</annotation>
+		<annotation cp="🏳‍🌈">байрақи тирукамон | тирукамон</annotation>
+		<annotation cp="🏳‍🌈" type="tts">байрақи тирукамон</annotation>
+		<annotation cp="9⃣">9 | клавиатура | нӯҳ</annotation>
+		<annotation cp="9⃣" type="tts">нӯҳ</annotation>
+	</annotations>
+</ldml>

@@ -17,9 +17,13 @@ if [ ! -x "$RHVOICE_ANDROID_DIR/gradlew" ]; then
   echo "Missing RHVoice gradlew at $RHVOICE_ANDROID_DIR" >&2
   exit 1
 fi
-if ! command -v scons >/dev/null 2>&1; then
-  echo "Missing 'scons' (required for RHVoice build)." >&2
-  exit 1
+SCONS_BIN="${SCONS_BIN:-/home/waldnet/projekty/blindroid/.venv_scons/bin/scons}"
+if [ ! -x "$SCONS_BIN" ]; then
+  if ! command -v scons >/dev/null 2>&1; then
+    echo "Missing 'scons' (required for RHVoice build)." >&2
+    exit 1
+  fi
+  SCONS_BIN="scons"
 fi
 
 ASSETS_DIR="app/src/main/assets"
@@ -27,7 +31,7 @@ ASSETS_DIR="app/src/main/assets"
 mkdir -p "$ASSETS_DIR"
 echo "sdk.dir=$SDK_DIR" > "$RHVOICE_ANDROID_DIR/local.properties"
 
-JAVA_HOME="$JDK_DIR" PATH="$JDK_DIR/bin:$PATH" \
+JAVA_HOME="$JDK_DIR" PATH="$JDK_DIR/bin:$(dirname "$SCONS_BIN"):$PATH" \
   ANDROID_SDK_ROOT="$SDK_DIR" \
   "$RHVOICE_ANDROID_DIR/gradlew" -p "$RHVOICE_ANDROID_DIR" :RHVoice-core:assembleStableDebug
 
@@ -40,7 +44,7 @@ else
 fi
 
 if [ -n "${RHVOICE_VOICE_TASK:-}" ]; then
-  JAVA_HOME="$JDK_DIR" PATH="$JDK_DIR/bin:$PATH" \
+  JAVA_HOME="$JDK_DIR" PATH="$JDK_DIR/bin:$(dirname "$SCONS_BIN"):$PATH" \
     ANDROID_SDK_ROOT="$SDK_DIR" \
     "$RHVOICE_ANDROID_DIR/gradlew" -p "$RHVOICE_ANDROID_DIR" "$RHVOICE_VOICE_TASK"
   VOICE_APK=$(find "$RHVOICE_ANDROID_DIR/RHVoice-data/build/outputs/apk" -type f -name "*.apk" | head -n 1)

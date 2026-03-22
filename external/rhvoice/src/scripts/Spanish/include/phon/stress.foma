@@ -1,0 +1,53 @@
+# Copyright (C) 2024-2026  Mateo Cedillo <angelitomateocedillo@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+source include/variables.foma
+
+# One of references that helped a lot: https://www.reddit.com/r/Spanish/comments/1336w1x/stress_pattern_on_espa%C3%B1ol/
+
+define StressedVowel [a1 | e1 | i1 | o1 | u1] ; 
+define UnstressedVowel a0|e0|i0|o0|u0 ; 
+define vowel  UnstressedVowel  | StressedVowel ; 
+define pc   \vowel ; 
+define noStress UnstressedVowel | pc ; 
+define stresses [
+	a0:a1|
+	e0:e1|
+	i0:i1|
+	o0:o1 (u0)|
+	u0:u1
+] ; 
+
+define stresses2 
+stresses | [o0 u0]:[o1 u0] | [o0 i0]:[o1 i0] | [e0 i0]:[e1 i0] ; 
+define MonosylStress stresses -> || 
+# Monosyllables in spanish always have the stress in the only one vowel between first consonants, and last consonants.
+.#. (Consonant+) _ (Consonant+) (IVrbS|IVrbP) .#. ; 
+
+define SpanishStress stresses2 @-> || 
+# In words that end in a vowel, n or s, the stress generally falls on the penultimate syllable.
+.#. noStress* _ pc* UnstressedVowel (n^<3|s^<3) (IVrbS|IVrbP|[adv [m [e1|e0] n t e0]]) .#. ; 
+
+define SpanishStress2 stresses2 @-> || 
+# If a word ends with a consonant, the stress falls in the last vowel of the syllable. Example, Español.
+.#. noStress+ _ Consonant+ ([adv [m e1 n t e0]]) .#. ; 
+
+define unstress [
+a:a0|
+e:e0|
+i:i0|
+o:o0|
+u:u0
+] @-> || _ ;

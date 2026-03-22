@@ -1,0 +1,3948 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
+<!-- Copyright © 1991-2025 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+SPDX-License-Identifier: Unicode-3.0
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+-->
+<ldml>
+	<identity>
+		<version number="$Revision$"/>
+		<language type="en"/>
+		<territory type="CA"/>
+	</identity>
+	<annotations>
+		<annotation cp="{">↑↑↑</annotation>
+		<annotation cp="{" type="tts">↑↑↑</annotation>
+		<annotation cp="🏻">↑↑↑</annotation>
+		<annotation cp="🏻" type="tts">↑↑↑</annotation>
+		<annotation cp="🏼">↑↑↑</annotation>
+		<annotation cp="🏼" type="tts">↑↑↑</annotation>
+		<annotation cp="🏽">↑↑↑</annotation>
+		<annotation cp="🏽" type="tts">↑↑↑</annotation>
+		<annotation cp="🏾">↑↑↑</annotation>
+		<annotation cp="🏾" type="tts">↑↑↑</annotation>
+		<annotation cp="🏿">↑↑↑</annotation>
+		<annotation cp="🏿" type="tts">↑↑↑</annotation>
+		<annotation cp="‾">↑↑↑</annotation>
+		<annotation cp="‾" type="tts">↑↑↑</annotation>
+		<annotation cp="_">↑↑↑</annotation>
+		<annotation cp="_" type="tts">↑↑↑</annotation>
+		<annotation cp="-">↑↑↑</annotation>
+		<annotation cp="-" type="tts">↑↑↑</annotation>
+		<annotation cp="‐">↑↑↑</annotation>
+		<annotation cp="‐" type="tts">↑↑↑</annotation>
+		<annotation cp="–">↑↑↑</annotation>
+		<annotation cp="–" type="tts">↑↑↑</annotation>
+		<annotation cp="—">↑↑↑</annotation>
+		<annotation cp="—" type="tts">↑↑↑</annotation>
+		<annotation cp="―">↑↑↑</annotation>
+		<annotation cp="―" type="tts">↑↑↑</annotation>
+		<annotation cp="・">↑↑↑</annotation>
+		<annotation cp="・" type="tts">↑↑↑</annotation>
+		<annotation cp=",">↑↑↑</annotation>
+		<annotation cp="," type="tts">↑↑↑</annotation>
+		<annotation cp="،">Arabic | comma</annotation>
+		<annotation cp="،" type="tts">Arabic comma</annotation>
+		<annotation cp="、">↑↑↑</annotation>
+		<annotation cp="、" type="tts">↑↑↑</annotation>
+		<annotation cp=";">↑↑↑</annotation>
+		<annotation cp=";" type="tts">↑↑↑</annotation>
+		<annotation cp="؛">Arabic | Arabic semicolon | semi-colon</annotation>
+		<annotation cp="؛" type="tts">Arabic semicolon</annotation>
+		<annotation cp=":">↑↑↑</annotation>
+		<annotation cp=":" type="tts">↑↑↑</annotation>
+		<annotation cp="!">↑↑↑</annotation>
+		<annotation cp="!" type="tts">↑↑↑</annotation>
+		<annotation cp="¡">↑↑↑</annotation>
+		<annotation cp="¡" type="tts">↑↑↑</annotation>
+		<annotation cp="?">↑↑↑</annotation>
+		<annotation cp="?" type="tts">↑↑↑</annotation>
+		<annotation cp="¿">↑↑↑</annotation>
+		<annotation cp="¿" type="tts">↑↑↑</annotation>
+		<annotation cp="؟">Arabic | Arabic question mark | question | question mark</annotation>
+		<annotation cp="؟" type="tts">Arabic question mark</annotation>
+		<annotation cp="‽">↑↑↑</annotation>
+		<annotation cp="‽" type="tts">↑↑↑</annotation>
+		<annotation cp=".">↑↑↑</annotation>
+		<annotation cp="." type="tts">↑↑↑</annotation>
+		<annotation cp="…">↑↑↑</annotation>
+		<annotation cp="…" type="tts">↑↑↑</annotation>
+		<annotation cp="。">↑↑↑</annotation>
+		<annotation cp="。" type="tts">↑↑↑</annotation>
+		<annotation cp="·">↑↑↑</annotation>
+		<annotation cp="·" type="tts">↑↑↑</annotation>
+		<annotation cp="'">↑↑↑</annotation>
+		<annotation cp="'" type="tts">↑↑↑</annotation>
+		<annotation cp="‘">apostrophe | curly quote | left apostrophe | quote | single quote | smart quote</annotation>
+		<annotation cp="‘" type="tts">↑↑↑</annotation>
+		<annotation cp="’">apostrophe | curly quote | quote | right apostrophe | single quote | smart quote</annotation>
+		<annotation cp="’" type="tts">↑↑↑</annotation>
+		<annotation cp="‚">↑↑↑</annotation>
+		<annotation cp="‚" type="tts">↑↑↑</annotation>
+		<annotation cp="“">curly quotes | double quote | left quotation mark | quotation | quote | smart quotation</annotation>
+		<annotation cp="“" type="tts">↑↑↑</annotation>
+		<annotation cp="”">curly quotes | double quote | quotation | quote | right quotation mark | smart quotation</annotation>
+		<annotation cp="”" type="tts">↑↑↑</annotation>
+		<annotation cp="„">↑↑↑</annotation>
+		<annotation cp="„" type="tts">↑↑↑</annotation>
+		<annotation cp="«">↑↑↑</annotation>
+		<annotation cp="«" type="tts">↑↑↑</annotation>
+		<annotation cp="»">↑↑↑</annotation>
+		<annotation cp="»" type="tts">↑↑↑</annotation>
+		<annotation cp=")">bracket | close parenthesis | paren | parens | parenthesis | right round bracket | round bracket</annotation>
+		<annotation cp=")" type="tts">↑↑↑</annotation>
+		<annotation cp="[">bracket | crotchet | left square bracket | open square bracket | square bracket</annotation>
+		<annotation cp="[" type="tts">↑↑↑</annotation>
+		<annotation cp="]">bracket | close square bracket | crotchet | right square bracket | square bracket</annotation>
+		<annotation cp="]" type="tts">↑↑↑</annotation>
+		<annotation cp="}">↑↑↑</annotation>
+		<annotation cp="}" type="tts">↑↑↑</annotation>
+		<annotation cp="〈">↑↑↑</annotation>
+		<annotation cp="〈" type="tts">↑↑↑</annotation>
+		<annotation cp="〉">↑↑↑</annotation>
+		<annotation cp="〉" type="tts">↑↑↑</annotation>
+		<annotation cp="《">↑↑↑</annotation>
+		<annotation cp="《" type="tts">↑↑↑</annotation>
+		<annotation cp="》">↑↑↑</annotation>
+		<annotation cp="》" type="tts">↑↑↑</annotation>
+		<annotation cp="「">↑↑↑</annotation>
+		<annotation cp="「" type="tts">↑↑↑</annotation>
+		<annotation cp="」">↑↑↑</annotation>
+		<annotation cp="」" type="tts">↑↑↑</annotation>
+		<annotation cp="『">↑↑↑</annotation>
+		<annotation cp="『" type="tts">↑↑↑</annotation>
+		<annotation cp="』">↑↑↑</annotation>
+		<annotation cp="』" type="tts">↑↑↑</annotation>
+		<annotation cp="【">↑↑↑</annotation>
+		<annotation cp="【" type="tts">↑↑↑</annotation>
+		<annotation cp="】">↑↑↑</annotation>
+		<annotation cp="】" type="tts">↑↑↑</annotation>
+		<annotation cp="〔">↑↑↑</annotation>
+		<annotation cp="〔" type="tts">↑↑↑</annotation>
+		<annotation cp="〕">↑↑↑</annotation>
+		<annotation cp="〕" type="tts">↑↑↑</annotation>
+		<annotation cp="〖">↑↑↑</annotation>
+		<annotation cp="〖" type="tts">↑↑↑</annotation>
+		<annotation cp="〗">↑↑↑</annotation>
+		<annotation cp="〗" type="tts">↑↑↑</annotation>
+		<annotation cp="§">↑↑↑</annotation>
+		<annotation cp="§" type="tts">↑↑↑</annotation>
+		<annotation cp="¶">↑↑↑</annotation>
+		<annotation cp="¶" type="tts">↑↑↑</annotation>
+		<annotation cp="@">↑↑↑</annotation>
+		<annotation cp="@" type="tts">at sign</annotation>
+		<annotation cp="*">↑↑↑</annotation>
+		<annotation cp="*" type="tts">↑↑↑</annotation>
+		<annotation cp="/">↑↑↑</annotation>
+		<annotation cp="/" type="tts">↑↑↑</annotation>
+		<annotation cp="\">↑↑↑</annotation>
+		<annotation cp="\" type="tts">↑↑↑</annotation>
+		<annotation cp="&amp;">↑↑↑</annotation>
+		<annotation cp="&amp;" type="tts">↑↑↑</annotation>
+		<annotation cp="#">↑↑↑</annotation>
+		<annotation cp="#" type="tts">↑↑↑</annotation>
+		<annotation cp="%">per cent | per-cent | percent | percentage</annotation>
+		<annotation cp="%" type="tts">↑↑↑</annotation>
+		<annotation cp="‰">↑↑↑</annotation>
+		<annotation cp="‰" type="tts">↑↑↑</annotation>
+		<annotation cp="†">↑↑↑</annotation>
+		<annotation cp="†" type="tts">↑↑↑</annotation>
+		<annotation cp="‡">↑↑↑</annotation>
+		<annotation cp="‡" type="tts">↑↑↑</annotation>
+		<annotation cp="•">↑↑↑</annotation>
+		<annotation cp="•" type="tts">↑↑↑</annotation>
+		<annotation cp="‧">↑↑↑</annotation>
+		<annotation cp="‧" type="tts">↑↑↑</annotation>
+		<annotation cp="′">↑↑↑</annotation>
+		<annotation cp="′" type="tts">↑↑↑</annotation>
+		<annotation cp="″">↑↑↑</annotation>
+		<annotation cp="″" type="tts">↑↑↑</annotation>
+		<annotation cp="‴">↑↑↑</annotation>
+		<annotation cp="‴" type="tts">↑↑↑</annotation>
+		<annotation cp="‸">↑↑↑</annotation>
+		<annotation cp="‸" type="tts">↑↑↑</annotation>
+		<annotation cp="※">↑↑↑</annotation>
+		<annotation cp="※" type="tts">↑↑↑</annotation>
+		<annotation cp="⁂">↑↑↑</annotation>
+		<annotation cp="⁂" type="tts">↑↑↑</annotation>
+		<annotation cp="`">↑↑↑</annotation>
+		<annotation cp="`" type="tts">↑↑↑</annotation>
+		<annotation cp="´">↑↑↑</annotation>
+		<annotation cp="´" type="tts">↑↑↑</annotation>
+		<annotation cp="^">↑↑↑</annotation>
+		<annotation cp="^" type="tts">↑↑↑</annotation>
+		<annotation cp="¨">↑↑↑</annotation>
+		<annotation cp="¨" type="tts">↑↑↑</annotation>
+		<annotation cp="°">↑↑↑</annotation>
+		<annotation cp="°" type="tts">↑↑↑</annotation>
+		<annotation cp="℗">↑↑↑</annotation>
+		<annotation cp="℗" type="tts">↑↑↑</annotation>
+		<annotation cp="←">↑↑↑</annotation>
+		<annotation cp="←" type="tts">↑↑↑</annotation>
+		<annotation cp="↚">↑↑↑</annotation>
+		<annotation cp="↚" type="tts">↑↑↑</annotation>
+		<annotation cp="→">↑↑↑</annotation>
+		<annotation cp="→" type="tts">↑↑↑</annotation>
+		<annotation cp="↛">↑↑↑</annotation>
+		<annotation cp="↛" type="tts">↑↑↑</annotation>
+		<annotation cp="↑">↑↑↑</annotation>
+		<annotation cp="↑" type="tts">↑↑↑</annotation>
+		<annotation cp="↓">↑↑↑</annotation>
+		<annotation cp="↓" type="tts">↑↑↑</annotation>
+		<annotation cp="↜">↑↑↑</annotation>
+		<annotation cp="↜" type="tts">↑↑↑</annotation>
+		<annotation cp="↝">↑↑↑</annotation>
+		<annotation cp="↝" type="tts">↑↑↑</annotation>
+		<annotation cp="↞">↑↑↑</annotation>
+		<annotation cp="↞" type="tts">↑↑↑</annotation>
+		<annotation cp="↟">↑↑↑</annotation>
+		<annotation cp="↟" type="tts">↑↑↑</annotation>
+		<annotation cp="↠">↑↑↑</annotation>
+		<annotation cp="↠" type="tts">↑↑↑</annotation>
+		<annotation cp="↡">↑↑↑</annotation>
+		<annotation cp="↡" type="tts">↑↑↑</annotation>
+		<annotation cp="↢">↑↑↑</annotation>
+		<annotation cp="↢" type="tts">↑↑↑</annotation>
+		<annotation cp="↣">↑↑↑</annotation>
+		<annotation cp="↣" type="tts">↑↑↑</annotation>
+		<annotation cp="↤">↑↑↑</annotation>
+		<annotation cp="↤" type="tts">↑↑↑</annotation>
+		<annotation cp="↥">↑↑↑</annotation>
+		<annotation cp="↥" type="tts">↑↑↑</annotation>
+		<annotation cp="↦">↑↑↑</annotation>
+		<annotation cp="↦" type="tts">↑↑↑</annotation>
+		<annotation cp="↧">↑↑↑</annotation>
+		<annotation cp="↧" type="tts">↑↑↑</annotation>
+		<annotation cp="↨">↑↑↑</annotation>
+		<annotation cp="↨" type="tts">↑↑↑</annotation>
+		<annotation cp="↫">↑↑↑</annotation>
+		<annotation cp="↫" type="tts">↑↑↑</annotation>
+		<annotation cp="↬">↑↑↑</annotation>
+		<annotation cp="↬" type="tts">↑↑↑</annotation>
+		<annotation cp="↭">↑↑↑</annotation>
+		<annotation cp="↭" type="tts">↑↑↑</annotation>
+		<annotation cp="↯">↑↑↑</annotation>
+		<annotation cp="↯" type="tts">↑↑↑</annotation>
+		<annotation cp="↰">↑↑↑</annotation>
+		<annotation cp="↰" type="tts">↑↑↑</annotation>
+		<annotation cp="↱">↑↑↑</annotation>
+		<annotation cp="↱" type="tts">↑↑↑</annotation>
+		<annotation cp="↲">↑↑↑</annotation>
+		<annotation cp="↲" type="tts">↑↑↑</annotation>
+		<annotation cp="↳">↑↑↑</annotation>
+		<annotation cp="↳" type="tts">↑↑↑</annotation>
+		<annotation cp="↴">↑↑↑</annotation>
+		<annotation cp="↴" type="tts">↑↑↑</annotation>
+		<annotation cp="↵">↑↑↑</annotation>
+		<annotation cp="↵" type="tts">↑↑↑</annotation>
+		<annotation cp="↶">↑↑↑</annotation>
+		<annotation cp="↶" type="tts">↑↑↑</annotation>
+		<annotation cp="↷">↑↑↑</annotation>
+		<annotation cp="↷" type="tts">↑↑↑</annotation>
+		<annotation cp="↸">↑↑↑</annotation>
+		<annotation cp="↸" type="tts">↑↑↑</annotation>
+		<annotation cp="↹">↑↑↑</annotation>
+		<annotation cp="↹" type="tts">↑↑↑</annotation>
+		<annotation cp="↺">↑↑↑</annotation>
+		<annotation cp="↺" type="tts">↑↑↑</annotation>
+		<annotation cp="↻">↑↑↑</annotation>
+		<annotation cp="↻" type="tts">↑↑↑</annotation>
+		<annotation cp="↼">↑↑↑</annotation>
+		<annotation cp="↼" type="tts">↑↑↑</annotation>
+		<annotation cp="↽">↑↑↑</annotation>
+		<annotation cp="↽" type="tts">↑↑↑</annotation>
+		<annotation cp="↾">↑↑↑</annotation>
+		<annotation cp="↾" type="tts">↑↑↑</annotation>
+		<annotation cp="↿">↑↑↑</annotation>
+		<annotation cp="↿" type="tts">↑↑↑</annotation>
+		<annotation cp="⇀">↑↑↑</annotation>
+		<annotation cp="⇀" type="tts">↑↑↑</annotation>
+		<annotation cp="⇁">↑↑↑</annotation>
+		<annotation cp="⇁" type="tts">↑↑↑</annotation>
+		<annotation cp="⇂">↑↑↑</annotation>
+		<annotation cp="⇂" type="tts">↑↑↑</annotation>
+		<annotation cp="⇃">↑↑↑</annotation>
+		<annotation cp="⇃" type="tts">↑↑↑</annotation>
+		<annotation cp="⇄">↑↑↑</annotation>
+		<annotation cp="⇄" type="tts">↑↑↑</annotation>
+		<annotation cp="⇅">↑↑↑</annotation>
+		<annotation cp="⇅" type="tts">↑↑↑</annotation>
+		<annotation cp="⇆">↑↑↑</annotation>
+		<annotation cp="⇆" type="tts">↑↑↑</annotation>
+		<annotation cp="⇇">↑↑↑</annotation>
+		<annotation cp="⇇" type="tts">↑↑↑</annotation>
+		<annotation cp="⇈">↑↑↑</annotation>
+		<annotation cp="⇈" type="tts">↑↑↑</annotation>
+		<annotation cp="⇉">↑↑↑</annotation>
+		<annotation cp="⇉" type="tts">↑↑↑</annotation>
+		<annotation cp="⇊">↑↑↑</annotation>
+		<annotation cp="⇊" type="tts">↑↑↑</annotation>
+		<annotation cp="⇋">↑↑↑</annotation>
+		<annotation cp="⇋" type="tts">↑↑↑</annotation>
+		<annotation cp="⇌">↑↑↑</annotation>
+		<annotation cp="⇌" type="tts">↑↑↑</annotation>
+		<annotation cp="⇐">↑↑↑</annotation>
+		<annotation cp="⇐" type="tts">↑↑↑</annotation>
+		<annotation cp="⇍">↑↑↑</annotation>
+		<annotation cp="⇍" type="tts">↑↑↑</annotation>
+		<annotation cp="⇑">↑↑↑</annotation>
+		<annotation cp="⇑" type="tts">↑↑↑</annotation>
+		<annotation cp="⇒">↑↑↑</annotation>
+		<annotation cp="⇒" type="tts">↑↑↑</annotation>
+		<annotation cp="⇏">↑↑↑</annotation>
+		<annotation cp="⇏" type="tts">↑↑↑</annotation>
+		<annotation cp="⇓">↑↑↑</annotation>
+		<annotation cp="⇓" type="tts">↑↑↑</annotation>
+		<annotation cp="⇔">↑↑↑</annotation>
+		<annotation cp="⇔" type="tts">↑↑↑</annotation>
+		<annotation cp="⇎">↑↑↑</annotation>
+		<annotation cp="⇎" type="tts">↑↑↑</annotation>
+		<annotation cp="⇖">↑↑↑</annotation>
+		<annotation cp="⇖" type="tts">↑↑↑</annotation>
+		<annotation cp="⇗">↑↑↑</annotation>
+		<annotation cp="⇗" type="tts">↑↑↑</annotation>
+		<annotation cp="⇘">↑↑↑</annotation>
+		<annotation cp="⇘" type="tts">↑↑↑</annotation>
+		<annotation cp="⇙">↑↑↑</annotation>
+		<annotation cp="⇙" type="tts">↑↑↑</annotation>
+		<annotation cp="⇚">↑↑↑</annotation>
+		<annotation cp="⇚" type="tts">↑↑↑</annotation>
+		<annotation cp="⇛">↑↑↑</annotation>
+		<annotation cp="⇛" type="tts">↑↑↑</annotation>
+		<annotation cp="⇜">↑↑↑</annotation>
+		<annotation cp="⇜" type="tts">↑↑↑</annotation>
+		<annotation cp="⇝">↑↑↑</annotation>
+		<annotation cp="⇝" type="tts">↑↑↑</annotation>
+		<annotation cp="⇞">↑↑↑</annotation>
+		<annotation cp="⇞" type="tts">↑↑↑</annotation>
+		<annotation cp="⇟">↑↑↑</annotation>
+		<annotation cp="⇟" type="tts">↑↑↑</annotation>
+		<annotation cp="⇠">↑↑↑</annotation>
+		<annotation cp="⇠" type="tts">↑↑↑</annotation>
+		<annotation cp="⇡">↑↑↑</annotation>
+		<annotation cp="⇡" type="tts">↑↑↑</annotation>
+		<annotation cp="⇢">↑↑↑</annotation>
+		<annotation cp="⇢" type="tts">↑↑↑</annotation>
+		<annotation cp="⇣">↑↑↑</annotation>
+		<annotation cp="⇣" type="tts">↑↑↑</annotation>
+		<annotation cp="⇤">↑↑↑</annotation>
+		<annotation cp="⇤" type="tts">↑↑↑</annotation>
+		<annotation cp="⇥">↑↑↑</annotation>
+		<annotation cp="⇥" type="tts">↑↑↑</annotation>
+		<annotation cp="⇦">↑↑↑</annotation>
+		<annotation cp="⇦" type="tts">↑↑↑</annotation>
+		<annotation cp="⇧">↑↑↑</annotation>
+		<annotation cp="⇧" type="tts">↑↑↑</annotation>
+		<annotation cp="⇨">↑↑↑</annotation>
+		<annotation cp="⇨" type="tts">↑↑↑</annotation>
+		<annotation cp="⇩">↑↑↑</annotation>
+		<annotation cp="⇩" type="tts">↑↑↑</annotation>
+		<annotation cp="⇪">↑↑↑</annotation>
+		<annotation cp="⇪" type="tts">↑↑↑</annotation>
+		<annotation cp="⇵">↑↑↑</annotation>
+		<annotation cp="⇵" type="tts">↑↑↑</annotation>
+		<annotation cp="∀">↑↑↑</annotation>
+		<annotation cp="∀" type="tts">↑↑↑</annotation>
+		<annotation cp="∂">differential | partial derivative | partial differential</annotation>
+		<annotation cp="∂" type="tts">↑↑↑</annotation>
+		<annotation cp="∃">existential | mathematics | quantifier | there exists</annotation>
+		<annotation cp="∃" type="tts">↑↑↑</annotation>
+		<annotation cp="∅">↑↑↑</annotation>
+		<annotation cp="∅" type="tts">↑↑↑</annotation>
+		<annotation cp="∆">↑↑↑</annotation>
+		<annotation cp="∆" type="tts">↑↑↑</annotation>
+		<annotation cp="∇">↑↑↑</annotation>
+		<annotation cp="∇" type="tts">↑↑↑</annotation>
+		<annotation cp="∈">↑↑↑</annotation>
+		<annotation cp="∈" type="tts">↑↑↑</annotation>
+		<annotation cp="∉">↑↑↑</annotation>
+		<annotation cp="∉" type="tts">not an element of</annotation>
+		<annotation cp="∋">↑↑↑</annotation>
+		<annotation cp="∋" type="tts">↑↑↑</annotation>
+		<annotation cp="∎">↑↑↑</annotation>
+		<annotation cp="∎" type="tts">end of proof</annotation>
+		<annotation cp="∏">↑↑↑</annotation>
+		<annotation cp="∏" type="tts">↑↑↑</annotation>
+		<annotation cp="∑">↑↑↑</annotation>
+		<annotation cp="∑" type="tts">↑↑↑</annotation>
+		<annotation cp="+">↑↑↑</annotation>
+		<annotation cp="+" type="tts">↑↑↑</annotation>
+		<annotation cp="±">↑↑↑</annotation>
+		<annotation cp="±" type="tts">↑↑↑</annotation>
+		<annotation cp="÷">↑↑↑</annotation>
+		<annotation cp="÷" type="tts">↑↑↑</annotation>
+		<annotation cp="×">↑↑↑</annotation>
+		<annotation cp="×" type="tts">↑↑↑</annotation>
+		<annotation cp="&lt;">less than | less-than sign | open tag | tag</annotation>
+		<annotation cp="&lt;" type="tts">less than</annotation>
+		<annotation cp="≮">↑↑↑</annotation>
+		<annotation cp="≮" type="tts">↑↑↑</annotation>
+		<annotation cp="=">↑↑↑</annotation>
+		<annotation cp="=" type="tts">↑↑↑</annotation>
+		<annotation cp="≠">↑↑↑</annotation>
+		<annotation cp="≠" type="tts">↑↑↑</annotation>
+		<annotation cp="&gt;">close tag | greater than | greater-than sign | tag</annotation>
+		<annotation cp="&gt;" type="tts">greater than</annotation>
+		<annotation cp="≯">↑↑↑</annotation>
+		<annotation cp="≯" type="tts">↑↑↑</annotation>
+		<annotation cp="¬">↑↑↑</annotation>
+		<annotation cp="¬" type="tts">↑↑↑</annotation>
+		<annotation cp="|">bar | line | pipe | sheffer stroke | vertical bar | vertical line</annotation>
+		<annotation cp="|" type="tts">↑↑↑</annotation>
+		<annotation cp="~">↑↑↑</annotation>
+		<annotation cp="~" type="tts">↑↑↑</annotation>
+		<annotation cp="−">↑↑↑</annotation>
+		<annotation cp="−" type="tts">↑↑↑</annotation>
+		<annotation cp="⁻">↑↑↑</annotation>
+		<annotation cp="⁻" type="tts">↑↑↑</annotation>
+		<annotation cp="∓">↑↑↑</annotation>
+		<annotation cp="∓" type="tts">↑↑↑</annotation>
+		<annotation cp="∕">↑↑↑</annotation>
+		<annotation cp="∕" type="tts">↑↑↑</annotation>
+		<annotation cp="⁄">↑↑↑</annotation>
+		<annotation cp="⁄" type="tts">↑↑↑</annotation>
+		<annotation cp="∗">↑↑↑</annotation>
+		<annotation cp="∗" type="tts">↑↑↑</annotation>
+		<annotation cp="∘">↑↑↑</annotation>
+		<annotation cp="∘" type="tts">↑↑↑</annotation>
+		<annotation cp="∙">↑↑↑</annotation>
+		<annotation cp="∙" type="tts">↑↑↑</annotation>
+		<annotation cp="√">↑↑↑</annotation>
+		<annotation cp="√" type="tts">↑↑↑</annotation>
+		<annotation cp="∝">is proportional | proportional | proportionality</annotation>
+		<annotation cp="∝" type="tts">is proportional</annotation>
+		<annotation cp="∞">↑↑↑</annotation>
+		<annotation cp="∞" type="tts">↑↑↑</annotation>
+		<annotation cp="∟">↑↑↑</annotation>
+		<annotation cp="∟" type="tts">↑↑↑</annotation>
+		<annotation cp="∠">↑↑↑</annotation>
+		<annotation cp="∠" type="tts">↑↑↑</annotation>
+		<annotation cp="∣">divides | divisor | vertical bar</annotation>
+		<annotation cp="∣" type="tts">↑↑↑</annotation>
+		<annotation cp="∥">parallel | parallel to</annotation>
+		<annotation cp="∥" type="tts">parallel to</annotation>
+		<annotation cp="∧">↑↑↑</annotation>
+		<annotation cp="∧" type="tts">↑↑↑</annotation>
+		<annotation cp="∩">↑↑↑</annotation>
+		<annotation cp="∩" type="tts">↑↑↑</annotation>
+		<annotation cp="∪">↑↑↑</annotation>
+		<annotation cp="∪" type="tts">↑↑↑</annotation>
+		<annotation cp="∫">↑↑↑</annotation>
+		<annotation cp="∫" type="tts">↑↑↑</annotation>
+		<annotation cp="∬">↑↑↑</annotation>
+		<annotation cp="∬" type="tts">↑↑↑</annotation>
+		<annotation cp="∮">↑↑↑</annotation>
+		<annotation cp="∮" type="tts">↑↑↑</annotation>
+		<annotation cp="∴">↑↑↑</annotation>
+		<annotation cp="∴" type="tts">↑↑↑</annotation>
+		<annotation cp="∵">↑↑↑</annotation>
+		<annotation cp="∵" type="tts">↑↑↑</annotation>
+		<annotation cp="∶">↑↑↑</annotation>
+		<annotation cp="∶" type="tts">↑↑↑</annotation>
+		<annotation cp="∷">↑↑↑</annotation>
+		<annotation cp="∷" type="tts">↑↑↑</annotation>
+		<annotation cp="∼">↑↑↑</annotation>
+		<annotation cp="∼" type="tts">↑↑↑</annotation>
+		<annotation cp="∽">↑↑↑</annotation>
+		<annotation cp="∽" type="tts">↑↑↑</annotation>
+		<annotation cp="∾">↑↑↑</annotation>
+		<annotation cp="∾" type="tts">↑↑↑</annotation>
+		<annotation cp="≃">↑↑↑</annotation>
+		<annotation cp="≃" type="tts">asymptotically equal to</annotation>
+		<annotation cp="≅">↑↑↑</annotation>
+		<annotation cp="≅" type="tts">approximately equal to</annotation>
+		<annotation cp="≈">about | almost equal | approximate | approximation | around</annotation>
+		<annotation cp="≈" type="tts">↑↑↑</annotation>
+		<annotation cp="≌">↑↑↑</annotation>
+		<annotation cp="≌" type="tts">all equal to</annotation>
+		<annotation cp="≒">↑↑↑</annotation>
+		<annotation cp="≒" type="tts">↑↑↑</annotation>
+		<annotation cp="≖">↑↑↑</annotation>
+		<annotation cp="≖" type="tts">↑↑↑</annotation>
+		<annotation cp="≡">↑↑↑</annotation>
+		<annotation cp="≡" type="tts">↑↑↑</annotation>
+		<annotation cp="≣">↑↑↑</annotation>
+		<annotation cp="≣" type="tts">strictly equivalent to</annotation>
+		<annotation cp="≤">equal | equals | inequality | less than or equal to | less-than</annotation>
+		<annotation cp="≤" type="tts">less than or equal to</annotation>
+		<annotation cp="≥">equal | equals | greater than or equal to | greater-than | inequality</annotation>
+		<annotation cp="≥" type="tts">greater than or equal to</annotation>
+		<annotation cp="≦">↑↑↑</annotation>
+		<annotation cp="≦" type="tts">↑↑↑</annotation>
+		<annotation cp="≧">↑↑↑</annotation>
+		<annotation cp="≧" type="tts">↑↑↑</annotation>
+		<annotation cp="≪">↑↑↑</annotation>
+		<annotation cp="≪" type="tts">↑↑↑</annotation>
+		<annotation cp="≫">↑↑↑</annotation>
+		<annotation cp="≫" type="tts">↑↑↑</annotation>
+		<annotation cp="≬">↑↑↑</annotation>
+		<annotation cp="≬" type="tts">↑↑↑</annotation>
+		<annotation cp="≳">↑↑↑</annotation>
+		<annotation cp="≳" type="tts">greater-than or equivalent to</annotation>
+		<annotation cp="≺">↑↑↑</annotation>
+		<annotation cp="≺" type="tts">↑↑↑</annotation>
+		<annotation cp="≻">↑↑↑</annotation>
+		<annotation cp="≻" type="tts">↑↑↑</annotation>
+		<annotation cp="⊁">↑↑↑</annotation>
+		<annotation cp="⊁" type="tts">↑↑↑</annotation>
+		<annotation cp="⊂">↑↑↑</annotation>
+		<annotation cp="⊂" type="tts">↑↑↑</annotation>
+		<annotation cp="⊃">↑↑↑</annotation>
+		<annotation cp="⊃" type="tts">superset of</annotation>
+		<annotation cp="⊆">↑↑↑</annotation>
+		<annotation cp="⊆" type="tts">subset of or equal to</annotation>
+		<annotation cp="⊇">↑↑↑</annotation>
+		<annotation cp="⊇" type="tts">superset of or equal to</annotation>
+		<annotation cp="⊕">↑↑↑</annotation>
+		<annotation cp="⊕" type="tts">↑↑↑</annotation>
+		<annotation cp="⊖">↑↑↑</annotation>
+		<annotation cp="⊖" type="tts">↑↑↑</annotation>
+		<annotation cp="⊗">↑↑↑</annotation>
+		<annotation cp="⊗" type="tts">↑↑↑</annotation>
+		<annotation cp="⊘">↑↑↑</annotation>
+		<annotation cp="⊘" type="tts">↑↑↑</annotation>
+		<annotation cp="⊙">↑↑↑</annotation>
+		<annotation cp="⊙" type="tts">↑↑↑</annotation>
+		<annotation cp="⊚">↑↑↑</annotation>
+		<annotation cp="⊚" type="tts">↑↑↑</annotation>
+		<annotation cp="⊛">↑↑↑</annotation>
+		<annotation cp="⊛" type="tts">↑↑↑</annotation>
+		<annotation cp="⊞">↑↑↑</annotation>
+		<annotation cp="⊞" type="tts">↑↑↑</annotation>
+		<annotation cp="⊟">↑↑↑</annotation>
+		<annotation cp="⊟" type="tts">↑↑↑</annotation>
+		<annotation cp="⊥">↑↑↑</annotation>
+		<annotation cp="⊥" type="tts">↑↑↑</annotation>
+		<annotation cp="⊮">↑↑↑</annotation>
+		<annotation cp="⊮" type="tts">↑↑↑</annotation>
+		<annotation cp="⊰">↑↑↑</annotation>
+		<annotation cp="⊰" type="tts">↑↑↑</annotation>
+		<annotation cp="⊱">↑↑↑</annotation>
+		<annotation cp="⊱" type="tts">↑↑↑</annotation>
+		<annotation cp="⋭">↑↑↑</annotation>
+		<annotation cp="⋭" type="tts">does not contain as normal subgroup or equal</annotation>
+		<annotation cp="⊶">↑↑↑</annotation>
+		<annotation cp="⊶" type="tts">original of</annotation>
+		<annotation cp="⊹">↑↑↑</annotation>
+		<annotation cp="⊹" type="tts">↑↑↑</annotation>
+		<annotation cp="⊿">↑↑↑</annotation>
+		<annotation cp="⊿" type="tts">↑↑↑</annotation>
+		<annotation cp="⋁">↑↑↑</annotation>
+		<annotation cp="⋁" type="tts">↑↑↑</annotation>
+		<annotation cp="⋂">↑↑↑</annotation>
+		<annotation cp="⋂" type="tts">↑↑↑</annotation>
+		<annotation cp="⋃">↑↑↑</annotation>
+		<annotation cp="⋃" type="tts">↑↑↑</annotation>
+		<annotation cp="⋅">↑↑↑</annotation>
+		<annotation cp="⋅" type="tts">↑↑↑</annotation>
+		<annotation cp="⋆">↑↑↑</annotation>
+		<annotation cp="⋆" type="tts">↑↑↑</annotation>
+		<annotation cp="⋈">↑↑↑</annotation>
+		<annotation cp="⋈" type="tts">↑↑↑</annotation>
+		<annotation cp="⋒">↑↑↑</annotation>
+		<annotation cp="⋒" type="tts">↑↑↑</annotation>
+		<annotation cp="⋘">↑↑↑</annotation>
+		<annotation cp="⋘" type="tts">↑↑↑</annotation>
+		<annotation cp="⋙">↑↑↑</annotation>
+		<annotation cp="⋙" type="tts">↑↑↑</annotation>
+		<annotation cp="⋮">↑↑↑</annotation>
+		<annotation cp="⋮" type="tts">↑↑↑</annotation>
+		<annotation cp="⋯">↑↑↑</annotation>
+		<annotation cp="⋯" type="tts">↑↑↑</annotation>
+		<annotation cp="⋰">↑↑↑</annotation>
+		<annotation cp="⋰" type="tts">↑↑↑</annotation>
+		<annotation cp="⋱">↑↑↑</annotation>
+		<annotation cp="⋱" type="tts">↑↑↑</annotation>
+		<annotation cp="■">↑↑↑</annotation>
+		<annotation cp="■" type="tts">↑↑↑</annotation>
+		<annotation cp="□">↑↑↑</annotation>
+		<annotation cp="□" type="tts">↑↑↑</annotation>
+		<annotation cp="▢">↑↑↑</annotation>
+		<annotation cp="▢" type="tts">↑↑↑</annotation>
+		<annotation cp="▣">↑↑↑</annotation>
+		<annotation cp="▣" type="tts">↑↑↑</annotation>
+		<annotation cp="▤">↑↑↑</annotation>
+		<annotation cp="▤" type="tts">↑↑↑</annotation>
+		<annotation cp="▥">↑↑↑</annotation>
+		<annotation cp="▥" type="tts">↑↑↑</annotation>
+		<annotation cp="▦">↑↑↑</annotation>
+		<annotation cp="▦" type="tts">square with orthogonal crosshatch fill</annotation>
+		<annotation cp="▧">↑↑↑</annotation>
+		<annotation cp="▧" type="tts">square with upper left to lower right fill</annotation>
+		<annotation cp="▨">↑↑↑</annotation>
+		<annotation cp="▨" type="tts">square with upper right to lower left fill</annotation>
+		<annotation cp="▩">square with diagonal crosshatch fill</annotation>
+		<annotation cp="▩" type="tts">square with diagonal crosshatch fill</annotation>
+		<annotation cp="▬">↑↑↑</annotation>
+		<annotation cp="▬" type="tts">↑↑↑</annotation>
+		<annotation cp="▭">↑↑↑</annotation>
+		<annotation cp="▭" type="tts">↑↑↑</annotation>
+		<annotation cp="▮">↑↑↑</annotation>
+		<annotation cp="▮" type="tts">↑↑↑</annotation>
+		<annotation cp="▰">↑↑↑</annotation>
+		<annotation cp="▰" type="tts">↑↑↑</annotation>
+		<annotation cp="▲">arrow | black up-pointing triangle | filled up-pointing triangle | triangle | up</annotation>
+		<annotation cp="▲" type="tts">↑↑↑</annotation>
+		<annotation cp="△">↑↑↑</annotation>
+		<annotation cp="△" type="tts">↑↑↑</annotation>
+		<annotation cp="▴">↑↑↑</annotation>
+		<annotation cp="▴" type="tts">↑↑↑</annotation>
+		<annotation cp="▵">↑↑↑</annotation>
+		<annotation cp="▵" type="tts">↑↑↑</annotation>
+		<annotation cp="▷">↑↑↑</annotation>
+		<annotation cp="▷" type="tts">↑↑↑</annotation>
+		<annotation cp="▸">↑↑↑</annotation>
+		<annotation cp="▸" type="tts">↑↑↑</annotation>
+		<annotation cp="▹">↑↑↑</annotation>
+		<annotation cp="▹" type="tts">↑↑↑</annotation>
+		<annotation cp="►">↑↑↑</annotation>
+		<annotation cp="►" type="tts">↑↑↑</annotation>
+		<annotation cp="▻">↑↑↑</annotation>
+		<annotation cp="▻" type="tts">↑↑↑</annotation>
+		<annotation cp="▼">arrow | black down-pointing triangle | down | filled down-pointing triangle | triangle</annotation>
+		<annotation cp="▼" type="tts">↑↑↑</annotation>
+		<annotation cp="▽">↑↑↑</annotation>
+		<annotation cp="▽" type="tts">↑↑↑</annotation>
+		<annotation cp="▾">↑↑↑</annotation>
+		<annotation cp="▾" type="tts">↑↑↑</annotation>
+		<annotation cp="▿">↑↑↑</annotation>
+		<annotation cp="▿" type="tts">↑↑↑</annotation>
+		<annotation cp="◁">↑↑↑</annotation>
+		<annotation cp="◁" type="tts">↑↑↑</annotation>
+		<annotation cp="◂">↑↑↑</annotation>
+		<annotation cp="◂" type="tts">↑↑↑</annotation>
+		<annotation cp="◃">↑↑↑</annotation>
+		<annotation cp="◃" type="tts">↑↑↑</annotation>
+		<annotation cp="◄">↑↑↑</annotation>
+		<annotation cp="◄" type="tts">↑↑↑</annotation>
+		<annotation cp="◅">↑↑↑</annotation>
+		<annotation cp="◅" type="tts">↑↑↑</annotation>
+		<annotation cp="◆">↑↑↑</annotation>
+		<annotation cp="◆" type="tts">↑↑↑</annotation>
+		<annotation cp="◇">↑↑↑</annotation>
+		<annotation cp="◇" type="tts">↑↑↑</annotation>
+		<annotation cp="◈">hollow diamond containing filled diamond | white diamond containing black diamond</annotation>
+		<annotation cp="◈" type="tts">↑↑↑</annotation>
+		<annotation cp="◉">circled dot | concentric circles filled | fisheye | hollow circle containing filled circle | white circle containing black circle</annotation>
+		<annotation cp="◉" type="tts">↑↑↑</annotation>
+		<annotation cp="◊">↑↑↑</annotation>
+		<annotation cp="◊" type="tts">↑↑↑</annotation>
+		<annotation cp="○">circle | hollow circle | ring | white circle</annotation>
+		<annotation cp="○" type="tts">↑↑↑</annotation>
+		<annotation cp="◌">↑↑↑</annotation>
+		<annotation cp="◌" type="tts">↑↑↑</annotation>
+		<annotation cp="◍">↑↑↑</annotation>
+		<annotation cp="◍" type="tts">↑↑↑</annotation>
+		<annotation cp="◎">↑↑↑</annotation>
+		<annotation cp="◎" type="tts">↑↑↑</annotation>
+		<annotation cp="●">black circle | circle | filled circle</annotation>
+		<annotation cp="●" type="tts">↑↑↑</annotation>
+		<annotation cp="◐">↑↑↑</annotation>
+		<annotation cp="◐" type="tts">↑↑↑</annotation>
+		<annotation cp="◑">↑↑↑</annotation>
+		<annotation cp="◑" type="tts">↑↑↑</annotation>
+		<annotation cp="◒">↑↑↑</annotation>
+		<annotation cp="◒" type="tts">↑↑↑</annotation>
+		<annotation cp="◓">↑↑↑</annotation>
+		<annotation cp="◓" type="tts">↑↑↑</annotation>
+		<annotation cp="◔">↑↑↑</annotation>
+		<annotation cp="◔" type="tts">circle with upper-right quadrant filled</annotation>
+		<annotation cp="◕">↑↑↑</annotation>
+		<annotation cp="◕" type="tts">circle with all but upper-left quadrant filled</annotation>
+		<annotation cp="◖">↑↑↑</annotation>
+		<annotation cp="◖" type="tts">↑↑↑</annotation>
+		<annotation cp="◗">↑↑↑</annotation>
+		<annotation cp="◗" type="tts">↑↑↑</annotation>
+		<annotation cp="◘">↑↑↑</annotation>
+		<annotation cp="◘" type="tts">↑↑↑</annotation>
+		<annotation cp="◙">↑↑↑</annotation>
+		<annotation cp="◙" type="tts">↑↑↑</annotation>
+		<annotation cp="◜">↑↑↑</annotation>
+		<annotation cp="◜" type="tts">upper-left quadrant circular arc</annotation>
+		<annotation cp="◝">↑↑↑</annotation>
+		<annotation cp="◝" type="tts">upper-right quadrant circular arc</annotation>
+		<annotation cp="◞">↑↑↑</annotation>
+		<annotation cp="◞" type="tts">lower-right quadrant circular arc</annotation>
+		<annotation cp="◟">↑↑↑</annotation>
+		<annotation cp="◟" type="tts">lower-left quadrant circular arc</annotation>
+		<annotation cp="◠">↑↑↑</annotation>
+		<annotation cp="◠" type="tts">↑↑↑</annotation>
+		<annotation cp="◡">↑↑↑</annotation>
+		<annotation cp="◡" type="tts">↑↑↑</annotation>
+		<annotation cp="◢">↑↑↑</annotation>
+		<annotation cp="◢" type="tts">filled lower-right triangle</annotation>
+		<annotation cp="◣">↑↑↑</annotation>
+		<annotation cp="◣" type="tts">filled lower-left triangle</annotation>
+		<annotation cp="◤">↑↑↑</annotation>
+		<annotation cp="◤" type="tts">filled upper-left triangle</annotation>
+		<annotation cp="◥">↑↑↑</annotation>
+		<annotation cp="◥" type="tts">filled upper-right triangle</annotation>
+		<annotation cp="◦">↑↑↑</annotation>
+		<annotation cp="◦" type="tts">↑↑↑</annotation>
+		<annotation cp="◯">circle | large hollow circle | large white circle | ring</annotation>
+		<annotation cp="◯" type="tts">↑↑↑</annotation>
+		<annotation cp="◳">↑↑↑</annotation>
+		<annotation cp="◳" type="tts">hollow square with upper-right quadrant</annotation>
+		<annotation cp="◷">↑↑↑</annotation>
+		<annotation cp="◷" type="tts">hollow circle with upper-right quadrant</annotation>
+		<annotation cp="◿">↑↑↑</annotation>
+		<annotation cp="◿" type="tts">↑↑↑</annotation>
+		<annotation cp="♪">↑↑↑</annotation>
+		<annotation cp="♪" type="tts">↑↑↑</annotation>
+		<annotation cp="⨧">↑↑↑</annotation>
+		<annotation cp="⨧" type="tts">plus sign with subscript two</annotation>
+		<annotation cp="⨯">cross product | vector | vector or cross product</annotation>
+		<annotation cp="⨯" type="tts">vector or cross product</annotation>
+		<annotation cp="⨼">↑↑↑</annotation>
+		<annotation cp="⨼" type="tts">↑↑↑</annotation>
+		<annotation cp="⩣">↑↑↑</annotation>
+		<annotation cp="⩣" type="tts">↑↑↑</annotation>
+		<annotation cp="⩽">↑↑↑</annotation>
+		<annotation cp="⩽" type="tts">↑↑↑</annotation>
+		<annotation cp="⪍">↑↑↑</annotation>
+		<annotation cp="⪍" type="tts">↑↑↑</annotation>
+		<annotation cp="⪚">↑↑↑</annotation>
+		<annotation cp="⪚" type="tts">↑↑↑</annotation>
+		<annotation cp="⪺">↑↑↑</annotation>
+		<annotation cp="⪺" type="tts">↑↑↑</annotation>
+		<annotation cp="♭">↑↑↑</annotation>
+		<annotation cp="♭" type="tts">↑↑↑</annotation>
+		<annotation cp="♯">↑↑↑</annotation>
+		<annotation cp="♯" type="tts">↑↑↑</annotation>
+		<annotation cp="😀">↑↑↑</annotation>
+		<annotation cp="😀" type="tts">↑↑↑</annotation>
+		<annotation cp="😃">↑↑↑</annotation>
+		<annotation cp="😃" type="tts">↑↑↑</annotation>
+		<annotation cp="😄">↑↑↑</annotation>
+		<annotation cp="😄" type="tts">↑↑↑</annotation>
+		<annotation cp="😁">↑↑↑</annotation>
+		<annotation cp="😁" type="tts">↑↑↑</annotation>
+		<annotation cp="😆">↑↑↑</annotation>
+		<annotation cp="😆" type="tts">↑↑↑</annotation>
+		<annotation cp="😅">↑↑↑</annotation>
+		<annotation cp="😅" type="tts">↑↑↑</annotation>
+		<annotation cp="🤣">↑↑↑</annotation>
+		<annotation cp="🤣" type="tts">↑↑↑</annotation>
+		<annotation cp="😂">↑↑↑</annotation>
+		<annotation cp="😂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙂">↑↑↑</annotation>
+		<annotation cp="🙂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙃">face | upside down | upside-down face</annotation>
+		<annotation cp="🙃" type="tts">↑↑↑</annotation>
+		<annotation cp="🫠">↑↑↑</annotation>
+		<annotation cp="🫠" type="tts">↑↑↑</annotation>
+		<annotation cp="😉">↑↑↑</annotation>
+		<annotation cp="😉" type="tts">↑↑↑</annotation>
+		<annotation cp="😊">↑↑↑</annotation>
+		<annotation cp="😊" type="tts">↑↑↑</annotation>
+		<annotation cp="😇">↑↑↑</annotation>
+		<annotation cp="😇" type="tts">↑↑↑</annotation>
+		<annotation cp="🥰">↑↑↑</annotation>
+		<annotation cp="🥰" type="tts">↑↑↑</annotation>
+		<annotation cp="😍">eye | face | love | smile | smiling face with heart eyes | smiling face with heart-eyes</annotation>
+		<annotation cp="😍" type="tts">smiling face with heart eyes</annotation>
+		<annotation cp="🤩">↑↑↑</annotation>
+		<annotation cp="🤩" type="tts">↑↑↑</annotation>
+		<annotation cp="😘">↑↑↑</annotation>
+		<annotation cp="😘" type="tts">↑↑↑</annotation>
+		<annotation cp="😗">↑↑↑</annotation>
+		<annotation cp="😗" type="tts">↑↑↑</annotation>
+		<annotation cp="☺">↑↑↑</annotation>
+		<annotation cp="☺" type="tts">↑↑↑</annotation>
+		<annotation cp="😚">↑↑↑</annotation>
+		<annotation cp="😚" type="tts">↑↑↑</annotation>
+		<annotation cp="😙">↑↑↑</annotation>
+		<annotation cp="😙" type="tts">↑↑↑</annotation>
+		<annotation cp="🥲">↑↑↑</annotation>
+		<annotation cp="🥲" type="tts">↑↑↑</annotation>
+		<annotation cp="😋">delicious | face | face savouring food | savoring | savouring | smile | yum</annotation>
+		<annotation cp="😋" type="tts">face savouring food</annotation>
+		<annotation cp="😛">↑↑↑</annotation>
+		<annotation cp="😛" type="tts">↑↑↑</annotation>
+		<annotation cp="😜">↑↑↑</annotation>
+		<annotation cp="😜" type="tts">↑↑↑</annotation>
+		<annotation cp="🤪">↑↑↑</annotation>
+		<annotation cp="🤪" type="tts">↑↑↑</annotation>
+		<annotation cp="😝">↑↑↑</annotation>
+		<annotation cp="😝" type="tts">↑↑↑</annotation>
+		<annotation cp="🤑">↑↑↑</annotation>
+		<annotation cp="🤑" type="tts">↑↑↑</annotation>
+		<annotation cp="🤗">↑↑↑</annotation>
+		<annotation cp="🤗" type="tts">↑↑↑</annotation>
+		<annotation cp="🤭">face with hand over mouth | oops | whoops</annotation>
+		<annotation cp="🤭" type="tts">↑↑↑</annotation>
+		<annotation cp="🫢">↑↑↑</annotation>
+		<annotation cp="🫢" type="tts">↑↑↑</annotation>
+		<annotation cp="🫣">↑↑↑</annotation>
+		<annotation cp="🫣" type="tts">↑↑↑</annotation>
+		<annotation cp="🤫">↑↑↑</annotation>
+		<annotation cp="🤫" type="tts">↑↑↑</annotation>
+		<annotation cp="🤔">↑↑↑</annotation>
+		<annotation cp="🤔" type="tts">↑↑↑</annotation>
+		<annotation cp="🫡">↑↑↑</annotation>
+		<annotation cp="🫡" type="tts">↑↑↑</annotation>
+		<annotation cp="🤐">↑↑↑</annotation>
+		<annotation cp="🤐" type="tts">↑↑↑</annotation>
+		<annotation cp="🤨">↑↑↑</annotation>
+		<annotation cp="🤨" type="tts">↑↑↑</annotation>
+		<annotation cp="😐">↑↑↑</annotation>
+		<annotation cp="😐" type="tts">↑↑↑</annotation>
+		<annotation cp="😑">↑↑↑</annotation>
+		<annotation cp="😑" type="tts">↑↑↑</annotation>
+		<annotation cp="😶">↑↑↑</annotation>
+		<annotation cp="😶" type="tts">↑↑↑</annotation>
+		<annotation cp="🫥">depressed | disappear | dotted line face | dotted-line face | hide | introvert | invisible</annotation>
+		<annotation cp="🫥" type="tts">dotted-line face</annotation>
+		<annotation cp="😶‍🌫">↑↑↑</annotation>
+		<annotation cp="😶‍🌫" type="tts">↑↑↑</annotation>
+		<annotation cp="😏">↑↑↑</annotation>
+		<annotation cp="😏" type="tts">↑↑↑</annotation>
+		<annotation cp="😒">↑↑↑</annotation>
+		<annotation cp="😒" type="tts">↑↑↑</annotation>
+		<annotation cp="🙄">↑↑↑</annotation>
+		<annotation cp="🙄" type="tts">↑↑↑</annotation>
+		<annotation cp="😬">↑↑↑</annotation>
+		<annotation cp="😬" type="tts">↑↑↑</annotation>
+		<annotation cp="😮‍💨">↑↑↑</annotation>
+		<annotation cp="😮‍💨" type="tts">↑↑↑</annotation>
+		<annotation cp="🤥">face | lie | lying face | Pinocchio</annotation>
+		<annotation cp="🤥" type="tts">↑↑↑</annotation>
+		<annotation cp="🫨">↑↑↑</annotation>
+		<annotation cp="🫨" type="tts">↑↑↑</annotation>
+		<annotation cp="🙂‍↔">↑↑↑</annotation>
+		<annotation cp="🙂‍↔" type="tts">↑↑↑</annotation>
+		<annotation cp="🙂‍↕">↑↑↑</annotation>
+		<annotation cp="🙂‍↕" type="tts">↑↑↑</annotation>
+		<annotation cp="😌">↑↑↑</annotation>
+		<annotation cp="😌" type="tts">↑↑↑</annotation>
+		<annotation cp="😔">↑↑↑</annotation>
+		<annotation cp="😔" type="tts">↑↑↑</annotation>
+		<annotation cp="😪">↑↑↑</annotation>
+		<annotation cp="😪" type="tts">↑↑↑</annotation>
+		<annotation cp="🤤">↑↑↑</annotation>
+		<annotation cp="🤤" type="tts">↑↑↑</annotation>
+		<annotation cp="😴">↑↑↑</annotation>
+		<annotation cp="😴" type="tts">↑↑↑</annotation>
+		<annotation cp="🫩">↑↑↑</annotation>
+		<annotation cp="🫩" type="tts">↑↑↑</annotation>
+		<annotation cp="😷">cold | doctor | face | face with medical mask | ill | mask | sick</annotation>
+		<annotation cp="😷" type="tts">↑↑↑</annotation>
+		<annotation cp="🤒">↑↑↑</annotation>
+		<annotation cp="🤒" type="tts">↑↑↑</annotation>
+		<annotation cp="🤕">↑↑↑</annotation>
+		<annotation cp="🤕" type="tts">↑↑↑</annotation>
+		<annotation cp="🤢">↑↑↑</annotation>
+		<annotation cp="🤢" type="tts">↑↑↑</annotation>
+		<annotation cp="🤮">↑↑↑</annotation>
+		<annotation cp="🤮" type="tts">↑↑↑</annotation>
+		<annotation cp="🤧">bless you | face | gesundheit | sneeze | sneezing face</annotation>
+		<annotation cp="🤧" type="tts">↑↑↑</annotation>
+		<annotation cp="🥵">↑↑↑</annotation>
+		<annotation cp="🥵" type="tts">↑↑↑</annotation>
+		<annotation cp="🥶">↑↑↑</annotation>
+		<annotation cp="🥶" type="tts">↑↑↑</annotation>
+		<annotation cp="🥴">↑↑↑</annotation>
+		<annotation cp="🥴" type="tts">↑↑↑</annotation>
+		<annotation cp="😵">↑↑↑</annotation>
+		<annotation cp="😵" type="tts">↑↑↑</annotation>
+		<annotation cp="😵‍💫">↑↑↑</annotation>
+		<annotation cp="😵‍💫" type="tts">↑↑↑</annotation>
+		<annotation cp="🤯">↑↑↑</annotation>
+		<annotation cp="🤯" type="tts">↑↑↑</annotation>
+		<annotation cp="🤠">cowboy | cowgirl | face | face with cowboy hat | hat</annotation>
+		<annotation cp="🤠" type="tts">face with cowboy hat</annotation>
+		<annotation cp="🥳">↑↑↑</annotation>
+		<annotation cp="🥳" type="tts">↑↑↑</annotation>
+		<annotation cp="🥸">↑↑↑</annotation>
+		<annotation cp="🥸" type="tts">↑↑↑</annotation>
+		<annotation cp="😎">↑↑↑</annotation>
+		<annotation cp="😎" type="tts">↑↑↑</annotation>
+		<annotation cp="🤓">↑↑↑</annotation>
+		<annotation cp="🤓" type="tts">↑↑↑</annotation>
+		<annotation cp="🧐">↑↑↑</annotation>
+		<annotation cp="🧐" type="tts">↑↑↑</annotation>
+		<annotation cp="😕">↑↑↑</annotation>
+		<annotation cp="😕" type="tts">↑↑↑</annotation>
+		<annotation cp="🫤">↑↑↑</annotation>
+		<annotation cp="🫤" type="tts">↑↑↑</annotation>
+		<annotation cp="😟">↑↑↑</annotation>
+		<annotation cp="😟" type="tts">↑↑↑</annotation>
+		<annotation cp="🙁">↑↑↑</annotation>
+		<annotation cp="🙁" type="tts">↑↑↑</annotation>
+		<annotation cp="☹">↑↑↑</annotation>
+		<annotation cp="☹" type="tts">↑↑↑</annotation>
+		<annotation cp="😮">↑↑↑</annotation>
+		<annotation cp="😮" type="tts">↑↑↑</annotation>
+		<annotation cp="😯">↑↑↑</annotation>
+		<annotation cp="😯" type="tts">↑↑↑</annotation>
+		<annotation cp="😲">↑↑↑</annotation>
+		<annotation cp="😲" type="tts">↑↑↑</annotation>
+		<annotation cp="😳">↑↑↑</annotation>
+		<annotation cp="😳" type="tts">↑↑↑</annotation>
+		<annotation cp="🫪">↑↑↑</annotation>
+		<annotation cp="🫪" type="tts">↑↑↑</annotation>
+		<annotation cp="🥺">↑↑↑</annotation>
+		<annotation cp="🥺" type="tts">↑↑↑</annotation>
+		<annotation cp="🥹">↑↑↑</annotation>
+		<annotation cp="🥹" type="tts">↑↑↑</annotation>
+		<annotation cp="😦">↑↑↑</annotation>
+		<annotation cp="😦" type="tts">↑↑↑</annotation>
+		<annotation cp="😧">↑↑↑</annotation>
+		<annotation cp="😧" type="tts">↑↑↑</annotation>
+		<annotation cp="😨">↑↑↑</annotation>
+		<annotation cp="😨" type="tts">↑↑↑</annotation>
+		<annotation cp="😰">↑↑↑</annotation>
+		<annotation cp="😰" type="tts">↑↑↑</annotation>
+		<annotation cp="😥">↑↑↑</annotation>
+		<annotation cp="😥" type="tts">↑↑↑</annotation>
+		<annotation cp="😢">↑↑↑</annotation>
+		<annotation cp="😢" type="tts">↑↑↑</annotation>
+		<annotation cp="😭">↑↑↑</annotation>
+		<annotation cp="😭" type="tts">↑↑↑</annotation>
+		<annotation cp="😱">↑↑↑</annotation>
+		<annotation cp="😱" type="tts">↑↑↑</annotation>
+		<annotation cp="😖">↑↑↑</annotation>
+		<annotation cp="😖" type="tts">↑↑↑</annotation>
+		<annotation cp="😣">↑↑↑</annotation>
+		<annotation cp="😣" type="tts">↑↑↑</annotation>
+		<annotation cp="😞">↑↑↑</annotation>
+		<annotation cp="😞" type="tts">↑↑↑</annotation>
+		<annotation cp="😓">↑↑↑</annotation>
+		<annotation cp="😓" type="tts">↑↑↑</annotation>
+		<annotation cp="😩">↑↑↑</annotation>
+		<annotation cp="😩" type="tts">↑↑↑</annotation>
+		<annotation cp="😫">↑↑↑</annotation>
+		<annotation cp="😫" type="tts">↑↑↑</annotation>
+		<annotation cp="🥱">↑↑↑</annotation>
+		<annotation cp="🥱" type="tts">↑↑↑</annotation>
+		<annotation cp="😤">angry | face | face with steam from nose | frustration | triumph | won</annotation>
+		<annotation cp="😤" type="tts">↑↑↑</annotation>
+		<annotation cp="😡">↑↑↑</annotation>
+		<annotation cp="😡" type="tts">↑↑↑</annotation>
+		<annotation cp="😠">↑↑↑</annotation>
+		<annotation cp="😠" type="tts">↑↑↑</annotation>
+		<annotation cp="🤬">↑↑↑</annotation>
+		<annotation cp="🤬" type="tts">↑↑↑</annotation>
+		<annotation cp="😈">↑↑↑</annotation>
+		<annotation cp="😈" type="tts">↑↑↑</annotation>
+		<annotation cp="👿">↑↑↑</annotation>
+		<annotation cp="👿" type="tts">↑↑↑</annotation>
+		<annotation cp="💀">↑↑↑</annotation>
+		<annotation cp="💀" type="tts">↑↑↑</annotation>
+		<annotation cp="☠">↑↑↑</annotation>
+		<annotation cp="☠" type="tts">↑↑↑</annotation>
+		<annotation cp="💩">↑↑↑</annotation>
+		<annotation cp="💩" type="tts">↑↑↑</annotation>
+		<annotation cp="🤡">↑↑↑</annotation>
+		<annotation cp="🤡" type="tts">↑↑↑</annotation>
+		<annotation cp="👹">↑↑↑</annotation>
+		<annotation cp="👹" type="tts">↑↑↑</annotation>
+		<annotation cp="👺">↑↑↑</annotation>
+		<annotation cp="👺" type="tts">↑↑↑</annotation>
+		<annotation cp="👻">↑↑↑</annotation>
+		<annotation cp="👻" type="tts">↑↑↑</annotation>
+		<annotation cp="👽">alien | creature | ET | extraterrestrial | face | fantasy | UFO</annotation>
+		<annotation cp="👽" type="tts">↑↑↑</annotation>
+		<annotation cp="👾">alien | creature | ET | extraterrestrial | face | monster | UFO</annotation>
+		<annotation cp="👾" type="tts">↑↑↑</annotation>
+		<annotation cp="🤖">↑↑↑</annotation>
+		<annotation cp="🤖" type="tts">↑↑↑</annotation>
+		<annotation cp="😺">↑↑↑</annotation>
+		<annotation cp="😺" type="tts">↑↑↑</annotation>
+		<annotation cp="😸">↑↑↑</annotation>
+		<annotation cp="😸" type="tts">↑↑↑</annotation>
+		<annotation cp="😹">↑↑↑</annotation>
+		<annotation cp="😹" type="tts">↑↑↑</annotation>
+		<annotation cp="😻">cat | eye | face | heart | love | smile | smiling cat face with heart eyes | smiling cat with heart-eyes</annotation>
+		<annotation cp="😻" type="tts">smiling cat face with heart eyes</annotation>
+		<annotation cp="😼">↑↑↑</annotation>
+		<annotation cp="😼" type="tts">↑↑↑</annotation>
+		<annotation cp="😽">↑↑↑</annotation>
+		<annotation cp="😽" type="tts">↑↑↑</annotation>
+		<annotation cp="🙀">↑↑↑</annotation>
+		<annotation cp="🙀" type="tts">↑↑↑</annotation>
+		<annotation cp="😿">↑↑↑</annotation>
+		<annotation cp="😿" type="tts">↑↑↑</annotation>
+		<annotation cp="😾">↑↑↑</annotation>
+		<annotation cp="😾" type="tts">↑↑↑</annotation>
+		<annotation cp="🙈">↑↑↑</annotation>
+		<annotation cp="🙈" type="tts">↑↑↑</annotation>
+		<annotation cp="🙉">↑↑↑</annotation>
+		<annotation cp="🙉" type="tts">↑↑↑</annotation>
+		<annotation cp="🙊">↑↑↑</annotation>
+		<annotation cp="🙊" type="tts">↑↑↑</annotation>
+		<annotation cp="💌">↑↑↑</annotation>
+		<annotation cp="💌" type="tts">↑↑↑</annotation>
+		<annotation cp="💘">↑↑↑</annotation>
+		<annotation cp="💘" type="tts">↑↑↑</annotation>
+		<annotation cp="💝">↑↑↑</annotation>
+		<annotation cp="💝" type="tts">↑↑↑</annotation>
+		<annotation cp="💖">↑↑↑</annotation>
+		<annotation cp="💖" type="tts">↑↑↑</annotation>
+		<annotation cp="💗">↑↑↑</annotation>
+		<annotation cp="💗" type="tts">↑↑↑</annotation>
+		<annotation cp="💓">↑↑↑</annotation>
+		<annotation cp="💓" type="tts">↑↑↑</annotation>
+		<annotation cp="💞">↑↑↑</annotation>
+		<annotation cp="💞" type="tts">↑↑↑</annotation>
+		<annotation cp="💕">↑↑↑</annotation>
+		<annotation cp="💕" type="tts">↑↑↑</annotation>
+		<annotation cp="💟">↑↑↑</annotation>
+		<annotation cp="💟" type="tts">↑↑↑</annotation>
+		<annotation cp="❣">↑↑↑</annotation>
+		<annotation cp="❣" type="tts">↑↑↑</annotation>
+		<annotation cp="💔">↑↑↑</annotation>
+		<annotation cp="💔" type="tts">↑↑↑</annotation>
+		<annotation cp="❤‍🔥">↑↑↑</annotation>
+		<annotation cp="❤‍🔥" type="tts">↑↑↑</annotation>
+		<annotation cp="❤‍🩹">↑↑↑</annotation>
+		<annotation cp="❤‍🩹" type="tts">↑↑↑</annotation>
+		<annotation cp="❤">↑↑↑</annotation>
+		<annotation cp="❤" type="tts">↑↑↑</annotation>
+		<annotation cp="🩷">↑↑↑</annotation>
+		<annotation cp="🩷" type="tts">↑↑↑</annotation>
+		<annotation cp="🧡">↑↑↑</annotation>
+		<annotation cp="🧡" type="tts">↑↑↑</annotation>
+		<annotation cp="💛">↑↑↑</annotation>
+		<annotation cp="💛" type="tts">↑↑↑</annotation>
+		<annotation cp="💚">↑↑↑</annotation>
+		<annotation cp="💚" type="tts">↑↑↑</annotation>
+		<annotation cp="💙">↑↑↑</annotation>
+		<annotation cp="💙" type="tts">↑↑↑</annotation>
+		<annotation cp="🩵">↑↑↑</annotation>
+		<annotation cp="🩵" type="tts">↑↑↑</annotation>
+		<annotation cp="💜">↑↑↑</annotation>
+		<annotation cp="💜" type="tts">↑↑↑</annotation>
+		<annotation cp="🤎">↑↑↑</annotation>
+		<annotation cp="🤎" type="tts">↑↑↑</annotation>
+		<annotation cp="🖤">↑↑↑</annotation>
+		<annotation cp="🖤" type="tts">↑↑↑</annotation>
+		<annotation cp="🩶">↑↑↑</annotation>
+		<annotation cp="🩶" type="tts">↑↑↑</annotation>
+		<annotation cp="🤍">↑↑↑</annotation>
+		<annotation cp="🤍" type="tts">↑↑↑</annotation>
+		<annotation cp="💋">↑↑↑</annotation>
+		<annotation cp="💋" type="tts">↑↑↑</annotation>
+		<annotation cp="💯">100 | full | hundred | hundred percent | hundred points | one hundred | score</annotation>
+		<annotation cp="💯" type="tts">↑↑↑</annotation>
+		<annotation cp="💢">↑↑↑</annotation>
+		<annotation cp="💢" type="tts">↑↑↑</annotation>
+		<annotation cp="🫯">↑↑↑</annotation>
+		<annotation cp="🫯" type="tts">↑↑↑</annotation>
+		<annotation cp="💥">↑↑↑</annotation>
+		<annotation cp="💥" type="tts">↑↑↑</annotation>
+		<annotation cp="💫">↑↑↑</annotation>
+		<annotation cp="💫" type="tts">↑↑↑</annotation>
+		<annotation cp="💦">↑↑↑</annotation>
+		<annotation cp="💦" type="tts">↑↑↑</annotation>
+		<annotation cp="💨">↑↑↑</annotation>
+		<annotation cp="💨" type="tts">↑↑↑</annotation>
+		<annotation cp="🕳">↑↑↑</annotation>
+		<annotation cp="🕳" type="tts">↑↑↑</annotation>
+		<annotation cp="💬">balloon | bubble | comic | dialog | dialogue | speech</annotation>
+		<annotation cp="💬" type="tts">↑↑↑</annotation>
+		<annotation cp="👁‍🗨">↑↑↑</annotation>
+		<annotation cp="👁‍🗨" type="tts">↑↑↑</annotation>
+		<annotation cp="🗨">balloon | bubble | dialog | dialogue | left speech bubble | speech</annotation>
+		<annotation cp="🗨" type="tts">↑↑↑</annotation>
+		<annotation cp="🗯">↑↑↑</annotation>
+		<annotation cp="🗯" type="tts">↑↑↑</annotation>
+		<annotation cp="💭">↑↑↑</annotation>
+		<annotation cp="💭" type="tts">↑↑↑</annotation>
+		<annotation cp="💤">↑↑↑</annotation>
+		<annotation cp="💤" type="tts">↑↑↑</annotation>
+		<annotation cp="👋">↑↑↑</annotation>
+		<annotation cp="👋" type="tts">↑↑↑</annotation>
+		<annotation cp="🤚">↑↑↑</annotation>
+		<annotation cp="🤚" type="tts">↑↑↑</annotation>
+		<annotation cp="🖐">↑↑↑</annotation>
+		<annotation cp="🖐" type="tts">↑↑↑</annotation>
+		<annotation cp="✋">↑↑↑</annotation>
+		<annotation cp="✋" type="tts">↑↑↑</annotation>
+		<annotation cp="🖖">finger | hand | Spock | Vulcan | Vulcan salute</annotation>
+		<annotation cp="🖖" type="tts">Vulcan salute</annotation>
+		<annotation cp="🫱">hand | right | rightward | rightwards</annotation>
+		<annotation cp="🫱" type="tts">rightward hand</annotation>
+		<annotation cp="🫲">hand | left | leftward | leftwards</annotation>
+		<annotation cp="🫲" type="tts">leftward hand</annotation>
+		<annotation cp="🫳">dismiss | drop | palm down hand | palm-down hand | shoo</annotation>
+		<annotation cp="🫳" type="tts">palm-down hand</annotation>
+		<annotation cp="🫴">beckon | catch | come | offer | palm up hand | palm-up hand</annotation>
+		<annotation cp="🫴" type="tts">palm-up hand</annotation>
+		<annotation cp="🫷">high five | leftward | leftward-pushing hand | leftwards pushing hand | push | refuse | stop | wait</annotation>
+		<annotation cp="🫷" type="tts">leftward-pushing hand</annotation>
+		<annotation cp="🫸">high five | push | refuse | rightward | rightward-pushing hand | rightwards pushing hand | stop | wait</annotation>
+		<annotation cp="🫸" type="tts">rightward-pushing hand</annotation>
+		<annotation cp="👌">hand | OK | perfect</annotation>
+		<annotation cp="👌" type="tts">↑↑↑</annotation>
+		<annotation cp="🤌">↑↑↑</annotation>
+		<annotation cp="🤌" type="tts">↑↑↑</annotation>
+		<annotation cp="🤏">↑↑↑</annotation>
+		<annotation cp="🤏" type="tts">↑↑↑</annotation>
+		<annotation cp="✌">↑↑↑</annotation>
+		<annotation cp="✌" type="tts">↑↑↑</annotation>
+		<annotation cp="🤞">cross | crossed fingers | finger | good luck | hand | luck</annotation>
+		<annotation cp="🤞" type="tts">↑↑↑</annotation>
+		<annotation cp="🫰">↑↑↑</annotation>
+		<annotation cp="🫰" type="tts">↑↑↑</annotation>
+		<annotation cp="🤟">hand | ILY | love you gesture | love-you gesture</annotation>
+		<annotation cp="🤟" type="tts">↑↑↑</annotation>
+		<annotation cp="🤘">finger | hand | horns | rock on | sign of the horns</annotation>
+		<annotation cp="🤘" type="tts">↑↑↑</annotation>
+		<annotation cp="🤙">call | call me hand | call-me hand | hand | hang loose | Shaka</annotation>
+		<annotation cp="🤙" type="tts">call-me hand</annotation>
+		<annotation cp="👈">↑↑↑</annotation>
+		<annotation cp="👈" type="tts">↑↑↑</annotation>
+		<annotation cp="👉">↑↑↑</annotation>
+		<annotation cp="👉" type="tts">↑↑↑</annotation>
+		<annotation cp="👆">↑↑↑</annotation>
+		<annotation cp="👆" type="tts">↑↑↑</annotation>
+		<annotation cp="🖕">↑↑↑</annotation>
+		<annotation cp="🖕" type="tts">↑↑↑</annotation>
+		<annotation cp="👇">↑↑↑</annotation>
+		<annotation cp="👇" type="tts">↑↑↑</annotation>
+		<annotation cp="☝">↑↑↑</annotation>
+		<annotation cp="☝" type="tts">↑↑↑</annotation>
+		<annotation cp="🫵">↑↑↑</annotation>
+		<annotation cp="🫵" type="tts">↑↑↑</annotation>
+		<annotation cp="👍">↑↑↑</annotation>
+		<annotation cp="👍" type="tts">↑↑↑</annotation>
+		<annotation cp="👎">↑↑↑</annotation>
+		<annotation cp="👎" type="tts">↑↑↑</annotation>
+		<annotation cp="✊">↑↑↑</annotation>
+		<annotation cp="✊" type="tts">↑↑↑</annotation>
+		<annotation cp="👊">↑↑↑</annotation>
+		<annotation cp="👊" type="tts">↑↑↑</annotation>
+		<annotation cp="🤛">fist | left-facing fist | leftward</annotation>
+		<annotation cp="🤛" type="tts">↑↑↑</annotation>
+		<annotation cp="🤜">fist | right-facing fist | rightward</annotation>
+		<annotation cp="🤜" type="tts">↑↑↑</annotation>
+		<annotation cp="👏">↑↑↑</annotation>
+		<annotation cp="👏" type="tts">↑↑↑</annotation>
+		<annotation cp="🙌">↑↑↑</annotation>
+		<annotation cp="🙌" type="tts">↑↑↑</annotation>
+		<annotation cp="🫶">↑↑↑</annotation>
+		<annotation cp="🫶" type="tts">↑↑↑</annotation>
+		<annotation cp="👐">↑↑↑</annotation>
+		<annotation cp="👐" type="tts">↑↑↑</annotation>
+		<annotation cp="🤲">↑↑↑</annotation>
+		<annotation cp="🤲" type="tts">↑↑↑</annotation>
+		<annotation cp="🤝">↑↑↑</annotation>
+		<annotation cp="🤝" type="tts">↑↑↑</annotation>
+		<annotation cp="🙏">ask | folded hands | hand | high five | please | pray | thanks</annotation>
+		<annotation cp="🙏" type="tts">↑↑↑</annotation>
+		<annotation cp="✍">↑↑↑</annotation>
+		<annotation cp="✍" type="tts">↑↑↑</annotation>
+		<annotation cp="💅">↑↑↑</annotation>
+		<annotation cp="💅" type="tts">↑↑↑</annotation>
+		<annotation cp="🤳">↑↑↑</annotation>
+		<annotation cp="🤳" type="tts">↑↑↑</annotation>
+		<annotation cp="💪">biceps | comic | flex | flexed bicep | muscle</annotation>
+		<annotation cp="💪" type="tts">flexed bicep</annotation>
+		<annotation cp="🦾">↑↑↑</annotation>
+		<annotation cp="🦾" type="tts">↑↑↑</annotation>
+		<annotation cp="🦿">↑↑↑</annotation>
+		<annotation cp="🦿" type="tts">↑↑↑</annotation>
+		<annotation cp="🦵">↑↑↑</annotation>
+		<annotation cp="🦵" type="tts">↑↑↑</annotation>
+		<annotation cp="🦶">↑↑↑</annotation>
+		<annotation cp="🦶" type="tts">↑↑↑</annotation>
+		<annotation cp="👂">↑↑↑</annotation>
+		<annotation cp="👂" type="tts">↑↑↑</annotation>
+		<annotation cp="🦻">accessibility | ear with hearing aid | hard of hearing | hearing impaired</annotation>
+		<annotation cp="🦻" type="tts">↑↑↑</annotation>
+		<annotation cp="👃">↑↑↑</annotation>
+		<annotation cp="👃" type="tts">↑↑↑</annotation>
+		<annotation cp="🧠">↑↑↑</annotation>
+		<annotation cp="🧠" type="tts">↑↑↑</annotation>
+		<annotation cp="🫀">↑↑↑</annotation>
+		<annotation cp="🫀" type="tts">↑↑↑</annotation>
+		<annotation cp="🫁">↑↑↑</annotation>
+		<annotation cp="🫁" type="tts">↑↑↑</annotation>
+		<annotation cp="🦷">↑↑↑</annotation>
+		<annotation cp="🦷" type="tts">↑↑↑</annotation>
+		<annotation cp="🦴">↑↑↑</annotation>
+		<annotation cp="🦴" type="tts">↑↑↑</annotation>
+		<annotation cp="👀">↑↑↑</annotation>
+		<annotation cp="👀" type="tts">↑↑↑</annotation>
+		<annotation cp="👁">↑↑↑</annotation>
+		<annotation cp="👁" type="tts">↑↑↑</annotation>
+		<annotation cp="👅">↑↑↑</annotation>
+		<annotation cp="👅" type="tts">↑↑↑</annotation>
+		<annotation cp="👄">↑↑↑</annotation>
+		<annotation cp="👄" type="tts">↑↑↑</annotation>
+		<annotation cp="🫦">↑↑↑</annotation>
+		<annotation cp="🫦" type="tts">↑↑↑</annotation>
+		<annotation cp="👶">↑↑↑</annotation>
+		<annotation cp="👶" type="tts">↑↑↑</annotation>
+		<annotation cp="🧒">↑↑↑</annotation>
+		<annotation cp="🧒" type="tts">↑↑↑</annotation>
+		<annotation cp="👦">↑↑↑</annotation>
+		<annotation cp="👦" type="tts">↑↑↑</annotation>
+		<annotation cp="👧">girl | young</annotation>
+		<annotation cp="👧" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑">↑↑↑</annotation>
+		<annotation cp="🧑" type="tts">↑↑↑</annotation>
+		<annotation cp="👱">↑↑↑</annotation>
+		<annotation cp="👱" type="tts">↑↑↑</annotation>
+		<annotation cp="👨">↑↑↑</annotation>
+		<annotation cp="👨" type="tts">↑↑↑</annotation>
+		<annotation cp="🧔">↑↑↑</annotation>
+		<annotation cp="🧔" type="tts">↑↑↑</annotation>
+		<annotation cp="🧔‍♂">↑↑↑</annotation>
+		<annotation cp="🧔‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👱‍♂">↑↑↑</annotation>
+		<annotation cp="👱‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👩">↑↑↑</annotation>
+		<annotation cp="👩" type="tts">↑↑↑</annotation>
+		<annotation cp="🧔‍♀">↑↑↑</annotation>
+		<annotation cp="🧔‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="👱‍♀">↑↑↑</annotation>
+		<annotation cp="👱‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧓">↑↑↑</annotation>
+		<annotation cp="🧓" type="tts">↑↑↑</annotation>
+		<annotation cp="👴">↑↑↑</annotation>
+		<annotation cp="👴" type="tts">↑↑↑</annotation>
+		<annotation cp="👵">↑↑↑</annotation>
+		<annotation cp="👵" type="tts">↑↑↑</annotation>
+		<annotation cp="🙍">↑↑↑</annotation>
+		<annotation cp="🙍" type="tts">↑↑↑</annotation>
+		<annotation cp="🙍‍♂">↑↑↑</annotation>
+		<annotation cp="🙍‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙍‍♀">↑↑↑</annotation>
+		<annotation cp="🙍‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🙎">facial expression | gesture | person pouting | pouting</annotation>
+		<annotation cp="🙎" type="tts">↑↑↑</annotation>
+		<annotation cp="🙎‍♂">↑↑↑</annotation>
+		<annotation cp="🙎‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙎‍♀">↑↑↑</annotation>
+		<annotation cp="🙎‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🙅">↑↑↑</annotation>
+		<annotation cp="🙅" type="tts">↑↑↑</annotation>
+		<annotation cp="🙅‍♂">↑↑↑</annotation>
+		<annotation cp="🙅‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙅‍♀">↑↑↑</annotation>
+		<annotation cp="🙅‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🙆">↑↑↑</annotation>
+		<annotation cp="🙆" type="tts">↑↑↑</annotation>
+		<annotation cp="🙆‍♂">↑↑↑</annotation>
+		<annotation cp="🙆‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙆‍♀">↑↑↑</annotation>
+		<annotation cp="🙆‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="💁">↑↑↑</annotation>
+		<annotation cp="💁" type="tts">↑↑↑</annotation>
+		<annotation cp="💁‍♂">↑↑↑</annotation>
+		<annotation cp="💁‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="💁‍♀">↑↑↑</annotation>
+		<annotation cp="💁‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🙋">↑↑↑</annotation>
+		<annotation cp="🙋" type="tts">↑↑↑</annotation>
+		<annotation cp="🙋‍♂">↑↑↑</annotation>
+		<annotation cp="🙋‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙋‍♀">↑↑↑</annotation>
+		<annotation cp="🙋‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧏">accessibility | deaf | deaf person | ear | hard of hearing | hear | hearing impaired</annotation>
+		<annotation cp="🧏" type="tts">↑↑↑</annotation>
+		<annotation cp="🧏‍♂">↑↑↑</annotation>
+		<annotation cp="🧏‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧏‍♀">↑↑↑</annotation>
+		<annotation cp="🧏‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🙇">↑↑↑</annotation>
+		<annotation cp="🙇" type="tts">↑↑↑</annotation>
+		<annotation cp="🙇‍♂">apology | bowing | favor | favour | gesture | man | sorry</annotation>
+		<annotation cp="🙇‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🙇‍♀">apology | bowing | favor | favour | gesture | sorry | woman</annotation>
+		<annotation cp="🙇‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤦">↑↑↑</annotation>
+		<annotation cp="🤦" type="tts">↑↑↑</annotation>
+		<annotation cp="🤦‍♂">↑↑↑</annotation>
+		<annotation cp="🤦‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤦‍♀">↑↑↑</annotation>
+		<annotation cp="🤦‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤷">↑↑↑</annotation>
+		<annotation cp="🤷" type="tts">↑↑↑</annotation>
+		<annotation cp="🤷‍♂">↑↑↑</annotation>
+		<annotation cp="🤷‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤷‍♀">↑↑↑</annotation>
+		<annotation cp="🤷‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍⚕">doctor | health care | health worker | healthcare | nurse | therapist</annotation>
+		<annotation cp="🧑‍⚕" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍⚕">doctor | health care | man | man health worker | nurse | therapist</annotation>
+		<annotation cp="👨‍⚕" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍⚕">doctor | health care | nurse | therapist | woman | woman health worker</annotation>
+		<annotation cp="👩‍⚕" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🎓">↑↑↑</annotation>
+		<annotation cp="🧑‍🎓" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🎓">↑↑↑</annotation>
+		<annotation cp="👨‍🎓" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🎓">↑↑↑</annotation>
+		<annotation cp="👩‍🎓" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🏫">↑↑↑</annotation>
+		<annotation cp="🧑‍🏫" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🏫">↑↑↑</annotation>
+		<annotation cp="👨‍🏫" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🏫">↑↑↑</annotation>
+		<annotation cp="👩‍🏫" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍⚖">↑↑↑</annotation>
+		<annotation cp="🧑‍⚖" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍⚖">↑↑↑</annotation>
+		<annotation cp="👨‍⚖" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍⚖">↑↑↑</annotation>
+		<annotation cp="👩‍⚖" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🌾">↑↑↑</annotation>
+		<annotation cp="🧑‍🌾" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🌾">↑↑↑</annotation>
+		<annotation cp="👨‍🌾" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🌾">↑↑↑</annotation>
+		<annotation cp="👩‍🌾" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🍳">↑↑↑</annotation>
+		<annotation cp="🧑‍🍳" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🍳">↑↑↑</annotation>
+		<annotation cp="👨‍🍳" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🍳">↑↑↑</annotation>
+		<annotation cp="👩‍🍳" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🔧">↑↑↑</annotation>
+		<annotation cp="🧑‍🔧" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🔧">↑↑↑</annotation>
+		<annotation cp="👨‍🔧" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🔧">↑↑↑</annotation>
+		<annotation cp="👩‍🔧" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🏭">↑↑↑</annotation>
+		<annotation cp="🧑‍🏭" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🏭">↑↑↑</annotation>
+		<annotation cp="👨‍🏭" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🏭">↑↑↑</annotation>
+		<annotation cp="👩‍🏭" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍💼">↑↑↑</annotation>
+		<annotation cp="🧑‍💼" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍💼">↑↑↑</annotation>
+		<annotation cp="👨‍💼" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍💼">↑↑↑</annotation>
+		<annotation cp="👩‍💼" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🔬">↑↑↑</annotation>
+		<annotation cp="🧑‍🔬" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🔬">↑↑↑</annotation>
+		<annotation cp="👨‍🔬" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🔬">↑↑↑</annotation>
+		<annotation cp="👩‍🔬" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍💻">↑↑↑</annotation>
+		<annotation cp="🧑‍💻" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍💻">↑↑↑</annotation>
+		<annotation cp="👨‍💻" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍💻">↑↑↑</annotation>
+		<annotation cp="👩‍💻" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🎤">↑↑↑</annotation>
+		<annotation cp="🧑‍🎤" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🎤">↑↑↑</annotation>
+		<annotation cp="👨‍🎤" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🎤">↑↑↑</annotation>
+		<annotation cp="👩‍🎤" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🎨">↑↑↑</annotation>
+		<annotation cp="🧑‍🎨" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🎨">↑↑↑</annotation>
+		<annotation cp="👨‍🎨" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🎨">↑↑↑</annotation>
+		<annotation cp="👩‍🎨" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍✈">↑↑↑</annotation>
+		<annotation cp="🧑‍✈" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍✈">↑↑↑</annotation>
+		<annotation cp="👨‍✈" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍✈">↑↑↑</annotation>
+		<annotation cp="👩‍✈" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🚀">↑↑↑</annotation>
+		<annotation cp="🧑‍🚀" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🚀">↑↑↑</annotation>
+		<annotation cp="👨‍🚀" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🚀">↑↑↑</annotation>
+		<annotation cp="👩‍🚀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🚒">engine | fire | firefighter | firetruck | truck</annotation>
+		<annotation cp="🧑‍🚒" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🚒">fire truck | firefighter | fireman | man</annotation>
+		<annotation cp="👨‍🚒" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🚒">engine | fire | firefighter | firetruck | firewoman | truck | woman</annotation>
+		<annotation cp="👩‍🚒" type="tts">↑↑↑</annotation>
+		<annotation cp="👮">↑↑↑</annotation>
+		<annotation cp="👮" type="tts">↑↑↑</annotation>
+		<annotation cp="👮‍♂">↑↑↑</annotation>
+		<annotation cp="👮‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👮‍♀">↑↑↑</annotation>
+		<annotation cp="👮‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🕵">detective | private eye | sleuth | spy</annotation>
+		<annotation cp="🕵" type="tts">↑↑↑</annotation>
+		<annotation cp="🕵‍♂">↑↑↑</annotation>
+		<annotation cp="🕵‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🕵‍♀">↑↑↑</annotation>
+		<annotation cp="🕵‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="💂">↑↑↑</annotation>
+		<annotation cp="💂" type="tts">↑↑↑</annotation>
+		<annotation cp="💂‍♂">↑↑↑</annotation>
+		<annotation cp="💂‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="💂‍♀">↑↑↑</annotation>
+		<annotation cp="💂‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🥷">↑↑↑</annotation>
+		<annotation cp="🥷" type="tts">↑↑↑</annotation>
+		<annotation cp="👷">↑↑↑</annotation>
+		<annotation cp="👷" type="tts">↑↑↑</annotation>
+		<annotation cp="👷‍♂">↑↑↑</annotation>
+		<annotation cp="👷‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👷‍♀">↑↑↑</annotation>
+		<annotation cp="👷‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🫅">king | monarch | noble | person with crown | queen | regal | royalty</annotation>
+		<annotation cp="🫅" type="tts">↑↑↑</annotation>
+		<annotation cp="🤴">fairy tale | fantasy | prince</annotation>
+		<annotation cp="🤴" type="tts">↑↑↑</annotation>
+		<annotation cp="👸">↑↑↑</annotation>
+		<annotation cp="👸" type="tts">↑↑↑</annotation>
+		<annotation cp="👳">↑↑↑</annotation>
+		<annotation cp="👳" type="tts">↑↑↑</annotation>
+		<annotation cp="👳‍♂">↑↑↑</annotation>
+		<annotation cp="👳‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👳‍♀">↑↑↑</annotation>
+		<annotation cp="👳‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="👲">↑↑↑</annotation>
+		<annotation cp="👲" type="tts">↑↑↑</annotation>
+		<annotation cp="🧕">↑↑↑</annotation>
+		<annotation cp="🧕" type="tts">↑↑↑</annotation>
+		<annotation cp="🤵">↑↑↑</annotation>
+		<annotation cp="🤵" type="tts">↑↑↑</annotation>
+		<annotation cp="🤵‍♂">↑↑↑</annotation>
+		<annotation cp="🤵‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤵‍♀">↑↑↑</annotation>
+		<annotation cp="🤵‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="👰">↑↑↑</annotation>
+		<annotation cp="👰" type="tts">↑↑↑</annotation>
+		<annotation cp="👰‍♂">↑↑↑</annotation>
+		<annotation cp="👰‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👰‍♀">↑↑↑</annotation>
+		<annotation cp="👰‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤰">↑↑↑</annotation>
+		<annotation cp="🤰" type="tts">↑↑↑</annotation>
+		<annotation cp="🫃">↑↑↑</annotation>
+		<annotation cp="🫃" type="tts">↑↑↑</annotation>
+		<annotation cp="🫄">↑↑↑</annotation>
+		<annotation cp="🫄" type="tts">↑↑↑</annotation>
+		<annotation cp="🤱">↑↑↑</annotation>
+		<annotation cp="🤱" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🍼">↑↑↑</annotation>
+		<annotation cp="👩‍🍼" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🍼">↑↑↑</annotation>
+		<annotation cp="👨‍🍼" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🍼">↑↑↑</annotation>
+		<annotation cp="🧑‍🍼" type="tts">↑↑↑</annotation>
+		<annotation cp="👼">↑↑↑</annotation>
+		<annotation cp="👼" type="tts">↑↑↑</annotation>
+		<annotation cp="🎅">celebration | Christmas | Claus | Father | Santa</annotation>
+		<annotation cp="🎅" type="tts">↑↑↑</annotation>
+		<annotation cp="🤶">celebration | Christmas | Claus | Mother | Mrs.</annotation>
+		<annotation cp="🤶" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🎄">Christmas | Claus | Mx. Claus</annotation>
+		<annotation cp="🧑‍🎄" type="tts">Mx. Claus</annotation>
+		<annotation cp="🦸">↑↑↑</annotation>
+		<annotation cp="🦸" type="tts">↑↑↑</annotation>
+		<annotation cp="🦸‍♂">↑↑↑</annotation>
+		<annotation cp="🦸‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🦸‍♀">↑↑↑</annotation>
+		<annotation cp="🦸‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🦹">↑↑↑</annotation>
+		<annotation cp="🦹" type="tts">↑↑↑</annotation>
+		<annotation cp="🦹‍♂">↑↑↑</annotation>
+		<annotation cp="🦹‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🦹‍♀">↑↑↑</annotation>
+		<annotation cp="🦹‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧙">↑↑↑</annotation>
+		<annotation cp="🧙" type="tts">↑↑↑</annotation>
+		<annotation cp="🧙‍♂">↑↑↑</annotation>
+		<annotation cp="🧙‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧙‍♀">↑↑↑</annotation>
+		<annotation cp="🧙‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧚">↑↑↑</annotation>
+		<annotation cp="🧚" type="tts">↑↑↑</annotation>
+		<annotation cp="🧚‍♂">↑↑↑</annotation>
+		<annotation cp="🧚‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧚‍♀">↑↑↑</annotation>
+		<annotation cp="🧚‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧛">↑↑↑</annotation>
+		<annotation cp="🧛" type="tts">↑↑↑</annotation>
+		<annotation cp="🧛‍♂">↑↑↑</annotation>
+		<annotation cp="🧛‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧛‍♀">↑↑↑</annotation>
+		<annotation cp="🧛‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧜">↑↑↑</annotation>
+		<annotation cp="🧜" type="tts">↑↑↑</annotation>
+		<annotation cp="🧜‍♂">↑↑↑</annotation>
+		<annotation cp="🧜‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧜‍♀">↑↑↑</annotation>
+		<annotation cp="🧜‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧝">↑↑↑</annotation>
+		<annotation cp="🧝" type="tts">↑↑↑</annotation>
+		<annotation cp="🧝‍♂">↑↑↑</annotation>
+		<annotation cp="🧝‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧝‍♀">↑↑↑</annotation>
+		<annotation cp="🧝‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧞">↑↑↑</annotation>
+		<annotation cp="🧞" type="tts">↑↑↑</annotation>
+		<annotation cp="🧞‍♂">↑↑↑</annotation>
+		<annotation cp="🧞‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧞‍♀">↑↑↑</annotation>
+		<annotation cp="🧞‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧟">↑↑↑</annotation>
+		<annotation cp="🧟" type="tts">↑↑↑</annotation>
+		<annotation cp="🧟‍♂">↑↑↑</annotation>
+		<annotation cp="🧟‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧟‍♀">↑↑↑</annotation>
+		<annotation cp="🧟‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧌">↑↑↑</annotation>
+		<annotation cp="🧌" type="tts">↑↑↑</annotation>
+		<annotation cp="🫈">↑↑↑</annotation>
+		<annotation cp="🫈" type="tts">↑↑↑</annotation>
+		<annotation cp="💆">↑↑↑</annotation>
+		<annotation cp="💆" type="tts">↑↑↑</annotation>
+		<annotation cp="💆‍♂">↑↑↑</annotation>
+		<annotation cp="💆‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="💆‍♀">↑↑↑</annotation>
+		<annotation cp="💆‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="💇">barber | beauty | haircut | parlor | parlour | person getting haircut | salon</annotation>
+		<annotation cp="💇" type="tts">↑↑↑</annotation>
+		<annotation cp="💇‍♂">↑↑↑</annotation>
+		<annotation cp="💇‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="💇‍♀">↑↑↑</annotation>
+		<annotation cp="💇‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🚶">↑↑↑</annotation>
+		<annotation cp="🚶" type="tts">↑↑↑</annotation>
+		<annotation cp="🚶‍♂">↑↑↑</annotation>
+		<annotation cp="🚶‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🚶‍♀">↑↑↑</annotation>
+		<annotation cp="🚶‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧍">↑↑↑</annotation>
+		<annotation cp="🧍" type="tts">↑↑↑</annotation>
+		<annotation cp="🧍‍♂">↑↑↑</annotation>
+		<annotation cp="🧍‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧍‍♀">↑↑↑</annotation>
+		<annotation cp="🧍‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧎">↑↑↑</annotation>
+		<annotation cp="🧎" type="tts">↑↑↑</annotation>
+		<annotation cp="🧎‍♂">↑↑↑</annotation>
+		<annotation cp="🧎‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧎‍♀">↑↑↑</annotation>
+		<annotation cp="🧎‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🦯">↑↑↑</annotation>
+		<annotation cp="🧑‍🦯" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🦯">↑↑↑</annotation>
+		<annotation cp="👨‍🦯" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🦯">↑↑↑</annotation>
+		<annotation cp="👩‍🦯" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🦼">↑↑↑</annotation>
+		<annotation cp="🧑‍🦼" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🦼">↑↑↑</annotation>
+		<annotation cp="👨‍🦼" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🦼">↑↑↑</annotation>
+		<annotation cp="👩‍🦼" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🦽">↑↑↑</annotation>
+		<annotation cp="🧑‍🦽" type="tts">↑↑↑</annotation>
+		<annotation cp="👨‍🦽">↑↑↑</annotation>
+		<annotation cp="👨‍🦽" type="tts">↑↑↑</annotation>
+		<annotation cp="👩‍🦽">↑↑↑</annotation>
+		<annotation cp="👩‍🦽" type="tts">↑↑↑</annotation>
+		<annotation cp="🏃">↑↑↑</annotation>
+		<annotation cp="🏃" type="tts">↑↑↑</annotation>
+		<annotation cp="🏃‍♂">↑↑↑</annotation>
+		<annotation cp="🏃‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏃‍♀">↑↑↑</annotation>
+		<annotation cp="🏃‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🩰">↑↑↑</annotation>
+		<annotation cp="🧑‍🩰" type="tts">↑↑↑</annotation>
+		<annotation cp="💃">↑↑↑</annotation>
+		<annotation cp="💃" type="tts">↑↑↑</annotation>
+		<annotation cp="🕺">↑↑↑</annotation>
+		<annotation cp="🕺" type="tts">↑↑↑</annotation>
+		<annotation cp="🕴">↑↑↑</annotation>
+		<annotation cp="🕴" type="tts">↑↑↑</annotation>
+		<annotation cp="👯">↑↑↑</annotation>
+		<annotation cp="👯" type="tts">↑↑↑</annotation>
+		<annotation cp="👯‍♂">↑↑↑</annotation>
+		<annotation cp="👯‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="👯‍♀">↑↑↑</annotation>
+		<annotation cp="👯‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧖">↑↑↑</annotation>
+		<annotation cp="🧖" type="tts">↑↑↑</annotation>
+		<annotation cp="🧖‍♂">↑↑↑</annotation>
+		<annotation cp="🧖‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧖‍♀">↑↑↑</annotation>
+		<annotation cp="🧖‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧗">↑↑↑</annotation>
+		<annotation cp="🧗" type="tts">↑↑↑</annotation>
+		<annotation cp="🧗‍♂">↑↑↑</annotation>
+		<annotation cp="🧗‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧗‍♀">↑↑↑</annotation>
+		<annotation cp="🧗‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤺">↑↑↑</annotation>
+		<annotation cp="🤺" type="tts">↑↑↑</annotation>
+		<annotation cp="🏇">↑↑↑</annotation>
+		<annotation cp="🏇" type="tts">↑↑↑</annotation>
+		<annotation cp="⛷">↑↑↑</annotation>
+		<annotation cp="⛷" type="tts">↑↑↑</annotation>
+		<annotation cp="🏂">↑↑↑</annotation>
+		<annotation cp="🏂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏌">↑↑↑</annotation>
+		<annotation cp="🏌" type="tts">↑↑↑</annotation>
+		<annotation cp="🏌‍♂">↑↑↑</annotation>
+		<annotation cp="🏌‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏌‍♀">↑↑↑</annotation>
+		<annotation cp="🏌‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🏄">↑↑↑</annotation>
+		<annotation cp="🏄" type="tts">↑↑↑</annotation>
+		<annotation cp="🏄‍♂">↑↑↑</annotation>
+		<annotation cp="🏄‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏄‍♀">↑↑↑</annotation>
+		<annotation cp="🏄‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🚣">↑↑↑</annotation>
+		<annotation cp="🚣" type="tts">↑↑↑</annotation>
+		<annotation cp="🚣‍♂">↑↑↑</annotation>
+		<annotation cp="🚣‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🚣‍♀">↑↑↑</annotation>
+		<annotation cp="🚣‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🏊">↑↑↑</annotation>
+		<annotation cp="🏊" type="tts">↑↑↑</annotation>
+		<annotation cp="🏊‍♂">↑↑↑</annotation>
+		<annotation cp="🏊‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏊‍♀">↑↑↑</annotation>
+		<annotation cp="🏊‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="⛹">↑↑↑</annotation>
+		<annotation cp="⛹" type="tts">↑↑↑</annotation>
+		<annotation cp="⛹‍♂">↑↑↑</annotation>
+		<annotation cp="⛹‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="⛹‍♀">↑↑↑</annotation>
+		<annotation cp="⛹‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🏋">lifter | person lifting weights | weight | weightlifter</annotation>
+		<annotation cp="🏋" type="tts">↑↑↑</annotation>
+		<annotation cp="🏋‍♂">↑↑↑</annotation>
+		<annotation cp="🏋‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🏋‍♀">↑↑↑</annotation>
+		<annotation cp="🏋‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🚴">↑↑↑</annotation>
+		<annotation cp="🚴" type="tts">↑↑↑</annotation>
+		<annotation cp="🚴‍♂">↑↑↑</annotation>
+		<annotation cp="🚴‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🚴‍♀">↑↑↑</annotation>
+		<annotation cp="🚴‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🚵">↑↑↑</annotation>
+		<annotation cp="🚵" type="tts">↑↑↑</annotation>
+		<annotation cp="🚵‍♂">↑↑↑</annotation>
+		<annotation cp="🚵‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🚵‍♀">↑↑↑</annotation>
+		<annotation cp="🚵‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤸">↑↑↑</annotation>
+		<annotation cp="🤸" type="tts">↑↑↑</annotation>
+		<annotation cp="🤸‍♂">↑↑↑</annotation>
+		<annotation cp="🤸‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤸‍♀">↑↑↑</annotation>
+		<annotation cp="🤸‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤼">↑↑↑</annotation>
+		<annotation cp="🤼" type="tts">↑↑↑</annotation>
+		<annotation cp="🤼‍♂">↑↑↑</annotation>
+		<annotation cp="🤼‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤼‍♀">↑↑↑</annotation>
+		<annotation cp="🤼‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤽">↑↑↑</annotation>
+		<annotation cp="🤽" type="tts">↑↑↑</annotation>
+		<annotation cp="🤽‍♂">↑↑↑</annotation>
+		<annotation cp="🤽‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤽‍♀">↑↑↑</annotation>
+		<annotation cp="🤽‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤾">↑↑↑</annotation>
+		<annotation cp="🤾" type="tts">↑↑↑</annotation>
+		<annotation cp="🤾‍♂">↑↑↑</annotation>
+		<annotation cp="🤾‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤾‍♀">↑↑↑</annotation>
+		<annotation cp="🤾‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🤹">balance | juggle | multi-task | multitask | person juggling | skill</annotation>
+		<annotation cp="🤹" type="tts">↑↑↑</annotation>
+		<annotation cp="🤹‍♂">juggling | man | multi-task | multitask</annotation>
+		<annotation cp="🤹‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🤹‍♀">juggling | multi-task | multitask | woman</annotation>
+		<annotation cp="🤹‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧘">↑↑↑</annotation>
+		<annotation cp="🧘" type="tts">↑↑↑</annotation>
+		<annotation cp="🧘‍♂">↑↑↑</annotation>
+		<annotation cp="🧘‍♂" type="tts">↑↑↑</annotation>
+		<annotation cp="🧘‍♀">↑↑↑</annotation>
+		<annotation cp="🧘‍♀" type="tts">↑↑↑</annotation>
+		<annotation cp="🛀">↑↑↑</annotation>
+		<annotation cp="🛀" type="tts">↑↑↑</annotation>
+		<annotation cp="🛌">↑↑↑</annotation>
+		<annotation cp="🛌" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🤝‍🧑">↑↑↑</annotation>
+		<annotation cp="🧑‍🤝‍🧑" type="tts">↑↑↑</annotation>
+		<annotation cp="👭">↑↑↑</annotation>
+		<annotation cp="👭" type="tts">↑↑↑</annotation>
+		<annotation cp="👫">↑↑↑</annotation>
+		<annotation cp="👫" type="tts">↑↑↑</annotation>
+		<annotation cp="👬">couple | Gemini | holding hands | men holding hands | twins | zodiac</annotation>
+		<annotation cp="👬" type="tts">↑↑↑</annotation>
+		<annotation cp="💏">↑↑↑</annotation>
+		<annotation cp="💏" type="tts">↑↑↑</annotation>
+		<annotation cp="💑">↑↑↑</annotation>
+		<annotation cp="💑" type="tts">↑↑↑</annotation>
+		<annotation cp="🗣">↑↑↑</annotation>
+		<annotation cp="🗣" type="tts">↑↑↑</annotation>
+		<annotation cp="👤">↑↑↑</annotation>
+		<annotation cp="👤" type="tts">↑↑↑</annotation>
+		<annotation cp="👥">↑↑↑</annotation>
+		<annotation cp="👥" type="tts">↑↑↑</annotation>
+		<annotation cp="🫂">↑↑↑</annotation>
+		<annotation cp="🫂" type="tts">↑↑↑</annotation>
+		<annotation cp="👪">↑↑↑</annotation>
+		<annotation cp="👪" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🧑‍🧒">↑↑↑</annotation>
+		<annotation cp="🧑‍🧑‍🧒" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🧑‍🧒‍🧒">↑↑↑</annotation>
+		<annotation cp="🧑‍🧑‍🧒‍🧒" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🧒">↑↑↑</annotation>
+		<annotation cp="🧑‍🧒" type="tts">↑↑↑</annotation>
+		<annotation cp="🧑‍🧒‍🧒">↑↑↑</annotation>
+		<annotation cp="🧑‍🧒‍🧒" type="tts">↑↑↑</annotation>
+		<annotation cp="👣">↑↑↑</annotation>
+		<annotation cp="👣" type="tts">↑↑↑</annotation>
+		<annotation cp="🫆">↑↑↑</annotation>
+		<annotation cp="🫆" type="tts">↑↑↑</annotation>
+		<annotation cp="🦰">↑↑↑</annotation>
+		<annotation cp="🦰" type="tts">↑↑↑</annotation>
+		<annotation cp="🦱">↑↑↑</annotation>
+		<annotation cp="🦱" type="tts">↑↑↑</annotation>
+		<annotation cp="🦳">gray | grey | hair | old | white</annotation>
+		<annotation cp="🦳" type="tts">↑↑↑</annotation>
+		<annotation cp="🦲">↑↑↑</annotation>
+		<annotation cp="🦲" type="tts">↑↑↑</annotation>
+		<annotation cp="🐵">↑↑↑</annotation>
+		<annotation cp="🐵" type="tts">↑↑↑</annotation>
+		<annotation cp="🐒">↑↑↑</annotation>
+		<annotation cp="🐒" type="tts">↑↑↑</annotation>
+		<annotation cp="🦍">↑↑↑</annotation>
+		<annotation cp="🦍" type="tts">↑↑↑</annotation>
+		<annotation cp="🦧">↑↑↑</annotation>
+		<annotation cp="🦧" type="tts">↑↑↑</annotation>
+		<annotation cp="🐶">↑↑↑</annotation>
+		<annotation cp="🐶" type="tts">↑↑↑</annotation>
+		<annotation cp="🐕">↑↑↑</annotation>
+		<annotation cp="🐕" type="tts">↑↑↑</annotation>
+		<annotation cp="🦮">↑↑↑</annotation>
+		<annotation cp="🦮" type="tts">↑↑↑</annotation>
+		<annotation cp="🐕‍🦺">↑↑↑</annotation>
+		<annotation cp="🐕‍🦺" type="tts">↑↑↑</annotation>
+		<annotation cp="🐩">↑↑↑</annotation>
+		<annotation cp="🐩" type="tts">↑↑↑</annotation>
+		<annotation cp="🐺">↑↑↑</annotation>
+		<annotation cp="🐺" type="tts">↑↑↑</annotation>
+		<annotation cp="🦊">↑↑↑</annotation>
+		<annotation cp="🦊" type="tts">↑↑↑</annotation>
+		<annotation cp="🦝">↑↑↑</annotation>
+		<annotation cp="🦝" type="tts">↑↑↑</annotation>
+		<annotation cp="🐱">↑↑↑</annotation>
+		<annotation cp="🐱" type="tts">↑↑↑</annotation>
+		<annotation cp="🐈">↑↑↑</annotation>
+		<annotation cp="🐈" type="tts">↑↑↑</annotation>
+		<annotation cp="🐈‍⬛">↑↑↑</annotation>
+		<annotation cp="🐈‍⬛" type="tts">↑↑↑</annotation>
+		<annotation cp="🦁">↑↑↑</annotation>
+		<annotation cp="🦁" type="tts">↑↑↑</annotation>
+		<annotation cp="🐯">↑↑↑</annotation>
+		<annotation cp="🐯" type="tts">↑↑↑</annotation>
+		<annotation cp="🐅">↑↑↑</annotation>
+		<annotation cp="🐅" type="tts">↑↑↑</annotation>
+		<annotation cp="🐆">↑↑↑</annotation>
+		<annotation cp="🐆" type="tts">↑↑↑</annotation>
+		<annotation cp="🐴">↑↑↑</annotation>
+		<annotation cp="🐴" type="tts">↑↑↑</annotation>
+		<annotation cp="🫎">↑↑↑</annotation>
+		<annotation cp="🫎" type="tts">↑↑↑</annotation>
+		<annotation cp="🫏">↑↑↑</annotation>
+		<annotation cp="🫏" type="tts">↑↑↑</annotation>
+		<annotation cp="🐎">↑↑↑</annotation>
+		<annotation cp="🐎" type="tts">↑↑↑</annotation>
+		<annotation cp="🦄">↑↑↑</annotation>
+		<annotation cp="🦄" type="tts">↑↑↑</annotation>
+		<annotation cp="🦓">↑↑↑</annotation>
+		<annotation cp="🦓" type="tts">↑↑↑</annotation>
+		<annotation cp="🦌">↑↑↑</annotation>
+		<annotation cp="🦌" type="tts">↑↑↑</annotation>
+		<annotation cp="🦬">↑↑↑</annotation>
+		<annotation cp="🦬" type="tts">↑↑↑</annotation>
+		<annotation cp="🐮">↑↑↑</annotation>
+		<annotation cp="🐮" type="tts">↑↑↑</annotation>
+		<annotation cp="🐂">↑↑↑</annotation>
+		<annotation cp="🐂" type="tts">↑↑↑</annotation>
+		<annotation cp="🐃">↑↑↑</annotation>
+		<annotation cp="🐃" type="tts">↑↑↑</annotation>
+		<annotation cp="🐄">↑↑↑</annotation>
+		<annotation cp="🐄" type="tts">↑↑↑</annotation>
+		<annotation cp="🐷">↑↑↑</annotation>
+		<annotation cp="🐷" type="tts">↑↑↑</annotation>
+		<annotation cp="🐖">↑↑↑</annotation>
+		<annotation cp="🐖" type="tts">↑↑↑</annotation>
+		<annotation cp="🐗">↑↑↑</annotation>
+		<annotation cp="🐗" type="tts">↑↑↑</annotation>
+		<annotation cp="🐽">↑↑↑</annotation>
+		<annotation cp="🐽" type="tts">↑↑↑</annotation>
+		<annotation cp="🐏">↑↑↑</annotation>
+		<annotation cp="🐏" type="tts">↑↑↑</annotation>
+		<annotation cp="🐑">↑↑↑</annotation>
+		<annotation cp="🐑" type="tts">↑↑↑</annotation>
+		<annotation cp="🐐">↑↑↑</annotation>
+		<annotation cp="🐐" type="tts">↑↑↑</annotation>
+		<annotation cp="🐪">↑↑↑</annotation>
+		<annotation cp="🐪" type="tts">↑↑↑</annotation>
+		<annotation cp="🐫">Bactrian | camel | hump | two-hump camel</annotation>
+		<annotation cp="🐫" type="tts">↑↑↑</annotation>
+		<annotation cp="🦙">↑↑↑</annotation>
+		<annotation cp="🦙" type="tts">↑↑↑</annotation>
+		<annotation cp="🦒">↑↑↑</annotation>
+		<annotation cp="🦒" type="tts">↑↑↑</annotation>
+		<annotation cp="🐘">↑↑↑</annotation>
+		<annotation cp="🐘" type="tts">↑↑↑</annotation>
+		<annotation cp="🦣">extinct | extinction | large | mammoth | tusk | woolly</annotation>
+		<annotation cp="🦣" type="tts">↑↑↑</annotation>
+		<annotation cp="🦏">↑↑↑</annotation>
+		<annotation cp="🦏" type="tts">↑↑↑</annotation>
+		<annotation cp="🦛">↑↑↑</annotation>
+		<annotation cp="🦛" type="tts">↑↑↑</annotation>
+		<annotation cp="🐭">↑↑↑</annotation>
+		<annotation cp="🐭" type="tts">↑↑↑</annotation>
+		<annotation cp="🐁">↑↑↑</annotation>
+		<annotation cp="🐁" type="tts">↑↑↑</annotation>
+		<annotation cp="🐀">↑↑↑</annotation>
+		<annotation cp="🐀" type="tts">↑↑↑</annotation>
+		<annotation cp="🐹">↑↑↑</annotation>
+		<annotation cp="🐹" type="tts">↑↑↑</annotation>
+		<annotation cp="🐰">↑↑↑</annotation>
+		<annotation cp="🐰" type="tts">↑↑↑</annotation>
+		<annotation cp="🐇">↑↑↑</annotation>
+		<annotation cp="🐇" type="tts">↑↑↑</annotation>
+		<annotation cp="🐿">↑↑↑</annotation>
+		<annotation cp="🐿" type="tts">↑↑↑</annotation>
+		<annotation cp="🦫">↑↑↑</annotation>
+		<annotation cp="🦫" type="tts">↑↑↑</annotation>
+		<annotation cp="🦔">↑↑↑</annotation>
+		<annotation cp="🦔" type="tts">↑↑↑</annotation>
+		<annotation cp="🦇">↑↑↑</annotation>
+		<annotation cp="🦇" type="tts">↑↑↑</annotation>
+		<annotation cp="🐻">↑↑↑</annotation>
+		<annotation cp="🐻" type="tts">↑↑↑</annotation>
+		<annotation cp="🐻‍❄">↑↑↑</annotation>
+		<annotation cp="🐻‍❄" type="tts">↑↑↑</annotation>
+		<annotation cp="🐨">↑↑↑</annotation>
+		<annotation cp="🐨" type="tts">↑↑↑</annotation>
+		<annotation cp="🐼">↑↑↑</annotation>
+		<annotation cp="🐼" type="tts">↑↑↑</annotation>
+		<annotation cp="🦥">↑↑↑</annotation>
+		<annotation cp="🦥" type="tts">↑↑↑</annotation>
+		<annotation cp="🦦">↑↑↑</annotation>
+		<annotation cp="🦦" type="tts">↑↑↑</annotation>
+		<annotation cp="🦨">↑↑↑</annotation>
+		<annotation cp="🦨" type="tts">↑↑↑</annotation>
+		<annotation cp="🦘">↑↑↑</annotation>
+		<annotation cp="🦘" type="tts">↑↑↑</annotation>
+		<annotation cp="🦡">↑↑↑</annotation>
+		<annotation cp="🦡" type="tts">↑↑↑</annotation>
+		<annotation cp="🐾">↑↑↑</annotation>
+		<annotation cp="🐾" type="tts">↑↑↑</annotation>
+		<annotation cp="🦃">↑↑↑</annotation>
+		<annotation cp="🦃" type="tts">↑↑↑</annotation>
+		<annotation cp="🐔">↑↑↑</annotation>
+		<annotation cp="🐔" type="tts">↑↑↑</annotation>
+		<annotation cp="🐓">↑↑↑</annotation>
+		<annotation cp="🐓" type="tts">↑↑↑</annotation>
+		<annotation cp="🐣">↑↑↑</annotation>
+		<annotation cp="🐣" type="tts">↑↑↑</annotation>
+		<annotation cp="🐤">↑↑↑</annotation>
+		<annotation cp="🐤" type="tts">↑↑↑</annotation>
+		<annotation cp="🐥">↑↑↑</annotation>
+		<annotation cp="🐥" type="tts">↑↑↑</annotation>
+		<annotation cp="🐦">↑↑↑</annotation>
+		<annotation cp="🐦" type="tts">↑↑↑</annotation>
+		<annotation cp="🐧">↑↑↑</annotation>
+		<annotation cp="🐧" type="tts">↑↑↑</annotation>
+		<annotation cp="🕊">↑↑↑</annotation>
+		<annotation cp="🕊" type="tts">↑↑↑</annotation>
+		<annotation cp="🦅">↑↑↑</annotation>
+		<annotation cp="🦅" type="tts">↑↑↑</annotation>
+		<annotation cp="🦆">↑↑↑</annotation>
+		<annotation cp="🦆" type="tts">↑↑↑</annotation>
+		<annotation cp="🦢">↑↑↑</annotation>
+		<annotation cp="🦢" type="tts">↑↑↑</annotation>
+		<annotation cp="🦉">↑↑↑</annotation>
+		<annotation cp="🦉" type="tts">↑↑↑</annotation>
+		<annotation cp="🦤">↑↑↑</annotation>
+		<annotation cp="🦤" type="tts">↑↑↑</annotation>
+		<annotation cp="🪶">↑↑↑</annotation>
+		<annotation cp="🪶" type="tts">↑↑↑</annotation>
+		<annotation cp="🦩">↑↑↑</annotation>
+		<annotation cp="🦩" type="tts">↑↑↑</annotation>
+		<annotation cp="🦚">↑↑↑</annotation>
+		<annotation cp="🦚" type="tts">↑↑↑</annotation>
+		<annotation cp="🦜">↑↑↑</annotation>
+		<annotation cp="🦜" type="tts">↑↑↑</annotation>
+		<annotation cp="🪽">↑↑↑</annotation>
+		<annotation cp="🪽" type="tts">↑↑↑</annotation>
+		<annotation cp="🐦‍⬛">↑↑↑</annotation>
+		<annotation cp="🐦‍⬛" type="tts">↑↑↑</annotation>
+		<annotation cp="🪿">↑↑↑</annotation>
+		<annotation cp="🪿" type="tts">↑↑↑</annotation>
+		<annotation cp="🐦‍🔥">↑↑↑</annotation>
+		<annotation cp="🐦‍🔥" type="tts">↑↑↑</annotation>
+		<annotation cp="🐸">↑↑↑</annotation>
+		<annotation cp="🐸" type="tts">↑↑↑</annotation>
+		<annotation cp="🐊">↑↑↑</annotation>
+		<annotation cp="🐊" type="tts">↑↑↑</annotation>
+		<annotation cp="🐢">↑↑↑</annotation>
+		<annotation cp="🐢" type="tts">↑↑↑</annotation>
+		<annotation cp="🦎">↑↑↑</annotation>
+		<annotation cp="🦎" type="tts">↑↑↑</annotation>
+		<annotation cp="🐍">↑↑↑</annotation>
+		<annotation cp="🐍" type="tts">↑↑↑</annotation>
+		<annotation cp="🐲">↑↑↑</annotation>
+		<annotation cp="🐲" type="tts">↑↑↑</annotation>
+		<annotation cp="🐉">↑↑↑</annotation>
+		<annotation cp="🐉" type="tts">↑↑↑</annotation>
+		<annotation cp="🦕">↑↑↑</annotation>
+		<annotation cp="🦕" type="tts">↑↑↑</annotation>
+		<annotation cp="🦖">↑↑↑</annotation>
+		<annotation cp="🦖" type="tts">↑↑↑</annotation>
+		<annotation cp="🐳">↑↑↑</annotation>
+		<annotation cp="🐳" type="tts">↑↑↑</annotation>
+		<annotation cp="🐋">↑↑↑</annotation>
+		<annotation cp="🐋" type="tts">↑↑↑</annotation>
+		<annotation cp="🐬">↑↑↑</annotation>
+		<annotation cp="🐬" type="tts">↑↑↑</annotation>
+		<annotation cp="🫍">↑↑↑</annotation>
+		<annotation cp="🫍" type="tts">↑↑↑</annotation>
+		<annotation cp="🦭">↑↑↑</annotation>
+		<annotation cp="🦭" type="tts">↑↑↑</annotation>
+		<annotation cp="🐟">↑↑↑</annotation>
+		<annotation cp="🐟" type="tts">↑↑↑</annotation>
+		<annotation cp="🐠">↑↑↑</annotation>
+		<annotation cp="🐠" type="tts">↑↑↑</annotation>
+		<annotation cp="🐡">↑↑↑</annotation>
+		<annotation cp="🐡" type="tts">↑↑↑</annotation>
+		<annotation cp="🦈">↑↑↑</annotation>
+		<annotation cp="🦈" type="tts">↑↑↑</annotation>
+		<annotation cp="🐙">↑↑↑</annotation>
+		<annotation cp="🐙" type="tts">↑↑↑</annotation>
+		<annotation cp="🐚">↑↑↑</annotation>
+		<annotation cp="🐚" type="tts">↑↑↑</annotation>
+		<annotation cp="🪸">↑↑↑</annotation>
+		<annotation cp="🪸" type="tts">↑↑↑</annotation>
+		<annotation cp="🪼">↑↑↑</annotation>
+		<annotation cp="🪼" type="tts">↑↑↑</annotation>
+		<annotation cp="🦀">↑↑↑</annotation>
+		<annotation cp="🦀" type="tts">↑↑↑</annotation>
+		<annotation cp="🦞">↑↑↑</annotation>
+		<annotation cp="🦞" type="tts">↑↑↑</annotation>
+		<annotation cp="🦐">↑↑↑</annotation>
+		<annotation cp="🦐" type="tts">↑↑↑</annotation>
+		<annotation cp="🦑">↑↑↑</annotation>
+		<annotation cp="🦑" type="tts">↑↑↑</annotation>
+		<annotation cp="🦪">↑↑↑</annotation>
+		<annotation cp="🦪" type="tts">↑↑↑</annotation>
+		<annotation cp="🐌">↑↑↑</annotation>
+		<annotation cp="🐌" type="tts">↑↑↑</annotation>
+		<annotation cp="🦋">↑↑↑</annotation>
+		<annotation cp="🦋" type="tts">↑↑↑</annotation>
+		<annotation cp="🐛">↑↑↑</annotation>
+		<annotation cp="🐛" type="tts">↑↑↑</annotation>
+		<annotation cp="🐜">↑↑↑</annotation>
+		<annotation cp="🐜" type="tts">↑↑↑</annotation>
+		<annotation cp="🐝">↑↑↑</annotation>
+		<annotation cp="🐝" type="tts">↑↑↑</annotation>
+		<annotation cp="🪲">↑↑↑</annotation>
+		<annotation cp="🪲" type="tts">↑↑↑</annotation>
+		<annotation cp="🐞">↑↑↑</annotation>
+		<annotation cp="🐞" type="tts">ladybug</annotation>
+		<annotation cp="🦗">↑↑↑</annotation>
+		<annotation cp="🦗" type="tts">↑↑↑</annotation>
+		<annotation cp="🪳">↑↑↑</annotation>
+		<annotation cp="🪳" type="tts">↑↑↑</annotation>
+		<annotation cp="🕷">↑↑↑</annotation>
+		<annotation cp="🕷" type="tts">↑↑↑</annotation>
+		<annotation cp="🕸">↑↑↑</annotation>
+		<annotation cp="🕸" type="tts">↑↑↑</annotation>
+		<annotation cp="🦂">↑↑↑</annotation>
+		<annotation cp="🦂" type="tts">↑↑↑</annotation>
+		<annotation cp="🦟">↑↑↑</annotation>
+		<annotation cp="🦟" type="tts">↑↑↑</annotation>
+		<annotation cp="🪰">↑↑↑</annotation>
+		<annotation cp="🪰" type="tts">↑↑↑</annotation>
+		<annotation cp="🪱">↑↑↑</annotation>
+		<annotation cp="🪱" type="tts">↑↑↑</annotation>
+		<annotation cp="🦠">↑↑↑</annotation>
+		<annotation cp="🦠" type="tts">↑↑↑</annotation>
+		<annotation cp="💐">↑↑↑</annotation>
+		<annotation cp="💐" type="tts">↑↑↑</annotation>
+		<annotation cp="🌸">↑↑↑</annotation>
+		<annotation cp="🌸" type="tts">↑↑↑</annotation>
+		<annotation cp="💮">↑↑↑</annotation>
+		<annotation cp="💮" type="tts">↑↑↑</annotation>
+		<annotation cp="🪷">↑↑↑</annotation>
+		<annotation cp="🪷" type="tts">↑↑↑</annotation>
+		<annotation cp="🏵">↑↑↑</annotation>
+		<annotation cp="🏵" type="tts">↑↑↑</annotation>
+		<annotation cp="🌹">↑↑↑</annotation>
+		<annotation cp="🌹" type="tts">↑↑↑</annotation>
+		<annotation cp="🥀">↑↑↑</annotation>
+		<annotation cp="🥀" type="tts">↑↑↑</annotation>
+		<annotation cp="🌺">↑↑↑</annotation>
+		<annotation cp="🌺" type="tts">↑↑↑</annotation>
+		<annotation cp="🌻">↑↑↑</annotation>
+		<annotation cp="🌻" type="tts">↑↑↑</annotation>
+		<annotation cp="🌼">↑↑↑</annotation>
+		<annotation cp="🌼" type="tts">↑↑↑</annotation>
+		<annotation cp="🌷">↑↑↑</annotation>
+		<annotation cp="🌷" type="tts">↑↑↑</annotation>
+		<annotation cp="🪻">↑↑↑</annotation>
+		<annotation cp="🪻" type="tts">↑↑↑</annotation>
+		<annotation cp="🌱">↑↑↑</annotation>
+		<annotation cp="🌱" type="tts">↑↑↑</annotation>
+		<annotation cp="🪴">↑↑↑</annotation>
+		<annotation cp="🪴" type="tts">↑↑↑</annotation>
+		<annotation cp="🌲">↑↑↑</annotation>
+		<annotation cp="🌲" type="tts">↑↑↑</annotation>
+		<annotation cp="🌳">↑↑↑</annotation>
+		<annotation cp="🌳" type="tts">↑↑↑</annotation>
+		<annotation cp="🌴">↑↑↑</annotation>
+		<annotation cp="🌴" type="tts">↑↑↑</annotation>
+		<annotation cp="🌵">↑↑↑</annotation>
+		<annotation cp="🌵" type="tts">↑↑↑</annotation>
+		<annotation cp="🌾">ear | grain | rice | sheaf | sheaf of rice</annotation>
+		<annotation cp="🌾" type="tts">↑↑↑</annotation>
+		<annotation cp="🌿">↑↑↑</annotation>
+		<annotation cp="🌿" type="tts">↑↑↑</annotation>
+		<annotation cp="☘">↑↑↑</annotation>
+		<annotation cp="☘" type="tts">↑↑↑</annotation>
+		<annotation cp="🍀">↑↑↑</annotation>
+		<annotation cp="🍀" type="tts">four-leaf clover</annotation>
+		<annotation cp="🍁">↑↑↑</annotation>
+		<annotation cp="🍁" type="tts">↑↑↑</annotation>
+		<annotation cp="🍂">↑↑↑</annotation>
+		<annotation cp="🍂" type="tts">↑↑↑</annotation>
+		<annotation cp="🍃">↑↑↑</annotation>
+		<annotation cp="🍃" type="tts">↑↑↑</annotation>
+		<annotation cp="🪹">↑↑↑</annotation>
+		<annotation cp="🪹" type="tts">↑↑↑</annotation>
+		<annotation cp="🪺">↑↑↑</annotation>
+		<annotation cp="🪺" type="tts">↑↑↑</annotation>
+		<annotation cp="🍄">↑↑↑</annotation>
+		<annotation cp="🍄" type="tts">↑↑↑</annotation>
+		<annotation cp="🪾">↑↑↑</annotation>
+		<annotation cp="🪾" type="tts">↑↑↑</annotation>
+		<annotation cp="🍇">↑↑↑</annotation>
+		<annotation cp="🍇" type="tts">↑↑↑</annotation>
+		<annotation cp="🍈">↑↑↑</annotation>
+		<annotation cp="🍈" type="tts">↑↑↑</annotation>
+		<annotation cp="🍉">↑↑↑</annotation>
+		<annotation cp="🍉" type="tts">↑↑↑</annotation>
+		<annotation cp="🍊">↑↑↑</annotation>
+		<annotation cp="🍊" type="tts">↑↑↑</annotation>
+		<annotation cp="🍋">↑↑↑</annotation>
+		<annotation cp="🍋" type="tts">↑↑↑</annotation>
+		<annotation cp="🍋‍🟩">↑↑↑</annotation>
+		<annotation cp="🍋‍🟩" type="tts">↑↑↑</annotation>
+		<annotation cp="🍌">↑↑↑</annotation>
+		<annotation cp="🍌" type="tts">↑↑↑</annotation>
+		<annotation cp="🍍">↑↑↑</annotation>
+		<annotation cp="🍍" type="tts">↑↑↑</annotation>
+		<annotation cp="🥭">↑↑↑</annotation>
+		<annotation cp="🥭" type="tts">↑↑↑</annotation>
+		<annotation cp="🍎">↑↑↑</annotation>
+		<annotation cp="🍎" type="tts">↑↑↑</annotation>
+		<annotation cp="🍏">↑↑↑</annotation>
+		<annotation cp="🍏" type="tts">↑↑↑</annotation>
+		<annotation cp="🍐">↑↑↑</annotation>
+		<annotation cp="🍐" type="tts">↑↑↑</annotation>
+		<annotation cp="🍑">↑↑↑</annotation>
+		<annotation cp="🍑" type="tts">↑↑↑</annotation>
+		<annotation cp="🍒">↑↑↑</annotation>
+		<annotation cp="🍒" type="tts">↑↑↑</annotation>
+		<annotation cp="🍓">↑↑↑</annotation>
+		<annotation cp="🍓" type="tts">↑↑↑</annotation>
+		<annotation cp="🫐">↑↑↑</annotation>
+		<annotation cp="🫐" type="tts">↑↑↑</annotation>
+		<annotation cp="🥝">↑↑↑</annotation>
+		<annotation cp="🥝" type="tts">↑↑↑</annotation>
+		<annotation cp="🍅">↑↑↑</annotation>
+		<annotation cp="🍅" type="tts">↑↑↑</annotation>
+		<annotation cp="🫒">↑↑↑</annotation>
+		<annotation cp="🫒" type="tts">↑↑↑</annotation>
+		<annotation cp="🥥">↑↑↑</annotation>
+		<annotation cp="🥥" type="tts">↑↑↑</annotation>
+		<annotation cp="🥑">↑↑↑</annotation>
+		<annotation cp="🥑" type="tts">↑↑↑</annotation>
+		<annotation cp="🍆">↑↑↑</annotation>
+		<annotation cp="🍆" type="tts">↑↑↑</annotation>
+		<annotation cp="🥔">↑↑↑</annotation>
+		<annotation cp="🥔" type="tts">↑↑↑</annotation>
+		<annotation cp="🥕">↑↑↑</annotation>
+		<annotation cp="🥕" type="tts">↑↑↑</annotation>
+		<annotation cp="🌽">↑↑↑</annotation>
+		<annotation cp="🌽" type="tts">↑↑↑</annotation>
+		<annotation cp="🌶">↑↑↑</annotation>
+		<annotation cp="🌶" type="tts">↑↑↑</annotation>
+		<annotation cp="🫑">↑↑↑</annotation>
+		<annotation cp="🫑" type="tts">↑↑↑</annotation>
+		<annotation cp="🥒">↑↑↑</annotation>
+		<annotation cp="🥒" type="tts">↑↑↑</annotation>
+		<annotation cp="🥬">↑↑↑</annotation>
+		<annotation cp="🥬" type="tts">↑↑↑</annotation>
+		<annotation cp="🥦">↑↑↑</annotation>
+		<annotation cp="🥦" type="tts">↑↑↑</annotation>
+		<annotation cp="🧄">flavoring | flavouring | garlic</annotation>
+		<annotation cp="🧄" type="tts">↑↑↑</annotation>
+		<annotation cp="🧅">flavoring | flavouring | onion</annotation>
+		<annotation cp="🧅" type="tts">↑↑↑</annotation>
+		<annotation cp="🥜">↑↑↑</annotation>
+		<annotation cp="🥜" type="tts">↑↑↑</annotation>
+		<annotation cp="🫘">↑↑↑</annotation>
+		<annotation cp="🫘" type="tts">↑↑↑</annotation>
+		<annotation cp="🌰">chestnut | nut | plant</annotation>
+		<annotation cp="🌰" type="tts">↑↑↑</annotation>
+		<annotation cp="🫚">beer | ginger | root | spice</annotation>
+		<annotation cp="🫚" type="tts">ginger</annotation>
+		<annotation cp="🫛">↑↑↑</annotation>
+		<annotation cp="🫛" type="tts">↑↑↑</annotation>
+		<annotation cp="🍄‍🟫">↑↑↑</annotation>
+		<annotation cp="🍄‍🟫" type="tts">↑↑↑</annotation>
+		<annotation cp="🫜">↑↑↑</annotation>
+		<annotation cp="🫜" type="tts">↑↑↑</annotation>
+		<annotation cp="🍞">↑↑↑</annotation>
+		<annotation cp="🍞" type="tts">↑↑↑</annotation>
+		<annotation cp="🥐">bread | breakfast | crescent | croissant | food | French | roll</annotation>
+		<annotation cp="🥐" type="tts">↑↑↑</annotation>
+		<annotation cp="🥖">baguette | bread | food | French</annotation>
+		<annotation cp="🥖" type="tts">↑↑↑</annotation>
+		<annotation cp="🫓">↑↑↑</annotation>
+		<annotation cp="🫓" type="tts">↑↑↑</annotation>
+		<annotation cp="🥨">↑↑↑</annotation>
+		<annotation cp="🥨" type="tts">↑↑↑</annotation>
+		<annotation cp="🥯">↑↑↑</annotation>
+		<annotation cp="🥯" type="tts">↑↑↑</annotation>
+		<annotation cp="🥞">breakfast | crepe | crêpe | food | hotcake | pancake | pancakes</annotation>
+		<annotation cp="🥞" type="tts">↑↑↑</annotation>
+		<annotation cp="🧇">breakfast | iron | unclear | vague | waffle</annotation>
+		<annotation cp="🧇" type="tts">↑↑↑</annotation>
+		<annotation cp="🧀">↑↑↑</annotation>
+		<annotation cp="🧀" type="tts">↑↑↑</annotation>
+		<annotation cp="🍖">↑↑↑</annotation>
+		<annotation cp="🍖" type="tts">↑↑↑</annotation>
+		<annotation cp="🍗">↑↑↑</annotation>
+		<annotation cp="🍗" type="tts">↑↑↑</annotation>
+		<annotation cp="🥩">chop | cut of meat | lamb chop | pork chop | steak</annotation>
+		<annotation cp="🥩" type="tts">↑↑↑</annotation>
+		<annotation cp="🥓">↑↑↑</annotation>
+		<annotation cp="🥓" type="tts">↑↑↑</annotation>
+		<annotation cp="🍔">↑↑↑</annotation>
+		<annotation cp="🍔" type="tts">↑↑↑</annotation>
+		<annotation cp="🍟">French | fries</annotation>
+		<annotation cp="🍟" type="tts">French fries</annotation>
+		<annotation cp="🍕">↑↑↑</annotation>
+		<annotation cp="🍕" type="tts">↑↑↑</annotation>
+		<annotation cp="🌭">frank | frankfurter | hot dog | hotdog | sausage</annotation>
+		<annotation cp="🌭" type="tts">↑↑↑</annotation>
+		<annotation cp="🥪">↑↑↑</annotation>
+		<annotation cp="🥪" type="tts">↑↑↑</annotation>
+		<annotation cp="🌮">Mexican | taco</annotation>
+		<annotation cp="🌮" type="tts">↑↑↑</annotation>
+		<annotation cp="🌯">burrito | Mexican | wrap</annotation>
+		<annotation cp="🌯" type="tts">↑↑↑</annotation>
+		<annotation cp="🫔">Mexican | tamale | wrapped</annotation>
+		<annotation cp="🫔" type="tts">↑↑↑</annotation>
+		<annotation cp="🥙">↑↑↑</annotation>
+		<annotation cp="🥙" type="tts">↑↑↑</annotation>
+		<annotation cp="🧆">chick pea | chickpea | falafel | meatball</annotation>
+		<annotation cp="🧆" type="tts">↑↑↑</annotation>
+		<annotation cp="🥚">↑↑↑</annotation>
+		<annotation cp="🥚" type="tts">↑↑↑</annotation>
+		<annotation cp="🍳">↑↑↑</annotation>
+		<annotation cp="🍳" type="tts">↑↑↑</annotation>
+		<annotation cp="🥘">↑↑↑</annotation>
+		<annotation cp="🥘" type="tts">↑↑↑</annotation>
+		<annotation cp="🍲">↑↑↑</annotation>
+		<annotation cp="🍲" type="tts">↑↑↑</annotation>
+		<annotation cp="🫕">↑↑↑</annotation>
+		<annotation cp="🫕" type="tts">↑↑↑</annotation>
+		<annotation cp="🥣">↑↑↑</annotation>
+		<annotation cp="🥣" type="tts">↑↑↑</annotation>
+		<annotation cp="🥗">↑↑↑</annotation>
+		<annotation cp="🥗" type="tts">↑↑↑</annotation>
+		<annotation cp="🍿">↑↑↑</annotation>
+		<annotation cp="🍿" type="tts">↑↑↑</annotation>
+		<annotation cp="🧈">↑↑↑</annotation>
+		<annotation cp="🧈" type="tts">↑↑↑</annotation>
+		<annotation cp="🧂">↑↑↑</annotation>
+		<annotation cp="🧂" type="tts">↑↑↑</annotation>
+		<annotation cp="🥫">↑↑↑</annotation>
+		<annotation cp="🥫" type="tts">↑↑↑</annotation>
+		<annotation cp="🍱">↑↑↑</annotation>
+		<annotation cp="🍱" type="tts">↑↑↑</annotation>
+		<annotation cp="🍘">↑↑↑</annotation>
+		<annotation cp="🍘" type="tts">↑↑↑</annotation>
+		<annotation cp="🍙">↑↑↑</annotation>
+		<annotation cp="🍙" type="tts">↑↑↑</annotation>
+		<annotation cp="🍚">↑↑↑</annotation>
+		<annotation cp="🍚" type="tts">↑↑↑</annotation>
+		<annotation cp="🍛">↑↑↑</annotation>
+		<annotation cp="🍛" type="tts">↑↑↑</annotation>
+		<annotation cp="🍜">↑↑↑</annotation>
+		<annotation cp="🍜" type="tts">↑↑↑</annotation>
+		<annotation cp="🍝">↑↑↑</annotation>
+		<annotation cp="🍝" type="tts">↑↑↑</annotation>
+		<annotation cp="🍠">↑↑↑</annotation>
+		<annotation cp="🍠" type="tts">↑↑↑</annotation>
+		<annotation cp="🍢">↑↑↑</annotation>
+		<annotation cp="🍢" type="tts">↑↑↑</annotation>
+		<annotation cp="🍣">↑↑↑</annotation>
+		<annotation cp="🍣" type="tts">↑↑↑</annotation>
+		<annotation cp="🍤">↑↑↑</annotation>
+		<annotation cp="🍤" type="tts">↑↑↑</annotation>
+		<annotation cp="🍥">cake | fish | fish cake with swirl | narutomaki | pastry | swirl</annotation>
+		<annotation cp="🍥" type="tts">↑↑↑</annotation>
+		<annotation cp="🥮">↑↑↑</annotation>
+		<annotation cp="🥮" type="tts">↑↑↑</annotation>
+		<annotation cp="🍡">↑↑↑</annotation>
+		<annotation cp="🍡" type="tts">↑↑↑</annotation>
+		<annotation cp="🥟">↑↑↑</annotation>
+		<annotation cp="🥟" type="tts">↑↑↑</annotation>
+		<annotation cp="🥠">↑↑↑</annotation>
+		<annotation cp="🥠" type="tts">↑↑↑</annotation>
+		<annotation cp="🥡">↑↑↑</annotation>
+		<annotation cp="🥡" type="tts">↑↑↑</annotation>
+		<annotation cp="🍦">cream | dessert | ice | icecream | soft | soft-serve ice cream | sweet</annotation>
+		<annotation cp="🍦" type="tts">soft-serve ice cream</annotation>
+		<annotation cp="🍧">↑↑↑</annotation>
+		<annotation cp="🍧" type="tts">↑↑↑</annotation>
+		<annotation cp="🍨">↑↑↑</annotation>
+		<annotation cp="🍨" type="tts">↑↑↑</annotation>
+		<annotation cp="🍩">↑↑↑</annotation>
+		<annotation cp="🍩" type="tts">↑↑↑</annotation>
+		<annotation cp="🍪">↑↑↑</annotation>
+		<annotation cp="🍪" type="tts">↑↑↑</annotation>
+		<annotation cp="🎂">↑↑↑</annotation>
+		<annotation cp="🎂" type="tts">↑↑↑</annotation>
+		<annotation cp="🍰">↑↑↑</annotation>
+		<annotation cp="🍰" type="tts">↑↑↑</annotation>
+		<annotation cp="🧁">↑↑↑</annotation>
+		<annotation cp="🧁" type="tts">↑↑↑</annotation>
+		<annotation cp="🥧">↑↑↑</annotation>
+		<annotation cp="🥧" type="tts">↑↑↑</annotation>
+		<annotation cp="🍫">↑↑↑</annotation>
+		<annotation cp="🍫" type="tts">↑↑↑</annotation>
+		<annotation cp="🍬">candy | dessert | sweet | sweets</annotation>
+		<annotation cp="🍬" type="tts">↑↑↑</annotation>
+		<annotation cp="🍭">↑↑↑</annotation>
+		<annotation cp="🍭" type="tts">↑↑↑</annotation>
+		<annotation cp="🍮">↑↑↑</annotation>
+		<annotation cp="🍮" type="tts">↑↑↑</annotation>
+		<annotation cp="🍯">↑↑↑</annotation>
+		<annotation cp="🍯" type="tts">↑↑↑</annotation>
+		<annotation cp="🍼">↑↑↑</annotation>
+		<annotation cp="🍼" type="tts">↑↑↑</annotation>
+		<annotation cp="🥛">↑↑↑</annotation>
+		<annotation cp="🥛" type="tts">↑↑↑</annotation>
+		<annotation cp="☕">↑↑↑</annotation>
+		<annotation cp="☕" type="tts">↑↑↑</annotation>
+		<annotation cp="🫖">↑↑↑</annotation>
+		<annotation cp="🫖" type="tts">↑↑↑</annotation>
+		<annotation cp="🍵">↑↑↑</annotation>
+		<annotation cp="🍵" type="tts">↑↑↑</annotation>
+		<annotation cp="🍶">bar | beverage | bottle | cup | drink | sake | saké</annotation>
+		<annotation cp="🍶" type="tts">↑↑↑</annotation>
+		<annotation cp="🍾">bar | bottle | bottle with popping cork | bubbly | cork | drink | popping</annotation>
+		<annotation cp="🍾" type="tts">↑↑↑</annotation>
+		<annotation cp="🍷">↑↑↑</annotation>
+		<annotation cp="🍷" type="tts">↑↑↑</annotation>
+		<annotation cp="🍸">↑↑↑</annotation>
+		<annotation cp="🍸" type="tts">↑↑↑</annotation>
+		<annotation cp="🍹">↑↑↑</annotation>
+		<annotation cp="🍹" type="tts">↑↑↑</annotation>
+		<annotation cp="🍺">↑↑↑</annotation>
+		<annotation cp="🍺" type="tts">↑↑↑</annotation>
+		<annotation cp="🍻">bar | beer | cheers | clink | clinking beer mugs | drink | mug</annotation>
+		<annotation cp="🍻" type="tts">↑↑↑</annotation>
+		<annotation cp="🥂">celebrate | cheers | clink | clinking glasses | drink | glass</annotation>
+		<annotation cp="🥂" type="tts">↑↑↑</annotation>
+		<annotation cp="🥃">glass | liquor | shot | tumbler | whiskey | whisky</annotation>
+		<annotation cp="🥃" type="tts">↑↑↑</annotation>
+		<annotation cp="🫗">↑↑↑</annotation>
+		<annotation cp="🫗" type="tts">↑↑↑</annotation>
+		<annotation cp="🥤">↑↑↑</annotation>
+		<annotation cp="🥤" type="tts">↑↑↑</annotation>
+		<annotation cp="🧋">boba | bubble | milk | pearl | tea</annotation>
+		<annotation cp="🧋" type="tts">↑↑↑</annotation>
+		<annotation cp="🧃">↑↑↑</annotation>
+		<annotation cp="🧃" type="tts">↑↑↑</annotation>
+		<annotation cp="🧉">↑↑↑</annotation>
+		<annotation cp="🧉" type="tts">↑↑↑</annotation>
+		<annotation cp="🧊">↑↑↑</annotation>
+		<annotation cp="🧊" type="tts">↑↑↑</annotation>
+		<annotation cp="🥢">↑↑↑</annotation>
+		<annotation cp="🥢" type="tts">↑↑↑</annotation>
+		<annotation cp="🍽">↑↑↑</annotation>
+		<annotation cp="🍽" type="tts">↑↑↑</annotation>
+		<annotation cp="🍴">cooking | cutlery | fork | fork and knife | knife | knife and fork</annotation>
+		<annotation cp="🍴" type="tts">↑↑↑</annotation>
+		<annotation cp="🥄">↑↑↑</annotation>
+		<annotation cp="🥄" type="tts">↑↑↑</annotation>
+		<annotation cp="🔪">↑↑↑</annotation>
+		<annotation cp="🔪" type="tts">↑↑↑</annotation>
+		<annotation cp="🫙">↑↑↑</annotation>
+		<annotation cp="🫙" type="tts">↑↑↑</annotation>
+		<annotation cp="🏺">↑↑↑</annotation>
+		<annotation cp="🏺" type="tts">↑↑↑</annotation>
+		<annotation cp="🌍">↑↑↑</annotation>
+		<annotation cp="🌍" type="tts">↑↑↑</annotation>
+		<annotation cp="🌎">↑↑↑</annotation>
+		<annotation cp="🌎" type="tts">↑↑↑</annotation>
+		<annotation cp="🌏">↑↑↑</annotation>
+		<annotation cp="🌏" type="tts">↑↑↑</annotation>
+		<annotation cp="🌐">↑↑↑</annotation>
+		<annotation cp="🌐" type="tts">↑↑↑</annotation>
+		<annotation cp="🗺">↑↑↑</annotation>
+		<annotation cp="🗺" type="tts">↑↑↑</annotation>
+		<annotation cp="🗾">↑↑↑</annotation>
+		<annotation cp="🗾" type="tts">↑↑↑</annotation>
+		<annotation cp="🧭">↑↑↑</annotation>
+		<annotation cp="🧭" type="tts">↑↑↑</annotation>
+		<annotation cp="🏔">↑↑↑</annotation>
+		<annotation cp="🏔" type="tts">↑↑↑</annotation>
+		<annotation cp="⛰">↑↑↑</annotation>
+		<annotation cp="⛰" type="tts">↑↑↑</annotation>
+		<annotation cp="🛘">↑↑↑</annotation>
+		<annotation cp="🛘" type="tts">↑↑↑</annotation>
+		<annotation cp="🌋">↑↑↑</annotation>
+		<annotation cp="🌋" type="tts">↑↑↑</annotation>
+		<annotation cp="🗻">Fuji | Mount Fuji | mountain</annotation>
+		<annotation cp="🗻" type="tts">Mount Fuji</annotation>
+		<annotation cp="🏕">↑↑↑</annotation>
+		<annotation cp="🏕" type="tts">↑↑↑</annotation>
+		<annotation cp="🏖">↑↑↑</annotation>
+		<annotation cp="🏖" type="tts">↑↑↑</annotation>
+		<annotation cp="🏜">↑↑↑</annotation>
+		<annotation cp="🏜" type="tts">↑↑↑</annotation>
+		<annotation cp="🏝">↑↑↑</annotation>
+		<annotation cp="🏝" type="tts">↑↑↑</annotation>
+		<annotation cp="🏞">↑↑↑</annotation>
+		<annotation cp="🏞" type="tts">↑↑↑</annotation>
+		<annotation cp="🏟">↑↑↑</annotation>
+		<annotation cp="🏟" type="tts">↑↑↑</annotation>
+		<annotation cp="🏛">classical | classical building | column</annotation>
+		<annotation cp="🏛" type="tts">↑↑↑</annotation>
+		<annotation cp="🏗">↑↑↑</annotation>
+		<annotation cp="🏗" type="tts">↑↑↑</annotation>
+		<annotation cp="🧱">↑↑↑</annotation>
+		<annotation cp="🧱" type="tts">↑↑↑</annotation>
+		<annotation cp="🪨">↑↑↑</annotation>
+		<annotation cp="🪨" type="tts">↑↑↑</annotation>
+		<annotation cp="🪵">↑↑↑</annotation>
+		<annotation cp="🪵" type="tts">↑↑↑</annotation>
+		<annotation cp="🛖">↑↑↑</annotation>
+		<annotation cp="🛖" type="tts">↑↑↑</annotation>
+		<annotation cp="🏘">↑↑↑</annotation>
+		<annotation cp="🏘" type="tts">↑↑↑</annotation>
+		<annotation cp="🏚">↑↑↑</annotation>
+		<annotation cp="🏚" type="tts">↑↑↑</annotation>
+		<annotation cp="🏠">↑↑↑</annotation>
+		<annotation cp="🏠" type="tts">↑↑↑</annotation>
+		<annotation cp="🏡">↑↑↑</annotation>
+		<annotation cp="🏡" type="tts">↑↑↑</annotation>
+		<annotation cp="🏢">↑↑↑</annotation>
+		<annotation cp="🏢" type="tts">↑↑↑</annotation>
+		<annotation cp="🏣">↑↑↑</annotation>
+		<annotation cp="🏣" type="tts">↑↑↑</annotation>
+		<annotation cp="🏤">↑↑↑</annotation>
+		<annotation cp="🏤" type="tts">↑↑↑</annotation>
+		<annotation cp="🏥">↑↑↑</annotation>
+		<annotation cp="🏥" type="tts">↑↑↑</annotation>
+		<annotation cp="🏦">↑↑↑</annotation>
+		<annotation cp="🏦" type="tts">↑↑↑</annotation>
+		<annotation cp="🏨">↑↑↑</annotation>
+		<annotation cp="🏨" type="tts">↑↑↑</annotation>
+		<annotation cp="🏩">↑↑↑</annotation>
+		<annotation cp="🏩" type="tts">↑↑↑</annotation>
+		<annotation cp="🏪">convenience | dépanneur | store</annotation>
+		<annotation cp="🏪" type="tts">↑↑↑</annotation>
+		<annotation cp="🏫">↑↑↑</annotation>
+		<annotation cp="🏫" type="tts">↑↑↑</annotation>
+		<annotation cp="🏬">↑↑↑</annotation>
+		<annotation cp="🏬" type="tts">↑↑↑</annotation>
+		<annotation cp="🏭">↑↑↑</annotation>
+		<annotation cp="🏭" type="tts">↑↑↑</annotation>
+		<annotation cp="🏯">↑↑↑</annotation>
+		<annotation cp="🏯" type="tts">↑↑↑</annotation>
+		<annotation cp="🏰">↑↑↑</annotation>
+		<annotation cp="🏰" type="tts">↑↑↑</annotation>
+		<annotation cp="💒">↑↑↑</annotation>
+		<annotation cp="💒" type="tts">↑↑↑</annotation>
+		<annotation cp="🗼">Tokyo | Tower</annotation>
+		<annotation cp="🗼" type="tts">Tokyo Tower</annotation>
+		<annotation cp="🗽">Liberty | Statue | Statue of Liberty</annotation>
+		<annotation cp="🗽" type="tts">↑↑↑</annotation>
+		<annotation cp="⛪">↑↑↑</annotation>
+		<annotation cp="⛪" type="tts">↑↑↑</annotation>
+		<annotation cp="🕌">Islam | mosque | Muslim | religion</annotation>
+		<annotation cp="🕌" type="tts">↑↑↑</annotation>
+		<annotation cp="🛕">Hindu | temple</annotation>
+		<annotation cp="🛕" type="tts">Hindu temple</annotation>
+		<annotation cp="🕍">Jew | Jewish | religion | shul | synagogue | temple</annotation>
+		<annotation cp="🕍" type="tts">↑↑↑</annotation>
+		<annotation cp="⛩">religion | Shinto | shrine</annotation>
+		<annotation cp="⛩" type="tts">Shinto shrine</annotation>
+		<annotation cp="🕋">Islam | Kaaba | Muslim | religion</annotation>
+		<annotation cp="🕋" type="tts">Kaaba</annotation>
+		<annotation cp="⛲">↑↑↑</annotation>
+		<annotation cp="⛲" type="tts">↑↑↑</annotation>
+		<annotation cp="⛺">↑↑↑</annotation>
+		<annotation cp="⛺" type="tts">↑↑↑</annotation>
+		<annotation cp="🌁">↑↑↑</annotation>
+		<annotation cp="🌁" type="tts">↑↑↑</annotation>
+		<annotation cp="🌃">night | night with stars | star | starry night</annotation>
+		<annotation cp="🌃" type="tts">↑↑↑</annotation>
+		<annotation cp="🏙">city | cityscape | skyline</annotation>
+		<annotation cp="🏙" type="tts">↑↑↑</annotation>
+		<annotation cp="🌄">↑↑↑</annotation>
+		<annotation cp="🌄" type="tts">↑↑↑</annotation>
+		<annotation cp="🌅">↑↑↑</annotation>
+		<annotation cp="🌅" type="tts">↑↑↑</annotation>
+		<annotation cp="🌆">city | cityscape at dusk | dusk | evening | landscape | skyline at dusk | sunset</annotation>
+		<annotation cp="🌆" type="tts">↑↑↑</annotation>
+		<annotation cp="🌇">↑↑↑</annotation>
+		<annotation cp="🌇" type="tts">↑↑↑</annotation>
+		<annotation cp="🌉">↑↑↑</annotation>
+		<annotation cp="🌉" type="tts">↑↑↑</annotation>
+		<annotation cp="♨">↑↑↑</annotation>
+		<annotation cp="♨" type="tts">↑↑↑</annotation>
+		<annotation cp="🎠">carousel | horse | merry-go-round</annotation>
+		<annotation cp="🎠" type="tts">↑↑↑</annotation>
+		<annotation cp="🛝">↑↑↑</annotation>
+		<annotation cp="🛝" type="tts">↑↑↑</annotation>
+		<annotation cp="🎡">amusement park | Ferris | theme park | wheel</annotation>
+		<annotation cp="🎡" type="tts">Ferris wheel</annotation>
+		<annotation cp="🎢">↑↑↑</annotation>
+		<annotation cp="🎢" type="tts">↑↑↑</annotation>
+		<annotation cp="💈">↑↑↑</annotation>
+		<annotation cp="💈" type="tts">↑↑↑</annotation>
+		<annotation cp="🎪">↑↑↑</annotation>
+		<annotation cp="🎪" type="tts">↑↑↑</annotation>
+		<annotation cp="🚂">↑↑↑</annotation>
+		<annotation cp="🚂" type="tts">↑↑↑</annotation>
+		<annotation cp="🚃">car | electric | railway | train | tram | trolley bus | trolleybus</annotation>
+		<annotation cp="🚃" type="tts">↑↑↑</annotation>
+		<annotation cp="🚄">high-speed train | railway | Shinkansen | speed | train</annotation>
+		<annotation cp="🚄" type="tts">↑↑↑</annotation>
+		<annotation cp="🚅">bullet | railway | Shinkansen | speed | train</annotation>
+		<annotation cp="🚅" type="tts">↑↑↑</annotation>
+		<annotation cp="🚆">↑↑↑</annotation>
+		<annotation cp="🚆" type="tts">↑↑↑</annotation>
+		<annotation cp="🚇">metro | subway | tube | underground</annotation>
+		<annotation cp="🚇" type="tts">subway</annotation>
+		<annotation cp="🚈">↑↑↑</annotation>
+		<annotation cp="🚈" type="tts">↑↑↑</annotation>
+		<annotation cp="🚉">↑↑↑</annotation>
+		<annotation cp="🚉" type="tts">↑↑↑</annotation>
+		<annotation cp="🚊">car | streetcar | tram | tramcar | trolley | trolley bus | trolleybus</annotation>
+		<annotation cp="🚊" type="tts">↑↑↑</annotation>
+		<annotation cp="🚝">↑↑↑</annotation>
+		<annotation cp="🚝" type="tts">↑↑↑</annotation>
+		<annotation cp="🚞">↑↑↑</annotation>
+		<annotation cp="🚞" type="tts">↑↑↑</annotation>
+		<annotation cp="🚋">car | streetcar | tram | tramcar | trolley | trolley bus | trolleybus</annotation>
+		<annotation cp="🚋" type="tts">streetcar</annotation>
+		<annotation cp="🚌">↑↑↑</annotation>
+		<annotation cp="🚌" type="tts">↑↑↑</annotation>
+		<annotation cp="🚍">↑↑↑</annotation>
+		<annotation cp="🚍" type="tts">↑↑↑</annotation>
+		<annotation cp="🚎">bus | streetcar | tram | trolley | trolleybus</annotation>
+		<annotation cp="🚎" type="tts">trolley bus</annotation>
+		<annotation cp="🚐">↑↑↑</annotation>
+		<annotation cp="🚐" type="tts">↑↑↑</annotation>
+		<annotation cp="🚑">↑↑↑</annotation>
+		<annotation cp="🚑" type="tts">↑↑↑</annotation>
+		<annotation cp="🚒">↑↑↑</annotation>
+		<annotation cp="🚒" type="tts">fire truck</annotation>
+		<annotation cp="🚓">↑↑↑</annotation>
+		<annotation cp="🚓" type="tts">↑↑↑</annotation>
+		<annotation cp="🚔">↑↑↑</annotation>
+		<annotation cp="🚔" type="tts">↑↑↑</annotation>
+		<annotation cp="🚕">↑↑↑</annotation>
+		<annotation cp="🚕" type="tts">↑↑↑</annotation>
+		<annotation cp="🚖">↑↑↑</annotation>
+		<annotation cp="🚖" type="tts">↑↑↑</annotation>
+		<annotation cp="🚗">↑↑↑</annotation>
+		<annotation cp="🚗" type="tts">↑↑↑</annotation>
+		<annotation cp="🚘">↑↑↑</annotation>
+		<annotation cp="🚘" type="tts">↑↑↑</annotation>
+		<annotation cp="🚙">recreational | sport utility | sport utility vehicle | SUV</annotation>
+		<annotation cp="🚙" type="tts">↑↑↑</annotation>
+		<annotation cp="🛻">↑↑↑</annotation>
+		<annotation cp="🛻" type="tts">↑↑↑</annotation>
+		<annotation cp="🚚">↑↑↑</annotation>
+		<annotation cp="🚚" type="tts">↑↑↑</annotation>
+		<annotation cp="🚛">↑↑↑</annotation>
+		<annotation cp="🚛" type="tts">semi</annotation>
+		<annotation cp="🚜">↑↑↑</annotation>
+		<annotation cp="🚜" type="tts">↑↑↑</annotation>
+		<annotation cp="🏎">↑↑↑</annotation>
+		<annotation cp="🏎" type="tts">↑↑↑</annotation>
+		<annotation cp="🏍">↑↑↑</annotation>
+		<annotation cp="🏍" type="tts">↑↑↑</annotation>
+		<annotation cp="🛵">↑↑↑</annotation>
+		<annotation cp="🛵" type="tts">↑↑↑</annotation>
+		<annotation cp="🦽">↑↑↑</annotation>
+		<annotation cp="🦽" type="tts">↑↑↑</annotation>
+		<annotation cp="🦼">↑↑↑</annotation>
+		<annotation cp="🦼" type="tts">↑↑↑</annotation>
+		<annotation cp="🛺">auto rickshaw | tuk tuk | tuk-tuk | tuktuk</annotation>
+		<annotation cp="🛺" type="tts">↑↑↑</annotation>
+		<annotation cp="🚲">↑↑↑</annotation>
+		<annotation cp="🚲" type="tts">↑↑↑</annotation>
+		<annotation cp="🛴">↑↑↑</annotation>
+		<annotation cp="🛴" type="tts">↑↑↑</annotation>
+		<annotation cp="🛹">↑↑↑</annotation>
+		<annotation cp="🛹" type="tts">↑↑↑</annotation>
+		<annotation cp="🛼">↑↑↑</annotation>
+		<annotation cp="🛼" type="tts">↑↑↑</annotation>
+		<annotation cp="🚏">↑↑↑</annotation>
+		<annotation cp="🚏" type="tts">↑↑↑</annotation>
+		<annotation cp="🛣">↑↑↑</annotation>
+		<annotation cp="🛣" type="tts">highway</annotation>
+		<annotation cp="🛤">↑↑↑</annotation>
+		<annotation cp="🛤" type="tts">↑↑↑</annotation>
+		<annotation cp="🛢">↑↑↑</annotation>
+		<annotation cp="🛢" type="tts">↑↑↑</annotation>
+		<annotation cp="⛽">↑↑↑</annotation>
+		<annotation cp="⛽" type="tts">gas pump</annotation>
+		<annotation cp="🛞">↑↑↑</annotation>
+		<annotation cp="🛞" type="tts">↑↑↑</annotation>
+		<annotation cp="🚨">↑↑↑</annotation>
+		<annotation cp="🚨" type="tts">↑↑↑</annotation>
+		<annotation cp="🚥">↑↑↑</annotation>
+		<annotation cp="🚥" type="tts">↑↑↑</annotation>
+		<annotation cp="🚦">↑↑↑</annotation>
+		<annotation cp="🚦" type="tts">↑↑↑</annotation>
+		<annotation cp="🛑">↑↑↑</annotation>
+		<annotation cp="🛑" type="tts">↑↑↑</annotation>
+		<annotation cp="🚧">↑↑↑</annotation>
+		<annotation cp="🚧" type="tts">↑↑↑</annotation>
+		<annotation cp="⚓">↑↑↑</annotation>
+		<annotation cp="⚓" type="tts">↑↑↑</annotation>
+		<annotation cp="🛟">↑↑↑</annotation>
+		<annotation cp="🛟" type="tts">↑↑↑</annotation>
+		<annotation cp="⛵">↑↑↑</annotation>
+		<annotation cp="⛵" type="tts">↑↑↑</annotation>
+		<annotation cp="🛶">↑↑↑</annotation>
+		<annotation cp="🛶" type="tts">↑↑↑</annotation>
+		<annotation cp="🚤">↑↑↑</annotation>
+		<annotation cp="🚤" type="tts">↑↑↑</annotation>
+		<annotation cp="🛳">↑↑↑</annotation>
+		<annotation cp="🛳" type="tts">↑↑↑</annotation>
+		<annotation cp="⛴">↑↑↑</annotation>
+		<annotation cp="⛴" type="tts">↑↑↑</annotation>
+		<annotation cp="🛥">↑↑↑</annotation>
+		<annotation cp="🛥" type="tts">motorboat</annotation>
+		<annotation cp="🚢">↑↑↑</annotation>
+		<annotation cp="🚢" type="tts">↑↑↑</annotation>
+		<annotation cp="✈">aeroplane | airplane | flight</annotation>
+		<annotation cp="✈" type="tts">↑↑↑</annotation>
+		<annotation cp="🛩">aeroplane | airplane | small airplane | small plane</annotation>
+		<annotation cp="🛩" type="tts">↑↑↑</annotation>
+		<annotation cp="🛫">aeroplane | airplane | check-in | departure | departures | flight departure | plane departure</annotation>
+		<annotation cp="🛫" type="tts">↑↑↑</annotation>
+		<annotation cp="🛬">↑↑↑</annotation>
+		<annotation cp="🛬" type="tts">↑↑↑</annotation>
+		<annotation cp="🪂">↑↑↑</annotation>
+		<annotation cp="🪂" type="tts">↑↑↑</annotation>
+		<annotation cp="💺">↑↑↑</annotation>
+		<annotation cp="💺" type="tts">↑↑↑</annotation>
+		<annotation cp="🚁">↑↑↑</annotation>
+		<annotation cp="🚁" type="tts">↑↑↑</annotation>
+		<annotation cp="🚟">↑↑↑</annotation>
+		<annotation cp="🚟" type="tts">↑↑↑</annotation>
+		<annotation cp="🚠">↑↑↑</annotation>
+		<annotation cp="🚠" type="tts">↑↑↑</annotation>
+		<annotation cp="🚡">↑↑↑</annotation>
+		<annotation cp="🚡" type="tts">↑↑↑</annotation>
+		<annotation cp="🛰">↑↑↑</annotation>
+		<annotation cp="🛰" type="tts">↑↑↑</annotation>
+		<annotation cp="🚀">↑↑↑</annotation>
+		<annotation cp="🚀" type="tts">↑↑↑</annotation>
+		<annotation cp="🛸">flying saucer | spaceship | UFO</annotation>
+		<annotation cp="🛸" type="tts">↑↑↑</annotation>
+		<annotation cp="🛎">↑↑↑</annotation>
+		<annotation cp="🛎" type="tts">↑↑↑</annotation>
+		<annotation cp="🧳">↑↑↑</annotation>
+		<annotation cp="🧳" type="tts">↑↑↑</annotation>
+		<annotation cp="⌛">↑↑↑</annotation>
+		<annotation cp="⌛" type="tts">↑↑↑</annotation>
+		<annotation cp="⏳">↑↑↑</annotation>
+		<annotation cp="⏳" type="tts">↑↑↑</annotation>
+		<annotation cp="⌚">↑↑↑</annotation>
+		<annotation cp="⌚" type="tts">↑↑↑</annotation>
+		<annotation cp="⏰">↑↑↑</annotation>
+		<annotation cp="⏰" type="tts">↑↑↑</annotation>
+		<annotation cp="⏱">↑↑↑</annotation>
+		<annotation cp="⏱" type="tts">↑↑↑</annotation>
+		<annotation cp="⏲">↑↑↑</annotation>
+		<annotation cp="⏲" type="tts">↑↑↑</annotation>
+		<annotation cp="🕰">↑↑↑</annotation>
+		<annotation cp="🕰" type="tts">↑↑↑</annotation>
+		<annotation cp="🕛">↑↑↑</annotation>
+		<annotation cp="🕛" type="tts">↑↑↑</annotation>
+		<annotation cp="🕧">12 | 12:30 | clock | half past twelve | thirty | twelve | twelve-thirty</annotation>
+		<annotation cp="🕧" type="tts">twelve thirty</annotation>
+		<annotation cp="🕐">↑↑↑</annotation>
+		<annotation cp="🕐" type="tts">↑↑↑</annotation>
+		<annotation cp="🕜">1 | 1:30 | clock | half past one | one | one-thirty | thirty</annotation>
+		<annotation cp="🕜" type="tts">one thirty</annotation>
+		<annotation cp="🕑">↑↑↑</annotation>
+		<annotation cp="🕑" type="tts">↑↑↑</annotation>
+		<annotation cp="🕝">2 | 2:30 | clock | half past two | thirty | two | two-thirty</annotation>
+		<annotation cp="🕝" type="tts">two thirty</annotation>
+		<annotation cp="🕒">↑↑↑</annotation>
+		<annotation cp="🕒" type="tts">↑↑↑</annotation>
+		<annotation cp="🕞">3 | 3:30 | clock | half past three | thirty | three | three-thirty</annotation>
+		<annotation cp="🕞" type="tts">three thirty</annotation>
+		<annotation cp="🕓">↑↑↑</annotation>
+		<annotation cp="🕓" type="tts">↑↑↑</annotation>
+		<annotation cp="🕟">4 | 4:30 | clock | four | four-thirty | half past four | thirty</annotation>
+		<annotation cp="🕟" type="tts">four thirty</annotation>
+		<annotation cp="🕔">↑↑↑</annotation>
+		<annotation cp="🕔" type="tts">↑↑↑</annotation>
+		<annotation cp="🕠">5 | 5:30 | clock | five | five-thirty | half past five | thirty</annotation>
+		<annotation cp="🕠" type="tts">five thirty</annotation>
+		<annotation cp="🕕">↑↑↑</annotation>
+		<annotation cp="🕕" type="tts">↑↑↑</annotation>
+		<annotation cp="🕡">6 | 6:30 | clock | half past six | six | six-thirty | thirty</annotation>
+		<annotation cp="🕡" type="tts">six thirty</annotation>
+		<annotation cp="🕖">↑↑↑</annotation>
+		<annotation cp="🕖" type="tts">↑↑↑</annotation>
+		<annotation cp="🕢">7 | 7:30 | clock | half past seven | seven | seven-thirty | thirty</annotation>
+		<annotation cp="🕢" type="tts">seven thirty</annotation>
+		<annotation cp="🕗">↑↑↑</annotation>
+		<annotation cp="🕗" type="tts">↑↑↑</annotation>
+		<annotation cp="🕣">8 | 8:30 | clock | eight | eight-thirty | half past eight | thirty</annotation>
+		<annotation cp="🕣" type="tts">eight thirty</annotation>
+		<annotation cp="🕘">↑↑↑</annotation>
+		<annotation cp="🕘" type="tts">↑↑↑</annotation>
+		<annotation cp="🕤">9 | 9:30 | clock | half past nine | nine | nine-thirty | thirty</annotation>
+		<annotation cp="🕤" type="tts">nine thirty</annotation>
+		<annotation cp="🕙">↑↑↑</annotation>
+		<annotation cp="🕙" type="tts">↑↑↑</annotation>
+		<annotation cp="🕥">10 | 10:30 | clock | half past ten | ten | ten-thirty | thirty</annotation>
+		<annotation cp="🕥" type="tts">ten thirty</annotation>
+		<annotation cp="🕚">↑↑↑</annotation>
+		<annotation cp="🕚" type="tts">↑↑↑</annotation>
+		<annotation cp="🕦">11 | 11:30 | clock | eleven | eleven-thirty | half past eleven | thirty</annotation>
+		<annotation cp="🕦" type="tts">eleven thirty</annotation>
+		<annotation cp="🌑">↑↑↑</annotation>
+		<annotation cp="🌑" type="tts">↑↑↑</annotation>
+		<annotation cp="🌒">↑↑↑</annotation>
+		<annotation cp="🌒" type="tts">↑↑↑</annotation>
+		<annotation cp="🌓">↑↑↑</annotation>
+		<annotation cp="🌓" type="tts">↑↑↑</annotation>
+		<annotation cp="🌔">↑↑↑</annotation>
+		<annotation cp="🌔" type="tts">↑↑↑</annotation>
+		<annotation cp="🌕">↑↑↑</annotation>
+		<annotation cp="🌕" type="tts">↑↑↑</annotation>
+		<annotation cp="🌖">↑↑↑</annotation>
+		<annotation cp="🌖" type="tts">↑↑↑</annotation>
+		<annotation cp="🌗">↑↑↑</annotation>
+		<annotation cp="🌗" type="tts">↑↑↑</annotation>
+		<annotation cp="🌘">↑↑↑</annotation>
+		<annotation cp="🌘" type="tts">↑↑↑</annotation>
+		<annotation cp="🌙">↑↑↑</annotation>
+		<annotation cp="🌙" type="tts">↑↑↑</annotation>
+		<annotation cp="🌚">↑↑↑</annotation>
+		<annotation cp="🌚" type="tts">↑↑↑</annotation>
+		<annotation cp="🌛">↑↑↑</annotation>
+		<annotation cp="🌛" type="tts">↑↑↑</annotation>
+		<annotation cp="🌜">↑↑↑</annotation>
+		<annotation cp="🌜" type="tts">↑↑↑</annotation>
+		<annotation cp="🌡">↑↑↑</annotation>
+		<annotation cp="🌡" type="tts">↑↑↑</annotation>
+		<annotation cp="☀">↑↑↑</annotation>
+		<annotation cp="☀" type="tts">↑↑↑</annotation>
+		<annotation cp="🌝">bright | face | full | full-moon face | moon</annotation>
+		<annotation cp="🌝" type="tts">full-moon face</annotation>
+		<annotation cp="🌞">↑↑↑</annotation>
+		<annotation cp="🌞" type="tts">↑↑↑</annotation>
+		<annotation cp="🪐">↑↑↑</annotation>
+		<annotation cp="🪐" type="tts">↑↑↑</annotation>
+		<annotation cp="⭐">↑↑↑</annotation>
+		<annotation cp="⭐" type="tts">↑↑↑</annotation>
+		<annotation cp="🌟">↑↑↑</annotation>
+		<annotation cp="🌟" type="tts">↑↑↑</annotation>
+		<annotation cp="🌠">↑↑↑</annotation>
+		<annotation cp="🌠" type="tts">↑↑↑</annotation>
+		<annotation cp="🌌">Milky | space | Way</annotation>
+		<annotation cp="🌌" type="tts">Milky Way</annotation>
+		<annotation cp="☁">↑↑↑</annotation>
+		<annotation cp="☁" type="tts">↑↑↑</annotation>
+		<annotation cp="⛅">↑↑↑</annotation>
+		<annotation cp="⛅" type="tts">↑↑↑</annotation>
+		<annotation cp="⛈">↑↑↑</annotation>
+		<annotation cp="⛈" type="tts">↑↑↑</annotation>
+		<annotation cp="🌤">↑↑↑</annotation>
+		<annotation cp="🌤" type="tts">↑↑↑</annotation>
+		<annotation cp="🌥">↑↑↑</annotation>
+		<annotation cp="🌥" type="tts">↑↑↑</annotation>
+		<annotation cp="🌦">↑↑↑</annotation>
+		<annotation cp="🌦" type="tts">↑↑↑</annotation>
+		<annotation cp="🌧">↑↑↑</annotation>
+		<annotation cp="🌧" type="tts">↑↑↑</annotation>
+		<annotation cp="🌨">↑↑↑</annotation>
+		<annotation cp="🌨" type="tts">↑↑↑</annotation>
+		<annotation cp="🌩">↑↑↑</annotation>
+		<annotation cp="🌩" type="tts">↑↑↑</annotation>
+		<annotation cp="🌪">↑↑↑</annotation>
+		<annotation cp="🌪" type="tts">↑↑↑</annotation>
+		<annotation cp="🌫">↑↑↑</annotation>
+		<annotation cp="🌫" type="tts">↑↑↑</annotation>
+		<annotation cp="🌬">↑↑↑</annotation>
+		<annotation cp="🌬" type="tts">↑↑↑</annotation>
+		<annotation cp="🌀">↑↑↑</annotation>
+		<annotation cp="🌀" type="tts">↑↑↑</annotation>
+		<annotation cp="🌈">↑↑↑</annotation>
+		<annotation cp="🌈" type="tts">↑↑↑</annotation>
+		<annotation cp="🌂">↑↑↑</annotation>
+		<annotation cp="🌂" type="tts">↑↑↑</annotation>
+		<annotation cp="☂">↑↑↑</annotation>
+		<annotation cp="☂" type="tts">↑↑↑</annotation>
+		<annotation cp="☔">↑↑↑</annotation>
+		<annotation cp="☔" type="tts">↑↑↑</annotation>
+		<annotation cp="⛱">↑↑↑</annotation>
+		<annotation cp="⛱" type="tts">↑↑↑</annotation>
+		<annotation cp="⚡">↑↑↑</annotation>
+		<annotation cp="⚡" type="tts">↑↑↑</annotation>
+		<annotation cp="❄">↑↑↑</annotation>
+		<annotation cp="❄" type="tts">↑↑↑</annotation>
+		<annotation cp="☃">↑↑↑</annotation>
+		<annotation cp="☃" type="tts">↑↑↑</annotation>
+		<annotation cp="⛄">↑↑↑</annotation>
+		<annotation cp="⛄" type="tts">↑↑↑</annotation>
+		<annotation cp="☄">↑↑↑</annotation>
+		<annotation cp="☄" type="tts">↑↑↑</annotation>
+		<annotation cp="🔥">↑↑↑</annotation>
+		<annotation cp="🔥" type="tts">↑↑↑</annotation>
+		<annotation cp="💧">↑↑↑</annotation>
+		<annotation cp="💧" type="tts">↑↑↑</annotation>
+		<annotation cp="🌊">↑↑↑</annotation>
+		<annotation cp="🌊" type="tts">↑↑↑</annotation>
+		<annotation cp="🎃">celebration | Halloween | jack | jack-o-lantern | jack-o’-lantern | lantern</annotation>
+		<annotation cp="🎃" type="tts">↑↑↑</annotation>
+		<annotation cp="🎄">↑↑↑</annotation>
+		<annotation cp="🎄" type="tts">↑↑↑</annotation>
+		<annotation cp="🎆">↑↑↑</annotation>
+		<annotation cp="🎆" type="tts">↑↑↑</annotation>
+		<annotation cp="🎇">↑↑↑</annotation>
+		<annotation cp="🎇" type="tts">↑↑↑</annotation>
+		<annotation cp="🧨">↑↑↑</annotation>
+		<annotation cp="🧨" type="tts">↑↑↑</annotation>
+		<annotation cp="✨">↑↑↑</annotation>
+		<annotation cp="✨" type="tts">↑↑↑</annotation>
+		<annotation cp="🎈">↑↑↑</annotation>
+		<annotation cp="🎈" type="tts">↑↑↑</annotation>
+		<annotation cp="🎉">↑↑↑</annotation>
+		<annotation cp="🎉" type="tts">↑↑↑</annotation>
+		<annotation cp="🎊">↑↑↑</annotation>
+		<annotation cp="🎊" type="tts">↑↑↑</annotation>
+		<annotation cp="🎋">banner | celebration | Japanese | Tanabata tree | tree</annotation>
+		<annotation cp="🎋" type="tts">Tanabata tree</annotation>
+		<annotation cp="🎍">↑↑↑</annotation>
+		<annotation cp="🎍" type="tts">↑↑↑</annotation>
+		<annotation cp="🎎">↑↑↑</annotation>
+		<annotation cp="🎎" type="tts">↑↑↑</annotation>
+		<annotation cp="🎏">↑↑↑</annotation>
+		<annotation cp="🎏" type="tts">↑↑↑</annotation>
+		<annotation cp="🎐">↑↑↑</annotation>
+		<annotation cp="🎐" type="tts">↑↑↑</annotation>
+		<annotation cp="🎑">celebration | ceremony | moon | moon viewing ceremony | moon-viewing ceremony</annotation>
+		<annotation cp="🎑" type="tts">moon-viewing ceremony</annotation>
+		<annotation cp="🧧">↑↑↑</annotation>
+		<annotation cp="🧧" type="tts">↑↑↑</annotation>
+		<annotation cp="🎀">↑↑↑</annotation>
+		<annotation cp="🎀" type="tts">↑↑↑</annotation>
+		<annotation cp="🎁">↑↑↑</annotation>
+		<annotation cp="🎁" type="tts">↑↑↑</annotation>
+		<annotation cp="🎗">↑↑↑</annotation>
+		<annotation cp="🎗" type="tts">↑↑↑</annotation>
+		<annotation cp="🎟">↑↑↑</annotation>
+		<annotation cp="🎟" type="tts">↑↑↑</annotation>
+		<annotation cp="🎫">↑↑↑</annotation>
+		<annotation cp="🎫" type="tts">↑↑↑</annotation>
+		<annotation cp="🎖">↑↑↑</annotation>
+		<annotation cp="🎖" type="tts">↑↑↑</annotation>
+		<annotation cp="🏆">↑↑↑</annotation>
+		<annotation cp="🏆" type="tts">↑↑↑</annotation>
+		<annotation cp="🏅">↑↑↑</annotation>
+		<annotation cp="🏅" type="tts">↑↑↑</annotation>
+		<annotation cp="🥇">↑↑↑</annotation>
+		<annotation cp="🥇" type="tts">↑↑↑</annotation>
+		<annotation cp="🥈">↑↑↑</annotation>
+		<annotation cp="🥈" type="tts">↑↑↑</annotation>
+		<annotation cp="🥉">↑↑↑</annotation>
+		<annotation cp="🥉" type="tts">↑↑↑</annotation>
+		<annotation cp="⚽">↑↑↑</annotation>
+		<annotation cp="⚽" type="tts">↑↑↑</annotation>
+		<annotation cp="⚾">↑↑↑</annotation>
+		<annotation cp="⚾" type="tts">↑↑↑</annotation>
+		<annotation cp="🥎">↑↑↑</annotation>
+		<annotation cp="🥎" type="tts">↑↑↑</annotation>
+		<annotation cp="🏀">↑↑↑</annotation>
+		<annotation cp="🏀" type="tts">↑↑↑</annotation>
+		<annotation cp="🏐">↑↑↑</annotation>
+		<annotation cp="🏐" type="tts">↑↑↑</annotation>
+		<annotation cp="🏈">↑↑↑</annotation>
+		<annotation cp="🏈" type="tts">football</annotation>
+		<annotation cp="🏉">↑↑↑</annotation>
+		<annotation cp="🏉" type="tts">rugby</annotation>
+		<annotation cp="🎾">↑↑↑</annotation>
+		<annotation cp="🎾" type="tts">↑↑↑</annotation>
+		<annotation cp="🥏">flying disc | Frisbee | ultimate</annotation>
+		<annotation cp="🥏" type="tts">↑↑↑</annotation>
+		<annotation cp="🎳">↑↑↑</annotation>
+		<annotation cp="🎳" type="tts">↑↑↑</annotation>
+		<annotation cp="🏏">ball | bat | cricket | cricket match | game</annotation>
+		<annotation cp="🏏" type="tts">↑↑↑</annotation>
+		<annotation cp="🏑">↑↑↑</annotation>
+		<annotation cp="🏑" type="tts">↑↑↑</annotation>
+		<annotation cp="🏒">↑↑↑</annotation>
+		<annotation cp="🏒" type="tts">hockey</annotation>
+		<annotation cp="🥍">↑↑↑</annotation>
+		<annotation cp="🥍" type="tts">↑↑↑</annotation>
+		<annotation cp="🏓">ball | bat | game | paddle | ping pong | ping-pong | table tennis</annotation>
+		<annotation cp="🏓" type="tts">↑↑↑</annotation>
+		<annotation cp="🏸">↑↑↑</annotation>
+		<annotation cp="🏸" type="tts">↑↑↑</annotation>
+		<annotation cp="🥊">↑↑↑</annotation>
+		<annotation cp="🥊" type="tts">↑↑↑</annotation>
+		<annotation cp="🥋">judo | karate | martial arts | martial arts uniform | MMA | taekwondo | uniform</annotation>
+		<annotation cp="🥋" type="tts">↑↑↑</annotation>
+		<annotation cp="🥅">↑↑↑</annotation>
+		<annotation cp="🥅" type="tts">↑↑↑</annotation>
+		<annotation cp="⛳">↑↑↑</annotation>
+		<annotation cp="⛳" type="tts">↑↑↑</annotation>
+		<annotation cp="⛸">↑↑↑</annotation>
+		<annotation cp="⛸" type="tts">↑↑↑</annotation>
+		<annotation cp="🎣">fish | fishing pole | fishing rod | pole</annotation>
+		<annotation cp="🎣" type="tts">↑↑↑</annotation>
+		<annotation cp="🤿">diving | diving mask | scuba | snorkelling</annotation>
+		<annotation cp="🤿" type="tts">↑↑↑</annotation>
+		<annotation cp="🎽">↑↑↑</annotation>
+		<annotation cp="🎽" type="tts">↑↑↑</annotation>
+		<annotation cp="🎿">↑↑↑</annotation>
+		<annotation cp="🎿" type="tts">↑↑↑</annotation>
+		<annotation cp="🛷">↑↑↑</annotation>
+		<annotation cp="🛷" type="tts">↑↑↑</annotation>
+		<annotation cp="🥌">curling rock | curling stone | game | rock</annotation>
+		<annotation cp="🥌" type="tts">curling rock</annotation>
+		<annotation cp="🎯">bull’s-eye | bullseye | dart | direct hit | game | hit | target</annotation>
+		<annotation cp="🎯" type="tts">↑↑↑</annotation>
+		<annotation cp="🪀">↑↑↑</annotation>
+		<annotation cp="🪀" type="tts">↑↑↑</annotation>
+		<annotation cp="🪁">↑↑↑</annotation>
+		<annotation cp="🪁" type="tts">↑↑↑</annotation>
+		<annotation cp="🔫">↑↑↑</annotation>
+		<annotation cp="🔫" type="tts">↑↑↑</annotation>
+		<annotation cp="🎱">8 | ball | billiard | eight | game | magic 8 ball | pool 8 ball</annotation>
+		<annotation cp="🎱" type="tts">↑↑↑</annotation>
+		<annotation cp="🔮">↑↑↑</annotation>
+		<annotation cp="🔮" type="tts">↑↑↑</annotation>
+		<annotation cp="🪄">↑↑↑</annotation>
+		<annotation cp="🪄" type="tts">↑↑↑</annotation>
+		<annotation cp="🎮">↑↑↑</annotation>
+		<annotation cp="🎮" type="tts">↑↑↑</annotation>
+		<annotation cp="🕹">↑↑↑</annotation>
+		<annotation cp="🕹" type="tts">↑↑↑</annotation>
+		<annotation cp="🎰">↑↑↑</annotation>
+		<annotation cp="🎰" type="tts">↑↑↑</annotation>
+		<annotation cp="🎲">↑↑↑</annotation>
+		<annotation cp="🎲" type="tts">↑↑↑</annotation>
+		<annotation cp="🧩">↑↑↑</annotation>
+		<annotation cp="🧩" type="tts">↑↑↑</annotation>
+		<annotation cp="🧸">↑↑↑</annotation>
+		<annotation cp="🧸" type="tts">↑↑↑</annotation>
+		<annotation cp="🪅">↑↑↑</annotation>
+		<annotation cp="🪅" type="tts">↑↑↑</annotation>
+		<annotation cp="🪩">↑↑↑</annotation>
+		<annotation cp="🪩" type="tts">↑↑↑</annotation>
+		<annotation cp="🪆">doll | nesting | nesting dolls | Russia</annotation>
+		<annotation cp="🪆" type="tts">↑↑↑</annotation>
+		<annotation cp="♠">↑↑↑</annotation>
+		<annotation cp="♠" type="tts">↑↑↑</annotation>
+		<annotation cp="♥">↑↑↑</annotation>
+		<annotation cp="♥" type="tts">↑↑↑</annotation>
+		<annotation cp="♦">↑↑↑</annotation>
+		<annotation cp="♦" type="tts">↑↑↑</annotation>
+		<annotation cp="♣">↑↑↑</annotation>
+		<annotation cp="♣" type="tts">↑↑↑</annotation>
+		<annotation cp="♟">↑↑↑</annotation>
+		<annotation cp="♟" type="tts">↑↑↑</annotation>
+		<annotation cp="🃏">↑↑↑</annotation>
+		<annotation cp="🃏" type="tts">↑↑↑</annotation>
+		<annotation cp="🀄">game | Mahjong | Mahjong red dragon | red</annotation>
+		<annotation cp="🀄" type="tts">Mahjong red dragon</annotation>
+		<annotation cp="🎴">↑↑↑</annotation>
+		<annotation cp="🎴" type="tts">↑↑↑</annotation>
+		<annotation cp="🎭">↑↑↑</annotation>
+		<annotation cp="🎭" type="tts">↑↑↑</annotation>
+		<annotation cp="🖼">↑↑↑</annotation>
+		<annotation cp="🖼" type="tts">↑↑↑</annotation>
+		<annotation cp="🎨">↑↑↑</annotation>
+		<annotation cp="🎨" type="tts">↑↑↑</annotation>
+		<annotation cp="🧵">↑↑↑</annotation>
+		<annotation cp="🧵" type="tts">↑↑↑</annotation>
+		<annotation cp="🪡">↑↑↑</annotation>
+		<annotation cp="🪡" type="tts">↑↑↑</annotation>
+		<annotation cp="🧶">↑↑↑</annotation>
+		<annotation cp="🧶" type="tts">↑↑↑</annotation>
+		<annotation cp="🪢">↑↑↑</annotation>
+		<annotation cp="🪢" type="tts">↑↑↑</annotation>
+		<annotation cp="👓">↑↑↑</annotation>
+		<annotation cp="👓" type="tts">↑↑↑</annotation>
+		<annotation cp="🕶">↑↑↑</annotation>
+		<annotation cp="🕶" type="tts">↑↑↑</annotation>
+		<annotation cp="🥽">↑↑↑</annotation>
+		<annotation cp="🥽" type="tts">↑↑↑</annotation>
+		<annotation cp="🥼">↑↑↑</annotation>
+		<annotation cp="🥼" type="tts">↑↑↑</annotation>
+		<annotation cp="🦺">↑↑↑</annotation>
+		<annotation cp="🦺" type="tts">↑↑↑</annotation>
+		<annotation cp="👔">↑↑↑</annotation>
+		<annotation cp="👔" type="tts">↑↑↑</annotation>
+		<annotation cp="👕">clothing | shirt | T-shirt | tee-shirt | tshirt</annotation>
+		<annotation cp="👕" type="tts">T-shirt</annotation>
+		<annotation cp="👖">↑↑↑</annotation>
+		<annotation cp="👖" type="tts">↑↑↑</annotation>
+		<annotation cp="🧣">↑↑↑</annotation>
+		<annotation cp="🧣" type="tts">↑↑↑</annotation>
+		<annotation cp="🧤">↑↑↑</annotation>
+		<annotation cp="🧤" type="tts">↑↑↑</annotation>
+		<annotation cp="🧥">↑↑↑</annotation>
+		<annotation cp="🧥" type="tts">↑↑↑</annotation>
+		<annotation cp="🧦">↑↑↑</annotation>
+		<annotation cp="🧦" type="tts">↑↑↑</annotation>
+		<annotation cp="👗">↑↑↑</annotation>
+		<annotation cp="👗" type="tts">↑↑↑</annotation>
+		<annotation cp="👘">↑↑↑</annotation>
+		<annotation cp="👘" type="tts">↑↑↑</annotation>
+		<annotation cp="🥻">↑↑↑</annotation>
+		<annotation cp="🥻" type="tts">↑↑↑</annotation>
+		<annotation cp="🩱">bathing suit | one-piece swimsuit | swimming costume</annotation>
+		<annotation cp="🩱" type="tts">↑↑↑</annotation>
+		<annotation cp="🩲">↑↑↑</annotation>
+		<annotation cp="🩲" type="tts">↑↑↑</annotation>
+		<annotation cp="🩳">↑↑↑</annotation>
+		<annotation cp="🩳" type="tts">↑↑↑</annotation>
+		<annotation cp="👙">↑↑↑</annotation>
+		<annotation cp="👙" type="tts">↑↑↑</annotation>
+		<annotation cp="👚">↑↑↑</annotation>
+		<annotation cp="👚" type="tts">↑↑↑</annotation>
+		<annotation cp="🪭">↑↑↑</annotation>
+		<annotation cp="🪭" type="tts">↑↑↑</annotation>
+		<annotation cp="👛">↑↑↑</annotation>
+		<annotation cp="👛" type="tts">↑↑↑</annotation>
+		<annotation cp="👜">↑↑↑</annotation>
+		<annotation cp="👜" type="tts">↑↑↑</annotation>
+		<annotation cp="👝">↑↑↑</annotation>
+		<annotation cp="👝" type="tts">↑↑↑</annotation>
+		<annotation cp="🛍">↑↑↑</annotation>
+		<annotation cp="🛍" type="tts">↑↑↑</annotation>
+		<annotation cp="🎒">↑↑↑</annotation>
+		<annotation cp="🎒" type="tts">↑↑↑</annotation>
+		<annotation cp="🩴">beach sandal | flip-flop | sandal | thong | zōri</annotation>
+		<annotation cp="🩴" type="tts">flip-flop</annotation>
+		<annotation cp="👞">↑↑↑</annotation>
+		<annotation cp="👞" type="tts">↑↑↑</annotation>
+		<annotation cp="👟">↑↑↑</annotation>
+		<annotation cp="👟" type="tts">↑↑↑</annotation>
+		<annotation cp="🥾">↑↑↑</annotation>
+		<annotation cp="🥾" type="tts">↑↑↑</annotation>
+		<annotation cp="🥿">↑↑↑</annotation>
+		<annotation cp="🥿" type="tts">↑↑↑</annotation>
+		<annotation cp="👠">↑↑↑</annotation>
+		<annotation cp="👠" type="tts">↑↑↑</annotation>
+		<annotation cp="👡">↑↑↑</annotation>
+		<annotation cp="👡" type="tts">↑↑↑</annotation>
+		<annotation cp="🩰">↑↑↑</annotation>
+		<annotation cp="🩰" type="tts">↑↑↑</annotation>
+		<annotation cp="👢">↑↑↑</annotation>
+		<annotation cp="👢" type="tts">↑↑↑</annotation>
+		<annotation cp="🪮">↑↑↑</annotation>
+		<annotation cp="🪮" type="tts">↑↑↑</annotation>
+		<annotation cp="👑">↑↑↑</annotation>
+		<annotation cp="👑" type="tts">↑↑↑</annotation>
+		<annotation cp="👒">↑↑↑</annotation>
+		<annotation cp="👒" type="tts">↑↑↑</annotation>
+		<annotation cp="🎩">↑↑↑</annotation>
+		<annotation cp="🎩" type="tts">↑↑↑</annotation>
+		<annotation cp="🎓">↑↑↑</annotation>
+		<annotation cp="🎓" type="tts">↑↑↑</annotation>
+		<annotation cp="🧢">↑↑↑</annotation>
+		<annotation cp="🧢" type="tts">baseball cap</annotation>
+		<annotation cp="🪖">↑↑↑</annotation>
+		<annotation cp="🪖" type="tts">↑↑↑</annotation>
+		<annotation cp="⛑">↑↑↑</annotation>
+		<annotation cp="⛑" type="tts">↑↑↑</annotation>
+		<annotation cp="📿">↑↑↑</annotation>
+		<annotation cp="📿" type="tts">↑↑↑</annotation>
+		<annotation cp="💄">↑↑↑</annotation>
+		<annotation cp="💄" type="tts">↑↑↑</annotation>
+		<annotation cp="💍">↑↑↑</annotation>
+		<annotation cp="💍" type="tts">↑↑↑</annotation>
+		<annotation cp="💎">diamond | gem | gem stone | gemstone | jewel</annotation>
+		<annotation cp="💎" type="tts">gemstone</annotation>
+		<annotation cp="🔇">↑↑↑</annotation>
+		<annotation cp="🔇" type="tts">↑↑↑</annotation>
+		<annotation cp="🔈">↑↑↑</annotation>
+		<annotation cp="🔈" type="tts">↑↑↑</annotation>
+		<annotation cp="🔉">↑↑↑</annotation>
+		<annotation cp="🔉" type="tts">↑↑↑</annotation>
+		<annotation cp="🔊">↑↑↑</annotation>
+		<annotation cp="🔊" type="tts">↑↑↑</annotation>
+		<annotation cp="📢">↑↑↑</annotation>
+		<annotation cp="📢" type="tts">↑↑↑</annotation>
+		<annotation cp="📣">↑↑↑</annotation>
+		<annotation cp="📣" type="tts">↑↑↑</annotation>
+		<annotation cp="📯">↑↑↑</annotation>
+		<annotation cp="📯" type="tts">post horn</annotation>
+		<annotation cp="🔔">↑↑↑</annotation>
+		<annotation cp="🔔" type="tts">↑↑↑</annotation>
+		<annotation cp="🔕">↑↑↑</annotation>
+		<annotation cp="🔕" type="tts">↑↑↑</annotation>
+		<annotation cp="🎼">↑↑↑</annotation>
+		<annotation cp="🎼" type="tts">↑↑↑</annotation>
+		<annotation cp="🎵">↑↑↑</annotation>
+		<annotation cp="🎵" type="tts">↑↑↑</annotation>
+		<annotation cp="🎶">↑↑↑</annotation>
+		<annotation cp="🎶" type="tts">↑↑↑</annotation>
+		<annotation cp="🎙">↑↑↑</annotation>
+		<annotation cp="🎙" type="tts">↑↑↑</annotation>
+		<annotation cp="🎚">↑↑↑</annotation>
+		<annotation cp="🎚" type="tts">↑↑↑</annotation>
+		<annotation cp="🎛">↑↑↑</annotation>
+		<annotation cp="🎛" type="tts">↑↑↑</annotation>
+		<annotation cp="🎤">↑↑↑</annotation>
+		<annotation cp="🎤" type="tts">↑↑↑</annotation>
+		<annotation cp="🎧">↑↑↑</annotation>
+		<annotation cp="🎧" type="tts">↑↑↑</annotation>
+		<annotation cp="📻">↑↑↑</annotation>
+		<annotation cp="📻" type="tts">↑↑↑</annotation>
+		<annotation cp="🎷">↑↑↑</annotation>
+		<annotation cp="🎷" type="tts">↑↑↑</annotation>
+		<annotation cp="🎺">↑↑↑</annotation>
+		<annotation cp="🎺" type="tts">↑↑↑</annotation>
+		<annotation cp="🪊">↑↑↑</annotation>
+		<annotation cp="🪊" type="tts">↑↑↑</annotation>
+		<annotation cp="🪗">↑↑↑</annotation>
+		<annotation cp="🪗" type="tts">↑↑↑</annotation>
+		<annotation cp="🎸">↑↑↑</annotation>
+		<annotation cp="🎸" type="tts">↑↑↑</annotation>
+		<annotation cp="🎹">↑↑↑</annotation>
+		<annotation cp="🎹" type="tts">↑↑↑</annotation>
+		<annotation cp="🎻">↑↑↑</annotation>
+		<annotation cp="🎻" type="tts">↑↑↑</annotation>
+		<annotation cp="🪕">↑↑↑</annotation>
+		<annotation cp="🪕" type="tts">↑↑↑</annotation>
+		<annotation cp="🥁">↑↑↑</annotation>
+		<annotation cp="🥁" type="tts">↑↑↑</annotation>
+		<annotation cp="🪘">↑↑↑</annotation>
+		<annotation cp="🪘" type="tts">↑↑↑</annotation>
+		<annotation cp="🪇">↑↑↑</annotation>
+		<annotation cp="🪇" type="tts">↑↑↑</annotation>
+		<annotation cp="🪈">↑↑↑</annotation>
+		<annotation cp="🪈" type="tts">↑↑↑</annotation>
+		<annotation cp="🪉">↑↑↑</annotation>
+		<annotation cp="🪉" type="tts">↑↑↑</annotation>
+		<annotation cp="📱">↑↑↑</annotation>
+		<annotation cp="📱" type="tts">↑↑↑</annotation>
+		<annotation cp="📲">↑↑↑</annotation>
+		<annotation cp="📲" type="tts">↑↑↑</annotation>
+		<annotation cp="☎">↑↑↑</annotation>
+		<annotation cp="☎" type="tts">↑↑↑</annotation>
+		<annotation cp="📞">↑↑↑</annotation>
+		<annotation cp="📞" type="tts">↑↑↑</annotation>
+		<annotation cp="📟">↑↑↑</annotation>
+		<annotation cp="📟" type="tts">↑↑↑</annotation>
+		<annotation cp="📠">↑↑↑</annotation>
+		<annotation cp="📠" type="tts">↑↑↑</annotation>
+		<annotation cp="🔋">↑↑↑</annotation>
+		<annotation cp="🔋" type="tts">↑↑↑</annotation>
+		<annotation cp="🪫">↑↑↑</annotation>
+		<annotation cp="🪫" type="tts">↑↑↑</annotation>
+		<annotation cp="🔌">↑↑↑</annotation>
+		<annotation cp="🔌" type="tts">↑↑↑</annotation>
+		<annotation cp="💻">computer | laptop | PC | personal</annotation>
+		<annotation cp="💻" type="tts">↑↑↑</annotation>
+		<annotation cp="🖥">↑↑↑</annotation>
+		<annotation cp="🖥" type="tts">↑↑↑</annotation>
+		<annotation cp="🖨">↑↑↑</annotation>
+		<annotation cp="🖨" type="tts">↑↑↑</annotation>
+		<annotation cp="⌨">↑↑↑</annotation>
+		<annotation cp="⌨" type="tts">↑↑↑</annotation>
+		<annotation cp="🖱">↑↑↑</annotation>
+		<annotation cp="🖱" type="tts">↑↑↑</annotation>
+		<annotation cp="🖲">↑↑↑</annotation>
+		<annotation cp="🖲" type="tts">↑↑↑</annotation>
+		<annotation cp="💽">↑↑↑</annotation>
+		<annotation cp="💽" type="tts">↑↑↑</annotation>
+		<annotation cp="💾">computer | disk | diskette | floppy</annotation>
+		<annotation cp="💾" type="tts">↑↑↑</annotation>
+		<annotation cp="💿">↑↑↑</annotation>
+		<annotation cp="💿" type="tts">↑↑↑</annotation>
+		<annotation cp="📀">↑↑↑</annotation>
+		<annotation cp="📀" type="tts">↑↑↑</annotation>
+		<annotation cp="🧮">↑↑↑</annotation>
+		<annotation cp="🧮" type="tts">↑↑↑</annotation>
+		<annotation cp="🎥">↑↑↑</annotation>
+		<annotation cp="🎥" type="tts">↑↑↑</annotation>
+		<annotation cp="🎞">↑↑↑</annotation>
+		<annotation cp="🎞" type="tts">↑↑↑</annotation>
+		<annotation cp="📽">↑↑↑</annotation>
+		<annotation cp="📽" type="tts">↑↑↑</annotation>
+		<annotation cp="🎬">↑↑↑</annotation>
+		<annotation cp="🎬" type="tts">↑↑↑</annotation>
+		<annotation cp="📺">television | TV | video</annotation>
+		<annotation cp="📺" type="tts">↑↑↑</annotation>
+		<annotation cp="📷">↑↑↑</annotation>
+		<annotation cp="📷" type="tts">↑↑↑</annotation>
+		<annotation cp="📸">↑↑↑</annotation>
+		<annotation cp="📸" type="tts">↑↑↑</annotation>
+		<annotation cp="📹">↑↑↑</annotation>
+		<annotation cp="📹" type="tts">↑↑↑</annotation>
+		<annotation cp="📼">tape | VHS | video | videocassette | videotape</annotation>
+		<annotation cp="📼" type="tts">↑↑↑</annotation>
+		<annotation cp="🔍">↑↑↑</annotation>
+		<annotation cp="🔍" type="tts">↑↑↑</annotation>
+		<annotation cp="🔎">↑↑↑</annotation>
+		<annotation cp="🔎" type="tts">↑↑↑</annotation>
+		<annotation cp="🕯">↑↑↑</annotation>
+		<annotation cp="🕯" type="tts">↑↑↑</annotation>
+		<annotation cp="💡">↑↑↑</annotation>
+		<annotation cp="💡" type="tts">↑↑↑</annotation>
+		<annotation cp="🔦">↑↑↑</annotation>
+		<annotation cp="🔦" type="tts">↑↑↑</annotation>
+		<annotation cp="🏮">↑↑↑</annotation>
+		<annotation cp="🏮" type="tts">↑↑↑</annotation>
+		<annotation cp="🪔">↑↑↑</annotation>
+		<annotation cp="🪔" type="tts">↑↑↑</annotation>
+		<annotation cp="📔">↑↑↑</annotation>
+		<annotation cp="📔" type="tts">↑↑↑</annotation>
+		<annotation cp="📕">↑↑↑</annotation>
+		<annotation cp="📕" type="tts">↑↑↑</annotation>
+		<annotation cp="📖">↑↑↑</annotation>
+		<annotation cp="📖" type="tts">↑↑↑</annotation>
+		<annotation cp="📗">↑↑↑</annotation>
+		<annotation cp="📗" type="tts">↑↑↑</annotation>
+		<annotation cp="📘">↑↑↑</annotation>
+		<annotation cp="📘" type="tts">↑↑↑</annotation>
+		<annotation cp="📙">↑↑↑</annotation>
+		<annotation cp="📙" type="tts">↑↑↑</annotation>
+		<annotation cp="📚">↑↑↑</annotation>
+		<annotation cp="📚" type="tts">↑↑↑</annotation>
+		<annotation cp="📓">↑↑↑</annotation>
+		<annotation cp="📓" type="tts">↑↑↑</annotation>
+		<annotation cp="📒">↑↑↑</annotation>
+		<annotation cp="📒" type="tts">↑↑↑</annotation>
+		<annotation cp="📃">↑↑↑</annotation>
+		<annotation cp="📃" type="tts">↑↑↑</annotation>
+		<annotation cp="📜">↑↑↑</annotation>
+		<annotation cp="📜" type="tts">↑↑↑</annotation>
+		<annotation cp="📄">↑↑↑</annotation>
+		<annotation cp="📄" type="tts">↑↑↑</annotation>
+		<annotation cp="📰">↑↑↑</annotation>
+		<annotation cp="📰" type="tts">↑↑↑</annotation>
+		<annotation cp="🗞">↑↑↑</annotation>
+		<annotation cp="🗞" type="tts">↑↑↑</annotation>
+		<annotation cp="📑">↑↑↑</annotation>
+		<annotation cp="📑" type="tts">↑↑↑</annotation>
+		<annotation cp="🔖">↑↑↑</annotation>
+		<annotation cp="🔖" type="tts">↑↑↑</annotation>
+		<annotation cp="🏷">↑↑↑</annotation>
+		<annotation cp="🏷" type="tts">↑↑↑</annotation>
+		<annotation cp="🪙">↑↑↑</annotation>
+		<annotation cp="🪙" type="tts">↑↑↑</annotation>
+		<annotation cp="💰">↑↑↑</annotation>
+		<annotation cp="💰" type="tts">↑↑↑</annotation>
+		<annotation cp="🪎">↑↑↑</annotation>
+		<annotation cp="🪎" type="tts">↑↑↑</annotation>
+		<annotation cp="💴">↑↑↑</annotation>
+		<annotation cp="💴" type="tts">↑↑↑</annotation>
+		<annotation cp="💵">↑↑↑</annotation>
+		<annotation cp="💵" type="tts">↑↑↑</annotation>
+		<annotation cp="💶">↑↑↑</annotation>
+		<annotation cp="💶" type="tts">↑↑↑</annotation>
+		<annotation cp="💷">banknote | bill | currency | money | note | pound | sterling</annotation>
+		<annotation cp="💷" type="tts">↑↑↑</annotation>
+		<annotation cp="💸">↑↑↑</annotation>
+		<annotation cp="💸" type="tts">↑↑↑</annotation>
+		<annotation cp="💳">↑↑↑</annotation>
+		<annotation cp="💳" type="tts">↑↑↑</annotation>
+		<annotation cp="🧾">↑↑↑</annotation>
+		<annotation cp="🧾" type="tts">↑↑↑</annotation>
+		<annotation cp="💹">↑↑↑</annotation>
+		<annotation cp="💹" type="tts">↑↑↑</annotation>
+		<annotation cp="✉">↑↑↑</annotation>
+		<annotation cp="✉" type="tts">↑↑↑</annotation>
+		<annotation cp="📧">↑↑↑</annotation>
+		<annotation cp="📧" type="tts">↑↑↑</annotation>
+		<annotation cp="📨">↑↑↑</annotation>
+		<annotation cp="📨" type="tts">↑↑↑</annotation>
+		<annotation cp="📩">↑↑↑</annotation>
+		<annotation cp="📩" type="tts">↑↑↑</annotation>
+		<annotation cp="📤">↑↑↑</annotation>
+		<annotation cp="📤" type="tts">↑↑↑</annotation>
+		<annotation cp="📥">↑↑↑</annotation>
+		<annotation cp="📥" type="tts">↑↑↑</annotation>
+		<annotation cp="📦">↑↑↑</annotation>
+		<annotation cp="📦" type="tts">↑↑↑</annotation>
+		<annotation cp="📫">↑↑↑</annotation>
+		<annotation cp="📫" type="tts">↑↑↑</annotation>
+		<annotation cp="📪">↑↑↑</annotation>
+		<annotation cp="📪" type="tts">↑↑↑</annotation>
+		<annotation cp="📬">↑↑↑</annotation>
+		<annotation cp="📬" type="tts">↑↑↑</annotation>
+		<annotation cp="📭">↑↑↑</annotation>
+		<annotation cp="📭" type="tts">↑↑↑</annotation>
+		<annotation cp="📮">mail | mailbox | post | post box | postbox</annotation>
+		<annotation cp="📮" type="tts">mailbox</annotation>
+		<annotation cp="🗳">↑↑↑</annotation>
+		<annotation cp="🗳" type="tts">↑↑↑</annotation>
+		<annotation cp="✏">↑↑↑</annotation>
+		<annotation cp="✏" type="tts">↑↑↑</annotation>
+		<annotation cp="✒">↑↑↑</annotation>
+		<annotation cp="✒" type="tts">↑↑↑</annotation>
+		<annotation cp="🖋">↑↑↑</annotation>
+		<annotation cp="🖋" type="tts">↑↑↑</annotation>
+		<annotation cp="🖊">↑↑↑</annotation>
+		<annotation cp="🖊" type="tts">↑↑↑</annotation>
+		<annotation cp="🖌">↑↑↑</annotation>
+		<annotation cp="🖌" type="tts">↑↑↑</annotation>
+		<annotation cp="🖍">↑↑↑</annotation>
+		<annotation cp="🖍" type="tts">↑↑↑</annotation>
+		<annotation cp="📝">↑↑↑</annotation>
+		<annotation cp="📝" type="tts">↑↑↑</annotation>
+		<annotation cp="💼">↑↑↑</annotation>
+		<annotation cp="💼" type="tts">↑↑↑</annotation>
+		<annotation cp="📁">↑↑↑</annotation>
+		<annotation cp="📁" type="tts">↑↑↑</annotation>
+		<annotation cp="📂">↑↑↑</annotation>
+		<annotation cp="📂" type="tts">↑↑↑</annotation>
+		<annotation cp="🗂">↑↑↑</annotation>
+		<annotation cp="🗂" type="tts">↑↑↑</annotation>
+		<annotation cp="📅">↑↑↑</annotation>
+		<annotation cp="📅" type="tts">↑↑↑</annotation>
+		<annotation cp="📆">↑↑↑</annotation>
+		<annotation cp="📆" type="tts">↑↑↑</annotation>
+		<annotation cp="🗒">↑↑↑</annotation>
+		<annotation cp="🗒" type="tts">↑↑↑</annotation>
+		<annotation cp="🗓">↑↑↑</annotation>
+		<annotation cp="🗓" type="tts">↑↑↑</annotation>
+		<annotation cp="📇">↑↑↑</annotation>
+		<annotation cp="📇" type="tts">↑↑↑</annotation>
+		<annotation cp="📈">↑↑↑</annotation>
+		<annotation cp="📈" type="tts">↑↑↑</annotation>
+		<annotation cp="📉">↑↑↑</annotation>
+		<annotation cp="📉" type="tts">↑↑↑</annotation>
+		<annotation cp="📊">↑↑↑</annotation>
+		<annotation cp="📊" type="tts">↑↑↑</annotation>
+		<annotation cp="📋">↑↑↑</annotation>
+		<annotation cp="📋" type="tts">↑↑↑</annotation>
+		<annotation cp="📌">↑↑↑</annotation>
+		<annotation cp="📌" type="tts">↑↑↑</annotation>
+		<annotation cp="📍">↑↑↑</annotation>
+		<annotation cp="📍" type="tts">↑↑↑</annotation>
+		<annotation cp="📎">↑↑↑</annotation>
+		<annotation cp="📎" type="tts">↑↑↑</annotation>
+		<annotation cp="🖇">↑↑↑</annotation>
+		<annotation cp="🖇" type="tts">↑↑↑</annotation>
+		<annotation cp="📏">↑↑↑</annotation>
+		<annotation cp="📏" type="tts">↑↑↑</annotation>
+		<annotation cp="📐">ruler | set | set square | triangle | triangular ruler</annotation>
+		<annotation cp="📐" type="tts">↑↑↑</annotation>
+		<annotation cp="✂">↑↑↑</annotation>
+		<annotation cp="✂" type="tts">↑↑↑</annotation>
+		<annotation cp="🗃">↑↑↑</annotation>
+		<annotation cp="🗃" type="tts">↑↑↑</annotation>
+		<annotation cp="🗄">↑↑↑</annotation>
+		<annotation cp="🗄" type="tts">↑↑↑</annotation>
+		<annotation cp="🗑">↑↑↑</annotation>
+		<annotation cp="🗑" type="tts">↑↑↑</annotation>
+		<annotation cp="🔒">closed | locked | padlock</annotation>
+		<annotation cp="🔒" type="tts">↑↑↑</annotation>
+		<annotation cp="🔓">lock | open | padlock | unlock | unlocked</annotation>
+		<annotation cp="🔓" type="tts">↑↑↑</annotation>
+		<annotation cp="🔏">↑↑↑</annotation>
+		<annotation cp="🔏" type="tts">↑↑↑</annotation>
+		<annotation cp="🔐">↑↑↑</annotation>
+		<annotation cp="🔐" type="tts">↑↑↑</annotation>
+		<annotation cp="🔑">↑↑↑</annotation>
+		<annotation cp="🔑" type="tts">↑↑↑</annotation>
+		<annotation cp="🗝">↑↑↑</annotation>
+		<annotation cp="🗝" type="tts">↑↑↑</annotation>
+		<annotation cp="🔨">↑↑↑</annotation>
+		<annotation cp="🔨" type="tts">↑↑↑</annotation>
+		<annotation cp="🪓">↑↑↑</annotation>
+		<annotation cp="🪓" type="tts">↑↑↑</annotation>
+		<annotation cp="⛏">↑↑↑</annotation>
+		<annotation cp="⛏" type="tts">↑↑↑</annotation>
+		<annotation cp="⚒">↑↑↑</annotation>
+		<annotation cp="⚒" type="tts">↑↑↑</annotation>
+		<annotation cp="🛠">↑↑↑</annotation>
+		<annotation cp="🛠" type="tts">↑↑↑</annotation>
+		<annotation cp="🗡">↑↑↑</annotation>
+		<annotation cp="🗡" type="tts">↑↑↑</annotation>
+		<annotation cp="⚔">↑↑↑</annotation>
+		<annotation cp="⚔" type="tts">↑↑↑</annotation>
+		<annotation cp="💣">↑↑↑</annotation>
+		<annotation cp="💣" type="tts">↑↑↑</annotation>
+		<annotation cp="🪃">↑↑↑</annotation>
+		<annotation cp="🪃" type="tts">↑↑↑</annotation>
+		<annotation cp="🏹">↑↑↑</annotation>
+		<annotation cp="🏹" type="tts">↑↑↑</annotation>
+		<annotation cp="🛡">↑↑↑</annotation>
+		<annotation cp="🛡" type="tts">↑↑↑</annotation>
+		<annotation cp="🪚">↑↑↑</annotation>
+		<annotation cp="🪚" type="tts">↑↑↑</annotation>
+		<annotation cp="🔧">↑↑↑</annotation>
+		<annotation cp="🔧" type="tts">↑↑↑</annotation>
+		<annotation cp="🪛">↑↑↑</annotation>
+		<annotation cp="🪛" type="tts">↑↑↑</annotation>
+		<annotation cp="🔩">↑↑↑</annotation>
+		<annotation cp="🔩" type="tts">↑↑↑</annotation>
+		<annotation cp="⚙">↑↑↑</annotation>
+		<annotation cp="⚙" type="tts">↑↑↑</annotation>
+		<annotation cp="🗜">↑↑↑</annotation>
+		<annotation cp="🗜" type="tts">↑↑↑</annotation>
+		<annotation cp="⚖">↑↑↑</annotation>
+		<annotation cp="⚖" type="tts">↑↑↑</annotation>
+		<annotation cp="🦯">accessibility | blind | guide cane | white cane</annotation>
+		<annotation cp="🦯" type="tts">↑↑↑</annotation>
+		<annotation cp="🔗">↑↑↑</annotation>
+		<annotation cp="🔗" type="tts">↑↑↑</annotation>
+		<annotation cp="⛓‍💥">↑↑↑</annotation>
+		<annotation cp="⛓‍💥" type="tts">↑↑↑</annotation>
+		<annotation cp="⛓">↑↑↑</annotation>
+		<annotation cp="⛓" type="tts">↑↑↑</annotation>
+		<annotation cp="🪝">↑↑↑</annotation>
+		<annotation cp="🪝" type="tts">↑↑↑</annotation>
+		<annotation cp="🧰">↑↑↑</annotation>
+		<annotation cp="🧰" type="tts">↑↑↑</annotation>
+		<annotation cp="🧲">↑↑↑</annotation>
+		<annotation cp="🧲" type="tts">↑↑↑</annotation>
+		<annotation cp="🪜">↑↑↑</annotation>
+		<annotation cp="🪜" type="tts">↑↑↑</annotation>
+		<annotation cp="🪏">↑↑↑</annotation>
+		<annotation cp="🪏" type="tts">↑↑↑</annotation>
+		<annotation cp="⚗">↑↑↑</annotation>
+		<annotation cp="⚗" type="tts">↑↑↑</annotation>
+		<annotation cp="🧪">↑↑↑</annotation>
+		<annotation cp="🧪" type="tts">↑↑↑</annotation>
+		<annotation cp="🧫">↑↑↑</annotation>
+		<annotation cp="🧫" type="tts">↑↑↑</annotation>
+		<annotation cp="🧬">biologist | DNA | evolution | gene | genetics | life</annotation>
+		<annotation cp="🧬" type="tts">DNA</annotation>
+		<annotation cp="🔬">↑↑↑</annotation>
+		<annotation cp="🔬" type="tts">↑↑↑</annotation>
+		<annotation cp="🔭">↑↑↑</annotation>
+		<annotation cp="🔭" type="tts">↑↑↑</annotation>
+		<annotation cp="📡">↑↑↑</annotation>
+		<annotation cp="📡" type="tts">↑↑↑</annotation>
+		<annotation cp="💉">↑↑↑</annotation>
+		<annotation cp="💉" type="tts">↑↑↑</annotation>
+		<annotation cp="🩸">↑↑↑</annotation>
+		<annotation cp="🩸" type="tts">↑↑↑</annotation>
+		<annotation cp="💊">↑↑↑</annotation>
+		<annotation cp="💊" type="tts">↑↑↑</annotation>
+		<annotation cp="🩹">adhesive bandage | injury | plaster | sticking plaster</annotation>
+		<annotation cp="🩹" type="tts">↑↑↑</annotation>
+		<annotation cp="🩼">↑↑↑</annotation>
+		<annotation cp="🩼" type="tts">↑↑↑</annotation>
+		<annotation cp="🩺">↑↑↑</annotation>
+		<annotation cp="🩺" type="tts">↑↑↑</annotation>
+		<annotation cp="🩻">bones | doctor | medical | skeleton | X-ray</annotation>
+		<annotation cp="🩻" type="tts">X-ray</annotation>
+		<annotation cp="🚪">↑↑↑</annotation>
+		<annotation cp="🚪" type="tts">↑↑↑</annotation>
+		<annotation cp="🛗">↑↑↑</annotation>
+		<annotation cp="🛗" type="tts">↑↑↑</annotation>
+		<annotation cp="🪞">↑↑↑</annotation>
+		<annotation cp="🪞" type="tts">↑↑↑</annotation>
+		<annotation cp="🪟">↑↑↑</annotation>
+		<annotation cp="🪟" type="tts">↑↑↑</annotation>
+		<annotation cp="🛏">↑↑↑</annotation>
+		<annotation cp="🛏" type="tts">↑↑↑</annotation>
+		<annotation cp="🛋">couch | couch and lamp | hotel | lamp | sofa | sofa and lamp</annotation>
+		<annotation cp="🛋" type="tts">↑↑↑</annotation>
+		<annotation cp="🪑">↑↑↑</annotation>
+		<annotation cp="🪑" type="tts">↑↑↑</annotation>
+		<annotation cp="🚽">lavatory | toilet</annotation>
+		<annotation cp="🚽" type="tts">↑↑↑</annotation>
+		<annotation cp="🪠">↑↑↑</annotation>
+		<annotation cp="🪠" type="tts">↑↑↑</annotation>
+		<annotation cp="🚿">↑↑↑</annotation>
+		<annotation cp="🚿" type="tts">↑↑↑</annotation>
+		<annotation cp="🛁">↑↑↑</annotation>
+		<annotation cp="🛁" type="tts">↑↑↑</annotation>
+		<annotation cp="🪤">bait | mouse | mousetrap | snare | trap</annotation>
+		<annotation cp="🪤" type="tts">mousetrap</annotation>
+		<annotation cp="🪒">↑↑↑</annotation>
+		<annotation cp="🪒" type="tts">↑↑↑</annotation>
+		<annotation cp="🧴">↑↑↑</annotation>
+		<annotation cp="🧴" type="tts">↑↑↑</annotation>
+		<annotation cp="🧷">↑↑↑</annotation>
+		<annotation cp="🧷" type="tts">↑↑↑</annotation>
+		<annotation cp="🧹">↑↑↑</annotation>
+		<annotation cp="🧹" type="tts">↑↑↑</annotation>
+		<annotation cp="🧺">↑↑↑</annotation>
+		<annotation cp="🧺" type="tts">↑↑↑</annotation>
+		<annotation cp="🧻">↑↑↑</annotation>
+		<annotation cp="🧻" type="tts">↑↑↑</annotation>
+		<annotation cp="🪣">↑↑↑</annotation>
+		<annotation cp="🪣" type="tts">↑↑↑</annotation>
+		<annotation cp="🧼">↑↑↑</annotation>
+		<annotation cp="🧼" type="tts">↑↑↑</annotation>
+		<annotation cp="🫧">↑↑↑</annotation>
+		<annotation cp="🫧" type="tts">↑↑↑</annotation>
+		<annotation cp="🪥">↑↑↑</annotation>
+		<annotation cp="🪥" type="tts">↑↑↑</annotation>
+		<annotation cp="🧽">↑↑↑</annotation>
+		<annotation cp="🧽" type="tts">↑↑↑</annotation>
+		<annotation cp="🧯">↑↑↑</annotation>
+		<annotation cp="🧯" type="tts">↑↑↑</annotation>
+		<annotation cp="🛒">basket | cart | shopping | trolley</annotation>
+		<annotation cp="🛒" type="tts">↑↑↑</annotation>
+		<annotation cp="🚬">↑↑↑</annotation>
+		<annotation cp="🚬" type="tts">↑↑↑</annotation>
+		<annotation cp="⚰">casket | coffin | death</annotation>
+		<annotation cp="⚰" type="tts">↑↑↑</annotation>
+		<annotation cp="🪦">↑↑↑</annotation>
+		<annotation cp="🪦" type="tts">↑↑↑</annotation>
+		<annotation cp="⚱">↑↑↑</annotation>
+		<annotation cp="⚱" type="tts">↑↑↑</annotation>
+		<annotation cp="🧿">bead | charm | evil eye | nazar | nazar amulet | talisman</annotation>
+		<annotation cp="🧿" type="tts">↑↑↑</annotation>
+		<annotation cp="🪬">↑↑↑</annotation>
+		<annotation cp="🪬" type="tts">↑↑↑</annotation>
+		<annotation cp="🗿">↑↑↑</annotation>
+		<annotation cp="🗿" type="tts">↑↑↑</annotation>
+		<annotation cp="🪧">↑↑↑</annotation>
+		<annotation cp="🪧" type="tts">↑↑↑</annotation>
+		<annotation cp="🪪">credentials | ID | identification card | licence | security</annotation>
+		<annotation cp="🪪" type="tts">↑↑↑</annotation>
+		<annotation cp="🏧">↑↑↑</annotation>
+		<annotation cp="🏧" type="tts">↑↑↑</annotation>
+		<annotation cp="🚮">garbage | litter | litter bin | litter in bin sign | trash</annotation>
+		<annotation cp="🚮" type="tts">↑↑↑</annotation>
+		<annotation cp="🚰">↑↑↑</annotation>
+		<annotation cp="🚰" type="tts">↑↑↑</annotation>
+		<annotation cp="♿">↑↑↑</annotation>
+		<annotation cp="♿" type="tts">↑↑↑</annotation>
+		<annotation cp="🚹">bathroom | lavatory | men’s | men’s room | restroom | washroom | wc</annotation>
+		<annotation cp="🚹" type="tts">↑↑↑</annotation>
+		<annotation cp="🚺">bathroom | ladies’ room | lavatory | restroom | toilet | WC | woman | women’s room</annotation>
+		<annotation cp="🚺" type="tts">ladies’ room</annotation>
+		<annotation cp="🚻">bathroom | lavatory | restroom | washroom | WC</annotation>
+		<annotation cp="🚻" type="tts">washroom</annotation>
+		<annotation cp="🚼">↑↑↑</annotation>
+		<annotation cp="🚼" type="tts">↑↑↑</annotation>
+		<annotation cp="🚾">↑↑↑</annotation>
+		<annotation cp="🚾" type="tts">↑↑↑</annotation>
+		<annotation cp="🛂">↑↑↑</annotation>
+		<annotation cp="🛂" type="tts">↑↑↑</annotation>
+		<annotation cp="🛃">↑↑↑</annotation>
+		<annotation cp="🛃" type="tts">↑↑↑</annotation>
+		<annotation cp="🛄">↑↑↑</annotation>
+		<annotation cp="🛄" type="tts">↑↑↑</annotation>
+		<annotation cp="🛅">↑↑↑</annotation>
+		<annotation cp="🛅" type="tts">↑↑↑</annotation>
+		<annotation cp="⚠">↑↑↑</annotation>
+		<annotation cp="⚠" type="tts">↑↑↑</annotation>
+		<annotation cp="🚸">↑↑↑</annotation>
+		<annotation cp="🚸" type="tts">↑↑↑</annotation>
+		<annotation cp="⛔">↑↑↑</annotation>
+		<annotation cp="⛔" type="tts">↑↑↑</annotation>
+		<annotation cp="🚫">↑↑↑</annotation>
+		<annotation cp="🚫" type="tts">↑↑↑</annotation>
+		<annotation cp="🚳">↑↑↑</annotation>
+		<annotation cp="🚳" type="tts">↑↑↑</annotation>
+		<annotation cp="🚭">↑↑↑</annotation>
+		<annotation cp="🚭" type="tts">↑↑↑</annotation>
+		<annotation cp="🚯">↑↑↑</annotation>
+		<annotation cp="🚯" type="tts">↑↑↑</annotation>
+		<annotation cp="🚱">↑↑↑</annotation>
+		<annotation cp="🚱" type="tts">↑↑↑</annotation>
+		<annotation cp="🚷">↑↑↑</annotation>
+		<annotation cp="🚷" type="tts">↑↑↑</annotation>
+		<annotation cp="📵">↑↑↑</annotation>
+		<annotation cp="📵" type="tts">↑↑↑</annotation>
+		<annotation cp="🔞">↑↑↑</annotation>
+		<annotation cp="🔞" type="tts">↑↑↑</annotation>
+		<annotation cp="☢">↑↑↑</annotation>
+		<annotation cp="☢" type="tts">↑↑↑</annotation>
+		<annotation cp="☣">↑↑↑</annotation>
+		<annotation cp="☣" type="tts">↑↑↑</annotation>
+		<annotation cp="⬆">↑↑↑</annotation>
+		<annotation cp="⬆" type="tts">↑↑↑</annotation>
+		<annotation cp="↗">↑↑↑</annotation>
+		<annotation cp="↗" type="tts">↑↑↑</annotation>
+		<annotation cp="➡">↑↑↑</annotation>
+		<annotation cp="➡" type="tts">↑↑↑</annotation>
+		<annotation cp="↘">↑↑↑</annotation>
+		<annotation cp="↘" type="tts">↑↑↑</annotation>
+		<annotation cp="⬇">↑↑↑</annotation>
+		<annotation cp="⬇" type="tts">↑↑↑</annotation>
+		<annotation cp="↙">↑↑↑</annotation>
+		<annotation cp="↙" type="tts">↑↑↑</annotation>
+		<annotation cp="⬅">↑↑↑</annotation>
+		<annotation cp="⬅" type="tts">↑↑↑</annotation>
+		<annotation cp="↖">↑↑↑</annotation>
+		<annotation cp="↖" type="tts">↑↑↑</annotation>
+		<annotation cp="↕">↑↑↑</annotation>
+		<annotation cp="↕" type="tts">↑↑↑</annotation>
+		<annotation cp="↔">↑↑↑</annotation>
+		<annotation cp="↔" type="tts">↑↑↑</annotation>
+		<annotation cp="↮">↑↑↑</annotation>
+		<annotation cp="↮" type="tts">↑↑↑</annotation>
+		<annotation cp="↩">↑↑↑</annotation>
+		<annotation cp="↩" type="tts">↑↑↑</annotation>
+		<annotation cp="↪">↑↑↑</annotation>
+		<annotation cp="↪" type="tts">↑↑↑</annotation>
+		<annotation cp="⤴">↑↑↑</annotation>
+		<annotation cp="⤴" type="tts">↑↑↑</annotation>
+		<annotation cp="⤵">↑↑↑</annotation>
+		<annotation cp="⤵" type="tts">↑↑↑</annotation>
+		<annotation cp="🔃">↑↑↑</annotation>
+		<annotation cp="🔃" type="tts">↑↑↑</annotation>
+		<annotation cp="🔄">↑↑↑</annotation>
+		<annotation cp="🔄" type="tts">↑↑↑</annotation>
+		<annotation cp="🔙">↑↑↑</annotation>
+		<annotation cp="🔙" type="tts">↑↑↑</annotation>
+		<annotation cp="🔚">↑↑↑</annotation>
+		<annotation cp="🔚" type="tts">↑↑↑</annotation>
+		<annotation cp="🔛">↑↑↑</annotation>
+		<annotation cp="🔛" type="tts">↑↑↑</annotation>
+		<annotation cp="🔜">↑↑↑</annotation>
+		<annotation cp="🔜" type="tts">↑↑↑</annotation>
+		<annotation cp="🔝">↑↑↑</annotation>
+		<annotation cp="🔝" type="tts">↑↑↑</annotation>
+		<annotation cp="🛐">↑↑↑</annotation>
+		<annotation cp="🛐" type="tts">↑↑↑</annotation>
+		<annotation cp="⚛">↑↑↑</annotation>
+		<annotation cp="⚛" type="tts">↑↑↑</annotation>
+		<annotation cp="🕉">↑↑↑</annotation>
+		<annotation cp="🕉" type="tts">↑↑↑</annotation>
+		<annotation cp="✡">David | Jewish | Judaism | religion | star | Star of David</annotation>
+		<annotation cp="✡" type="tts">Star of David</annotation>
+		<annotation cp="☸">↑↑↑</annotation>
+		<annotation cp="☸" type="tts">↑↑↑</annotation>
+		<annotation cp="☯">religion | Tao | Taoist | yang | yin</annotation>
+		<annotation cp="☯" type="tts">↑↑↑</annotation>
+		<annotation cp="✝">Christian | cross | Latin cross | religion</annotation>
+		<annotation cp="✝" type="tts">Latin cross</annotation>
+		<annotation cp="☦">Christian | cross | Orthodox cross | religion</annotation>
+		<annotation cp="☦" type="tts">Orthodox cross</annotation>
+		<annotation cp="☪">Islam | Muslim | religion | star and crescent</annotation>
+		<annotation cp="☪" type="tts">↑↑↑</annotation>
+		<annotation cp="☮">↑↑↑</annotation>
+		<annotation cp="☮" type="tts">↑↑↑</annotation>
+		<annotation cp="🕎">↑↑↑</annotation>
+		<annotation cp="🕎" type="tts">↑↑↑</annotation>
+		<annotation cp="🔯">↑↑↑</annotation>
+		<annotation cp="🔯" type="tts">↑↑↑</annotation>
+		<annotation cp="🪯">↑↑↑</annotation>
+		<annotation cp="🪯" type="tts">↑↑↑</annotation>
+		<annotation cp="♈">↑↑↑</annotation>
+		<annotation cp="♈" type="tts">↑↑↑</annotation>
+		<annotation cp="♉">↑↑↑</annotation>
+		<annotation cp="♉" type="tts">↑↑↑</annotation>
+		<annotation cp="♊">↑↑↑</annotation>
+		<annotation cp="♊" type="tts">↑↑↑</annotation>
+		<annotation cp="♋">↑↑↑</annotation>
+		<annotation cp="♋" type="tts">↑↑↑</annotation>
+		<annotation cp="♌">↑↑↑</annotation>
+		<annotation cp="♌" type="tts">↑↑↑</annotation>
+		<annotation cp="♍">↑↑↑</annotation>
+		<annotation cp="♍" type="tts">↑↑↑</annotation>
+		<annotation cp="♎">↑↑↑</annotation>
+		<annotation cp="♎" type="tts">↑↑↑</annotation>
+		<annotation cp="♏">Scorpio | scorpion | Scorpius | zodiac</annotation>
+		<annotation cp="♏" type="tts">↑↑↑</annotation>
+		<annotation cp="♐">↑↑↑</annotation>
+		<annotation cp="♐" type="tts">↑↑↑</annotation>
+		<annotation cp="♑">↑↑↑</annotation>
+		<annotation cp="♑" type="tts">↑↑↑</annotation>
+		<annotation cp="♒">↑↑↑</annotation>
+		<annotation cp="♒" type="tts">↑↑↑</annotation>
+		<annotation cp="♓">↑↑↑</annotation>
+		<annotation cp="♓" type="tts">↑↑↑</annotation>
+		<annotation cp="⛎">↑↑↑</annotation>
+		<annotation cp="⛎" type="tts">↑↑↑</annotation>
+		<annotation cp="🔀">↑↑↑</annotation>
+		<annotation cp="🔀" type="tts">↑↑↑</annotation>
+		<annotation cp="🔁">↑↑↑</annotation>
+		<annotation cp="🔁" type="tts">↑↑↑</annotation>
+		<annotation cp="🔂">↑↑↑</annotation>
+		<annotation cp="🔂" type="tts">↑↑↑</annotation>
+		<annotation cp="▶">↑↑↑</annotation>
+		<annotation cp="▶" type="tts">↑↑↑</annotation>
+		<annotation cp="⏩">↑↑↑</annotation>
+		<annotation cp="⏩" type="tts">↑↑↑</annotation>
+		<annotation cp="⏭">↑↑↑</annotation>
+		<annotation cp="⏭" type="tts">↑↑↑</annotation>
+		<annotation cp="⏯">↑↑↑</annotation>
+		<annotation cp="⏯" type="tts">↑↑↑</annotation>
+		<annotation cp="◀">↑↑↑</annotation>
+		<annotation cp="◀" type="tts">↑↑↑</annotation>
+		<annotation cp="⏪">↑↑↑</annotation>
+		<annotation cp="⏪" type="tts">↑↑↑</annotation>
+		<annotation cp="⏮">↑↑↑</annotation>
+		<annotation cp="⏮" type="tts">↑↑↑</annotation>
+		<annotation cp="🔼">arrow | button | red | upward button | upwards button</annotation>
+		<annotation cp="🔼" type="tts">upward button</annotation>
+		<annotation cp="⏫">↑↑↑</annotation>
+		<annotation cp="⏫" type="tts">↑↑↑</annotation>
+		<annotation cp="🔽">arrow | button | down | downward button | downwards button | red</annotation>
+		<annotation cp="🔽" type="tts">downward button</annotation>
+		<annotation cp="⏬">↑↑↑</annotation>
+		<annotation cp="⏬" type="tts">↑↑↑</annotation>
+		<annotation cp="⏸">↑↑↑</annotation>
+		<annotation cp="⏸" type="tts">↑↑↑</annotation>
+		<annotation cp="⏹">↑↑↑</annotation>
+		<annotation cp="⏹" type="tts">↑↑↑</annotation>
+		<annotation cp="⏺">↑↑↑</annotation>
+		<annotation cp="⏺" type="tts">↑↑↑</annotation>
+		<annotation cp="⏏">↑↑↑</annotation>
+		<annotation cp="⏏" type="tts">↑↑↑</annotation>
+		<annotation cp="🎦">↑↑↑</annotation>
+		<annotation cp="🎦" type="tts">↑↑↑</annotation>
+		<annotation cp="🔅">↑↑↑</annotation>
+		<annotation cp="🔅" type="tts">↑↑↑</annotation>
+		<annotation cp="🔆">↑↑↑</annotation>
+		<annotation cp="🔆" type="tts">↑↑↑</annotation>
+		<annotation cp="📶">↑↑↑</annotation>
+		<annotation cp="📶" type="tts">↑↑↑</annotation>
+		<annotation cp="🛜">↑↑↑</annotation>
+		<annotation cp="🛜" type="tts">↑↑↑</annotation>
+		<annotation cp="📳">cell | mobile | mode | phone | telephone | vibrate | vibration</annotation>
+		<annotation cp="📳" type="tts">↑↑↑</annotation>
+		<annotation cp="📴">↑↑↑</annotation>
+		<annotation cp="📴" type="tts">↑↑↑</annotation>
+		<annotation cp="♀">↑↑↑</annotation>
+		<annotation cp="♀" type="tts">↑↑↑</annotation>
+		<annotation cp="♂">↑↑↑</annotation>
+		<annotation cp="♂" type="tts">↑↑↑</annotation>
+		<annotation cp="⚧">↑↑↑</annotation>
+		<annotation cp="⚧" type="tts">↑↑↑</annotation>
+		<annotation cp="✖">↑↑↑</annotation>
+		<annotation cp="✖" type="tts">↑↑↑</annotation>
+		<annotation cp="➕">↑↑↑</annotation>
+		<annotation cp="➕" type="tts">↑↑↑</annotation>
+		<annotation cp="➖">↑↑↑</annotation>
+		<annotation cp="➖" type="tts">↑↑↑</annotation>
+		<annotation cp="➗">↑↑↑</annotation>
+		<annotation cp="➗" type="tts">↑↑↑</annotation>
+		<annotation cp="🟰">↑↑↑</annotation>
+		<annotation cp="🟰" type="tts">↑↑↑</annotation>
+		<annotation cp="♾">↑↑↑</annotation>
+		<annotation cp="♾" type="tts">↑↑↑</annotation>
+		<annotation cp="‼">↑↑↑</annotation>
+		<annotation cp="‼" type="tts">↑↑↑</annotation>
+		<annotation cp="⁉">! | !? | ? | exclamation | mark | punctuation | question</annotation>
+		<annotation cp="⁉" type="tts">↑↑↑</annotation>
+		<annotation cp="❓">↑↑↑</annotation>
+		<annotation cp="❓" type="tts">↑↑↑</annotation>
+		<annotation cp="❔">↑↑↑</annotation>
+		<annotation cp="❔" type="tts">↑↑↑</annotation>
+		<annotation cp="❕">↑↑↑</annotation>
+		<annotation cp="❕" type="tts">↑↑↑</annotation>
+		<annotation cp="❗">↑↑↑</annotation>
+		<annotation cp="❗" type="tts">↑↑↑</annotation>
+		<annotation cp="〰">↑↑↑</annotation>
+		<annotation cp="〰" type="tts">↑↑↑</annotation>
+		<annotation cp="💱">↑↑↑</annotation>
+		<annotation cp="💱" type="tts">↑↑↑</annotation>
+		<annotation cp="💲">↑↑↑</annotation>
+		<annotation cp="💲" type="tts">↑↑↑</annotation>
+		<annotation cp="⚕">↑↑↑</annotation>
+		<annotation cp="⚕" type="tts">↑↑↑</annotation>
+		<annotation cp="♻">↑↑↑</annotation>
+		<annotation cp="♻" type="tts">↑↑↑</annotation>
+		<annotation cp="⚜">↑↑↑</annotation>
+		<annotation cp="⚜" type="tts">↑↑↑</annotation>
+		<annotation cp="🔱">↑↑↑</annotation>
+		<annotation cp="🔱" type="tts">↑↑↑</annotation>
+		<annotation cp="📛">↑↑↑</annotation>
+		<annotation cp="📛" type="tts">↑↑↑</annotation>
+		<annotation cp="🔰">↑↑↑</annotation>
+		<annotation cp="🔰" type="tts">↑↑↑</annotation>
+		<annotation cp="⭕">↑↑↑</annotation>
+		<annotation cp="⭕" type="tts">↑↑↑</annotation>
+		<annotation cp="✅">✓ | button | check | mark | tick</annotation>
+		<annotation cp="✅" type="tts">↑↑↑</annotation>
+		<annotation cp="☑">✓ | box | check | check box with check | tick | tick box with tick</annotation>
+		<annotation cp="☑" type="tts">↑↑↑</annotation>
+		<annotation cp="✔">↑↑↑</annotation>
+		<annotation cp="✔" type="tts">↑↑↑</annotation>
+		<annotation cp="❌">↑↑↑</annotation>
+		<annotation cp="❌" type="tts">↑↑↑</annotation>
+		<annotation cp="❎">↑↑↑</annotation>
+		<annotation cp="❎" type="tts">↑↑↑</annotation>
+		<annotation cp="➰">↑↑↑</annotation>
+		<annotation cp="➰" type="tts">↑↑↑</annotation>
+		<annotation cp="➿">↑↑↑</annotation>
+		<annotation cp="➿" type="tts">↑↑↑</annotation>
+		<annotation cp="〽">↑↑↑</annotation>
+		<annotation cp="〽" type="tts">↑↑↑</annotation>
+		<annotation cp="✳">↑↑↑</annotation>
+		<annotation cp="✳" type="tts">↑↑↑</annotation>
+		<annotation cp="✴">↑↑↑</annotation>
+		<annotation cp="✴" type="tts">↑↑↑</annotation>
+		<annotation cp="❇">↑↑↑</annotation>
+		<annotation cp="❇" type="tts">↑↑↑</annotation>
+		<annotation cp="©">↑↑↑</annotation>
+		<annotation cp="©" type="tts">↑↑↑</annotation>
+		<annotation cp="®">r | registered | trademark</annotation>
+		<annotation cp="®" type="tts">↑↑↑</annotation>
+		<annotation cp="™">↑↑↑</annotation>
+		<annotation cp="™" type="tts">trademark</annotation>
+		<annotation cp="🫟">↑↑↑</annotation>
+		<annotation cp="🫟" type="tts">↑↑↑</annotation>
+		<annotation cp="🔠">ABCD | input | Latin | letters | uppercase</annotation>
+		<annotation cp="🔠" type="tts">input Latin uppercase</annotation>
+		<annotation cp="🔡">abcd | input | Latin | letters | lowercase</annotation>
+		<annotation cp="🔡" type="tts">input Latin lowercase</annotation>
+		<annotation cp="🔢">↑↑↑</annotation>
+		<annotation cp="🔢" type="tts">↑↑↑</annotation>
+		<annotation cp="🔣">↑↑↑</annotation>
+		<annotation cp="🔣" type="tts">↑↑↑</annotation>
+		<annotation cp="🔤">abc | alphabet | input | Latin | letters</annotation>
+		<annotation cp="🔤" type="tts">input Latin letters</annotation>
+		<annotation cp="🅰">↑↑↑</annotation>
+		<annotation cp="🅰" type="tts">↑↑↑</annotation>
+		<annotation cp="🆎">↑↑↑</annotation>
+		<annotation cp="🆎" type="tts">↑↑↑</annotation>
+		<annotation cp="🅱">↑↑↑</annotation>
+		<annotation cp="🅱" type="tts">↑↑↑</annotation>
+		<annotation cp="🆑">↑↑↑</annotation>
+		<annotation cp="🆑" type="tts">↑↑↑</annotation>
+		<annotation cp="🆒">↑↑↑</annotation>
+		<annotation cp="🆒" type="tts">↑↑↑</annotation>
+		<annotation cp="🆓">↑↑↑</annotation>
+		<annotation cp="🆓" type="tts">↑↑↑</annotation>
+		<annotation cp="ℹ">↑↑↑</annotation>
+		<annotation cp="ℹ" type="tts">↑↑↑</annotation>
+		<annotation cp="🆔">↑↑↑</annotation>
+		<annotation cp="🆔" type="tts">↑↑↑</annotation>
+		<annotation cp="Ⓜ">↑↑↑</annotation>
+		<annotation cp="Ⓜ" type="tts">↑↑↑</annotation>
+		<annotation cp="🆕">↑↑↑</annotation>
+		<annotation cp="🆕" type="tts">↑↑↑</annotation>
+		<annotation cp="🆖">↑↑↑</annotation>
+		<annotation cp="🆖" type="tts">↑↑↑</annotation>
+		<annotation cp="🅾">↑↑↑</annotation>
+		<annotation cp="🅾" type="tts">↑↑↑</annotation>
+		<annotation cp="🆗">↑↑↑</annotation>
+		<annotation cp="🆗" type="tts">↑↑↑</annotation>
+		<annotation cp="🅿">↑↑↑</annotation>
+		<annotation cp="🅿" type="tts">↑↑↑</annotation>
+		<annotation cp="🆘">↑↑↑</annotation>
+		<annotation cp="🆘" type="tts">↑↑↑</annotation>
+		<annotation cp="🆙">↑↑↑</annotation>
+		<annotation cp="🆙" type="tts">↑↑↑</annotation>
+		<annotation cp="🆚">↑↑↑</annotation>
+		<annotation cp="🆚" type="tts">↑↑↑</annotation>
+		<annotation cp="🈁">↑↑↑</annotation>
+		<annotation cp="🈁" type="tts">↑↑↑</annotation>
+		<annotation cp="🈂">↑↑↑</annotation>
+		<annotation cp="🈂" type="tts">↑↑↑</annotation>
+		<annotation cp="🈷">↑↑↑</annotation>
+		<annotation cp="🈷" type="tts">↑↑↑</annotation>
+		<annotation cp="🈶">↑↑↑</annotation>
+		<annotation cp="🈶" type="tts">↑↑↑</annotation>
+		<annotation cp="🈯">↑↑↑</annotation>
+		<annotation cp="🈯" type="tts">↑↑↑</annotation>
+		<annotation cp="🉐">↑↑↑</annotation>
+		<annotation cp="🉐" type="tts">↑↑↑</annotation>
+		<annotation cp="🈹">↑↑↑</annotation>
+		<annotation cp="🈹" type="tts">↑↑↑</annotation>
+		<annotation cp="🈚">↑↑↑</annotation>
+		<annotation cp="🈚" type="tts">↑↑↑</annotation>
+		<annotation cp="🈲">↑↑↑</annotation>
+		<annotation cp="🈲" type="tts">↑↑↑</annotation>
+		<annotation cp="🉑">↑↑↑</annotation>
+		<annotation cp="🉑" type="tts">↑↑↑</annotation>
+		<annotation cp="🈸">↑↑↑</annotation>
+		<annotation cp="🈸" type="tts">↑↑↑</annotation>
+		<annotation cp="🈴">↑↑↑</annotation>
+		<annotation cp="🈴" type="tts">↑↑↑</annotation>
+		<annotation cp="🈳">↑↑↑</annotation>
+		<annotation cp="🈳" type="tts">↑↑↑</annotation>
+		<annotation cp="㊗">↑↑↑</annotation>
+		<annotation cp="㊗" type="tts">↑↑↑</annotation>
+		<annotation cp="㊙">↑↑↑</annotation>
+		<annotation cp="㊙" type="tts">↑↑↑</annotation>
+		<annotation cp="🈺">↑↑↑</annotation>
+		<annotation cp="🈺" type="tts">↑↑↑</annotation>
+		<annotation cp="🈵">↑↑↑</annotation>
+		<annotation cp="🈵" type="tts">↑↑↑</annotation>
+		<annotation cp="🔴">↑↑↑</annotation>
+		<annotation cp="🔴" type="tts">↑↑↑</annotation>
+		<annotation cp="🟠">↑↑↑</annotation>
+		<annotation cp="🟠" type="tts">↑↑↑</annotation>
+		<annotation cp="🟡">↑↑↑</annotation>
+		<annotation cp="🟡" type="tts">↑↑↑</annotation>
+		<annotation cp="🟢">↑↑↑</annotation>
+		<annotation cp="🟢" type="tts">↑↑↑</annotation>
+		<annotation cp="🔵">↑↑↑</annotation>
+		<annotation cp="🔵" type="tts">↑↑↑</annotation>
+		<annotation cp="🟣">↑↑↑</annotation>
+		<annotation cp="🟣" type="tts">↑↑↑</annotation>
+		<annotation cp="🟤">↑↑↑</annotation>
+		<annotation cp="🟤" type="tts">↑↑↑</annotation>
+		<annotation cp="⚫">↑↑↑</annotation>
+		<annotation cp="⚫" type="tts">↑↑↑</annotation>
+		<annotation cp="⚪">↑↑↑</annotation>
+		<annotation cp="⚪" type="tts">↑↑↑</annotation>
+		<annotation cp="🟥">↑↑↑</annotation>
+		<annotation cp="🟥" type="tts">↑↑↑</annotation>
+		<annotation cp="🟧">↑↑↑</annotation>
+		<annotation cp="🟧" type="tts">↑↑↑</annotation>
+		<annotation cp="🟨">↑↑↑</annotation>
+		<annotation cp="🟨" type="tts">↑↑↑</annotation>
+		<annotation cp="🟩">↑↑↑</annotation>
+		<annotation cp="🟩" type="tts">↑↑↑</annotation>
+		<annotation cp="🟦">↑↑↑</annotation>
+		<annotation cp="🟦" type="tts">↑↑↑</annotation>
+		<annotation cp="🟪">↑↑↑</annotation>
+		<annotation cp="🟪" type="tts">↑↑↑</annotation>
+		<annotation cp="🟫">↑↑↑</annotation>
+		<annotation cp="🟫" type="tts">↑↑↑</annotation>
+		<annotation cp="⬛">↑↑↑</annotation>
+		<annotation cp="⬛" type="tts">↑↑↑</annotation>
+		<annotation cp="⬜">↑↑↑</annotation>
+		<annotation cp="⬜" type="tts">↑↑↑</annotation>
+		<annotation cp="◼">↑↑↑</annotation>
+		<annotation cp="◼" type="tts">↑↑↑</annotation>
+		<annotation cp="◻">↑↑↑</annotation>
+		<annotation cp="◻" type="tts">↑↑↑</annotation>
+		<annotation cp="◾">↑↑↑</annotation>
+		<annotation cp="◾" type="tts">↑↑↑</annotation>
+		<annotation cp="◽">↑↑↑</annotation>
+		<annotation cp="◽" type="tts">↑↑↑</annotation>
+		<annotation cp="▪">↑↑↑</annotation>
+		<annotation cp="▪" type="tts">↑↑↑</annotation>
+		<annotation cp="▫">↑↑↑</annotation>
+		<annotation cp="▫" type="tts">↑↑↑</annotation>
+		<annotation cp="🔶">↑↑↑</annotation>
+		<annotation cp="🔶" type="tts">↑↑↑</annotation>
+		<annotation cp="🔷">↑↑↑</annotation>
+		<annotation cp="🔷" type="tts">↑↑↑</annotation>
+		<annotation cp="🔸">↑↑↑</annotation>
+		<annotation cp="🔸" type="tts">↑↑↑</annotation>
+		<annotation cp="🔹">↑↑↑</annotation>
+		<annotation cp="🔹" type="tts">↑↑↑</annotation>
+		<annotation cp="🔺">↑↑↑</annotation>
+		<annotation cp="🔺" type="tts">↑↑↑</annotation>
+		<annotation cp="🔻">↑↑↑</annotation>
+		<annotation cp="🔻" type="tts">↑↑↑</annotation>
+		<annotation cp="💠">↑↑↑</annotation>
+		<annotation cp="💠" type="tts">↑↑↑</annotation>
+		<annotation cp="🔘">↑↑↑</annotation>
+		<annotation cp="🔘" type="tts">↑↑↑</annotation>
+		<annotation cp="🔳">↑↑↑</annotation>
+		<annotation cp="🔳" type="tts">↑↑↑</annotation>
+		<annotation cp="🔲">↑↑↑</annotation>
+		<annotation cp="🔲" type="tts">↑↑↑</annotation>
+		<annotation cp="🏁">checkered | checkered flag | chequered | chequered flag | racing</annotation>
+		<annotation cp="🏁" type="tts">checkered flag</annotation>
+		<annotation cp="🚩">post | red flag | triangular flag</annotation>
+		<annotation cp="🚩" type="tts">↑↑↑</annotation>
+		<annotation cp="🎌">↑↑↑</annotation>
+		<annotation cp="🎌" type="tts">↑↑↑</annotation>
+		<annotation cp="🏴">↑↑↑</annotation>
+		<annotation cp="🏴" type="tts">↑↑↑</annotation>
+		<annotation cp="🏳">surrender | waving | white flag</annotation>
+		<annotation cp="🏳" type="tts">↑↑↑</annotation>
+		<annotation cp="🏳‍🌈">↑↑↑</annotation>
+		<annotation cp="🏳‍🌈" type="tts">↑↑↑</annotation>
+		<annotation cp="🏳‍⚧">↑↑↑</annotation>
+		<annotation cp="🏳‍⚧" type="tts">↑↑↑</annotation>
+		<annotation cp="🏴‍☠">↑↑↑</annotation>
+		<annotation cp="🏴‍☠" type="tts">↑↑↑</annotation>
+		<annotation cp="¢">cent | cents</annotation>
+		<annotation cp="¢" type="tts">↑↑↑</annotation>
+		<annotation cp="$">CAD | cash | dollar | dollars | money | peso | USD</annotation>
+		<annotation cp="$" type="tts">↑↑↑</annotation>
+		<annotation cp="£">↑↑↑</annotation>
+		<annotation cp="£" type="tts">↑↑↑</annotation>
+		<annotation cp="¥">↑↑↑</annotation>
+		<annotation cp="¥" type="tts">↑↑↑</annotation>
+		<annotation cp="₢">Brazil | BRB | cruzeiro | currency</annotation>
+		<annotation cp="₢" type="tts">↑↑↑</annotation>
+		<annotation cp="₣">↑↑↑</annotation>
+		<annotation cp="₣" type="tts">French franc</annotation>
+		<annotation cp="₤">currency | Italy | lira</annotation>
+		<annotation cp="₤" type="tts">↑↑↑</annotation>
+		<annotation cp="₥">↑↑↑</annotation>
+		<annotation cp="₥" type="tts">↑↑↑</annotation>
+		<annotation cp="₩">↑↑↑</annotation>
+		<annotation cp="₩" type="tts">↑↑↑</annotation>
+		<annotation cp="€">↑↑↑</annotation>
+		<annotation cp="€" type="tts">↑↑↑</annotation>
+		<annotation cp="₰">↑↑↑</annotation>
+		<annotation cp="₰" type="tts">German penny</annotation>
+		<annotation cp="₱">peso | pesos</annotation>
+		<annotation cp="₱" type="tts">↑↑↑</annotation>
+		<annotation cp="₳">ARA | Argentina | austral | currency</annotation>
+		<annotation cp="₳" type="tts">↑↑↑</annotation>
+		<annotation cp="₶">currency | France | livre tournois</annotation>
+		<annotation cp="₶" type="tts">↑↑↑</annotation>
+		<annotation cp="₷">↑↑↑</annotation>
+		<annotation cp="₷" type="tts">↑↑↑</annotation>
+		<annotation cp="₹">currency | Indian rupee | rupee</annotation>
+		<annotation cp="₹" type="tts">Indian rupee</annotation>
+		<annotation cp="₽">↑↑↑</annotation>
+		<annotation cp="₽" type="tts">↑↑↑</annotation>
+		<annotation cp="₿">↑↑↑</annotation>
+		<annotation cp="₿" type="tts">↑↑↑</annotation>
+		<annotation cp="0⃣">↑↑↑</annotation>
+		<annotation cp="0⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="1⃣">↑↑↑</annotation>
+		<annotation cp="1⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="2⃣">↑↑↑</annotation>
+		<annotation cp="2⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="3⃣">↑↑↑</annotation>
+		<annotation cp="3⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="4⃣">↑↑↑</annotation>
+		<annotation cp="4⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="5⃣">↑↑↑</annotation>
+		<annotation cp="5⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="6⃣">↑↑↑</annotation>
+		<annotation cp="6⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="7⃣">↑↑↑</annotation>
+		<annotation cp="7⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="8⃣">↑↑↑</annotation>
+		<annotation cp="8⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="9⃣">↑↑↑</annotation>
+		<annotation cp="9⃣" type="tts">↑↑↑</annotation>
+		<annotation cp="¹">↑↑↑</annotation>
+		<annotation cp="¹" type="tts">↑↑↑</annotation>
+		<annotation cp="²">↑↑↑</annotation>
+		<annotation cp="²" type="tts">↑↑↑</annotation>
+		<annotation cp="³">↑↑↑</annotation>
+		<annotation cp="³" type="tts">↑↑↑</annotation>
+		<annotation cp="₨">↑↑↑</annotation>
+		<annotation cp="₨" type="tts">↑↑↑</annotation>
+		<annotation cp="µ">↑↑↑</annotation>
+		<annotation cp="µ" type="tts">↑↑↑</annotation>
+		<annotation cp="﷼">↑↑↑</annotation>
+		<annotation cp="﷼" type="tts">↑↑↑</annotation>
+	</annotations>
+</ldml>

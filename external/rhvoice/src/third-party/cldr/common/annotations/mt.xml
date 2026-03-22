@@ -1,0 +1,2549 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
+<!-- Copyright © 1991-2025 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+SPDX-License-Identifier: Unicode-3.0
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+-->
+<ldml>
+	<identity>
+		<version number="$Revision$"/>
+		<language type="mt"/>
+	</identity>
+	<annotations>
+		<annotation cp="🏻">tip 1–2 | ton ċar tal-ġilda | ton tal-ġilda</annotation>
+		<annotation cp="🏻" type="tts">ton ċar tal-ġilda</annotation>
+		<annotation cp="🏼">tip 3 | ton medju-ċar tal-ġilda | ton tal-ġilda</annotation>
+		<annotation cp="🏼" type="tts">ton medju-ċar tal-ġilda</annotation>
+		<annotation cp="🏽">tip 4 | ton medju tal-ġilda | ton tal-ġilda</annotation>
+		<annotation cp="🏽" type="tts">ton medju tal-ġilda</annotation>
+		<annotation cp="🏾">tip 5 | ton medju-skur tal-ġilda | ton tal-ġilda</annotation>
+		<annotation cp="🏾" type="tts">ton medju-skur tal-ġilda</annotation>
+		<annotation cp="🏿">tip 6 | ton skur tal-ġilda | ton tal-ġilda</annotation>
+		<annotation cp="🏿" type="tts">ton skur tal-ġilda</annotation>
+		<annotation cp="😀">jidħaq ħafna | wiċċ | wiċċ jidħak ħafna</annotation>
+		<annotation cp="😀" type="tts">wiċċ jidħak ħafna</annotation>
+		<annotation cp="😃">ħalq | jitbissem | miftuħ | wiċċ | wiċċ jidħaq bil-ħalq miftuħ</annotation>
+		<annotation cp="😃" type="tts">wiċċ jidħaq bil-ħalq miftuħ</annotation>
+		<annotation cp="😄">għajn | ħalq | jitbissem | miftuħ | wiċċ | wiċċ jidħaq b’ħalq miftuħ u għajnejn jitbissmu</annotation>
+		<annotation cp="😄" type="tts">wiċċ jidħaq b’ħalq miftuħ u għajnejn jitbissmu</annotation>
+		<annotation cp="😁">għajn | jidħaq ħafna | jitbissem | wiċċ | wiċċ jidħak ħafna b’għajnejn jitbissmu</annotation>
+		<annotation cp="😁" type="tts">wiċċ jidħak ħafna b’għajnejn jitbissmu</annotation>
+		<annotation cp="😆">ħalq | jidħq | jitbissem | miftuħ | sodisfatti | wiċċ | wiċċ jidħaq b’ħalq miftuħ u għajnejn magħluqa</annotation>
+		<annotation cp="😆" type="tts">wiċċ jidħaq b’ħalq miftuħ u għajnejn magħluqa</annotation>
+		<annotation cp="😅">għaraq | jitbissem | kiesaħ | miftuħ | wiċċ | wiċċ jidħaq b’ħalq miftuħ u għaraq kiesaħ</annotation>
+		<annotation cp="😅" type="tts">wiċċ jidħaq b’ħalq miftuħ u għaraq kiesaħ</annotation>
+		<annotation cp="🤣">art | irrumblar | jidħaq | jirrombla mal-art jidħaq | wiċċ</annotation>
+		<annotation cp="🤣" type="tts">jirrombla mal-art jidħaq</annotation>
+		<annotation cp="😂">daħq | demgħa | ferħ | wiċċ | wiċċ bi dmugħ ta’ ferħ</annotation>
+		<annotation cp="😂" type="tts">wiċċ bi dmugħ ta’ ferħ</annotation>
+		<annotation cp="🙂">jitbissem | wiċċ | wiċċ jitbissem ftit</annotation>
+		<annotation cp="🙂" type="tts">wiċċ jitbissem ftit</annotation>
+		<annotation cp="🙃">ta’ taħt fuq | wiċċ | wiċċ ta’ taħt fuq</annotation>
+		<annotation cp="🙃" type="tts">wiċċ ta’ taħt fuq</annotation>
+		<annotation cp="😉">hemeż | wiċċ | wiċċ jehmeż</annotation>
+		<annotation cp="😉" type="tts">wiċċ jehmeż</annotation>
+		<annotation cp="😊">għajn | jiħmar | jitbissem | wiċċ | wiċċ jitbissem b’għajnejn jitbissmu</annotation>
+		<annotation cp="😊" type="tts">wiċċ jitbissem b’għajnejn jitbissmu</annotation>
+		<annotation cp="😇">anġlu | fantasija | ħrafa | innoċenti | jitbissem | raġġiera | wiċċ | wiċċ jitbissem b’raġġiera</annotation>
+		<annotation cp="😇" type="tts">wiċċ jitbissem b’raġġiera</annotation>
+		<annotation cp="😍">għajn | imħabba | jitbissem | wiċċ | wiċċ jitbissem b’għajnejn bil-qlub</annotation>
+		<annotation cp="😍" type="tts">wiċċ jitbissem b’għajnejn bil-qlub</annotation>
+		<annotation cp="🤩">għajnejn | jitbissem | star | star-struck | wiċċ</annotation>
+		<annotation cp="🤩" type="tts">star-struck</annotation>
+		<annotation cp="😘">bewsa | wiċċ | wiċċ jitfa’ bewsa</annotation>
+		<annotation cp="😘" type="tts">wiċċ jitfa’ bewsa</annotation>
+		<annotation cp="😗">bewsa | wiċċ | wiċċ ibewwes</annotation>
+		<annotation cp="😗" type="tts">wiċċ ibewwes</annotation>
+		<annotation cp="☺">jitbissem | rilassat | spjegati | wiċċ</annotation>
+		<annotation cp="☺" type="tts">wiċċ jitbissem</annotation>
+		<annotation cp="😚">bewsa | għajn | magħluqin | wiċċ | wiċċ ibewwes b’għajnejn magħluqin</annotation>
+		<annotation cp="😚" type="tts">wiċċ ibewwes b’għajnejn magħluqin</annotation>
+		<annotation cp="😙">bewsa | għajn | jitbissem | wiċċ | wiċċ ibewwes b’għajnejn jitbissmu</annotation>
+		<annotation cp="😙" type="tts">wiċċ ibewwes b’għajnejn jitbissmu</annotation>
+		<annotation cp="😋">delizzjuż | iduq | jitbissem | um | wiċċ | wiċċ iduq ikel delizzjuż | yum</annotation>
+		<annotation cp="😋" type="tts">wiċċ iduq ikel delizzjuż</annotation>
+		<annotation cp="😛">ilsien | wiċċ | wiċċ b’ilsien barra</annotation>
+		<annotation cp="😛" type="tts">wiċċ b’ilsien barra</annotation>
+		<annotation cp="😜">ċajta | għajn | hemża | ilsien | wiċċ | wiċċ b’ilsien barra u għajn tehmeż</annotation>
+		<annotation cp="😜" type="tts">wiċċ b’ilsien barra u għajn tehmeż</annotation>
+		<annotation cp="🤪">għajnejn | kbar | wiċċ miġnun | żgħar</annotation>
+		<annotation cp="🤪" type="tts">wiċċ miġnun</annotation>
+		<annotation cp="😝">għajnejn | ilsien | orribbli | togħma | wiċċ | wiċċ b’ilsien barra u għajnejn magħluqin</annotation>
+		<annotation cp="😝" type="tts">wiċċ b’ilsien barra u għajnejn magħluqin</annotation>
+		<annotation cp="🤑">flus | ħalq | wiċċ | wiċċ b’ħalq tal-flus</annotation>
+		<annotation cp="🤑" type="tts">wiċċ b’ħalq tal-flus</annotation>
+		<annotation cp="🤗">jgħannaq | qed jgħannaq | wiċċ</annotation>
+		<annotation cp="🤗" type="tts">wiċċ jgħannaq</annotation>
+		<annotation cp="🤭">whoops | wiċċ bl-idejn fuq il-ħalq</annotation>
+		<annotation cp="🤭" type="tts">wiċċ bl-idejn fuq il-ħalq</annotation>
+		<annotation cp="🤫">kwiet | skiet | wiċċ qed isikket</annotation>
+		<annotation cp="🤫" type="tts">wiċċ qed isikket</annotation>
+		<annotation cp="🤔">ħosbien | wiċċ</annotation>
+		<annotation cp="🤔" type="tts">wiċċ ħosbien</annotation>
+		<annotation cp="🤐">ħalq | wiċċ | wiċċ b’ħalq b’żipp | żipp</annotation>
+		<annotation cp="🤐" type="tts">wiċċ b’ħalq b’żipp</annotation>
+		<annotation cp="🤨">nuqqas ta’ fiduċja | wiċċ b’ħuġbejn imtella’ | xettiku</annotation>
+		<annotation cp="🤨" type="tts">wiċċ b’ħuġbejn imtella’</annotation>
+		<annotation cp="😐">mingħajr emozzjoni | newtrali | wiċċ</annotation>
+		<annotation cp="😐" type="tts">wiċċ newtrali</annotation>
+		<annotation cp="😑">m’għandux espressjoni | mingħajr espressjoni | nieqes minn espressjoni | wiċċ | wiċċ mingħajr espressjoni</annotation>
+		<annotation cp="😑" type="tts">wiċċ mingħajr espressjoni</annotation>
+		<annotation cp="😶">ħalq | kwieta | siekta | wiċċ | wiċċ mingħajr ħalq</annotation>
+		<annotation cp="😶" type="tts">wiċċ mingħajr ħalq</annotation>
+		<annotation cp="😏">jitkerraħ | wiċċ</annotation>
+		<annotation cp="😏" type="tts">wiċċ jitkerraħ</annotation>
+		<annotation cp="😒">mhux ferrieħi | mhux kuntent | wiċċ | wiċċ mhux ferrieħi</annotation>
+		<annotation cp="😒" type="tts">wiċċ mhux ferrieħi</annotation>
+		<annotation cp="🙄">għajnejn | iduru | wiċċ | wiċċ b’għajnejn iduru</annotation>
+		<annotation cp="🙄" type="tts">wiċċ b’għajnejn iduru</annotation>
+		<annotation cp="😬">jistmerraħ | wiċċ</annotation>
+		<annotation cp="😬" type="tts">wiċċ jistmerraħ</annotation>
+		<annotation cp="🤥">jigdeb | pinocchio | wiċċ</annotation>
+		<annotation cp="🤥" type="tts">wiċċ jigdeb</annotation>
+		<annotation cp="😌">sollevat | wiċċ</annotation>
+		<annotation cp="😌" type="tts">wiċċ sollevat</annotation>
+		<annotation cp="😔">imħasseb | skoraġġut | wiċċ</annotation>
+		<annotation cp="😔" type="tts">wiċċ imħasseb</annotation>
+		<annotation cp="😪">rieqed | wiċċ | wiċċ bi ngħas</annotation>
+		<annotation cp="😪" type="tts">wiċċ bi ngħas</annotation>
+		<annotation cp="🤤">ibeżlaq | wiċċ</annotation>
+		<annotation cp="🤤" type="tts">wiċċ ibeżlaq</annotation>
+		<annotation cp="😴">rieqed | wiċċ | żżż</annotation>
+		<annotation cp="😴" type="tts">wiċċ rieqed</annotation>
+		<annotation cp="😷">kiesaħ | maskra | mediċina | morda | tabib | wiċċ | wiċċ bil-maskra medika</annotation>
+		<annotation cp="😷" type="tts">wiċċ bil-maskra medika</annotation>
+		<annotation cp="🤒">marid | morda | termometru | wiċċ | wiċċ b’termometru</annotation>
+		<annotation cp="🤒" type="tts">wiċċ b’termometru</annotation>
+		<annotation cp="🤕">faxxa | ħsara | muġugħ | wiċċ | wiċċ b’faxxa mar-ras</annotation>
+		<annotation cp="🤕" type="tts">wiċċ b’faxxa mar-ras</annotation>
+		<annotation cp="🤢">jirremetti | vomtu | wiċċ</annotation>
+		<annotation cp="🤢" type="tts">wiċċ jirremetti</annotation>
+		<annotation cp="🤮">mard | remettar | wiċċ qed jirremetti</annotation>
+		<annotation cp="🤮" type="tts">wiċċ qed jirremetti</annotation>
+		<annotation cp="🤧">gesundheit | għatsa | wiċċ | wiċċ jagħtas</annotation>
+		<annotation cp="🤧" type="tts">wiċċ jagħtas</annotation>
+		<annotation cp="😵">sturdut | wiċċ</annotation>
+		<annotation cp="😵" type="tts">wiċċ sturdut</annotation>
+		<annotation cp="🤯">maħsud | ras tisplodi</annotation>
+		<annotation cp="🤯" type="tts">ras tisplodi</annotation>
+		<annotation cp="🤠">cowboy | cowgirl | kappell | wiċċ | wiċċ b’kappell tal-cowboys</annotation>
+		<annotation cp="🤠" type="tts">wiċċ b’kappell tal-cowboys</annotation>
+		<annotation cp="😎">għajn | imdawwal | jitbissem | modern | nuċċali | nuċċali tax-xemx | nuċċalijiet | wiċċ | wiċċ jitbissem b’nuċċali tax-xemx | xemx</annotation>
+		<annotation cp="😎" type="tts">wiċċ jitbissem b’nuċċali tax-xemx</annotation>
+		<annotation cp="🤓">nerd | stramb | wiċċ</annotation>
+		<annotation cp="🤓" type="tts">wiċċ nerd</annotation>
+		<annotation cp="🧐">bla arja | wiċċ bil-monokolu</annotation>
+		<annotation cp="🧐" type="tts">wiċċ bil-monokolu</annotation>
+		<annotation cp="😕">konfuż | wiċċ</annotation>
+		<annotation cp="😕" type="tts">wiċċ konfuż</annotation>
+		<annotation cp="😟">inkwetat | wiċċ</annotation>
+		<annotation cp="😟" type="tts">wiċċ inkwetat</annotation>
+		<annotation cp="🙁">imkemmex | wiċċ | wiċċ imkemmex ftit</annotation>
+		<annotation cp="🙁" type="tts">wiċċ imkemmex ftit</annotation>
+		<annotation cp="☹">imkemmex | wiċċ</annotation>
+		<annotation cp="☹" type="tts">wiċċ imkemmex</annotation>
+		<annotation cp="😮">ħalq | miftuħ | simpatiku | wiċċ | wiċċ b’ħalq miftuħ</annotation>
+		<annotation cp="😮" type="tts">wiċċ b’ħalq miftuħ</annotation>
+		<annotation cp="😯">imsikket | sorpriż | stordut | wiċċ</annotation>
+		<annotation cp="😯" type="tts">wiċċ imsikket</annotation>
+		<annotation cp="😲">ixxokkjat | skantat | totalment | wiċċ</annotation>
+		<annotation cp="😲" type="tts">wiċċ skantat</annotation>
+		<annotation cp="😳">ruxxan | sturdut | wiċċ</annotation>
+		<annotation cp="😳" type="tts">wiċċ ruxxan</annotation>
+		<annotation cp="😦">ħalq | imkemmex | tiftaħ | wiċċ | wiċċ imkemmex b’ħalq miftuħ</annotation>
+		<annotation cp="😦" type="tts">wiċċ imkemmex b’ħalq miftuħ</annotation>
+		<annotation cp="😧">imdejjaq ħafna | wiċċ | wiċċ imdejjaq ħafna</annotation>
+		<annotation cp="😧" type="tts">wiċċ imdejjaq ħafna</annotation>
+		<annotation cp="😨">biża’ | imbeżża’ | tal-biża’ | wiċċ</annotation>
+		<annotation cp="😨" type="tts">wiċċ imbeżża’</annotation>
+		<annotation cp="😰">blu | għaraq | ħalq | kiesaħ | mgħaġġel | miftuħ | wiċċ | wiċċ b’ħalq miftuħ u għaraq kiesaħ</annotation>
+		<annotation cp="😰" type="tts">wiċċ b’ħalq miftuħ u għaraq kiesaħ</annotation>
+		<annotation cp="😥">diżappuntat | għall-erwieħ | sollevat | wiċċ | wiċċ diżappuntat iżda sollevat</annotation>
+		<annotation cp="😥" type="tts">wiċċ diżappuntat iżda sollevat</annotation>
+		<annotation cp="😢">dmugħ | imdejjaq | jibki | wiċċ</annotation>
+		<annotation cp="😢" type="tts">wiċċ jibki</annotation>
+		<annotation cp="😭">dmugħ | imdejjaq | jibki | jolfoq | wiċċ | wiċċ jibki jgħajjat</annotation>
+		<annotation cp="😭" type="tts">wiċċ jibki jgħajjat</annotation>
+		<annotation cp="😱">biża’ | għomod | imbeżża’ | tal-biża’ | werżaq | wiċċ | wiċċ iwerżaq bil-biża’</annotation>
+		<annotation cp="😱" type="tts">wiċċ iwerżaq bil-biża’</annotation>
+		<annotation cp="😖">imħawwad | wiċċ</annotation>
+		<annotation cp="😖" type="tts">wiċċ imħawwad</annotation>
+		<annotation cp="😣">perseveranti | wiċċ</annotation>
+		<annotation cp="😣" type="tts">wiċċ perseveranti</annotation>
+		<annotation cp="😞">diżappuntat | wiċċ</annotation>
+		<annotation cp="😞" type="tts">wiċċ diżappuntat</annotation>
+		<annotation cp="😓">għaraq | kiesaħ | wiċċ | wiċċ b’għaraq kiesaħ</annotation>
+		<annotation cp="😓" type="tts">wiċċ b’għaraq kiesaħ</annotation>
+		<annotation cp="😩">għajjien | għeja | wiċċ | wiċċ mimli għeja</annotation>
+		<annotation cp="😩" type="tts">wiċċ mimli għeja</annotation>
+		<annotation cp="😫">għajjien | wiċċ</annotation>
+		<annotation cp="😫" type="tts">wiċċ għajjien</annotation>
+		<annotation cp="😤">rebaħ | rebbieħ | wiċċ | wiċċ bid-duħħan ħiereġ mill-imnieħer</annotation>
+		<annotation cp="😤" type="tts">wiċċ bid-duħħan ħiereġ mill-imnieħer</annotation>
+		<annotation cp="😡">aħmar | irrabjat | irrabjat ħafna | rabja kbira | sporġa xofftejh | wiċċ | wiċċ jisporġi x-xofftejn</annotation>
+		<annotation cp="😡" type="tts">wiċċ jisporġi x-xofftejn</annotation>
+		<annotation cp="😠">irrabjat | irrabjat ħafna | wiċċ</annotation>
+		<annotation cp="😠" type="tts">wiċċ irrabjat</annotation>
+		<annotation cp="🤬">dagħa | wiċċ bis-simboli fuq il-ħalq</annotation>
+		<annotation cp="🤬" type="tts">wiċċ bis-simboli fuq il-ħalq</annotation>
+		<annotation cp="😈">fantasija | ħrafa | qrun | tbissem | wiċċ | wiċċ jitbissem bil-qrun</annotation>
+		<annotation cp="😈" type="tts">wiċċ jitbissem bil-qrun</annotation>
+		<annotation cp="👿">dimonju | fantasija | għafrit | ħrafa | wiċċ | wiċċ irrabjat bil-qrun | xitan</annotation>
+		<annotation cp="👿" type="tts">wiċċ irrabjat bil-qrun</annotation>
+		<annotation cp="💀">ħrafa | kranju | mewt | mostru | wiċċ</annotation>
+		<annotation cp="💀" type="tts">kranju</annotation>
+		<annotation cp="☠">crossbones | kranju | kranju u crossbones | mewt | mostru | wiċċ</annotation>
+		<annotation cp="☠" type="tts">kranju u crossbones</annotation>
+		<annotation cp="💩">demel | ħmieġ | komiku | mostru | munzell ħmieġ | purgar | wiċċ</annotation>
+		<annotation cp="💩" type="tts">munzell ħmieġ</annotation>
+		<annotation cp="🤡">buffu | wiċċ | wiċċ ta’ buffu</annotation>
+		<annotation cp="🤡" type="tts">wiċċ ta’ buffu</annotation>
+		<annotation cp="👹">fantasija | ħrafa | kreatura | mostru | orku | wiċċ</annotation>
+		<annotation cp="👹" type="tts">orku</annotation>
+		<annotation cp="👺">fantasija | goblin | ħrafa | kreatura | mostru | wiċċ</annotation>
+		<annotation cp="👺" type="tts">goblin</annotation>
+		<annotation cp="👻">fantasija | fatat | ħrafa | kreatura | mostru | wiċċ</annotation>
+		<annotation cp="👻" type="tts">fatat</annotation>
+		<annotation cp="👽">aljen | extraterrestrijali | fantasija | ħrafa | kreatura | mostru | UFO | wiċċ</annotation>
+		<annotation cp="👽" type="tts">aljen</annotation>
+		<annotation cp="👾">aljen | extraterrestrijali | fantasija | ħrafa | mostru | UFO | wiċċ</annotation>
+		<annotation cp="👾" type="tts">mostru aljen</annotation>
+		<annotation cp="🤖">mostru | robot | wiċċ | wiċċ ta’ robot</annotation>
+		<annotation cp="🤖" type="tts">wiċċ ta’ robot</annotation>
+		<annotation cp="😺">ħalq | jitbissem | miftuħ | qattus | wiċċ | wiċċ ta’ qattus jitbissem b’ħalq miftuħ</annotation>
+		<annotation cp="😺" type="tts">wiċċ ta’ qattus jitbissem b’ħalq miftuħ</annotation>
+		<annotation cp="😸">għajn | jidħaq | jitbissem | qattus | wiċċ | wiċċ ta’ qattus jidħak ħafna b’għajnejn jitbissmu</annotation>
+		<annotation cp="😸" type="tts">wiċċ ta’ qattus jidħak ħafna b’għajnejn jitbissmu</annotation>
+		<annotation cp="😹">dmugħ | kant | qattus | wiċċ | wiċċ ta’ qattus bi dmugħ ta’ ferħ</annotation>
+		<annotation cp="😹" type="tts">wiċċ ta’ qattus bi dmugħ ta’ ferħ</annotation>
+		<annotation cp="😻">għajn | imħabba | jitbissem | qattus | wiċċ | wiċċ ta’ qattus jitbissem b’għajnejn bil-qlub</annotation>
+		<annotation cp="😻" type="tts">wiċċ ta’ qattus jitbissem b’għajnejn bil-qlub</annotation>
+		<annotation cp="😼">imqarras | ironiku | jitbissem | qattus | wiċċ | wiċċ ta’ qattus bi tbissima mqarrsa</annotation>
+		<annotation cp="😼" type="tts">wiċċ ta’ qattus bi tbissima mqarrsa</annotation>
+		<annotation cp="😽">bewsa | għajn | qattus | wiċċ | wiċċ ta’ qattus ibewwes b’għajnejn magħluqin</annotation>
+		<annotation cp="😽" type="tts">wiċċ ta’ qattus ibewwes b’għajnejn magħluqin</annotation>
+		<annotation cp="🙀">għajjien | mistgħaġeb | oh | qattus | wiċċ | wiċċ ta’ qattus għajjien</annotation>
+		<annotation cp="🙀" type="tts">wiċċ ta’ qattus għajjien</annotation>
+		<annotation cp="😿">dmugħ | imdejjaq | jibki | qattus | wiċċ | wiċċ ta’ qattus jibki</annotation>
+		<annotation cp="😿" type="tts">wiċċ ta’ qattus jibki</annotation>
+		<annotation cp="😾">jisporġi x-xofftejn | qattus | wiċċ | wiċċ ta’ qattus jisporġi x-xofftejn</annotation>
+		<annotation cp="😾" type="tts">wiċċ ta’ qattus jisporġi x-xofftejn</annotation>
+		<annotation cp="🙈">ara | ġesti | ħażen | ma | mhux | pprojbit | pprojbiti | wiċċ | xadina | xadina li ma tara ebda ħażen</annotation>
+		<annotation cp="🙈" type="tts">xadina li ma tara ebda ħażen</annotation>
+		<annotation cp="🙉">ġesti | ħażen | isma’ | ma | mhux | pprojbit | pprojbiti | wiċċ | xadina | xadina li ma tisma’ ebda ħażen</annotation>
+		<annotation cp="🙉" type="tts">xadina li ma tisma’ ebda ħażen</annotation>
+		<annotation cp="🙊">ġesti | ħażen | ma | mhux | pprojbit | pprojbiti | tkellem | wiċċ | xadina | xadina li ma titkellem ebda ħażen</annotation>
+		<annotation cp="🙊" type="tts">xadina li ma titkellem ebda ħażen</annotation>
+		<annotation cp="💌">imħabba | ittra | ittra ta’ mħabba | posta | qalb</annotation>
+		<annotation cp="💌" type="tts">ittra ta’ mħabba</annotation>
+		<annotation cp="💘">kupidu | qalb bi vleġġa | vleġġa</annotation>
+		<annotation cp="💘" type="tts">qalb bi vleġġa</annotation>
+		<annotation cp="💝">qalb b’ċoff | valentinu | żigarella</annotation>
+		<annotation cp="💝" type="tts">qalb b’ċoff</annotation>
+		<annotation cp="💖">eċċitat | qalb tfexfex | tfexfex</annotation>
+		<annotation cp="💖" type="tts">qalb tfexfex</annotation>
+		<annotation cp="💗">eċċitat | nervuża | polz | qalb tikber | tkabbir</annotation>
+		<annotation cp="💗" type="tts">qalb tikber</annotation>
+		<annotation cp="💓">qalb tħabbat | taħbita tal-qalb | tħabbat</annotation>
+		<annotation cp="💓" type="tts">qalb tħabbat</annotation>
+		<annotation cp="💞">iduru | qlub iduru</annotation>
+		<annotation cp="💞" type="tts">qlub iduru</annotation>
+		<annotation cp="💕">imħabba | żewġt iqlub</annotation>
+		<annotation cp="💕" type="tts">żewġt iqlub</annotation>
+		<annotation cp="💟">dekorazzjoni ta’ qalb | qalb</annotation>
+		<annotation cp="💟" type="tts">dekorazzjoni ta’ qalb</annotation>
+		<annotation cp="❣">esklamazzjoni | esklamazzjoni ta’ qalb miġugħa | marka | punteġġjatura</annotation>
+		<annotation cp="❣" type="tts">esklamazzjoni ta’ qalb miġugħa</annotation>
+		<annotation cp="💔">kisser | maqsuma | qalb maqsuma</annotation>
+		<annotation cp="💔" type="tts">qalb maqsuma</annotation>
+		<annotation cp="❤">qalb | qalb ħamra</annotation>
+		<annotation cp="❤" type="tts">qalb ħamra</annotation>
+		<annotation cp="🧡">oranġjo | qalb oranġjo</annotation>
+		<annotation cp="🧡" type="tts">qalb oranġjo</annotation>
+		<annotation cp="💛">isfar | qalb safra</annotation>
+		<annotation cp="💛" type="tts">qalb safra</annotation>
+		<annotation cp="💚">aħdar | qalb ħadra</annotation>
+		<annotation cp="💚" type="tts">qalb ħadra</annotation>
+		<annotation cp="💙">blu | qalb blu</annotation>
+		<annotation cp="💙" type="tts">qalb blu</annotation>
+		<annotation cp="💜">qalb vjola | vjola</annotation>
+		<annotation cp="💜" type="tts">qalb vjola</annotation>
+		<annotation cp="🖤">ħażen | ħażin | iswed | qalb sewda</annotation>
+		<annotation cp="🖤" type="tts">qalb sewda</annotation>
+		<annotation cp="💋">bews | marka ta’ bewsa | xofftejn</annotation>
+		<annotation cp="💋" type="tts">marka ta’ bewsa</annotation>
+		<annotation cp="💯">100 | mija | mitt punt | punteġġ | sħiħ</annotation>
+		<annotation cp="💯" type="tts">mitt punt</annotation>
+		<annotation cp="💢">irrabjat | irrabjat ħafna | komiku | simbolu ta’ rabja</annotation>
+		<annotation cp="💢" type="tts">simbolu ta’ rabja</annotation>
+		<annotation cp="💥">boom | ħabta | komiku</annotation>
+		<annotation cp="💥" type="tts">ħabta</annotation>
+		<annotation cp="💫">kewkba | komiku | stordut</annotation>
+		<annotation cp="💫" type="tts">stordut</annotation>
+		<annotation cp="💦">għaraq | komiku | qed itajjar | qtar tal-għaraq</annotation>
+		<annotation cp="💦" type="tts">qtar tal-għaraq</annotation>
+		<annotation cp="💨">jaħrab ’l hemm | komiku | qed jiġri | sing</annotation>
+		<annotation cp="💨" type="tts">jaħrab ’l hemm</annotation>
+		<annotation cp="🕳">toqba</annotation>
+		<annotation cp="🕳" type="tts">toqba</annotation>
+		<annotation cp="💬">buzzieqa | bużżieqa | bużżieqa tad-diskors | djalogu | komik | taħdit</annotation>
+		<annotation cp="💬" type="tts">bużżieqa tad-diskors</annotation>
+		<annotation cp="👁‍🗨">bużżieqa tad-diskors | għajn | għajnejn f’bużżieqa tad-diskors | xhud</annotation>
+		<annotation cp="👁‍🗨" type="tts">għajnejn f’bużżieqa tad-diskors</annotation>
+		<annotation cp="🗨">bużżieqa tad-diskors fuq ix-xellug | diskors | djalogu</annotation>
+		<annotation cp="🗨" type="tts">bużżieqa tad-diskors fuq ix-xellug</annotation>
+		<annotation cp="🗯">buzzieqa | bużżieqa | bużżieqa ta’ rabja fuq il-lemin | irrabjat | irrabjat ħafna</annotation>
+		<annotation cp="🗯" type="tts">bużżieqa ta’ rabja fuq il-lemin</annotation>
+		<annotation cp="💭">bużżieqa | bużżieqa tal-ħsibijiet | djalogu | komiku | taħdit</annotation>
+		<annotation cp="💭" type="tts">bużżieqa tal-ħsibijiet</annotation>
+		<annotation cp="💤">irqad | komiku | zzz</annotation>
+		<annotation cp="💤" type="tts">zzz</annotation>
+		<annotation cp="👋">id | id ixxejjer | qed ixejjer | xejjer</annotation>
+		<annotation cp="👋" type="tts">id ixxejjer</annotation>
+		<annotation cp="🤚">id minn wara | id minn wara mgħollija | mgħollija</annotation>
+		<annotation cp="🤚" type="tts">id minn wara mgħollija</annotation>
+		<annotation cp="🖐">id | id mgħollija bl-iswaba’ mfettħa | mfettħa | suba’</annotation>
+		<annotation cp="🖐" type="tts">id mgħollija bl-iswaba’ mfettħa</annotation>
+		<annotation cp="✋">id | id mgħollija</annotation>
+		<annotation cp="✋" type="tts">id mgħollija</annotation>
+		<annotation cp="🖖">id | salut ta’ vulcan | spock | suba’ | vulcan</annotation>
+		<annotation cp="🖖" type="tts">salut ta’ vulcan</annotation>
+		<annotation cp="👌">id | OK</annotation>
+		<annotation cp="👌" type="tts">id OK</annotation>
+		<annotation cp="✌">id | id tar-rebħa | rebħa | v</annotation>
+		<annotation cp="✌" type="tts">id tar-rebħa</annotation>
+		<annotation cp="🤞">bl-idejn | inkroċja | subgħa | swaba nkroċjati | xorti</annotation>
+		<annotation cp="🤞" type="tts">swaba nkroċjati</annotation>
+		<annotation cp="🤟">ġest ta’ mħabba | id | ILY</annotation>
+		<annotation cp="🤟" type="tts">ġest ta’ mħabba</annotation>
+		<annotation cp="🤘">id | qrun | rock-on | sinjal tal-qrun | suba’</annotation>
+		<annotation cp="🤘" type="tts">sinjal tal-qrun</annotation>
+		<annotation cp="🤙">id | id ċempilli | sejħa</annotation>
+		<annotation cp="🤙" type="tts">id ċempilli</annotation>
+		<annotation cp="👈">b’lura | idejn | indiċi | indiċi b’lura iipponta lejn ix-xellug | punt | suba’</annotation>
+		<annotation cp="👈" type="tts">indiċi b’lura iipponta lejn ix-xellug</annotation>
+		<annotation cp="👉">b’lura | idejn | indiċi | indiċi b’lura li jipponta lejn il-lemin | punt | suba’</annotation>
+		<annotation cp="👉" type="tts">indiċi b’lura li jipponta lejn il-lemin</annotation>
+		<annotation cp="👆">’l fuq | id | indiċ | indiċi b’lura | indiċi b’lura li jipponta ’l fuq | ipponta | suba’</annotation>
+		<annotation cp="👆" type="tts">indiċi b’lura li jipponta ’l fuq</annotation>
+		<annotation cp="🖕">id | suba’ | suba’ tan-nofs</annotation>
+		<annotation cp="🖕" type="tts">suba’ tan-nofs</annotation>
+		<annotation cp="👇">’l isfel | id | indiċi | indiċi b’lura | indiċi b’lura li jipponta ’l isfel | punt | suba’</annotation>
+		<annotation cp="👇" type="tts">indiċi b’lura li jipponta ’l isfel</annotation>
+		<annotation cp="☝">’l fuq | id | indiċi | indiċi li jipponta ’l fuq | ipponta | suba’</annotation>
+		<annotation cp="☝" type="tts">indiċi li jipponta ’l fuq</annotation>
+		<annotation cp="👍">’il fuq | +1 | behem | behem ’il fuq | id</annotation>
+		<annotation cp="👍" type="tts">behem ’il fuq</annotation>
+		<annotation cp="👎">-1 | ’l isfel | behem | behem ’l isfel | id</annotation>
+		<annotation cp="👎" type="tts">behem ’l isfel</annotation>
+		<annotation cp="✊">daqqa ta’ ponn | ħafen | id | ponn | ponn mgħolli</annotation>
+		<annotation cp="✊" type="tts">ponn mgħolli</annotation>
+		<annotation cp="👊">daqqa ta’ ponn | ħafen | id | ponn | ponn dieħel</annotation>
+		<annotation cp="👊" type="tts">ponn dieħel</annotation>
+		<annotation cp="🤛">l-ewwel | lejn ix-xellug | ponn iħares lejn ix-xellug</annotation>
+		<annotation cp="🤛" type="tts">ponn iħares lejn ix-xellug</annotation>
+		<annotation cp="🤜">l-ewwel | lejn il-lemin | ponn iħares lemin</annotation>
+		<annotation cp="🤜" type="tts">ponn iħares lemin</annotation>
+		<annotation cp="👏">ċapċap | id | idejn iċapċpu</annotation>
+		<annotation cp="👏" type="tts">idejn iċapċpu</annotation>
+		<annotation cp="🙌">bl-idejn | ċelebrazzjoni | ġesti | hooray | idejn mgħollija | mgħollija</annotation>
+		<annotation cp="🙌" type="tts">idejn mgħollija</annotation>
+		<annotation cp="👐">id | idejn miftuħa | miftuħa</annotation>
+		<annotation cp="👐" type="tts">idejn miftuħa</annotation>
+		<annotation cp="🤲">pali tal-idejn flimkien | talb</annotation>
+		<annotation cp="🤲" type="tts">pali tal-idejn flimkien</annotation>
+		<annotation cp="🤝">b’idejn | ftehim | handshake | ħu | ħu bl-idejn | laqgħa</annotation>
+		<annotation cp="🤝" type="tts">ħu bl-idejn</annotation>
+		<annotation cp="🙏">bl-idejn | ġesti | grazzi | idejn magħluqa | inkina | jekk jogħġbok | jitolbu | magħluqa | Staqsi</annotation>
+		<annotation cp="🙏" type="tts">idejn magħluqa</annotation>
+		<annotation cp="✍">id | id li tikteb biha | tikteb</annotation>
+		<annotation cp="✍" type="tts">id li tikteb biha</annotation>
+		<annotation cp="💅">dwiefer | kosmetiċi | kura | manicure | nail polish | polish</annotation>
+		<annotation cp="💅" type="tts">nail polish</annotation>
+		<annotation cp="🤳">kamera | stessu | telefown</annotation>
+		<annotation cp="🤳" type="tts">stessu</annotation>
+		<annotation cp="💪">biceps | biceps bil-muskoli | flex | komiku | muskoli</annotation>
+		<annotation cp="💪" type="tts">biceps bil-muskoli</annotation>
+		<annotation cp="👂">ġisem | widna</annotation>
+		<annotation cp="👂" type="tts">widna</annotation>
+		<annotation cp="👃">ġisem | imnieħer</annotation>
+		<annotation cp="👃" type="tts">imnieħer</annotation>
+		<annotation cp="🧠">intelliġenti | moħħ</annotation>
+		<annotation cp="🧠" type="tts">moħħ</annotation>
+		<annotation cp="👀">għajn | għajnejn | wiċċ</annotation>
+		<annotation cp="👀" type="tts">għajnejn</annotation>
+		<annotation cp="👁">għajn</annotation>
+		<annotation cp="👁" type="tts">għajn</annotation>
+		<annotation cp="👅">ilsien</annotation>
+		<annotation cp="👅" type="tts">ilsien</annotation>
+		<annotation cp="👄">ħalq | xufftejn</annotation>
+		<annotation cp="👄" type="tts">ħalq</annotation>
+		<annotation cp="👶">tarbija</annotation>
+		<annotation cp="👶" type="tts">tarbija</annotation>
+		<annotation cp="🧒">newtrali fil-ġeneru | tfal | żgħażagħ</annotation>
+		<annotation cp="🧒" type="tts">tfal</annotation>
+		<annotation cp="👦">tifel | żagħżugħ</annotation>
+		<annotation cp="👦" type="tts">tifel</annotation>
+		<annotation cp="👧">tifla | Virgo | żgħażagħ | żodjaku</annotation>
+		<annotation cp="👧" type="tts">tifla</annotation>
+		<annotation cp="🧑">adult | newtrali fil-ġeneru</annotation>
+		<annotation cp="🧑" type="tts">adult</annotation>
+		<annotation cp="👱">persuna b’xagħar isfar | xagħara isfar</annotation>
+		<annotation cp="👱" type="tts">persuna b’xagħar isfar</annotation>
+		<annotation cp="👨">raġel</annotation>
+		<annotation cp="👨" type="tts">raġel</annotation>
+		<annotation cp="🧔">baffi | persuna bil-baffi</annotation>
+		<annotation cp="🧔" type="tts">persuna bil-baffi</annotation>
+		<annotation cp="👱‍♂">raġel | raġel b’xagħar isfar | xagħar isfar</annotation>
+		<annotation cp="👱‍♂" type="tts">raġel b’xagħar isfar</annotation>
+		<annotation cp="👩">mara</annotation>
+		<annotation cp="👩" type="tts">mara</annotation>
+		<annotation cp="👱‍♀">mara | mara b’xagħar isfar | xagħar isfar</annotation>
+		<annotation cp="👱‍♀" type="tts">mara b’xagħar isfar</annotation>
+		<annotation cp="🧓">adulti anzjan | anzjan | newtrali fil-ġeneru</annotation>
+		<annotation cp="🧓" type="tts">adulti anzjan</annotation>
+		<annotation cp="👴">raġel | xiħ</annotation>
+		<annotation cp="👴" type="tts">raġel xiħ</annotation>
+		<annotation cp="👵">mara | xiħa</annotation>
+		<annotation cp="👵" type="tts">mara xiħa</annotation>
+		<annotation cp="🙍">ġesti | persuna titkerrah | titkerrah</annotation>
+		<annotation cp="🙍" type="tts">persuna titkerrah</annotation>
+		<annotation cp="🙍‍♂">ġesti | jitkerrah | raġel</annotation>
+		<annotation cp="🙍‍♂" type="tts">raġel jitkerrah</annotation>
+		<annotation cp="🙍‍♀">ġesti | mara | titkerrah</annotation>
+		<annotation cp="🙍‍♀" type="tts">mara titkerrah</annotation>
+		<annotation cp="🙎">ġesti | jisporġi x-xofftejn | persuna tisporġi x-xofftejn</annotation>
+		<annotation cp="🙎" type="tts">persuna tisporġi x-xofftejn</annotation>
+		<annotation cp="🙎‍♂">ġesti | jisporġi x-xofftejn | raġel | raġel jisporġi x-xofftejn</annotation>
+		<annotation cp="🙎‍♂" type="tts">raġel jisporġi x-xofftejn</annotation>
+		<annotation cp="🙎‍♀">ġesti | mara | mara tisporġi x-xofftejn | tisporġi x-xofftejn</annotation>
+		<annotation cp="🙎‍♀" type="tts">mara tisporġi x-xofftejn</annotation>
+		<annotation cp="🙅">bl-idejn | ġesti | ma | mhux | persuna tagħmel sinjal ta’ LE | pprojbiti | projbit</annotation>
+		<annotation cp="🙅" type="tts">persuna tagħmel sinjal ta’ LE</annotation>
+		<annotation cp="🙅‍♂">bl-idejn | ġesti | mhux | pprojbiti | projbit | raġel | raġel jagħmel sinjal ta’ LE</annotation>
+		<annotation cp="🙅‍♂" type="tts">raġel jagħmel sinjal ta’ LE</annotation>
+		<annotation cp="🙅‍♀">bl-idejn | ġesti | mara | mara tagħmel sinjal ta’ LE | mhux | pprojbiti | projbit</annotation>
+		<annotation cp="🙅‍♀" type="tts">mara tagħmel sinjal ta’ LE</annotation>
+		<annotation cp="🙆">bl-idejn | ġesti | OK | persuna tagħmel sinjal ta’ OK</annotation>
+		<annotation cp="🙆" type="tts">persuna tagħmel sinjal ta’ OK</annotation>
+		<annotation cp="🙆‍♂">bl-idejn | ġesti | OK | raġel | raġel jagħmel sinjal ta’ OK</annotation>
+		<annotation cp="🙆‍♂" type="tts">raġel jagħmel sinjal ta’ OK</annotation>
+		<annotation cp="🙆‍♀">bl-idejn | ġesti | mara | mara tagħmel sinjal ta’ OK | OK</annotation>
+		<annotation cp="🙆‍♀" type="tts">mara tagħmel sinjal ta’ OK</annotation>
+		<annotation cp="💁">għajnuna | idha | l-informazzjoni | persuna tbaxxi idha | tbaxxi | tost</annotation>
+		<annotation cp="💁" type="tts">persuna tbaxxi idha</annotation>
+		<annotation cp="💁‍♂">raġel | raġel ibaxxi idejh | tbaxxija tal-idejn | tost</annotation>
+		<annotation cp="💁‍♂" type="tts">raġel ibaxxi idejh</annotation>
+		<annotation cp="💁‍♀">mara | mara tbaxxi idha | tbaxxija tal-idejn | tost</annotation>
+		<annotation cp="💁‍♀" type="tts">mara tbaxxi idha</annotation>
+		<annotation cp="🙋">bl-idejn | ġesti | għolli | kuntentizza | persuna tgħolli idha</annotation>
+		<annotation cp="🙋" type="tts">persuna tgħolli idha</annotation>
+		<annotation cp="🙋‍♂">ġesti | jgħolli l-idejn | raġel | raġel jgħolli idejh</annotation>
+		<annotation cp="🙋‍♂" type="tts">raġel jgħolli idejh</annotation>
+		<annotation cp="🙋‍♀">ġesti | għolli l-idejn | mara | mara tgħolli idha</annotation>
+		<annotation cp="🙋‍♀" type="tts">mara tgħolli idha</annotation>
+		<annotation cp="🙇">apoloġija | ġesti | inkina | jiddispjaċina | persuna tinkina</annotation>
+		<annotation cp="🙇" type="tts">persuna tinkina</annotation>
+		<annotation cp="🙇‍♂">apoloġija | favur | ġesti | inkina | jiddispjaċih | raġel jikina | reġel</annotation>
+		<annotation cp="🙇‍♂" type="tts">raġel jikina</annotation>
+		<annotation cp="🙇‍♀">apoloġija | favur | ġesti | inkina | jiddispjaċih | mara | mara tikina</annotation>
+		<annotation cp="🙇‍♀" type="tts">mara tikina</annotation>
+		<annotation cp="🤦">eżasperazzjoni | ma jitwemminx | pala | persuna tagħmel facepalm | wiċċ</annotation>
+		<annotation cp="🤦" type="tts">persuna tagħmel facepalm</annotation>
+		<annotation cp="🤦‍♂">eżasperazzjoni | facepalm | ma jitwemminx | raġel | raġel jagħmel facepalming</annotation>
+		<annotation cp="🤦‍♂" type="tts">raġel jagħmel facepalming</annotation>
+		<annotation cp="🤦‍♀">eżasperazzjoni | facepalm | ma jitwemminx | mara | mara tagħmel facepalming</annotation>
+		<annotation cp="🤦‍♀" type="tts">mara tagħmel facepalming</annotation>
+		<annotation cp="🤷">dubju | indifferenza | injoranza | persuna xxengel spallejha | xengel spallejn</annotation>
+		<annotation cp="🤷" type="tts">persuna xxengel spallejha</annotation>
+		<annotation cp="🤷‍♂">dubju | għolli spallejn | indifferenzi | injoranza | raġel | raġel ixengel spallejh</annotation>
+		<annotation cp="🤷‍♂" type="tts">raġel ixengel spallejh</annotation>
+		<annotation cp="🤷‍♀">dubju | għolli spallejn | indifferenzi | injoranza | mara | mara xxengel spallejha</annotation>
+		<annotation cp="🤷‍♀" type="tts">mara xxengel spallejha</annotation>
+		<annotation cp="👨‍⚕">bniedem | ħaddiem fil-kura tal-bniedem | infermiera | kura tas-saħħa | tabib | terapista</annotation>
+		<annotation cp="👨‍⚕" type="tts">ħaddiem fil-kura tal-bniedem</annotation>
+		<annotation cp="👩‍⚕">infermiera | kura tas-saħħa | mara | mara fil-kura tas-saħħa | tabib | terapista</annotation>
+		<annotation cp="👩‍⚕" type="tts">mara fil-kura tas-saħħa</annotation>
+		<annotation cp="👨‍🎓">gradwat | raġel | student | student maskil</annotation>
+		<annotation cp="👨‍🎓" type="tts">student maskil</annotation>
+		<annotation cp="👩‍🎓">gradwat | mara | student | student femminil</annotation>
+		<annotation cp="👩‍🎓" type="tts">student femminil</annotation>
+		<annotation cp="👨‍🏫">għalliem | professur | raġel</annotation>
+		<annotation cp="👨‍🏫" type="tts">għalliem</annotation>
+		<annotation cp="👩‍🏫">għalliem | għalliema | mara | professur</annotation>
+		<annotation cp="👩‍🏫" type="tts">għalliema</annotation>
+		<annotation cp="👨‍⚖">ġustizzja | imħallef maskil | miżien | raġel</annotation>
+		<annotation cp="👨‍⚖" type="tts">imħallef maskil</annotation>
+		<annotation cp="👩‍⚖">imħallef | mara | miżien</annotation>
+		<annotation cp="👩‍⚖" type="tts">imħallef mara</annotation>
+		<annotation cp="👨‍🌾">bidwi | bidwi maskil | ġardinar | raġel | raħħal</annotation>
+		<annotation cp="👨‍🌾" type="tts">bidwi maskil</annotation>
+		<annotation cp="👩‍🌾">bidwi | bidwi femminil | ġardinar | mara | raħħal</annotation>
+		<annotation cp="👩‍🌾" type="tts">bidwi femminil</annotation>
+		<annotation cp="👨‍🍳">chef | kok | kok maskil | raġel</annotation>
+		<annotation cp="👨‍🍳" type="tts">kok maskil</annotation>
+		<annotation cp="👩‍🍳">chef | kok | kok femminil | mara</annotation>
+		<annotation cp="👩‍🍳" type="tts">kok femminil</annotation>
+		<annotation cp="👨‍🔧">electrician | ħaddiem tas-sengħa | mekkanik | mekkanik maskili | plumber | raġel</annotation>
+		<annotation cp="👨‍🔧" type="tts">mekkanik maskili</annotation>
+		<annotation cp="👩‍🔧">electrician | ħaddiem tas-sengħa | mara | mekkanik | plumber</annotation>
+		<annotation cp="👩‍🔧" type="tts">mekkanik mara</annotation>
+		<annotation cp="👨‍🏭">assemblaġġ | fabbrika | ħaddiem | ħaddiem tal-fabbrika | industrijali | raġel</annotation>
+		<annotation cp="👨‍🏭" type="tts">ħaddiem tal-fabbrika</annotation>
+		<annotation cp="👩‍🏭">assemblaġġ | fabbrika | ħaddiem | ħaddiema tal-fabbrika | industrijali | mara</annotation>
+		<annotation cp="👩‍🏭" type="tts">ħaddiema tal-fabbrika</annotation>
+		<annotation cp="👨‍💼">ħaddiema professjonali | maniġer | negozju | perit | raġel | raġel jaħdem f’uffiċċju | uffiċċju</annotation>
+		<annotation cp="👨‍💼" type="tts">raġel jaħdem f’uffiċċju</annotation>
+		<annotation cp="👩‍💼">ħaddiema professjonali | maniġer | mara | mara taħdem f’uffiċċju | negozju | perit | uffiċċju</annotation>
+		<annotation cp="👩‍💼" type="tts">mara taħdem f’uffiċċju</annotation>
+		<annotation cp="👨‍🔬">bijologu | fiżiċist | inġiniera | matematiku | raġel | spiżjar | xjenzat | xjenzat maskili</annotation>
+		<annotation cp="👨‍🔬" type="tts">xjenzat maskili</annotation>
+		<annotation cp="👩‍🔬">bijologu | fiżiċist | inġinier | mara | matematiku | spiżjar | xjenzat | xjenzata mara</annotation>
+		<annotation cp="👩‍🔬" type="tts">xjenzata mara</annotation>
+		<annotation cp="👨‍💻">inventur | kodifikatur | raġel | softwer | teknoloġist | teknoloġist maskili | żviluppatur</annotation>
+		<annotation cp="👨‍💻" type="tts">teknoloġist maskili</annotation>
+		<annotation cp="👩‍💻">coder | inventur | mara | softwer | teknoloġist | teknoloġist femminili | żviluppatur</annotation>
+		<annotation cp="👩‍💻" type="tts">teknoloġist femminili</annotation>
+		<annotation cp="👨‍🎤">attur | entertainer | kantant | kantant maskili | raġel | rock | star</annotation>
+		<annotation cp="👨‍🎤" type="tts">kantant maskili</annotation>
+		<annotation cp="👩‍🎤">attur | entertainer | kantant | katant femminil | mara | rock | star</annotation>
+		<annotation cp="👩‍🎤" type="tts">katant femminil</annotation>
+		<annotation cp="👨‍🎨">artist | artist maskili | paletta | raġel</annotation>
+		<annotation cp="👨‍🎨" type="tts">artist maskili</annotation>
+		<annotation cp="👩‍🎨">artist | artist femminil | mara | tavlozza</annotation>
+		<annotation cp="👩‍🎨" type="tts">artist femminil</annotation>
+		<annotation cp="👨‍✈">ajruplan | pilota | pilota tal-bniedem | raġel</annotation>
+		<annotation cp="👨‍✈" type="tts">pilota tal-bniedem</annotation>
+		<annotation cp="👩‍✈">ajruplan | mara | pilota</annotation>
+		<annotation cp="👩‍✈" type="tts">pilota mara</annotation>
+		<annotation cp="👨‍🚀">astronawt | astronawt maskil | raġel | rokit</annotation>
+		<annotation cp="👨‍🚀" type="tts">astronawt maskil</annotation>
+		<annotation cp="👩‍🚀">astronawt | astronawta mara | mara | rokit</annotation>
+		<annotation cp="👩‍🚀" type="tts">astronawta mara</annotation>
+		<annotation cp="👨‍🚒">ħaddiem tat-tifi tan-nar | ħaddiem tat-tifi tan-nar maskil | raġel | vettura tat-tifi tan-nar</annotation>
+		<annotation cp="👨‍🚒" type="tts">ħaddiem tat-tifi tan-nar maskil</annotation>
+		<annotation cp="👩‍🚒">ħaddiem tat-tifi tan-nar | ħaddiem tat-tifi tan-nar femminil | mara | vettura tat-tifi tan-nar</annotation>
+		<annotation cp="👩‍🚒" type="tts">ħaddiem tat-tifi tan-nar femminil</annotation>
+		<annotation cp="👮">pulizija | tal-pulizija | uffiċjal</annotation>
+		<annotation cp="👮" type="tts">uffiċjal tal-pulizija</annotation>
+		<annotation cp="👮‍♂">pulizija | raġel | tal-pulizija | uffiċjal</annotation>
+		<annotation cp="👮‍♂" type="tts">uffiċjal tal-pulizija raġel</annotation>
+		<annotation cp="👮‍♀">mara | pulizija | tal-pulizija | uffiċjal</annotation>
+		<annotation cp="👮‍♀" type="tts">uffiċjal tal-pulizija mara</annotation>
+		<annotation cp="🕵">ditektiv | spija</annotation>
+		<annotation cp="🕵" type="tts">ditektiv</annotation>
+		<annotation cp="🕵‍♂">ditektiv | raġel | spija</annotation>
+		<annotation cp="🕵‍♂" type="tts">ditektiv raġel</annotation>
+		<annotation cp="🕵‍♀">ditektiv | mara | spija</annotation>
+		<annotation cp="🕵‍♀" type="tts">ditektiv mara</annotation>
+		<annotation cp="💂">gwardjan</annotation>
+		<annotation cp="💂" type="tts">gwardjan</annotation>
+		<annotation cp="💂‍♂">gwardjan | raġel</annotation>
+		<annotation cp="💂‍♂" type="tts">gwardjan raġel</annotation>
+		<annotation cp="💂‍♀">gwardjan | mara</annotation>
+		<annotation cp="💂‍♀" type="tts">gwardjan mara</annotation>
+		<annotation cp="👷">ħaddiem | ħaddiem tal-kostruzzjoni | kappell | kostruzzjoni</annotation>
+		<annotation cp="👷" type="tts">ħaddiem tal-kostruzzjoni</annotation>
+		<annotation cp="👷‍♂">ħaddiem | ħaddiem tal-kostruzzjoni maskili | kostruzzjoni | raġel</annotation>
+		<annotation cp="👷‍♂" type="tts">ħaddiem tal-kostruzzjoni maskili</annotation>
+		<annotation cp="👷‍♀">ħaddiem | ħaddiem tal-kostruzzjoni femminili | kostruzzjoni | mara</annotation>
+		<annotation cp="👷‍♀" type="tts">ħaddiem tal-kostruzzjoni femminili</annotation>
+		<annotation cp="🤴">prinċep</annotation>
+		<annotation cp="🤴" type="tts">prinċep</annotation>
+		<annotation cp="👸">fantasija | ħrafa | prinċipessa</annotation>
+		<annotation cp="👸" type="tts">prinċipessa</annotation>
+		<annotation cp="👳">persuna liebsa turban | turban</annotation>
+		<annotation cp="👳" type="tts">persuna liebsa turban</annotation>
+		<annotation cp="👳‍♂">raġel | raġel liebes turban | turban</annotation>
+		<annotation cp="👳‍♂" type="tts">raġel liebes turban</annotation>
+		<annotation cp="👳‍♀">mara | mara liebsa turban | turban</annotation>
+		<annotation cp="👳‍♀" type="tts">mara liebsa turban</annotation>
+		<annotation cp="👲">gua pi mao | kappell | raġel | raġel b’kappell Ċiniż</annotation>
+		<annotation cp="👲" type="tts">raġel b’kappell Ċiniż</annotation>
+		<annotation cp="🧕">hijab | mantilla | mara b’velu | tichel | velu</annotation>
+		<annotation cp="🧕" type="tts">mara b’velu</annotation>
+		<annotation cp="🤵">għarus | raġel | raġel b’tuxedo | tuxedo</annotation>
+		<annotation cp="🤵" type="tts">raġel b’tuxedo</annotation>
+		<annotation cp="👰">għarusa | għarusa b’velu | velu | żwieġ</annotation>
+		<annotation cp="👰" type="tts">għarusa b’velu</annotation>
+		<annotation cp="🤰">mara | tqila</annotation>
+		<annotation cp="🤰" type="tts">mara tqila</annotation>
+		<annotation cp="🤱">irdigħ | sider | tarbija | treddigħ</annotation>
+		<annotation cp="🤱" type="tts">irdigħ</annotation>
+		<annotation cp="👼">anġlu | fantasija | ħrafa | tarbija | wiċċ</annotation>
+		<annotation cp="👼" type="tts">anġlu tarbija</annotation>
+		<annotation cp="🎅">ċelebarazzjoni | klaws | Milied | missier | santa</annotation>
+		<annotation cp="🎅" type="tts">Santa Klaws</annotation>
+		<annotation cp="🤶">ċelebarazzjoni | il-Milied | Is-Sinjura | Klaws | omm</annotation>
+		<annotation cp="🤶" type="tts">Is-Sinjura Klaws</annotation>
+		<annotation cp="🧙">magu | saħħar | saħħara</annotation>
+		<annotation cp="🧙" type="tts">magu</annotation>
+		<annotation cp="🧙‍♂">assistent | raġel magu | saħħar</annotation>
+		<annotation cp="🧙‍♂" type="tts">raġel magu</annotation>
+		<annotation cp="🧙‍♀">mara magu | saħħar | saħħara</annotation>
+		<annotation cp="🧙‍♀" type="tts">mara magu</annotation>
+		<annotation cp="🧚">fatatina | Oberon | Puck | Titania</annotation>
+		<annotation cp="🧚" type="tts">fatatina</annotation>
+		<annotation cp="🧚‍♂">fatat maskil | Oberon | Puck</annotation>
+		<annotation cp="🧚‍♂" type="tts">fatat maskil</annotation>
+		<annotation cp="🧚‍♀">fatat femminil | Titania</annotation>
+		<annotation cp="🧚‍♀" type="tts">fatat femminil</annotation>
+		<annotation cp="🧛">Dracula | qam mil-mewt | vampira</annotation>
+		<annotation cp="🧛" type="tts">vampira</annotation>
+		<annotation cp="🧛‍♂">Dracula | qam mil-mewt | raġel vampira</annotation>
+		<annotation cp="🧛‍♂" type="tts">raġel vampira</annotation>
+		<annotation cp="🧛‍♀">mara vampira | qam mil-mewt</annotation>
+		<annotation cp="🧛‍♀" type="tts">mara vampira</annotation>
+		<annotation cp="🧜">merman | merperson | merwoman | serena</annotation>
+		<annotation cp="🧜" type="tts">merperson</annotation>
+		<annotation cp="🧜‍♂">merman | Triton</annotation>
+		<annotation cp="🧜‍♂" type="tts">merman</annotation>
+		<annotation cp="🧜‍♀">merwoman | serena</annotation>
+		<annotation cp="🧜‍♀" type="tts">serena</annotation>
+		<annotation cp="🧝">għafrit | maġiku</annotation>
+		<annotation cp="🧝" type="tts">għafrit</annotation>
+		<annotation cp="🧝‍♂">għafrit raġel | maġiku</annotation>
+		<annotation cp="🧝‍♂" type="tts">għafrit raġel</annotation>
+		<annotation cp="🧝‍♀">għafrit mara | maġiku</annotation>
+		<annotation cp="🧝‍♀" type="tts">għafrit mara</annotation>
+		<annotation cp="🧞">djinn | ġenju</annotation>
+		<annotation cp="🧞" type="tts">ġenju</annotation>
+		<annotation cp="🧞‍♂">djinn | ġenju raġel</annotation>
+		<annotation cp="🧞‍♂" type="tts">ġenju raġel</annotation>
+		<annotation cp="🧞‍♀">djinn | ġenju mara</annotation>
+		<annotation cp="🧞‍♀" type="tts">ġenju mara</annotation>
+		<annotation cp="🧟">mejtin jimxu | qam mil-mewt | żombi</annotation>
+		<annotation cp="🧟" type="tts">żombi</annotation>
+		<annotation cp="🧟‍♂">mejtin jimxu | qam mil-mewt | raġel żombi</annotation>
+		<annotation cp="🧟‍♂" type="tts">raġel żombi</annotation>
+		<annotation cp="🧟‍♀">mara żombi | mejtin jimxu | qam mil-mewt</annotation>
+		<annotation cp="🧟‍♀" type="tts">mara żombi</annotation>
+		<annotation cp="💆">massaġġi | persuna tingħata massaġġ | salon | wiċċ</annotation>
+		<annotation cp="💆" type="tts">persuna tingħata massaġġ</annotation>
+		<annotation cp="💆‍♂">massaġġi | raġel | raġel jingħata massaġġ | wiċċ</annotation>
+		<annotation cp="💆‍♂" type="tts">raġel jingħata massaġġ</annotation>
+		<annotation cp="💆‍♀">mara | mara tingħata massaġġ | massaġġi | wiċċ</annotation>
+		<annotation cp="💆‍♀" type="tts">mara tingħata massaġġ</annotation>
+		<annotation cp="💇">ħanut | parrukkier | persuna taqta’ xagħarha | qatgħa xagħar | tas-sbuħija</annotation>
+		<annotation cp="💇" type="tts">persuna taqta’ xagħarha</annotation>
+		<annotation cp="💇‍♂">qatgħa xagħar | raġel | raġel jaqta’ xagħaru</annotation>
+		<annotation cp="💇‍♂" type="tts">raġel jaqta’ xagħaru</annotation>
+		<annotation cp="💇‍♀">mara | mara taqta’ xagħarha | qatgħa xagħar</annotation>
+		<annotation cp="💇‍♀" type="tts">mara taqta’ xagħarha</annotation>
+		<annotation cp="🚶">bil-mixi | ħajk | mixja | persuna timxi</annotation>
+		<annotation cp="🚶" type="tts">persuna timxi</annotation>
+		<annotation cp="🚶‍♂">ħajk | mixja | raġel | raġel miexi</annotation>
+		<annotation cp="🚶‍♂" type="tts">raġel miexi</annotation>
+		<annotation cp="🚶‍♀">ħajk | mara | mara miexja | mixja</annotation>
+		<annotation cp="🚶‍♀" type="tts">mara miexja</annotation>
+		<annotation cp="🏃">maratona | persuna tiġri | qed jiġri</annotation>
+		<annotation cp="🏃" type="tts">persuna tiġri</annotation>
+		<annotation cp="🏃‍♂">maratona | qed ittellaq | qed jiġri | raġel | raġel qed jiġri</annotation>
+		<annotation cp="🏃‍♂" type="tts">raġel qed jiġri</annotation>
+		<annotation cp="🏃‍♀">mara | mara qed tiġri | maratona | qed ittellaq | qed tiġri</annotation>
+		<annotation cp="🏃‍♀" type="tts">mara qed tiġri</annotation>
+		<annotation cp="💃">mara | tiżfen</annotation>
+		<annotation cp="💃" type="tts">mara tiżfen</annotation>
+		<annotation cp="🕺">jiżfen | raġel</annotation>
+		<annotation cp="🕺" type="tts">raġel jiżfen</annotation>
+		<annotation cp="🕴">libsa | negozju | raġel | raġel jillevita b’libsa ta’ negozju</annotation>
+		<annotation cp="🕴" type="tts">raġel jillevita b’libsa ta’ negozju</annotation>
+		<annotation cp="👯">jiddevertu | persuni b’widnejn ta’ fenek jiddevertu | widnejn ta’ fenek | żeffien</annotation>
+		<annotation cp="👯" type="tts">persuni b’widnejn ta’ fenek jiddevertu</annotation>
+		<annotation cp="👯‍♂">jiddevertu | rġiel | rġiel b’widnejn ta’ fenek jiddevertu | widnejn ta’ fenek | żeffien</annotation>
+		<annotation cp="👯‍♂" type="tts">rġiel b’widnejn ta’ fenek jiddevertu</annotation>
+		<annotation cp="👯‍♀">jiddevertu | nisa | nisa b’widnejn ta’ fenek jiddevertu | widnejn ta’ fenek | żeffien</annotation>
+		<annotation cp="👯‍♀" type="tts">nisa b’widnejn ta’ fenek jiddevertu</annotation>
+		<annotation cp="🧖">kamra tal-fwar | persuna f’kamra tal-fwar | sawna</annotation>
+		<annotation cp="🧖" type="tts">persuna f’kamra tal-fwar</annotation>
+		<annotation cp="🧖‍♂">kamra tal-fwar | raġel f’kamra tal-fwar | sawna</annotation>
+		<annotation cp="🧖‍♂" type="tts">raġel f’kamra tal-fwar</annotation>
+		<annotation cp="🧖‍♀">kamra tal-fwar | mara f’kamra tal-fwar | sawna</annotation>
+		<annotation cp="🧖‍♀" type="tts">mara f’kamra tal-fwar</annotation>
+		<annotation cp="🧗">persuna li titla’ | persuna tiela’</annotation>
+		<annotation cp="🧗" type="tts">persuna tiela’</annotation>
+		<annotation cp="🧗‍♂">persuna li titla’ | raġel tiela’</annotation>
+		<annotation cp="🧗‍♂" type="tts">raġel tiela’</annotation>
+		<annotation cp="🧗‍♀">mara tiela’ | persuna li titla’</annotation>
+		<annotation cp="🧗‍♀" type="tts">mara tiela’</annotation>
+		<annotation cp="🤺">fencer | fencing | persuna fencing | xabla</annotation>
+		<annotation cp="🤺" type="tts">persuna fencing</annotation>
+		<annotation cp="🏇">itellaq | jockey | żiemel | żiemel tat-tlielaq</annotation>
+		<annotation cp="🏇" type="tts">żiemel itellaq</annotation>
+		<annotation cp="⛷">silġ | skier | skis</annotation>
+		<annotation cp="⛷" type="tts">skier</annotation>
+		<annotation cp="🏂">silġ | skis | snowboard | snowboarder</annotation>
+		<annotation cp="🏂" type="tts">snowboarder</annotation>
+		<annotation cp="🏌">ballun | golf | persuna tilgħab il-golf</annotation>
+		<annotation cp="🏌" type="tts">persuna tilgħab il-golf</annotation>
+		<annotation cp="🏌‍♂">golf | raġel | raġel jilgħab il-golf</annotation>
+		<annotation cp="🏌‍♂" type="tts">raġel jilgħab il-golf</annotation>
+		<annotation cp="🏌‍♀">golf | mara | mara tilgħab il-golf</annotation>
+		<annotation cp="🏌‍♀" type="tts">mara tilgħab il-golf</annotation>
+		<annotation cp="🏄">persuna surfing | surfing</annotation>
+		<annotation cp="🏄" type="tts">persuna surfing</annotation>
+		<annotation cp="🏄‍♂">raġel | surfing</annotation>
+		<annotation cp="🏄‍♂" type="tts">raġel surfing</annotation>
+		<annotation cp="🏄‍♀">mara | surfing</annotation>
+		<annotation cp="🏄‍♀" type="tts">mara surfing</annotation>
+		<annotation cp="🚣">dgħajsa | dgħajsa bil-moqdief | persuna taqdef dgħajsa</annotation>
+		<annotation cp="🚣" type="tts">persuna taqdef dgħajsa</annotation>
+		<annotation cp="🚣‍♂">dgħajsa | dgħajsa bil-moqdief | raġel | raġel taqdef dgħajsa</annotation>
+		<annotation cp="🚣‍♂" type="tts">raġel taqdef dgħajsa</annotation>
+		<annotation cp="🚣‍♀">dgħajsa | dgħajsa bil-moqdief | mara | mara taqdef dgħajsa</annotation>
+		<annotation cp="🚣‍♀" type="tts">mara taqdef dgħajsa</annotation>
+		<annotation cp="🏊">għawma | persuna tgħum</annotation>
+		<annotation cp="🏊" type="tts">persuna tgħum</annotation>
+		<annotation cp="🏊‍♂">għawma | raġel | raġel jgħum</annotation>
+		<annotation cp="🏊‍♂" type="tts">raġel jgħum</annotation>
+		<annotation cp="🏊‍♀">mara | tgħum</annotation>
+		<annotation cp="🏊‍♀" type="tts">mara tgħum</annotation>
+		<annotation cp="⛹">ballun | persuna tqabbeż ballun</annotation>
+		<annotation cp="⛹" type="tts">persuna tqabbeż ballun</annotation>
+		<annotation cp="⛹‍♂">ballun | raġel | raġel iqabbeż ballun</annotation>
+		<annotation cp="⛹‍♂" type="tts">raġel iqabbeż ballun</annotation>
+		<annotation cp="⛹‍♀">ballun | mara | mara tqabbeż ballun</annotation>
+		<annotation cp="⛹‍♀" type="tts">mara tqabbeż ballun</annotation>
+		<annotation cp="🏋">irfigħ | jerfa’ | persuna terfa’ l-piż | piż</annotation>
+		<annotation cp="🏋" type="tts">persuna terfa’ l-piż</annotation>
+		<annotation cp="🏋‍♂">jerfa’ l-piż | raġel | raġel jerfa’ l-piżijiet</annotation>
+		<annotation cp="🏋‍♂" type="tts">raġel jerfa’ l-piżijiet</annotation>
+		<annotation cp="🏋‍♀">mara | mara terfa’ l-piżijiet | terfa’ l-piż</annotation>
+		<annotation cp="🏋‍♀" type="tts">mara terfa’ l-piżijiet</annotation>
+		<annotation cp="🚴">ċiklist | ġiri bir-rota | persuna ssuq rota | rota</annotation>
+		<annotation cp="🚴" type="tts">persuna ssuq rota</annotation>
+		<annotation cp="🚴‍♂">ċiklist | ġiri bir-rota | raġel | raġel isuq rota | rota</annotation>
+		<annotation cp="🚴‍♂" type="tts">raġel isuq rota</annotation>
+		<annotation cp="🚴‍♀">ċiklist | ġiri bir-rota | mara | mara ssuq rota | rota</annotation>
+		<annotation cp="🚴‍♀" type="tts">mara ssuq rota</annotation>
+		<annotation cp="🚵">ċiklist | muntanja | persuna ssuq mountain bike | persuna ssuq rota | rota</annotation>
+		<annotation cp="🚵" type="tts">persuna ssuq mountain bike</annotation>
+		<annotation cp="🚵‍♂">muntanja | persuna ssuq rota | raġel | raġel isuq mountain bike | rota</annotation>
+		<annotation cp="🚵‍♂" type="tts">raġel isuq mountain bike</annotation>
+		<annotation cp="🚵‍♀">ċiklist | mara | mara ssuq mountain bike | muntanja | persuna ssuq rota | rota</annotation>
+		<annotation cp="🚵‍♀" type="tts">mara ssuq mountain bike</annotation>
+		<annotation cp="🤸">gabrijola | ġinnastika | persuna tagħmel gabrijoli</annotation>
+		<annotation cp="🤸" type="tts">persuna tagħmel gabrijoli</annotation>
+		<annotation cp="🤸‍♂">gabrijola | ġinnastika | raġel | raġel jagħmel gabrijoli</annotation>
+		<annotation cp="🤸‍♂" type="tts">raġel jagħmel gabrijoli</annotation>
+		<annotation cp="🤸‍♀">gabrijola | ġinnastika | mara | mara tagħmel gabrijoli</annotation>
+		<annotation cp="🤸‍♀" type="tts">mara tagħmel gabrijoli</annotation>
+		<annotation cp="🤼">persuna jagħmlu r-wrestling | wrestle | wrestler</annotation>
+		<annotation cp="🤼" type="tts">persuna jagħmlu r-wrestling</annotation>
+		<annotation cp="🤼‍♂">irġiel | irġiel jagħmlu r-wrestling | wrestle</annotation>
+		<annotation cp="🤼‍♂" type="tts">irġiel jagħmlu r-wrestling</annotation>
+		<annotation cp="🤼‍♀">nisa | nisa jagħmlu r-wrestling | wrestle</annotation>
+		<annotation cp="🤼‍♀" type="tts">nisa jagħmlu r-wrestling</annotation>
+		<annotation cp="🤽">ilma | persuna tilgħab il-waterpolo | polo</annotation>
+		<annotation cp="🤽" type="tts">persuna tilgħab il-waterpolo</annotation>
+		<annotation cp="🤽‍♂">raġel | raġel jilgħab il-waterpolo | water polo</annotation>
+		<annotation cp="🤽‍♂" type="tts">raġel jilgħab il-waterpolo</annotation>
+		<annotation cp="🤽‍♀">mara | mara tilgħab il-waterpolo | water polo</annotation>
+		<annotation cp="🤽‍♀" type="tts">mara tilgħab il-waterpolo</annotation>
+		<annotation cp="🤾">ballun | handball | persuna tilgħab il-handball</annotation>
+		<annotation cp="🤾" type="tts">persuna tilgħab il-handball</annotation>
+		<annotation cp="🤾‍♂">handball | raġel | raġel jilgħab il-handball</annotation>
+		<annotation cp="🤾‍♂" type="tts">raġel jilgħab il-handball</annotation>
+		<annotation cp="🤾‍♀">handball | mara | mara tilgħab il-handball</annotation>
+		<annotation cp="🤾‍♀" type="tts">mara tilgħab il-handball</annotation>
+		<annotation cp="🤹">bilanċ | ħila | juggle | multitask | persuna tagħmel il-juggling</annotation>
+		<annotation cp="🤹" type="tts">persuna tagħmel il-juggling</annotation>
+		<annotation cp="🤹‍♂">juggling | multitask | raġel | raġel jagħmel il-juggling</annotation>
+		<annotation cp="🤹‍♂" type="tts">raġel jagħmel il-juggling</annotation>
+		<annotation cp="🤹‍♀">juggling | mara | mara tagħmel il-juggling | multitask</annotation>
+		<annotation cp="🤹‍♀" type="tts">mara tagħmel il-juggling</annotation>
+		<annotation cp="🧘">joga | meditazzjoni | persuna fil-pożizzjoni ta’ lotus</annotation>
+		<annotation cp="🧘" type="tts">persuna fil-pożizzjoni ta’ lotus</annotation>
+		<annotation cp="🧘‍♂">joga | meditazzjoni | raġel fil-pożizzjoni ta’ lotus</annotation>
+		<annotation cp="🧘‍♂" type="tts">raġel fil-pożizzjoni ta’ lotus</annotation>
+		<annotation cp="🧘‍♀">joga | mara fil-pożizzjoni ta’ lotus | meditazzjoni</annotation>
+		<annotation cp="🧘‍♀" type="tts">mara fil-pożizzjoni ta’ lotus</annotation>
+		<annotation cp="🛀">banju | persuna tieħu banju</annotation>
+		<annotation cp="🛀" type="tts">persuna tieħu banju</annotation>
+		<annotation cp="🛌">lukanda | persuna fis-sodda | rqad</annotation>
+		<annotation cp="🛌" type="tts">persuna fis-sodda</annotation>
+		<annotation cp="👭">idejn | koppja | mara | żewġ nisa jżommu jdejhom | żomm</annotation>
+		<annotation cp="👭" type="tts">żewġ nisa jżommu jdejhom</annotation>
+		<annotation cp="👫">idejn | koppja | mara | raġel | raġel u mara jżommu jdejhom | żomm</annotation>
+		<annotation cp="👫" type="tts">raġel u mara jżommu jdejhom</annotation>
+		<annotation cp="👬">Gemini | idejn | koppja | raġel | tewmin | żewġt irġiel iżommu jdejhom | żodjaku | żomm</annotation>
+		<annotation cp="👬" type="tts">żewġt irġiel iżommu jdejhom</annotation>
+		<annotation cp="💏">bewsa | koppja</annotation>
+		<annotation cp="💏" type="tts">bewsa</annotation>
+		<annotation cp="💑">imħabba | koppja | koppja b’qalb</annotation>
+		<annotation cp="💑" type="tts">koppja b’qalb</annotation>
+		<annotation cp="🗣">jitkellmu | ras | silwett | titkellem | wiċċ</annotation>
+		<annotation cp="🗣" type="tts">titkellem ras</annotation>
+		<annotation cp="👤">bust | bust f’silwett | silwett</annotation>
+		<annotation cp="👤" type="tts">bust f’silwett</annotation>
+		<annotation cp="👥">bust | busti f’silwett | silwett</annotation>
+		<annotation cp="👥" type="tts">busti f’silwett</annotation>
+		<annotation cp="👪">familja</annotation>
+		<annotation cp="👪" type="tts">familja</annotation>
+		<annotation cp="👣">ħwejjeġ | impronta | ipprintja | marki tas-saqajn</annotation>
+		<annotation cp="👣" type="tts">marki tas-saqajn</annotation>
+		<annotation cp="🐵">wiċċ | wiċċ ta’ xadina | xadina</annotation>
+		<annotation cp="🐵" type="tts">wiċċ ta’ xadina</annotation>
+		<annotation cp="🐒">xadina</annotation>
+		<annotation cp="🐒" type="tts">xadina</annotation>
+		<annotation cp="🦍">gorilla</annotation>
+		<annotation cp="🦍" type="tts">gorilla</annotation>
+		<annotation cp="🐶">kelb | pet | wiċċ | wiċċ ta’ kelb</annotation>
+		<annotation cp="🐶" type="tts">wiċċ ta’ kelb</annotation>
+		<annotation cp="🐕">kelb | pet</annotation>
+		<annotation cp="🐕" type="tts">kelb</annotation>
+		<annotation cp="🐩">kelb | poodle</annotation>
+		<annotation cp="🐩" type="tts">poodle</annotation>
+		<annotation cp="🐺">lupu | wiċċ | wiċċ ta’ lupu</annotation>
+		<annotation cp="🐺" type="tts">wiċċ ta’ lupu</annotation>
+		<annotation cp="🦊">volpi | wiċċ | wiċċ ta’ volpi</annotation>
+		<annotation cp="🦊" type="tts">wiċċ ta’ volpi</annotation>
+		<annotation cp="🐱">pet | qattus | wiċċ | wiċċ ta’ qattus</annotation>
+		<annotation cp="🐱" type="tts">wiċċ ta’ qattus</annotation>
+		<annotation cp="🐈">pet | qattus</annotation>
+		<annotation cp="🐈" type="tts">qattus</annotation>
+		<annotation cp="🦁">Iljun | Leo | wiċċ | wiċċ ta’ ljun | żodjaku</annotation>
+		<annotation cp="🦁" type="tts">wiċċ ta’ ljun</annotation>
+		<annotation cp="🐯">tigra | wiċċ | wiċċ ta’ tigra</annotation>
+		<annotation cp="🐯" type="tts">wiċċ ta’ tigra</annotation>
+		<annotation cp="🐅">tigra</annotation>
+		<annotation cp="🐅" type="tts">tigra</annotation>
+		<annotation cp="🐆">leopard</annotation>
+		<annotation cp="🐆" type="tts">leopard</annotation>
+		<annotation cp="🐴">wiċċ | wiċċ ta’ żiemel | żiemel</annotation>
+		<annotation cp="🐴" type="tts">wiċċ ta’ żiemel</annotation>
+		<annotation cp="🐎">ekwestri | tlielaq | żiemel | żiemel tat-tiġrija</annotation>
+		<annotation cp="🐎" type="tts">żiemel</annotation>
+		<annotation cp="🦄">unikornu | wiċċ | wiċċ ta’ unikornu</annotation>
+		<annotation cp="🦄" type="tts">wiċċ ta’ unikornu</annotation>
+		<annotation cp="🦓">strixxa | żebra</annotation>
+		<annotation cp="🦓" type="tts">żebra</annotation>
+		<annotation cp="🦌">ċerva</annotation>
+		<annotation cp="🦌" type="tts">ċerva</annotation>
+		<annotation cp="🐮">baqra | wiċċ | wiċċ ta’ baqra</annotation>
+		<annotation cp="🐮" type="tts">wiċċ ta’ baqra</annotation>
+		<annotation cp="🐂">barri | bhima | Taurus | żodjaku</annotation>
+		<annotation cp="🐂" type="tts">bhima</annotation>
+		<annotation cp="🐃">buflu | buflu tal-ilma | ilma</annotation>
+		<annotation cp="🐃" type="tts">buflu tal-ilma</annotation>
+		<annotation cp="🐄">baqra</annotation>
+		<annotation cp="🐄" type="tts">baqra</annotation>
+		<annotation cp="🐷">majjal | wiċċ | wiċċ ta’ ħanżir</annotation>
+		<annotation cp="🐷" type="tts">wiċċ ta’ ħanżir</annotation>
+		<annotation cp="🐖">ħanżir | ħanżira</annotation>
+		<annotation cp="🐖" type="tts">ħanżir</annotation>
+		<annotation cp="🐗">ċingjal | ħanżir</annotation>
+		<annotation cp="🐗" type="tts">ċingjal</annotation>
+		<annotation cp="🐽">imnieħer | imnieħer ta’ ħanżir | majjal | wiċċ</annotation>
+		<annotation cp="🐽" type="tts">imnieħer ta’ ħanżir</annotation>
+		<annotation cp="🐏">Aries | maskili | muntun | nagħaġ | żodjaku</annotation>
+		<annotation cp="🐏" type="tts">muntun</annotation>
+		<annotation cp="🐑">femminil | nagħaġ | nagħġa</annotation>
+		<annotation cp="🐑" type="tts">nagħġa</annotation>
+		<annotation cp="🐐">Capricorn | mogħża | żodjaku</annotation>
+		<annotation cp="🐐" type="tts">mogħża</annotation>
+		<annotation cp="🐪">dromedarju | ġemel | ħotba</annotation>
+		<annotation cp="🐪" type="tts">ġemel</annotation>
+		<annotation cp="🐫">baktrijan | ġemel | ġemel b’żewġ ħotob | ħotba</annotation>
+		<annotation cp="🐫" type="tts">ġemel b’żewġ ħotob</annotation>
+		<annotation cp="🦒">ġiraff | tikek</annotation>
+		<annotation cp="🦒" type="tts">ġiraff</annotation>
+		<annotation cp="🐘">iljunfant</annotation>
+		<annotation cp="🐘" type="tts">iljunfant</annotation>
+		<annotation cp="🦏">rinoċeronti</annotation>
+		<annotation cp="🦏" type="tts">rinoċeronti</annotation>
+		<annotation cp="🐭">ġurdien | wiċċ | wiċċ ta’ ġurdien</annotation>
+		<annotation cp="🐭" type="tts">wiċċ ta’ ġurdien</annotation>
+		<annotation cp="🐁">ġurdien</annotation>
+		<annotation cp="🐁" type="tts">ġurdien</annotation>
+		<annotation cp="🐀">far</annotation>
+		<annotation cp="🐀" type="tts">far</annotation>
+		<annotation cp="🐹">ħamster | pet | wiċċ | wiċċ ta’ ħamster</annotation>
+		<annotation cp="🐹" type="tts">wiċċ ta’ ħamster</annotation>
+		<annotation cp="🐰">fenek | pet | wiċċ | wiċċ ta’ fenek</annotation>
+		<annotation cp="🐰" type="tts">wiċċ ta’ fenek</annotation>
+		<annotation cp="🐇">fenek | pet</annotation>
+		<annotation cp="🐇" type="tts">fenek</annotation>
+		<annotation cp="🐿">chipmunk</annotation>
+		<annotation cp="🐿" type="tts">chipmunk</annotation>
+		<annotation cp="🦔">bix-xewk | qanfud</annotation>
+		<annotation cp="🦔" type="tts">qanfud</annotation>
+		<annotation cp="🦇">farfett il-lejl | vampira</annotation>
+		<annotation cp="🦇" type="tts">farfett il-lejl</annotation>
+		<annotation cp="🐻">ors | wiċċ | wiċċ ta’ ors</annotation>
+		<annotation cp="🐻" type="tts">wiċċ ta’ ors</annotation>
+		<annotation cp="🐨">koala | ors</annotation>
+		<annotation cp="🐨" type="tts">koala</annotation>
+		<annotation cp="🐼">panda | wiċċ | wiċċ ta’ panda</annotation>
+		<annotation cp="🐼" type="tts">wiċċ ta’ panda</annotation>
+		<annotation cp="🐾">ipprintja | marki tas-saqajn ta’ annimal | saqajn | saqajn ta’ annimal</annotation>
+		<annotation cp="🐾" type="tts">marki tas-saqajn ta’ annimal</annotation>
+		<annotation cp="🦃">dundjan | għasfur</annotation>
+		<annotation cp="🦃" type="tts">dundjan</annotation>
+		<annotation cp="🐔">għasfur | tiġieġ | tiġieġa</annotation>
+		<annotation cp="🐔" type="tts">tiġieġa</annotation>
+		<annotation cp="🐓">għasfur | serduk</annotation>
+		<annotation cp="🐓" type="tts">serduk</annotation>
+		<annotation cp="🐣">fellus | fellus qed ifaqqas | għasfur | tfaqqis | żgħir</annotation>
+		<annotation cp="🐣" type="tts">fellus qed ifaqqas</annotation>
+		<annotation cp="🐤">fellus | għasfur | żgħir</annotation>
+		<annotation cp="🐤" type="tts">fellus żgħir</annotation>
+		<annotation cp="🐥">fellus | fellus żgħir iħares ’il quddiem | għasfur | żgħir</annotation>
+		<annotation cp="🐥" type="tts">fellus żgħir iħares ’il quddiem</annotation>
+		<annotation cp="🐦">għasfur</annotation>
+		<annotation cp="🐦" type="tts">għasfur</annotation>
+		<annotation cp="🐧">għasfur | pingwin</annotation>
+		<annotation cp="🐧" type="tts">pingwin</annotation>
+		<annotation cp="🕊">għasfur | ħamiema | itir | paċi</annotation>
+		<annotation cp="🕊" type="tts">ħamiema</annotation>
+		<annotation cp="🦅">ajkla | għasfur</annotation>
+		<annotation cp="🦅" type="tts">ajkla</annotation>
+		<annotation cp="🦆">għasfur | papra</annotation>
+		<annotation cp="🦆" type="tts">papra</annotation>
+		<annotation cp="🦉">għaqli | għasfur | kokka</annotation>
+		<annotation cp="🦉" type="tts">kokka</annotation>
+		<annotation cp="🐸">wiċċ | wiċċ ta’ żrinġ | żrinġ</annotation>
+		<annotation cp="🐸" type="tts">wiċċ ta’ żrinġ</annotation>
+		<annotation cp="🐊">kukkudrill</annotation>
+		<annotation cp="🐊" type="tts">kukkudrill</annotation>
+		<annotation cp="🐢">fekruna | terrapin</annotation>
+		<annotation cp="🐢" type="tts">fekruna</annotation>
+		<annotation cp="🦎">rettili | wiża’</annotation>
+		<annotation cp="🦎" type="tts">wiża’</annotation>
+		<annotation cp="🐍">Ophiuchus | portatur | serp | serpent | żodjaku</annotation>
+		<annotation cp="🐍" type="tts">serp</annotation>
+		<annotation cp="🐲">dragun | ħrafa | wiċċ | wiċċ ta’ dragun</annotation>
+		<annotation cp="🐲" type="tts">wiċċ ta’ dragun</annotation>
+		<annotation cp="🐉">dragun | ħrafa</annotation>
+		<annotation cp="🐉" type="tts">dragun</annotation>
+		<annotation cp="🦕">brakkjosawru | brontosawru | diplodoku | sawropodu</annotation>
+		<annotation cp="🦕" type="tts">sawropodu</annotation>
+		<annotation cp="🦖">T-Rex | Tirannosawru Rex</annotation>
+		<annotation cp="🦖" type="tts">T-Rex</annotation>
+		<annotation cp="🐳">baliena | baliena tfawwar l-ilma | tfawwar | wiċċ</annotation>
+		<annotation cp="🐳" type="tts">baliena tfawwar l-ilma</annotation>
+		<annotation cp="🐋">baliena</annotation>
+		<annotation cp="🐋" type="tts">baliena</annotation>
+		<annotation cp="🐬">denfil | ġewnaħ</annotation>
+		<annotation cp="🐬" type="tts">denfil</annotation>
+		<annotation cp="🐟">ħut | Pisces | żodjaku</annotation>
+		<annotation cp="🐟" type="tts">ħut</annotation>
+		<annotation cp="🐠">ħut | tropikali</annotation>
+		<annotation cp="🐠" type="tts">ħut tropikali</annotation>
+		<annotation cp="🐡">blowfish | ħut</annotation>
+		<annotation cp="🐡" type="tts">blowfish</annotation>
+		<annotation cp="🦈">ħut | kelb il-baħar</annotation>
+		<annotation cp="🦈" type="tts">kelb il-baħar</annotation>
+		<annotation cp="🐙">qarnita</annotation>
+		<annotation cp="🐙" type="tts">qarnita</annotation>
+		<annotation cp="🐚">qoxra | spirali</annotation>
+		<annotation cp="🐚" type="tts">qoxra spirali</annotation>
+		<annotation cp="🦀">Cancer | granċ | żodjaku</annotation>
+		<annotation cp="🦀" type="tts">granċ</annotation>
+		<annotation cp="🦐">frott tal-baħar | gamblu | ikel | żgħir</annotation>
+		<annotation cp="🦐" type="tts">gamblu</annotation>
+		<annotation cp="🦑">ikel | klamari | mollusk</annotation>
+		<annotation cp="🦑" type="tts">klamari</annotation>
+		<annotation cp="🐌">bebbuxu</annotation>
+		<annotation cp="🐌" type="tts">bebbuxu</annotation>
+		<annotation cp="🦋">farfett | insett | sabiħ</annotation>
+		<annotation cp="🦋" type="tts">farfett</annotation>
+		<annotation cp="🐛">insett</annotation>
+		<annotation cp="🐛" type="tts">insett</annotation>
+		<annotation cp="🐜">insett | nemla</annotation>
+		<annotation cp="🐜" type="tts">nemla</annotation>
+		<annotation cp="🐝">insett | naħal | żunżana</annotation>
+		<annotation cp="🐝" type="tts">żunżana</annotation>
+		<annotation cp="🐞">ħanfusa | insett | nanna kola</annotation>
+		<annotation cp="🐞" type="tts">ħanfusa</annotation>
+		<annotation cp="🦗">cricket | ġurat</annotation>
+		<annotation cp="🦗" type="tts">cricket</annotation>
+		<annotation cp="🕷">brimba | insett</annotation>
+		<annotation cp="🕷" type="tts">brimba</annotation>
+		<annotation cp="🕸">brimba | għanqbuta</annotation>
+		<annotation cp="🕸" type="tts">għanqbuta</annotation>
+		<annotation cp="🦂">scorpio | Scorpius | skorpjun | żodjaku</annotation>
+		<annotation cp="🦂" type="tts">skorpjun</annotation>
+		<annotation cp="💐">bukkett | fjura</annotation>
+		<annotation cp="💐" type="tts">bukkett</annotation>
+		<annotation cp="🌸">ċirasa | fjur | fjur taċ-ċirasa | fjuri</annotation>
+		<annotation cp="🌸" type="tts">fjur taċ-ċirasa</annotation>
+		<annotation cp="💮">fjura | fjura bajda</annotation>
+		<annotation cp="💮" type="tts">fjura bajda</annotation>
+		<annotation cp="🏵">pjanta | rożetta</annotation>
+		<annotation cp="🏵" type="tts">rożetta</annotation>
+		<annotation cp="🌹">fjura | warda</annotation>
+		<annotation cp="🌹" type="tts">warda</annotation>
+		<annotation cp="🥀">fjura | mitbiela</annotation>
+		<annotation cp="🥀" type="tts">fjura mitbiela</annotation>
+		<annotation cp="🌺">fjura | hibiscus</annotation>
+		<annotation cp="🌺" type="tts">hibiscus</annotation>
+		<annotation cp="🌻">fjura | ġirasol | xemx</annotation>
+		<annotation cp="🌻" type="tts">ġirasol</annotation>
+		<annotation cp="🌼">fjur | fjura</annotation>
+		<annotation cp="🌼" type="tts">fjur</annotation>
+		<annotation cp="🌷">fjura | tulipan</annotation>
+		<annotation cp="🌷" type="tts">tulipan</annotation>
+		<annotation cp="🌱">żerriegħa | żgħażagħ</annotation>
+		<annotation cp="🌱" type="tts">żerriegħa</annotation>
+		<annotation cp="🌲">siġra | siġra tħaddar</annotation>
+		<annotation cp="🌲" type="tts">siġra tħaddar</annotation>
+		<annotation cp="🌳">deċiduża | iwaqqgħu | siġra</annotation>
+		<annotation cp="🌳" type="tts">siġra deċiduża</annotation>
+		<annotation cp="🌴">palm | siġra | siġra tal-palm</annotation>
+		<annotation cp="🌴" type="tts">siġra tal-palm</annotation>
+		<annotation cp="🌵">kaktus | pjanta</annotation>
+		<annotation cp="🌵" type="tts">kaktus</annotation>
+		<annotation cp="🌾">għarma ross | qamħ | ross | widna</annotation>
+		<annotation cp="🌾" type="tts">għarma ross</annotation>
+		<annotation cp="🌿">ħwawar | werqa</annotation>
+		<annotation cp="🌿" type="tts">ħwawar</annotation>
+		<annotation cp="☘">pjanta | xamrok</annotation>
+		<annotation cp="☘" type="tts">xamrok</annotation>
+		<annotation cp="🍀">4 | erba’ | silla | silla ta’ erba’ werqiet | werqa</annotation>
+		<annotation cp="🍀" type="tts">silla ta’ erba’ werqiet</annotation>
+		<annotation cp="🍁">aġġru | jaqgħu | werqa | werqa tal-aġġru</annotation>
+		<annotation cp="🍁" type="tts">werqa tal-aġġru</annotation>
+		<annotation cp="🍂">jaqgħu | werqa | werqa mwaqqa’</annotation>
+		<annotation cp="🍂" type="tts">werqa mwaqqa’</annotation>
+		<annotation cp="🍃">onfoħ | riħ | tixxejjer | werqa | werqa tixxejjer fir-riħ</annotation>
+		<annotation cp="🍃" type="tts">werqa tixxejjer fir-riħ</annotation>
+		<annotation cp="🍄">faqqiegħa | fungu velenuż</annotation>
+		<annotation cp="🍄" type="tts">faqqiegħa</annotation>
+		<annotation cp="🍇">frott | għenba | għeneb</annotation>
+		<annotation cp="🍇" type="tts">għeneb</annotation>
+		<annotation cp="🍈">bettieħa | frott</annotation>
+		<annotation cp="🍈" type="tts">bettieħa</annotation>
+		<annotation cp="🍉">dulliegħa | frott</annotation>
+		<annotation cp="🍉" type="tts">dulliegħa</annotation>
+		<annotation cp="🍊">frott | larinġa | mandolina</annotation>
+		<annotation cp="🍊" type="tts">mandolina</annotation>
+		<annotation cp="🍋">ċitru | frott | lumija</annotation>
+		<annotation cp="🍋" type="tts">lumija</annotation>
+		<annotation cp="🍌">banana | frott</annotation>
+		<annotation cp="🍌" type="tts">banana</annotation>
+		<annotation cp="🍍">ananas | frott</annotation>
+		<annotation cp="🍍" type="tts">ananas</annotation>
+		<annotation cp="🍎">aħmar | frott | tuffieħa | tuffieħa ħamra</annotation>
+		<annotation cp="🍎" type="tts">tuffieħa ħamra</annotation>
+		<annotation cp="🍏">aħdar | frott | tuffieħa | tuffieħa ħadra</annotation>
+		<annotation cp="🍏" type="tts">tuffieħa ħadra</annotation>
+		<annotation cp="🍐">frott | lanġasa</annotation>
+		<annotation cp="🍐" type="tts">lanġasa</annotation>
+		<annotation cp="🍑">frott | ħawħa</annotation>
+		<annotation cp="🍑" type="tts">ħawħa</annotation>
+		<annotation cp="🍒">ċirasa | frott</annotation>
+		<annotation cp="🍒" type="tts">ċirasa</annotation>
+		<annotation cp="🍓">berry | frawla | frott</annotation>
+		<annotation cp="🍓" type="tts">frawla</annotation>
+		<annotation cp="🥝">frotta | frotta tal-kiwi | ikel | kiwi</annotation>
+		<annotation cp="🥝" type="tts">frotta tal-kiwi</annotation>
+		<annotation cp="🍅">frott | ħaxix | tadama</annotation>
+		<annotation cp="🍅" type="tts">tadama</annotation>
+		<annotation cp="🥥">ġewż tal-indi | palma | piña colada</annotation>
+		<annotation cp="🥥" type="tts">ġewż tal-indi</annotation>
+		<annotation cp="🥑">avokado | frott | ikel</annotation>
+		<annotation cp="🥑" type="tts">avokado</annotation>
+		<annotation cp="🍆">brunġiel | brunġiela | ħaxix</annotation>
+		<annotation cp="🍆" type="tts">brunġiela</annotation>
+		<annotation cp="🥔">ħaxix | ikel | patata</annotation>
+		<annotation cp="🥔" type="tts">patata</annotation>
+		<annotation cp="🥕">ħaxix | ikel | zunnerija</annotation>
+		<annotation cp="🥕" type="tts">zunnerija</annotation>
+		<annotation cp="🌽">qamħ | qamħirrum | qamħirrun | widna | widna tal-qamħ</annotation>
+		<annotation cp="🌽" type="tts">widna tal-qamħ</annotation>
+		<annotation cp="🌶">bżar | jaħraq</annotation>
+		<annotation cp="🌶" type="tts">bżar jaħraq</annotation>
+		<annotation cp="🥒">ħaxix | ħjara | ikel | immarinat</annotation>
+		<annotation cp="🥒" type="tts">ħjara</annotation>
+		<annotation cp="🥦">brokkoli | kaboċċa selvaġġa</annotation>
+		<annotation cp="🥦" type="tts">brokkoli</annotation>
+		<annotation cp="🥜">ħaxix | ikel | karawett | lewż</annotation>
+		<annotation cp="🥜" type="tts">karawett</annotation>
+		<annotation cp="🌰">pjanta | qastan</annotation>
+		<annotation cp="🌰" type="tts">qastan</annotation>
+		<annotation cp="🍞">ħobż | ħobża</annotation>
+		<annotation cp="🍞" type="tts">ħobż</annotation>
+		<annotation cp="🥐">croissant | franċiż | ħobż | ikel | panina forma ta’ nofs qamar</annotation>
+		<annotation cp="🥐" type="tts">croissant</annotation>
+		<annotation cp="🥖">baguette | franċiż | ħobż | ikel</annotation>
+		<annotation cp="🥖" type="tts">ħobż baguette</annotation>
+		<annotation cp="🥨">mibruma | pretzel</annotation>
+		<annotation cp="🥨" type="tts">pretzel</annotation>
+		<annotation cp="🥞">crêpe | hotcake | ikel | pancake | pancakes</annotation>
+		<annotation cp="🥞" type="tts">pancakes</annotation>
+		<annotation cp="🧀">biċċa ġobon | ġobon</annotation>
+		<annotation cp="🧀" type="tts">biċċa ġobon</annotation>
+		<annotation cp="🍖">għadma | laħam | laħam fuq l-għadma</annotation>
+		<annotation cp="🍖" type="tts">laħam fuq l-għadma</annotation>
+		<annotation cp="🍗">għadma | sieq | sieq ta’ tjur | tiġieġa | tjur</annotation>
+		<annotation cp="🍗" type="tts">sieq ta’ tjur</annotation>
+		<annotation cp="🥩">biċċa | biċċa laħam | kustilja tal-majjal | kustilja tal-muntun | steak</annotation>
+		<annotation cp="🥩" type="tts">biċċa laħam</annotation>
+		<annotation cp="🥓">bejken | ikel | laħam</annotation>
+		<annotation cp="🥓" type="tts">bejken</annotation>
+		<annotation cp="🍔">burger | hamburger</annotation>
+		<annotation cp="🍔" type="tts">hamburger</annotation>
+		<annotation cp="🍟">ċips</annotation>
+		<annotation cp="🍟" type="tts">ċips</annotation>
+		<annotation cp="🍕">ġobon | pizza | slajs</annotation>
+		<annotation cp="🍕" type="tts">pizza</annotation>
+		<annotation cp="🌭">frankfurter | hot dog | hotdog | zalzett</annotation>
+		<annotation cp="🌭" type="tts">hot dog</annotation>
+		<annotation cp="🥪">ħobż | sandwich</annotation>
+		<annotation cp="🥪" type="tts">sandwich</annotation>
+		<annotation cp="🌮">messikan | taco</annotation>
+		<annotation cp="🌮" type="tts">taco</annotation>
+		<annotation cp="🌯">burrito | messikan | wrap</annotation>
+		<annotation cp="🌯" type="tts">burrito</annotation>
+		<annotation cp="🥙">falafel | gyro | ħobż ċatt | ħobż ċatt mimli | ikel | kebab | mimli</annotation>
+		<annotation cp="🥙" type="tts">ħobż ċatt mimli</annotation>
+		<annotation cp="🥚">bajda | ikel</annotation>
+		<annotation cp="🥚" type="tts">bajda</annotation>
+		<annotation cp="🍳">bajda | borma | qali | tisjir</annotation>
+		<annotation cp="🍳" type="tts">tisjir</annotation>
+		<annotation cp="🥘">baxx | ikel | paella | pagna | taġen | taġen baxx tal-Ikel</annotation>
+		<annotation cp="🥘" type="tts">taġen baxx tal-Ikel</annotation>
+		<annotation cp="🍲">borma | borma tal-ikel | stuffat</annotation>
+		<annotation cp="🍲" type="tts">borma tal-ikel</annotation>
+		<annotation cp="🥣">ċereali | congee | kolazzjon | skutella b’mgħarfa</annotation>
+		<annotation cp="🥣" type="tts">skutella b’mgħarfa</annotation>
+		<annotation cp="🥗">ħadra | ikel | insalata</annotation>
+		<annotation cp="🥗" type="tts">insalata ħadra</annotation>
+		<annotation cp="🍿">popcorn</annotation>
+		<annotation cp="🍿" type="tts">popcorn</annotation>
+		<annotation cp="🥫">ikel fil-laned | landa</annotation>
+		<annotation cp="🥫" type="tts">ikel fil-laned</annotation>
+		<annotation cp="🍱">bento | box</annotation>
+		<annotation cp="🍱" type="tts">bento box</annotation>
+		<annotation cp="🍘">craker | rice cracker | ross</annotation>
+		<annotation cp="🍘" type="tts">rice cracker</annotation>
+		<annotation cp="🍙">ballun | Ġappuniż | pulpetta tar-ross | ross</annotation>
+		<annotation cp="🍙" type="tts">pulpetta tar-ross</annotation>
+		<annotation cp="🍚">imsajjar | ross</annotation>
+		<annotation cp="🍚" type="tts">ross imsajjar</annotation>
+		<annotation cp="🍛">karì | ross | ross tal-karì</annotation>
+		<annotation cp="🍛" type="tts">ross tal-karì</annotation>
+		<annotation cp="🍜">bieqja | bieqja tal-fwar | fwar | noodle | ramen</annotation>
+		<annotation cp="🍜" type="tts">bieqja tal-fwar</annotation>
+		<annotation cp="🍝">għaġin | spagetti</annotation>
+		<annotation cp="🍝" type="tts">spagetti</annotation>
+		<annotation cp="🍠">ħelwa | mixwija | patata</annotation>
+		<annotation cp="🍠" type="tts">patata ħelwa mixwija</annotation>
+		<annotation cp="🍢">frott tal-baħar | kebab | oden | skewer | stikka</annotation>
+		<annotation cp="🍢" type="tts">oden</annotation>
+		<annotation cp="🍣">sushi</annotation>
+		<annotation cp="🍣" type="tts">sushi</annotation>
+		<annotation cp="🍤">gambli | moqli | tempura</annotation>
+		<annotation cp="🍤" type="tts">gambli moqli</annotation>
+		<annotation cp="🍥">għaġina | ħut | innokkla | pulpetta | pulpetta tal-ħut innokklata</annotation>
+		<annotation cp="🍥" type="tts">pulpetta tal-ħut innokklata</annotation>
+		<annotation cp="🍡">dango | deżerta | Ġappuniż | ħelwa | skewer | stikka</annotation>
+		<annotation cp="🍡" type="tts">dango</annotation>
+		<annotation cp="🥟">dumpling | empanada | gyōza | jiaozi | pierogi | potsticker</annotation>
+		<annotation cp="🥟" type="tts">dumpling</annotation>
+		<annotation cp="🥠">fortune cookie | profezija</annotation>
+		<annotation cp="🥠" type="tts">fortune cookie</annotation>
+		<annotation cp="🥡">kaxxa tat-takeout | oyster pail</annotation>
+		<annotation cp="🥡" type="tts">kaxxa tat-takeout</annotation>
+		<annotation cp="🍦">artab | deżerta | ġelat | ħelu | krema | silġ</annotation>
+		<annotation cp="🍦" type="tts">ġelat artab</annotation>
+		<annotation cp="🍧">deżerta | ħelu | imqaxxar | silġ</annotation>
+		<annotation cp="🍧" type="tts">silġ imqaxxar</annotation>
+		<annotation cp="🍨">deżerta | ġelat | ħelu | krema | silġ</annotation>
+		<annotation cp="🍨" type="tts">ġelat</annotation>
+		<annotation cp="🍩">deżerta | donut | doughnut | ħelu</annotation>
+		<annotation cp="🍩" type="tts">doughnut</annotation>
+		<annotation cp="🍪">deżerta | gallettina | ħelwa</annotation>
+		<annotation cp="🍪" type="tts">gallettina</annotation>
+		<annotation cp="🎂">ċelebarazzjoni | deżerta | għaġina | għeluq is-snin | ħelwa | kejk | kejk ta’ għeluq is-snin</annotation>
+		<annotation cp="🎂" type="tts">kejk ta’ għeluq is-snin</annotation>
+		<annotation cp="🍰">deżerta | għaġina | ħelu | kejk | shortcake | slajs</annotation>
+		<annotation cp="🍰" type="tts">shortcake</annotation>
+		<annotation cp="🥧">għaġina | mili | torta</annotation>
+		<annotation cp="🥧" type="tts">torta</annotation>
+		<annotation cp="🍫">biċċa | ċikkulata | deżerta | ħelwa</annotation>
+		<annotation cp="🍫" type="tts">biċċa ċikkulata</annotation>
+		<annotation cp="🍬">deżerta | ħelu | ħelwa</annotation>
+		<annotation cp="🍬" type="tts">ħelu</annotation>
+		<annotation cp="🍭">deżerta | ħelu | ħelwa | lolipop</annotation>
+		<annotation cp="🍭" type="tts">lolipop</annotation>
+		<annotation cp="🍮">deżerta | ħelwa | kastard | pudina</annotation>
+		<annotation cp="🍮" type="tts">kastard</annotation>
+		<annotation cp="🍯">għasel | ħelu | vażett | vażett tal-għasel</annotation>
+		<annotation cp="🍯" type="tts">vażett għasel</annotation>
+		<annotation cp="🍼">flixkun | flixkun tat-trabi | ħalib | tarbija | xarba</annotation>
+		<annotation cp="🍼" type="tts">flixkun tat-trabi</annotation>
+		<annotation cp="🥛">ħalib | tazza | xarba</annotation>
+		<annotation cp="🥛" type="tts">tazza ħalib</annotation>
+		<annotation cp="☕">fwar | kafè | sħun | te | xarba | xarba sħuna | xorb</annotation>
+		<annotation cp="☕" type="tts">xarba sħuna</annotation>
+		<annotation cp="🍵">kikkra | kikkra tat-te mingħajr manku | tazza | te | xarba</annotation>
+		<annotation cp="🍵" type="tts">kikkra tat-te mingħajr manku</annotation>
+		<annotation cp="🍶">bar | flixkun | sake | tazza | xarba | xorb</annotation>
+		<annotation cp="🍶" type="tts">sake</annotation>
+		<annotation cp="🍾">bar | flixkun | flixkun b’tapp tas-sufra jinfetaħ | jinfetaħ | sufra | xarba</annotation>
+		<annotation cp="🍾" type="tts">flixkun b’tapp tas-sufra jinfetaħ</annotation>
+		<annotation cp="🍷">bar | inbid | tazza | tazza nbid | xarba | xorb</annotation>
+		<annotation cp="🍷" type="tts">tazza nbid</annotation>
+		<annotation cp="🍸">bar | cocktail | tazza | tazza tal-cocktails | xarba</annotation>
+		<annotation cp="🍸" type="tts">tazza tal-cocktails</annotation>
+		<annotation cp="🍹">bar | tropikali | xarba</annotation>
+		<annotation cp="🍹" type="tts">xarba tropikali</annotation>
+		<annotation cp="🍺">bar | birra | magg | xarba</annotation>
+		<annotation cp="🍺" type="tts">magg birra</annotation>
+		<annotation cp="🍻">bar | birra | iċekċku | magg | maggijiet tal-birra jċekċku | xarba</annotation>
+		<annotation cp="🍻" type="tts">maggijiet tal-birra jċekċku</annotation>
+		<annotation cp="🥂">ċekċek | tazza | tazzi jċekċku | tiċċelebra | xarba</annotation>
+		<annotation cp="🥂" type="tts">tazzi jċekċku</annotation>
+		<annotation cp="🥃">likur | shot | tazza | tazza kbira | tazza kbira tal-ħġieġ | whisky</annotation>
+		<annotation cp="🥃" type="tts">tazza kbira tal-ħġieġ</annotation>
+		<annotation cp="🥤">luminata | meraq | tazza bi stro</annotation>
+		<annotation cp="🥤" type="tts">tazza bi stro</annotation>
+		<annotation cp="🥢">chopsticks | hashi</annotation>
+		<annotation cp="🥢" type="tts">chopsticks</annotation>
+		<annotation cp="🍽">furketta | furketta u sikkina ma’ platt | platt | sikkina | tisjir</annotation>
+		<annotation cp="🍽" type="tts">furketta u sikkina ma’ platt</annotation>
+		<annotation cp="🍴">furketta | furketta u sikkina | sikkina | tisjir</annotation>
+		<annotation cp="🍴" type="tts">furketta u sikkina</annotation>
+		<annotation cp="🥄">mgħarfa | oġġetti tal-mejda</annotation>
+		<annotation cp="🥄" type="tts">mgħarfa</annotation>
+		<annotation cp="🔪">arma | għodda | hocho | sikkina | sikkina tal-kċina | tisjir</annotation>
+		<annotation cp="🔪" type="tts">sikkina tal-kċina</annotation>
+		<annotation cp="🏺">anfora | Aquarius | arma | buqar | għodda | tisjir | xarba | żodjaku</annotation>
+		<annotation cp="🏺" type="tts">anfora</annotation>
+		<annotation cp="🌍">Afrika | dinja | globu | globu juri l-Ewropa-Afrika | l-Ewropa</annotation>
+		<annotation cp="🌍" type="tts">globu juri l-Ewropa-Afrika</annotation>
+		<annotation cp="🌎">dinja | globu | globu juri l-Ameriki | l-Ameriki</annotation>
+		<annotation cp="🌎" type="tts">globu juri l-Ameriki</annotation>
+		<annotation cp="🌏">dinja | globu | globu juri l-Asja-Awstralja | l-Asja | l-Awstralja</annotation>
+		<annotation cp="🌏" type="tts">globu juri l-Asja-Awstralja</annotation>
+		<annotation cp="🌐">dinja | globu | globu bil-meridjani | meridjani</annotation>
+		<annotation cp="🌐" type="tts">globu bil-meridjani</annotation>
+		<annotation cp="🗺">dinja | mappa | mappa tad-dinjija</annotation>
+		<annotation cp="🗺" type="tts">mappa tad-dinjija</annotation>
+		<annotation cp="🗾">Ġappun | mappa | mappa tal-Ġappun</annotation>
+		<annotation cp="🗾" type="tts">mappa tal-Ġappun</annotation>
+		<annotation cp="🏔">kiesaħ | muntanja | muntanja miksija bis-silġ | silġ</annotation>
+		<annotation cp="🏔" type="tts">muntanja miksija bis-silġ</annotation>
+		<annotation cp="⛰">muntanja</annotation>
+		<annotation cp="⛰" type="tts">muntanja</annotation>
+		<annotation cp="🌋">eruzzjoni | muntanja | vulkan</annotation>
+		<annotation cp="🌋" type="tts">vulkan</annotation>
+		<annotation cp="🗻">fuji | muntanja</annotation>
+		<annotation cp="🗻" type="tts">muntanja fuji</annotation>
+		<annotation cp="🏕">kampeġġ</annotation>
+		<annotation cp="🏕" type="tts">kampeġġ</annotation>
+		<annotation cp="🏖">bajja | bajja b’umbrella | umbrella</annotation>
+		<annotation cp="🏖" type="tts">bajja b’umbrella</annotation>
+		<annotation cp="🏜">deżert</annotation>
+		<annotation cp="🏜" type="tts">deżert</annotation>
+		<annotation cp="🏝">deżert | gżira</annotation>
+		<annotation cp="🏝" type="tts">gżira deżert</annotation>
+		<annotation cp="🏞">park | park nazzjonali</annotation>
+		<annotation cp="🏞" type="tts">park nazzjonali</annotation>
+		<annotation cp="🏟">stadium</annotation>
+		<annotation cp="🏟" type="tts">stadium</annotation>
+		<annotation cp="🏛">bini klassiku | klassiku</annotation>
+		<annotation cp="🏛" type="tts">bini klassiku</annotation>
+		<annotation cp="🏗">kostruzzjoni | kostruzzjoni tal-bini</annotation>
+		<annotation cp="🏗" type="tts">kostruzzjoni tal-bini</annotation>
+		<annotation cp="🏘">djar</annotation>
+		<annotation cp="🏘" type="tts">djar</annotation>
+		<annotation cp="🏚">dar | mitluqa</annotation>
+		<annotation cp="🏚" type="tts">dar mitluqa</annotation>
+		<annotation cp="🏠">binja | dar</annotation>
+		<annotation cp="🏠" type="tts">binja</annotation>
+		<annotation cp="🏡">dar | dar bil-ġnien | ġnien</annotation>
+		<annotation cp="🏡" type="tts">dar bil-ġnien</annotation>
+		<annotation cp="🏢">bini | bini tal-uffiċċju</annotation>
+		<annotation cp="🏢" type="tts">bini tal-uffiċċju</annotation>
+		<annotation cp="🏣">Ġappuniż | posta | uffiċċju tal-posta Ġappuniż</annotation>
+		<annotation cp="🏣" type="tts">uffiċċju tal-posta Ġappuniż</annotation>
+		<annotation cp="🏤">Ewropea | posta | uffiċċju tal-posta</annotation>
+		<annotation cp="🏤" type="tts">uffiċċju tal-posta</annotation>
+		<annotation cp="🏥">mediċina | sptar | tabib</annotation>
+		<annotation cp="🏥" type="tts">sptar</annotation>
+		<annotation cp="🏦">bank | bini</annotation>
+		<annotation cp="🏦" type="tts">bank</annotation>
+		<annotation cp="🏨">bini | lukanda</annotation>
+		<annotation cp="🏨" type="tts">lukanda</annotation>
+		<annotation cp="🏩">imħabba | lukanda | lukanda tal-imħabba</annotation>
+		<annotation cp="🏩" type="tts">lukanda tal-imħabba</annotation>
+		<annotation cp="🏪">ħanut | tal-merċa</annotation>
+		<annotation cp="🏪" type="tts">ħanut tal-merċa</annotation>
+		<annotation cp="🏫">bini | skola</annotation>
+		<annotation cp="🏫" type="tts">skola</annotation>
+		<annotation cp="🏬">stabbiliment</annotation>
+		<annotation cp="🏬" type="tts">stabbiliment</annotation>
+		<annotation cp="🏭">bini | fabbrika</annotation>
+		<annotation cp="🏭" type="tts">fabbrika</annotation>
+		<annotation cp="🏯">Ġappuniż | kastell</annotation>
+		<annotation cp="🏯" type="tts">kastell Ġappuniż</annotation>
+		<annotation cp="🏰">Ewropew | kastell</annotation>
+		<annotation cp="🏰" type="tts">kastell</annotation>
+		<annotation cp="💒">imħabba | kappella | tieġ</annotation>
+		<annotation cp="💒" type="tts">tieġ</annotation>
+		<annotation cp="🗼">Tokjo | torri | torri ta’ Tokjo</annotation>
+		<annotation cp="🗼" type="tts">torri ta’ Tokjo</annotation>
+		<annotation cp="🗽">libertà | statwa | Statwa tal-Libertà</annotation>
+		<annotation cp="🗽" type="tts">Statwa tal-Libertà</annotation>
+		<annotation cp="⛪">knisja | Kristjan | reliġjon | salib</annotation>
+		<annotation cp="⛪" type="tts">knisja</annotation>
+		<annotation cp="🕌">Islam | moskea | Musulmana | reliġjon</annotation>
+		<annotation cp="🕌" type="tts">moskea</annotation>
+		<annotation cp="🕍">Lhudi | reliġjon | sinagoga | tempju</annotation>
+		<annotation cp="🕍" type="tts">sinagoga</annotation>
+		<annotation cp="⛩">maqdes | reliġjon | shinto</annotation>
+		<annotation cp="⛩" type="tts">maqdes shinto</annotation>
+		<annotation cp="🕋">Islam | kaaba | Musulmana | reliġjon</annotation>
+		<annotation cp="🕋" type="tts">kaaba</annotation>
+		<annotation cp="⛲">funtana</annotation>
+		<annotation cp="⛲" type="tts">funtana</annotation>
+		<annotation cp="⛺">kampeġġ | tinda</annotation>
+		<annotation cp="⛺" type="tts">tinda</annotation>
+		<annotation cp="🌁">ċpar | imċajpar</annotation>
+		<annotation cp="🌁" type="tts">imċajpar</annotation>
+		<annotation cp="🌃">bil-lejl | lejl bl-istilel | stilla</annotation>
+		<annotation cp="🌃" type="tts">lejl bl-istilel</annotation>
+		<annotation cp="🏙">belt | silwett tal-belt</annotation>
+		<annotation cp="🏙" type="tts">silwett tal-belt</annotation>
+		<annotation cp="🌄">filgħodu | muntanja | tlugħ ix-xemx | tlugħ ix-xemx fuq il-muntanji | xemx</annotation>
+		<annotation cp="🌄" type="tts">tlugħ ix-xemx fuq il-muntanji</annotation>
+		<annotation cp="🌅">filgħodu | tlugħ ix-xemx | xemx</annotation>
+		<annotation cp="🌅" type="tts">tlugħ ix-xemx</annotation>
+		<annotation cp="🌆">belt | fl-għaxija | inżul ix-xemx | pajsaġġ | silwett tal-belt fi nżul ix-xemx | xemx | żerniq</annotation>
+		<annotation cp="🌆" type="tts">silwett tal-belt fi nżul ix-xemx</annotation>
+		<annotation cp="🌇">nżul ix-xemx | xemx | żerniq</annotation>
+		<annotation cp="🌇" type="tts">nżul ix-xemx</annotation>
+		<annotation cp="🌉">billejl | pont</annotation>
+		<annotation cp="🌉" type="tts">pont billejl</annotation>
+		<annotation cp="♨">fwar | nixxigħat | nixxigħat sħan | sħun</annotation>
+		<annotation cp="♨" type="tts">nixxigħat sħan</annotation>
+		<annotation cp="🎠">karusell | żiemel | żiemel tal-karusell</annotation>
+		<annotation cp="🎠" type="tts">żiemel tal-karusell</annotation>
+		<annotation cp="🎡">ferris | ferris wheel | park tad-divertiment | rota</annotation>
+		<annotation cp="🎡" type="tts">ferris wheel</annotation>
+		<annotation cp="🎢">coaster | park tad-divertiment | roller</annotation>
+		<annotation cp="🎢" type="tts">roller coaster</annotation>
+		<annotation cp="💈">arblu | arblu tal-barbier | barbier | qatgħa xagħar</annotation>
+		<annotation cp="💈" type="tts">arblu tal-barbier</annotation>
+		<annotation cp="🎪">ċirklu | tinda | tinda taċ-ċirklu</annotation>
+		<annotation cp="🎪" type="tts">tinda taċ-ċirklu</annotation>
+		<annotation cp="🚂">ferrovija | lokomottiva | magna | tal-fwar</annotation>
+		<annotation cp="🚂" type="tts">lokomottiva</annotation>
+		<annotation cp="🚃">elettriku | ferrovija | karozza | karozza tal-ferrovija | tramm | trolleybus</annotation>
+		<annotation cp="🚃" type="tts">karozza tal-ferrovija</annotation>
+		<annotation cp="🚄">ferrovija | ferrovija b’velocità għolja | shinkansen | veloċità</annotation>
+		<annotation cp="🚄" type="tts">ferrovija b’velocità għolja</annotation>
+		<annotation cp="🚅">bullet | ferrovija | ferrovija b’veloċità għolja bil-bullet nose | shinkansen | veloċità</annotation>
+		<annotation cp="🚅" type="tts">ferrovija b’veloċità għolja bil-bullet nose</annotation>
+		<annotation cp="🚆">ferrovija</annotation>
+		<annotation cp="🚆" type="tts">ferrovija</annotation>
+		<annotation cp="🚇">metro | subway</annotation>
+		<annotation cp="🚇" type="tts">metro</annotation>
+		<annotation cp="🚈">ferrovija | ferrovija ħafifa</annotation>
+		<annotation cp="🚈" type="tts">ferrovija ħafifa</annotation>
+		<annotation cp="🚉">ferrovija | stazzjon</annotation>
+		<annotation cp="🚉" type="tts">stazzjon</annotation>
+		<annotation cp="🚊">tramm | trolleybus</annotation>
+		<annotation cp="🚊" type="tts">tramm</annotation>
+		<annotation cp="🚝">monorail | vettura</annotation>
+		<annotation cp="🚝" type="tts">monorail</annotation>
+		<annotation cp="🚞">ferrovija | ferrovija tal-muntanji | karozza | muntanja</annotation>
+		<annotation cp="🚞" type="tts">ferrovija tal-muntanji</annotation>
+		<annotation cp="🚋">karozza tat-tramm | karozzi | tramm | trolleybus</annotation>
+		<annotation cp="🚋" type="tts">karozza tat-tramm</annotation>
+		<annotation cp="🚌">vettura | xarabank</annotation>
+		<annotation cp="🚌" type="tts">xarabank</annotation>
+		<annotation cp="🚍">ġejja ’l hawn | xarabank | xarabank ġejja ’l hawn</annotation>
+		<annotation cp="🚍" type="tts">xarabank ġejja ’l hawn</annotation>
+		<annotation cp="🚎">tramm | trolley | trolleybus | xarabank</annotation>
+		<annotation cp="🚎" type="tts">trolleybus</annotation>
+		<annotation cp="🚐">minibus | xarabank</annotation>
+		<annotation cp="🚐" type="tts">minibus</annotation>
+		<annotation cp="🚑">ambulanza | vettura</annotation>
+		<annotation cp="🚑" type="tts">ambulanza</annotation>
+		<annotation cp="🚒">magna | nar | trakk | vettura tat-tifi tan-nar</annotation>
+		<annotation cp="🚒" type="tts">vettura tat-tifi tan-nar</annotation>
+		<annotation cp="🚓">karozza | karozza tal-pulizija | pulizija | ronda</annotation>
+		<annotation cp="🚓" type="tts">karozza tal-pulizija</annotation>
+		<annotation cp="🚔">ġejja ’l hawn | karozza | karozza tal-pulizija ġejja ’l hawn | pulizija</annotation>
+		<annotation cp="🚔" type="tts">karozza tal-pulizija ġejja ’l hawn</annotation>
+		<annotation cp="🚕">taxi | vettura</annotation>
+		<annotation cp="🚕" type="tts">taxi</annotation>
+		<annotation cp="🚖">ġejja ’l hawn | taxi | taxi ġejja ’l hawn</annotation>
+		<annotation cp="🚖" type="tts">taxi ġejja ’l hawn</annotation>
+		<annotation cp="🚗">karozza</annotation>
+		<annotation cp="🚗" type="tts">karozza</annotation>
+		<annotation cp="🚘">ġejja ’l hawn | karozza | karozza ġejja ’l hawn</annotation>
+		<annotation cp="🚘" type="tts">karozza ġejja ’l hawn</annotation>
+		<annotation cp="🚙">rikreazzjoni | utilità sportiva | vettura għal utilità sportiva</annotation>
+		<annotation cp="🚙" type="tts">vettura għal utilità sportiva</annotation>
+		<annotation cp="🚚">konsenji | trakk | trakk tal-konsenji</annotation>
+		<annotation cp="🚚" type="tts">trakk tal-konsenji</annotation>
+		<annotation cp="🚛">semi | trakk | trakk artikolat</annotation>
+		<annotation cp="🚛" type="tts">trakk artikolat</annotation>
+		<annotation cp="🚜">trattur | vettura</annotation>
+		<annotation cp="🚜" type="tts">trattur</annotation>
+		<annotation cp="🏎">karozza | tlielaq | tlielaq tal-karozzi</annotation>
+		<annotation cp="🏎" type="tts">tlielaq tal-karozzi</annotation>
+		<annotation cp="🏍">mutur | tlielaq</annotation>
+		<annotation cp="🏍" type="tts">mutur</annotation>
+		<annotation cp="🛵">mutur | scooter | scooter bil-mutur</annotation>
+		<annotation cp="🛵" type="tts">scooter bil-mutur</annotation>
+		<annotation cp="🚲">rota</annotation>
+		<annotation cp="🚲" type="tts">rota</annotation>
+		<annotation cp="🛴">kick | scooter</annotation>
+		<annotation cp="🛴" type="tts">scooter</annotation>
+		<annotation cp="🚏">bus stop | busstop | Waqqaf | xarabank</annotation>
+		<annotation cp="🚏" type="tts">bus stop</annotation>
+		<annotation cp="🛣">awtostrada | highway | triq</annotation>
+		<annotation cp="🛣" type="tts">awtostrada</annotation>
+		<annotation cp="🛤">ferrovija | linja tal-ferrovija</annotation>
+		<annotation cp="🛤" type="tts">linja tal-ferrovija</annotation>
+		<annotation cp="🛢">landa | żejt</annotation>
+		<annotation cp="🛢" type="tts">landa żejt</annotation>
+		<annotation cp="⛽">gass | karburant | pompa | pompa tal-petrol</annotation>
+		<annotation cp="⛽" type="tts">pompa tal-petrol</annotation>
+		<annotation cp="🚨">dawl | dawl tal-karozza tal-pulizija | karozza | li jduru | pulizija</annotation>
+		<annotation cp="🚨" type="tts">dawl tal-karozza tal-pulizija</annotation>
+		<annotation cp="🚥">dawl | dawl tat-traffiku orizzontali | sinjal | traffiku</annotation>
+		<annotation cp="🚥" type="tts">dawl tat-traffiku orizzontali</annotation>
+		<annotation cp="🚦">dawl | dawl tat-traffiku vertikali | sinjal | traffiku</annotation>
+		<annotation cp="🚦" type="tts">dawl tat-traffiku vertikali</annotation>
+		<annotation cp="🛑">ieqaf | ottagonali | sinjal | sinjal biex tieqaf</annotation>
+		<annotation cp="🛑" type="tts">sinjal biex tieqaf</annotation>
+		<annotation cp="🚧">barriera | kostruzzjoni</annotation>
+		<annotation cp="🚧" type="tts">kostruzzjoni</annotation>
+		<annotation cp="⚓">ankra | bastiment | għodda</annotation>
+		<annotation cp="⚓" type="tts">ankra</annotation>
+		<annotation cp="⛵">baħar | dgħajsa | dgħajsa bil-qlugħ | jott | resort</annotation>
+		<annotation cp="⛵" type="tts">dgħajsa bil-qlugħ</annotation>
+		<annotation cp="🛶">canoe | dgħajsa</annotation>
+		<annotation cp="🛶" type="tts">canoe</annotation>
+		<annotation cp="🚤">dgħajsa | speedboat</annotation>
+		<annotation cp="🚤" type="tts">speedboat</annotation>
+		<annotation cp="🛳">passiġġieri | vapur | vapur tal-passiġġieri</annotation>
+		<annotation cp="🛳" type="tts">vapur tal-passiġġieri</annotation>
+		<annotation cp="⛴">dgħajsa | lanċa | passiġġieri</annotation>
+		<annotation cp="⛴" type="tts">lanċa</annotation>
+		<annotation cp="🛥">dgħajsa | dgħajsa bil-mutur</annotation>
+		<annotation cp="🛥" type="tts">dgħajsa bil-mutur</annotation>
+		<annotation cp="🚢">dgħajsa | passiġġieri | vapur</annotation>
+		<annotation cp="🚢" type="tts">vapur</annotation>
+		<annotation cp="✈">ajruplan</annotation>
+		<annotation cp="✈" type="tts">ajruplan</annotation>
+		<annotation cp="🛩">ajruplan | ajruplan żgħir</annotation>
+		<annotation cp="🛩" type="tts">ajruplan żgħir</annotation>
+		<annotation cp="🛫">ajruplan | check in | tluq | tluq ta’ ajruplan</annotation>
+		<annotation cp="🛫" type="tts">tluq ta’ ajruplan</annotation>
+		<annotation cp="🛬">ajruplan | jaslu | landing | wasla ta’ ajruplan | wasliet</annotation>
+		<annotation cp="🛬" type="tts">wasla ta’ ajruplan</annotation>
+		<annotation cp="💺">sedil | siġġu</annotation>
+		<annotation cp="💺" type="tts">sedil</annotation>
+		<annotation cp="🚁">elikotteru | vettura</annotation>
+		<annotation cp="🚁" type="tts">elikotteru</annotation>
+		<annotation cp="🚟">ferrovija | ferrovija fuq sospensjoni | sospensjoni</annotation>
+		<annotation cp="🚟" type="tts">ferrovija fuq sospensjoni</annotation>
+		<annotation cp="🚠">funikular tal-muntanji | gondola | kejbil | muntanja</annotation>
+		<annotation cp="🚠" type="tts">funikular tal-muntanji</annotation>
+		<annotation cp="🚡">gondola | karozai | kejbil | linja tat-ramm fl-ajru | linja tat-tramm | mill-ajru</annotation>
+		<annotation cp="🚡" type="tts">linja tat-ramm fl-ajru</annotation>
+		<annotation cp="🛰">satellita | spazju</annotation>
+		<annotation cp="🛰" type="tts">satellita</annotation>
+		<annotation cp="🚀">rokit | spazju</annotation>
+		<annotation cp="🚀" type="tts">rokit</annotation>
+		<annotation cp="🛸">flying saucer | UFO</annotation>
+		<annotation cp="🛸" type="tts">flying saucer</annotation>
+		<annotation cp="🛎">bellhop | lukanda | qanpiena | qanpiena ta’ bellhop</annotation>
+		<annotation cp="🛎" type="tts">qanpiena ta’ bellhop</annotation>
+		<annotation cp="⌛">klessidra | kronometru | ramel</annotation>
+		<annotation cp="⌛" type="tts">klessidra</annotation>
+		<annotation cp="⏳">klessidra | klessidra bir-ramel nieżel | kronometru | ramel</annotation>
+		<annotation cp="⏳" type="tts">klessidra bir-ramel nieżel</annotation>
+		<annotation cp="⌚">arloġġ</annotation>
+		<annotation cp="⌚" type="tts">arloġġ</annotation>
+		<annotation cp="⏰">arloġġ | żveljarin</annotation>
+		<annotation cp="⏰" type="tts">żveljarin</annotation>
+		<annotation cp="⏱">arloġġ | stopwatch</annotation>
+		<annotation cp="⏱" type="tts">stopwatch</annotation>
+		<annotation cp="⏲">arloġġ | kronometru | kronometru tal-arloġġ</annotation>
+		<annotation cp="⏲" type="tts">kronometru tal-arloġġ</annotation>
+		<annotation cp="🕰">arloġġ | arloġġ ta’ fuq l-ixkaffa</annotation>
+		<annotation cp="🕰" type="tts">arloġġ ta’ fuq l-ixkaffa</annotation>
+		<annotation cp="🕛">00 | 12 | 12:00 | arloġġ | nofsinhar</annotation>
+		<annotation cp="🕛" type="tts">nofsinhar</annotation>
+		<annotation cp="🕧">12 | 12:30 | 30 | arloġġ | in-nofs siegħa</annotation>
+		<annotation cp="🕧" type="tts">in-nofs siegħa</annotation>
+		<annotation cp="🕐">00 | 1 | 1:00 | arloġġ | is-siegħa</annotation>
+		<annotation cp="🕐" type="tts">is-siegħa</annotation>
+		<annotation cp="🕜">1 | 1:30 | 30 | arloġġ | is-siegħa u nofs</annotation>
+		<annotation cp="🕜" type="tts">is-siegħa u nofs</annotation>
+		<annotation cp="🕑">00 | 2 | 2:00 | arloġġ | is-sagħtejn</annotation>
+		<annotation cp="🕑" type="tts">is-sagħtejn</annotation>
+		<annotation cp="🕝">2 | 2:30 | 30 | arloġġ | is-sagħtejn u nofs</annotation>
+		<annotation cp="🕝" type="tts">is-sagħtejn u nofs</annotation>
+		<annotation cp="🕒">00 | 3 | 3:00 | arloġġ | it-tlieta</annotation>
+		<annotation cp="🕒" type="tts">it-tlieta</annotation>
+		<annotation cp="🕞">3 | 3:30 | 30 | arloġġ | it-tlieta u nofs</annotation>
+		<annotation cp="🕞" type="tts">it-tlieta u nofs</annotation>
+		<annotation cp="🕓">00 | 4 | 4:00 | arloġġ | l-erbgħa</annotation>
+		<annotation cp="🕓" type="tts">l-erbgħa</annotation>
+		<annotation cp="🕟">00 | 4 | 4:00 | arloġġ | l-erbgħa u nofs</annotation>
+		<annotation cp="🕟" type="tts">l-erbgħa u nofs</annotation>
+		<annotation cp="🕔">00 | 5 | 5:00 | arloġġ | ħames | il-ħamsa</annotation>
+		<annotation cp="🕔" type="tts">il-ħamsa</annotation>
+		<annotation cp="🕠">00 | 5 | 5:00 | arloġġ | ħames | il-ħamsa u nofs</annotation>
+		<annotation cp="🕠" type="tts">il-ħamsa u nofs</annotation>
+		<annotation cp="🕕">00 | 6 | 6:00 | arloġġ | is-sitta</annotation>
+		<annotation cp="🕕" type="tts">is-sitta</annotation>
+		<annotation cp="🕡">30 | 6 | 6:30 | arloġġ | is-sitta u nofs</annotation>
+		<annotation cp="🕡" type="tts">is-sitta u nofs</annotation>
+		<annotation cp="🕖">00 | 7 | 7:00 | arloġġ | is-sebgħa</annotation>
+		<annotation cp="🕖" type="tts">is-sebgħa</annotation>
+		<annotation cp="🕢">30 | 7 | 7:30 | arloġġ | is-sebgħa u nofs</annotation>
+		<annotation cp="🕢" type="tts">is-sebgħa u nofs</annotation>
+		<annotation cp="🕗">00 | 8 | 8:00 | arloġġ | it-tmienja</annotation>
+		<annotation cp="🕗" type="tts">it-tmienja</annotation>
+		<annotation cp="🕣">00 | 8 | 8:00 | arloġġ | it-tmienja u nofs</annotation>
+		<annotation cp="🕣" type="tts">it-tmienja u nofs</annotation>
+		<annotation cp="🕘">00 | 9 | 9:00 | arloġġ | id-disgħa</annotation>
+		<annotation cp="🕘" type="tts">id-disgħa</annotation>
+		<annotation cp="🕤">00 | 9 | 9:00 | arloġġ | id-disgħa u nofs</annotation>
+		<annotation cp="🕤" type="tts">id-disgħa u nofs</annotation>
+		<annotation cp="🕙">00 | 10 | 10:00 | arloġġ | l-għaxra</annotation>
+		<annotation cp="🕙" type="tts">l-għaxra</annotation>
+		<annotation cp="🕥">10 | 10:30 | 30 | arloġġ | l-għaxra u nofs</annotation>
+		<annotation cp="🕥" type="tts">l-għaxra u nofs</annotation>
+		<annotation cp="🕚">00 | 11 | 11:00 | clock | il-ħdax</annotation>
+		<annotation cp="🕚" type="tts">il-ħdax</annotation>
+		<annotation cp="🕦">11 | 11:30 | 30 | arloġġ | il-ħdax u nofs</annotation>
+		<annotation cp="🕦" type="tts">il-ħdax u nofs</annotation>
+		<annotation cp="🌑">qamar | qamar ġdid | skur</annotation>
+		<annotation cp="🌑" type="tts">qamar ġdid</annotation>
+		<annotation cp="🌒">felli | felli qamar qed jikber | qamar | qed jikber</annotation>
+		<annotation cp="🌒" type="tts">felli qamar qed jikber</annotation>
+		<annotation cp="🌓">kwart | l-ewwel kwart tal-qamar | qamar</annotation>
+		<annotation cp="🌓" type="tts">l-ewwel kwart tal-qamar</annotation>
+		<annotation cp="🌔">akbar minn nofs | qamar | qamar akbar minn nofs li qed jikber | qed jikber</annotation>
+		<annotation cp="🌔" type="tts">qamar akbar minn nofs li qed jikber</annotation>
+		<annotation cp="🌕">qamar | sħiħ</annotation>
+		<annotation cp="🌕" type="tts">qamar sħiħ</annotation>
+		<annotation cp="🌖">akbar minn nofs | qamar | qamar akbar minn nofs li qed jonqos | qed jonqos</annotation>
+		<annotation cp="🌖" type="tts">qamar akbar minn nofs li qed jonqos</annotation>
+		<annotation cp="🌗">kwart | l-aħħar kwart tal-qamar | qamar</annotation>
+		<annotation cp="🌗" type="tts">l-aħħar kwart tal-qamar</annotation>
+		<annotation cp="🌘">felli | felli qamar li qed jonqos | qamar | qed jonqos</annotation>
+		<annotation cp="🌘" type="tts">felli qamar li qed jonqos</annotation>
+		<annotation cp="🌙">felli | qamar</annotation>
+		<annotation cp="🌙" type="tts">felli qamar</annotation>
+		<annotation cp="🌚">qamar | wiċċ | wiċċ ta’ qamar ġdid</annotation>
+		<annotation cp="🌚" type="tts">wiċċ ta’ qamar ġdid</annotation>
+		<annotation cp="🌛">kwart | qamar | wiċċ | wiċċ tal-ewwel kwart tal-qamar</annotation>
+		<annotation cp="🌛" type="tts">wiċċ tal-ewwel kwart tal-qamar</annotation>
+		<annotation cp="🌜">kwart | qamar | wiċċ | wiċċ tal-aħħar kwart tal-qamar</annotation>
+		<annotation cp="🌜" type="tts">wiċċ tal-aħħar kwart tal-qamar</annotation>
+		<annotation cp="🌡">temp | termometru</annotation>
+		<annotation cp="🌡" type="tts">termometru</annotation>
+		<annotation cp="☀">raġġi | tleqq | xemx | xemxi</annotation>
+		<annotation cp="☀" type="tts">xemx</annotation>
+		<annotation cp="🌝">qamar | sħiħ | tleqq | wiċċ | wiċċ ta’ qamar sħiħ</annotation>
+		<annotation cp="🌝" type="tts">wiċċ ta’ qamar sħiħ</annotation>
+		<annotation cp="🌞">tleqq | wiċċ | xemx b’wiċċ | xemxi</annotation>
+		<annotation cp="🌞" type="tts">xemx b’wiċċ</annotation>
+		<annotation cp="⭐">stilla | stilla medja bajda</annotation>
+		<annotation cp="⭐" type="tts">stilla medja bajda</annotation>
+		<annotation cp="🌟">jiddi | stilla | tiddi | tlellex | tleqq</annotation>
+		<annotation cp="🌟" type="tts">stilla tiddi</annotation>
+		<annotation cp="🌠">feġġa | stilla | taqa’</annotation>
+		<annotation cp="🌠" type="tts">stilla feġġa</annotation>
+		<annotation cp="🌌">spazju | triq ta’ Sant’Anna</annotation>
+		<annotation cp="🌌" type="tts">triq ta’ Sant’Anna</annotation>
+		<annotation cp="☁">sħaba | temp</annotation>
+		<annotation cp="☁" type="tts">sħaba</annotation>
+		<annotation cp="⛅">sħaba | xemx | xemx wara sħaba</annotation>
+		<annotation cp="⛅" type="tts">xemx wara sħaba</annotation>
+		<annotation cp="⛈">ragħad | sħaba | sħaba b’sajjetti u x-xita | xita</annotation>
+		<annotation cp="⛈" type="tts">sħaba b’sajjetti u x-xita</annotation>
+		<annotation cp="🌤">sħaba | xemx | xemx wara sħaba żgħira</annotation>
+		<annotation cp="🌤" type="tts">xemx wara sħaba żgħira</annotation>
+		<annotation cp="🌥">sħaba | xemx | xemx wara sħaba kbira</annotation>
+		<annotation cp="🌥" type="tts">xemx wara sħaba kbira</annotation>
+		<annotation cp="🌦">sħaba | xemx | xemx wara sħaba tax-xita | xita</annotation>
+		<annotation cp="🌦" type="tts">xemx wara sħaba tax-xita</annotation>
+		<annotation cp="🌧">sħaba | sħaba bix-xita | xita</annotation>
+		<annotation cp="🌧" type="tts">sħaba bix-xita</annotation>
+		<annotation cp="🌨">kiesaħ | sħaba | sħaba bis-silġ | silġ</annotation>
+		<annotation cp="🌨" type="tts">sħaba bis-silġ</annotation>
+		<annotation cp="🌩">sajjetti | sħaba | sħaba bis-sajjetti</annotation>
+		<annotation cp="🌩" type="tts">sħaba bis-sajjetti</annotation>
+		<annotation cp="🌪">buffuri | sħaba | tornado</annotation>
+		<annotation cp="🌪" type="tts">tornado</annotation>
+		<annotation cp="🌫">ċpar | sħaba</annotation>
+		<annotation cp="🌫" type="tts">ċpar</annotation>
+		<annotation cp="🌬">jonfoħ | riħ | sħaba | wiċċ | wiċċ tar-riħ</annotation>
+		<annotation cp="🌬" type="tts">wiċċ tar-riħ</annotation>
+		<annotation cp="🌀">ċiklun | stordut | tifun | twister</annotation>
+		<annotation cp="🌀" type="tts">ċiklun</annotation>
+		<annotation cp="🌈">qawsalla | xita</annotation>
+		<annotation cp="🌈" type="tts">qawsalla</annotation>
+		<annotation cp="🌂">ħwejjeġ | umbrella | umbrella magħluqa | xita</annotation>
+		<annotation cp="🌂" type="tts">umbrella magħluqa</annotation>
+		<annotation cp="☂">ħwejjeġ | umbrella | xita</annotation>
+		<annotation cp="☂" type="tts">umbrella</annotation>
+		<annotation cp="☔">ħwejjeġ | qattra | umbrella | umbrella bi qtar tax-xita | xita</annotation>
+		<annotation cp="☔" type="tts">umbrella bi qtar tax-xita</annotation>
+		<annotation cp="⛱">umbrella | umbrella fuq art | xemx | xita</annotation>
+		<annotation cp="⛱" type="tts">umbrella fuq art</annotation>
+		<annotation cp="⚡">elettriku | l-elettriku | periklu | sajjetti | vultaġġ | vultaġġ għoli | żap</annotation>
+		<annotation cp="⚡" type="tts">vultaġġ għoli</annotation>
+		<annotation cp="❄">farka borra | kiesaħ | silġ</annotation>
+		<annotation cp="❄" type="tts">farka borra</annotation>
+		<annotation cp="☃">borrinu | kiesaħ | silġ</annotation>
+		<annotation cp="☃" type="tts">borrinu</annotation>
+		<annotation cp="⛄">borrinu | borrinu mingħajr borra | kiesaħ | silġ</annotation>
+		<annotation cp="⛄" type="tts">borrinu mingħajr borra</annotation>
+		<annotation cp="☄">kometa | spazju</annotation>
+		<annotation cp="☄" type="tts">kometa</annotation>
+		<annotation cp="🔥">fjamma | għodda | nar</annotation>
+		<annotation cp="🔥" type="tts">nar</annotation>
+		<annotation cp="💧">għaraq | kiesaħ | komiku | qattra</annotation>
+		<annotation cp="💧" type="tts">qattra</annotation>
+		<annotation cp="🌊">ilma | mewġa | oċean</annotation>
+		<annotation cp="🌊" type="tts">mewġa ilma</annotation>
+		<annotation cp="🎃">ċelebrazzjoni | halloween | jack | jack-o-lantern | lantern</annotation>
+		<annotation cp="🎃" type="tts">jack-o-lantern</annotation>
+		<annotation cp="🎄">ċelebrazzjoni | Milied | siġra | siġra tal-Milied</annotation>
+		<annotation cp="🎄" type="tts">siġra tal-Milied</annotation>
+		<annotation cp="🎆">ċelebrazzjoni | logħob tan-nar</annotation>
+		<annotation cp="🎆" type="tts">logħob tan-nar</annotation>
+		<annotation cp="🎇">ċelebrazzjoni | logħob tan-nar | sparkler | tlellex</annotation>
+		<annotation cp="🎇" type="tts">sparkler</annotation>
+		<annotation cp="✨">sparkle | stilla | tlellix</annotation>
+		<annotation cp="✨" type="tts">tlellix</annotation>
+		<annotation cp="🎈">bużżieqa | ċelebrazzjoni</annotation>
+		<annotation cp="🎈" type="tts">bużżieqa</annotation>
+		<annotation cp="🎉">ċelebrazzjoni | party | popper | tada</annotation>
+		<annotation cp="🎉" type="tts">party popper</annotation>
+		<annotation cp="🎊">ballun | ċelebrazzjoni | konfetti</annotation>
+		<annotation cp="🎊" type="tts">ballun konfetti</annotation>
+		<annotation cp="🎋">ċelebrazzjoni | Ġappuniż | siġra | siġra tat-tanabata | strixxun</annotation>
+		<annotation cp="🎋" type="tts">siġra tat-tanabata</annotation>
+		<annotation cp="🎍">arżnu | bambù | ċelebrazzjoni | dekorazzjoni tal-arżnu | Ġappuniż</annotation>
+		<annotation cp="🎍" type="tts">dekorazzjoni tal-arżnu</annotation>
+		<annotation cp="🎎">ċelebrazzjoni | festival | Ġappuniż | pupa | pupi Ġappuniżi</annotation>
+		<annotation cp="🎎" type="tts">pupi Ġappuniżi</annotation>
+		<annotation cp="🎏">ċelebrazzjoni | karpjun | streamer | streamer ta’ karpjun</annotation>
+		<annotation cp="🎏" type="tts">streamer ta’ karpjun</annotation>
+		<annotation cp="🎐">ċelebrazzjoni | qanpiena | qniepen tar-riħ | riħ</annotation>
+		<annotation cp="🎐" type="tts">qniepen tar-riħ</annotation>
+		<annotation cp="🎑">ċelebrazzjoni | ċerimonja | ċerimonja biex tara l-qamar | qamar</annotation>
+		<annotation cp="🎑" type="tts">ċerimonja biex tara l-qamar</annotation>
+		<annotation cp="🎀">ċelebrazzjoni | żigarella</annotation>
+		<annotation cp="🎀" type="tts">żigarella</annotation>
+		<annotation cp="🎁">ċelebrazzjoni | kaxxa | mgeżwra | rigal | rigal imgeżwer</annotation>
+		<annotation cp="🎁" type="tts">rigal imgeżwer</annotation>
+		<annotation cp="🎗">ċelebrazzjoni | tfakkira | żigarella | żigarella ta’ tfakkira</annotation>
+		<annotation cp="🎗" type="tts">żigarella ta’ tfakkira</annotation>
+		<annotation cp="🎟">biljett | biljetti tad-dħul | dħul</annotation>
+		<annotation cp="🎟" type="tts">biljetti tad-dħul</annotation>
+		<annotation cp="🎫">biljett | dħul</annotation>
+		<annotation cp="🎫" type="tts">biljett</annotation>
+		<annotation cp="🎖">ċelebrazzjoni | midalja | militari</annotation>
+		<annotation cp="🎖" type="tts">midalja militari</annotation>
+		<annotation cp="🏆">premju | trofew</annotation>
+		<annotation cp="🏆" type="tts">trofew</annotation>
+		<annotation cp="🏅">midalja | midalja sportiva</annotation>
+		<annotation cp="🏅" type="tts">midalja sportiva</annotation>
+		<annotation cp="🥇">l-ewwel | midalja | midalja tal-1 post | tad-deheb</annotation>
+		<annotation cp="🥇" type="tts">midalja tal-1 post</annotation>
+		<annotation cp="🥈">it-tieni | midalja | midalja tat-2 post | tal-fidda</annotation>
+		<annotation cp="🥈" type="tts">midalja tat-2 post</annotation>
+		<annotation cp="🥉">bronż | it-tielet | midalja | midalja tat-3 post</annotation>
+		<annotation cp="🥉" type="tts">midalja tat-3 post</annotation>
+		<annotation cp="⚽">ballun | ballun tal-futbol | futbol | soccer</annotation>
+		<annotation cp="⚽" type="tts">ballun tal-futbol</annotation>
+		<annotation cp="⚾">ballun | baseball</annotation>
+		<annotation cp="⚾" type="tts">baseball</annotation>
+		<annotation cp="🏀">ballun | basketball | hoop</annotation>
+		<annotation cp="🏀" type="tts">basketball</annotation>
+		<annotation cp="🏐">ballun | logħba | volleyball</annotation>
+		<annotation cp="🏐" type="tts">volleyball</annotation>
+		<annotation cp="🏈">amerikan | ballun | futbol</annotation>
+		<annotation cp="🏈" type="tts">futbol Amerikan</annotation>
+		<annotation cp="🏉">ballun | futbol | futbol tar-rugby | rugby</annotation>
+		<annotation cp="🏉" type="tts">futbol tar-rugby</annotation>
+		<annotation cp="🎾">ballun | pala | tennis</annotation>
+		<annotation cp="🎾" type="tts">tennis</annotation>
+		<annotation cp="🎳">ballun | bowling | logħba</annotation>
+		<annotation cp="🎳" type="tts">bowling</annotation>
+		<annotation cp="🏏">ballun | logħba | logħba tal-cricket | pala</annotation>
+		<annotation cp="🏏" type="tts">logħba tal-cricket</annotation>
+		<annotation cp="🏑">ballun | field | hockey | logħob | stikka</annotation>
+		<annotation cp="🏑" type="tts">field hockey</annotation>
+		<annotation cp="🏒">disk | hockey | ice hockey | logħba | silġ | stikka</annotation>
+		<annotation cp="🏒" type="tts">ice hockey</annotation>
+		<annotation cp="🏓">ballun | logħba | pala | ping pong | table tennis</annotation>
+		<annotation cp="🏓" type="tts">ping pong</annotation>
+		<annotation cp="🏸">badminton | birdie | logħba | pala | shuttlecock</annotation>
+		<annotation cp="🏸" type="tts">badminton</annotation>
+		<annotation cp="🥊">ingwanta | tal-boxing</annotation>
+		<annotation cp="🥊" type="tts">ingwanta tal-boxing</annotation>
+		<annotation cp="🥋">arti marzjali | judo | karate | taekwondo | uniformi | uniformi tal-arti marzjali</annotation>
+		<annotation cp="🥋" type="tts">uniformi tal-arti marzjali</annotation>
+		<annotation cp="🥅">tal-gowl | xibka</annotation>
+		<annotation cp="🥅" type="tts">xibka tal-gowl</annotation>
+		<annotation cp="⛳">bandiera fit-toqba | golf | toqba</annotation>
+		<annotation cp="⛳" type="tts">bandiera fit-toqba</annotation>
+		<annotation cp="⛸">silġ | skate | skating fuq is-silġ</annotation>
+		<annotation cp="⛸" type="tts">skating fuq is-silġ</annotation>
+		<annotation cp="🎣">ħut | qasba | qasba tas-sajd</annotation>
+		<annotation cp="🎣" type="tts">qasba tas-sajd</annotation>
+		<annotation cp="🎽">ġiri | l-atletika | qmis | qmis tal-ġiri | terħa</annotation>
+		<annotation cp="🎽" type="tts">qmis tal-ġiri</annotation>
+		<annotation cp="🎿">silġ | skis</annotation>
+		<annotation cp="🎿" type="tts">skis</annotation>
+		<annotation cp="🛷">slitta</annotation>
+		<annotation cp="🛷" type="tts">slitta</annotation>
+		<annotation cp="🥌">blata | ġebla tal-curling | logħba</annotation>
+		<annotation cp="🥌" type="tts">ġebla tal-curling</annotation>
+		<annotation cp="🎯">-mira | bull | bullseye | għajn | logħba | tir | tir dirett | vleġġa</annotation>
+		<annotation cp="🎯" type="tts">tir dirett</annotation>
+		<annotation cp="🔫">arma | għodda | pistola | revolvers | xkubetta</annotation>
+		<annotation cp="🔫" type="tts">pistola</annotation>
+		<annotation cp="🎱">8 | ballun | ballun ta’ pool 8 | billiard | logħba | tmien</annotation>
+		<annotation cp="🎱" type="tts">ballun ta’ pool 8</annotation>
+		<annotation cp="🔮">ballun | boċċa tal-kristal | fantasija | fortuna | għodda | ħrafa | kristall</annotation>
+		<annotation cp="🔮" type="tts">boċċa tal-kristal</annotation>
+		<annotation cp="🎮">kontrollur | logħba | video game</annotation>
+		<annotation cp="🎮" type="tts">video game</annotation>
+		<annotation cp="🕹">joystick | logħba | video game</annotation>
+		<annotation cp="🕹" type="tts">joystick</annotation>
+		<annotation cp="🎰">logħba | slot | slot machine</annotation>
+		<annotation cp="🎰" type="tts">slot machine</annotation>
+		<annotation cp="🎲">dada | dadi | dadi tal-logħob | logħba</annotation>
+		<annotation cp="🎲" type="tts">dadi tal-logħob</annotation>
+		<annotation cp="♠">karta | logħba | taqsima tal-ispati</annotation>
+		<annotation cp="♠" type="tts">taqsima tal-ispati</annotation>
+		<annotation cp="♥">karta | logħba | taqsima tal-kwori</annotation>
+		<annotation cp="♥" type="tts">taqsima tal-kwori</annotation>
+		<annotation cp="♦">karta | logħba | taqsima tad-denari</annotation>
+		<annotation cp="♦" type="tts">taqsima tad-denari</annotation>
+		<annotation cp="♣">karta | logħba | taqsima tal-fjuri</annotation>
+		<annotation cp="♣" type="tts">taqsima tal-fjuri</annotation>
+		<annotation cp="🃏">joker | karta | tal-logħob | wildcards</annotation>
+		<annotation cp="🃏" type="tts">joker</annotation>
+		<annotation cp="🀄">logħba | mahjong | mahjong red dragon | red</annotation>
+		<annotation cp="🀄" type="tts">mahjong red dragon</annotation>
+		<annotation cp="🎴">fjuri | fjuri tal-karti tal-logħob | Ġappuniż | jilgħab | karta | logħba</annotation>
+		<annotation cp="🎴" type="tts">fjuri tal-karti tal-logħob</annotation>
+		<annotation cp="🎭">arti | arti, żfin u mużika | maskra | performattivi | teatru | żfin u mużika</annotation>
+		<annotation cp="🎭" type="tts">arti, żfin u mużika</annotation>
+		<annotation cp="🖼">arti | frejm | mużew | pittura | stampa | stampa fi frejm</annotation>
+		<annotation cp="🖼" type="tts">stampa fi frejm</annotation>
+		<annotation cp="🎨">arti | mużew | pittura | tavlozza</annotation>
+		<annotation cp="🎨" type="tts">tavlozza</annotation>
+		<annotation cp="👓">għajn | ħwejjeġ | nuċċali | nuċċalijiet</annotation>
+		<annotation cp="👓" type="tts">nuċċali</annotation>
+		<annotation cp="🕶">għajn | nuċċali | nuċċali tax-xemx | skur</annotation>
+		<annotation cp="🕶" type="tts">nuċċali tax-xemx</annotation>
+		<annotation cp="👔">ħwejjeġ | ingravata</annotation>
+		<annotation cp="👔" type="tts">ingravata</annotation>
+		<annotation cp="👕">ħwejjeġ | qmis | t-shirt | tshirt</annotation>
+		<annotation cp="👕" type="tts">t-shirt</annotation>
+		<annotation cp="👖">ħwejjeġ | jeans | qalziet | qliezet</annotation>
+		<annotation cp="👖" type="tts">jeans</annotation>
+		<annotation cp="🧣">għonq | xalpa</annotation>
+		<annotation cp="🧣" type="tts">xalpa</annotation>
+		<annotation cp="🧤">id | ingwanti</annotation>
+		<annotation cp="🧤" type="tts">ingwanti</annotation>
+		<annotation cp="🧥">ġakketta | kowt</annotation>
+		<annotation cp="🧥" type="tts">kowt</annotation>
+		<annotation cp="🧦">kalzetti qosra | stoking</annotation>
+		<annotation cp="🧦" type="tts">kalzetti qosra</annotation>
+		<annotation cp="👗">ħwejjeġ | libsa</annotation>
+		<annotation cp="👗" type="tts">libsa</annotation>
+		<annotation cp="👘">ħwejjeġ | kimono</annotation>
+		<annotation cp="👘" type="tts">kimono</annotation>
+		<annotation cp="👙">bikini | għawm | ħwejjeġ</annotation>
+		<annotation cp="👙" type="tts">bikini</annotation>
+		<annotation cp="👚">ħwejjeġ | ħwejjeġ ta’ mara | mara</annotation>
+		<annotation cp="👚" type="tts">ħwejjeġ ta’ mara</annotation>
+		<annotation cp="👛">ħwejjaġ | munita | portmoni</annotation>
+		<annotation cp="👛" type="tts">portmoni</annotation>
+		<annotation cp="👜">borża | handbag | ħwejjeġ | portmoni</annotation>
+		<annotation cp="👜" type="tts">handbag</annotation>
+		<annotation cp="👝">borża | ħwejjeġ | kartiera | pouch</annotation>
+		<annotation cp="👝" type="tts">kartiera</annotation>
+		<annotation cp="🛍">basktijiet tax-xiri | borża | lukanda | xiri</annotation>
+		<annotation cp="🛍" type="tts">basktijiet tax-xiri</annotation>
+		<annotation cp="🎒">basket tal-iskola | borża | satchel | skola</annotation>
+		<annotation cp="🎒" type="tts">basket tal-iskola</annotation>
+		<annotation cp="👞">ħwejjeġ | raġel | żarbun | żarbun tal-irġiel</annotation>
+		<annotation cp="👞" type="tts">żarbun tal-irġiel</annotation>
+		<annotation cp="👟">atletika | ħwejjeġ | papoċċ tal-ġiri | sneaker | żarbun</annotation>
+		<annotation cp="👟" type="tts">papoċċ tal-ġiri</annotation>
+		<annotation cp="👠">ħwejjeġ | mara | takkuna | żarbun | żarbun b’takkuna għolja</annotation>
+		<annotation cp="👠" type="tts">żarbun b’takkuna għolja</annotation>
+		<annotation cp="👡">ħwejjeġ | mara | sandli | sandli ta’ mara | żarbun</annotation>
+		<annotation cp="👡" type="tts">sandli ta’ mara</annotation>
+		<annotation cp="👢">buts | buts ta’ mara | ħwejjeġ | mara | żarbun</annotation>
+		<annotation cp="👢" type="tts">buts ta’ mara</annotation>
+		<annotation cp="👑">ħwejjeġ | kuruna | re | reġina</annotation>
+		<annotation cp="👑" type="tts">kuruna</annotation>
+		<annotation cp="👒">ħwejjeġ | kappell | kappell ta’ mara | mara</annotation>
+		<annotation cp="👒" type="tts">kappell ta’ mara</annotation>
+		<annotation cp="🎩">ħwejjeġ | kappell | kpiepel top | quċċata | tophat</annotation>
+		<annotation cp="🎩" type="tts">kpiepel top</annotation>
+		<annotation cp="🎓">berettin | berettin tal-gradwazzjoni | ċelebrazzjoni | gradwazzjoni | ħwejjeġ | kappell</annotation>
+		<annotation cp="🎓" type="tts">berettin tal-gradwazzjoni</annotation>
+		<annotation cp="🧢">beritta tal-baseball | kappell</annotation>
+		<annotation cp="🧢" type="tts">kappell</annotation>
+		<annotation cp="⛑">elmu | għajnuna | jaqsmu | kappell | l-elmu tal-ħaddiem tas-salvataġġ | wiċċ</annotation>
+		<annotation cp="⛑" type="tts">l-elmu tal-ħaddiem tas-salvataġġ</annotation>
+		<annotation cp="📿">ġiżirana | ħwejjeġ | misteru | reliġjon | żibeġ | żibeġ tat-talb</annotation>
+		<annotation cp="📿" type="tts">żibeġ tat-talb</annotation>
+		<annotation cp="💄">kosmetiċi | lipstick | makeup</annotation>
+		<annotation cp="💄" type="tts">lipstick</annotation>
+		<annotation cp="💍">ċurkett | djamanti</annotation>
+		<annotation cp="💍" type="tts">ċurkett</annotation>
+		<annotation cp="💎">djamanti | ġawhra | ħadra</annotation>
+		<annotation cp="💎" type="tts">ġawhra</annotation>
+		<annotation cp="🔇">kwieta | muted ta ’ l-ispiker | mutes | siekta | spiker</annotation>
+		<annotation cp="🔇" type="tts">muted ta ’ l-ispiker</annotation>
+		<annotation cp="🔈">artab | speaker volum baxx</annotation>
+		<annotation cp="🔈" type="tts">speaker volum baxx</annotation>
+		<annotation cp="🔉">medju | speaker volum medju</annotation>
+		<annotation cp="🔉" type="tts">speaker volum medju</annotation>
+		<annotation cp="🔊">ħsejjes għolja | speaker volum għoli</annotation>
+		<annotation cp="🔊" type="tts">speaker volum għoli</annotation>
+		<annotation cp="📢">ħsejjes għolja | indirizz pubbliku | loudspeaker</annotation>
+		<annotation cp="📢" type="tts">loudspeaker</annotation>
+		<annotation cp="📣">cheering | megafonu</annotation>
+		<annotation cp="📣" type="tts">megafonu</annotation>
+		<annotation cp="📯">posta | postali | qrun | tromba postali</annotation>
+		<annotation cp="📯" type="tts">tromba postali</annotation>
+		<annotation cp="🔔">qanpiena</annotation>
+		<annotation cp="🔔" type="tts">qanpiena</annotation>
+		<annotation cp="🔕">kwieta | ma | mhux | mute | pprojbiti | qanpiena | qanpiena bi slash | siekta</annotation>
+		<annotation cp="🔕" type="tts">qanpiena bi slash</annotation>
+		<annotation cp="🎼">mużika | partitura | partitura mużikali</annotation>
+		<annotation cp="🎼" type="tts">partitura mużikali</annotation>
+		<annotation cp="🎵">mużika | nota | nota mużikali</annotation>
+		<annotation cp="🎵" type="tts">nota mużikali</annotation>
+		<annotation cp="🎶">mużika | nota | noti | noti mużikali</annotation>
+		<annotation cp="🎶" type="tts">noti mużikali</annotation>
+		<annotation cp="🎙">mik | mikrofonu | mikrofonu tal-istudjo | mużika | studjo</annotation>
+		<annotation cp="🎙" type="tts">mikrofonu tal-istudjo</annotation>
+		<annotation cp="🎚">livell | mużika | slajder | slajder tal-livell</annotation>
+		<annotation cp="🎚" type="tts">slajder tal-livell</annotation>
+		<annotation cp="🎛">kontroll | pumi | pumi tal-kontroll | tal-mużika</annotation>
+		<annotation cp="🎛" type="tts">pumi tal-kontroll</annotation>
+		<annotation cp="🎤">karaoke | mik | mikrofonu</annotation>
+		<annotation cp="🎤" type="tts">mikrofonu</annotation>
+		<annotation cp="🎧">earbud | headphone</annotation>
+		<annotation cp="🎧" type="tts">headphone</annotation>
+		<annotation cp="📻">radju | vidjo</annotation>
+		<annotation cp="📻" type="tts">radju</annotation>
+		<annotation cp="🎷">mużika | sassafonu | sassofonu | strument</annotation>
+		<annotation cp="🎷" type="tts">sassofonu</annotation>
+		<annotation cp="🎺">mużika | strument | trumbetta</annotation>
+		<annotation cp="🎺" type="tts">trumbetta</annotation>
+		<annotation cp="🎸">kitarra | mużika | strument</annotation>
+		<annotation cp="🎸" type="tts">kitarra</annotation>
+		<annotation cp="🎹">mużika | pjanu | strument | tastiera | tastiera mużikali</annotation>
+		<annotation cp="🎹" type="tts">tastiera mużikali</annotation>
+		<annotation cp="🎻">mużika | strument | vjolin</annotation>
+		<annotation cp="🎻" type="tts">vjolin</annotation>
+		<annotation cp="🥁">drumsticks | mużika | tanbur</annotation>
+		<annotation cp="🥁" type="tts">tanbur</annotation>
+		<annotation cp="📱">mowbajl | telefown</annotation>
+		<annotation cp="📱" type="tts">mowbajl</annotation>
+		<annotation cp="📲">ċempel | jirċievu | mowbajl | mowbajl bi vleġġa | telefon | telefown | vleġġa</annotation>
+		<annotation cp="📲" type="tts">mowbajl bi vleġġa</annotation>
+		<annotation cp="☎">telefon | telefown</annotation>
+		<annotation cp="☎" type="tts">telefon</annotation>
+		<annotation cp="📞">riċevitur | riċevitur tat-telefon | telefon</annotation>
+		<annotation cp="📞" type="tts">riċevitur tat-telefon</annotation>
+		<annotation cp="📟">pejġer</annotation>
+		<annotation cp="📟" type="tts">pejġer</annotation>
+		<annotation cp="📠">fax | magna tal-fax</annotation>
+		<annotation cp="📠" type="tts">magna tal-fax</annotation>
+		<annotation cp="🔋">batterija</annotation>
+		<annotation cp="🔋" type="tts">batterija</annotation>
+		<annotation cp="🔌">elettriku | Ipplaggja | l-elettriku | plagga elettrika</annotation>
+		<annotation cp="🔌" type="tts">plagga elettrika</annotation>
+		<annotation cp="💻">kompjuter | kompjuter laptop | pc | personali</annotation>
+		<annotation cp="💻" type="tts">kompjuter laptop</annotation>
+		<annotation cp="🖥">desktop | kompjuter</annotation>
+		<annotation cp="🖥" type="tts">kompjuter desktop</annotation>
+		<annotation cp="🖨">kompjuter | printer</annotation>
+		<annotation cp="🖨" type="tts">printer</annotation>
+		<annotation cp="⌨">kompjuter | tastiera</annotation>
+		<annotation cp="⌨" type="tts">tastiera</annotation>
+		<annotation cp="🖱">kompjuter | maws tal-kompjuter</annotation>
+		<annotation cp="🖱" type="tts">maws tal-kompjuter</annotation>
+		<annotation cp="🖲">kompjuter | trackball</annotation>
+		<annotation cp="🖲" type="tts">trackball</annotation>
+		<annotation cp="💽">diska | diska tal-kompjuter | kompjuter | minidisk | ottiċi</annotation>
+		<annotation cp="💽" type="tts">diska tal-kompjuter</annotation>
+		<annotation cp="💾">diska | diskett | floppy | kompjuter</annotation>
+		<annotation cp="💾" type="tts">diskett</annotation>
+		<annotation cp="💿">cd | diska | diska ottika | kompjuter | ottiċi</annotation>
+		<annotation cp="💿" type="tts">diska ottika</annotation>
+		<annotation cp="📀">blu-ray | diska | dvd | kompjuter | ottiċi</annotation>
+		<annotation cp="📀" type="tts">dvd</annotation>
+		<annotation cp="🎥">ċinema | filmat | kamera | kamera tal-films</annotation>
+		<annotation cp="🎥" type="tts">kamera tal-films</annotation>
+		<annotation cp="🎞">ċinema | film | filmat | frejms | frejms tal-film</annotation>
+		<annotation cp="🎞" type="tts">frejms tal-film</annotation>
+		<annotation cp="📽">ċinema | film | filmat | projettur | projettur tal-filmati | vidjo</annotation>
+		<annotation cp="📽" type="tts">projettur tal-filmati</annotation>
+		<annotation cp="🎬">clapper | clapper board | filmat</annotation>
+		<annotation cp="🎬" type="tts">clapper board</annotation>
+		<annotation cp="📺">televiżjoni | tv | vidjo</annotation>
+		<annotation cp="📺" type="tts">televiżjoni</annotation>
+		<annotation cp="📷">kamera | vidjo</annotation>
+		<annotation cp="📷" type="tts">kamera</annotation>
+		<annotation cp="📸">flash | kamera | kamera bi flash | vidjo</annotation>
+		<annotation cp="📸" type="tts">kamera bi flash</annotation>
+		<annotation cp="📹">kamera | vidjo</annotation>
+		<annotation cp="📹" type="tts">vidjo kamera</annotation>
+		<annotation cp="📼">tejp | vhs | videocassette | vidjo</annotation>
+		<annotation cp="📼" type="tts">videocassette</annotation>
+		<annotation cp="🔍">fittex | għodda | ħġieġ | lenti tat-tkabbir tipponta xellug | tkabbir ottiku</annotation>
+		<annotation cp="🔍" type="tts">lenti tat-tkabbir tipponta xellug</annotation>
+		<annotation cp="🔎">fittex | għodda | ħġieġ | lenti tat-tkabbir tipponta Lemin | tkabbir ottiku</annotation>
+		<annotation cp="🔎" type="tts">lenti tat-tkabbir tipponta Lemin</annotation>
+		<annotation cp="🕯">dawl | xemgħa</annotation>
+		<annotation cp="🕯" type="tts">xemgħa</annotation>
+		<annotation cp="💡">bozza | dawl | elettriku | idea | komiku</annotation>
+		<annotation cp="💡" type="tts">bozza</annotation>
+		<annotation cp="🔦">dawl | elettriku | għodda | torċ</annotation>
+		<annotation cp="🔦" type="tts">torċ</annotation>
+		<annotation cp="🏮">aħmar | bar | dawl | lanterna | lanterna tal-karti ħamra</annotation>
+		<annotation cp="🏮" type="tts">lanterna tal-karti ħamra</annotation>
+		<annotation cp="📔">imżejna | kopertura | ktieb | notebook | notebook b’kopertura dekorattiva</annotation>
+		<annotation cp="📔" type="tts">notebook b’kopertura dekorattiva</annotation>
+		<annotation cp="📕">ktieb | magħluq</annotation>
+		<annotation cp="📕" type="tts">ktieb magħluq</annotation>
+		<annotation cp="📖">ktieb | miftuħ</annotation>
+		<annotation cp="📖" type="tts">ktieb miftuħ</annotation>
+		<annotation cp="📗">aħdar | ktieb</annotation>
+		<annotation cp="📗" type="tts">ktieb aħdar</annotation>
+		<annotation cp="📘">blu | ktieb</annotation>
+		<annotation cp="📘" type="tts">ktieb blu</annotation>
+		<annotation cp="📙">ktieb | oranġjo</annotation>
+		<annotation cp="📙" type="tts">ktieb oranġjo</annotation>
+		<annotation cp="📚">kotba | ktieb</annotation>
+		<annotation cp="📚" type="tts">kotba</annotation>
+		<annotation cp="📓">notebook</annotation>
+		<annotation cp="📓" type="tts">notebook</annotation>
+		<annotation cp="📒">leġer | notebook</annotation>
+		<annotation cp="📒" type="tts">leġer</annotation>
+		<annotation cp="📃">dokument | nokkla | paġna | paġna b’nokkla</annotation>
+		<annotation cp="📃" type="tts">paġna b’nokkla</annotation>
+		<annotation cp="📜">karta | skrollja</annotation>
+		<annotation cp="📜" type="tts">skrollja</annotation>
+		<annotation cp="📄">dokument | paġna | paġna wiċċha ’l fuq</annotation>
+		<annotation cp="📄" type="tts">paġna wiċċha ’l fuq</annotation>
+		<annotation cp="📰">gazzetta | l-aħbarijiet | tal-karta</annotation>
+		<annotation cp="📰" type="tts">gazzetta</annotation>
+		<annotation cp="🗞">aħbarijiet | gazzetti | karta | rromblati</annotation>
+		<annotation cp="🗞" type="tts">gazzetti rromblati</annotation>
+		<annotation cp="📑">bookmarks | marka | markatur | tabs | tabs tal-bookmarks</annotation>
+		<annotation cp="📑" type="tts">tabs tal-bookmarks</annotation>
+		<annotation cp="🔖">bookmark | marka</annotation>
+		<annotation cp="🔖" type="tts">bookmark</annotation>
+		<annotation cp="🏷">tikketta</annotation>
+		<annotation cp="🏷" type="tts">tikketta</annotation>
+		<annotation cp="💰">borża | borża tal-flus | dollaru | flus</annotation>
+		<annotation cp="💰" type="tts">borża tal-flus</annotation>
+		<annotation cp="💴">bank | flus | karta | karta tal-flus | karta tal-flus yen | munita | nota | yen</annotation>
+		<annotation cp="💴" type="tts">karta tal-flus yen</annotation>
+		<annotation cp="💵">bank | dollaru | flus | karta | karta tal-flus | karta tal-flus dollaru | munita | nota</annotation>
+		<annotation cp="💵" type="tts">karta tal-flus dollaru</annotation>
+		<annotation cp="💶">bank | euro | flus | karta | karta tal-flus | karta tal-flus ewro | munita | nota</annotation>
+		<annotation cp="💶" type="tts">karta tal-flus ewro</annotation>
+		<annotation cp="💷">bank | flus | karta | karta tal-flus | karta tal-flus lira sterlina | lira | munita | nota</annotation>
+		<annotation cp="💷" type="tts">karta tal-flus lira sterlina</annotation>
+		<annotation cp="💸">bank | dollaru | flus | flus bil-ġwienaħ | fly | ġwienaħ | karta | karta tal-flus | nota</annotation>
+		<annotation cp="💸" type="tts">flus bil-ġwienaħ</annotation>
+		<annotation cp="💳">bank | flus | karta | karta tal-kreditu | kreditu</annotation>
+		<annotation cp="💳" type="tts">karta tal-kreditu</annotation>
+		<annotation cp="💹">’l fuq | bank | ċart | ċart tiżdied bil-yen | flus | graff | munita | suq | tendenza | tkabbir | tlugħ | yen</annotation>
+		<annotation cp="💹" type="tts">ċart tiżdied bil-yen</annotation>
+		<annotation cp="✉">envelop | indirizz elettroniku | ittra</annotation>
+		<annotation cp="✉" type="tts">envelop</annotation>
+		<annotation cp="📧">indirizz elettroniku | ittra | posta | posta elettronika</annotation>
+		<annotation cp="📧" type="tts">posta elettronika</annotation>
+		<annotation cp="📨">deħlin | envelop | envelop dieħel | indirizz elettroniku | ittra | jirċievu | posta | posta elettronika</annotation>
+		<annotation cp="📨" type="tts">envelop dieħel</annotation>
+		<annotation cp="📩">’ | barra | envelop | envelop bi vleġġa | indirizz elettroniku | isfel | ittra | mibgħuta | posta | posta elettronika | vleġġa</annotation>
+		<annotation cp="📩" type="tts">envelop bi vleġġa</annotation>
+		<annotation cp="📤">ittra | jintbagħtu | kaxxa | messaġġi ħerġin | posta | trej | trej tal-posta ħierġa</annotation>
+		<annotation cp="📤" type="tts">trej tal-posta ħierġa</annotation>
+		<annotation cp="📥">ittra | kaxxa | messaġġi ħerġin | posta | rċivuta | trej | trej tal-posta rċivuta</annotation>
+		<annotation cp="📥" type="tts">trej tal-posta rċivuta</annotation>
+		<annotation cp="📦">kaxxa | pakkett</annotation>
+		<annotation cp="📦" type="tts">pakkett</annotation>
+		<annotation cp="📫">kaxxa tal-ittri | kaxxa tal-ittri magħluqa bil-bandiera mtellgħa | kaxxa tal-posta | magħluqa | posta</annotation>
+		<annotation cp="📫" type="tts">kaxxa tal-ittri magħluqa bil-bandiera mtellgħa</annotation>
+		<annotation cp="📪">kaxxa tal-ittri | kaxxa tal-ittri magħluqa bil-bandiera mniżżla | kaxxa tal-posta | magħluqa | mniżżla</annotation>
+		<annotation cp="📪" type="tts">kaxxa tal-ittri magħluqa bil-bandiera mniżżla</annotation>
+		<annotation cp="📬">aħbarijiet | Iftaħ | kaxxa tal-ittri miftuħa bil-bandiera mtellgħa | posta | postbox</annotation>
+		<annotation cp="📬" type="tts">kaxxa tal-ittri miftuħa bil-bandiera mtellgħa</annotation>
+		<annotation cp="📭">kaxxa tal-ittri | kaxxa tal-ittri miftuħa bil-bandiera mniżżla | kaxxa tal-posta | miftuħa | mniżżla | posta</annotation>
+		<annotation cp="📭" type="tts">kaxxa tal-ittri miftuħa bil-bandiera mniżżla</annotation>
+		<annotation cp="📮">kaxxa tal-ittri | posta</annotation>
+		<annotation cp="📮" type="tts">kaxxa tal-ittri</annotation>
+		<annotation cp="🗳">kaxxa | kaxxa tal-votazzjoni b’votazzjoni | votazzjoni</annotation>
+		<annotation cp="🗳" type="tts">kaxxa tal-votazzjoni b’votazzjoni</annotation>
+		<annotation cp="✏">lapes</annotation>
+		<annotation cp="✏" type="tts">lapes</annotation>
+		<annotation cp="✒">pinna | ponta | ponta sewda</annotation>
+		<annotation cp="✒" type="tts">ponta sewda</annotation>
+		<annotation cp="🖋">fountain | pen</annotation>
+		<annotation cp="🖋" type="tts">fountain pen</annotation>
+		<annotation cp="🖊">ballpoint | pinna</annotation>
+		<annotation cp="🖊" type="tts">pinna</annotation>
+		<annotation cp="🖌">pinzell | pittura</annotation>
+		<annotation cp="🖌" type="tts">pinzell</annotation>
+		<annotation cp="🖍">crayon</annotation>
+		<annotation cp="🖍" type="tts">crayon</annotation>
+		<annotation cp="📝">lapes | memo</annotation>
+		<annotation cp="📝" type="tts">memo</annotation>
+		<annotation cp="💼">briefcase</annotation>
+		<annotation cp="💼" type="tts">briefcase</annotation>
+		<annotation cp="📁">fajl | fowlder | fowlder tal-fajls</annotation>
+		<annotation cp="📁" type="tts">fowlder tal-fajls</annotation>
+		<annotation cp="📂">fajl | fowlder | fowlder tal-fajls miftuħ | miftuħ</annotation>
+		<annotation cp="📂" type="tts">fowlder tal-fajls miftuħ</annotation>
+		<annotation cp="🗂">dividers | indiċi | kard | kard dividers tal-indiċi tal-biljett</annotation>
+		<annotation cp="🗂" type="tts">kard dividers tal-indiċi tal-biljett</annotation>
+		<annotation cp="📅">data | kalendarju</annotation>
+		<annotation cp="📅" type="tts">kalendarju</annotation>
+		<annotation cp="📆">kalendarju | kalendarju bil-karti jitqaċċtu</annotation>
+		<annotation cp="📆" type="tts">kalendarju bil-karti jitqaċċtu</annotation>
+		<annotation cp="🗒">nota | notepad spirali | pad | spirali</annotation>
+		<annotation cp="🗒" type="tts">notepad spirali</annotation>
+		<annotation cp="🗓">kalendarju | pad | spirali</annotation>
+		<annotation cp="🗓" type="tts">kalendarju spirali</annotation>
+		<annotation cp="📇">indiċi | indiċi tal-kards | kard | rolodex</annotation>
+		<annotation cp="📇" type="tts">indiċi tal-kards</annotation>
+		<annotation cp="📈">’il fuq | ċart | ċart tiżdied | graff | tendenza | tkabbir</annotation>
+		<annotation cp="📈" type="tts">ċart tiżdied</annotation>
+		<annotation cp="📉">’l isfel | ċart | ċart tonqos | graff | tendenza</annotation>
+		<annotation cp="📉" type="tts">ċart tonqos</annotation>
+		<annotation cp="📊">bar | barċart | ċart | graff</annotation>
+		<annotation cp="📊" type="tts">barċart</annotation>
+		<annotation cp="📋">klibbord</annotation>
+		<annotation cp="📋" type="tts">klibbord</annotation>
+		<annotation cp="📌">pin | pushpin</annotation>
+		<annotation cp="📌" type="tts">pushpin</annotation>
+		<annotation cp="📍">pin | pushpin | pushpin tond</annotation>
+		<annotation cp="📍" type="tts">pushpin tond</annotation>
+		<annotation cp="📎">paperclip</annotation>
+		<annotation cp="📎" type="tts">paperclip</annotation>
+		<annotation cp="🖇">link | paperclip | paperclips illinkjati</annotation>
+		<annotation cp="🖇" type="tts">paperclips illinkjati</annotation>
+		<annotation cp="📏">riga | riga dritta | xifer dritt</annotation>
+		<annotation cp="📏" type="tts">riga dritta</annotation>
+		<annotation cp="📐">riga | riga trijangulari | set | trijangolu</annotation>
+		<annotation cp="📐" type="tts">riga trijangulari</annotation>
+		<annotation cp="✂">għodda | imqass | qtugħ</annotation>
+		<annotation cp="✂" type="tts">imqass</annotation>
+		<annotation cp="🗃">fajl | kard | kaxxa | kaxxa tal-biljetti tal-fajl</annotation>
+		<annotation cp="🗃" type="tts">kaxxa tal-biljetti tal-fajl</annotation>
+		<annotation cp="🗄">fajl | iffajljar | kabinet | kabinet tal-fajls</annotation>
+		<annotation cp="🗄" type="tts">kabinet tal-fajls</annotation>
+		<annotation cp="🗑">landa tal-iskart</annotation>
+		<annotation cp="🗑" type="tts">landa tal-iskart</annotation>
+		<annotation cp="🔒">imsakkar | magħluqa</annotation>
+		<annotation cp="🔒" type="tts">imsakkar</annotation>
+		<annotation cp="🔓">iftaħ | mhux imsakkar | sakkar</annotation>
+		<annotation cp="🔓" type="tts">mhux imsakkar</annotation>
+		<annotation cp="🔏">imsakkar | imsakkar b’pinna | linka | pinna | ponta | privatezza</annotation>
+		<annotation cp="🔏" type="tts">imsakkar b’pinna</annotation>
+		<annotation cp="🔐">ċavetta | imsakkar | magħluqa | msakkar b’ċavetta | sigur</annotation>
+		<annotation cp="🔐" type="tts">msakkar b’ċavetta</annotation>
+		<annotation cp="🔑">ċavetta | password | sakkar</annotation>
+		<annotation cp="🔑" type="tts">ċavetta</annotation>
+		<annotation cp="🗝">antik | ċavetta | ċavetta qadima | ħjiel | sakkar</annotation>
+		<annotation cp="🗝" type="tts">ċavetta qadima</annotation>
+		<annotation cp="🔨">għodda | martell</annotation>
+		<annotation cp="🔨" type="tts">martell</annotation>
+		<annotation cp="⛏">agħżel | għodda | mini</annotation>
+		<annotation cp="⛏" type="tts">agħżel</annotation>
+		<annotation cp="⚒">fies | għodda | martell | martell u fies</annotation>
+		<annotation cp="⚒" type="tts">martell u fies</annotation>
+		<annotation cp="🛠">għodda | martell | martell u spaner | spaner</annotation>
+		<annotation cp="🛠" type="tts">martell u spaner</annotation>
+		<annotation cp="🗡">arma | sikkina | stallet</annotation>
+		<annotation cp="🗡" type="tts">stallet</annotation>
+		<annotation cp="⚔">arma | inkroċjati | xwabel</annotation>
+		<annotation cp="⚔" type="tts">xwabel inkroċjati</annotation>
+		<annotation cp="💣">bomba | komiku</annotation>
+		<annotation cp="💣" type="tts">bomba</annotation>
+		<annotation cp="🏹">arċier | arma | għodda | qaws | qaws u vleġġa | Sagittarius | sparar bil-qaws | vleġġa | zodjaku</annotation>
+		<annotation cp="🏹" type="tts">qaws u vleġġa</annotation>
+		<annotation cp="🛡">arma | tarka</annotation>
+		<annotation cp="🛡" type="tts">tarka</annotation>
+		<annotation cp="🔧">martell | spaner | spanner</annotation>
+		<annotation cp="🔧" type="tts">spanner</annotation>
+		<annotation cp="🔩">għodda | skorfina | vit | vit u skorfina</annotation>
+		<annotation cp="🔩" type="tts">vit u skorfina</annotation>
+		<annotation cp="⚙">apparat | għodda</annotation>
+		<annotation cp="⚙" type="tts">apparat</annotation>
+		<annotation cp="🗜">għodda | ikkompressa | klamp | morsa</annotation>
+		<annotation cp="🗜" type="tts">klamp</annotation>
+		<annotation cp="⚖">bilanċ | għodda | ġustizzja | Libra | miżien | piż | zodjaku</annotation>
+		<annotation cp="⚖" type="tts">miżien</annotation>
+		<annotation cp="🔗">katina</annotation>
+		<annotation cp="🔗" type="tts">katina</annotation>
+		<annotation cp="⛓">katina | ktajjen</annotation>
+		<annotation cp="⛓" type="tts">ktajjen</annotation>
+		<annotation cp="⚗">għodda | kimika | lampik</annotation>
+		<annotation cp="⚗" type="tts">lampik</annotation>
+		<annotation cp="🔬">għodda | mikroskopju | xjenza</annotation>
+		<annotation cp="🔬" type="tts">mikroskopju</annotation>
+		<annotation cp="🔭">għodda | teleskopju | xjenza</annotation>
+		<annotation cp="🔭" type="tts">teleskopju</annotation>
+		<annotation cp="📡">antenna | antenna tas-satellita | dixx | satellita</annotation>
+		<annotation cp="📡" type="tts">antenna tas-satellita</annotation>
+		<annotation cp="💉">għodda | labra | marid | mediċina | siringa | tabib | vaċċin</annotation>
+		<annotation cp="💉" type="tts">siringa</annotation>
+		<annotation cp="💊">marid | mediċina | pillola | tabib</annotation>
+		<annotation cp="💊" type="tts">pillola</annotation>
+		<annotation cp="🚪">bieb</annotation>
+		<annotation cp="🚪" type="tts">bieb</annotation>
+		<annotation cp="🛏">lukanda | rqad | sodda</annotation>
+		<annotation cp="🛏" type="tts">sodda</annotation>
+		<annotation cp="🛋">fanal | lukanda | sufan | sufan u lampa</annotation>
+		<annotation cp="🛋" type="tts">sufan u lampa</annotation>
+		<annotation cp="🚽">toilet</annotation>
+		<annotation cp="🚽" type="tts">toilet</annotation>
+		<annotation cp="🚿">doxxa | ilma</annotation>
+		<annotation cp="🚿" type="tts">doxxa</annotation>
+		<annotation cp="🛁">banju</annotation>
+		<annotation cp="🛁" type="tts">banju</annotation>
+		<annotation cp="🛒">basket | basket tax-xiri | troli | xiri</annotation>
+		<annotation cp="🛒" type="tts">basket tax-xiri</annotation>
+		<annotation cp="🚬">sigarett | tipjip</annotation>
+		<annotation cp="🚬" type="tts">sigarett</annotation>
+		<annotation cp="⚰">mewt | tebut</annotation>
+		<annotation cp="⚰" type="tts">tebut</annotation>
+		<annotation cp="⚱">funerali | irmied | mewt | urna | urna tal-funerali</annotation>
+		<annotation cp="⚱" type="tts">urna tal-funerali</annotation>
+		<annotation cp="🗿">moai | moyai | statwa | wiċċ</annotation>
+		<annotation cp="🗿" type="tts">moai</annotation>
+		<annotation cp="🏧">atm | awtomatiku | bank | kaxxiera | tabella tal-ATM</annotation>
+		<annotation cp="🏧" type="tts">tabella tal-ATM</annotation>
+		<annotation cp="🚮">barmil taż-żibel | tabella ta’ barmil taż-żibel | żibel</annotation>
+		<annotation cp="🚮" type="tts">tabella ta’ barmil taż-żibel</annotation>
+		<annotation cp="🚰">ilma | tax-xorb | xorb</annotation>
+		<annotation cp="🚰" type="tts">ilma tax-xorb</annotation>
+		<annotation cp="♿">aċċess | simbolu ta’ siġġu tar-roti</annotation>
+		<annotation cp="♿" type="tts">simbolu ta’ siġġu tar-roti</annotation>
+		<annotation cp="🚹">kamra tal-irġiel | latrina | raġel | toilet | wc</annotation>
+		<annotation cp="🚹" type="tts">kamra tal-irġiel</annotation>
+		<annotation cp="🚺">kamra tan-nisa | latrina | mara | toilet | wc</annotation>
+		<annotation cp="🚺" type="tts">kamra tan-nisa</annotation>
+		<annotation cp="🚻">lavatory | toilet | toilets | WC</annotation>
+		<annotation cp="🚻" type="tts">toilets</annotation>
+		<annotation cp="🚼">simbolu ta’ trabi | tarbija | tbiddel</annotation>
+		<annotation cp="🚼" type="tts">simbolu ta’ trabi</annotation>
+		<annotation cp="🚾">ilma | kmajra | latrina | toilet | wc</annotation>
+		<annotation cp="🚾" type="tts">wc</annotation>
+		<annotation cp="🛂">kontroll | kontroll tal-passaport | passaport</annotation>
+		<annotation cp="🛂" type="tts">kontroll tal-passaport</annotation>
+		<annotation cp="🛃">dwana</annotation>
+		<annotation cp="🛃" type="tts">dwana</annotation>
+		<annotation cp="🛄">bagalji | uffiċċju | uffiċċju tal-bagalji</annotation>
+		<annotation cp="🛄" type="tts">uffiċċju tal-bagalji</annotation>
+		<annotation cp="🛅">bagalji | bagalji mitlufa | loker</annotation>
+		<annotation cp="🛅" type="tts">bagalji mitlufa</annotation>
+		<annotation cp="⚠">twissija</annotation>
+		<annotation cp="⚠" type="tts">twissija</annotation>
+		<annotation cp="🚸">pedonali | qsim | tfal | tfal jaqsmu | traffiku</annotation>
+		<annotation cp="🚸" type="tts">tfal jaqsmu</annotation>
+		<annotation cp="⛔">dħul | ebda dħul | ma | mhux | pprojbit | pprojbiti | traffiku</annotation>
+		<annotation cp="⛔" type="tts">ebda dħul</annotation>
+		<annotation cp="🚫">dħul | ma | mhux | pprojbit | projbit</annotation>
+		<annotation cp="🚫" type="tts">projbit</annotation>
+		<annotation cp="🚳">ebda rota | ma | mhux | pprojbit | projbit | rota</annotation>
+		<annotation cp="🚳" type="tts">ebda rota</annotation>
+		<annotation cp="🚭">ma | mhux | pprojbit | pprojbiti | tipjip | tipjip mhux permess</annotation>
+		<annotation cp="🚭" type="tts">tipjip mhux permess</annotation>
+		<annotation cp="🚯">ebda rimi | ma | mhux | pprojbit | pprojbiti | skart</annotation>
+		<annotation cp="🚯" type="tts">ebda rimi</annotation>
+		<annotation cp="🚱">ilma | ilma mhux tajjeb għax-xorb | mhux tajjeb għax-xorb</annotation>
+		<annotation cp="🚱" type="tts">ilma mhux tajjeb għax-xorb</annotation>
+		<annotation cp="🚷">ebda nies pedonali | ma | mhux | pedonali | pprojbit | pprojbiti</annotation>
+		<annotation cp="🚷" type="tts">ebda nies pedonali</annotation>
+		<annotation cp="📵">ebda mowbajl | ma | mhux | mowbajl | pprojbiti | telefown</annotation>
+		<annotation cp="📵" type="tts">ebda mowbajl</annotation>
+		<annotation cp="🔞">18 | ħadd taħt it-tmintax | ma | mhux | pprojbiti | restrizzjoni tal-età | taħt l-età | tmintax</annotation>
+		<annotation cp="🔞" type="tts">ħadd taħt it-tmintax</annotation>
+		<annotation cp="☢">radjoattiv | sinjal</annotation>
+		<annotation cp="☢" type="tts">radjoattiv</annotation>
+		<annotation cp="☣">perikolu bijoloġiku | sinjal</annotation>
+		<annotation cp="☣" type="tts">perikolu bijoloġiku</annotation>
+		<annotation cp="⬆">direzzjoni | kardinal | tramuntana | vleġġa | vleġġa ’l fuq</annotation>
+		<annotation cp="⬆" type="tts">vleġġa ’l fuq</annotation>
+		<annotation cp="↗">direzzjoni | grigal | interkardinal | vleġġa | vleġġa ’l fuq leminija</annotation>
+		<annotation cp="↗" type="tts">vleġġa ’l fuq leminija</annotation>
+		<annotation cp="➡">direzzjoni | il-lvant | kardinal | vleġġa | vleġġa leminija</annotation>
+		<annotation cp="➡" type="tts">vleġġa leminija</annotation>
+		<annotation cp="↘">direzzjoni | interkardinal | vleġġa | vleġġa ’l isfel leminija | xlokk</annotation>
+		<annotation cp="↘" type="tts">vleġġa ’l isfel leminija</annotation>
+		<annotation cp="⬇">’l isfel | direzzjoni | kardinal | nofsinhar | vleġġa | vleġġa ’l isfel</annotation>
+		<annotation cp="⬇" type="tts">vleġġa ’l isfel</annotation>
+		<annotation cp="↙">direzzjoni | interkardinal | lbiċ | vleġġa | vleġġa xellugija ’l isfel</annotation>
+		<annotation cp="↙" type="tts">vleġġa xellugija ’l isfel</annotation>
+		<annotation cp="⬅">direzzjoni | il-punent | kardinal | vleġġa | vleġġa xellugija</annotation>
+		<annotation cp="⬅" type="tts">vleġġa xellugija</annotation>
+		<annotation cp="↖">direzzjoni | interkardinal | majjistral | vleġġa | vleġġa xellugija ’l fuq</annotation>
+		<annotation cp="↖" type="tts">vleġġa xellugija ’l fuq</annotation>
+		<annotation cp="↕">vleġġa | vleġġa ’l isfel u ’l isfel</annotation>
+		<annotation cp="↕" type="tts">vleġġa ’l isfel u ’l isfel</annotation>
+		<annotation cp="↔">vleġġa | vleġġa ’l isfel xellugija</annotation>
+		<annotation cp="↔" type="tts">vleġġa ’l isfel xellugija</annotation>
+		<annotation cp="↩">vleġġa | vleġġa leminija mgħawġa lejn ix-xellug</annotation>
+		<annotation cp="↩" type="tts">vleġġa leminija mgħawġa lejn ix-xellug</annotation>
+		<annotation cp="↪">vleġġa | vleġġa tax-xellug mgħawġa lejn il-lemin</annotation>
+		<annotation cp="↪" type="tts">vleġġa tax-xellug mgħawġa lejn il-lemin</annotation>
+		<annotation cp="⤴">vleġġa | vleġġa leminija mgħawġa ’l fuq</annotation>
+		<annotation cp="⤴" type="tts">vleġġa leminija mgħawġa ’l fuq</annotation>
+		<annotation cp="⤵">’l isfel | vleġġa | vleġġa leminija mgħawġa ’l isfel</annotation>
+		<annotation cp="⤵" type="tts">vleġġa leminija mgħawġa ’l isfel</annotation>
+		<annotation cp="🔃">favur l-arloġġ | terġa’ ttella’ | vleġeġ vertikali favur l-arloġġ | vleġġa</annotation>
+		<annotation cp="🔃" type="tts">vleġeġ vertikali favur l-arloġġ</annotation>
+		<annotation cp="🔄">buttuna vleġeġ kontra l-arloġġ | kontra l-arloġġ | vleġġa | withershins</annotation>
+		<annotation cp="🔄" type="tts">buttuna vleġeġ kontra l-arloġġ</annotation>
+		<annotation cp="🔙">lura | vleġġa | vleġġa BACK</annotation>
+		<annotation cp="🔙" type="tts">vleġġa BACK</annotation>
+		<annotation cp="🔚">tmiem | vleġġa | vleġġa END</annotation>
+		<annotation cp="🔚" type="tts">vleġġa END</annotation>
+		<annotation cp="🔛">fuq | marka | vleġġa | vleġġa ON!</annotation>
+		<annotation cp="🔛" type="tts">vleġġa ON!</annotation>
+		<annotation cp="🔜">mill-aktar fis | vleġġa | vleġġa SOON</annotation>
+		<annotation cp="🔜" type="tts">vleġġa SOON</annotation>
+		<annotation cp="🔝">’il fuq | fuq | vleġġa | vleġġa TOP</annotation>
+		<annotation cp="🔝" type="tts">vleġġa TOP</annotation>
+		<annotation cp="🛐">post ta’ qima | qima | reliġjon</annotation>
+		<annotation cp="🛐" type="tts">post ta’ qima</annotation>
+		<annotation cp="⚛">ateu | atomu | simbolu tal-atomu</annotation>
+		<annotation cp="⚛" type="tts">simbolu tal-atomu</annotation>
+		<annotation cp="🕉">Hindu | om | reliġjon</annotation>
+		<annotation cp="🕉" type="tts">om</annotation>
+		<annotation cp="✡">David | l-istilla ta’ David | Lhudi | reliġjon | stilla</annotation>
+		<annotation cp="✡" type="tts">l-istilla ta’ David</annotation>
+		<annotation cp="☸">Buddhist | dharma | ir-rota ta’ dharma | reliġjon | rota</annotation>
+		<annotation cp="☸" type="tts">ir-rota ta’ dharma</annotation>
+		<annotation cp="☯">reliġjon | tao | taoist | yang | yin</annotation>
+		<annotation cp="☯" type="tts">yin yang</annotation>
+		<annotation cp="✝">Kristjan | reliġjon | salib | salib latin</annotation>
+		<annotation cp="✝" type="tts">salib latin</annotation>
+		<annotation cp="☦">Kristjan | reliġjon | salib | salib ortodoss</annotation>
+		<annotation cp="☦" type="tts">salib ortodoss</annotation>
+		<annotation cp="☪">Islam | Musulmana | reliġjon | stilla u nofs qamar</annotation>
+		<annotation cp="☪" type="tts">stilla u nofs qamar</annotation>
+		<annotation cp="☮">is-simbolu tal-paċi | paċi</annotation>
+		<annotation cp="☮" type="tts">is-simbolu tal-paċi</annotation>
+		<annotation cp="🕎">gandelabru | gandlier | menora | reliġjon</annotation>
+		<annotation cp="🕎" type="tts">menora</annotation>
+		<annotation cp="🔯">fortuna | stilla | stilla bit-tikek b’sitt ponot</annotation>
+		<annotation cp="🔯" type="tts">stilla bit-tikek b’sitt ponot</annotation>
+		<annotation cp="♈">Aries | muntun | żodjaku</annotation>
+		<annotation cp="♈" type="tts">Aries</annotation>
+		<annotation cp="♉">barri | bhima | Taurus | żodjaku</annotation>
+		<annotation cp="♉" type="tts">Taurus</annotation>
+		<annotation cp="♊">Gemini | it-tewmin | żodjaku</annotation>
+		<annotation cp="♊" type="tts">Gemini</annotation>
+		<annotation cp="♋">Cancer | granċ | żodjaku</annotation>
+		<annotation cp="♋" type="tts">Cancer</annotation>
+		<annotation cp="♌">iljun | Leo | żodjaku</annotation>
+		<annotation cp="♌" type="tts">Leo</annotation>
+		<annotation cp="♍">Virgo | żodjaku</annotation>
+		<annotation cp="♍" type="tts">Virgo</annotation>
+		<annotation cp="♎">bilanċ | ġustizzja | Libra | miżien | żodjaku</annotation>
+		<annotation cp="♎" type="tts">Libra</annotation>
+		<annotation cp="♏">scorpio | Scorpius | skorpjun | żodjaku</annotation>
+		<annotation cp="♏" type="tts">Scorpius</annotation>
+		<annotation cp="♐">arċier | Sagittarius | żodjaku</annotation>
+		<annotation cp="♐" type="tts">Sagittarius</annotation>
+		<annotation cp="♑">Capricorn | mogħża | żodjaku</annotation>
+		<annotation cp="♑" type="tts">Capricorn</annotation>
+		<annotation cp="♒">Aquarius | ilma | portatur | żodjaku</annotation>
+		<annotation cp="♒" type="tts">Aquarius</annotation>
+		<annotation cp="♓">ħut | Pisces | żodjaku</annotation>
+		<annotation cp="♓" type="tts">Pisces</annotation>
+		<annotation cp="⛎">Ophiuchus | portatur | serp | serpent | żodjaku</annotation>
+		<annotation cp="⛎" type="tts">Ophiuchus</annotation>
+		<annotation cp="🔀">buttuna shuffle tracks | inkroċjata | vleġġa</annotation>
+		<annotation cp="🔀" type="tts">buttuna shuffle tracks</annotation>
+		<annotation cp="🔁">buttuna irrepeti | favur l-arloġġ | irrepeti | vleġġa</annotation>
+		<annotation cp="🔁" type="tts">buttuna irrepeti</annotation>
+		<annotation cp="🔂">buttuna irrepeti darba | darba | favur l-arloġġ | vleġġa</annotation>
+		<annotation cp="🔂" type="tts">buttuna irrepeti darba</annotation>
+		<annotation cp="▶">aqra | dritt | il-buttuna aqra | trijangolu | vleġġa</annotation>
+		<annotation cp="▶" type="tts">il-buttuna aqra</annotation>
+		<annotation cp="⏩">’il quddiem | buttuna fast-forward | doppju | veloċi | vleġġa</annotation>
+		<annotation cp="⏩" type="tts">buttuna fast-forward</annotation>
+		<annotation cp="⏭">buttuna trekk li jmiss | trekk li jmiss | trijangolu | vleġġa | xena li jmiss</annotation>
+		<annotation cp="⏭" type="tts">buttuna trekk li jmiss</annotation>
+		<annotation cp="⏯">aqra | buttuna aqra jew issospendi | dritt | issospendi | trijangolu | vleġġa</annotation>
+		<annotation cp="⏯" type="tts">buttuna aqra jew issospendi</annotation>
+		<annotation cp="◀">bil-maqlub | buttuna reverse | tax-xellug | trijangolu | vleġġa</annotation>
+		<annotation cp="◀" type="tts">buttuna reverse</annotation>
+		<annotation cp="⏪">buttuna fast reverse | doppja | irriwajndja | vleġġa</annotation>
+		<annotation cp="⏪" type="tts">buttuna fast reverse</annotation>
+		<annotation cp="⏮">buttuna l-aħħar trekk | it-trekk preċedenti | trijangolu | vleġġa | xena preċedenti</annotation>
+		<annotation cp="⏮" type="tts">buttuna l-aħħar trekk</annotation>
+		<annotation cp="🔼">buttuna | buttuna up | ħamra | vleġġa</annotation>
+		<annotation cp="🔼" type="tts">buttuna up</annotation>
+		<annotation cp="⏫">buttuna fast up | doppja | vleġġa</annotation>
+		<annotation cp="⏫" type="tts">buttuna fast up</annotation>
+		<annotation cp="🔽">buttuna | buttuna down | ħamra | isfel | vleġġa</annotation>
+		<annotation cp="🔽" type="tts">buttuna down</annotation>
+		<annotation cp="⏬">buttuna fast down | doppja | isfel | vleġġa</annotation>
+		<annotation cp="⏬" type="tts">buttuna fast down</annotation>
+		<annotation cp="⏸">bar | buttuna issospendi | doppju | issospendi | vertikali</annotation>
+		<annotation cp="⏸" type="tts">buttuna issospendi</annotation>
+		<annotation cp="⏹">buttuna waqqaf | kwadru | waqqaf</annotation>
+		<annotation cp="⏹" type="tts">buttuna waqqaf</annotation>
+		<annotation cp="⏺">buttuna tar-rekord | ċirku | rekord</annotation>
+		<annotation cp="⏺" type="tts">buttuna tar-rekord</annotation>
+		<annotation cp="⏏">il-buttuna oħroġ | oħroġ</annotation>
+		<annotation cp="⏏" type="tts">il-buttuna oħroġ</annotation>
+		<annotation cp="🎦">ċinema | film | filmat | kamera</annotation>
+		<annotation cp="🎦" type="tts">ċinema</annotation>
+		<annotation cp="🔅">baxx | buttuna dim | dim | qawwa tad-dawl</annotation>
+		<annotation cp="🔅" type="tts">buttuna dim</annotation>
+		<annotation cp="🔆">bright | buttuna bright | qawwa tad-dawl</annotation>
+		<annotation cp="🔆" type="tts">buttuna bright</annotation>
+		<annotation cp="📶">antenna | mowbajl | sinjal | telefown | virga | virgi tal-antenna</annotation>
+		<annotation cp="📶" type="tts">virgi tal-antenna</annotation>
+		<annotation cp="📳">mod | mod ta’ vibrazzjoni | mowbajl | telefown | vibrazzjoni</annotation>
+		<annotation cp="📳" type="tts">mod ta’ vibrazzjoni</annotation>
+		<annotation cp="📴">mitfi | mowbajl | telefown</annotation>
+		<annotation cp="📴" type="tts">mowbajl mitfi</annotation>
+		<annotation cp="♀">mara | sinjal femminili</annotation>
+		<annotation cp="♀" type="tts">sinjal femminili</annotation>
+		<annotation cp="♂">raġel | sinjal maskili</annotation>
+		<annotation cp="♂" type="tts">sinjal maskili</annotation>
+		<annotation cp="✖">ikkanċella | immoltiplika | multiplikazzjoni | multiplikazzjoni grassett x | x</annotation>
+		<annotation cp="✖" type="tts">multiplikazzjoni grassett x</annotation>
+		<annotation cp="➕">matematika | plus | sinjal plus grassett</annotation>
+		<annotation cp="➕" type="tts">sinjal plus grassett</annotation>
+		<annotation cp="➖">matematika | minus | sinjal minus grassett</annotation>
+		<annotation cp="➖" type="tts">sinjal minus grassett</annotation>
+		<annotation cp="➗">diviżjoni | matematika | sinjal diviżjoni grassett</annotation>
+		<annotation cp="➗" type="tts">sinjal diviżjoni grassett</annotation>
+		<annotation cp="‼">bangbang | esklamazzjoni | marka | punt doppju esklamattiv | punteġġjatura</annotation>
+		<annotation cp="‼" type="tts">punt doppju esklamattiv</annotation>
+		<annotation cp="⁉">esklamazzjoni | interrobang | marka | mistoqsija | punt interrogattiv ta’ esklamazzjoni | punteġġjatura</annotation>
+		<annotation cp="⁉" type="tts">punt interrogattiv ta’ esklamazzjoni</annotation>
+		<annotation cp="❓">marka | mistoqsija | punt interrogattiv | punteġġjatura</annotation>
+		<annotation cp="❓" type="tts">punt interrogattiv</annotation>
+		<annotation cp="❔">marka | mistoqsija | punt interrogattiv abjad | punteġġjatura | spjegati</annotation>
+		<annotation cp="❔" type="tts">punt interrogattiv abjad</annotation>
+		<annotation cp="❕">esklamazzjoni | marka | punt esklamattiv abjad | punteġġjatura | spjegati</annotation>
+		<annotation cp="❕" type="tts">punt esklamattiv abjad</annotation>
+		<annotation cp="❗">esklamazzjoni | marka | punt esklamattiv | punteġġjatura</annotation>
+		<annotation cp="❗" type="tts">punt esklamattiv</annotation>
+		<annotation cp="〰">mmewwweġ | punteġġjatura | sing | sing immewwweġ</annotation>
+		<annotation cp="〰" type="tts">sing immewwweġ</annotation>
+		<annotation cp="💱">bank | flus | kambju tal-munita | munita | skambju</annotation>
+		<annotation cp="💱" type="tts">kambju tal-munita</annotation>
+		<annotation cp="💲">dollaru | flus | munita | sinjal tad-dollaru grassett</annotation>
+		<annotation cp="💲" type="tts">sinjal tad-dollaru grassett</annotation>
+		<annotation cp="⚕">aesculapius | mediċina | persunal | simbolu mediku</annotation>
+		<annotation cp="⚕" type="tts">simbolu mediku</annotation>
+		<annotation cp="♻">irriċikla | simbolu tar-riċiklaġġ</annotation>
+		<annotation cp="♻" type="tts">simbolu tar-riċiklaġġ</annotation>
+		<annotation cp="⚜">fleur-de-lis</annotation>
+		<annotation cp="⚜" type="tts">fleur-de-lis</annotation>
+		<annotation cp="🔱">ankra | bastiment | emblema | għodda | trident</annotation>
+		<annotation cp="🔱" type="tts">emblema trident</annotation>
+		<annotation cp="📛">beġġ | beġġ bl-isem | isem</annotation>
+		<annotation cp="📛" type="tts">beġġ bl-isem</annotation>
+		<annotation cp="🔰">aħdar | chevron | Ġappuniż | għodda | isfar | prinċipjant | simbolu Ġappuniż għal prinċipjant | werqa</annotation>
+		<annotation cp="🔰" type="tts">simbolu Ġappuniż għal prinċipjant</annotation>
+		<annotation cp="⭕">ċirku | ċirku kbir grassett | o</annotation>
+		<annotation cp="⭕" type="tts">ċirku kbir grassett</annotation>
+		<annotation cp="✅">marka | marka ta’ verifika bajda grassett | verifika</annotation>
+		<annotation cp="✅" type="tts">marka ta’ verifika bajda grassett</annotation>
+		<annotation cp="☑">kaxxa | kaxxa tal-votazzjoni b’marka | marka | votazzjoni</annotation>
+		<annotation cp="☑" type="tts">kaxxa tal-votazzjoni b’marka</annotation>
+		<annotation cp="✔">marka | marka ta’ verifika grassett | verifika</annotation>
+		<annotation cp="✔" type="tts">marka ta’ verifika grassett</annotation>
+		<annotation cp="❌">ikkanċella | immoltiplika | marka | marka salib | multiplikazzjoni | x</annotation>
+		<annotation cp="❌" type="tts">marka salib</annotation>
+		<annotation cp="❎">buttuna ta’ marka salib | kwadru | marka</annotation>
+		<annotation cp="❎" type="tts">buttuna ta’ marka salib</annotation>
+		<annotation cp="➰">innukklata | loop</annotation>
+		<annotation cp="➰" type="tts">loop innukklata</annotation>
+		<annotation cp="➿">doppju | innukklata | loop | loop innukklata doppja</annotation>
+		<annotation cp="➿" type="tts">loop innukklata doppja</annotation>
+		<annotation cp="〽">marka | marka ta’ alternanza ta’ parti | parti</annotation>
+		<annotation cp="〽" type="tts">marka ta’ alternanza ta’ parti</annotation>
+		<annotation cp="✳">stilla | stilla bi tmien linji</annotation>
+		<annotation cp="✳" type="tts">stilla bi tmien linji</annotation>
+		<annotation cp="✴">stilla | stilla bi tmien ponot</annotation>
+		<annotation cp="✴" type="tts">stilla bi tmien ponot</annotation>
+		<annotation cp="❇">ileħħ</annotation>
+		<annotation cp="❇" type="tts">ileħħ</annotation>
+		<annotation cp="©">drittijiet tal-awtur</annotation>
+		<annotation cp="©" type="tts">drittijiet tal-awtur</annotation>
+		<annotation cp="®">reġistrati</annotation>
+		<annotation cp="®" type="tts">reġistrati</annotation>
+		<annotation cp="™">marka | tm | trade mark | trademark</annotation>
+		<annotation cp="™" type="tts">trade mark</annotation>
+		<annotation cp="🔠">ABCD | input | ittri | kapitali | latin</annotation>
+		<annotation cp="🔠" type="tts">input latin kapitali</annotation>
+		<annotation cp="🔡">abcd | input | input latin ittra żgħira | ittra żgħira | ittri | latin</annotation>
+		<annotation cp="🔡" type="tts">input latin ittra żgħira</annotation>
+		<annotation cp="🔢">1234 | input | numri | numri tal-input</annotation>
+		<annotation cp="🔢" type="tts">numri tal-input</annotation>
+		<annotation cp="🔣">〒♪&amp;% | input | simboli tal-input</annotation>
+		<annotation cp="🔣" type="tts">simboli tal-input</annotation>
+		<annotation cp="🔤">abc | alfabett | input | ittri | latin</annotation>
+		<annotation cp="🔤" type="tts">input ittri latin</annotation>
+		<annotation cp="🅰">a | buttuna A (tip tad-demm) | tip tad-demm</annotation>
+		<annotation cp="🅰" type="tts">buttuna A (tip tad-demm)</annotation>
+		<annotation cp="🆎">ab | buttuna AB (tip tad-demm) | tip tad-demm</annotation>
+		<annotation cp="🆎" type="tts">buttuna AB (tip tad-demm)</annotation>
+		<annotation cp="🅱">b | buttuna B (tip tad-demm) | tip tad-demm</annotation>
+		<annotation cp="🅱" type="tts">buttuna B (tip tad-demm)</annotation>
+		<annotation cp="🆑">buttuna CL | cl</annotation>
+		<annotation cp="🆑" type="tts">buttuna CL</annotation>
+		<annotation cp="🆒">buttuna COOL | cool</annotation>
+		<annotation cp="🆒" type="tts">buttuna COOL</annotation>
+		<annotation cp="🆓">buttuna FREE | free</annotation>
+		<annotation cp="🆓" type="tts">buttuna FREE</annotation>
+		<annotation cp="ℹ">i | informazzjoni</annotation>
+		<annotation cp="ℹ" type="tts">informazzjoni</annotation>
+		<annotation cp="🆔">buttuna ID | id | identità</annotation>
+		<annotation cp="🆔" type="tts">buttuna ID</annotation>
+		<annotation cp="Ⓜ">ċirku | m</annotation>
+		<annotation cp="Ⓜ" type="tts">ċirku M</annotation>
+		<annotation cp="🆕">buttuna NEW | new</annotation>
+		<annotation cp="🆕" type="tts">buttuna NEW</annotation>
+		<annotation cp="🆖">buttuna NG | ng</annotation>
+		<annotation cp="🆖" type="tts">buttuna NG</annotation>
+		<annotation cp="🅾">buttuna O (tip tad-demm) | o | tip tad-demm</annotation>
+		<annotation cp="🅾" type="tts">buttuna O (tip tad-demm)</annotation>
+		<annotation cp="🆗">buttuna OK | OK</annotation>
+		<annotation cp="🆗" type="tts">buttuna OK</annotation>
+		<annotation cp="🅿">buttuna P | pparkjar</annotation>
+		<annotation cp="🅿" type="tts">buttuna P</annotation>
+		<annotation cp="🆘">buttuna SOS | għajnuna | sos</annotation>
+		<annotation cp="🆘" type="tts">buttuna SOS</annotation>
+		<annotation cp="🆚">buttuna VS | versus | vs</annotation>
+		<annotation cp="🆚" type="tts">buttuna VS</annotation>
+		<annotation cp="🈁">“hawn” | buttuna Ġappuniż “hawn” | Ġappuniż | katakana | ココ</annotation>
+		<annotation cp="🈁" type="tts">buttuna Ġappuniż “hawn”</annotation>
+		<annotation cp="🈂">“imposta tas-servizz” | buttuna Ġappuniż “imposta’ għal servizz“ | Ġappuniż | katakana | サ</annotation>
+		<annotation cp="🈂" type="tts">buttuna Ġappuniż “imposta’ għal servizz“</annotation>
+		<annotation cp="🈷">“ammont ta’ kull xahar” | buttuna Ġappuniż “ammont ta’ kull xahar” | Ġappuniż | ideograff | 月</annotation>
+		<annotation cp="🈷" type="tts">buttuna Ġappuniż “ammont ta’ kull xahar”</annotation>
+		<annotation cp="🈶">“mhux b’xejn” | buttuna Ġappuniż “mhux Bla Ħlas” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈶" type="tts">buttuna Ġappuniż “mhux Bla Ħlas”</annotation>
+		<annotation cp="🈯">“riservat” | buttuna Ġappuniż “riservat” | Ġappuniż | ideograff | 指</annotation>
+		<annotation cp="🈯" type="tts">buttuna Ġappuniż “riservat”</annotation>
+		<annotation cp="🉐">“bargain” | buttuna Ġappuniż “bargain” | Ġappuniż | ideograff | 指</annotation>
+		<annotation cp="🉐" type="tts">buttuna Ġappuniż “bargain”</annotation>
+		<annotation cp="🈹">“skont” | buttuna Ġappuniż “skont” | Ġappuniż | ideograff | 指</annotation>
+		<annotation cp="🈹" type="tts">buttuna Ġappuniż “skont”</annotation>
+		<annotation cp="🈚">“b’xejn” | buttuna Ġappuniż “bla ħlas” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈚" type="tts">buttuna Ġappuniż “bla ħlas”</annotation>
+		<annotation cp="🈲">“projbit” | buttuna Ġappuniż “projbit” | Ġappuniż | ideograph | 禁</annotation>
+		<annotation cp="🈲" type="tts">buttuna Ġappuniż “projbit”</annotation>
+		<annotation cp="🉑">“aċċettabbli” | buttuna Ġappuniż “aċċettabbli” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🉑" type="tts">buttuna Ġappuniż “aċċettabbli”</annotation>
+		<annotation cp="🈸">“applikazzjoni” | buttuna Ġappuniż “applikazzjoni” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈸" type="tts">buttuna Ġappuniż “applikazzjoni”</annotation>
+		<annotation cp="🈴">“li jgħaddi l-grad” | buttuna Ġappuniż “li jgħaddi l-grad” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈴" type="tts">buttuna Ġappuniż “li jgħaddi l-grad”</annotation>
+		<annotation cp="🈳">“post battal” | buttuna Ġappuniż “post battal” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈳" type="tts">buttuna Ġappuniż “post battal”</annotation>
+		<annotation cp="㊗">“awguri” | buttuna Ġappuniż “awguri” | Ġappuniż | ideograph | 祝</annotation>
+		<annotation cp="㊗" type="tts">buttuna Ġappuniż “awguri”</annotation>
+		<annotation cp="㊙">“sigriet” | buttuna Ġappuniż “sigriet” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="㊙" type="tts">buttuna Ġappuniż “sigriet”</annotation>
+		<annotation cp="🈺">“miftuħa għan-negozju” | buttuna Ġappuniż “miftuħ għan-negozju” | Ġappuniż | ideograph | 営</annotation>
+		<annotation cp="🈺" type="tts">buttuna Ġappuniż “miftuħ għan-negozju”</annotation>
+		<annotation cp="🈵">“ebda post battal” | buttuna Ġappuniż “ebda post battal” | Ġappuniż | ideograff | 有</annotation>
+		<annotation cp="🈵" type="tts">buttuna Ġappuniż “ebda post battal”</annotation>
+		<annotation cp="🔴">aħmar | ċirku | ġeometriku</annotation>
+		<annotation cp="🔴" type="tts">ċirku aħmar</annotation>
+		<annotation cp="🔵">blu | ċirku | ġeometriku</annotation>
+		<annotation cp="🔵" type="tts">ċirku blu</annotation>
+		<annotation cp="⚫">ċirku | ċirku iswed | ġeometriku</annotation>
+		<annotation cp="⚫" type="tts">ċirku iswed</annotation>
+		<annotation cp="⚪">ċirku | ċirku abjad | ġeometriku</annotation>
+		<annotation cp="⚪" type="tts">ċirku abjad</annotation>
+		<annotation cp="⬛">ġeometrika | kwadrat kbir iswed | kwadru</annotation>
+		<annotation cp="⬛" type="tts">kwadrat kbir iswed</annotation>
+		<annotation cp="⬜">ġeometrika | kwadrat kbir abjad | kwadru</annotation>
+		<annotation cp="⬜" type="tts">kwadrat kbir abjad</annotation>
+		<annotation cp="◼">ġeometrika | kwadrat medju iswed | kwadru</annotation>
+		<annotation cp="◼" type="tts">kwadrat medju iswed</annotation>
+		<annotation cp="◻">ġeometrika | kwadrat medju abjad | kwadru</annotation>
+		<annotation cp="◻" type="tts">kwadrat medju abjad</annotation>
+		<annotation cp="◾">ġeometrika | kwadrat medju żgħar iswed | kwadru</annotation>
+		<annotation cp="◾" type="tts">kwadrat medju żgħar iswed</annotation>
+		<annotation cp="◽">ġeometrika | kwadrat medju żgħar abjad | kwadru</annotation>
+		<annotation cp="◽" type="tts">kwadrat medju żgħar abjad</annotation>
+		<annotation cp="▪">ġeometrika | kwadri żgħir iswed | kwadru</annotation>
+		<annotation cp="▪" type="tts">kwadri żgħir iswed</annotation>
+		<annotation cp="▫">ġeometrika | kwadrat żgħir abjad | kwadru</annotation>
+		<annotation cp="▫" type="tts">kwadrat żgħir abjad</annotation>
+		<annotation cp="🔶">djamant kbir oranġjo | djamanti | ġeometrika | oranġjo</annotation>
+		<annotation cp="🔶" type="tts">djamant kbir oranġjo</annotation>
+		<annotation cp="🔷">blu | djamant kbir blu | djamanti | ġeometrika</annotation>
+		<annotation cp="🔷" type="tts">djamant kbir blu</annotation>
+		<annotation cp="🔸">djamant żgħir oranġjo | djamanti | ġeometrika | oranġjo</annotation>
+		<annotation cp="🔸" type="tts">djamant żgħir oranġjo</annotation>
+		<annotation cp="🔹">blu | djamant żgħir blu | djamanti | ġeometrika</annotation>
+		<annotation cp="🔹" type="tts">djamant żgħir blu</annotation>
+		<annotation cp="🔺">aħmar | ġeometrika | trijangolu aħmar jipponta ’l fuq</annotation>
+		<annotation cp="🔺" type="tts">trijangolu aħmar jipponta ’l fuq</annotation>
+		<annotation cp="🔻">’l isfel | aħmar | ġeometriku | trijangolu aħmar jipponta ’l isfel</annotation>
+		<annotation cp="🔻" type="tts">trijangolu aħmar jipponta ’l isfel</annotation>
+		<annotation cp="💠">djamant b’tikka | djamanti | ġeometrika | ġewwa | komiku</annotation>
+		<annotation cp="💠" type="tts">djamant b’tikka</annotation>
+		<annotation cp="🔘">buttuna | buttuna tal-għażla | ġeometrika | radju</annotation>
+		<annotation cp="🔘" type="tts">buttuna tal-għażla</annotation>
+		<annotation cp="🔳">buttuna | buttuna kwadra bajda | ġeometrika | kwadra | spjegati</annotation>
+		<annotation cp="🔳" type="tts">buttuna kwadra bajda</annotation>
+		<annotation cp="🔲">buttuna | buttuna kwadra sewda | ġeometrika | kwadra</annotation>
+		<annotation cp="🔲" type="tts">buttuna kwadra sewda</annotation>
+		<annotation cp="🏁">bandiera bil-kaxxi | bil-kaxxi | tlielaq</annotation>
+		<annotation cp="🏁" type="tts">bandiera bil-kaxxi</annotation>
+		<annotation cp="🚩">bandiera trijangolari | posta</annotation>
+		<annotation cp="🚩" type="tts">bandiera trijangolari</annotation>
+		<annotation cp="🎌">bnadar inkroċjati | ċelebrazzjoni | Ġappuniż | inkroċja | inkroċjati</annotation>
+		<annotation cp="🎌" type="tts">bnadar inkroċjati</annotation>
+		<annotation cp="🏴">bandiera sewda | ixejjer</annotation>
+		<annotation cp="🏴" type="tts">bandiera sewda</annotation>
+		<annotation cp="🏳">bandiera bajda | ixejjer</annotation>
+		<annotation cp="🏳" type="tts">bandiera bajda</annotation>
+		<annotation cp="🏳‍🌈">bandiera tal-qawsalla | qawsalla</annotation>
+		<annotation cp="🏳‍🌈" type="tts">bandiera tal-qawsalla</annotation>
+		<annotation cp="0⃣">0 | keycap | żero</annotation>
+		<annotation cp="1⃣">1 | keycap | wieħed</annotation>
+		<annotation cp="2⃣">2 | keycap | tnejn</annotation>
+		<annotation cp="3⃣">3 | keycap | tlieta</annotation>
+		<annotation cp="4⃣">4 | erbgħa | keycap</annotation>
+		<annotation cp="5⃣">5 | ħamsa | keycap</annotation>
+		<annotation cp="6⃣">6 | keycap | sitta</annotation>
+		<annotation cp="7⃣">7 | keycap | sebgħa</annotation>
+		<annotation cp="8⃣">8 | keycap | tmienja</annotation>
+		<annotation cp="9⃣">9 | disgħa | keycap</annotation>
+	</annotations>
+</ldml>

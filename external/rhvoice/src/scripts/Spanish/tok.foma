@@ -1,0 +1,99 @@
+# Copyright (C) 2024-2026  Mateo Cedillo <angelitomateocedillo@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+source include/textproc/cluster.foma
+source include/formats.foma
+
+define Apos %'|%‘|%’ ; 
+
+define LetterSequence [GraphemeConsonant - [y|Y]]+ /Apos ; 
+
+define ExceptionalWord 
+[[a|A] %. [m|M] %.] | 
+[[p|P] %. [m|M] %.] | 
+[[a|A] %. [c|C] %.] | 
+[[d|D] %. [c|C] %.] | 
+[L u n %.] | [M a r %.] | [M i é %.] | [J u e %.] | [V i e %.] | [S á b %.] | [D o m %.] | 
+[e n e %.] | [f e b %.] | [a b r %.] | [m a y %.] | [j u n %.] | [j u l %.] | [a g o %.] | [s e p %.] | [o c t %.] | [n o v %.] | [d i c %.] | 
+[D R (A) %.] | [L C D (O|A) %.] | [S R (A|[[A|E] S]|[T A]) %.] | [U D (S) %.] | 
+[[e|E] [t|T] [c|C] %.] | 
+[[w|W] [i|I] %- [f|F] [i|I]] ; 
+# Exceptions for apple product names. Avoid word splitting (see below)
+define ExceptionalWord2 [[P h o n e]|[P [a|o] d] | [C l o u d]] ; 
+define Word [Letter+ [Apos Letter+]*] | ExceptionalWord ;
+define Symbol \[Letter | Digit] ; 
+
+define Structure [[Symbol sym]|[Word word]|[Number num]|.#.] ; 
+
+define Stage1 
+Word @-> ... word || _ .#. | \Letter ,, 
+Number @-> ... num ,, 
+%0 Digit+ @-> ... dig ,, 
+%0 @-> ... num ,, 
+Symbol @-> ... sym || _ ; 
+
+define Stage2 
+# SplitWordsWhenCamelCase, so voices canInterpretAsSeparateWords InsteadOfOnlyOne
+[..] -> word || 
+[SmallLetter|SmallVowel] _ [CapitalLetter|CapitalVowel] , 
+[CapitalLetter|CapitalVowel] _ [CapitalLetter|CapitalVowel] [SmallLetter|SmallVowel] ,, 
+word -> num || [.#.|sym] ESRomanNumeral _ [.#.|[? sym]] ; 
+
+define Stage3 
+word -> lseq || 
+[.#.|word|num|dig|sym] LetterSequence _ , 
+# Custom LSeq handling:
+Structure [[CapitalLetter^2 CapitalVowel] - GraphemeSyllableAllow] _ , 
+Structure CapitalLetter^3 CapitalVowel _ , 
+Structure CapitalLetter^4 CapitalVowel _ , 
+Structure CapitalLetter^5 CapitalVowel _ , 
+Structure CapitalVowel CapitalLetter^2 _ , 
+Structure CapitalVowel CapitalLetter^3 _ , 
+Structure CapitalVowel CapitalLetter^4 _ , 
+Structure CapitalVowel CapitalLetter^5 _ , 
+Structure CapitalLetter CapitalVowel CapitalLetter^2 _ , 
+Structure CapitalLetter CapitalVowel CapitalLetter^3 _ , 
+Structure CapitalLetter CapitalVowel CapitalLetter^4 _ , 
+Structure CapitalLetter^2 CapitalVowel CapitalLetter^2 _ , 
+Structure X CapitalVowel CapitalLetter _ , 
+Structure CapitalLetter CapitalVowel W _ ; 
+
+define Stage4 
+sym -> num || [sym|.#.] %- _ Digit,
+sym -> num || [sym|.#.] %+ _ Digit,,
+sym -> 0 || [%: sym %/] _ [%/ sym Word] ,, 
+[num %, sym] -> %,  || .#. Digit+  _ Digit+ num .#. ,, 
+num -> dig || Digit^28 _ ; 
+
+define Stage5 
+word -> lseq || .#. _ , .#. GraphemeVowel _ Number ,, 
+sym -> num || 
+[word|lseq] [%.|%/] _ [Word|LetterSequence] , 
+%: sym [%/^2] _ Word ,, 
+word -> 0 || 
+# Apple product names.
+{i} _ ExceptionalWord2 word , 
+# Miscellaneous: YouTube and others.
+[[y|Y] o u] _ [[t|T] u b e] ; 
+
+source include/norm/ntok.foma
+
+regex 
+NormalizeCharacters .o. 
+Stage1 .o. 
+Stage2 .o. 
+Stage3 .o. 
+Stage4 .o. 
+Stage5 ; 

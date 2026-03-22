@@ -1,0 +1,2557 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
+<!-- Copyright © 1991-2025 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+SPDX-License-Identifier: Unicode-3.0
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+-->
+<ldml>
+	<identity>
+		<version number="$Revision$"/>
+		<language type="mi"/>
+	</identity>
+	<annotations>
+		<annotation cp="🏻">kiri āhua | kiri āhua māmā | momo 1–2</annotation>
+		<annotation cp="🏻" type="tts">kiri āhua māmā</annotation>
+		<annotation cp="🏼">kiri āhua | kiri āhua māmā-waenga | momo 3</annotation>
+		<annotation cp="🏼" type="tts">kiri āhua māmā-waenga</annotation>
+		<annotation cp="🏽">kiri āhua | kiri āhua waenga | momo 4</annotation>
+		<annotation cp="🏽" type="tts">kiri āhua waenga</annotation>
+		<annotation cp="🏾">kiri āhua | kiri āhua waenga-parauri | momo 5</annotation>
+		<annotation cp="🏾" type="tts">kiri āhua waenga-parauri</annotation>
+		<annotation cp="🏿">kiri āhua | kiri āhua parauri | momo 6</annotation>
+		<annotation cp="🏿" type="tts">kiri āhua parauri</annotation>
+		<annotation cp="‾">tapae</annotation>
+		<annotation cp="‾" type="tts">tapae</annotation>
+		<annotation cp="‽">interrobang</annotation>
+		<annotation cp="‽" type="tts">interrobang</annotation>
+		<annotation cp="‸">kātete</annotation>
+		<annotation cp="‸" type="tts">kātete</annotation>
+		<annotation cp="⁂">hakiraki</annotation>
+		<annotation cp="⁂" type="tts">hakiraki</annotation>
+		<annotation cp="😀">kanohi | pakiri</annotation>
+		<annotation cp="😀" type="tts">kanohi pakiri</annotation>
+		<annotation cp="😃">kanohi | menemene | tuwhera | waha</annotation>
+		<annotation cp="😃" type="tts">kanohi menemene waha tuwhera</annotation>
+		<annotation cp="😄">kanohi | kanohi menemene waha tuwhera me ngā karu menemene | karu | menemene | tuwhera | waha</annotation>
+		<annotation cp="😄" type="tts">kanohi menemene waha tuwhera me ngā karu menemene</annotation>
+		<annotation cp="😁">kanohi | karu | menemene | pakiri</annotation>
+		<annotation cp="😁" type="tts">kanohi pakiri karu menemene</annotation>
+		<annotation cp="😆">kanohi | kanohi menemene waha tuwhera me ngā karu kopi | kata | menemene | ngata | tuwhera | waha</annotation>
+		<annotation cp="😆" type="tts">kanohi menemene waha tuwhera me ngā karu kopi</annotation>
+		<annotation cp="😅">kanohi | kanohi menemene waha tuwhera me te werawera mātao | mātao | menemene | tuwhera | werawera</annotation>
+		<annotation cp="😅" type="tts">kanohi menemene waha tuwhera me te werawera mātao</annotation>
+		<annotation cp="🤣">kanohi | katakata | papa | takaoriori | takaoriori ana i te papa me te katakata</annotation>
+		<annotation cp="🤣" type="tts">takaoriori ana i te papa me te katakata</annotation>
+		<annotation cp="😂">harikoa | kanohi | kata | roimata</annotation>
+		<annotation cp="😂" type="tts">kanohi roimata harikoa</annotation>
+		<annotation cp="🙂">kanohi | kanohi menemene iti | menemene</annotation>
+		<annotation cp="🙂" type="tts">kanohi menemene iti</annotation>
+		<annotation cp="🙃">huripoki | kanohi</annotation>
+		<annotation cp="🙃" type="tts">kanohi huripoki</annotation>
+		<annotation cp="😉">kanohi | kanohi kimokimo | kimo</annotation>
+		<annotation cp="😉" type="tts">kanohi kimokimo</annotation>
+		<annotation cp="😊">kanohi | karu | menemene | mumura</annotation>
+		<annotation cp="😊" type="tts">kanohi menemene karu menemene</annotation>
+		<annotation cp="😇">anahera | āwheo | hēkore | kanohi | kanohi menemene whai āwheo | kōrero pakiwaitara | menemene | moemoeā</annotation>
+		<annotation cp="😇" type="tts">kanohi menemene whai āwheo</annotation>
+		<annotation cp="😍">aroha | kanohi | kanohi menemene karu-manawa | karu | menemene</annotation>
+		<annotation cp="😍" type="tts">kanohi menemene karu-manawa</annotation>
+		<annotation cp="🤩">kanohi | karu | pakiri | tino mīharotia | whetū</annotation>
+		<annotation cp="🤩" type="tts">tino mīharotia</annotation>
+		<annotation cp="😘">kanohi | kanohi pupuhi kihi | kihi</annotation>
+		<annotation cp="😘" type="tts">kanohi pupuhi kihi</annotation>
+		<annotation cp="😗">kanohi | kanohi kihikihi | kihi</annotation>
+		<annotation cp="😗" type="tts">kanohi kihikihi</annotation>
+		<annotation cp="☺">kanohi | menemene | pārohe | whakahuahua</annotation>
+		<annotation cp="☺" type="tts">kanohi menemene</annotation>
+		<annotation cp="😚">kanohi | kanohi kihikihi karu kopi | karu | kihi | kopi</annotation>
+		<annotation cp="😚" type="tts">kanohi kihikihi karu kopi</annotation>
+		<annotation cp="😙">kanohi | kanohi kihikihi karu menemene | karu | kihi | menemene</annotation>
+		<annotation cp="😙" type="tts">kanohi kihikihi karu menemene</annotation>
+		<annotation cp="😋">ā | kanohi | kanohi tāwara kai reka | menemene | reka | tāwara | um</annotation>
+		<annotation cp="😋" type="tts">kanohi tāwara kai reka</annotation>
+		<annotation cp="😛">arero | kanohi | kanohi whātero</annotation>
+		<annotation cp="😛" type="tts">kanohi whātero</annotation>
+		<annotation cp="😜">arero | hangarau | kanohi | kanohi whātero karu kimokimo | karu | kimo</annotation>
+		<annotation cp="😜" type="tts">kanohi whātero karu kimokimo</annotation>
+		<annotation cp="🤪">iti | kanohi pōrangi | karu | rahi</annotation>
+		<annotation cp="🤪" type="tts">kanohi pōrangi</annotation>
+		<annotation cp="😝">arero | kanohi | kanohi whātero karu kopi | karu | tāwara | weriweri</annotation>
+		<annotation cp="😝" type="tts">kanohi whātero karu kopi</annotation>
+		<annotation cp="🤑">kanohi | kanohi waha-moni | moni | waha</annotation>
+		<annotation cp="🤑" type="tts">kanohi waha-moni</annotation>
+		<annotation cp="🤗">awhi | awhiawhi | kanohi</annotation>
+		<annotation cp="🤗" type="tts">kanohi awhiawhi</annotation>
+		<annotation cp="🤭">aue | kanohi ringa runga waha</annotation>
+		<annotation cp="🤭" type="tts">kanohi ringa runga waha</annotation>
+		<annotation cp="🤫">hū | kanohi whakahū | turituri</annotation>
+		<annotation cp="🤫" type="tts">kanohi whakahū</annotation>
+		<annotation cp="🤔">kanohi | whakaaroaro</annotation>
+		<annotation cp="🤔" type="tts">kanohi whakaaroaro</annotation>
+		<annotation cp="🤐">kanohi | kanohi waha-kōtui | kōtui | waha</annotation>
+		<annotation cp="🤐" type="tts">kanohi waha-kōtui</annotation>
+		<annotation cp="🤨">kaitaunu | kanohi tukemata rewa | matakana</annotation>
+		<annotation cp="🤨" type="tts">kanohi tukemata rewa</annotation>
+		<annotation cp="😐">kanohi | kūpapa | whakaririka</annotation>
+		<annotation cp="😐" type="tts">kanohi kūpapa</annotation>
+		<annotation cp="😑">kanohi | kore ngangahau | whakaririka</annotation>
+		<annotation cp="😑" type="tts">kanohi whakaririka</annotation>
+		<annotation cp="😶">hū | kanohi | kanohi kore waha | ngū | waha</annotation>
+		<annotation cp="😶" type="tts">kanohi kore waha</annotation>
+		<annotation cp="😏">kanohi | tāpahi</annotation>
+		<annotation cp="😏" type="tts">kanohi tāpahi</annotation>
+		<annotation cp="😒">kanohi | katakore | pōuri</annotation>
+		<annotation cp="😒" type="tts">kanohi katakore</annotation>
+		<annotation cp="🙄">kanohi | karu | takahuri</annotation>
+		<annotation cp="🙄" type="tts">kanohi karu takahuri</annotation>
+		<annotation cp="😬">kanohi | whāita</annotation>
+		<annotation cp="😬" type="tts">kanohi whāita</annotation>
+		<annotation cp="🤥">kanohi | pinōkio | teka</annotation>
+		<annotation cp="🤥" type="tts">kanohi teka</annotation>
+		<annotation cp="😌">kanohi | whakaoraora</annotation>
+		<annotation cp="😌" type="tts">kanohi whakaoraora</annotation>
+		<annotation cp="😔">kanohi | kanohi whakaaro | pāpōuri | whakaaroaro</annotation>
+		<annotation cp="😔" type="tts">kanohi whakaaro</annotation>
+		<annotation cp="😪">kanohi | kanohi hiamoe | moe</annotation>
+		<annotation cp="😪" type="tts">kanohi hiamoe</annotation>
+		<annotation cp="🤤">hāware | kanohi</annotation>
+		<annotation cp="🤤" type="tts">kanohi hāware</annotation>
+		<annotation cp="😴">kanohi | moe | zzz</annotation>
+		<annotation cp="😴" type="tts">kanohi moe</annotation>
+		<annotation cp="😷">ārai | kanohi | kanohi mau ārai rongoā | mātao | mate | rata | rongoā</annotation>
+		<annotation cp="😷" type="tts">kanohi mau ārai rongoā</annotation>
+		<annotation cp="🤒">inemahana | kanohi | kanohi whai inemahana | mate | māuiui</annotation>
+		<annotation cp="🤒" type="tts">kanohi whai inemahana</annotation>
+		<annotation cp="🤕">kanohi | kanohi mau takai-upoko | mamae | takai | whara</annotation>
+		<annotation cp="🤕" type="tts">kanohi mau takai-upoko</annotation>
+		<annotation cp="🤢">kanekane | kanohi | ruaki</annotation>
+		<annotation cp="🤢" type="tts">kanohi kanekane</annotation>
+		<annotation cp="🤮">kanohi ruaki | mate | ruaki</annotation>
+		<annotation cp="🤮" type="tts">kanohi ruaki</annotation>
+		<annotation cp="🤧">kanohi | matihe | ngā manaaki</annotation>
+		<annotation cp="🤧" type="tts">kanohi matihe</annotation>
+		<annotation cp="😵">kanohi | takaanini</annotation>
+		<annotation cp="😵" type="tts">kanohi takaanini</annotation>
+		<annotation cp="🤯">māhunga pahū | oho</annotation>
+		<annotation cp="🤯" type="tts">māhunga pahū</annotation>
+		<annotation cp="🤠">kanohi | kauhine | kaupoi | pōtae</annotation>
+		<annotation cp="🤠" type="tts">kanohi pōtae kaupoi</annotation>
+		<annotation cp="😎">kanapa | kanohi | kanohi menemene mau mōhitirā | karu | menemene | mōhiti | mōhitirā | rā | rawe</annotation>
+		<annotation cp="😎" type="tts">kanohi menemene mau mōhitirā</annotation>
+		<annotation cp="🤓">kanohi | kīki | nere</annotation>
+		<annotation cp="🤓" type="tts">kanohi nere</annotation>
+		<annotation cp="🧐">kanohi mau mōhititahi | māuiui</annotation>
+		<annotation cp="🧐" type="tts">kanohi mau mōhititahi</annotation>
+		<annotation cp="😕">kanohi | pōraru</annotation>
+		<annotation cp="😕" type="tts">kanohi pōraru</annotation>
+		<annotation cp="😟">āwangawanga | kanohi</annotation>
+		<annotation cp="😟" type="tts">kanohi āwangawanga</annotation>
+		<annotation cp="🙁">kanohi | kanohi āhua poururu | poururu</annotation>
+		<annotation cp="🙁" type="tts">kanohi āhua poururu</annotation>
+		<annotation cp="☹">kanohi | poururu</annotation>
+		<annotation cp="☹" type="tts">kanohi poururu</annotation>
+		<annotation cp="😮">aroha | kanohi | tuwhera | waha</annotation>
+		<annotation cp="😮" type="tts">kanohi waha tuwhera</annotation>
+		<annotation cp="😯">hanea | kanohi | mae | ohorere</annotation>
+		<annotation cp="😯" type="tts">kanohi hanea</annotation>
+		<annotation cp="😲">kanohi | katoa | oho | ohorere</annotation>
+		<annotation cp="😲" type="tts">kanohi ohorere</annotation>
+		<annotation cp="😳">kanohi | pōro | werawera</annotation>
+		<annotation cp="😳" type="tts">kanohi werawera</annotation>
+		<annotation cp="😦">kanohi | poururu | tuwhera | waha</annotation>
+		<annotation cp="😦" type="tts">kanohi poururu waha tuwhera</annotation>
+		<annotation cp="😧">aurere | kanohi</annotation>
+		<annotation cp="😧" type="tts">kanohi aurere</annotation>
+		<annotation cp="😨">kanohi | mataku | wehi | wewehi</annotation>
+		<annotation cp="😨" type="tts">kanohi mataku</annotation>
+		<annotation cp="😰">kanohi | kanohi waha tuwhera me te werawera mātao | kikorangi | mātao | tuwhera | waha | werawera | whāwhai</annotation>
+		<annotation cp="😰" type="tts">kanohi waha tuwhera me te werawera mātao</annotation>
+		<annotation cp="😥">kanohi | kanohi pāpouri engari whakaoraora | pāpōuri | whakaoraora | whiu</annotation>
+		<annotation cp="😥" type="tts">kanohi pāpouri engari whakaoraora</annotation>
+		<annotation cp="😢">kanohi | kanohi tatangi | pōuri | roimata | tangi</annotation>
+		<annotation cp="😢" type="tts">kanohi tatangi</annotation>
+		<annotation cp="😭">hotu | kanohi | kanohi tangi reonui | pōuri | roimata | tangi</annotation>
+		<annotation cp="😭" type="tts">kanohi tangi reonui</annotation>
+		<annotation cp="😱">kanohi | kanohi ūmere i te wehi | mataku | ngangau | ūmere | wehi | wewehi</annotation>
+		<annotation cp="😱" type="tts">kanohi ūmere i te wehi</annotation>
+		<annotation cp="😖">kanohi | whakahēhē</annotation>
+		<annotation cp="😖" type="tts">kanohi whakahēhē</annotation>
+		<annotation cp="😣">kanohi | pāuaua</annotation>
+		<annotation cp="😣" type="tts">kanohi pāuaua</annotation>
+		<annotation cp="😞">kanohi | pāpōuri</annotation>
+		<annotation cp="😞" type="tts">kanohi pāpōuri</annotation>
+		<annotation cp="😓">kanohi | mātao | werawera</annotation>
+		<annotation cp="😓" type="tts">kanohi werawera mātao</annotation>
+		<annotation cp="😩">kanohi | ngenge | ruha</annotation>
+		<annotation cp="😩" type="tts">kanohi ruha</annotation>
+		<annotation cp="😫">kanohi | ngenge</annotation>
+		<annotation cp="😫" type="tts">kanohi ngenge</annotation>
+		<annotation cp="😤">kanohi | kanohi ihu korohū | toa | wini</annotation>
+		<annotation cp="😤" type="tts">kanohi ihu korohū</annotation>
+		<annotation cp="😡">kanohi | nguha | pōrangi | riri | tupere | whero</annotation>
+		<annotation cp="😡" type="tts">kanohi tupere</annotation>
+		<annotation cp="😠">kanohi | pōrangi | riri</annotation>
+		<annotation cp="😠" type="tts">kanohi riri</annotation>
+		<annotation cp="🤬">kanga ana | kanohi tohu runga waha</annotation>
+		<annotation cp="🤬" type="tts">kanohi tohu runga waha</annotation>
+		<annotation cp="😈">kanohi | kanohi menemene whai pihi | kōrero pakiwaitara | menemene | moemoeā | pihi</annotation>
+		<annotation cp="😈" type="tts">kanohi menemene whai pihi</annotation>
+		<annotation cp="👿">kanohi | kanohi riri whai pihi | kōrero pakiwaitara | moemoeā | patupaiarehe | rēwera | tēmoni</annotation>
+		<annotation cp="👿" type="tts">kanohi riri whai pihi</annotation>
+		<annotation cp="💀">angaanga | kanohi | kōrero pakiwaitara | mate | taniwha</annotation>
+		<annotation cp="💀" type="tts">angaanga</annotation>
+		<annotation cp="☠">angaanga | angaanga me ngā kōiwi-whiri | kanohi | kōiwi-whiri | mate | taniwha</annotation>
+		<annotation cp="☠" type="tts">angaanga me ngā kōiwi-whiri</annotation>
+		<annotation cp="💩">kanohi | putunga tiko | tae | taniwha | tiko | tūtae | whakakata</annotation>
+		<annotation cp="💩" type="tts">putunga tiko</annotation>
+		<annotation cp="🤡">hangareka | kanohi</annotation>
+		<annotation cp="🤡" type="tts">kanohi hangareka</annotation>
+		<annotation cp="👹">kanohi | kaurehe | kīrehe | kōrero pakiwaitara | moemoeā | taniwha</annotation>
+		<annotation cp="👹" type="tts">kaurehe</annotation>
+		<annotation cp="👺">kanohi | kīrehe | kōrero pakiwaitara | moemoeā | taipō | taniwha</annotation>
+		<annotation cp="👺" type="tts">taipō</annotation>
+		<annotation cp="👻">kanohi | kēhua | kīrehe | kōrero pakiwaitara | moemoeā | taniwha</annotation>
+		<annotation cp="👻" type="tts">kēhua</annotation>
+		<annotation cp="👽">kanohi | kīrehe | kīrehe aokē | kōrero pakiwaitara | manene aokē | moemoeā | taniwha | ufo</annotation>
+		<annotation cp="👽" type="tts">manene aokē</annotation>
+		<annotation cp="👾">kanohi | kīrehe | kōrero pakiwaitara | manene aokē | moemoeā | ngārara aokē | taniwha | ufo</annotation>
+		<annotation cp="👾" type="tts">ngārara aokē</annotation>
+		<annotation cp="🤖">kanohi | karetao | taniwha</annotation>
+		<annotation cp="🤖" type="tts">kanohi karetao</annotation>
+		<annotation cp="😺">kanohi | menemene | ngeru | tuwhera | waha</annotation>
+		<annotation cp="😺" type="tts">kanohi ngeru menemene waha tuwhera</annotation>
+		<annotation cp="😸">kanohi | karu | menemene | ngeru | pakiri</annotation>
+		<annotation cp="😸" type="tts">kanohi ngeru pakiri karu menemene</annotation>
+		<annotation cp="😹">harikoa | kanohi | kanohi ngeru me ngā roimata harikoa | ngeru | roimata</annotation>
+		<annotation cp="😹" type="tts">kanohi ngeru me ngā roimata harikoa</annotation>
+		<annotation cp="😻">aroha | kanohi | kanohi ngeru menemene karu-manawa | karu | menemene | ngeru</annotation>
+		<annotation cp="😻" type="tts">kanohi ngeru menemene karu-manawa</annotation>
+		<annotation cp="😼">kanohi | menemene | ngeru | pūkawa | takahiri</annotation>
+		<annotation cp="😼" type="tts">kanohi ngeru menemene pūkawa</annotation>
+		<annotation cp="😽">kanohi | kanohi ngeru kihikihi karu kopi | karu | kihi | ngeru</annotation>
+		<annotation cp="😽" type="tts">kanohi ngeru kihikihi karu kopi</annotation>
+		<annotation cp="🙀">kanohi | ngeru | oho | ohorere | ruha</annotation>
+		<annotation cp="🙀" type="tts">kanohi ngeru ruha</annotation>
+		<annotation cp="😿">kanohi | kanohi ngeru tatangi | ngeru | pōuri | roimata | tangi</annotation>
+		<annotation cp="😿" type="tts">kanohi ngeru tatangi</annotation>
+		<annotation cp="😾">kanohi | ngeru | tupere</annotation>
+		<annotation cp="😾" type="tts">kanohi ngeru tupere</annotation>
+		<annotation cp="🙈">kanohi | kāo | kāore | kino | kite | makimaki | makimaki kore-kite-kino | tohu ā-ringa | whakakāhore | whakakore</annotation>
+		<annotation cp="🙈" type="tts">makimaki kore-kite-kino</annotation>
+		<annotation cp="🙉">kanohi | kāo | kāore | kino | makimaki | makimaki kore-rongo-kino | rongo | tohu ā-ringa | whakakāhore | whakakore</annotation>
+		<annotation cp="🙉" type="tts">makimaki kore-rongo-kino</annotation>
+		<annotation cp="🙊">kanohi | kāo | kāore | kino | kōrero | makimaki | makimaki kore-kōrero-kino | tohu ā-ringa | whakakāhore | whakakore</annotation>
+		<annotation cp="🙊" type="tts">makimaki kore-kōrero-kino</annotation>
+		<annotation cp="💌">aroha | manawa | mēra | reta</annotation>
+		<annotation cp="💌" type="tts">reta aroha</annotation>
+		<annotation cp="💘">kupiti | manawa me te pere | pere</annotation>
+		<annotation cp="💘" type="tts">manawa me te pere</annotation>
+		<annotation cp="💝">manawa mau rīpene | rīpene | tohu aroha</annotation>
+		<annotation cp="💝" type="tts">manawa mau rīpene</annotation>
+		<annotation cp="💖">hiamo | manawa tīaho | tīaho</annotation>
+		<annotation cp="💖" type="tts">manawa tīaho</annotation>
+		<annotation cp="💗">hiamo | kapakapa | manawa tipu haere | taiatea | tipu ana</annotation>
+		<annotation cp="💗" type="tts">manawa tipu haere</annotation>
+		<annotation cp="💓">kapakapa | manawa patupatu | patu manawa | patupatu</annotation>
+		<annotation cp="💓" type="tts">manawa patupatu</annotation>
+		<annotation cp="💞">ngā manawa takahurihuri | takahurihuri</annotation>
+		<annotation cp="💞" type="tts">ngā manawa takahurihuri</annotation>
+		<annotation cp="💕">aroha | rua manawa</annotation>
+		<annotation cp="💕" type="tts">rua manawa</annotation>
+		<annotation cp="💟">manawa | rākeitanga manawa</annotation>
+		<annotation cp="💟" type="tts">rākeitanga manawa</annotation>
+		<annotation cp="❣">tohu | tohu reo | tohuhā | tohuhā manawa pā</annotation>
+		<annotation cp="❣" type="tts">tohuhā manawa pā</annotation>
+		<annotation cp="💔">manawa whati | pakaru | whati</annotation>
+		<annotation cp="💔" type="tts">manawa whati</annotation>
+		<annotation cp="❤">manawa | manawa whero</annotation>
+		<annotation cp="❤" type="tts">manawa whero</annotation>
+		<annotation cp="🧡">karaka | manawa karaka</annotation>
+		<annotation cp="🧡" type="tts">manawa karaka</annotation>
+		<annotation cp="💛">kōwhai | manawa kōwhai</annotation>
+		<annotation cp="💛" type="tts">manawa kōwhai</annotation>
+		<annotation cp="💚">kākariki | manawa kākāriki</annotation>
+		<annotation cp="💚" type="tts">manawa kākāriki</annotation>
+		<annotation cp="💙">kikorangi | manawa kikorangi</annotation>
+		<annotation cp="💙" type="tts">manawa kikorangi</annotation>
+		<annotation cp="💜">manawa poroporo | poroporo</annotation>
+		<annotation cp="💜" type="tts">manawa poroporo</annotation>
+		<annotation cp="🖤">kino | manawa pango | nanakia | pango</annotation>
+		<annotation cp="🖤" type="tts">manawa pango</annotation>
+		<annotation cp="💋">kihi | ngutu | tohu kihi</annotation>
+		<annotation cp="💋" type="tts">tohu kihi</annotation>
+		<annotation cp="💯">100 | kī | kotahi rau | piro | rau piro</annotation>
+		<annotation cp="💯" type="tts">rau piro</annotation>
+		<annotation cp="💢">pōrangi | pukuriri | tohu riri | whakakata</annotation>
+		<annotation cp="💢" type="tts">tohu riri</annotation>
+		<annotation cp="💥">pahū | tutukitanga | whakakata</annotation>
+		<annotation cp="💥" type="tts">tutukitanga</annotation>
+		<annotation cp="💫">whakaamai | whakakata | whetū</annotation>
+		<annotation cp="💫" type="tts">whakaamai</annotation>
+		<annotation cp="💦">ngā kōpata werawera | paratī | werawera | whakakata</annotation>
+		<annotation cp="💦" type="tts">ngā kōpata werawera</annotation>
+		<annotation cp="💨">oma ana | rere | rere atu ana | whakakata</annotation>
+		<annotation cp="💨" type="tts">rere atu ana</annotation>
+		<annotation cp="🕳">puare</annotation>
+		<annotation cp="🕳" type="tts">puare</annotation>
+		<annotation cp="💬">kōrero | mirumiru | pūangi | whakakata</annotation>
+		<annotation cp="💬" type="tts">pūangi kōrero</annotation>
+		<annotation cp="👁‍🗨">kaiwhakaatu | karu | karu rō mirumiru kōrero | mirumiru kōrero</annotation>
+		<annotation cp="👁‍🗨" type="tts">karu rō mirumiru kōrero</annotation>
+		<annotation cp="🗨">kōrero | mirumiru kōrero mauī</annotation>
+		<annotation cp="🗨" type="tts">mirumiru kōrero mauī</annotation>
+		<annotation cp="🗯">mirumiru | mirumiru riri matau | pōrangi | pūangi | riri</annotation>
+		<annotation cp="🗯" type="tts">mirumiru riri matau</annotation>
+		<annotation cp="💭">mirumiru | pūangi | whakaaro | whakakata</annotation>
+		<annotation cp="💭" type="tts">pūangi whakaaro</annotation>
+		<annotation cp="💤">moe | whakakata | zzz</annotation>
+		<annotation cp="💤" type="tts">zzz</annotation>
+		<annotation cp="👋">pōhiri | pōhirihiri | ringa</annotation>
+		<annotation cp="👋" type="tts">ringa pōhirihiri</annotation>
+		<annotation cp="🤚">tāmuri | tū</annotation>
+		<annotation cp="🤚" type="tts">tāmuri tū</annotation>
+		<annotation cp="🖐">matimati | paraha | ringa | ringa tū matimati paraha</annotation>
+		<annotation cp="🖐" type="tts">ringa tū matimati paraha</annotation>
+		<annotation cp="✋">ringa | ringa tū</annotation>
+		<annotation cp="✋" type="tts">ringa tū</annotation>
+		<annotation cp="🖖">matimati | ringa | spock | vulcan | whakakōtua vulcan</annotation>
+		<annotation cp="🖖" type="tts">whakakōtua vulcan</annotation>
+		<annotation cp="👌">ĀE | ringa</annotation>
+		<annotation cp="👌" type="tts">ringa ĀE</annotation>
+		<annotation cp="✌">ringa | v | wikitōria</annotation>
+		<annotation cp="✌" type="tts">ringa wikitōria</annotation>
+		<annotation cp="🤞">matimati | ringa | waimarie | whiri</annotation>
+		<annotation cp="🤞" type="tts">matimati whiri</annotation>
+		<annotation cp="🤟">aroha | ringa | tohu aroha-ki-a-koe</annotation>
+		<annotation cp="🤟" type="tts">tohu aroha-ki-a-koe</annotation>
+		<annotation cp="🤘">kai kaha | matimati | pihi | ringa | tohu o ngā pihi</annotation>
+		<annotation cp="🤘" type="tts">tohu o ngā pihi</annotation>
+		<annotation cp="🤙">ringa | ringa waea mai | waea</annotation>
+		<annotation cp="🤙" type="tts">ringa waea mai</annotation>
+		<annotation cp="👈">kōroa | kōroa tāmuri tohu mauī | matimati | ringa | tāmuri | tohu</annotation>
+		<annotation cp="👈" type="tts">kōroa tāmuri tohu mauī</annotation>
+		<annotation cp="👉">kōroa | kōroa tāmuri tohu matau | matimati | ringa | tāmuri | tohu</annotation>
+		<annotation cp="👉" type="tts">kōroa tāmuri tohu matau</annotation>
+		<annotation cp="👆">ake | kōroa | matimati | ringa | tāmuri | tohu</annotation>
+		<annotation cp="👆" type="tts">kōroa tāmuri tohu ake</annotation>
+		<annotation cp="🖕">māpere | matimati | ringa</annotation>
+		<annotation cp="🖕" type="tts">māpere</annotation>
+		<annotation cp="👇">iho | kōroa | matimati | ringa | tāmuri | tohu</annotation>
+		<annotation cp="👇" type="tts">kōroa tāmuri tohu iho</annotation>
+		<annotation cp="☝">ake | kōroa | matimati | ringa | tohu</annotation>
+		<annotation cp="☝" type="tts">kōroa tohu ake</annotation>
+		<annotation cp="👍">+1 | ake | kōnui | ringa</annotation>
+		<annotation cp="👍" type="tts">kōnui ake</annotation>
+		<annotation cp="👎">-1 | iho | kōnui | ringa</annotation>
+		<annotation cp="👎" type="tts">kōnui iho</annotation>
+		<annotation cp="✊">kumu | meke | meke tū | ringa | tuki</annotation>
+		<annotation cp="✊" type="tts">meke tū</annotation>
+		<annotation cp="👊">kumu | meke | meke anga mai | ringa | tuki</annotation>
+		<annotation cp="👊" type="tts">meke anga mai</annotation>
+		<annotation cp="🤛">meke | meke anga-mauī | whakatemauī</annotation>
+		<annotation cp="🤛" type="tts">meke anga-mauī</annotation>
+		<annotation cp="🤜">meke | meke anga-matau | whakatematau</annotation>
+		<annotation cp="🤜" type="tts">meke anga-matau</annotation>
+		<annotation cp="👏">pakipaki | ringa</annotation>
+		<annotation cp="👏" type="tts">ringa pakipaki</annotation>
+		<annotation cp="🙌">āhaha | ngā ringa tū | ringa | tohu ā-ringa | tū | whakanuinga</annotation>
+		<annotation cp="🙌" type="tts">ngā ringa tū</annotation>
+		<annotation cp="👐">ringa | tuwhera</annotation>
+		<annotation cp="👐" type="tts">ringa tuwhera</annotation>
+		<annotation cp="🤲">inoi | ringa rewa tahi</annotation>
+		<annotation cp="🤲" type="tts">ringa rewa tahi</annotation>
+		<annotation cp="🤝">ringa | rūrū | tūtaki | whakaaetanga</annotation>
+		<annotation cp="🤝" type="tts">rūrū</annotation>
+		<annotation cp="🙏">ihoi | koa | pōkai | ringa | ringa whiri | tohu | tuohu | ui | whakawhetai</annotation>
+		<annotation cp="🙏" type="tts">ringa whiri</annotation>
+		<annotation cp="✍">ringa | ringa tuhituhi | tuhi</annotation>
+		<annotation cp="✍" type="tts">ringa tuhituhi</annotation>
+		<annotation cp="💅">maikūkū | pani | tiaki | whakapai maikūkū | whakapaipai</annotation>
+		<annotation cp="💅" type="tts">pani maikūkū</annotation>
+		<annotation cp="🤳">kāmera | kiriāhua | waea</annotation>
+		<annotation cp="🤳" type="tts">kiriāhua</annotation>
+		<annotation cp="💪">uarua | uaua | whakakata | whakapakari</annotation>
+		<annotation cp="💪" type="tts">uarua whakapakari</annotation>
+		<annotation cp="👂">taringa | tinana</annotation>
+		<annotation cp="👂" type="tts">taringa</annotation>
+		<annotation cp="👃">ihu | tinana</annotation>
+		<annotation cp="👃" type="tts">ihu</annotation>
+		<annotation cp="🧠">mōhio | roro</annotation>
+		<annotation cp="🧠" type="tts">roro</annotation>
+		<annotation cp="👀">kanohi | karu | ngā karu</annotation>
+		<annotation cp="👀" type="tts">ngā karu</annotation>
+		<annotation cp="👁">karu | tinana</annotation>
+		<annotation cp="👁" type="tts">karu</annotation>
+		<annotation cp="👅">arero | tinana</annotation>
+		<annotation cp="👅" type="tts">arero</annotation>
+		<annotation cp="👄">ngā ngutu | waha</annotation>
+		<annotation cp="👄" type="tts">waha</annotation>
+		<annotation cp="👶">pēpi | tamariki</annotation>
+		<annotation cp="👶" type="tts">pēpi</annotation>
+		<annotation cp="🧒">ira-kūpapa | tamaiti | tamariki</annotation>
+		<annotation cp="🧒" type="tts">tamaiti</annotation>
+		<annotation cp="👦">tama | tamariki | tamatāne</annotation>
+		<annotation cp="👦" type="tts">tamatāne</annotation>
+		<annotation cp="👧">kōtiro | poutiriao | tamariki | Virgo</annotation>
+		<annotation cp="👧" type="tts">kōtiro</annotation>
+		<annotation cp="🧑">ira-kūpapa | pakeke</annotation>
+		<annotation cp="🧑" type="tts">pakeke</annotation>
+		<annotation cp="👱">mākekehu | tangata mākekehu</annotation>
+		<annotation cp="👱" type="tts">tangata mākekehu</annotation>
+		<annotation cp="👨">tāne</annotation>
+		<annotation cp="👨" type="tts">tāne</annotation>
+		<annotation cp="🧔">pāhau | tangata pāhau</annotation>
+		<annotation cp="🧔" type="tts">tangata pāhau</annotation>
+		<annotation cp="👱‍♂">mākekehu | tāne</annotation>
+		<annotation cp="👱‍♂" type="tts">tāne mākekehu</annotation>
+		<annotation cp="👩">wahine</annotation>
+		<annotation cp="👩" type="tts">wahine</annotation>
+		<annotation cp="👱‍♀">mākekehu | wahine</annotation>
+		<annotation cp="👱‍♀" type="tts">wahine mākekehu</annotation>
+		<annotation cp="🧓">ira-kūpapa | kaumātua</annotation>
+		<annotation cp="🧓" type="tts">kaumātua</annotation>
+		<annotation cp="👴">kaumātua | koroua | tāne</annotation>
+		<annotation cp="👴" type="tts">koroua</annotation>
+		<annotation cp="👵">kaumātua | kuia | wahine</annotation>
+		<annotation cp="👵" type="tts">kuia</annotation>
+		<annotation cp="🙍">poururu | tangata poururu | tohu ā-ringa</annotation>
+		<annotation cp="🙍" type="tts">tangata poururu</annotation>
+		<annotation cp="🙍‍♂">poururu | tāne | tohu ā-ringa</annotation>
+		<annotation cp="🙍‍♂" type="tts">tāne poururu</annotation>
+		<annotation cp="🙍‍♀">poururu | tohu ā-ringa | wahine</annotation>
+		<annotation cp="🙍‍♀" type="tts">wahine poururu</annotation>
+		<annotation cp="🙎">tangata tupere | tohu ā-ringa | tupere</annotation>
+		<annotation cp="🙎" type="tts">tangata tupere</annotation>
+		<annotation cp="🙎‍♂">tāne | tohu ā-ringa | tupere</annotation>
+		<annotation cp="🙎‍♂" type="tts">tāne tupere</annotation>
+		<annotation cp="🙎‍♀">tohu ā-ringa | tupere | wahine</annotation>
+		<annotation cp="🙎‍♀" type="tts">wahine tupere</annotation>
+		<annotation cp="🙅">kāo | kore | ringa | tangata tohu ana KĀO | tohu ā-ringa | whakakāhore | whakakore</annotation>
+		<annotation cp="🙅" type="tts">tangata tohu ana KĀO</annotation>
+		<annotation cp="🙅‍♂">kāo | kore | ringa | tāne | tāne tohu ana KĀO | tohu ā-ringa | whakakāhore | whakakore</annotation>
+		<annotation cp="🙅‍♂" type="tts">tāne tohu ana KĀO</annotation>
+		<annotation cp="🙅‍♀">kāo | kore | ringa | tohu ā-ringa | wahine | wahine tohu ana KĀO | whakakāhore | whakakore</annotation>
+		<annotation cp="🙅‍♀" type="tts">wahine tohu ana KĀO</annotation>
+		<annotation cp="🙆">ĀE | ringa | tangata tohu ana ĀE | tohu ā-ringa</annotation>
+		<annotation cp="🙆" type="tts">tangata tohu ana ĀE</annotation>
+		<annotation cp="🙆‍♂">ĀE | ringa | tāne | tāne tohu ana ĀE | tohu ā-ringa</annotation>
+		<annotation cp="🙆‍♂" type="tts">tāne tohu ana ĀE</annotation>
+		<annotation cp="🙆‍♀">ĀE | ringa | tohu ā-ringa | wahine | wahine tohu ana ĀE</annotation>
+		<annotation cp="🙆‍♀" type="tts">wahine tohu ana ĀE</annotation>
+		<annotation cp="💁">āwhina | mōhiohio | ringa | tangata ringa tāringi | tāringi | whakatete</annotation>
+		<annotation cp="💁" type="tts">tangata ringa tāringi</annotation>
+		<annotation cp="💁‍♂">ringa tāringi | tāne | tāne ringa tāringi | whakatete</annotation>
+		<annotation cp="💁‍♂" type="tts">tāne ringa tāringi</annotation>
+		<annotation cp="💁‍♀">ringa tāringi | wahine | wahine ringa tāringi | whakatete</annotation>
+		<annotation cp="💁‍♀" type="tts">wahine ringa tāringi</annotation>
+		<annotation cp="🙋">koa | ringa | tangata ringa tū | tohu ā-ringa | tū</annotation>
+		<annotation cp="🙋" type="tts">tangata ringa tū</annotation>
+		<annotation cp="🙋‍♂">ringa tū | tāne | tāne ringa tū | tohu ā-ringa</annotation>
+		<annotation cp="🙋‍♂" type="tts">tāne ringa tū</annotation>
+		<annotation cp="🙋‍♀">ringa tū | tohu ā-ringa | wahine | wahine ringa tū</annotation>
+		<annotation cp="🙋‍♀" type="tts">wahine ringa tū</annotation>
+		<annotation cp="🙇">aroha | tangata tuohu | tohu | tuohu | whakapāha</annotation>
+		<annotation cp="🙇" type="tts">tangata tuohu</annotation>
+		<annotation cp="🙇‍♂">aroha | tāne | tohu | tuohu | whakapāha | whakapai</annotation>
+		<annotation cp="🙇‍♂" type="tts">tāne tuohu</annotation>
+		<annotation cp="🙇‍♀">aroha | tohu | tuohu | wahine | whakapāha | whakapai</annotation>
+		<annotation cp="🙇‍♀" type="tts">wahine tuohu</annotation>
+		<annotation cp="🤦">hohoia | kanohi | kapu o te ringa | tangata ringakanohi | whakaparau</annotation>
+		<annotation cp="🤦" type="tts">tangata ringakanohi</annotation>
+		<annotation cp="🤦‍♂">hohoia | ringakanohi | tāne | whakaparau</annotation>
+		<annotation cp="🤦‍♂" type="tts">tāne ringakanohi</annotation>
+		<annotation cp="🤦‍♀">hohoia | ringakanohi | wahine | whakaparau</annotation>
+		<annotation cp="🤦‍♀" type="tts">wahine ringakanohi</annotation>
+		<annotation cp="🤷">haumāruru | hiki-pakihiwi | kūare | rangirua | tangata hiki-pakihiwi</annotation>
+		<annotation cp="🤷" type="tts">tangata hiki-pakihiwi</annotation>
+		<annotation cp="🤷‍♂">haumāruru | hiki-pakihiwi | kūare | rangirua | tāne</annotation>
+		<annotation cp="🤷‍♂" type="tts">tāne hiki-pakihiwi</annotation>
+		<annotation cp="🤷‍♀">haumāruru | hiki-pakihiwi | kūare | rangirua | wahine</annotation>
+		<annotation cp="🤷‍♀" type="tts">wahine hiki-pakihiwi</annotation>
+		<annotation cp="👨‍⚕">atawhai hauora | kaimahi hauora tāne | kaiwhakaora | rata | tāne | tapuhi</annotation>
+		<annotation cp="👨‍⚕" type="tts">kaimahi hauora tāne</annotation>
+		<annotation cp="👩‍⚕">atawhai hauora | kaiwhakaora | rata | tapuhi | wahine | wahine atawhai hauora</annotation>
+		<annotation cp="👩‍⚕" type="tts">wahine atawhai hauora</annotation>
+		<annotation cp="👨‍🎓">ākonga | paetahi | tāne</annotation>
+		<annotation cp="👨‍🎓" type="tts">ākonga tāne</annotation>
+		<annotation cp="👩‍🎓">ākonga | paetahi | wahine</annotation>
+		<annotation cp="👩‍🎓" type="tts">ākonga wahine</annotation>
+		<annotation cp="👨‍🏫">kaiako | kaitohutohu | mātanga | tāne</annotation>
+		<annotation cp="👨‍🏫" type="tts">tāne kaiako</annotation>
+		<annotation cp="👩‍🏫">kaiako | kaitohutohu | mātanga | wahine</annotation>
+		<annotation cp="👩‍🏫" type="tts">kaiako wahine</annotation>
+		<annotation cp="👨‍⚖">kaiwhakawā tāne | tāne | te whakawā | whārite</annotation>
+		<annotation cp="👨‍⚖" type="tts">kaiwhakawā tāne</annotation>
+		<annotation cp="👩‍⚖">kaiwhakawā | wahine | whārite</annotation>
+		<annotation cp="👩‍⚖" type="tts">kaiwhakawā wahine</annotation>
+		<annotation cp="👨‍🌾">kaimahi oneone | kaipāmu | kairāti | tāne</annotation>
+		<annotation cp="👨‍🌾" type="tts">kaipāmu tāne</annotation>
+		<annotation cp="👩‍🌾">kaimahi oneone | kaipāmu | kairāti | wahine</annotation>
+		<annotation cp="👩‍🌾" type="tts">wahine kaipāmu</annotation>
+		<annotation cp="👨‍🍳">kaitaka kai | kaitao | tāne</annotation>
+		<annotation cp="👨‍🍳" type="tts">kaitao tāne</annotation>
+		<annotation cp="👩‍🍳">kaitaka kai | kaitao | wahine</annotation>
+		<annotation cp="👩‍🍳" type="tts">kaitao wahine</annotation>
+		<annotation cp="👨‍🔧">kaiaka mīhini | kaiaka mīhini tāne | kaimahi hiko | kaimahi paipa wai | kaimahi-ā-rehe | tāne</annotation>
+		<annotation cp="👨‍🔧" type="tts">kaiaka mīhini tāne</annotation>
+		<annotation cp="👩‍🔧">kaiaka mīhini | kaiaka mīhini wahine | kaimahi hiko | kaimahi paipa wai | kaimahi-ā-rehe | wahine</annotation>
+		<annotation cp="👩‍🔧" type="tts">kaiaka mīhini wahine</annotation>
+		<annotation cp="👨‍🏭">ahumahi | hangahanga | kaimahi | tāne | tāne mahi wheketere | wheketere</annotation>
+		<annotation cp="👨‍🏭" type="tts">tāne mahi wheketere</annotation>
+		<annotation cp="👩‍🏭">ahumahi | hangahanga | kaimahi | wahine | wahine mahi wheketere | wheketere</annotation>
+		<annotation cp="👩‍🏭" type="tts">wahine mahi wheketere</annotation>
+		<annotation cp="👨‍💼">kaihoahoa whare | kaimahi tari tāne | kaiwhakahaere | kara-mā | pakihi | tāne | tari</annotation>
+		<annotation cp="👨‍💼" type="tts">kaimahi tari tāne</annotation>
+		<annotation cp="👩‍💼">kaihoahoa whare | kaimahi tari wahine | kaiwhakahaere | kara-mā | pakihi | tari | wahine</annotation>
+		<annotation cp="👩‍💼" type="tts">kaimahi tari wahine</annotation>
+		<annotation cp="👨‍🔬">kaimātai ahupūngao | kaimātai koiora | kaimātai matū | kaimātai pāngarau | kaimātai pūhanga | kaimātai pūtaiao | kaimātai pūtaiao tāne | tāne</annotation>
+		<annotation cp="👨‍🔬" type="tts">kaimātai pūtaiao tāne</annotation>
+		<annotation cp="👩‍🔬">kaimātai ahupūngao | kaimātai koiora | kaimātai matū | kaimātai pāngarau | kaimātai pūhanga | kaimātai pūtaiao | kaimātai pūtaiao wahine | wahine</annotation>
+		<annotation cp="👩‍🔬" type="tts">kaimātai pūtaiao wahine</annotation>
+		<annotation cp="👨‍💻">kaihanga | kaihangarau | kaiwaehere | kaiwhakawhanake | pūmanawa | tāne</annotation>
+		<annotation cp="👨‍💻" type="tts">kaihangarau tāne</annotation>
+		<annotation cp="👩‍💻">kaihanga | kaihangarau | kaiwaehere | kaiwhakawhanake | pūmanawa | wahine</annotation>
+		<annotation cp="👩‍💻" type="tts">kaihangarau wahine</annotation>
+		<annotation cp="👨‍🎤">kaitapere | kaiwaiata | kaiwhakangahau | raka | tāne | whetū</annotation>
+		<annotation cp="👨‍🎤" type="tts">kaiwaiata tāne</annotation>
+		<annotation cp="👩‍🎤">kaitapere | kaiwaiata | kaiwhakangahau | raka | wahine | whetū</annotation>
+		<annotation cp="👩‍🎤" type="tts">kaiwaiata wahine</annotation>
+		<annotation cp="👨‍🎨">kaitoi | papatae | tāne | tāne toi</annotation>
+		<annotation cp="👨‍🎨" type="tts">tāne toi</annotation>
+		<annotation cp="👩‍🎨">kaitoi | papatae | wahine | wahine toi</annotation>
+		<annotation cp="👩‍🎨" type="tts">wahine toi</annotation>
+		<annotation cp="👨‍✈">paerata | rererangi | tāne</annotation>
+		<annotation cp="👨‍✈" type="tts">paerata tāne</annotation>
+		<annotation cp="👩‍✈">paerata | wahine | waka rererangi</annotation>
+		<annotation cp="👩‍✈" type="tts">paerata wahine</annotation>
+		<annotation cp="👨‍🚀">kaiātea | tākirirangi | tāne</annotation>
+		<annotation cp="👨‍🚀" type="tts">kaiātea tāne</annotation>
+		<annotation cp="👩‍🚀">kaiātea | tākirirangi | wahine</annotation>
+		<annotation cp="👩‍🚀" type="tts">kaiātea wahine</annotation>
+		<annotation cp="👨‍🚒">kaitinei-ahi | tāne | waka-tinei-ahi</annotation>
+		<annotation cp="👨‍🚒" type="tts">kaitinei-ahi tāne</annotation>
+		<annotation cp="👩‍🚒">kaitinei-ahi | wahine | waka-tinei-ahi</annotation>
+		<annotation cp="👩‍🚒" type="tts">kaitinei-ahi wahine</annotation>
+		<annotation cp="👮">āpiha | kapa | pirihimana</annotation>
+		<annotation cp="👮" type="tts">āpiha pirihimana</annotation>
+		<annotation cp="👮‍♂">āpiha | kapa | pirihimana | tāne</annotation>
+		<annotation cp="👮‍♂" type="tts">āpiha pirihimana tāne</annotation>
+		<annotation cp="👮‍♀">āpiha | kapa | pirihimana | wahine</annotation>
+		<annotation cp="👮‍♀" type="tts">āpiha pirihimana wahine</annotation>
+		<annotation cp="🕵">kaikimihara | kairapuhē | kaitūtei</annotation>
+		<annotation cp="🕵" type="tts">kaikimihara</annotation>
+		<annotation cp="🕵‍♂">kaikimihara | kairapuhē | kaitūtei | tāne</annotation>
+		<annotation cp="🕵‍♂" type="tts">kaikimihara tāne</annotation>
+		<annotation cp="🕵‍♀">kaikimihara | kairapuhē | kaitūtei | wahine</annotation>
+		<annotation cp="🕵‍♀" type="tts">kaikimihara wahine</annotation>
+		<annotation cp="💂">tautieki</annotation>
+		<annotation cp="💂" type="tts">tautieki</annotation>
+		<annotation cp="💂‍♂">tāne | tautieki</annotation>
+		<annotation cp="💂‍♂" type="tts">tautieki tāne</annotation>
+		<annotation cp="💂‍♀">tautieki | wahine</annotation>
+		<annotation cp="💂‍♀" type="tts">tautieki wahine</annotation>
+		<annotation cp="👷">hangatanga | kaimahi | pōtae</annotation>
+		<annotation cp="👷" type="tts">kaimahi hangatanga</annotation>
+		<annotation cp="👷‍♂">hangatanga | kaimahi | tāne</annotation>
+		<annotation cp="👷‍♂" type="tts">kaimahi hangatanga tāne</annotation>
+		<annotation cp="👷‍♀">hangatanga | kaimahi | wahine</annotation>
+		<annotation cp="👷‍♀" type="tts">kaimahi hangatanga wahine</annotation>
+		<annotation cp="🤴">piriniha</annotation>
+		<annotation cp="🤴" type="tts">piriniha</annotation>
+		<annotation cp="👸">kōrero pakiwaitara | moemoeā | pirinihi</annotation>
+		<annotation cp="👸" type="tts">pirinihi</annotation>
+		<annotation cp="👳">pōtae kameta | tangata mau pōtae kameta</annotation>
+		<annotation cp="👳" type="tts">tangata mau pōtae kameta</annotation>
+		<annotation cp="👳‍♂">pōtae kameta | tāne | tāne mau pōtae kameta</annotation>
+		<annotation cp="👳‍♂" type="tts">tāne mau pōtae kameta</annotation>
+		<annotation cp="👳‍♀">pōtae kameta | wahine | wahine mau pōtae kameta</annotation>
+		<annotation cp="👳‍♀" type="tts">wahine mau pōtae kameta</annotation>
+		<annotation cp="👲">gua pi mao | pōtae | tāne | tāne mau kape hainīhi</annotation>
+		<annotation cp="👲" type="tts">tāne mau kape hainīhi</annotation>
+		<annotation cp="🧕">hijab | kāmeta māhunga | mantilla | tichel | wahine mau kāmeta</annotation>
+		<annotation cp="🧕" type="tts">wahine mau kāmeta</annotation>
+		<annotation cp="🤵">hūtu ōkawa | tāne | tāne mārena | tāne mau hūtu ōkawa</annotation>
+		<annotation cp="🤵" type="tts">tāne mau hūtu ōkawa</annotation>
+		<annotation cp="👰">ārai | mārenatanga | wahine mārena | wahine mārena mau ārai</annotation>
+		<annotation cp="👰" type="tts">wahine mārena mau ārai</annotation>
+		<annotation cp="🤰">hapū | wahine</annotation>
+		<annotation cp="🤰" type="tts">wahine hapū</annotation>
+		<annotation cp="🤱">pēpi | ū | whakangote ana | whāngote-ū</annotation>
+		<annotation cp="🤱" type="tts">whāngote-ū</annotation>
+		<annotation cp="👼">anahera | kanohi | kōrero pakiwaitara | moemoeā | pēpi | pīpī anahera</annotation>
+		<annotation cp="👼" type="tts">pīpī anahera</annotation>
+		<annotation cp="🎅">hana | kirihimete | koko | matua | whakanuinga</annotation>
+		<annotation cp="🎅" type="tts">hana koko</annotation>
+		<annotation cp="🤶">kirihimete | koko | kuia | whaea | whakanuinga</annotation>
+		<annotation cp="🤶" type="tts">kuia koko</annotation>
+		<annotation cp="🧙">rūānuku | tāngata matakite | tohunga mākutu | wahine mākutu</annotation>
+		<annotation cp="🧙" type="tts">tāngata matakite</annotation>
+		<annotation cp="🧙‍♂">rūānuku | tohunga mākutu | tohunga matakite</annotation>
+		<annotation cp="🧙‍♂" type="tts">tohunga matakite</annotation>
+		<annotation cp="🧙‍♀">wahine mākutu | wahine matakite</annotation>
+		<annotation cp="🧙‍♀" type="tts">wahine matakite</annotation>
+		<annotation cp="🧚">Oberon | patupaiarehe | Puck | Titania</annotation>
+		<annotation cp="🧚" type="tts">patupaiarehe</annotation>
+		<annotation cp="🧚‍♂">Oberon | patupaiarehe tāne | Puck</annotation>
+		<annotation cp="🧚‍♂" type="tts">patupaiarehe tāne</annotation>
+		<annotation cp="🧚‍♀">patupaiarehe wahine | Titania</annotation>
+		<annotation cp="🧚‍♀" type="tts">patupaiarehe wahine</annotation>
+		<annotation cp="🧛">Dracula | kaitoto | oramate</annotation>
+		<annotation cp="🧛" type="tts">kaitoto</annotation>
+		<annotation cp="🧛‍♂">Dracula | oramate | tāne kaitoto</annotation>
+		<annotation cp="🧛‍♂" type="tts">tāne kaitoto</annotation>
+		<annotation cp="🧛‍♀">oramate | wahine kaitoto</annotation>
+		<annotation cp="🧛‍♀" type="tts">wahine kaitoto</annotation>
+		<annotation cp="🧜">tāne-ika | tangata-ika | wahine-ika</annotation>
+		<annotation cp="🧜" type="tts">tangata-ika</annotation>
+		<annotation cp="🧜‍♂">tāne-ika | Tiritono</annotation>
+		<annotation cp="🧜‍♂" type="tts">tāne-ika</annotation>
+		<annotation cp="🧜‍♀">hine-ika | wahine-ika</annotation>
+		<annotation cp="🧜‍♀" type="tts">hine-ika</annotation>
+		<annotation cp="🧝">erepe | mākutu</annotation>
+		<annotation cp="🧝" type="tts">erepe</annotation>
+		<annotation cp="🧝‍♂">erepe tāne | mākutu</annotation>
+		<annotation cp="🧝‍♂" type="tts">erepe tāne</annotation>
+		<annotation cp="🧝‍♀">erepe wahine | mākutu</annotation>
+		<annotation cp="🧝‍♀" type="tts">erepe wahine</annotation>
+		<annotation cp="🧞">djinn | tūrehu</annotation>
+		<annotation cp="🧞" type="tts">tūrehu</annotation>
+		<annotation cp="🧞‍♂">djinn | tāne tūrehu</annotation>
+		<annotation cp="🧞‍♂" type="tts">tāne tūrehu</annotation>
+		<annotation cp="🧞‍♀">djinn | wahine tūrehu</annotation>
+		<annotation cp="🧞‍♀" type="tts">wahine tūrehu</annotation>
+		<annotation cp="🧟">oramate | tūpāpaku | tūpāpaku hīkoi</annotation>
+		<annotation cp="🧟" type="tts">tūpāpaku</annotation>
+		<annotation cp="🧟‍♂">oramate | tāne tūpāpaku | tūpāpaku hīkoi</annotation>
+		<annotation cp="🧟‍♂" type="tts">tāne tūpāpaku</annotation>
+		<annotation cp="🧟‍♀">oramate | tūpāpaku hīkoi | wahine tūpāpaku</annotation>
+		<annotation cp="🧟‍♀" type="tts">wahine tūpāpaku</annotation>
+		<annotation cp="💆">harono | kanohi | mirimiri | tangata whiwhi mirimiri</annotation>
+		<annotation cp="💆" type="tts">tangata whiwhi mirimiri</annotation>
+		<annotation cp="💆‍♂">kanohi | mirimiri | tāne | tāne whiwhi mirimiri</annotation>
+		<annotation cp="💆‍♂" type="tts">tāne whiwhi mirimiri</annotation>
+		<annotation cp="💆‍♀">kanohi | mirimiri | wahine | wahine whiwhi mirimiri</annotation>
+		<annotation cp="💆‍♀" type="tts">wahine whiwhi mirimiri</annotation>
+		<annotation cp="💇">ātaahua | harono | kaikuti makawe | kutinga makawe | tangata whiwhi kutinga makawe</annotation>
+		<annotation cp="💇" type="tts">tangata whiwhi kutinga makawe</annotation>
+		<annotation cp="💇‍♂">kutinga makawe | tāne | tāne whiwhi kutinga makawe</annotation>
+		<annotation cp="💇‍♂" type="tts">tāne whiwhi kutinga makawe</annotation>
+		<annotation cp="💇‍♀">kutinga makawe | wahine | wahine whiwhi kutinga makawe</annotation>
+		<annotation cp="💇‍♀" type="tts">wahine whiwhi kutinga makawe</annotation>
+		<annotation cp="🚶">hīkoi | hīkoi ana | hīkoi roa | tangata hīkoi</annotation>
+		<annotation cp="🚶" type="tts">tangata hīkoi</annotation>
+		<annotation cp="🚶‍♂">hīkoi | hīkoi roa | tāne</annotation>
+		<annotation cp="🚶‍♂" type="tts">tāne hīkoi</annotation>
+		<annotation cp="🚶‍♀">hīkoi | hīkoi roa | wahine</annotation>
+		<annotation cp="🚶‍♀" type="tts">wahine hīkoi</annotation>
+		<annotation cp="🏃">maratono | oma ana | tangata oma</annotation>
+		<annotation cp="🏃" type="tts">tangata oma</annotation>
+		<annotation cp="🏃‍♂">maratono | oma ana | tāne | tāne oma | tauomaoma</annotation>
+		<annotation cp="🏃‍♂" type="tts">tāne oma</annotation>
+		<annotation cp="🏃‍♀">maratono | oma ana | tauomaoma | wahine | wahine oma</annotation>
+		<annotation cp="🏃‍♀" type="tts">wahine oma</annotation>
+		<annotation cp="💃">kanikani | wahine</annotation>
+		<annotation cp="💃" type="tts">wahine kanikani</annotation>
+		<annotation cp="🕺">kanikani | tāne</annotation>
+		<annotation cp="🕺" type="tts">tāne kanikani</annotation>
+		<annotation cp="🕴">hūtu | pakihi | tāne | tāne mau hūtu e rewa ana</annotation>
+		<annotation cp="🕴" type="tts">tāne mau hūtu e rewa ana</annotation>
+		<annotation cp="👯">kaikanikani | tāngata taringa rāpeti whakangahau | taringa rāpeti | whakangahau</annotation>
+		<annotation cp="👯" type="tts">tāngata taringa rāpeti whakangahau</annotation>
+		<annotation cp="👯‍♂">kaikanikani | tāne | tāne taringa rāpeti whakangahau | taringa rāpeti | whakangahau</annotation>
+		<annotation cp="👯‍♂" type="tts">tāne taringa rāpeti whakangahau</annotation>
+		<annotation cp="👯‍♀">kaikanikani | taringa rāpeti | wāhine | wāhine taringa rāpeti whakangahau | whakangahau</annotation>
+		<annotation cp="👯‍♀" type="tts">wāhine taringa rāpeti whakangahau</annotation>
+		<annotation cp="🧖">hāuna | taiwhanga mamaoa | tangata rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧖" type="tts">tangata rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧖‍♂">hāuna | taiwhanga mamaoa | tāne rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧖‍♂" type="tts">tāne rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧖‍♀">hāuna | taiwhanga mamaoa | wahine rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧖‍♀" type="tts">wahine rō taiwhanga mamaoa</annotation>
+		<annotation cp="🧗">kaipiki | tangata piki</annotation>
+		<annotation cp="🧗" type="tts">tangata piki</annotation>
+		<annotation cp="🧗‍♂">kaipiki | tāne piki</annotation>
+		<annotation cp="🧗‍♂" type="tts">tāne piki</annotation>
+		<annotation cp="🧗‍♀">kaipiki | wahine piki</annotation>
+		<annotation cp="🧗‍♀" type="tts">wahine piki</annotation>
+		<annotation cp="🤺">hoari | kaimatātuhi | matātuhi hoari | tangata matātuhi</annotation>
+		<annotation cp="🤺" type="tts">tangata matātuhi</annotation>
+		<annotation cp="🏇">hoiho | hoiho tauoma | kaieke | tauomaoma</annotation>
+		<annotation cp="🏇" type="tts">tauomaoma hoiho</annotation>
+		<annotation cp="⛷">hukarere | kairetihuka | retihuka</annotation>
+		<annotation cp="⛷" type="tts">kairetihuka</annotation>
+		<annotation cp="🏂">hukarere | kaipaparetihuka | paparetihuka | retihuka</annotation>
+		<annotation cp="🏂" type="tts">kaipaparetihuka</annotation>
+		<annotation cp="🏌">haupōro | pōro | tangata haupōro</annotation>
+		<annotation cp="🏌" type="tts">tangata haupōro</annotation>
+		<annotation cp="🏌‍♂">haupōro | tāne</annotation>
+		<annotation cp="🏌‍♂" type="tts">tāne haupōro</annotation>
+		<annotation cp="🏌‍♀">haupōro | wahine</annotation>
+		<annotation cp="🏌‍♀" type="tts">wahine haupōro</annotation>
+		<annotation cp="🏄">tangata whakaheke ngaru | whakaheke ngaru</annotation>
+		<annotation cp="🏄" type="tts">tangata whakaheke ngaru</annotation>
+		<annotation cp="🏄‍♂">tāne | tāne whakaheke ngaru | whakaheke ngaru</annotation>
+		<annotation cp="🏄‍♂" type="tts">tāne whakaheke ngaru</annotation>
+		<annotation cp="🏄‍♀">wahine | wahine whakaheke ngaru | whakaheke ngaru</annotation>
+		<annotation cp="🏄‍♀" type="tts">wahine whakaheke ngaru</annotation>
+		<annotation cp="🚣">poti | tangata hoe waka | waka hoe</annotation>
+		<annotation cp="🚣" type="tts">tangata hoe waka</annotation>
+		<annotation cp="🚣‍♂">poti | tāne | tāne hoe waka | wakahoe</annotation>
+		<annotation cp="🚣‍♂" type="tts">tāne hoe waka</annotation>
+		<annotation cp="🚣‍♀">poti | wahine | wahine hoe waka | wakahoe</annotation>
+		<annotation cp="🚣‍♀" type="tts">wahine hoe waka</annotation>
+		<annotation cp="🏊">kauhoe | tangata kauhoe</annotation>
+		<annotation cp="🏊" type="tts">tangata kauhoe</annotation>
+		<annotation cp="🏊‍♂">kauhoe | tāne</annotation>
+		<annotation cp="🏊‍♂" type="tts">tāne kauhoe</annotation>
+		<annotation cp="🏊‍♀">kauhoe | wahine</annotation>
+		<annotation cp="🏊‍♀" type="tts">wahine kauhoe</annotation>
+		<annotation cp="⛹">pōro | tangata tāwhana pōro</annotation>
+		<annotation cp="⛹" type="tts">tangata tāwhana pōro</annotation>
+		<annotation cp="⛹‍♂">pōro | tāne | tāne tāwhana pōro</annotation>
+		<annotation cp="⛹‍♂" type="tts">tāne tāwhana pōro</annotation>
+		<annotation cp="⛹‍♀">pōro | wahine | wahine tāwhana pōro</annotation>
+		<annotation cp="⛹‍♀" type="tts">wahine tāwhana pōro</annotation>
+		<annotation cp="🏋">kaihiki | tangata hiki taumaha | taumaha</annotation>
+		<annotation cp="🏋" type="tts">tangata hiki taumaha</annotation>
+		<annotation cp="🏋‍♂">kaihiki taumaha | tāne | tāne hiki taumaha</annotation>
+		<annotation cp="🏋‍♂" type="tts">tāne hiki taumaha</annotation>
+		<annotation cp="🏋‍♀">kaihiki taumaha | wahine | wahine hiki taumaha</annotation>
+		<annotation cp="🏋‍♀" type="tts">wahine hiki taumaha</annotation>
+		<annotation cp="🚴">eke pahikara | kaieke pahikara | pahikara | tangata eke pahikara</annotation>
+		<annotation cp="🚴" type="tts">tangata eke pahikara</annotation>
+		<annotation cp="🚴‍♂">eke pahikara | kaieke pahikara | pahikara | tāne | tāne eke pahikara</annotation>
+		<annotation cp="🚴‍♂" type="tts">tāne eke pahikara</annotation>
+		<annotation cp="🚴‍♀">eke pahikara | kaieke pahikara | pahikara | wahine | wahine eke pahikara</annotation>
+		<annotation cp="🚴‍♀" type="tts">wahine eke pahikara</annotation>
+		<annotation cp="🚵">kaieke pahikara | maunga | pahikara | tangata eke pahikara maunga</annotation>
+		<annotation cp="🚵" type="tts">tangata eke pahikara maunga</annotation>
+		<annotation cp="🚵‍♂">kaieke pahikara | maunga | pahikara | tāne | tāne eke pahikara maunga</annotation>
+		<annotation cp="🚵‍♂" type="tts">tāne eke pahikara maunga</annotation>
+		<annotation cp="🚵‍♀">eke pahikara | kaieke pahikara | maunga | pahikara | wahine | wahine eke pahikara maunga</annotation>
+		<annotation cp="🚵‍♀" type="tts">wahine eke pahikara maunga</annotation>
+		<annotation cp="🤸">kātawīra | takaporepore | tangata kātawīra</annotation>
+		<annotation cp="🤸" type="tts">tangata kātawīra</annotation>
+		<annotation cp="🤸‍♂">kātawīra | takaporepore | tāne</annotation>
+		<annotation cp="🤸‍♂" type="tts">tāne kātawīra</annotation>
+		<annotation cp="🤸‍♀">kātawīra | takaporepore | wahine</annotation>
+		<annotation cp="🤸‍♀" type="tts">wahine kātawīra</annotation>
+		<annotation cp="🤼">kaimamau | mamau | tāngata mamau</annotation>
+		<annotation cp="🤼" type="tts">tāngata mamau</annotation>
+		<annotation cp="🤼‍♂">mamau | tāne</annotation>
+		<annotation cp="🤼‍♂" type="tts">tāne mamau</annotation>
+		<annotation cp="🤼‍♀">mamau | wāhine</annotation>
+		<annotation cp="🤼‍♀" type="tts">wāhine mamau</annotation>
+		<annotation cp="🤽">poro | tangata tākaro poro wai | wai</annotation>
+		<annotation cp="🤽" type="tts">tangata tākaro poro wai</annotation>
+		<annotation cp="🤽‍♂">poro wai | tāne | tāne tākaro poro wai</annotation>
+		<annotation cp="🤽‍♂" type="tts">tāne tākaro poro wai</annotation>
+		<annotation cp="🤽‍♀">poro wai | wahine | wahine tākaro poro wai</annotation>
+		<annotation cp="🤽‍♀" type="tts">wahine tākaro poro wai</annotation>
+		<annotation cp="🤾">poiringa | pōro | tangata tākaro poiringa</annotation>
+		<annotation cp="🤾" type="tts">tangata tākaro poiringa</annotation>
+		<annotation cp="🤾‍♂">poiringa | tāne | tāne tākaro poiringa</annotation>
+		<annotation cp="🤾‍♂" type="tts">tāne tākaro poiringa</annotation>
+		<annotation cp="🤾‍♀">poiringa | wahine | wahine tākaro poiringa</annotation>
+		<annotation cp="🤾‍♀" type="tts">wahine tākaro poiringa</annotation>
+		<annotation cp="🤹">mahitakimaha | pūkenga | tangata whiuwhiu | whakataurite | whiuwhiu</annotation>
+		<annotation cp="🤹" type="tts">tangata whiuwhiu</annotation>
+		<annotation cp="🤹‍♂">mahitakimaha | tāne | whiuwhiu</annotation>
+		<annotation cp="🤹‍♂" type="tts">tāne whiuwhiu</annotation>
+		<annotation cp="🤹‍♀">mahitakimaha | wahine | whiuwhiu</annotation>
+		<annotation cp="🤹‍♀" type="tts">wahine whiuwhiu</annotation>
+		<annotation cp="🧘">tangata tūranga rotu | whakaaro | yoga</annotation>
+		<annotation cp="🧘" type="tts">tangata tūranga rotu</annotation>
+		<annotation cp="🧘‍♂">tāne tūranga rotu | whakaaro | yoga</annotation>
+		<annotation cp="🧘‍♂" type="tts">tāne tūranga rotu</annotation>
+		<annotation cp="🧘‍♀">wahine tūranga rotu | whakaaro | yoga</annotation>
+		<annotation cp="🧘‍♀" type="tts">wahine tūranga rotu</annotation>
+		<annotation cp="🛀">kaukau | tangata kaukau ana | tāpu kaukau</annotation>
+		<annotation cp="🛀" type="tts">tangata kaukau ana</annotation>
+		<annotation cp="🛌">hōtēra | moe | tangata rō moenga</annotation>
+		<annotation cp="🛌" type="tts">tangata rō moenga</annotation>
+		<annotation cp="👭">pupuri | ringa | tokorua | tokorua wāhine mau ringa | wahine</annotation>
+		<annotation cp="👭" type="tts">tokorua wāhine mau ringa</annotation>
+		<annotation cp="👫">pupuri | ringa | tāne | tāne me te wahine mau ringa | tokorua | wahine</annotation>
+		<annotation cp="👫" type="tts">tāne me te wahine mau ringa</annotation>
+		<annotation cp="👬">Gemini | māhanga | poutiriao | pupuri | ringa | tāne | tokorua | tokorua tāne mau ringa</annotation>
+		<annotation cp="👬" type="tts">tokorua tāne mau ringa</annotation>
+		<annotation cp="💏">kihi | tokorua</annotation>
+		<annotation cp="💏" type="tts">kihi</annotation>
+		<annotation cp="💑">aroha | tokorua | tokorua me te manawa</annotation>
+		<annotation cp="💑" type="tts">tokorua me te manawa</annotation>
+		<annotation cp="🗣">ataata | kanohi | kōrero | kōrero ana | upoko</annotation>
+		<annotation cp="🗣" type="tts">upoko kōrero</annotation>
+		<annotation cp="👤">ataata | poho | poho rō ataata</annotation>
+		<annotation cp="👤" type="tts">poho rō ataata</annotation>
+		<annotation cp="👥">ataata | ngā poho rō ataata | poho</annotation>
+		<annotation cp="👥" type="tts">ngā poho rō ataata</annotation>
+		<annotation cp="👪">whānau</annotation>
+		<annotation cp="👪" type="tts">whānau</annotation>
+		<annotation cp="👣">kākahu | ngā tapuwae | tā | tapuwae</annotation>
+		<annotation cp="👣" type="tts">ngā tapuwae</annotation>
+		<annotation cp="🐵">kanohi | makimaki</annotation>
+		<annotation cp="🐵" type="tts">kanohi makimaki</annotation>
+		<annotation cp="🐒">makimaki</annotation>
+		<annotation cp="🐒" type="tts">makimaki</annotation>
+		<annotation cp="🦍">makimaki nui</annotation>
+		<annotation cp="🦍" type="tts">makimaki nui</annotation>
+		<annotation cp="🐶">kanohi | kurī | mōkai</annotation>
+		<annotation cp="🐶" type="tts">kanohi kurī</annotation>
+		<annotation cp="🐕">kurī | mōkai</annotation>
+		<annotation cp="🐕" type="tts">kurī</annotation>
+		<annotation cp="🐩">kurī | kurī poipoi</annotation>
+		<annotation cp="🐩" type="tts">kurī poipoi</annotation>
+		<annotation cp="🐺">kanohi | wūruhi</annotation>
+		<annotation cp="🐺" type="tts">kanohi wūruhi</annotation>
+		<annotation cp="🦊">kanohi | pōkiha</annotation>
+		<annotation cp="🦊" type="tts">kanohi pōkiha</annotation>
+		<annotation cp="🐱">kanohi | mōkai | ngeru</annotation>
+		<annotation cp="🐱" type="tts">kanohi ngeru</annotation>
+		<annotation cp="🐈">mōkai | ngeru</annotation>
+		<annotation cp="🐈" type="tts">ngeru</annotation>
+		<annotation cp="🦁">kanohi | Leo | poutiriao | raiona</annotation>
+		<annotation cp="🦁" type="tts">kanohi raiona</annotation>
+		<annotation cp="🐯">kanohi | taika</annotation>
+		<annotation cp="🐯" type="tts">kanohi taika</annotation>
+		<annotation cp="🐅">taika</annotation>
+		<annotation cp="🐅" type="tts">taika</annotation>
+		<annotation cp="🐆">reparo</annotation>
+		<annotation cp="🐆" type="tts">reparo</annotation>
+		<annotation cp="🐴">hoiho | kanohi | kanohi hōiho</annotation>
+		<annotation cp="🐴" type="tts">kanohi hōiho</annotation>
+		<annotation cp="🐎">hōiho | hoiho tauomaoma | hoihotanga | tauomaoma</annotation>
+		<annotation cp="🐎" type="tts">hōiho</annotation>
+		<annotation cp="🦄">hoiho pihi | kanohi | kanohi hōiho pihi</annotation>
+		<annotation cp="🦄" type="tts">kanohi hōiho pihi</annotation>
+		<annotation cp="🦓">hepapa | tāheke</annotation>
+		<annotation cp="🦓" type="tts">hepapa</annotation>
+		<annotation cp="🦌">tia</annotation>
+		<annotation cp="🦌" type="tts">tia</annotation>
+		<annotation cp="🐮">kanohi | kau</annotation>
+		<annotation cp="🐮" type="tts">kanohi kau</annotation>
+		<annotation cp="🐂">ōkiha | poutiriao | pūru | Taurus</annotation>
+		<annotation cp="🐂" type="tts">ōkiha</annotation>
+		<annotation cp="🐃">pūru | wai</annotation>
+		<annotation cp="🐃" type="tts">pūru wai</annotation>
+		<annotation cp="🐄">kau</annotation>
+		<annotation cp="🐄" type="tts">kau</annotation>
+		<annotation cp="🐷">kanohi | poaka</annotation>
+		<annotation cp="🐷" type="tts">kanohi poaka</annotation>
+		<annotation cp="🐖">poaka | poaka uha</annotation>
+		<annotation cp="🐖" type="tts">poaka</annotation>
+		<annotation cp="🐗">poaka | poaka toa</annotation>
+		<annotation cp="🐗" type="tts">poaka toa</annotation>
+		<annotation cp="🐽">ihu | kanohi | poaka</annotation>
+		<annotation cp="🐽" type="tts">ihu poaka</annotation>
+		<annotation cp="🐏">Aries | hipi | poutiriao | toa</annotation>
+		<annotation cp="🐏" type="tts">hipi toa</annotation>
+		<annotation cp="🐑">hipi | uha</annotation>
+		<annotation cp="🐑" type="tts">uha hipi</annotation>
+		<annotation cp="🐐">Capricorn | koati | poutiriao</annotation>
+		<annotation cp="🐐" type="tts">koati</annotation>
+		<annotation cp="🐪">kāmera | taromitari | tuapuku</annotation>
+		<annotation cp="🐪" type="tts">kāmera</annotation>
+		<annotation cp="🐫">kāmera | rua-tuapuku | tuapuku</annotation>
+		<annotation cp="🐫" type="tts">kāmera rua-tuapuku</annotation>
+		<annotation cp="🦒">kakīroa | ngā kōiraira</annotation>
+		<annotation cp="🦒" type="tts">kakīroa</annotation>
+		<annotation cp="🐘">erewhana</annotation>
+		<annotation cp="🐘" type="tts">erewhana</annotation>
+		<annotation cp="🦏">rinorino</annotation>
+		<annotation cp="🦏" type="tts">rinorino</annotation>
+		<annotation cp="🐭">kanohi | kiore</annotation>
+		<annotation cp="🐭" type="tts">kanohi kiore</annotation>
+		<annotation cp="🐁">kiore iti</annotation>
+		<annotation cp="🐁" type="tts">kiore iti</annotation>
+		<annotation cp="🐀">kiore rahi</annotation>
+		<annotation cp="🐀" type="tts">kiore rahi</annotation>
+		<annotation cp="🐹">hamikiore | kanohi | mōkai</annotation>
+		<annotation cp="🐹" type="tts">kanohi hamikiore</annotation>
+		<annotation cp="🐰">kanohi | mōkai | rāpeti</annotation>
+		<annotation cp="🐰" type="tts">kanohi rāpeti</annotation>
+		<annotation cp="🐇">mōkai | rāpeti</annotation>
+		<annotation cp="🐇" type="tts">rāpeti</annotation>
+		<annotation cp="🐿">timahaki</annotation>
+		<annotation cp="🐿" type="tts">timahaki</annotation>
+		<annotation cp="🦔">pūtaratara | tuatete</annotation>
+		<annotation cp="🦔" type="tts">tuatete</annotation>
+		<annotation cp="🦇">pekapeka | pekapeka kaitoto</annotation>
+		<annotation cp="🦇" type="tts">pekapeka</annotation>
+		<annotation cp="🐻">kanohi | pea</annotation>
+		<annotation cp="🐻" type="tts">kanohi pea</annotation>
+		<annotation cp="🐨">koara | pea</annotation>
+		<annotation cp="🐨" type="tts">koara</annotation>
+		<annotation cp="🐼">kanohi | panara</annotation>
+		<annotation cp="🐼" type="tts">kanohi panara</annotation>
+		<annotation cp="🐾">ngā tā tapuwae | tā tapuwae | tapuwae | waewae</annotation>
+		<annotation cp="🐾" type="tts">ngā tā tapuwae</annotation>
+		<annotation cp="🦃">korukoru | manu</annotation>
+		<annotation cp="🦃" type="tts">korukoru</annotation>
+		<annotation cp="🐔">heihei | manu</annotation>
+		<annotation cp="🐔" type="tts">heihei</annotation>
+		<annotation cp="🐓">manu | tameheihei</annotation>
+		<annotation cp="🐓" type="tts">tameheihei</annotation>
+		<annotation cp="🐣">manu | pī | pīpī | pīpī timotimo | timotimo ana</annotation>
+		<annotation cp="🐣" type="tts">pīpī timotimo</annotation>
+		<annotation cp="🐤">manu | pī | pīpī</annotation>
+		<annotation cp="🐤" type="tts">pīpī manu</annotation>
+		<annotation cp="🐥">manu | pī | pīpī | pīpī manu anga mua</annotation>
+		<annotation cp="🐥" type="tts">pīpī manu anga mua</annotation>
+		<annotation cp="🐦">manu</annotation>
+		<annotation cp="🐦" type="tts">manu</annotation>
+		<annotation cp="🐧">kororā | manu</annotation>
+		<annotation cp="🐧" type="tts">kororā</annotation>
+		<annotation cp="🕊">kupupa | manu | rere | rongomau</annotation>
+		<annotation cp="🕊" type="tts">kupupa</annotation>
+		<annotation cp="🦅">ekara | manu</annotation>
+		<annotation cp="🦅" type="tts">ekara</annotation>
+		<annotation cp="🦆">manu | parera</annotation>
+		<annotation cp="🦆" type="tts">parera</annotation>
+		<annotation cp="🦉">manu | mōhio | ruru</annotation>
+		<annotation cp="🦉" type="tts">ruru</annotation>
+		<annotation cp="🐸">kanohi | poraka</annotation>
+		<annotation cp="🐸" type="tts">kanohi poraka</annotation>
+		<annotation cp="🐊">nguturoa</annotation>
+		<annotation cp="🐊" type="tts">nguturoa</annotation>
+		<annotation cp="🐢">honu | terapine</annotation>
+		<annotation cp="🐢" type="tts">honu</annotation>
+		<annotation cp="🦎">mokomoko | ngārara</annotation>
+		<annotation cp="🦎" type="tts">mokomoko</annotation>
+		<annotation cp="🐍">kaihāpai | nākahi | Ophiuchus | poutiriao</annotation>
+		<annotation cp="🐍" type="tts">nākahi</annotation>
+		<annotation cp="🐲">kanohi | pakiwaitara | tarakona</annotation>
+		<annotation cp="🐲" type="tts">kanohi tarakona</annotation>
+		<annotation cp="🐉">pakiwaitara | tarakona</annotation>
+		<annotation cp="🐉" type="tts">tarakona</annotation>
+		<annotation cp="🦕">brachiosaurus | brontosaurus | diplodocus | sauropod</annotation>
+		<annotation cp="🦕" type="tts">sauropod</annotation>
+		<annotation cp="🦖">T-Rex | Tyrannosaurus Rex</annotation>
+		<annotation cp="🦖" type="tts">T-Rex</annotation>
+		<annotation cp="🐳">kanohi | pupuhi | tohorā</annotation>
+		<annotation cp="🐳" type="tts">tohorā pupuhi</annotation>
+		<annotation cp="🐋">tohorā</annotation>
+		<annotation cp="🐋" type="tts">tohorā</annotation>
+		<annotation cp="🐬">aihe | pakihau</annotation>
+		<annotation cp="🐬" type="tts">aihe</annotation>
+		<annotation cp="🐟">ika | Pisces | poutiriao</annotation>
+		<annotation cp="🐟" type="tts">ika</annotation>
+		<annotation cp="🐠">ika | pārūrū</annotation>
+		<annotation cp="🐠" type="tts">ika pārūrū</annotation>
+		<annotation cp="🐡">ika | ikapupuhi</annotation>
+		<annotation cp="🐡" type="tts">ikapupuhi</annotation>
+		<annotation cp="🦈">ika | mangō</annotation>
+		<annotation cp="🦈" type="tts">mangō</annotation>
+		<annotation cp="🐙">wheke</annotation>
+		<annotation cp="🐙" type="tts">wheke</annotation>
+		<annotation cp="🐚">anga | tōrino</annotation>
+		<annotation cp="🐚" type="tts">anga tōrino</annotation>
+		<annotation cp="🦀">Cancer | pāpaka | poutiriao</annotation>
+		<annotation cp="🦀" type="tts">pāpaka</annotation>
+		<annotation cp="🦐">kai | kōuraura | mātaitai | ririki</annotation>
+		<annotation cp="🦐" type="tts">kōuraura</annotation>
+		<annotation cp="🦑">kai | kota | ngū</annotation>
+		<annotation cp="🦑" type="tts">ngū</annotation>
+		<annotation cp="🐌">hātaretare</annotation>
+		<annotation cp="🐌" type="tts">hātaretare</annotation>
+		<annotation cp="🦋">ātaahua | pēpeke | pūrerehua</annotation>
+		<annotation cp="🦋" type="tts">pūrerehua</annotation>
+		<annotation cp="🐛">pēpeke | tātaka</annotation>
+		<annotation cp="🐛" type="tts">tātaka</annotation>
+		<annotation cp="🐜">pēpeke | pōpokorua</annotation>
+		<annotation cp="🐜" type="tts">pōpokorua</annotation>
+		<annotation cp="🐝">hanipī | ngārara | pī</annotation>
+		<annotation cp="🐝" type="tts">hanipī</annotation>
+		<annotation cp="🐞">pāpapa | pāpapa kōpure | pēpeke</annotation>
+		<annotation cp="🐞" type="tts">pāpapa kōpure</annotation>
+		<annotation cp="🦗">kirikiti | māwhitiwhiti</annotation>
+		<annotation cp="🦗" type="tts">kirikiti</annotation>
+		<annotation cp="🕷">ngārara | pēpeke</annotation>
+		<annotation cp="🕷" type="tts">ngārara</annotation>
+		<annotation cp="🕸">ngārara | tukutuku</annotation>
+		<annotation cp="🕸" type="tts">tukutuku ngārara</annotation>
+		<annotation cp="🦂">kopiona | poutiriao | scorpio | Scorpius</annotation>
+		<annotation cp="🦂" type="tts">kopiona</annotation>
+		<annotation cp="💐">putiputi | tākai putiputi</annotation>
+		<annotation cp="💐" type="tts">tākai putiputi</annotation>
+		<annotation cp="🌸">puāwai | putiputi | tieri</annotation>
+		<annotation cp="🌸" type="tts">putiputi tieri</annotation>
+		<annotation cp="💮">putiputi | putiputi mā</annotation>
+		<annotation cp="💮" type="tts">putiputi mā</annotation>
+		<annotation cp="🏵">rōhiti | tipu</annotation>
+		<annotation cp="🏵" type="tts">rōhiti</annotation>
+		<annotation cp="🌹">putiputi | rōhi</annotation>
+		<annotation cp="🌹" type="tts">rōhi</annotation>
+		<annotation cp="🥀">menge | putiputi | putiputi kautaka</annotation>
+		<annotation cp="🥀" type="tts">putiputi kautaka</annotation>
+		<annotation cp="🌺">puarangi | putiputi</annotation>
+		<annotation cp="🌺" type="tts">puarangi</annotation>
+		<annotation cp="🌻">putiputi | putiputirā | rā</annotation>
+		<annotation cp="🌻" type="tts">putiputirā</annotation>
+		<annotation cp="🌼">puāwai | putiputi</annotation>
+		<annotation cp="🌼" type="tts">puāwai</annotation>
+		<annotation cp="🌷">putiputi | tūripi</annotation>
+		<annotation cp="🌷" type="tts">tūripi</annotation>
+		<annotation cp="🌱">hōu | tipu</annotation>
+		<annotation cp="🌱" type="tts">tipu</annotation>
+		<annotation cp="🌲">rākau | rākau māota</annotation>
+		<annotation cp="🌲" type="tts">rākau māota</annotation>
+		<annotation cp="🌳">rākau | rākau whakamakere rau | tukurau | whakamakere rau</annotation>
+		<annotation cp="🌳" type="tts">rākau whakamakere rau</annotation>
+		<annotation cp="🌴">nīkau | rākau</annotation>
+		<annotation cp="🌴" type="tts">nīkau</annotation>
+		<annotation cp="🌵">tātā tiotio | tipu</annotation>
+		<annotation cp="🌵" type="tts">tātā tiotio</annotation>
+		<annotation cp="🌾">kākati raihi | pata | puku | raihi</annotation>
+		<annotation cp="🌾" type="tts">kākati raihi</annotation>
+		<annotation cp="🌿">amiami | rau</annotation>
+		<annotation cp="🌿" type="tts">amiami</annotation>
+		<annotation cp="☘">hamitoka | tipu</annotation>
+		<annotation cp="☘" type="tts">hamitoka</annotation>
+		<annotation cp="🍀">4 | koroa | rau | whā</annotation>
+		<annotation cp="🍀" type="tts">koroa whā rau</annotation>
+		<annotation cp="🍁">hinga | mapera | rau</annotation>
+		<annotation cp="🍁" type="tts">rau mapera</annotation>
+		<annotation cp="🍂">makere ana | rau | rau makere</annotation>
+		<annotation cp="🍂" type="tts">rau makere</annotation>
+		<annotation cp="🍃">hau | kapakapa | puhi | rau</annotation>
+		<annotation cp="🍃" type="tts">rau kapakapa hau</annotation>
+		<annotation cp="🍄">harore | tūruporaka</annotation>
+		<annotation cp="🍄" type="tts">harore</annotation>
+		<annotation cp="🍇">hua | karepe | ngā karepe</annotation>
+		<annotation cp="🍇" type="tts">ngā karepe</annotation>
+		<annotation cp="🍈">hua | merengi</annotation>
+		<annotation cp="🍈" type="tts">merengi</annotation>
+		<annotation cp="🍉">hua | merengiwai</annotation>
+		<annotation cp="🍉" type="tts">merengiwai</annotation>
+		<annotation cp="🍊">ārani | hua | tāngarīni</annotation>
+		<annotation cp="🍊" type="tts">tāngarīni</annotation>
+		<annotation cp="🍋">hua | rēmana | waikawa</annotation>
+		<annotation cp="🍋" type="tts">rēmana</annotation>
+		<annotation cp="🍌">hua | panana</annotation>
+		<annotation cp="🍌" type="tts">panana</annotation>
+		<annotation cp="🍍">hua | paināporo</annotation>
+		<annotation cp="🍍" type="tts">paināporo</annotation>
+		<annotation cp="🍎">āporo | hua | whero</annotation>
+		<annotation cp="🍎" type="tts">āporo whero</annotation>
+		<annotation cp="🍏">āporo | hua | kākāriki</annotation>
+		<annotation cp="🍏" type="tts">āporo kākāriki</annotation>
+		<annotation cp="🍐">hua | pea</annotation>
+		<annotation cp="🍐" type="tts">pea</annotation>
+		<annotation cp="🍑">hua | pītiti</annotation>
+		<annotation cp="🍑" type="tts">pītiti</annotation>
+		<annotation cp="🍒">hua | ngā tieri | tieri</annotation>
+		<annotation cp="🍒" type="tts">ngā tieri</annotation>
+		<annotation cp="🍓">hua | pere | rōpere</annotation>
+		<annotation cp="🍓" type="tts">rōpere</annotation>
+		<annotation cp="🥝">hua | kai | kiwi</annotation>
+		<annotation cp="🥝" type="tts">hua kiwi</annotation>
+		<annotation cp="🍅">hua | huawhenua | tomato</annotation>
+		<annotation cp="🍅" type="tts">tomato</annotation>
+		<annotation cp="🥥">kokonati | nīkau | pīna korara</annotation>
+		<annotation cp="🥥" type="tts">kokonati</annotation>
+		<annotation cp="🥑">awakāro | huarākau | kai</annotation>
+		<annotation cp="🥑" type="tts">awakāro</annotation>
+		<annotation cp="🍆">huawhenua | otahua</annotation>
+		<annotation cp="🍆" type="tts">otahua</annotation>
+		<annotation cp="🥔">huawhenua | kai | rīwai</annotation>
+		<annotation cp="🥔" type="tts">rīwai</annotation>
+		<annotation cp="🥕">huawhenua | kai | kāroti</annotation>
+		<annotation cp="🥕" type="tts">kāroti</annotation>
+		<annotation cp="🌽">kānga | puku kānga | taringa</annotation>
+		<annotation cp="🌽" type="tts">puku kānga</annotation>
+		<annotation cp="🌶">pepa | wera</annotation>
+		<annotation cp="🌶" type="tts">pepa wera</annotation>
+		<annotation cp="🥒">huawhenua | kai | kūkama | pīkara</annotation>
+		<annotation cp="🥒" type="tts">kūkama</annotation>
+		<annotation cp="🥦">kāpeti kōraha | porokori</annotation>
+		<annotation cp="🥦" type="tts">porokori</annotation>
+		<annotation cp="🥜">huawhenua | kai | nati | pīnati</annotation>
+		<annotation cp="🥜" type="tts">pīnati</annotation>
+		<annotation cp="🌰">hetenati | tipu</annotation>
+		<annotation cp="🌰" type="tts">hetenati</annotation>
+		<annotation cp="🍞">parāoa | rohi</annotation>
+		<annotation cp="🍞" type="tts">parāoa</annotation>
+		<annotation cp="🥐">kai | parāoa | parāoarīpeka | pōkai pewa | wīwī</annotation>
+		<annotation cp="🥐" type="tts">parāoarīpeka</annotation>
+		<annotation cp="🥖">kai | pakete | parāoa | wīwī</annotation>
+		<annotation cp="🥖" type="tts">parāoa pakete</annotation>
+		<annotation cp="🥨">pretzel | whiri</annotation>
+		<annotation cp="🥨" type="tts">pretzel</annotation>
+		<annotation cp="🥞">kai | kekewera | kerēpe | panekeke</annotation>
+		<annotation cp="🥞" type="tts">panekeke</annotation>
+		<annotation cp="🧀">matakahi tīhi | tīhi</annotation>
+		<annotation cp="🧀" type="tts">matakahi tīhi</annotation>
+		<annotation cp="🍖">kōiwi | mīti | mīti runga kōiwi</annotation>
+		<annotation cp="🍖" type="tts">mīti runga kōiwi</annotation>
+		<annotation cp="🍗">heihei | kōiwi | manu | waewae</annotation>
+		<annotation cp="🍗" type="tts">waewae manu</annotation>
+		<annotation cp="🥩">rara | rara poaka | rara reme | tapahitanga mīti | tēki</annotation>
+		<annotation cp="🥩" type="tts">tapahitanga mīti</annotation>
+		<annotation cp="🥓">kai | mīti | pēkana</annotation>
+		<annotation cp="🥓" type="tts">pēkana</annotation>
+		<annotation cp="🍔">hāmipēka | pāki</annotation>
+		<annotation cp="🍔" type="tts">hāmipēka</annotation>
+		<annotation cp="🍟">ngā parai wīwī | parai | wīwī</annotation>
+		<annotation cp="🍟" type="tts">ngā parai wīwī</annotation>
+		<annotation cp="🍕">parehe | poro | tīhi</annotation>
+		<annotation cp="🍕" type="tts">parehe</annotation>
+		<annotation cp="🌭">hōtiti | hōtiti pakipeta | kurī wera | kurīwera</annotation>
+		<annotation cp="🌭" type="tts">kurī wera</annotation>
+		<annotation cp="🥪">hanewiti | parāoa</annotation>
+		<annotation cp="🥪" type="tts">hanewiti</annotation>
+		<annotation cp="🌮">mehikana | tako</annotation>
+		<annotation cp="🌮" type="tts">tako</annotation>
+		<annotation cp="🌯">mehikana | purito | takai</annotation>
+		<annotation cp="🌯" type="tts">purito</annotation>
+		<annotation cp="🥙">kai | kepapa | parāoapapa | tōrino | whakakī | wharawhere</annotation>
+		<annotation cp="🥙" type="tts">parāoapapa whakakī</annotation>
+		<annotation cp="🥚">hēki | kai</annotation>
+		<annotation cp="🥚" type="tts">hēki</annotation>
+		<annotation cp="🍳">hēki | parai | pēne | tao ana</annotation>
+		<annotation cp="🍳" type="tts">tao ana</annotation>
+		<annotation cp="🥘">kaherora | kai | paera | pāpaku | pēne</annotation>
+		<annotation cp="🥘" type="tts">pēne kai pāpaku</annotation>
+		<annotation cp="🍲">kōhua | kōhua kai | tiu</annotation>
+		<annotation cp="🍲" type="tts">kōhua kai</annotation>
+		<annotation cp="🥣">congee | hereara | paepae me te pūnu | parakuihi</annotation>
+		<annotation cp="🥣" type="tts">paepae me te pūnu</annotation>
+		<annotation cp="🥗">huamata | kai | kākāriki</annotation>
+		<annotation cp="🥗" type="tts">huamata kākāriki</annotation>
+		<annotation cp="🍿">kāngapahū</annotation>
+		<annotation cp="🍿" type="tts">kāngapahū</annotation>
+		<annotation cp="🥫">kai kēne | kēne</annotation>
+		<annotation cp="🥫" type="tts">kai kēne</annotation>
+		<annotation cp="🍱">pouaka peneto</annotation>
+		<annotation cp="🍱" type="tts">pouaka peneto</annotation>
+		<annotation cp="🍘">pihikete | raihi</annotation>
+		<annotation cp="🍘" type="tts">pihikete raihi</annotation>
+		<annotation cp="🍙">Hapanīhi | pōro | raihi</annotation>
+		<annotation cp="🍙" type="tts">pōro raihi</annotation>
+		<annotation cp="🍚">maoa | raihi</annotation>
+		<annotation cp="🍚" type="tts">raihi maoa</annotation>
+		<annotation cp="🍛">kari | raihi</annotation>
+		<annotation cp="🍛" type="tts">raihi kari</annotation>
+		<annotation cp="🍜">korohū | nūru | paepae | ramen</annotation>
+		<annotation cp="🍜" type="tts">paepae korohū</annotation>
+		<annotation cp="🍝">pakēti | parāoa rimurapa</annotation>
+		<annotation cp="🍝" type="tts">pakēti</annotation>
+		<annotation cp="🍠">kūmara tunutunu | reka | rīwai | tukutuku</annotation>
+		<annotation cp="🍠" type="tts">kūmara tunutunu</annotation>
+		<annotation cp="🍢">kaimoana | kepapa | otene | rākau | wero</annotation>
+		<annotation cp="🍢" type="tts">otene</annotation>
+		<annotation cp="🍣">hūhi</annotation>
+		<annotation cp="🍣" type="tts">hūhi</annotation>
+		<annotation cp="🍤">kōura | kōuraura | parai | temepura</annotation>
+		<annotation cp="🍤" type="tts">kōuraura parai</annotation>
+		<annotation cp="🍥">ika | keke | keke ika whai koru | koru | pōhā</annotation>
+		<annotation cp="🍥" type="tts">keke ika whai koru</annotation>
+		<annotation cp="🍡">Hapanīhi | puruni | rākau | reka | tāngoro | wero</annotation>
+		<annotation cp="🍡" type="tts">tāngoro</annotation>
+		<annotation cp="🥟">empanada | gyōza | jiaozi | parāoa kinikini | pierogi</annotation>
+		<annotation cp="🥟" type="tts">parāoa kinikini</annotation>
+		<annotation cp="🥠">pihikete matapae | poropititanga</annotation>
+		<annotation cp="🥠" type="tts">pihikete matapae</annotation>
+		<annotation cp="🥡">paepae tio | pouaka kaweatu</annotation>
+		<annotation cp="🥡" type="tts">pouaka kaweatu</annotation>
+		<annotation cp="🍦">aihikirīmi | huka | kirīmi | ngohengohe | puruni | reka</annotation>
+		<annotation cp="🍦" type="tts">aihikirīmi ngohengohe</annotation>
+		<annotation cp="🍧">heua | huka | huka heuheu | puruni | reka</annotation>
+		<annotation cp="🍧" type="tts">huka heuheu</annotation>
+		<annotation cp="🍨">aihikirīmi | huka | kirīmi | puruni</annotation>
+		<annotation cp="🍨" type="tts">aihikirīmi</annotation>
+		<annotation cp="🍩">puruni | reka | tōnati</annotation>
+		<annotation cp="🍩" type="tts">tōnati</annotation>
+		<annotation cp="🍪">pihikete | puruni | reka</annotation>
+		<annotation cp="🍪" type="tts">pihikete</annotation>
+		<annotation cp="🎂">keke | pōhā | puruni | rāwhānau | reka | whakanuinga</annotation>
+		<annotation cp="🎂" type="tts">keke rāwhānau</annotation>
+		<annotation cp="🍰">keke | kekepoto | pōhā | poro | puruni | reka</annotation>
+		<annotation cp="🍰" type="tts">kekepoto</annotation>
+		<annotation cp="🥧">pāi | pōhā | whakakī</annotation>
+		<annotation cp="🥧" type="tts">pāi</annotation>
+		<annotation cp="🍫">pae | pae tiokorete | puruni | reka | tiokoreti</annotation>
+		<annotation cp="🍫" type="tts">pae tiokorete</annotation>
+		<annotation cp="🍬">puruni | rare | reka</annotation>
+		<annotation cp="🍬" type="tts">rare</annotation>
+		<annotation cp="🍭">puruni | rare | rarepapa | reka</annotation>
+		<annotation cp="🍭" type="tts">rarepapa</annotation>
+		<annotation cp="🍮">katete | puruni | reka</annotation>
+		<annotation cp="🍮" type="tts">katete</annotation>
+		<annotation cp="🍯">honi | kōhua | paepae honi | reka</annotation>
+		<annotation cp="🍯" type="tts">paepae honi</annotation>
+		<annotation cp="🍼">miraka | pātara | pēpi | unu</annotation>
+		<annotation cp="🍼" type="tts">pātara pēpi</annotation>
+		<annotation cp="🥛">karāhe | miraka | unu</annotation>
+		<annotation cp="🥛" type="tts">karāhe miraka</annotation>
+		<annotation cp="☕">mamaoa | puruni | reka wera | tī | unu wera</annotation>
+		<annotation cp="☕" type="tts">unu wera</annotation>
+		<annotation cp="🍵">kapu | tī | tīkapu | tīkapu kore kakau | unu</annotation>
+		<annotation cp="🍵" type="tts">tīkapu kore kakau</annotation>
+		<annotation cp="🍶">hake | kapu | pae | pātara | unu</annotation>
+		<annotation cp="🍶" type="tts">hake</annotation>
+		<annotation cp="🍾">pae | pahū ana | pātara | pātara puru pahū | puru | unu</annotation>
+		<annotation cp="🍾" type="tts">pātara puru pahū</annotation>
+		<annotation cp="🍷">karāhe | pae | unu | waina</annotation>
+		<annotation cp="🍷" type="tts">karāhe waina</annotation>
+		<annotation cp="🍸">karāhe | pae | unu | unuranu</annotation>
+		<annotation cp="🍸" type="tts">karāhe unuranu</annotation>
+		<annotation cp="🍹">pae | pārūrū | unu</annotation>
+		<annotation cp="🍹" type="tts">unu pārūrū</annotation>
+		<annotation cp="🍺">maka | pae | pia | unu</annotation>
+		<annotation cp="🍺" type="tts">maka pia</annotation>
+		<annotation cp="🍻">maka | ngā maka pia tutuki | pae | pia | tutuki | unu</annotation>
+		<annotation cp="🍻" type="tts">ngā maka pia tutuki</annotation>
+		<annotation cp="🥂">karāhe | tutuki | unu | whakanui</annotation>
+		<annotation cp="🥂" type="tts">karāhe tutuki</annotation>
+		<annotation cp="🥃">ipurau | karāhe | pota | waipiro | wihike</annotation>
+		<annotation cp="🥃" type="tts">karāhe ipurau</annotation>
+		<annotation cp="🥤">kapu me te ngongo | wai huarākau | wai reka</annotation>
+		<annotation cp="🥤" type="tts">kapu me te ngongo</annotation>
+		<annotation cp="🥢">hashi | rākaukai</annotation>
+		<annotation cp="🥢" type="tts">rākaukai</annotation>
+		<annotation cp="🍽">naihi | paoka | paoka me naihi me pereti | pereti | tao ana</annotation>
+		<annotation cp="🍽" type="tts">paoka me naihi me pereti</annotation>
+		<annotation cp="🍴">naihi | paoka | paoka me te naihi | tao ana</annotation>
+		<annotation cp="🍴" type="tts">paoka me te naihi</annotation>
+		<annotation cp="🥄">pūnu | taongatēpu</annotation>
+		<annotation cp="🥄" type="tts">pūnu</annotation>
+		<annotation cp="🔪">hocho | naihi | naihi kīhini | rākau-riri | tao ana | utauta</annotation>
+		<annotation cp="🔪" type="tts">naihi kīhini</annotation>
+		<annotation cp="🏺">amapora | Aquarius | poutiriao | rākau | tao ana | tiaka | unu | utauta</annotation>
+		<annotation cp="🏺" type="tts">amapora</annotation>
+		<annotation cp="🌍">ao | ao whakakite Uropi-Āwherika | Āwherika | Uropi | whenua</annotation>
+		<annotation cp="🌍" type="tts">ao whakakite Uropi-Āwherika</annotation>
+		<annotation cp="🌎">ao | ao whakakite i ngā Amerika | ngā Amerika | whenua</annotation>
+		<annotation cp="🌎" type="tts">ao whakakite i ngā Amerika</annotation>
+		<annotation cp="🌏">Āhia | Ahitereiria | ao | ao whakakite Āhia-Ahitereiria | whenua</annotation>
+		<annotation cp="🌏" type="tts">ao whakakite Āhia-Ahitereiria</annotation>
+		<annotation cp="🌐">ao | ao whai poutūmārō | ngā poutūmārō | whenua</annotation>
+		<annotation cp="🌐" type="tts">ao whai poutūmārō</annotation>
+		<annotation cp="🗺">ao | mahere</annotation>
+		<annotation cp="🗺" type="tts">mahere ao</annotation>
+		<annotation cp="🗾">Hapani | mahere | mahere o Hapani</annotation>
+		<annotation cp="🗾" type="tts">mahere o Hapani</annotation>
+		<annotation cp="🏔">hukarere | makariri | maunga | maunga tihi-hukarere</annotation>
+		<annotation cp="🏔" type="tts">maunga tihi-hukarere</annotation>
+		<annotation cp="⛰">maunga</annotation>
+		<annotation cp="⛰" type="tts">maunga</annotation>
+		<annotation cp="🌋">maunga | puia</annotation>
+		<annotation cp="🌋" type="tts">puia</annotation>
+		<annotation cp="🗻">fuji | maunga</annotation>
+		<annotation cp="🗻" type="tts">maunga fuji</annotation>
+		<annotation cp="🏕">puninga</annotation>
+		<annotation cp="🏕" type="tts">puninga</annotation>
+		<annotation cp="🏖">hāmarara | onepū | onepū me te hāmarara</annotation>
+		<annotation cp="🏖" type="tts">onepū me te hāmarara</annotation>
+		<annotation cp="🏜">kōraha</annotation>
+		<annotation cp="🏜" type="tts">kōraha</annotation>
+		<annotation cp="🏝">kōraha | motu</annotation>
+		<annotation cp="🏝" type="tts">motu kōraha</annotation>
+		<annotation cp="🏞">papa rēhia | papa rēhia ā-motu</annotation>
+		<annotation cp="🏞" type="tts">papa rēhia ā-motu</annotation>
+		<annotation cp="🏟">taiwhanga hākinakina</annotation>
+		<annotation cp="🏟" type="tts">taiwhanga hākinakina</annotation>
+		<annotation cp="🏛">hanganga tauhira | tauhira</annotation>
+		<annotation cp="🏛" type="tts">hanganga tauhira</annotation>
+		<annotation cp="🏗">hangatanga | hangatanga whare</annotation>
+		<annotation cp="🏗" type="tts">hangatanga whare</annotation>
+		<annotation cp="🏘">ngā whare</annotation>
+		<annotation cp="🏘" type="tts">ngā whare</annotation>
+		<annotation cp="🏚">pāea | whare</annotation>
+		<annotation cp="🏚" type="tts">whare pāea</annotation>
+		<annotation cp="🏠">kainga | whare</annotation>
+		<annotation cp="🏠" type="tts">whare</annotation>
+		<annotation cp="🏡">kāinga | māra | whare | whare me te māra</annotation>
+		<annotation cp="🏡" type="tts">whare me te māra</annotation>
+		<annotation cp="🏢">hanganga | hanganga tari</annotation>
+		<annotation cp="🏢" type="tts">hanganga tari</annotation>
+		<annotation cp="🏣">Hapanīhi | pōhi | poutāpeta Hapanīhi</annotation>
+		<annotation cp="🏣" type="tts">poutāpeta Hapanīhi</annotation>
+		<annotation cp="🏤">pōhi | poutāpeta | Uropi</annotation>
+		<annotation cp="🏤" type="tts">poutāpeta</annotation>
+		<annotation cp="🏥">hōhipera | rata | rongoā</annotation>
+		<annotation cp="🏥" type="tts">hōhipera</annotation>
+		<annotation cp="🏦">hanganga | pēke</annotation>
+		<annotation cp="🏦" type="tts">pēke</annotation>
+		<annotation cp="🏨">hanganga | hōtēra</annotation>
+		<annotation cp="🏨" type="tts">hōtēra</annotation>
+		<annotation cp="🏩">aroha | hōtēra</annotation>
+		<annotation cp="🏩" type="tts">hōtēra aroha</annotation>
+		<annotation cp="🏪">haratau | pātaka</annotation>
+		<annotation cp="🏪" type="tts">pātaka haratau</annotation>
+		<annotation cp="🏫">hanganga | kura</annotation>
+		<annotation cp="🏫" type="tts">kura</annotation>
+		<annotation cp="🏬">pātaka | pātaka taiwhanga maha | taiwhanga maha</annotation>
+		<annotation cp="🏬" type="tts">pātaka taiwhanga maha</annotation>
+		<annotation cp="🏭">hanganga | wheketere</annotation>
+		<annotation cp="🏭" type="tts">wheketere</annotation>
+		<annotation cp="🏯">Hapanīhi | whare kīngi | whare kīngi Hapanīhi</annotation>
+		<annotation cp="🏯" type="tts">whare kīngi Hapanīhi</annotation>
+		<annotation cp="🏰">Uropi | whare kīngi</annotation>
+		<annotation cp="🏰" type="tts">whare kīngi</annotation>
+		<annotation cp="💒">mārenatanga | whakawhaiāipo | whare karakia</annotation>
+		<annotation cp="💒" type="tts">mārenatanga</annotation>
+		<annotation cp="🗼">pourewa | Tōkio</annotation>
+		<annotation cp="🗼" type="tts">pourewa Tōkio</annotation>
+		<annotation cp="🗽">rangatiratanga | te whakapakoko rangatiratanga | whakapakoko</annotation>
+		<annotation cp="🗽" type="tts">te whakapakoko rangatiratanga</annotation>
+		<annotation cp="⛪">hāhi | karaitiana | momo karakia | rīpeka</annotation>
+		<annotation cp="⛪" type="tts">hāhi</annotation>
+		<annotation cp="🕌">ihirama | mōhiku | momo karakia | muhurimi</annotation>
+		<annotation cp="🕌" type="tts">mōhiku</annotation>
+		<annotation cp="🕍">hūrae | momo karakia | temepara | whare karakia hūrae</annotation>
+		<annotation cp="🕍" type="tts">whare karakia hūrae</annotation>
+		<annotation cp="⛩">hinito | momo karakia | wāhi tapu | wāhi tapu hinito</annotation>
+		<annotation cp="⛩" type="tts">wāhi tapu hinito</annotation>
+		<annotation cp="🕋">ihirama | kaapa | momo karakia | muhurimi</annotation>
+		<annotation cp="🕋" type="tts">kaapa</annotation>
+		<annotation cp="⛲">puna torotī</annotation>
+		<annotation cp="⛲" type="tts">puna torotī</annotation>
+		<annotation cp="⛺">puninga | tēneti</annotation>
+		<annotation cp="⛺" type="tts">tēneti</annotation>
+		<annotation cp="🌁">kohu | kohukohu</annotation>
+		<annotation cp="🌁" type="tts">kohukohu</annotation>
+		<annotation cp="🌃">pō | pō whai whetū | whetū</annotation>
+		<annotation cp="🌃" type="tts">pō whai whetū</annotation>
+		<annotation cp="🏙">ataata tāonenui | tāonenui</annotation>
+		<annotation cp="🏙" type="tts">ataata tāonenui</annotation>
+		<annotation cp="🌄">ata | maunga | rā | rā whiti | whitinga rā runga maunga</annotation>
+		<annotation cp="🌄" type="tts">whitinga rā runga maunga</annotation>
+		<annotation cp="🌅">ata | rā | whitinga o te rā</annotation>
+		<annotation cp="🌅" type="tts">whitinga o te rā</annotation>
+		<annotation cp="🌆">ahiahi | paewhenua | porehu | rā | rātō | tāonenui | whakahuahua tāonenui porehu</annotation>
+		<annotation cp="🌆" type="tts">whakahuahua tāonenui porehu</annotation>
+		<annotation cp="🌇">porehu | rā | tōnga o te rā</annotation>
+		<annotation cp="🌇" type="tts">tōnga o te rā</annotation>
+		<annotation cp="🌉">arawhata | arawhata i te pō | pō</annotation>
+		<annotation cp="🌉" type="tts">arawhata i te pō</annotation>
+		<annotation cp="♨">korohuhū | puna | wai ariki | waiariki | wera</annotation>
+		<annotation cp="♨" type="tts">wai ariki</annotation>
+		<annotation cp="🎠">hōiho | porowhawhe</annotation>
+		<annotation cp="🎠" type="tts">hōiho porowhawhe</annotation>
+		<annotation cp="🎡">papa whakangahau | pērihi | wīra</annotation>
+		<annotation cp="🎡" type="tts">wīra pērihi</annotation>
+		<annotation cp="🎢">papa whakangahau | pūkawe | takataka | tereina tō-ā-papa whakangahau</annotation>
+		<annotation cp="🎢" type="tts">tereina tō-ā-papa whakangahau</annotation>
+		<annotation cp="💈">kaikuti-makawe | kutinga-makawe | pou</annotation>
+		<annotation cp="💈" type="tts">pou kaikuti-makawe</annotation>
+		<annotation cp="🎪">manini rau | tēneti | tēneti manini rau</annotation>
+		<annotation cp="🎪" type="tts">tēneti manini rau</annotation>
+		<annotation cp="🚂">mamaoa | pūkaha | rerewē | tereina</annotation>
+		<annotation cp="🚂" type="tts">pūkaha tereina</annotation>
+		<annotation cp="🚃">pūhiko | rerewē | tarāme | tereina | waka | waka pāhiko</annotation>
+		<annotation cp="🚃" type="tts">waka rerewē</annotation>
+		<annotation cp="🚄">rerewē | shinkansen | tere | tereina | tereina tino tere</annotation>
+		<annotation cp="🚄" type="tts">tereina tino tere</annotation>
+		<annotation cp="🚅">matā | rerewē | shinkansen | tere | tereina | tereina tino tere ihu matā</annotation>
+		<annotation cp="🚅" type="tts">tereina tino tere ihu matā</annotation>
+		<annotation cp="🚆">rerewē | tereina</annotation>
+		<annotation cp="🚆" type="tts">tereina</annotation>
+		<annotation cp="🚇">rarowhenua | rerewē rarowhenua</annotation>
+		<annotation cp="🚇" type="tts">rarowhenua</annotation>
+		<annotation cp="🚈">rerewē | rerewē māmā</annotation>
+		<annotation cp="🚈" type="tts">rerewē māmā</annotation>
+		<annotation cp="🚉">rerewē | teihana | tereina</annotation>
+		<annotation cp="🚉" type="tts">teihana</annotation>
+		<annotation cp="🚊">tarāme | waka pāhiko</annotation>
+		<annotation cp="🚊" type="tts">tarāme</annotation>
+		<annotation cp="🚝">rōautahi | waka</annotation>
+		<annotation cp="🚝" type="tts">rōautahi</annotation>
+		<annotation cp="🚞">maunga | rerewē | waka</annotation>
+		<annotation cp="🚞" type="tts">rerewē maunga</annotation>
+		<annotation cp="🚋">tarāme | waka | waka pāhiko</annotation>
+		<annotation cp="🚋" type="tts">waka tarāme</annotation>
+		<annotation cp="🚌">pahi | waka</annotation>
+		<annotation cp="🚌" type="tts">pahi</annotation>
+		<annotation cp="🚍">anga mai | pahi | pahi anga mai</annotation>
+		<annotation cp="🚍" type="tts">pahi anga mai</annotation>
+		<annotation cp="🚎">pahi | tarāme | waka pāhiko</annotation>
+		<annotation cp="🚎" type="tts">waka pāhiko</annotation>
+		<annotation cp="🚐">pahi | pahi iti</annotation>
+		<annotation cp="🚐" type="tts">pahi iti</annotation>
+		<annotation cp="🚑">waka | waka tūroro</annotation>
+		<annotation cp="🚑" type="tts">waka tūroro</annotation>
+		<annotation cp="🚒">ahi | mīhini | taraka | waka tinei ahi</annotation>
+		<annotation cp="🚒" type="tts">waka tinei ahi</annotation>
+		<annotation cp="🚓">motokā | pirihimana | tira | waka pirihimana</annotation>
+		<annotation cp="🚓" type="tts">waka pirihimana</annotation>
+		<annotation cp="🚔">anga mai | motokā | pirihimana | waka pirihimana anga mai</annotation>
+		<annotation cp="🚔" type="tts">waka pirihimana anga mai</annotation>
+		<annotation cp="🚕">takihī | waka</annotation>
+		<annotation cp="🚕" type="tts">takihī</annotation>
+		<annotation cp="🚖">anga mai | takihī | takihī anga mai</annotation>
+		<annotation cp="🚖" type="tts">takihī anga mai</annotation>
+		<annotation cp="🚗">motokā</annotation>
+		<annotation cp="🚗" type="tts">motokā</annotation>
+		<annotation cp="🚘">anga mai | motokā | motokā anga mai</annotation>
+		<annotation cp="🚘" type="tts">motokā anga mai</annotation>
+		<annotation cp="🚙">hākinakina | taraka hākinakina</annotation>
+		<annotation cp="🚙" type="tts">taraka hākinakina</annotation>
+		<annotation cp="🚚">taraka | tiki</annotation>
+		<annotation cp="🚚" type="tts">taraka tiki</annotation>
+		<annotation cp="🚛">hemi | taraka | taraka tautō</annotation>
+		<annotation cp="🚛" type="tts">taraka tautō</annotation>
+		<annotation cp="🚜">tarakita | waka</annotation>
+		<annotation cp="🚜" type="tts">tarakita</annotation>
+		<annotation cp="🏎">motokā | tauwhainga</annotation>
+		<annotation cp="🏎" type="tts">motokā tauwhainga</annotation>
+		<annotation cp="🏍">motopaika | tauwhainga</annotation>
+		<annotation cp="🏍" type="tts">motopaika</annotation>
+		<annotation cp="🛵">hūpaika | pūkaha</annotation>
+		<annotation cp="🛵" type="tts">hūpaika</annotation>
+		<annotation cp="🚲">pahikara</annotation>
+		<annotation cp="🚲" type="tts">pahikara</annotation>
+		<annotation cp="🛴">kuta | whana</annotation>
+		<annotation cp="🛴" type="tts">kuta whana</annotation>
+		<annotation cp="🚏">pahi | tūnga</annotation>
+		<annotation cp="🚏" type="tts">tūnga pahi</annotation>
+		<annotation cp="🛣">ara | huanui</annotation>
+		<annotation cp="🛣" type="tts">huanui</annotation>
+		<annotation cp="🛤">ara rerewē | rerewē | tereina</annotation>
+		<annotation cp="🛤" type="tts">ara rerewē</annotation>
+		<annotation cp="🛢">hinu | taramu</annotation>
+		<annotation cp="🛢" type="tts">taramu hinu</annotation>
+		<annotation cp="⛽">hinu | papu | papuhinu | penehīni | teihana</annotation>
+		<annotation cp="⛽" type="tts">papu hinu</annotation>
+		<annotation cp="🚨">hurihuri | māmā | motokā | pirihimana | rama | rama waka pirihimana</annotation>
+		<annotation cp="🚨" type="tts">rama waka pirihimana</annotation>
+		<annotation cp="🚥">ngā waka | poutohu | rama | rama huarahi haupae</annotation>
+		<annotation cp="🚥" type="tts">rama huarahi haupae</annotation>
+		<annotation cp="🚦">ngā waka | poutohu | rama | rama huarahi poutū</annotation>
+		<annotation cp="🚦" type="tts">rama huarahi poutū</annotation>
+		<annotation cp="🛑">tapawaru | tohu | tū</annotation>
+		<annotation cp="🛑" type="tts">tohu tū</annotation>
+		<annotation cp="🚧">hangatanga | tauārai</annotation>
+		<annotation cp="🚧" type="tts">hangatanga</annotation>
+		<annotation cp="⚓">punga | utauta | waipuke</annotation>
+		<annotation cp="⚓" type="tts">punga</annotation>
+		<annotation cp="⛵">moana | pere rua | poti | wāhi hararei | waka pere</annotation>
+		<annotation cp="⛵" type="tts">waka pere</annotation>
+		<annotation cp="🛶">poti | waka</annotation>
+		<annotation cp="🛶" type="tts">waka</annotation>
+		<annotation cp="🚤">poti | wakatere</annotation>
+		<annotation cp="🚤" type="tts">wakatere</annotation>
+		<annotation cp="🛳">kaipuke | pāhihi</annotation>
+		<annotation cp="🛳" type="tts">kaipuke pāhihi</annotation>
+		<annotation cp="⛴">pāhihi | poti | waka kawekawe</annotation>
+		<annotation cp="⛴" type="tts">waka kawekawe</annotation>
+		<annotation cp="🛥">poti | waka pūkaha</annotation>
+		<annotation cp="🛥" type="tts">waka pūkaha</annotation>
+		<annotation cp="🚢">kaipuke | pāhihi | poti</annotation>
+		<annotation cp="🚢" type="tts">kaipuke</annotation>
+		<annotation cp="✈">rererangi | waka rererangi</annotation>
+		<annotation cp="✈" type="tts">waka rererangi</annotation>
+		<annotation cp="🛩">rererangi | rererangi iti | waka rererangi</annotation>
+		<annotation cp="🛩" type="tts">rererangi iti</annotation>
+		<annotation cp="🛫">ngā wehenga | pae takiuru | rererangi | waka rererangi | wehenga</annotation>
+		<annotation cp="🛫" type="tts">wehenga rererangi</annotation>
+		<annotation cp="🛬">ngā taunga mai | rererangi | tau ana | tau mai ana | taunga rererangi | waka rererangi</annotation>
+		<annotation cp="🛬" type="tts">taunga rererangi</annotation>
+		<annotation cp="💺">nohoanga | tūru</annotation>
+		<annotation cp="💺" type="tts">nohoanga</annotation>
+		<annotation cp="🚁">toparere | waka</annotation>
+		<annotation cp="🚁" type="tts">toparere</annotation>
+		<annotation cp="🚟">rerewē | whakairi</annotation>
+		<annotation cp="🚟" type="tts">rerewē whakairi</annotation>
+		<annotation cp="🚠">arataura maunga | maunga | taura | waka taura</annotation>
+		<annotation cp="🚠" type="tts">arataura maunga</annotation>
+		<annotation cp="🚡">ā-rangi | aratarāme | aratarāme rererangi | taura | waka</annotation>
+		<annotation cp="🚡" type="tts">aratarāme rererangi</annotation>
+		<annotation cp="🛰">āmiorangi | ātea</annotation>
+		<annotation cp="🛰" type="tts">āmiorangi</annotation>
+		<annotation cp="🚀">ātea | tākirirangi</annotation>
+		<annotation cp="🚀" type="tts">tākirirangi</annotation>
+		<annotation cp="🛸">waka ātea nō ao kē | waka tuarangi kāore i mōhiotia</annotation>
+		<annotation cp="🛸" type="tts">waka ātea nō ao kē</annotation>
+		<annotation cp="🛎">hōtēra | kaikawe | pere</annotation>
+		<annotation cp="🛎" type="tts">pere kaikawe</annotation>
+		<annotation cp="⌛">karāhe-hāora | kirikiri | pūtaki</annotation>
+		<annotation cp="⌛" type="tts">karāhe-hāora</annotation>
+		<annotation cp="⏳">karāhe-hāora | karāhe-hāora kirikiri rere | kirikiri | pūtaki</annotation>
+		<annotation cp="⏳" type="tts">karāhe-hāora kirikiri rere</annotation>
+		<annotation cp="⌚">karaka | matawā</annotation>
+		<annotation cp="⌚" type="tts">matawā</annotation>
+		<annotation cp="⏰">karaka | pūoho</annotation>
+		<annotation cp="⏰" type="tts">karaka pūoho</annotation>
+		<annotation cp="⏱">karaka | matawā-tū</annotation>
+		<annotation cp="⏱" type="tts">matawā-tū</annotation>
+		<annotation cp="⏲">karaka | pūtaki</annotation>
+		<annotation cp="⏲" type="tts">karaka pūtaki</annotation>
+		<annotation cp="🕰">karaka | karaka whatanga-ahi</annotation>
+		<annotation cp="🕰" type="tts">karaka whatanga-ahi</annotation>
+		<annotation cp="🕛">00 | 12 | 12:00 | karaka | o ngā hāora | te tekau-mā-rua o ngā hāora | tekau-mā-rua</annotation>
+		<annotation cp="🕛" type="tts">te tekau-mā-rua o ngā hāora</annotation>
+		<annotation cp="🕧">12 | 12:30 | 30 | karaka | te tekau-mā-rua me te toru tekau meneti | tekau-mā-rua | toru tekau</annotation>
+		<annotation cp="🕧" type="tts">te tekau-mā-rua me te toru tekau meneti</annotation>
+		<annotation cp="🕐">00 | 1 | 1:00 | karaka | o ngā hāora | tahi | te tahi o ngā hāora</annotation>
+		<annotation cp="🕐" type="tts">te tahi o ngā hāora</annotation>
+		<annotation cp="🕜">1 | 1:30 | 30 | karaka | tahi | te tahi me te toru tekau meneti | toru tekau</annotation>
+		<annotation cp="🕜" type="tts">te tahi me te toru tekau meneti</annotation>
+		<annotation cp="🕑">00 | 2 | 2:00 | karaka | o ngā hāora | rua | te rua o ngā hāora</annotation>
+		<annotation cp="🕑" type="tts">te rua o ngā hāora</annotation>
+		<annotation cp="🕝">2 | 2:30 | 30 | karaka | rua | te rua me te toru tekau meneti | toru tekau</annotation>
+		<annotation cp="🕝" type="tts">te rua me te toru tekau meneti</annotation>
+		<annotation cp="🕒">00 | 3 | 3:00 | karaka | o ngā hāora | te toru o ngā hāora | toru</annotation>
+		<annotation cp="🕒" type="tts">te toru o ngā hāora</annotation>
+		<annotation cp="🕞">3 | 3:30 | 30 | karaka | te toru me te toru tekau meneti | toru | toru tekau</annotation>
+		<annotation cp="🕞" type="tts">te toru me te toru tekau meneti</annotation>
+		<annotation cp="🕓">00 | 4 | 4:00 | karaka | o ngā hāora | te whā o ngā hāora | whā</annotation>
+		<annotation cp="🕓" type="tts">te whā o ngā hāora</annotation>
+		<annotation cp="🕟">30 | 4 | 4:30 | karaka | te whā me te toru tekau meneti | toru tekau | whā</annotation>
+		<annotation cp="🕟" type="tts">te whā me te toru tekau meneti</annotation>
+		<annotation cp="🕔">00 | 5 | 5:00 | karaka | o ngā hāora | rima | te rima o ngā hāora</annotation>
+		<annotation cp="🕔" type="tts">te rima o ngā hāora</annotation>
+		<annotation cp="🕠">30 | 5 | 5:30 | karaka | rima | te rima me te toru tekau meneti | toru tekau</annotation>
+		<annotation cp="🕠" type="tts">te rima me te toru tekau meneti</annotation>
+		<annotation cp="🕕">00 | 6 | 6:00 | karaka | o ngā hāora | ono | te ono o ngā hāora</annotation>
+		<annotation cp="🕕" type="tts">te ono o ngā hāora</annotation>
+		<annotation cp="🕡">30 | 6 | 6:30 | karaka | ono | te ono me te toru tekau meneti | toru tekau</annotation>
+		<annotation cp="🕡" type="tts">te ono me te toru tekau meneti</annotation>
+		<annotation cp="🕖">00 | 7 | 7:00 | karaka | o ngā hāora | te whitu o ngā hāora | whitu</annotation>
+		<annotation cp="🕖" type="tts">te whitu o ngā hāora</annotation>
+		<annotation cp="🕢">30 | 7 | 7:30 | karaka | te whitu me te toru tekau meneti | toru tekau | whitu</annotation>
+		<annotation cp="🕢" type="tts">te whitu me te toru tekau meneti</annotation>
+		<annotation cp="🕗">00 | 8 | 8:00 | karaka | o ngā hāora | te waru o ngā hāora | waru</annotation>
+		<annotation cp="🕗" type="tts">te waru o ngā hāora</annotation>
+		<annotation cp="🕣">30 | 8 | 8:30 | karaka | te waru me te toru tekau meneti | toru tekau | waru</annotation>
+		<annotation cp="🕣" type="tts">te waru me te toru tekau meneti</annotation>
+		<annotation cp="🕘">00 | 9 | 9:00 | iwa | karaka | o ngā hāora | te iwa o ngā hāora</annotation>
+		<annotation cp="🕘" type="tts">te iwa o ngā hāora</annotation>
+		<annotation cp="🕤">30 | 9 | 9:30 | iwa | karaka | te iwa me te toru tekau meneti | toru tekau</annotation>
+		<annotation cp="🕤" type="tts">te iwa me te toru tekau meneti</annotation>
+		<annotation cp="🕙">00 | 10 | 10:00 | karaka | o ngā hāora | te tekau o ngā hāora | tekau</annotation>
+		<annotation cp="🕙" type="tts">te tekau o ngā hāora</annotation>
+		<annotation cp="🕥">10 | 10:30 | 30 | karaka | te tekau me te toru tekau meneti | tekau | toru tekau</annotation>
+		<annotation cp="🕥" type="tts">te tekau me te toru tekau meneti</annotation>
+		<annotation cp="🕚">00 | 11 | 11:00 | karaka | o ngā hāora | te tekau-mā-tahi o ngā hāora | tekau-ma-tahi</annotation>
+		<annotation cp="🕚" type="tts">te tekau-mā-tahi o ngā hāora</annotation>
+		<annotation cp="🕦">11 | 11:30 | 30 | karaka | te tekau-mā-tahi me te toru tekau meneti | tekau-ma-tahi | toru tekau</annotation>
+		<annotation cp="🕦" type="tts">te tekau-mā-tahi me te toru tekau meneti</annotation>
+		<annotation cp="🌑">marama | marama kōhiti | pōuri</annotation>
+		<annotation cp="🌑" type="tts">marama kōhiti</annotation>
+		<annotation cp="🌒">hua | marama | marama hua tipihori | pewa</annotation>
+		<annotation cp="🌒" type="tts">marama hua tipihori</annotation>
+		<annotation cp="🌓">hauwhā | marama | marama ahotū</annotation>
+		<annotation cp="🌓" type="tts">marama ahotū</annotation>
+		<annotation cp="🌔">hua | kipuha | marama</annotation>
+		<annotation cp="🌔" type="tts">marama hua</annotation>
+		<annotation cp="🌕">marama | rākaunui</annotation>
+		<annotation cp="🌕" type="tts">rākaunui</annotation>
+		<annotation cp="🌖">kipuha | marama | roroku</annotation>
+		<annotation cp="🌖" type="tts">marama roroku</annotation>
+		<annotation cp="🌗">hauwhā | marama | marama korekore</annotation>
+		<annotation cp="🌗" type="tts">marama korekore</annotation>
+		<annotation cp="🌘">marama | marama tohi | pewa | roroku</annotation>
+		<annotation cp="🌘" type="tts">marama tohi</annotation>
+		<annotation cp="🌙">marama | pewa</annotation>
+		<annotation cp="🌙" type="tts">marama pewa</annotation>
+		<annotation cp="🌚">marama | mata | mata marama kōhiti</annotation>
+		<annotation cp="🌚" type="tts">mata marama kōhiti</annotation>
+		<annotation cp="🌛">hauwhā | marama | marama ahotū whai mata | mata</annotation>
+		<annotation cp="🌛" type="tts">marama ahotū whai mata</annotation>
+		<annotation cp="🌜">hauwhā | marama | marama korekore whai mata | mata</annotation>
+		<annotation cp="🌜" type="tts">marama korekore whai mata</annotation>
+		<annotation cp="🌡">huarere | inemahana</annotation>
+		<annotation cp="🌡" type="tts">inemahana</annotation>
+		<annotation cp="☀">ihi | kanapa | paki | rā</annotation>
+		<annotation cp="☀" type="tts">rā</annotation>
+		<annotation cp="🌝">kanapa | kī | marama | mata | rākaunui whai mata</annotation>
+		<annotation cp="🌝" type="tts">rākaunui whai mata</annotation>
+		<annotation cp="🌞">kanapa | mata | rā | rā whai mata</annotation>
+		<annotation cp="🌞" type="tts">rā whai mata</annotation>
+		<annotation cp="⭐">whetū | whetū mā waenga</annotation>
+		<annotation cp="⭐" type="tts">whetū mā waenga</annotation>
+		<annotation cp="🌟">hana | korakora | tīaho | wheriko | whetū | whetū mumura</annotation>
+		<annotation cp="🌟" type="tts">whetū mumura</annotation>
+		<annotation cp="🌠">hinga ana | unahi | unahi o takero | whetū</annotation>
+		<annotation cp="🌠" type="tts">unahi o takero</annotation>
+		<annotation cp="🌌">ātea | ikarangi</annotation>
+		<annotation cp="🌌" type="tts">ikarangi</annotation>
+		<annotation cp="☁">huarere | kapua</annotation>
+		<annotation cp="☁" type="tts">kapua</annotation>
+		<annotation cp="⛅">kapua | rā | rā muri kapua</annotation>
+		<annotation cp="⛅" type="tts">rā muri kapua</annotation>
+		<annotation cp="⛈">kapua | kapua me te uira me te ua | ua | whatitiri</annotation>
+		<annotation cp="⛈" type="tts">kapua me te uira me te ua</annotation>
+		<annotation cp="🌤">kapua | rā | rā muri kapua iti</annotation>
+		<annotation cp="🌤" type="tts">rā muri kapua iti</annotation>
+		<annotation cp="🌥">kapua | rā | rā muri kapua nui</annotation>
+		<annotation cp="🌥" type="tts">rā muri kapua nui</annotation>
+		<annotation cp="🌦">kapua | rā | rā muri kapua ua | ua</annotation>
+		<annotation cp="🌦" type="tts">rā muri kapua ua</annotation>
+		<annotation cp="🌧">kapua | kapua me te ua | ua</annotation>
+		<annotation cp="🌧" type="tts">kapua me te ua</annotation>
+		<annotation cp="🌨">hukarere | kapua | kapua me te hukarere | makariri</annotation>
+		<annotation cp="🌨" type="tts">kapua me te hukarere</annotation>
+		<annotation cp="🌩">kapua | kapua me te uira | uira</annotation>
+		<annotation cp="🌩" type="tts">kapua me te uira</annotation>
+		<annotation cp="🌪">āwhā | kapua | paroro</annotation>
+		<annotation cp="🌪" type="tts">āwhā</annotation>
+		<annotation cp="🌫">kapua | kohu</annotation>
+		<annotation cp="🌫" type="tts">kohu</annotation>
+		<annotation cp="🌬">hau | kanohi | kapua | pupuhi</annotation>
+		<annotation cp="🌬" type="tts">kanohi hau</annotation>
+		<annotation cp="🌀">āmaimai | huripari | kurahau awatea | paroro</annotation>
+		<annotation cp="🌀" type="tts">kurahau awatea</annotation>
+		<annotation cp="🌈">kahukura | ua</annotation>
+		<annotation cp="🌈" type="tts">kahukura</annotation>
+		<annotation cp="🌂">hāmarara | hāmarara kopi | kākahu | ua</annotation>
+		<annotation cp="🌂" type="tts">hāmarara kopi</annotation>
+		<annotation cp="☂">hāmarara | kākahu | ua</annotation>
+		<annotation cp="☂" type="tts">hāmarara</annotation>
+		<annotation cp="☔">hāmarara | hāmarara me ngā kōpata ua | kākahu | kōpata | ua</annotation>
+		<annotation cp="☔" type="tts">hāmarara me ngā kōpata ua</annotation>
+		<annotation cp="⛱">hāmarara | hāmarara i te papa | rā | ua</annotation>
+		<annotation cp="⛱" type="tts">hāmarara i te papa</annotation>
+		<annotation cp="⚡">hiko | mōrearea | ngaohiko | ngaohiko teitei | uira | whana</annotation>
+		<annotation cp="⚡" type="tts">ngaohiko teitei</annotation>
+		<annotation cp="❄">hukarere | makariri | whā hukarere</annotation>
+		<annotation cp="❄" type="tts">whā hukarere</annotation>
+		<annotation cp="☃">hukarere | makariri | tāne-hukarere</annotation>
+		<annotation cp="☃" type="tts">tāne-hukarere</annotation>
+		<annotation cp="⛄">hukarere | makariri | tāne-hukarere | tāne-hukarere kore hukarere</annotation>
+		<annotation cp="⛄" type="tts">tāne-hukarere kore hukarere</annotation>
+		<annotation cp="☄">ātea | unahiroa</annotation>
+		<annotation cp="☄" type="tts">unahiroa</annotation>
+		<annotation cp="🔥">ahi | mura | utauta</annotation>
+		<annotation cp="🔥" type="tts">ahi</annotation>
+		<annotation cp="💧">kōpata | kōpata wai | makariri | werawera | whakakata</annotation>
+		<annotation cp="💧" type="tts">kōpata wai</annotation>
+		<annotation cp="🌊">moana | ngaru | wai</annotation>
+		<annotation cp="🌊" type="tts">ngaru wai</annotation>
+		<annotation cp="🎃">haki | harowēne | rama | rama kanohi paukena | whakanuinga</annotation>
+		<annotation cp="🎃" type="tts">rama kanohi paukena</annotation>
+		<annotation cp="🎄">Kirihimete | rākau | whakanuinga</annotation>
+		<annotation cp="🎄" type="tts">rākau Kirihimete</annotation>
+		<annotation cp="🎆">pahūahi | whakanuinga</annotation>
+		<annotation cp="🎆" type="tts">pahūahi</annotation>
+		<annotation cp="🎇">korakora | pahūahi | whakakorakora | whakanuinga</annotation>
+		<annotation cp="🎇" type="tts">whakakorakora</annotation>
+		<annotation cp="✨">he korakora | korakora | whetū</annotation>
+		<annotation cp="✨" type="tts">he korakora</annotation>
+		<annotation cp="🎈">pūangi | whakanuinga</annotation>
+		<annotation cp="🎈" type="tts">pūangi</annotation>
+		<annotation cp="🎉">pahū | tarā | whakangahau | whakanuinga</annotation>
+		<annotation cp="🎉" type="tts">pahū whakangahau</annotation>
+		<annotation cp="🎊">pōro | pōro wāhi pepa | wāhi-pepa ririki | whakanuinga</annotation>
+		<annotation cp="🎊" type="tts">pōro wāhi pepa</annotation>
+		<annotation cp="🎋">Hapanīhi | kara | rākau | rākau tanapata | whakanuinga</annotation>
+		<annotation cp="🎋" type="tts">rākau tanapata</annotation>
+		<annotation cp="🎍">Hapanīhi | inanga | paina | whakanuinga | whakarei rākau paina</annotation>
+		<annotation cp="🎍" type="tts">whakarei rākau paina</annotation>
+		<annotation cp="🎎">Hapanīhi | karetao | taurima | whakanuinga</annotation>
+		<annotation cp="🎎" type="tts">karetao Hapanīhi</annotation>
+		<annotation cp="🎏">haki | ika | whakanuinga</annotation>
+		<annotation cp="🎏" type="tts">haki ika</annotation>
+		<annotation cp="🎐">hau | pere | whakanuinga</annotation>
+		<annotation cp="🎐" type="tts">pere hau</annotation>
+		<annotation cp="🎑">marama | taurima | taurima tiro marama | whakanuinga</annotation>
+		<annotation cp="🎑" type="tts">taurima tiro marama</annotation>
+		<annotation cp="🎀">rīpene | whakanuinga</annotation>
+		<annotation cp="🎀" type="tts">rīpene</annotation>
+		<annotation cp="🎁">koha | perehana | pouaka | takai | whakanuinga</annotation>
+		<annotation cp="🎁" type="tts">perehana takai</annotation>
+		<annotation cp="🎗">rīpene | whakamahara | whakanuinga</annotation>
+		<annotation cp="🎗" type="tts">rīpene whakamahara</annotation>
+		<annotation cp="🎟">tīkiti | tīkiti tomonga | whakatomo</annotation>
+		<annotation cp="🎟" type="tts">tīkiti tomonga</annotation>
+		<annotation cp="🎫">tīkiti | tomonga</annotation>
+		<annotation cp="🎫" type="tts">tīkiti</annotation>
+		<annotation cp="🎖">metara | metara ope tauā | ope tauā | whakanuinga</annotation>
+		<annotation cp="🎖" type="tts">metara ope tauā</annotation>
+		<annotation cp="🏆">paraihe | tohu toa</annotation>
+		<annotation cp="🏆" type="tts">tohu toa</annotation>
+		<annotation cp="🏅">mētara | mētara hākinakina</annotation>
+		<annotation cp="🏅" type="tts">mētara hākinakina</annotation>
+		<annotation cp="🥇">kōura | mētara | mētara wāhi 1 | tuatahi</annotation>
+		<annotation cp="🥇" type="tts">mētara wāhi 1</annotation>
+		<annotation cp="🥈">hiriwa | mētara | mētara wāhi 2 | tuarua</annotation>
+		<annotation cp="🥈" type="tts">mētara wāhi 2</annotation>
+		<annotation cp="🥉">mētara | mētara wāhi 3 | parāhe | tuatoru</annotation>
+		<annotation cp="🥉" type="tts">mētara wāhi 3</annotation>
+		<annotation cp="⚽">poi whana | poiwhana | pōro | whutupōro</annotation>
+		<annotation cp="⚽" type="tts">poi whana</annotation>
+		<annotation cp="⚾">pēhipōro | pōro</annotation>
+		<annotation cp="⚾" type="tts">pēhipōro</annotation>
+		<annotation cp="🏀">mōwhiti | poitūkohu | pōro</annotation>
+		<annotation cp="🏀" type="tts">poitūkohu</annotation>
+		<annotation cp="🏐">kēmu | poirewa | pōro</annotation>
+		<annotation cp="🏐" type="tts">poirewa</annotation>
+		<annotation cp="🏈">amerikana | pōro | whutupōro</annotation>
+		<annotation cp="🏈" type="tts">whutupōro amerikana</annotation>
+		<annotation cp="🏉">pōro | rakapi | whutupōro</annotation>
+		<annotation cp="🏉" type="tts">whutupōro rakapi</annotation>
+		<annotation cp="🎾">pōro | rākete | tēnehi</annotation>
+		<annotation cp="🎾" type="tts">tēnehi</annotation>
+		<annotation cp="🎳">kēmu | poipīrori | pōro</annotation>
+		<annotation cp="🎳" type="tts">poipīrori</annotation>
+		<annotation cp="🏏">kēmu | kēmu kirikiti | pōro | rākauhau</annotation>
+		<annotation cp="🏏" type="tts">kēmu kirikiti</annotation>
+		<annotation cp="🏑">haupoi | haupoi papa tākaro | kēmu | papa tākaro | pōro | rākau</annotation>
+		<annotation cp="🏑" type="tts">haupoi papa tākaro</annotation>
+		<annotation cp="🏒">haupoi | huka | kēmu | puki | rākau</annotation>
+		<annotation cp="🏒" type="tts">haupoi huka</annotation>
+		<annotation cp="🏓">kēmu | paopao | patu | pōro | rākauhau | tēpu tēnehi</annotation>
+		<annotation cp="🏓" type="tts">paopao</annotation>
+		<annotation cp="🏸">kēmu | manu | patukoko | pūkura | rākete</annotation>
+		<annotation cp="🏸" type="tts">pūkura</annotation>
+		<annotation cp="🥊">karapu | mekemeke</annotation>
+		<annotation cp="🥊" type="tts">karapu mekemeke</annotation>
+		<annotation cp="🥋">huro | kākahu | kākahu toi whawhai | karate | taekwondo | toi whawhai</annotation>
+		<annotation cp="🥋" type="tts">kākahu toi whawhai</annotation>
+		<annotation cp="🥅">neti | ūhunga</annotation>
+		<annotation cp="🥅" type="tts">neti ūhunga</annotation>
+		<annotation cp="⛳">haupōro | kara rō kōhao | kōhao</annotation>
+		<annotation cp="⛳" type="tts">kara rō kōhao</annotation>
+		<annotation cp="⛸">huka | reti | retireti keo</annotation>
+		<annotation cp="⛸" type="tts">retireti keo</annotation>
+		<annotation cp="🎣">ika | matira | matira hī ika</annotation>
+		<annotation cp="🎣" type="tts">matira hī ika</annotation>
+		<annotation cp="🎽">hāte | omaoma | rīpene | whakataetae</annotation>
+		<annotation cp="🎽" type="tts">hāte omaoma</annotation>
+		<annotation cp="🎿">hukarere | papa retihuka | retihuka</annotation>
+		<annotation cp="🎿" type="tts">papa retihuka</annotation>
+		<annotation cp="🛷">kōneke | panuku</annotation>
+		<annotation cp="🛷" type="tts">kōneke</annotation>
+		<annotation cp="🥌">kēmu | pōhatu whakakōrino | toka</annotation>
+		<annotation cp="🥌" type="tts">pōhatu whakakōrino</annotation>
+		<annotation cp="🎯">karu | kēmu | pā | pā hāngai | pere | pironga | pūru</annotation>
+		<annotation cp="🎯" type="tts">pā hāngai</annotation>
+		<annotation cp="🔫">pū | pū ā-ringa | pū hurihuri | rākau-riri | utauta</annotation>
+		<annotation cp="🔫" type="tts">pū</annotation>
+		<annotation cp="🎱">8 | kēmu | piriota | pōro | waru</annotation>
+		<annotation cp="🎱" type="tts">piriota 8 pōro</annotation>
+		<annotation cp="🔮">atamaha | matakite | moemoeā | pakiwaitara | pōro | utauta</annotation>
+		<annotation cp="🔮" type="tts">pōro atamaha</annotation>
+		<annotation cp="🎮">kēmu | kēmu ataata | pūwhakahaere</annotation>
+		<annotation cp="🎮" type="tts">kēmu ataata</annotation>
+		<annotation cp="🕹">kēmu | kēmu ataata | rākau mana</annotation>
+		<annotation cp="🕹" type="tts">rākau mana</annotation>
+		<annotation cp="🎰">kāniwha | kēmu | mīhini kaimoni</annotation>
+		<annotation cp="🎰" type="tts">mīhini kaimoni</annotation>
+		<annotation cp="🎲">kēmu | tapaono</annotation>
+		<annotation cp="🎲" type="tts">tapaono kēmu</annotation>
+		<annotation cp="♠">hūtu pēti | kāri | kēmu</annotation>
+		<annotation cp="♠" type="tts">hūtu pēti</annotation>
+		<annotation cp="♥">hūtu hāte | kāri | kēmu</annotation>
+		<annotation cp="♥" type="tts">hūtu hāte</annotation>
+		<annotation cp="♦">hūtu taimana | kāri | kēmu</annotation>
+		<annotation cp="♦" type="tts">hūtu taimana</annotation>
+		<annotation cp="♣">hūtu karapu | kāri | kēmu</annotation>
+		<annotation cp="♣" type="tts">hūtu karapu</annotation>
+		<annotation cp="🃏">kāri | kārimohowao | kēmu | tioka</annotation>
+		<annotation cp="🃏" type="tts">tioka</annotation>
+		<annotation cp="🀄">kēmu | mahjong | tarakona whero mahjong | whero</annotation>
+		<annotation cp="🀄" type="tts">tarakona whero mahjong</annotation>
+		<annotation cp="🎴">Hapanīhi | kāri | kēmu | purei | putiputi</annotation>
+		<annotation cp="🎴" type="tts">kāri purei putiputi</annotation>
+		<annotation cp="🎭">ārai | ngā toi whakaaturanga | toi | whakaaturanga | whare tapere</annotation>
+		<annotation cp="🎭" type="tts">ngā toi whakaaturanga</annotation>
+		<annotation cp="🖼">anga | papa tongarewa | pikitia | pikitia whai anga | toi | toi peita</annotation>
+		<annotation cp="🖼" type="tts">pikitia whai anga</annotation>
+		<annotation cp="🎨">papa tongarewa | papapeita | papapeita tohunga toi | toi | toi peita</annotation>
+		<annotation cp="🎨" type="tts">papapeita tohunga toi</annotation>
+		<annotation cp="👓">kākahu | karu | mōhiti</annotation>
+		<annotation cp="👓" type="tts">mōhiti karu</annotation>
+		<annotation cp="🕶">karu | mōhiti | mōhitirā | pōuri</annotation>
+		<annotation cp="🕶" type="tts">mōhitirā</annotation>
+		<annotation cp="👔">kākahu | neketai</annotation>
+		<annotation cp="👔" type="tts">neketai</annotation>
+		<annotation cp="👕">hāte | kākahu | tī-hāte</annotation>
+		<annotation cp="👕" type="tts">tī-hāte</annotation>
+		<annotation cp="👖">kākahu | tarau | tarau tāngari</annotation>
+		<annotation cp="👖" type="tts">tarau tāngari</annotation>
+		<annotation cp="🧣">kakī | kāmeta</annotation>
+		<annotation cp="🧣" type="tts">kāmeta</annotation>
+		<annotation cp="🧤">karapu | ringa</annotation>
+		<annotation cp="🧤" type="tts">karapu</annotation>
+		<annotation cp="🧥">koti</annotation>
+		<annotation cp="🧥" type="tts">koti</annotation>
+		<annotation cp="🧦">tōkena</annotation>
+		<annotation cp="🧦" type="tts">tōkena</annotation>
+		<annotation cp="👗">kākahu</annotation>
+		<annotation cp="👗" type="tts">kākahu</annotation>
+		<annotation cp="👘">kākahu | kimono</annotation>
+		<annotation cp="👘" type="tts">kimono</annotation>
+		<annotation cp="👙">kākahu | kaukau | pikīni</annotation>
+		<annotation cp="👙" type="tts">pikīni</annotation>
+		<annotation cp="👚">kākahu | wahine</annotation>
+		<annotation cp="👚" type="tts">kākahu wahine</annotation>
+		<annotation cp="👛">kākahu | moni uka | pāhi</annotation>
+		<annotation cp="👛" type="tts">pāhi</annotation>
+		<annotation cp="👜">kākahu | pāhi | pāhi ā-ringa | pēke</annotation>
+		<annotation cp="👜" type="tts">pāhi ā-ringa</annotation>
+		<annotation cp="👝">kākahu | pāhi hopu | pēke | pūkoro</annotation>
+		<annotation cp="👝" type="tts">pāhi hopu</annotation>
+		<annotation cp="🛍">hokohoko | hōtēra | pēke</annotation>
+		<annotation cp="🛍" type="tts">pēke hokohoko</annotation>
+		<annotation cp="🎒">kura | pēke | pēke tari | pēketuarā kura</annotation>
+		<annotation cp="🎒" type="tts">pēketuarā kura</annotation>
+		<annotation cp="👞">hū | kākahu | tāne</annotation>
+		<annotation cp="👞" type="tts">hū tāne</annotation>
+		<annotation cp="👟">hū | hū ngohengohe | hū omaama | kākahu | whakataetae</annotation>
+		<annotation cp="👟" type="tts">hū omaama</annotation>
+		<annotation cp="👠">hū | hū rekereke-teitei | kākahu | rekereke | wahine</annotation>
+		<annotation cp="👠" type="tts">hū rekereke-teitei</annotation>
+		<annotation cp="👡">hū | kākahu | kopa | wahine</annotation>
+		<annotation cp="👡" type="tts">kopa wahine</annotation>
+		<annotation cp="👢">hū | kākahu | pūtu | wahine</annotation>
+		<annotation cp="👢" type="tts">pūtu wahine</annotation>
+		<annotation cp="👑">kākahu | karauna | kīngi | kuini</annotation>
+		<annotation cp="👑" type="tts">karauna</annotation>
+		<annotation cp="👒">kākahu | pōtae | wahine</annotation>
+		<annotation cp="👒" type="tts">pōtae wahine</annotation>
+		<annotation cp="🎩">kākahu | pōtae | tihi</annotation>
+		<annotation cp="🎩" type="tts">pōtae tihi</annotation>
+		<annotation cp="🎓">kākahu | kape | kape whiwhinga tohu | paetahi | pōtae | whakanuinga</annotation>
+		<annotation cp="🎓" type="tts">kape whiwhinga tohu</annotation>
+		<annotation cp="🧢">kape ngutu-parera | kape pēhipōro</annotation>
+		<annotation cp="🧢" type="tts">kape ngutu-parera</annotation>
+		<annotation cp="⛑">āwhina | kanohi | pōtae | pōtae mārō | pōtae mārō kaimahi whakaora | rīpeka</annotation>
+		<annotation cp="⛑" type="tts">pōtae mārō kaimahi whakaora</annotation>
+		<annotation cp="📿">inoi | kākahu | karakia | ngā poria inoi | poria | reikakī</annotation>
+		<annotation cp="📿" type="tts">ngā poria inoi</annotation>
+		<annotation cp="💄">ngā whakanako | paningutu | whakapaipai kanohi</annotation>
+		<annotation cp="💄" type="tts">paningutu</annotation>
+		<annotation cp="💍">mōwhiti matimati | taimana</annotation>
+		<annotation cp="💍" type="tts">mōwhiti matimati</annotation>
+		<annotation cp="💎">kōhatu māpuna | māpuna | rei | taimana</annotation>
+		<annotation cp="💎" type="tts">kōhatu māpuna</annotation>
+		<annotation cp="🔇">hū | ngū | tukuoro | tukuoro whakangū</annotation>
+		<annotation cp="🔇" type="tts">tukuoro whakangū</annotation>
+		<annotation cp="🔈">pāpaku | tukuoro kahaoro pāpaku</annotation>
+		<annotation cp="🔈" type="tts">tukuoro kahaoro pāpaku</annotation>
+		<annotation cp="🔉">tukuoro kahaoro waenga | waenga</annotation>
+		<annotation cp="🔉" type="tts">tukuoro kahaoro waenga</annotation>
+		<annotation cp="🔊">nui | tukuoro kahaoro teitei</annotation>
+		<annotation cp="🔊" type="tts">tukuoro kahaoro teitei</annotation>
+		<annotation cp="📢">kōrero tūmatanui | nui | tukuoro</annotation>
+		<annotation cp="📢" type="tts">tukuoro</annotation>
+		<annotation cp="📣">pūwhakarahireo | umere ana</annotation>
+		<annotation cp="📣" type="tts">pūwhakarahireo</annotation>
+		<annotation cp="📯">haona | pōhi | poutāpeta</annotation>
+		<annotation cp="📯" type="tts">haona poutāpeta</annotation>
+		<annotation cp="🔔">pere</annotation>
+		<annotation cp="🔔" type="tts">pere</annotation>
+		<annotation cp="🔕">hū | kāo | kore | ngū | pere | pere whai rītaha | rāhuitia | whakakore</annotation>
+		<annotation cp="🔕" type="tts">pere whai rītaha</annotation>
+		<annotation cp="🎼">puoro | tuhinga</annotation>
+		<annotation cp="🎼" type="tts">tuhinga puoro</annotation>
+		<annotation cp="🎵">puoro | tohu waiata</annotation>
+		<annotation cp="🎵" type="tts">tohu waiata</annotation>
+		<annotation cp="🎶">ngā tohu | ngā tohu waiata | puoro | tohu</annotation>
+		<annotation cp="🎶" type="tts">ngā tohu waiata</annotation>
+		<annotation cp="🎙">hopuoro | puoro | taiwhanga</annotation>
+		<annotation cp="🎙" type="tts">hopuoro taiwhanga</annotation>
+		<annotation cp="🎚">puoro | rēreti | taumata</annotation>
+		<annotation cp="🎚" type="tts">rēreti puoro</annotation>
+		<annotation cp="🎛">ngā puku | ngā puku mana | paemana | puoro</annotation>
+		<annotation cp="🎛" type="tts">ngā puku mana</annotation>
+		<annotation cp="🎤">hopuoro | karaoke</annotation>
+		<annotation cp="🎤" type="tts">hopuoro</annotation>
+		<annotation cp="🎧">maupane | purutaringa</annotation>
+		<annotation cp="🎧" type="tts">maupane</annotation>
+		<annotation cp="📻">ataata | irirangi</annotation>
+		<annotation cp="📻" type="tts">irirangi</annotation>
+		<annotation cp="🎷">puoro | pūtohe | whakatangi</annotation>
+		<annotation cp="🎷" type="tts">pūtohe</annotation>
+		<annotation cp="🎺">pūawanui | puoro | whakatangi</annotation>
+		<annotation cp="🎺" type="tts">pūawanui</annotation>
+		<annotation cp="🎸">kitā | puoro | whakatangi</annotation>
+		<annotation cp="🎸" type="tts">kitā</annotation>
+		<annotation cp="🎹">papapurei | piana | puoro | whakatangi</annotation>
+		<annotation cp="🎹" type="tts">papapurei puoro</annotation>
+		<annotation cp="🎻">puoro | tōiri | whakatangi</annotation>
+		<annotation cp="🎻" type="tts">tōiri</annotation>
+		<annotation cp="🥁">pahū | patupahū | puoro</annotation>
+		<annotation cp="🥁" type="tts">pahū</annotation>
+		<annotation cp="📱">pūkoro | waea | waeakawe</annotation>
+		<annotation cp="📱" type="tts">waea pūkoro</annotation>
+		<annotation cp="📲">pere | pūkoro | pūwhiwhi | waea | waea pūkoro me te pere | waeakawe</annotation>
+		<annotation cp="📲" type="tts">waea pūkoro me te pere</annotation>
+		<annotation cp="☎">waea</annotation>
+		<annotation cp="☎" type="tts">waea</annotation>
+		<annotation cp="📞">pūwhiwhi | waea</annotation>
+		<annotation cp="📞" type="tts">pūwhiwhi waea</annotation>
+		<annotation cp="📟">pūoho</annotation>
+		<annotation cp="📟" type="tts">pūoho</annotation>
+		<annotation cp="📠">mīhini waeatuhi | waeatuhi</annotation>
+		<annotation cp="📠" type="tts">mīhini waeatuhi</annotation>
+		<annotation cp="🔋">pūhiko</annotation>
+		<annotation cp="🔋" type="tts">pūhiko</annotation>
+		<annotation cp="🔌">hiko | puru</annotation>
+		<annotation cp="🔌" type="tts">puru hiko</annotation>
+		<annotation cp="💻">paparorohiko | rorohiko | rw | whaiaro</annotation>
+		<annotation cp="💻" type="tts">paparorohiko</annotation>
+		<annotation cp="🖥">papamahi | rorohiko</annotation>
+		<annotation cp="🖥" type="tts">rorohiko papamahi</annotation>
+		<annotation cp="🖨">pūreretā | rorohiko</annotation>
+		<annotation cp="🖨" type="tts">pūreretā</annotation>
+		<annotation cp="⌨">papapātuhi | rorohiko</annotation>
+		<annotation cp="⌨" type="tts">papapātuhi</annotation>
+		<annotation cp="🖱">kiore rorohiko | rorohiko</annotation>
+		<annotation cp="🖱" type="tts">kiore rorohiko</annotation>
+		<annotation cp="🖲">pōrotaki | rorohiko</annotation>
+		<annotation cp="🖲" type="tts">pōrotaki</annotation>
+		<annotation cp="💽">kōpae | kōpae-iti | rorohiko | whatu</annotation>
+		<annotation cp="💽" type="tts">kōpae rorohiko</annotation>
+		<annotation cp="💾">kōpae | pīngore | rorohiko</annotation>
+		<annotation cp="💾" type="tts">kōpae pīngore</annotation>
+		<annotation cp="💿">kōpae | kōpaepae | rorohiko | whatu</annotation>
+		<annotation cp="💿" type="tts">kōpae whatu</annotation>
+		<annotation cp="📀">blu-ray | kam | kōpae | rorohiko | whatu</annotation>
+		<annotation cp="📀" type="tts">kam</annotation>
+		<annotation cp="🎥">kāmera | pū hopuata | whare whitiāhua | whitiāhua</annotation>
+		<annotation cp="🎥" type="tts">pū hopuata</annotation>
+		<annotation cp="🎞">anga | whare whitiāhua | whitiāhua</annotation>
+		<annotation cp="🎞" type="tts">anga whitiāhua</annotation>
+		<annotation cp="📽">ataata | tukuata | whare whitiāhua | whitiāhua</annotation>
+		<annotation cp="📽" type="tts">tukuata whitiāhua</annotation>
+		<annotation cp="🎬">papa papaki | papaki | whitiāhua</annotation>
+		<annotation cp="🎬" type="tts">papa papaki</annotation>
+		<annotation cp="📺">ataata | pouaka whakaata</annotation>
+		<annotation cp="📺" type="tts">pouaka whakaata</annotation>
+		<annotation cp="📷">ataata | pūwhakaahua</annotation>
+		<annotation cp="📷" type="tts">pūwhakaahua</annotation>
+		<annotation cp="📸">ataata | hikohiko | pūwhakaahua | pūwhakaahua whai hikohiko</annotation>
+		<annotation cp="📸" type="tts">pūwhakaahua whai hikohiko</annotation>
+		<annotation cp="📹">ataata | pūwhakaahua</annotation>
+		<annotation cp="📹" type="tts">pūwhakaahua ataata</annotation>
+		<annotation cp="📼">ataata | rīpene | rīpene-ataata | vhs</annotation>
+		<annotation cp="📼" type="tts">rīpene-ataata</annotation>
+		<annotation cp="🔍">karāhe | kārāhe whārahi anga mauī | rapu | utauta | whārahi</annotation>
+		<annotation cp="🔍" type="tts">kārāhe whārahi anga mauī</annotation>
+		<annotation cp="🔎">karāhe | karāhe whārahi anga matau | rapu | utauta | whārahi</annotation>
+		<annotation cp="🔎" type="tts">karāhe whārahi anga matau</annotation>
+		<annotation cp="🕯">kānara | rama</annotation>
+		<annotation cp="🕯" type="tts">kānara</annotation>
+		<annotation cp="💡">hiko | mārama | puku | whakaaro | whakakata</annotation>
+		<annotation cp="💡" type="tts">puku mārama</annotation>
+		<annotation cp="🔦">hiko | kōrama | mārama | utauta</annotation>
+		<annotation cp="🔦" type="tts">kōrama</annotation>
+		<annotation cp="🏮">mārama | pae | rama | rātana pepa whero | whero</annotation>
+		<annotation cp="🏮" type="tts">rātana pepa whero</annotation>
+		<annotation cp="📔">pukapuka | pukatuhipoka | pukatuhipoka whai uhi whakairoiro | uhi | whakairoiro</annotation>
+		<annotation cp="📔" type="tts">pukatuhipoka whai uhi whakairoiro</annotation>
+		<annotation cp="📕">kopi | pukapuka</annotation>
+		<annotation cp="📕" type="tts">pukapuka kopi</annotation>
+		<annotation cp="📖">pukapuka | tuwhera</annotation>
+		<annotation cp="📖" type="tts">pukapuka tuwhera</annotation>
+		<annotation cp="📗">kākāriki | pukapuka</annotation>
+		<annotation cp="📗" type="tts">pukapuka kākāriki</annotation>
+		<annotation cp="📘">kikorangi | pukapuka</annotation>
+		<annotation cp="📘" type="tts">pukapuka kikorangi</annotation>
+		<annotation cp="📙">karaka | pukapuka</annotation>
+		<annotation cp="📙" type="tts">pukapuka karaka</annotation>
+		<annotation cp="📚">ngā pukapuka | pukapuka</annotation>
+		<annotation cp="📚" type="tts">ngā pukapuka</annotation>
+		<annotation cp="📓">pukatuhipoka</annotation>
+		<annotation cp="📓" type="tts">pukatuhipoka</annotation>
+		<annotation cp="📒">puka kaute | pukatuhipoka</annotation>
+		<annotation cp="📒" type="tts">puka kaute</annotation>
+		<annotation cp="📃">piko | tuhinga | whārangi | whārangi whai piko</annotation>
+		<annotation cp="📃" type="tts">whārangi whai piko</annotation>
+		<annotation cp="📜">pepa | tuhinga pōkai</annotation>
+		<annotation cp="📜" type="tts">tuhinga pōkai</annotation>
+		<annotation cp="📄">tuhinga | whārangi | whārangi anga ake</annotation>
+		<annotation cp="📄" type="tts">whārangi anga ake</annotation>
+		<annotation cp="📰">nūpepa | pepa | rongo</annotation>
+		<annotation cp="📰" type="tts">nūpepa</annotation>
+		<annotation cp="🗞">nūpepa | pepa | pōkai | rongo</annotation>
+		<annotation cp="🗞" type="tts">nūpepa pōkai</annotation>
+		<annotation cp="📑">ngā ripa | ripa tohuwāhi | tohu | tohuwāhi</annotation>
+		<annotation cp="📑" type="tts">ripa tohuwāhi</annotation>
+		<annotation cp="🔖">tohu | tohuwāhi</annotation>
+		<annotation cp="🔖" type="tts">tohuwāhi</annotation>
+		<annotation cp="🏷">tapanga</annotation>
+		<annotation cp="🏷" type="tts">tapanga</annotation>
+		<annotation cp="💰">moni | pēke | tāra</annotation>
+		<annotation cp="💰" type="tts">pēke moni</annotation>
+		<annotation cp="💴">momo moni | moni | monipepa | pēke | pepa | pire | yen</annotation>
+		<annotation cp="💴" type="tts">monipepa Yen</annotation>
+		<annotation cp="💵">momo moni | moni | monipepa | pēke | pepa | pire | tāra</annotation>
+		<annotation cp="💵" type="tts">monipepa tāra</annotation>
+		<annotation cp="💶">momo moni | moni | monipepa | pēke | pepa | pire | uro</annotation>
+		<annotation cp="💶" type="tts">monipepa uro</annotation>
+		<annotation cp="💷">momo moni | moni | monipepa | pauna | pēke | pepa | pire</annotation>
+		<annotation cp="💷" type="tts">monipepa pauna</annotation>
+		<annotation cp="💸">moni | moni whai parirau | monipepa | parirau | pēke | pepa | pire | rere | tāra</annotation>
+		<annotation cp="💸" type="tts">moni whai parirau</annotation>
+		<annotation cp="💳">kāri | moni | pēke | tāwere</annotation>
+		<annotation cp="💳" type="tts">kāri tāwere</annotation>
+		<annotation cp="💹">au | aupiki | kauwhata | mākete | momo moni | moni | pēke | tipunga | tūtohi | tūtohi aupiki me te yen | whakarunga | yen</annotation>
+		<annotation cp="💹" type="tts">tūtohi aupiki me te yen</annotation>
+		<annotation cp="✉">īmēra | kōpaki | reta</annotation>
+		<annotation cp="✉" type="tts">kōpaki</annotation>
+		<annotation cp="📧">īmēra | mēra | reta</annotation>
+		<annotation cp="📧" type="tts">īmēra</annotation>
+		<annotation cp="📨">ī-mēra | īmēra | kōpaki | kōpaki taumai | mēra | reta | tau mai | whiwhi</annotation>
+		<annotation cp="📨" type="tts">kōpaki taumai</annotation>
+		<annotation cp="📩">ī-mēra | iho | īmēra | kōpaki | kōpaki whai kōpere | kua tuku | mēra | pere | reta | tuku atu</annotation>
+		<annotation cp="📩" type="tts">kōpaki whai kōpere</annotation>
+		<annotation cp="📤">heri | kua tuku | mēra | pouaka | pouakaputa | reta</annotation>
+		<annotation cp="📤" type="tts">heri pouakaputa</annotation>
+		<annotation cp="📥">heri | mēra | pouaka | pouakauru | reta | whiwhi</annotation>
+		<annotation cp="📥" type="tts">heri pouakauru</annotation>
+		<annotation cp="📦">mōkī | mōkihi | pouaka</annotation>
+		<annotation cp="📦" type="tts">mōkihi</annotation>
+		<annotation cp="📫">kati | mēra | pouaka pōhi | pouakamēra | pouakamēra kopi whai kara whakarewa</annotation>
+		<annotation cp="📫" type="tts">pouakamēra kopi whai kara whakarewa</annotation>
+		<annotation cp="📪">kati | mēra | pouaka pōhi | pouakamēra | pouakamēra kopi whai kara whakaheke | whakaheke</annotation>
+		<annotation cp="📪" type="tts">pouakamēra kopi whai kara whakaheke</annotation>
+		<annotation cp="📬">mēra | pouaka pōhi | pouakamēra | pouakamēra tuwhera whai kara whakarewa | tuwhera</annotation>
+		<annotation cp="📬" type="tts">pouakamēra tuwhera whai kara whakarewa</annotation>
+		<annotation cp="📭">mēra | pouaka pōhi | pouakamēra | pouakamēra tuwhera whai kara whakaheke | tuwhera | whakaheke</annotation>
+		<annotation cp="📭" type="tts">pouakamēra tuwhera whai kara whakaheke</annotation>
+		<annotation cp="📮">mēra | pouaka poutāpeta | pouakamēra</annotation>
+		<annotation cp="📮" type="tts">pouaka poutāpeta</annotation>
+		<annotation cp="🗳">pōti | pouaka | pouaka pōti me te pōti</annotation>
+		<annotation cp="🗳" type="tts">pouaka pōti me te pōti</annotation>
+		<annotation cp="✏">penerākau</annotation>
+		<annotation cp="✏" type="tts">penerākau</annotation>
+		<annotation cp="✒">pene | timopene | timopene pango</annotation>
+		<annotation cp="✒" type="tts">timopene pango</annotation>
+		<annotation cp="🖋">pene | puna</annotation>
+		<annotation cp="🖋" type="tts">pene puna</annotation>
+		<annotation cp="🖊">pene | penepōro</annotation>
+		<annotation cp="🖊" type="tts">pene</annotation>
+		<annotation cp="🖌">parahi peita | peitatanga</annotation>
+		<annotation cp="🖌" type="tts">parahi peita</annotation>
+		<annotation cp="🖍">pene hinu</annotation>
+		<annotation cp="🖍" type="tts">pene hinu</annotation>
+		<annotation cp="📝">manatu | penerākau</annotation>
+		<annotation cp="📝" type="tts">manatu</annotation>
+		<annotation cp="💼">kopamārō</annotation>
+		<annotation cp="💼" type="tts">kopamārō</annotation>
+		<annotation cp="📁">kōnae | kōpaki</annotation>
+		<annotation cp="📁" type="tts">kōpaki kōnae</annotation>
+		<annotation cp="📂">kōnae | kōpaki | tuwhera</annotation>
+		<annotation cp="📂" type="tts">kōpaki kōnae tuwhera</annotation>
+		<annotation cp="🗂">kāri | kuputohu | ngā whakawehe kāri kuputohu | whakawehe</annotation>
+		<annotation cp="🗂" type="tts">ngā whakawehe kāri kuputohu</annotation>
+		<annotation cp="📅">maramataka | te rā</annotation>
+		<annotation cp="📅" type="tts">maramataka</annotation>
+		<annotation cp="📆">maramataka | maramataka tīhae</annotation>
+		<annotation cp="📆" type="tts">maramataka tīhae</annotation>
+		<annotation cp="🗒">pukatuhi | tōrino | tuhipoka</annotation>
+		<annotation cp="🗒" type="tts">pukatuhi tōrino</annotation>
+		<annotation cp="🗓">maramataka | pukatuhi | tōrino</annotation>
+		<annotation cp="🗓" type="tts">maramataka tōrino</annotation>
+		<annotation cp="📇">kāri | kuputohu | kuputohu ā-kāri | rolodex</annotation>
+		<annotation cp="📇" type="tts">kuputohu ā-kāri</annotation>
+		<annotation cp="📈">au | kauwhata | tipunga | tūtohi | tūtohi aupiki | whakarunga</annotation>
+		<annotation cp="📈" type="tts">tūtohi aupiki</annotation>
+		<annotation cp="📉">au | kauwhata | tūtohi | tūtohi auheke | whakaheke</annotation>
+		<annotation cp="📉" type="tts">tūtohi auheke</annotation>
+		<annotation cp="📊">kauwhata | pae | tūtohi</annotation>
+		<annotation cp="📊" type="tts">tūtohi pae</annotation>
+		<annotation cp="📋">paparawhi</annotation>
+		<annotation cp="📋" type="tts">paparawhi</annotation>
+		<annotation cp="📌">pine | pinepana</annotation>
+		<annotation cp="📌" type="tts">pinepana</annotation>
+		<annotation cp="📍">pine | pinepana | pinepana porohita</annotation>
+		<annotation cp="📍" type="tts">pinepana porohita</annotation>
+		<annotation cp="📎">rawhipepa</annotation>
+		<annotation cp="📎" type="tts">rawhipepa</annotation>
+		<annotation cp="🖇">hono | ngā rawhipepa honohono | rawhipepa</annotation>
+		<annotation cp="🖇" type="tts">ngā rawhipepa honohono</annotation>
+		<annotation cp="📏">rūri | torotika</annotation>
+		<annotation cp="📏" type="tts">rūri torotika</annotation>
+		<annotation cp="📐">huinga | rūri | tapatoru</annotation>
+		<annotation cp="📐" type="tts">rūri tapatoru</annotation>
+		<annotation cp="✂">kutikuti | tapahitanga | utauta</annotation>
+		<annotation cp="✂" type="tts">kutikuti</annotation>
+		<annotation cp="🗃">kāri | kōnae | pouaka</annotation>
+		<annotation cp="🗃" type="tts">pouaka kōnae kāri</annotation>
+		<annotation cp="🗄">kāpata | kōnae | whakaraupapa kōnae</annotation>
+		<annotation cp="🗄" type="tts">kāpata kōnae</annotation>
+		<annotation cp="🗑">pāhikete para</annotation>
+		<annotation cp="🗑" type="tts">pāhikete para</annotation>
+		<annotation cp="🔒">kua kati | kua maukati</annotation>
+		<annotation cp="🔒" type="tts">kua maukati</annotation>
+		<annotation cp="🔓">maukati | wetemaukati | whakatuwhera</annotation>
+		<annotation cp="🔓" type="tts">wetemaukati</annotation>
+		<annotation cp="🔏">maukati | maukati mā te pene | pene | timopene | tūmataitinga | waituhi</annotation>
+		<annotation cp="🔏" type="tts">maukati mā te pene</annotation>
+		<annotation cp="🔐">haumaru | kati | kī | maukati | maukati mā te kī</annotation>
+		<annotation cp="🔐" type="tts">maukati mā te kī</annotation>
+		<annotation cp="🔑">kī | kupuhipa | maukati</annotation>
+		<annotation cp="🔑" type="tts">kī</annotation>
+		<annotation cp="🗝">kī | maukati | tawhito | tīwhiri</annotation>
+		<annotation cp="🗝" type="tts">kī tawhito</annotation>
+		<annotation cp="🔨">hama | utauta</annotation>
+		<annotation cp="🔨" type="tts">hama</annotation>
+		<annotation cp="⛏">keri kōhuke | keriwhenua | utauta</annotation>
+		<annotation cp="⛏" type="tts">keriwhenua</annotation>
+		<annotation cp="⚒">hama | hama me te keriwhenua | keriwhenua | utauta</annotation>
+		<annotation cp="⚒" type="tts">hama me te keriwhenua</annotation>
+		<annotation cp="🛠">hama | hama me te wāwāhi | mauhiri | utauta | wāwāhi</annotation>
+		<annotation cp="🛠" type="tts">hama me te wāwāhi</annotation>
+		<annotation cp="🗡">naihi | oka | rākau-riri</annotation>
+		<annotation cp="🗡" type="tts">oka</annotation>
+		<annotation cp="⚔">hoari | rākau-riri | whakawhiri</annotation>
+		<annotation cp="⚔" type="tts">hoari whakawhiri</annotation>
+		<annotation cp="💣">pōma | whakakata</annotation>
+		<annotation cp="💣" type="tts">pōma</annotation>
+		<annotation cp="🏹">kaikōpere | kōpere | kōpere me ngā pere | kōperetanga | pere | poutiriao | rākau-riri | Sagittarius | utauta</annotation>
+		<annotation cp="🏹" type="tts">kōpere me ngā pere</annotation>
+		<annotation cp="🛡">pākai | rākau-riri</annotation>
+		<annotation cp="🛡" type="tts">pākai</annotation>
+		<annotation cp="🔧">mauhiri | utauta | wāwāhi</annotation>
+		<annotation cp="🔧" type="tts">wāwāhi</annotation>
+		<annotation cp="🔩">nati | nati me te whaowiri | utauta | whaowiri</annotation>
+		<annotation cp="🔩" type="tts">nati me te whaowiri</annotation>
+		<annotation cp="⚙">taputapu | utauta</annotation>
+		<annotation cp="⚙" type="tts">taputapu</annotation>
+		<annotation cp="🗜">kuku | purimau | utauta | whakakōpeke</annotation>
+		<annotation cp="🗜" type="tts">kuku</annotation>
+		<annotation cp="⚖">Libra | ōrite | poutiriao | taumaha | utauta | whakawā | whārite</annotation>
+		<annotation cp="⚖" type="tts">ōrite whārite</annotation>
+		<annotation cp="🔗">hononga</annotation>
+		<annotation cp="🔗" type="tts">hononga</annotation>
+		<annotation cp="⛓">mekameka | ngā mekameka</annotation>
+		<annotation cp="⛓" type="tts">ngā mekameka</annotation>
+		<annotation cp="⚗">mātai matū | taputapu iheunga | utauta</annotation>
+		<annotation cp="⚗" type="tts">taputapu iheunga</annotation>
+		<annotation cp="🔬">pūtaiao | pūwhārahi | utauta</annotation>
+		<annotation cp="🔬" type="tts">pūwhārahi</annotation>
+		<annotation cp="🔭">karu whakatata | pūtaiao | utauta</annotation>
+		<annotation cp="🔭" type="tts">karu whakatata</annotation>
+		<annotation cp="📡">amiorangi | pūhihi | rīhi</annotation>
+		<annotation cp="📡" type="tts">pūhihi amiorangi</annotation>
+		<annotation cp="💉">mate | ngira | pota | rata | rongoā | utauta</annotation>
+		<annotation cp="💉" type="tts">ngira</annotation>
+		<annotation cp="💊">mate | pire | rata | rongoā</annotation>
+		<annotation cp="💊" type="tts">pire</annotation>
+		<annotation cp="🚪">kūwaha</annotation>
+		<annotation cp="🚪" type="tts">kūwaha</annotation>
+		<annotation cp="🛏">hōtēra | moe | moenga</annotation>
+		<annotation cp="🛏" type="tts">moenga</annotation>
+		<annotation cp="🛋">hōtēra | nohoanga roa | nohoanga roa me te rama | rama</annotation>
+		<annotation cp="🛋" type="tts">nohoanga roa me te rama</annotation>
+		<annotation cp="🚽">heketua</annotation>
+		<annotation cp="🚽" type="tts">heketua</annotation>
+		<annotation cp="🚿">uwhiuwhi | wai</annotation>
+		<annotation cp="🚿" type="tts">uwhiuwhi</annotation>
+		<annotation cp="🛁">kaukau | tāpukaukau</annotation>
+		<annotation cp="🛁" type="tts">tāpukaukau</annotation>
+		<annotation cp="🛒">hokohoko | kāta | tāiki panapana</annotation>
+		<annotation cp="🛒" type="tts">tāiki panapana</annotation>
+		<annotation cp="🚬">hikareti | momi hikareti</annotation>
+		<annotation cp="🚬" type="tts">hikareti</annotation>
+		<annotation cp="⚰">kāwhena | matenga</annotation>
+		<annotation cp="⚰" type="tts">kāwhena</annotation>
+		<annotation cp="⚱">ipu | mate | ngārehu | tangihanga</annotation>
+		<annotation cp="⚱" type="tts">ipu tangihanga</annotation>
+		<annotation cp="🗿">kanohi | moai | moyai | whakapakoko</annotation>
+		<annotation cp="🗿" type="tts">moai</annotation>
+		<annotation cp="🏧">atm | kaiwhitimoni | pēke | tohu ATM | whakaaunoa</annotation>
+		<annotation cp="🏧" type="tts">tohu ATM</annotation>
+		<annotation cp="🚮">ipu para | para | tohu para roto ipu</annotation>
+		<annotation cp="🚮" type="tts">tohu para roto ipu</annotation>
+		<annotation cp="🚰">inu | wai | wai pai | wai pai hei unu</annotation>
+		<annotation cp="🚰" type="tts">wai pai hei unu</annotation>
+		<annotation cp="♿">tohu kōrea | urunga</annotation>
+		<annotation cp="♿" type="tts">tohu kōrea</annotation>
+		<annotation cp="🚹">heketua | rūma whakatā | taiwhanga tāne | tāne | wharepaku</annotation>
+		<annotation cp="🚹" type="tts">taiwhanga tāne</annotation>
+		<annotation cp="🚺">heketua | rūma whakatā | taiwhanga wāhine | wahine | wharepaku</annotation>
+		<annotation cp="🚺" type="tts">taiwhanga wāhine</annotation>
+		<annotation cp="🚻">heketua | rūma whakatā | wharepaku</annotation>
+		<annotation cp="🚻" type="tts">rūma whakatā</annotation>
+		<annotation cp="🚼">pēpi | tohu pēpi | whakapaipai</annotation>
+		<annotation cp="🚼" type="tts">tohu pēpi</annotation>
+		<annotation cp="🚾">heketua | rūma whakatā | taiwhanga | wai | wharepaku</annotation>
+		<annotation cp="🚾" type="tts">wharepaku</annotation>
+		<annotation cp="🛂">mana | uruwhenua</annotation>
+		<annotation cp="🛂" type="tts">mana uruwhenua</annotation>
+		<annotation cp="🛃">tari taupare</annotation>
+		<annotation cp="🛃" type="tts">tari taupare</annotation>
+		<annotation cp="🛄">kerēme | pāhi</annotation>
+		<annotation cp="🛄" type="tts">kerēme pāhi</annotation>
+		<annotation cp="🛅">pāhi | pāhi mahue | raraka</annotation>
+		<annotation cp="🛅" type="tts">pāhi mahue</annotation>
+		<annotation cp="⚠">whakatūpato</annotation>
+		<annotation cp="⚠" type="tts">whakatūpato</annotation>
+		<annotation cp="🚸">kaihīkoi | ngā waka huarahi | tamaiti | tamariki e whakawhiti ana | whakawhiti</annotation>
+		<annotation cp="🚸" type="tts">tamariki e whakawhiti ana</annotation>
+		<annotation cp="⛔">kāo | kaua e tomo | kore | ngā waka huarahi | rāhuitia | tāuru | whakakāhore</annotation>
+		<annotation cp="⛔" type="tts">kaua e tomo</annotation>
+		<annotation cp="🚫">kāo | kore | kua whakakore | tomonga</annotation>
+		<annotation cp="🚫" type="tts">kua whakakore</annotation>
+		<annotation cp="🚳">kāo | kaua he pahikara | kore | kua whakakore | pahikara | rāhuitia</annotation>
+		<annotation cp="🚳" type="tts">kaua he pahikara</annotation>
+		<annotation cp="🚭">kaipaipa | kāo | kaua e kaipaipa | kore | kua whakakore | rāhuitia</annotation>
+		<annotation cp="🚭" type="tts">kaua e kaipaipa</annotation>
+		<annotation cp="🚯">kāo | kaua e mahi para | kore | kua whakakore | para | rāhuitia</annotation>
+		<annotation cp="🚯" type="tts">kaua e mahi para</annotation>
+		<annotation cp="🚱">kaua e unu | wai | wai kāore e pai hei unu</annotation>
+		<annotation cp="🚱" type="tts">wai kāore e pai hei unu</annotation>
+		<annotation cp="🚷">kaihīkoi | kāo | kaua he kaihīkoi | kore | kua whakakore | rāhuitia</annotation>
+		<annotation cp="🚷" type="tts">kaua he kaihīkoi</annotation>
+		<annotation cp="📵">kāo | kaua te waea pūkoro | kore | pūkoro | rāhuitia | waea | whakakorea</annotation>
+		<annotation cp="📵" type="tts">kaua te waea pūkoro</annotation>
+		<annotation cp="🔞">18 | kāo | kia tekau-mā-waru ake | kore | rahuitanga pakeke | rāhuitia | tamariki tonu | tekau-mā-waru | whakakorea</annotation>
+		<annotation cp="🔞" type="tts">kia tekau-mā-waru ake</annotation>
+		<annotation cp="☢">ira-rukeruke | tohu</annotation>
+		<annotation cp="☢" type="tts">ira-rukeruke</annotation>
+		<annotation cp="☣">pūmate koiora | tohu</annotation>
+		<annotation cp="☣" type="tts">pūmate koiora</annotation>
+		<annotation cp="⬆">ahunga | matua | pere | pere ake | raki</annotation>
+		<annotation cp="⬆" type="tts">pere ake</annotation>
+		<annotation cp="↗">ahunga | pere | pere ake-matau | rāwhiti-mā-raki | waenga-matua</annotation>
+		<annotation cp="↗" type="tts">pere ake-matau</annotation>
+		<annotation cp="➡">ahunga | matua | pere | pere matau | rāwhiti</annotation>
+		<annotation cp="➡" type="tts">pere matau</annotation>
+		<annotation cp="↘">ahunga | pere | pere iho-matau | rāwhiti-mā-tonga | waenga-matua</annotation>
+		<annotation cp="↘" type="tts">pere iho-matau</annotation>
+		<annotation cp="⬇">ahunga | iho | matua | pere | tonga</annotation>
+		<annotation cp="⬇" type="tts">pere iho</annotation>
+		<annotation cp="↙">ahunga | pere | pere iho-mauī | uru-mā-tonga | waenga-matua</annotation>
+		<annotation cp="↙" type="tts">pere iho-mauī</annotation>
+		<annotation cp="⬅">ahunga | matua | pere | pere mauī | uru</annotation>
+		<annotation cp="⬅" type="tts">pere mauī</annotation>
+		<annotation cp="↖">ahunga | pere | pere ake-mauī | uru-mā-raki | waenga-matua</annotation>
+		<annotation cp="↖" type="tts">pere ake-mauī</annotation>
+		<annotation cp="↕">pere | pere ake-iho</annotation>
+		<annotation cp="↕" type="tts">pere ake-iho</annotation>
+		<annotation cp="↔">pere | pere mauī-matau</annotation>
+		<annotation cp="↔" type="tts">pere mauī-matau</annotation>
+		<annotation cp="↩">pere | pere matau piko mauī</annotation>
+		<annotation cp="↩" type="tts">pere matau piko mauī</annotation>
+		<annotation cp="↪">pere | pere mauī piko matau</annotation>
+		<annotation cp="↪" type="tts">pere mauī piko matau</annotation>
+		<annotation cp="⤴">pere | pere matau piko ake</annotation>
+		<annotation cp="⤴" type="tts">pere matau piko ake</annotation>
+		<annotation cp="⤵">iho | pere | pere matau piko iho</annotation>
+		<annotation cp="⤵" type="tts">pere matau piko iho</annotation>
+		<annotation cp="🔃">pere | pere poutū whakatekaraka | uta anō | whakatekaraka</annotation>
+		<annotation cp="🔃" type="tts">pere poutū whakatekaraka</annotation>
+		<annotation cp="🔄">kōaro | pātene pere kōaro | pere</annotation>
+		<annotation cp="🔄" type="tts">pātene pere kōaro</annotation>
+		<annotation cp="🔙">hoki | pere</annotation>
+		<annotation cp="🔙" type="tts">pere HOKI</annotation>
+		<annotation cp="🔚">mutunga | pere</annotation>
+		<annotation cp="🔚" type="tts">pere MUTUNGA</annotation>
+		<annotation cp="🔛">kā | pere | pere KĀ! | tohu</annotation>
+		<annotation cp="🔛" type="tts">pere KĀ!</annotation>
+		<annotation cp="🔜">ākuanei | pere</annotation>
+		<annotation cp="🔜" type="tts">pere ĀKUANEI</annotation>
+		<annotation cp="🔝">ake | pere | runga</annotation>
+		<annotation cp="🔝" type="tts">pere RUNGA</annotation>
+		<annotation cp="🛐">karakia | momo karakia | wāhi karakia</annotation>
+		<annotation cp="🛐" type="tts">wāhi karakia</annotation>
+		<annotation cp="⚛">kaiwhakakāhore-atua | ngota | tohu ngota</annotation>
+		<annotation cp="⚛" type="tts">tohu ngota</annotation>
+		<annotation cp="🕉">Hiniru | momo karakia | om</annotation>
+		<annotation cp="🕉" type="tts">om</annotation>
+		<annotation cp="✡">Hūrae | momo karakia | Rāwiri | whetū | whetū o Rāwiri</annotation>
+		<annotation cp="✡" type="tts">whetū o Rāwiri</annotation>
+		<annotation cp="☸">momo karakia | Putihi | tārama | wīra | wīra o tārama</annotation>
+		<annotation cp="☸" type="tts">wīra o tārama</annotation>
+		<annotation cp="☯">momo karakia | tangata tao | tao | yang | yin</annotation>
+		<annotation cp="☯" type="tts">yin yang</annotation>
+		<annotation cp="✝">karaitiana | momo karakia | rīpeka | rīpeka ratini</annotation>
+		<annotation cp="✝" type="tts">rīpeka ratini</annotation>
+		<annotation cp="☦">karaitiana | momo karakia | rīpeka | rīpeka tukuiho</annotation>
+		<annotation cp="☦" type="tts">rīpeka tukuiho</annotation>
+		<annotation cp="☪">ihirama | momo karakia | muhurimi | whetū me pewa</annotation>
+		<annotation cp="☪" type="tts">whetū me pewa</annotation>
+		<annotation cp="☮">rongomau | tohu rongomau</annotation>
+		<annotation cp="☮" type="tts">tohu rongomau</annotation>
+		<annotation cp="🕎">menoraha | momo karakia | tūnga kānara | whatanga-kānara</annotation>
+		<annotation cp="🕎" type="tts">menoraha</annotation>
+		<annotation cp="🔯">matakite | whetū | whetū ono-pito iraira</annotation>
+		<annotation cp="🔯" type="tts">whetū ono-pito iraira</annotation>
+		<annotation cp="♈">Aries | poutiriao | rāme</annotation>
+		<annotation cp="♈" type="tts">Aries</annotation>
+		<annotation cp="♉">poutiriao | pūru | Taurus</annotation>
+		<annotation cp="♉" type="tts">Taurus</annotation>
+		<annotation cp="♊">Gemini | ngā māhanga | poutiriao</annotation>
+		<annotation cp="♊" type="tts">Gemini</annotation>
+		<annotation cp="♋">Cancer | pāpaka | poutiriao</annotation>
+		<annotation cp="♋" type="tts">Cancer</annotation>
+		<annotation cp="♌">Leo | poutiriao | raiona</annotation>
+		<annotation cp="♌" type="tts">Leo</annotation>
+		<annotation cp="♍">poutiriao | Virgo</annotation>
+		<annotation cp="♍" type="tts">Virgo</annotation>
+		<annotation cp="♎">Libra | ōrite | poutiriao | whakawā | whārite</annotation>
+		<annotation cp="♎" type="tts">Libra</annotation>
+		<annotation cp="♏">kopio | kopiona | poutiriao | Scorpius</annotation>
+		<annotation cp="♏" type="tts">Scorpius</annotation>
+		<annotation cp="♐">kaikōpere | poutiriao | Sagittarius</annotation>
+		<annotation cp="♐" type="tts">Sagittarius</annotation>
+		<annotation cp="♑">Capricorn | koati | poutiriao</annotation>
+		<annotation cp="♑" type="tts">Capricorn</annotation>
+		<annotation cp="♒">Aquarius | kaikawe | poutiriao | wai</annotation>
+		<annotation cp="♒" type="tts">Aquarius</annotation>
+		<annotation cp="♓">ika | Pisces | poutiriao</annotation>
+		<annotation cp="♓" type="tts">Pisces</annotation>
+		<annotation cp="⛎">kaikawe | nākahi | Ophiuchus | poutiriao</annotation>
+		<annotation cp="⛎" type="tts">Ophiuchus</annotation>
+		<annotation cp="🔀">pātene ranu riu | pere | whakawhiri</annotation>
+		<annotation cp="🔀" type="tts">pātene ranu riu</annotation>
+		<annotation cp="🔁">pātene tukurua | pere | tukurua | whakatekaraka</annotation>
+		<annotation cp="🔁" type="tts">pātene tukurua</annotation>
+		<annotation cp="🔂">pātene tukurua kotahi | pere | wā kotahi | whakatekaraka</annotation>
+		<annotation cp="🔂" type="tts">pātene tukurua kotahi</annotation>
+		<annotation cp="▶">matau | pātene purei | pere | purei | tapatoru</annotation>
+		<annotation cp="▶" type="tts">pātene purei</annotation>
+		<annotation cp="⏩">pātene tere whakamua | pere | taurua | tere | whakamua</annotation>
+		<annotation cp="⏩" type="tts">pātene tere whakamua</annotation>
+		<annotation cp="⏭">pātene riu panuku | pere | riu panuku | tapatoru | tironga panuku</annotation>
+		<annotation cp="⏭" type="tts">pātene riu panuku</annotation>
+		<annotation cp="⏯">matau | pātene purei | pātene purei, taihoa rānei | pere | purei | taihoa | taihoa rānei | tapatoru</annotation>
+		<annotation cp="⏯" type="tts">pātene purei, taihoa rānei</annotation>
+		<annotation cp="◀">mauī | pātene whakamuri | pere | tapatoru | whakamuri</annotation>
+		<annotation cp="◀" type="tts">pātene whakamuri</annotation>
+		<annotation cp="⏪">pātene tere whakamuri | pere | taurua | whakahoki</annotation>
+		<annotation cp="⏪" type="tts">pātene tere whakamuri</annotation>
+		<annotation cp="⏮">pātene riu tōmuri | pere | riu tōmua | tapatoru | tironga tōmua</annotation>
+		<annotation cp="⏮" type="tts">pātene riu tōmuri</annotation>
+		<annotation cp="🔼">pātene | pātene ake | pere | whero</annotation>
+		<annotation cp="🔼" type="tts">pātene ake</annotation>
+		<annotation cp="⏫">pātene tere ake | pere | taurua</annotation>
+		<annotation cp="⏫" type="tts">pātene tere ake</annotation>
+		<annotation cp="🔽">iho | pātene | pere | whero</annotation>
+		<annotation cp="🔽" type="tts">pātene iho</annotation>
+		<annotation cp="⏬">iho | pātene tere iho | pere | taurua</annotation>
+		<annotation cp="⏬" type="tts">pātene tere iho</annotation>
+		<annotation cp="⏸">pae | pātene taihoa | poutū | taihoa | taurua</annotation>
+		<annotation cp="⏸" type="tts">pātene taihoa</annotation>
+		<annotation cp="⏹">pātene tū | tapawhā | tū</annotation>
+		<annotation cp="⏹" type="tts">pātene tū</annotation>
+		<annotation cp="⏺">pātene tāhopu | porohita | tāhopu</annotation>
+		<annotation cp="⏺" type="tts">pātene tāhopu</annotation>
+		<annotation cp="⏏">pātene tuwha | tuwha</annotation>
+		<annotation cp="⏏" type="tts">pātene tuwha</annotation>
+		<annotation cp="🎦">pūwhakaahua | rīpene whitiāhua | whare whitiāhua | whitiāhua</annotation>
+		<annotation cp="🎦" type="tts">whare whitiāhua</annotation>
+		<annotation cp="🔅">kanapa | kaurehu | pāpaku | pātene whakakaurehu</annotation>
+		<annotation cp="🔅" type="tts">pātene whakakaurehu</annotation>
+		<annotation cp="🔆">kanapa | kanapatanga | pātene kanapa</annotation>
+		<annotation cp="🔆" type="tts">pātene kanapa</annotation>
+		<annotation cp="📶">irirangi | pae | pūhīhī | pūkoro | waea</annotation>
+		<annotation cp="📶" type="tts">pae pūhīhī</annotation>
+		<annotation cp="📳">aratau | pūkoro | waea | wiriwiri</annotation>
+		<annotation cp="📳" type="tts">aratau wiriwiri</annotation>
+		<annotation cp="📴">pūkoro | waea | weto</annotation>
+		<annotation cp="📴" type="tts">waea pūkoro weto</annotation>
+		<annotation cp="♀">tohu wahine | wahine</annotation>
+		<annotation cp="♀" type="tts">tohu wahine</annotation>
+		<annotation cp="♂">tāne | tohu tāne</annotation>
+		<annotation cp="♂" type="tts">tohu tāne</annotation>
+		<annotation cp="✖">whakakore | whakarea | whakareatanga | x | x whakarea taumaha</annotation>
+		<annotation cp="✖" type="tts">x whakarea taumaha</annotation>
+		<annotation cp="➕">pāngarau | tāpiri | tohu tāpiri taumaha</annotation>
+		<annotation cp="➕" type="tts">tohu tāpiri taumaha</annotation>
+		<annotation cp="➖">pāngarau | tango | tohu tango taumaha</annotation>
+		<annotation cp="➖" type="tts">tohu tango taumaha</annotation>
+		<annotation cp="➗">pāngarau | tohu whakawehe taumaha | whakawehe</annotation>
+		<annotation cp="➗" type="tts">tohu whakawehe taumaha</annotation>
+		<annotation cp="‼">tohu | tohuhā | tohuhā taurua | tohutuhi</annotation>
+		<annotation cp="‼" type="tts">tohuhā taurua</annotation>
+		<annotation cp="⁉">pātai | tohu | tohuhā | tohuhā-pātai | tohutuhi</annotation>
+		<annotation cp="⁉" type="tts">tohu tohuhā-pātai</annotation>
+		<annotation cp="❓">pātai | tohu | tohutuhi</annotation>
+		<annotation cp="❓" type="tts">tohu pātai</annotation>
+		<annotation cp="❔">pātai | tohu | tohu pātai mā | tohutuhi | whakahuahua</annotation>
+		<annotation cp="❔" type="tts">tohu pātai mā</annotation>
+		<annotation cp="❕">tohu | tohuhā | tohuhā mā | tohutuhi | whakahuahua</annotation>
+		<annotation cp="❕" type="tts">tohuhā mā</annotation>
+		<annotation cp="❗">tohu | tohu reo | tohuhā</annotation>
+		<annotation cp="❗" type="tts">tohuhā</annotation>
+		<annotation cp="〰">karekare | pīhono | tohutuhi</annotation>
+		<annotation cp="〰" type="tts">pīhono karekare</annotation>
+		<annotation cp="💱">momo moni | moni | pēke | whakawhitinga momo moni | whakawhitiwhiti</annotation>
+		<annotation cp="💱" type="tts">whakawhitinga momo moni</annotation>
+		<annotation cp="💲">momo moni | moni | tāra | tohu tāra taumaha</annotation>
+		<annotation cp="💲" type="tts">tohu tāra taumaha</annotation>
+		<annotation cp="⚕">pou | rata | rongoā | tohu rongoā</annotation>
+		<annotation cp="⚕" type="tts">tohu rongoā</annotation>
+		<annotation cp="♻">tohu tukurua | tukurua</annotation>
+		<annotation cp="♻" type="tts">tohu tukurua</annotation>
+		<annotation cp="⚜">putiputi rengarenga</annotation>
+		<annotation cp="⚜" type="tts">putiputi rengarenga</annotation>
+		<annotation cp="🔱">mārau | punga | tohu | utauta | waipuke</annotation>
+		<annotation cp="🔱" type="tts">tohu mārau</annotation>
+		<annotation cp="📛">ingoa | tohu</annotation>
+		<annotation cp="📛" type="tts">tohu ingoa</annotation>
+		<annotation cp="🔰">Hapanīhi | kaitīmata | kākāriki | kaokao | kōwhai | rau | tohu Hapanīhi mō te tauhou | utauta</annotation>
+		<annotation cp="🔰" type="tts">tohu Hapanīhi mō te tauhou</annotation>
+		<annotation cp="⭕">o | porohita | porohita rahi taumaha</annotation>
+		<annotation cp="⭕" type="tts">porohita rahi taumaha</annotation>
+		<annotation cp="✅">taki | tohu | tohu taki mā taumaha</annotation>
+		<annotation cp="✅" type="tts">tohu taki mā taumaha</annotation>
+		<annotation cp="☑">pōti | pouaka | pouaka pōti whai taki | taki</annotation>
+		<annotation cp="☑" type="tts">pouaka pōti whai taki</annotation>
+		<annotation cp="✔">taki | tohu | tohu taki taumaha</annotation>
+		<annotation cp="✔" type="tts">tohu taki taumaha</annotation>
+		<annotation cp="❌">tohu | tohu whiri | whakakore | whakarea | whakareatanga | x</annotation>
+		<annotation cp="❌" type="tts">tohu whiri</annotation>
+		<annotation cp="❎">pātene tohu whiri | tapawhā | tohu</annotation>
+		<annotation cp="❎" type="tts">pātene tohu whiri</annotation>
+		<annotation cp="➰">hūmenge | koromeke</annotation>
+		<annotation cp="➰" type="tts">koromeke hūmenge</annotation>
+		<annotation cp="➿">hūmenge | koromeke | taurua</annotation>
+		<annotation cp="➿" type="tts">koromeke hūmenge taurua</annotation>
+		<annotation cp="〽">tohu | tohu wāhi whirihoa | wāhi</annotation>
+		<annotation cp="〽" type="tts">tohu wāhi whirihoa</annotation>
+		<annotation cp="✳">whetūriki | whetūriki waru-pito</annotation>
+		<annotation cp="✳" type="tts">whetūriki waru-pito</annotation>
+		<annotation cp="✴">whetū | whetū waru-pito</annotation>
+		<annotation cp="✴" type="tts">whetū waru-pito</annotation>
+		<annotation cp="❇">korakora</annotation>
+		<annotation cp="❇" type="tts">korakora</annotation>
+		<annotation cp="©">manatārua</annotation>
+		<annotation cp="©" type="tts">manatārua</annotation>
+		<annotation cp="®">rēhitatia</annotation>
+		<annotation cp="®" type="tts">rēhitatia</annotation>
+		<annotation cp="™">tohu | tohu hoko | tohuhoko</annotation>
+		<annotation cp="™" type="tts">tohu hoko</annotation>
+		<annotation cp="🔠">ABCD | ngā pū | pūmatua | ratini | tāuru</annotation>
+		<annotation cp="🔠" type="tts">tāuru pūmatua ratini</annotation>
+		<annotation cp="🔡">abcd | ngā pū | pūriki | ratini | tāuru</annotation>
+		<annotation cp="🔡" type="tts">tāuru pūriki ratini</annotation>
+		<annotation cp="🔢">1234 | ngā tau | tāuru | tāuru tau</annotation>
+		<annotation cp="🔢" type="tts">tāuru tau</annotation>
+		<annotation cp="🔣">〒♪&amp;% | tāuru | tāuru tohu</annotation>
+		<annotation cp="🔣" type="tts">tāuru tohu</annotation>
+		<annotation cp="🔤">abc | ngā pū | ratini | tātai reta | tāuru | tāuru pū ratini</annotation>
+		<annotation cp="🔤" type="tts">tāuru pū ratini</annotation>
+		<annotation cp="🅰">a | momo toto | pātene A (momo toto)</annotation>
+		<annotation cp="🅰" type="tts">pātene A (momo toto)</annotation>
+		<annotation cp="🆎">ab | momo toto | pātene AB (momo toto)</annotation>
+		<annotation cp="🆎" type="tts">pātene AB (momo toto)</annotation>
+		<annotation cp="🅱">b | momo toto | pātene B (momo toto)</annotation>
+		<annotation cp="🅱" type="tts">pātene B (momo toto)</annotation>
+		<annotation cp="🆑">cl | pātene CL</annotation>
+		<annotation cp="🆑" type="tts">pātene CL</annotation>
+		<annotation cp="🆒">pātene RAWE | rawe</annotation>
+		<annotation cp="🆒" type="tts">pātene RAWE</annotation>
+		<annotation cp="🆓">koreutu | pātene KOREUTU</annotation>
+		<annotation cp="🆓" type="tts">pātene KOREUTU</annotation>
+		<annotation cp="ℹ">i | mōhiohio</annotation>
+		<annotation cp="ℹ" type="tts">mōhiohio</annotation>
+		<annotation cp="🆔">pātene TT | tt | tuakiri</annotation>
+		<annotation cp="🆔" type="tts">pātene TT</annotation>
+		<annotation cp="Ⓜ">m | M porohitatia | porohita</annotation>
+		<annotation cp="Ⓜ" type="tts">M porohitatia</annotation>
+		<annotation cp="🆕">hōu | pātene HŌU</annotation>
+		<annotation cp="🆕" type="tts">pātene HŌU</annotation>
+		<annotation cp="🆖">ng | pātene NG</annotation>
+		<annotation cp="🆖" type="tts">pātene NG</annotation>
+		<annotation cp="🅾">momo toto | o | pātene O (momo toto)</annotation>
+		<annotation cp="🅾" type="tts">pātene O (momo toto)</annotation>
+		<annotation cp="🆗">ĀE | pātene ĀE</annotation>
+		<annotation cp="🆗" type="tts">pātene ĀE</annotation>
+		<annotation cp="🅿">pātene P | turanga waka</annotation>
+		<annotation cp="🅿" type="tts">pātene P</annotation>
+		<annotation cp="🆘">āwhina | pātene SOS | sos</annotation>
+		<annotation cp="🆘" type="tts">pātene SOS</annotation>
+		<annotation cp="🆚">ki | ki a | pātene VS</annotation>
+		<annotation cp="🆚" type="tts">pātene VS</annotation>
+		<annotation cp="🈁">&quot;i konei&quot; | Hapanīhi | katakana | pātene Hapanīhi &quot;i konei&quot; | ココ</annotation>
+		<annotation cp="🈁" type="tts">pātene Hapanīhi &quot;i konei&quot;</annotation>
+		<annotation cp="🈂">&quot;utu ratonga&quot; | Hapanīhi | katakana | pātene Hapanīhi &quot;utu ratonga&quot; | サ</annotation>
+		<annotation cp="🈂" type="tts">pātene Hapanīhi &quot;utu ratonga&quot;</annotation>
+		<annotation cp="🈷">&quot;nuinga ā-marama&quot; | Hapanīhi | pātene Hapanīhi &quot;nuinga ā-marama&quot; | tohuwhakairo | 月</annotation>
+		<annotation cp="🈷" type="tts">pātene Hapanīhi &quot;nuinga ā-marama&quot;</annotation>
+		<annotation cp="🈶">&quot;ehara i te koreutu&quot; | Hapanīhi | pātene Hapanīhi &quot;ehara i te koreutu&quot; | tohuwhakairo | 有</annotation>
+		<annotation cp="🈶" type="tts">pātene Hapanīhi &quot;ehara i te koreutu&quot;</annotation>
+		<annotation cp="🈯">&quot;rāhuitia&quot; | Hapanīhi | pātene Hapanīhi &quot;rāhuitia&quot; | tohuwhakairo | 指</annotation>
+		<annotation cp="🈯" type="tts">pātene Hapanīhi &quot;rāhuitia&quot;</annotation>
+		<annotation cp="🉐">&quot;utu ngāwari&quot; | Hapanīhi | pātene Hapanīhi &quot;utu ngāwari&quot; | tohuwhakairo | 得</annotation>
+		<annotation cp="🉐" type="tts">pātene Hapanīhi &quot;utu ngāwari&quot;</annotation>
+		<annotation cp="🈹">&quot;kua whakaheke&quot; | Hapanīhi | pātene Hapanīhi &quot;kua whakaheke&quot; | tohuwhakairo | 割</annotation>
+		<annotation cp="🈹" type="tts">pātene Hapanīhi &quot;kua whakaheke&quot;</annotation>
+		<annotation cp="🈚">&quot;kāore he utu&quot; | Hapanīhi | pātene Hapanīhi &quot;kāore he utu&quot; | tohuwhakairo | 無</annotation>
+		<annotation cp="🈚" type="tts">pātene Hapanīhi &quot;kāore he utu&quot;</annotation>
+		<annotation cp="🈲">&quot;kua whakakore&quot; | Hapanīhi | pātene Hapanīhi &quot;kua whakakore&quot; | tohuwhakairo | 禁</annotation>
+		<annotation cp="🈲" type="tts">pātene Hapanīhi &quot;kua whakakore&quot;</annotation>
+		<annotation cp="🉑">&quot;ka whakaaetia&quot; | Hapanīhi | pātene Hapanīhi &quot;ka whakaaetia&quot; | tohuwhakairo | 可</annotation>
+		<annotation cp="🉑" type="tts">pātene Hapanīhi &quot;ka whakaaetia&quot;</annotation>
+		<annotation cp="🈸">&quot;taupānga&quot; | Hapanīhi | pātene Hapanīhi &quot;taupānga&quot; | tohuwhakairo | 申</annotation>
+		<annotation cp="🈸" type="tts">pātene Hapanīhi &quot;taupānga&quot;</annotation>
+		<annotation cp="🈴">&quot;whiwhinga pāhi&quot; | Hapanīhi | pātene Hapanīhi &quot;whiwhinga pāhi&quot; | tohuwhakairo | 合</annotation>
+		<annotation cp="🈴" type="tts">pātene Hapanīhi &quot;whiwhinga pāhi&quot;</annotation>
+		<annotation cp="🈳">&quot;wāteatanga&quot; | Hapanīhi | pātene Hapanīhi &quot;wāteatanga&quot; | tohuwhakairo | 空</annotation>
+		<annotation cp="🈳" type="tts">pātene Hapanīhi &quot;wāteatanga&quot;</annotation>
+		<annotation cp="㊗">&quot;tau kē&quot; | Hapanīhi | pātene Hapanīhi &quot;tau kē&quot; | tohuwhakairo | 祝</annotation>
+		<annotation cp="㊗" type="tts">pātene Hapanīhi &quot;tau kē&quot;</annotation>
+		<annotation cp="㊙">&quot;pirikoko&quot; | Hapanīhi | pātene Hapanīhi &quot;pirikoko&quot; | tohuwhakairo | 秘</annotation>
+		<annotation cp="㊙" type="tts">pātene Hapanīhi &quot;pirikoko&quot;</annotation>
+		<annotation cp="🈺">&quot;tuwhera mō te pakihi&quot; | Hapanīhi | pātene Hapanīhi &quot;tuwhera mō te pakihi&quot; | tohuwhakairo | 営</annotation>
+		<annotation cp="🈺" type="tts">pātene Hapanīhi &quot;tuwhera mō te pakihi&quot;</annotation>
+		<annotation cp="🈵">&quot;kore wāteatanga&quot; | Hapanīhi | pātene Hapanīhi &quot;kore wāteatanga&quot; | tohuwhakairo | 満</annotation>
+		<annotation cp="🈵" type="tts">pātene Hapanīhi &quot;kore wāteatanga&quot;</annotation>
+		<annotation cp="🔴">āhuahanga | porohita | whero</annotation>
+		<annotation cp="🔴" type="tts">porohita whero</annotation>
+		<annotation cp="🔵">āhuahanga | kikorangi | porohita</annotation>
+		<annotation cp="🔵" type="tts">porohita kikorangi</annotation>
+		<annotation cp="⚫">āhuahanga | porohita | porohita pango</annotation>
+		<annotation cp="⚫" type="tts">porohita pango</annotation>
+		<annotation cp="⚪">āhuahanga | porohita | porohita mā</annotation>
+		<annotation cp="⚪" type="tts">porohita mā</annotation>
+		<annotation cp="⬛">āhuahanga | tapawhā rite | tapawhā rite pango rahi</annotation>
+		<annotation cp="⬛" type="tts">tapawhā rite pango rahi</annotation>
+		<annotation cp="⬜">āhuahanga | tapawhā rite | tapawhā rite mā rahi</annotation>
+		<annotation cp="⬜" type="tts">tapawhā rite mā rahi</annotation>
+		<annotation cp="◼">āhuahanga | tapawhā rite | tapawhā rite pango waenga</annotation>
+		<annotation cp="◼" type="tts">tapawhā rite pango waenga</annotation>
+		<annotation cp="◻">āhuahanga | tapawhā rite | tapawhā rite mā waenga</annotation>
+		<annotation cp="◻" type="tts">tapawhā rite mā waenga</annotation>
+		<annotation cp="◾">āhuahanga | tapawhā rite | tapawhā rite pango waenga-iti</annotation>
+		<annotation cp="◾" type="tts">tapawhā rite pango waenga-iti</annotation>
+		<annotation cp="◽">āhuahanga | tapawhā rite | tapawhā rite mā waenga-iti</annotation>
+		<annotation cp="◽" type="tts">tapawhā rite mā waenga-iti</annotation>
+		<annotation cp="▪">āhuahanga | tapawhā rite | tapawhā rite pango iti</annotation>
+		<annotation cp="▪" type="tts">tapawhā rite pango iti</annotation>
+		<annotation cp="▫">āhuahanga | tapawhā rite | tapawhā rite mā iti</annotation>
+		<annotation cp="▫" type="tts">tapawhā rite mā iti</annotation>
+		<annotation cp="🔶">āhuahanga | karaka | taimana | taimana karaka rahi</annotation>
+		<annotation cp="🔶" type="tts">taimana karaka rahi</annotation>
+		<annotation cp="🔷">āhuahanga | kikorangi | taimana | taimana kikorangi rahi</annotation>
+		<annotation cp="🔷" type="tts">taimana kikorangi rahi</annotation>
+		<annotation cp="🔸">āhuahanga | karaka | taimana | taimana karaka iti</annotation>
+		<annotation cp="🔸" type="tts">taimana karaka iti</annotation>
+		<annotation cp="🔹">āhuahanga | kikorangi | taimana | taimana kikorangi iti</annotation>
+		<annotation cp="🔹" type="tts">taimana kikorangi iti</annotation>
+		<annotation cp="🔺">āhuahanga | tapatoru whero tohu ake | whero</annotation>
+		<annotation cp="🔺" type="tts">tapatoru whero tohu ake</annotation>
+		<annotation cp="🔻">āhuahanga | iho | tapatoru whero tohu iho | whero</annotation>
+		<annotation cp="🔻" type="tts">tapatoru whero tohu iho</annotation>
+		<annotation cp="💠">āhuahanga | roto | taimana | taimana whai ira | whakakata</annotation>
+		<annotation cp="💠" type="tts">taimana whai ira</annotation>
+		<annotation cp="🔘">āhuahanga | irirangi | pātene</annotation>
+		<annotation cp="🔘" type="tts">pātene irirangi</annotation>
+		<annotation cp="🔳">āhuahanga | pātene | pātene tapawhā mā | tapawhā rite | whakahuahua</annotation>
+		<annotation cp="🔳" type="tts">pātene tapawhā mā</annotation>
+		<annotation cp="🔲">āhuahanga | pātene | pātene tapawhā pango | tapawhā rite</annotation>
+		<annotation cp="🔲" type="tts">pātene tapawhā pango</annotation>
+		<annotation cp="🏁">kara pātikitiki | pātikitiki | tauwhāinga motokā</annotation>
+		<annotation cp="🏁" type="tts">kara pātikitiki</annotation>
+		<annotation cp="🚩">kara tapatoru | pou</annotation>
+		<annotation cp="🚩" type="tts">kara tapatoru</annotation>
+		<annotation cp="🎌">Hapanīhi | kara whakawhiri | whakanuinga | whakawhiri | whiri</annotation>
+		<annotation cp="🎌" type="tts">kara whakawhiri</annotation>
+		<annotation cp="🏴">kara pango | piupiu ana</annotation>
+		<annotation cp="🏴" type="tts">kara pango</annotation>
+		<annotation cp="🏳">kara mā | piupiu ana</annotation>
+		<annotation cp="🏳" type="tts">kara mā</annotation>
+		<annotation cp="🏳‍🌈">kahukura | kara kahukura</annotation>
+		<annotation cp="🏳‍🌈" type="tts">kara kahukura</annotation>
+		<annotation cp="0⃣" type="tts">uhi pātuhi: 0</annotation>
+		<annotation cp="1⃣" type="tts">uhi pātuhi: 1</annotation>
+		<annotation cp="2⃣" type="tts">uhi pātuhi: 2</annotation>
+		<annotation cp="3⃣" type="tts">uhi pātuhi: 3</annotation>
+		<annotation cp="4⃣" type="tts">uhi pātuhi: 4</annotation>
+		<annotation cp="5⃣" type="tts">uhi pātuhi: 5</annotation>
+		<annotation cp="6⃣" type="tts">uhi pātuhi: 6</annotation>
+		<annotation cp="7⃣" type="tts">uhi pātuhi: 7</annotation>
+		<annotation cp="8⃣" type="tts">uhi pātuhi: 8</annotation>
+		<annotation cp="9⃣" type="tts">uhi pātuhi: 9</annotation>
+	</annotations>
+</ldml>

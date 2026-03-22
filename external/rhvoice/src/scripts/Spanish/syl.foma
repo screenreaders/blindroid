@@ -1,0 +1,63 @@
+# Copyright (C) 2024-2026  Mateo Cedillo <angelitomateocedillo@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+source include/variables.foma
+
+define Nucleus 
+[[a | a0 | a1 | 
+e | e0 | e1 | 
+o | o0 | o1] (i0|u0)] | 
+i|i0 | i1 | 
+u | u0 | u1 ; 
+# área, línea, zapatear (á-rea, lí-nea, za-pa-tear).
+
+define MarkNuclei 
+Nucleus @-> %{ ... %} ; 
+
+define Onset 
+0 | Consonant | 
+[b [j|l|r|w]] | [b l [j|w]] | [b r [j|w]] | 
+[bh [j|w]] | 
+{cj} | 
+[ch [j|w]] | 
+[d [l|r|j|w]] | [d l [j|w]] | [d r [j|w]] | 
+[dh [j|w]] | 
+[f [l|r|j|w]] | [f l [j|w]] | [f r [j|w]] | 
+[g [l|r|j|w]] | [g l [j|w]] | [g r [j|w]] | 
+[gh [j|w]] | 
+[x [j|w]] | 
+[k [l|r|j|w]] | [k l [j|w]] | [k r [j|w]] | 
+[l [j|w]] | 
+[ll [j|w]] | 
+[m [j|w]] | 
+[n [j|w]] | 
+[p [l|r|j|w]] | [p l [j|w]] | [p r [j|w]] | 
+[r [j|w]] | 
+[rr [j|w]] | 
+[s [j|w]] | 
+[sh [j|w]] | 
+[t [l|r|j|w]] | [t l [j|w]] | [t r [j|w]] | 
+[v [j|w]] ; 
+
+define Syllable 
+Onset %{ Nucleus %} Consonant* ; 
+
+define MarkSyllables 
+Syllable @> ... "." || _ Syllable;
+
+regex 
+MarkNuclei .o. 
+MarkSyllables .o. 
+[%{|%} -> 0] ;

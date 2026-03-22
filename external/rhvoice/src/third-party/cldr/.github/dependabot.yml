@@ -1,0 +1,132 @@
+# Docs: https://docs.github.com/en/code-security/dependabot
+
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 gh:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/tools/cldr-apps/js"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 js:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+      
+  - package-ecosystem: "npm"
+    directory: "/tools/scripts/jira-updater"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 js:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+
+  - package-ecosystem: "npm"
+    directory: "/tools/scripts/tr-archive"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 tr:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+
+  - package-ecosystem: "npm"
+    directory: "/docs/site"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 site:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+
+  - package-ecosystem: "npm"
+    directory: "/tools/st-prom-exporter"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 exporter:"
+    assignees:
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295
+
+  - package-ecosystem: "npm"
+    directory: "/tools/scripts/keyboard-abnf-tests"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 kbd:"
+    assignees:
+      - srl295
+    reviewers:
+      - srl295
+      - miloush
+      - mcdurdin
+
+  - package-ecosystem: "npm"
+    directory: "/docs/charts/keyboards"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 kbd:"
+    assignees:
+      - srl295
+    reviewers:
+      - srl295
+      - miloush
+      - mcdurdin
+
+  # Maintain dependencies for Maven
+  - package-ecosystem: "maven"
+    directory: "/tools"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      include: scope
+      prefix: "CLDR-18356 j:"
+    assignees:
+      - btangmu
+      - srl295
+    reviewers:
+      - btangmu
+      - srl295

@@ -201,7 +201,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun openTtsSettings() {
         try {
-            startActivity(Intent(Settings.ACTION_TTS_SETTINGS))
+            startActivity(Intent(ACTION_TTS_SETTINGS))
         } catch (_: Exception) {
             startActivity(Intent(Settings.ACTION_SETTINGS))
         }
@@ -278,6 +278,7 @@ class OnboardingActivity : AppCompatActivity() {
     companion object {
         private const val REQ_CONTACTS = 201
         private const val REQ_SMS = 202
+        private const val ACTION_TTS_SETTINGS = "android.settings.TTS_SETTINGS"
         private const val RHVOICE_CORE_PACKAGE = "com.github.olga_yakovleva.rhvoice.android"
         private const val RHVOICE_VOICE_PREFIX = "com.github.olga_yakovleva.rhvoice.android.voice"
         private const val RHVOICE_CORE_ASSET = "rhvoice-core.apk"

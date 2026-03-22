@@ -5,7 +5,12 @@ keystore/
 *.jks
 build/
 app/build/
+external/rhvoice/src/android/.gradle/
+external/rhvoice/src/android/**/build/
+external/rhvoice/bin/
 *.apk
+!blindroid-100.apk
+!app/src/main/assets/*.apk
 data/
 tools/
 external/*
@@ -13,6 +18,7 @@ external/*
 !external/talkback/**
 !external/rhvoice/
 !external/rhvoice/**
+external/rhvoice/bin/
 external/talkback/.git_backup/
 external/rhvoice/.git_backup/
 **/.cxx/

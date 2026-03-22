@@ -1,0 +1,27 @@
+# Copyright (C) 2025  Mateo Cedillo <angelitomateocedillo@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+source include/variables.foma
+
+#He definido lo siguiente para que el stop más el glide más vocal, por ejemplo, BLA, BRE, DLI, DRO, FRU, sean palabras y no secuencias de caracteres. Con esto le vamos a decir al tokenizador en foma que defina las secuencias de caracteres en consonante^2 (dos veces) y una vocal, a excepción de estas reglas que son clusters de sílabas a continuación.
+define GraphemeStop B|C|D|F|G|K|P|T ; 
+define GraphemeLR L|R ; 
+#Este enfoque funciona bien para las r como glide. Sin embargo, necesitamos agregar una excepción para las l, queremos sacar d y t. Nótese el caso de TLI, que puede ser una posible secuencia de caracteres, al no tener palabras que contengan tl + vocal en el vocabulario Español, la misma situación para la d. DLA, DLE, DLI, DLO, DLU, fuera del bocablo español, a pesar de que técnicamente es un cluster correcto de sílaba. De todos modos, sería un intento de réplica de algoritmo para evitar confusiones o ambigüedades.
+define GraphemeStopException GraphemeStop - [D|T] ; 
+# Y se crea la regla de acuerdo a estas condiciones.
+define GraphemeSyllableAllow [GraphemeStopException L CapitalVowel] | [GraphemeStop R CapitalVowel] ; 
+# ¿Por qué usamos GraphemeStopException en L pero no en R? Porque es más que obvio. D y T con r sí son sílabas correctas que no interfieren con siglas.
+
+#regex GraphemeSyllableAllow ; 

@@ -1,0 +1,17 @@
+<!--
+Copyright © 1991-2025 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+SPDX-License-Identifier: Unicode-3.0
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+-->
+
+<!ELEMENT platform ((format | echo)*) >
+<!-- <!ATTLIST TestSTFactory version CDATA #REQUIRED> -->
+
+<!ELEMENT format (#PCDATA) >
+<!ATTLIST format type NMTOKEN #REQUIRED>
+<!ATTLIST format locale CDATA #REQUIRED>
+<!ATTLIST format combined ( true | false )  #REQUIRED>
+<!ATTLIST format alt (short | long)  #REQUIRED>
+
+<!ELEMENT echo (#PCDATA) >
