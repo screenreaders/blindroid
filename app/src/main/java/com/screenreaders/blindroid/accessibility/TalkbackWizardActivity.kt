@@ -3,9 +3,14 @@ package com.screenreaders.blindroid.accessibility
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.screenreaders.blindroid.R
 import com.screenreaders.blindroid.databinding.ActivityTalkbackWizardBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class TalkbackWizardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTalkbackWizardBinding
@@ -23,6 +28,9 @@ class TalkbackWizardActivity : AppCompatActivity() {
         }
         binding.backupSettingsButton.setOnClickListener {
             openBackupTalkBackSettings()
+        }
+        binding.backupInstallButton.setOnClickListener {
+            installBackupTalkBack()
         }
         binding.talkbackRefreshButton.setOnClickListener {
             updateStatus()
@@ -49,6 +57,7 @@ class TalkbackWizardActivity : AppCompatActivity() {
         }
         binding.backupStatus.text = getString(backupStatusRes)
         binding.backupSettingsButton.isEnabled = backupInstalled
+        binding.backupInstallButton.isEnabled = !backupInstalled && isBackupInstallerAvailable()
     }
 
     private fun openAccessibilitySettings() {
@@ -76,6 +85,52 @@ class TalkbackWizardActivity : AppCompatActivity() {
         }
     }
 
+    private fun installBackupTalkBack() {
+        if (TalkbackUtils.isBackupTalkBackInstalled(this)) {
+            openBackupTalkBackSettings()
+            return
+        }
+        val apk = copyApkFromAssets(BACKUP_TALKBACK_ASSET) ?: run {
+            Toast.makeText(this, R.string.talkback_backup_install_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", apk)
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, APK_MIME)
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
+            putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, packageName)
+        }
+        Toast.makeText(this, R.string.talkback_backup_install_started, Toast.LENGTH_SHORT).show()
+        startActivity(intent)
+    }
+
+    private fun isBackupInstallerAvailable(): Boolean {
+        return try {
+            assets.open(BACKUP_TALKBACK_ASSET).use { }
+            true
+        } catch (_: IOException) {
+            false
+        }
+    }
+
+    private fun copyApkFromAssets(assetName: String): File? {
+        val outDir = File(filesDir, "blindreader_installer")
+        if (!outDir.exists() && !outDir.mkdirs()) return null
+        val outFile = File(outDir, assetName)
+        if (outFile.exists()) return outFile
+        return try {
+            assets.open(assetName).use { input ->
+                FileOutputStream(outFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            outFile
+        } catch (_: IOException) {
+            null
+        }
+    }
+
     companion object {
         private const val ACTION_ACCESSIBILITY_SHORTCUT_SETTINGS =
             "android.settings.ACCESSIBILITY_SHORTCUT_SETTINGS"
@@ -83,5 +138,7 @@ class TalkbackWizardActivity : AppCompatActivity() {
             "android.settings.ACCESSIBILITY_DETAILS_SETTINGS"
         private const val EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME =
             "android.provider.extra.ACCESSIBILITY_SERVICE_COMPONENT_NAME"
+        private const val BACKUP_TALKBACK_ASSET = "blindreader.apk"
+        private const val APK_MIME = "application/vnd.android.package-archive"
     }
 }

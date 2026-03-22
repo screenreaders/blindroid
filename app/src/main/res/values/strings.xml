@@ -497,6 +497,9 @@
     <string name="talkback_backup_status_off">BlindReader: wyłączony</string>
     <string name="talkback_backup_status_missing">BlindReader: nie zainstalowany</string>
     <string name="talkback_backup_hint">Jeśli systemowy TalkBack nie działa, włącz BlindReader.</string>
+    <string name="talkback_backup_install">Zainstaluj BlindReader</string>
+    <string name="talkback_backup_install_started">Instalacja BlindReader uruchomiona</string>
+    <string name="talkback_backup_install_missing">Brak instalatora BlindReader</string>
     <string name="talkback_backup_open_settings">Ustawienia BlindReader</string>
     <string name="light_level_dark">ciemno</string>
     <string name="light_level_dim">średnio</string>

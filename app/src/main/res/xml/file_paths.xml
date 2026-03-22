@@ -9,4 +9,7 @@
     <files-path
         name="tts_installer"
         path="tts_installer/" />
+    <files-path
+        name="blindreader_installer"
+        path="blindreader_installer/" />
 </paths>
