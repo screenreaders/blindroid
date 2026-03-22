@@ -8,7 +8,8 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [ ] Add per‑gesture confirmation haptics toggle (UX)
 
 ## Soft Braille Keyboard Reactivation
-- [ ] Locate Soft Braille Keyboard repo (GitHub URL) and clone locally
+- [x] Locate Soft Braille Keyboard repo: https://github.com/danieldalton10/Soft-Braille-Keyboard
+- [ ] Clone repo locally into `external/soft-braille-keyboard`
 - [ ] Build current source and document build steps
 - [ ] Update target/compile SDK to latest Android (16)
 - [ ] Update IME manifest/service configuration for modern Android
@@ -23,6 +24,16 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [ ] Verify window insets / edge‑to‑edge handling in IME UI
 - [ ] Verify predictive back behavior for IME UI
 - [ ] Verify permissions/exported flags for IME service
+
+## Reference Links (Android Docs)
+- Android 16 behavior changes (all apps): https://developer.android.com/about/versions/16/behavior-changes-all
+- Android 16 behavior changes (targeting 16): https://developer.android.com/about/versions/16/behavior-changes-16
+- Android 15 behavior changes (all apps): https://developer.android.com/about/versions/15/behavior-changes-all
+- Android 15 behavior changes (targeting 15): https://developer.android.com/about/versions/15/behavior-changes-15
+- Android 14 behavior changes (all apps): https://developer.android.com/about/versions/14/behavior-changes-all
+- Android 14 behavior changes (targeting 14): https://developer.android.com/about/versions/14/behavior-changes-14
+- InputMethodService reference: https://developer.android.com/reference/android/inputmethodservice/InputMethodService
+- Create an input method (guide): https://developer.android.com/develop/ui/views/touch-and-input/creating-input-method
 
 ## Integrations & Delivery
 - [ ] Decide delivery: bundled IME module vs standalone APK
