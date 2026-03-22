@@ -9,6 +9,7 @@ app/build/
 data/
 tools/
 external/
+**/.cxx/
 braillekeyboard/src/main/cpp/liblouis/.git/
 braillekeyboard/src/main/cpp/liblouis/.git_submodule/
 braillekeyboard/src/main/cpp/liblouis/.git_submodule
