@@ -16,6 +16,7 @@ public final class LiblouisBridge {
 
     private static final Object LOCK = new Object();
     private static volatile boolean initialized = false;
+    private static volatile File tablesDir = null;
 
     private LiblouisBridge() {
     }
@@ -29,7 +30,7 @@ public final class LiblouisBridge {
                 return;
             }
             copyTablesIfNeeded(context);
-            File tablesDir = new File(context.getFilesDir(), "liblouis/tables");
+            tablesDir = new File(context.getFilesDir(), "liblouis/tables");
             LiblouisNative.setDataPath(tablesDir.getAbsolutePath());
             initialized = true;
         }
@@ -41,6 +42,14 @@ public final class LiblouisBridge {
         }
         String tableFile = LiblouisTableRegistry.resolveTableFile(tableId);
         if (tableFile == null) {
+            return null;
+        }
+        File localTables = tablesDir;
+        if (localTables == null) {
+            return null;
+        }
+        File tablePath = new File(localTables, tableFile);
+        if (!tablePath.exists()) {
             return null;
         }
         return LiblouisNative.backTranslate(tableFile, cells);
