@@ -78,7 +78,10 @@ dependencies {
     implementation("com.google.mlkit:face-detection:16.1.5")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
     implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0")
-    implementation("org.tensorflow:tensorflow-lite:2.14.0")
+    implementation("org.tensorflow:tensorflow-lite:2.14.0") {
+        exclude(group = "org.tensorflow", module = "tensorflow-lite-api")
+    }
+    implementation(files("libs/tensorflow-lite-api-2.14.0-no-namespace.aar"))
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation(project(":launcher"))
     implementation(project(":braillekeyboard"))

@@ -5,6 +5,7 @@ import android.os.Looper
 import android.telecom.Call
 import java.util.concurrent.CopyOnWriteArraySet
 
+@Suppress("DEPRECATION")
 object CallManager {
     interface Listener {
         fun onCallChanged(call: Call?)

@@ -10,6 +10,7 @@ import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.LockScreenUtils
 import com.screenreaders.blindroid.util.QuietHours
 
+@Suppress("DEPRECATION")
 class BlindroidNotificationListener : NotificationListenerService() {
     private lateinit var announcer: CallAnnouncer
 

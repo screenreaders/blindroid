@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import android.os.Handler
 import android.os.Looper
 
+@Suppress("DEPRECATION")
 class ChimeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         if (!Prefs.isChimeEnabled(context)) return

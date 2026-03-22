@@ -292,4 +292,11 @@
       Description: This is spoken to the user. [CHAR LIMIT="NONE"]
     -->
     <string name="punctuation_right_brace">Right brace</string>
+
+    <string name="pref_two_hand_calibration_title">Two-tap calibration</string>
+    <string name="pref_two_hand_calibration_summary">Allow calibrating the keyboard with two taps.</string>
+
+    <string name="trial_buy">Buy</string>
+    <string name="trial_expired_title">Trial expired</string>
+    <string name="trial_expired_message">Your trial has expired. Please purchase the app to continue using it.</string>
 </resources>

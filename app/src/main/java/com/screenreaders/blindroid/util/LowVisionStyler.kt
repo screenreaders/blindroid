@@ -10,6 +10,7 @@ import androidx.annotation.ColorInt
 import com.screenreaders.blindroid.R
 import com.screenreaders.blindroid.data.Prefs
 
+@Suppress("DEPRECATION")
 object LowVisionStyler {
     const val STYLE_DEFAULT = 0
     const val STYLE_DARK = 1

@@ -15,6 +15,7 @@ import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.util.QuietHours
 
+@Suppress("DEPRECATION")
 class BlindroidInCallService : InCallService() {
     private lateinit var announcer: CallAnnouncer
     private lateinit var proximityController: ProximitySpeakerController

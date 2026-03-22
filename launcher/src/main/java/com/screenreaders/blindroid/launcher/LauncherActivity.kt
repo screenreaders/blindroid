@@ -66,6 +66,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+@Suppress("DEPRECATION")
 class LauncherActivity : AppCompatActivity() {
     private lateinit var searchInput: EditText
     private lateinit var searchRow: LinearLayout
