@@ -12,7 +12,7 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Clone repo locally into `external/soft-braille-keyboard`
 - [x] Create `braillekeyboard` module inside Blindroid using Soft Braille sources
 - [x] Integrate liblouis native translator + tables
-- [ ] Validate table mappings against liblouis tables (locale/grade)
+- [x] Validate table file mappings against bundled liblouis assets
 - [ ] Build module and document steps
 - [x] Update target/compile SDK to latest Android (16)
 - [x] Update IME manifest/service configuration for modern Android
