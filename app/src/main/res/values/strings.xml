@@ -526,6 +526,7 @@
     <string name="crash_report_device_info">Dołącz dane urządzenia (model/CPU/RAM)</string>
     <string name="diagnostics_enable">Tryb diagnostyczny (log zdarzeń)</string>
     <string name="diagnostics_title">Log diagnostyczny</string>
+    <string name="braille_diagnostics_shortcut">Diagnostyka klawiatury brajlowskiej</string>
     <string name="diagnostics_empty">Brak zdarzeń</string>
     <string name="diagnostics_refresh">Odśwież</string>
     <string name="diagnostics_share">Udostępnij log</string>

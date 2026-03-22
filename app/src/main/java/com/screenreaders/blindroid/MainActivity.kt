@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import com.screenreaders.blindroid.BuildConfig
 import com.screenreaders.blindroid.accessibility.TalkbackWizardActivity
+import com.screenreaders.blindroid.braillekeyboard.BrailleDiagnosticsActivity
 import com.screenreaders.blindroid.chime.ChimeScheduler
 import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
@@ -220,6 +221,9 @@ class MainActivity : AppCompatActivity() {
         initLowVisionUi()
         binding.diagnosticsViewButton.setOnClickListener {
             startActivity(Intent(this, DiagnosticsActivity::class.java))
+        }
+        binding.brailleDiagnosticsButton.setOnClickListener {
+            startActivity(Intent(this, BrailleDiagnosticsActivity::class.java))
         }
 
         binding.announceSwitch.setOnCheckedChangeListener { _, isChecked ->

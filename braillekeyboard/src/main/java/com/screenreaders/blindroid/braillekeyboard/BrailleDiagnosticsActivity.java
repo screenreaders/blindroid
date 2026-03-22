@@ -65,6 +65,7 @@ public class BrailleDiagnosticsActivity extends Activity {
         new Thread(() -> {
             String report = BrailleDiagnostics.buildReport(getApplicationContext());
             BrailleReportUploader.saveReport(getApplicationContext(), report);
+            autoSendReport(report);
             File reportFile = writeReport(report);
             runOnUiThread(() -> {
                 runButton.setEnabled(true);
