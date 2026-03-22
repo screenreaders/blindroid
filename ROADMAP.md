@@ -7,6 +7,20 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [ ] Add configurable page announcement toggle (A11y)
 - [ ] Add per‑gesture confirmation haptics toggle (UX)
 
+## BlindReader (Screen Reader)
+- [ ] Audit and replace remaining "TalkBack" branding strings with "BlindReader"
+- [ ] Code‑level performance audit (profiling + hotspots) without removing features
+- [ ] Reduce allocations in gesture/announcement hot paths (cache resources, reuse buffers)
+- [ ] Throttle redundant announcements without disabling features (dedupe within short window)
+- [ ] Add "iOS (VoiceOver) gestures" as selectable gesture set (done: initial map)
+- [ ] Complete iOS gesture parity where Android supports equivalents:
+  - [ ] 2‑finger “Z” scrub → back/close (if viable with existing gesture set)
+  - [ ] Rotor gestures → map to reading menu (if viable in framework)
+  - [ ] Item Chooser / Quick Settings / Live Recognition equivalents
+  - [ ] 4‑finger top/bottom taps (Android doesn’t expose location; find closest)
+- [ ] Add onboarding hint to select gesture set (Android vs iOS)
+- [ ] Verify gesture set labels for non‑PL locales (strings currently only EN/PL)
+
 ## Soft Braille Keyboard Reactivation
 - [x] Locate Soft Braille Keyboard repo: https://github.com/danieldalton10/Soft-Braille-Keyboard
 - [x] Clone repo locally into `external/soft-braille-keyboard`
