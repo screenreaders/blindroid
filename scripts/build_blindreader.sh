@@ -14,15 +14,22 @@ if [ ! -d "$JDK_DIR" ]; then
 fi
 
 GRADLE_VERSION=7.6.4
-TMP_DIR="$(mktemp -d)"
+CACHE_DIR="${HOME}/.cache/blindroid"
+GRADLE_ZIP="${CACHE_DIR}/gradle-${GRADLE_VERSION}-bin.zip"
+GRADLE_DIR="${CACHE_DIR}/gradle-${GRADLE_VERSION}"
 
 echo "sdk.dir=$SDK_DIR" > external/talkback/local.properties
 
-curl -L "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -o "$TMP_DIR/gradle.zip"
-unzip -q -d "$TMP_DIR" "$TMP_DIR/gradle.zip"
+mkdir -p "$CACHE_DIR"
+if [ ! -f "$GRADLE_ZIP" ]; then
+  curl -L "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -o "$GRADLE_ZIP"
+fi
+if [ ! -d "$GRADLE_DIR" ]; then
+  unzip -q -d "$CACHE_DIR" "$GRADLE_ZIP"
+fi
 
 JAVA_HOME="$JDK_DIR" PATH="$JDK_DIR/bin:$PATH" \
-  "$TMP_DIR/gradle-${GRADLE_VERSION}/bin/gradle" -p external/talkback assembleDebug
+  "$GRADLE_DIR/bin/gradle" -p external/talkback assemblePhoneDebug
 
 APK_PATH="external/talkback/build/outputs/apk/phone/debug/talkback-phone-debug.apk"
 ASSET_PATH="app/src/main/assets/blindreader.apk"

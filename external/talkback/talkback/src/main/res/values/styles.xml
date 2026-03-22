@@ -24,10 +24,16 @@
     <item name="selector_icon_stroke_color">@color/quick_menu_overlay_finger_swipe_icon_stroke_color</item>
   </style>
 
+  <!-- Alias for legacy theme name referenced by TalkBack sources -->
+  <style name="TalkbackBaseTheme" parent="BlindReaderBaseTheme" />
+
   <!--The theme is for preference settings-->
   <style name="BlindReaderSettings" parent="Theme.MaterialComponents.Light.Bridge">
     <item name="colorAccent">@color/colorAccent</item>
   </style>
+
+  <!-- Alias for legacy manifest theme name -->
+  <style name="TalkBackSettings" parent="BlindReaderSettings" />
 
   <!-- Keymap -->
   <style name="KeymapTheme" parent="BlindReaderSettings">
