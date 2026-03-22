@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="talkback_on">เปิด TalkBack</string>
-  <string name="talkback_disabled">ปิด TalkBack อยู่</string>
+  <string name="talkback_on">เปิด BlindReader</string>
+  <string name="talkback_disabled">ปิด BlindReader อยู่</string>
   <string name="notification_type_beginning_of_field">จุดเริ่มต้นของช่อง</string>
   <string name="notification_type_end_of_field">จุดสิ้นสุดของช่อง</string>
   <string name="notification_type_selection_mode_on">โหมดการเลือกเปิดอยู่</string>

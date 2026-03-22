@@ -17,7 +17,7 @@
 <resources>
 
   <!--The basic theme for service-->
-  <style name="TalkbackBaseTheme" parent="Theme.AppCompat.Light" >
+  <style name="BlindReaderBaseTheme" parent="Theme.AppCompat.Light" >
     <item name="selector_background_color">@color/quick_menu_overlay_background_color</item>
     <item name="selector_background_stroke_color">@color/quick_menu_overlay_stroke_color</item>
     <item name="selector_icon_color">@color/quick_menu_overlay_finger_swipe_icon_color</item>
@@ -25,12 +25,12 @@
   </style>
 
   <!--The theme is for preference settings-->
-  <style name="TalkBackSettings" parent="Theme.MaterialComponents.Light.Bridge">
+  <style name="BlindReaderSettings" parent="Theme.MaterialComponents.Light.Bridge">
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
   <!-- Keymap -->
-  <style name="KeymapTheme" parent="TalkBackSettings">
+  <style name="KeymapTheme" parent="BlindReaderSettings">
     <item name="materialButtonStyle">@style/KeymapButtonStyle</item>
   </style>
 
@@ -41,7 +41,7 @@
   </style>
 
   <!-- Label manager -->
-  <style name="LabelManagerTheme" parent="TalkBackSettings">
+  <style name="LabelManagerTheme" parent="BlindReaderSettings">
     <item name="materialButtonStyle">@style/LabelButtonStyle</item>
   </style>
 

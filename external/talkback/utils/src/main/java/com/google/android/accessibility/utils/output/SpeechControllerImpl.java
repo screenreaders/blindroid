@@ -99,6 +99,9 @@ public class SpeechControllerImpl implements SpeechController {
   /** The number of recently-spoken items to keep in history. */
   private static final int MAX_HISTORY_ITEMS = 10;
 
+  /** Suppress immediate duplicate utterances within this window (ms). */
+  private static final int FAST_DUPLICATE_SUPPRESSION_MS = 250;
+
   /**
    * The delay, in ms, after which a recently-spoken item will be considered for duplicate removal
    * in the event that a new feedback item has the flag {@link FeedbackItem#FLAG_SKIP_DUPLICATE}.
@@ -133,6 +136,9 @@ public class SpeechControllerImpl implements SpeechController {
   private final HashMap<Integer, UtteranceRangeStartCallback> mUtteranceRangeStartCallbacks =
       new HashMap<>();
 
+  /** Reusable holder to avoid allocations in the speak() hot path. */
+  private final int[] expectedUtteranceIdHolder = new int[1];
+
   /** The list of items to be spoken. */
   private ArrayList<FeedbackItem> feedbackQueue = new ArrayList<>();
 
@@ -144,6 +150,10 @@ public class SpeechControllerImpl implements SpeechController {
 
   /** The list of recently-spoken items. */
   private final LinkedList<FeedbackItem> mFeedbackHistory = new LinkedList<>();
+
+  /** Tracks the most recent spoken item for fast duplicate suppression. */
+  private @Nullable FeedbackItem lastSpokenItem;
+  private long lastSpokenUptimeMs;
 
   /** Talkback speech deliberately saved by a caller of saveLastUtterance() */
   private @Nullable FeedbackItem savedUtterance;
@@ -1088,7 +1098,7 @@ public class SpeechControllerImpl implements SpeechController {
       return;
     }
 
-    int[] expectedUtteranceId = new int[1];
+    int[] expectedUtteranceId = expectedUtteranceIdHolder;
     expectedUtteranceId[0] = -1;
     if (item.hasFlag(FeedbackItem.FLAG_SKIP_DUPLICATE)
         && hasItemOnQueueOrSpeaking(item, expectedUtteranceId)) {
@@ -2194,7 +2204,15 @@ public class SpeechControllerImpl implements SpeechController {
    */
   private boolean speakNextItem() {
     final FeedbackItem previousItem = mCurrentFeedbackItem;
-    final FeedbackItem nextItem = (feedbackQueue.isEmpty() ? null : feedbackQueue.remove(0));
+    FeedbackItem nextItem = null;
+    while (nextItem == null && !feedbackQueue.isEmpty()) {
+      FeedbackItem candidate = feedbackQueue.remove(0);
+      if (shouldSuppressFastDuplicate(candidate)) {
+        notifyItemInterrupted(candidate);
+      } else {
+        nextItem = candidate;
+      }
+    }
 
     mCurrentFeedbackItem = nextItem;
 
@@ -2207,9 +2225,26 @@ public class SpeechControllerImpl implements SpeechController {
       handleSpeechStarting();
     }
 
+    lastSpokenItem = nextItem;
+    lastSpokenUptimeMs = SystemClock.uptimeMillis();
+
     currentFragmentIterator = new FeedbackFragmentsIterator(nextItem.getFragments().iterator());
     speakNextItemInternal(nextItem);
     return true;
+  }
+
+  private boolean shouldSuppressFastDuplicate(FeedbackItem candidate) {
+    if (candidate == null || lastSpokenItem == null) {
+      return false;
+    }
+    if (candidate.hasFlag(FeedbackItem.FLAG_FORCE_FEEDBACK)) {
+      return false;
+    }
+    long now = SystemClock.uptimeMillis();
+    if (now - lastSpokenUptimeMs > FAST_DUPLICATE_SUPPRESSION_MS) {
+      return false;
+    }
+    return feedbackTextEquals(candidate, lastSpokenItem);
   }
 
   public void dump(Logger dumpLogger) {

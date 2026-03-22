@@ -49,6 +49,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * The class provides gesture and action mappings in TalkBack for quick access. It updates cache
@@ -82,6 +83,12 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
 
   // The number of gesture sets to be provided.
   private static final int NUMBER_OF_GESTURE_SET = 2;
+
+  // Cache action strings per Resources to avoid repeated linear scans.
+  private static final Object ACTION_CACHE_LOCK = new Object();
+  private static final WeakHashMap<android.content.res.Resources, Map<String, String>>
+      ACTION_STRING_CACHE = new WeakHashMap<>();
+  private static volatile int ACTION_CACHE_CONFIG_HASH = 0;
 
   /** List all of supported gestures. */
   private enum TalkBackGesture {
@@ -615,6 +622,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor, R.string.pref_shortcut_left_key, R.string.shortcut_value_previous, iosGestureSet);
     applyDefaultIfAbsent(
+        editor, R.string.pref_shortcut_left_and_right_key, R.string.shortcut_value_back, iosGestureSet);
+    applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_1finger_2tap_key,
         R.string.shortcut_value_perform_click_action,
@@ -654,6 +663,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         editor,
         R.string.pref_shortcut_2finger_2tap_key,
         R.string.shortcut_value_media_control,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_2tap_hold_key,
+        R.string.shortcut_value_show_custom_actions,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
@@ -706,6 +720,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         editor,
         R.string.pref_shortcut_4finger_2tap_key,
         R.string.shortcut_value_last_in_screen,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_2tap_hold_key,
+        R.string.shortcut_value_quick_settings,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
@@ -1053,13 +1072,36 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
 
   /** Returns the corresponding action resource Id of action key. */
   public static String getActionString(Context context, String actionKeyString) {
-    for (TalkbackAction action : TalkbackAction.values()) {
-      if (action.actionKeyResId != -1
-          && TextUtils.equals(context.getString(action.actionKeyResId), actionKeyString)) {
-        return context.getString(action.actionNameResId);
+    if (TextUtils.isEmpty(actionKeyString)) {
+      return context.getString(R.string.shortcut_unassigned);
+    }
+
+    final android.content.res.Resources res = context.getResources();
+    final int configHash = res.getConfiguration().hashCode();
+    Map<String, String> cache;
+    synchronized (ACTION_CACHE_LOCK) {
+      if (ACTION_CACHE_CONFIG_HASH != configHash) {
+        ACTION_STRING_CACHE.clear();
+        ACTION_CACHE_CONFIG_HASH = configHash;
+      }
+      cache = ACTION_STRING_CACHE.get(res);
+      if (cache == null) {
+        cache = buildActionStringCache(res);
+        ACTION_STRING_CACHE.put(res, cache);
       }
     }
-    return context.getString(R.string.shortcut_unassigned);
+    String cached = cache.get(actionKeyString);
+    return cached != null ? cached : context.getString(R.string.shortcut_unassigned);
+  }
+
+  private static Map<String, String> buildActionStringCache(android.content.res.Resources res) {
+    HashMap<String, String> map = new HashMap<>();
+    for (TalkbackAction action : TalkbackAction.values()) {
+      if (action.actionKeyResId != -1) {
+        map.put(res.getString(action.actionKeyResId), res.getString(action.actionNameResId));
+      }
+    }
+    return map;
   }
 
   /** Returns if the device supports multiple gesture set. */

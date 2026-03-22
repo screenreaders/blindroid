@@ -52,8 +52,8 @@
   <string name="voice_commands_dictate">Айтып жаздыруу</string>
   <string name="voice_commands_write">Жазуу</string>
   <string name="voice_commands_Spell">Жазылышы</string>
-  <string name="voice_commands_talkback_settings">TalkBack параметрлери</string>
-  <string name="voice_commands_talkback_setting">TalkBack параметрлери</string>
+  <string name="voice_commands_talkback_settings">BlindReader параметрлери</string>
+  <string name="voice_commands_talkback_setting">BlindReader параметрлери</string>
   <string name="voice_commands_screen_search">Экранда издөө</string>
   <string name="voice_commands_search_on_screen">Экранда издөө</string>
   <string name="voice_commands_copy">@android:string/copy</string>
@@ -100,7 +100,7 @@
   <string name="voice_commands_help_title">Үн буйругу жөнүндө жалпы маалымат</string>
   <string name="voice_commands_help_description">Үн буйруктарын колдонуу үчүн экранды оңго жана өйдө сүрүңүз. Үн буйруктарынын тизмесин көрүү үчүн каалаган убакта \"%1$s\" же \"Эмне десем болот?\" деп айтыңыз.</string>
   <string name="voice_commands_help_hint">Буйруктар туура иштеши үчүн аларды төмөнкү экрандарда көрсөтүлгөндөй так айтыңыз.</string>
-  <string name="voice_command_screen_locked_hint">Экран кулпуланып турганда үн буйруктары жеткиликсиз. Анын ордуна TalkBack менюсун колдонуу үчүн %1$s.</string>
+  <string name="voice_command_screen_locked_hint">Экран кулпуланып турганда үн буйруктары жеткиликсиз. Анын ордуна BlindReader менюсун колдонуу үчүн %1$s.</string>
   <string name="voice_commands_during_setup_hint">Тууралап жатканда үн буйруктары иштебейт.</string>
   <string name="voice_commands_help_reading_controls_title">@string/shortcut_title_reading_control</string>
   <string name="voice_commands_help_reading_controls_description">Учурда экрандагы нерселердин кантип окуларын өзгөртөсүз</string>
@@ -131,7 +131,7 @@
   <string name="voice_commands_help_overview_description">Акыркы колдонмолорду көрүү</string>
   <string name="voice_commands_help_assistant_description">Google Жардамчыны ачуу</string>
   <string name="voice_commands_help_other_commands_title">Башка үй буйруктары</string>
-  <string name="voice_commands_help_other_commands_description">TalkBack параметрлерине өтүү, экранды жашыруу, аракеттерди көрүү, жеке энбелгилерди кошуу жана башкалар</string>
+  <string name="voice_commands_help_other_commands_description">BlindReader параметрлерине өтүү, экранды жашыруу, аракеттерди көрүү, жеке энбелгилерди кошуу жана башкалар</string>
   <string name="voice_commands_help_label">[Тапшырууну] белгилөө</string>
   <string name="voice_commands_help_hide_screen_description">Коомдук жайларда экраныңыз башкаларга көрүнбөй тургандай кылып, дисплейди жашыруу</string>
   <string name="voice_commands_help_show_screen_description">Экраныңызды жашыргандан кийин, аны кадимки абалга кайтарыңыз</string>

@@ -89,7 +89,7 @@ public final class FeatureFlagReader {
   }
 
   public static boolean removeUnnecessarySpans(Context context) {
-    return false;
+    return true;
   }
 
   public static boolean enableAggressiveChunking(Context context) {

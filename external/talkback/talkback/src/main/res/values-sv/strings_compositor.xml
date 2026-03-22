@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="talkback_on">TalkBack på</string>
-  <string name="talkback_disabled">TalkBack av</string>
+  <string name="talkback_on">BlindReader på</string>
+  <string name="talkback_disabled">BlindReader av</string>
   <string name="notification_type_beginning_of_field">Början av fältet</string>
   <string name="notification_type_end_of_field">Slutet av fältet</string>
   <string name="notification_type_selection_mode_on">Markeringsläget har aktiverats</string>

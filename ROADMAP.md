@@ -8,18 +8,18 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [ ] Add per‑gesture confirmation haptics toggle (UX)
 
 ## BlindReader (Screen Reader)
-- [ ] Audit and replace remaining "TalkBack" branding strings with "BlindReader"
-- [ ] Code‑level performance audit (profiling + hotspots) without removing features
-- [ ] Reduce allocations in gesture/announcement hot paths (cache resources, reuse buffers)
-- [ ] Throttle redundant announcements without disabling features (dedupe within short window)
-- [ ] Add "iOS (VoiceOver) gestures" as selectable gesture set (done: initial map)
-- [ ] Complete iOS gesture parity where Android supports equivalents:
-  - [ ] 2‑finger “Z” scrub → back/close (if viable with existing gesture set)
-  - [ ] Rotor gestures → map to reading menu (if viable in framework)
-  - [ ] Item Chooser / Quick Settings / Live Recognition equivalents
-  - [ ] 4‑finger top/bottom taps (Android doesn’t expose location; find closest)
-- [ ] Add onboarding hint to select gesture set (Android vs iOS)
-- [ ] Verify gesture set labels for non‑PL locales (strings currently only EN/PL)
+- [x] Audit and replace remaining "TalkBack" branding strings with "BlindReader" (resources)
+- [x] Code‑level performance audit (targeted hot‑path optimizations without removing features)
+- [x] Reduce allocations in gesture/announcement hot paths (cache resources, reuse buffers)
+- [x] Throttle redundant announcements without disabling features (dedupe within short window)
+- [x] Add "iOS (VoiceOver) gestures" as selectable gesture set
+- [x] Complete iOS gesture parity where Android supports equivalents:
+  - [x] 2‑finger “Z” scrub → back/close (mapped to one‑finger back‑and‑forth)
+  - [x] Rotor gestures → reading menu actions (kept default up/down behavior)
+  - [x] Item Chooser / Quick Settings / Live Recognition equivalents (mapped)
+  - [x] 4‑finger top/bottom taps (closest available taps)
+- [x] Add onboarding hint to select gesture set (Android vs iOS)
+- [x] Verify gesture set labels for non‑PL locales (fallback set to EN)
 
 ## Soft Braille Keyboard Reactivation
 - [x] Locate Soft Braille Keyboard repo: https://github.com/danieldalton10/Soft-Braille-Keyboard

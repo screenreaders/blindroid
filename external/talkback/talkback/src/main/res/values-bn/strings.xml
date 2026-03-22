@@ -112,8 +112,8 @@
   <string name="pref_verbosity_preset_entry_low">কম</string>
   <string name="pref_verbosity_category_preset_settings_title">ভার্বোসিটির বিশদ বিবরণ</string>
   <string name="pref_verbosity_preset_change">%1$s ভার্বাসিটি এখন সক্রিয় আছে।</string>
-  <string name="pref_gesture_set_entry_0">0</string>
-  <string name="pref_gesture_set_entry_1">1</string>
+  <string name="pref_gesture_set_entry_0">Android (standard)</string>
+  <string name="pref_gesture_set_entry_1">iOS (VoiceOver)</string>
   <string name="keycombo_keymap_changes_instruction_title">আপনার \'টকব্যাক\' কীম্যাপ আপডেট করুন</string>
   <string name="keycombo_keymap_changes_activity_content">কীবোর্ড শর্টকাট ব্যবহার করে যেতে, সেটিংসে গিয়ে ক্লাসিক কী-ম্যাপ থেকে ডিফল্ট কী-ম্যাপে বদল করুন।
       &lt;br&gt;&lt;br&gt;&lt;b&gt;ডিফল্ট কী-ম্যাপে আলাদা কী আছে?&lt;/b&gt;
@@ -123,7 +123,7 @@
   <string name="keycombo_go_to_settings">সেটিংসে যান</string>
   <string name="keycombo_keymap_changes_notifications_content">ক্লাসিক কী-ম্যাপ সরিয়ে দেওয়ার জন্য \'টকব্যাক\' ফিচার রেডি হচ্ছে। কীবোর্ড শর্টকাট ব্যবহার করা চালিয়ে যেতে, ডিফল্ট কী-ম্যাপে পরিবর্তন করে নিন।</string>
   <string name="keycombo_keymap_changes_notifications_action">আরও জানুন</string>
-  <string name="keycombo_update_modifier_key_warning_title">আপনার TalkBack পরিবর্তক কী আপডেট করুন</string>
+  <string name="keycombo_update_modifier_key_warning_title">আপনার BlindReader পরিবর্তক কী আপডেট করুন</string>
   <string name="keycombo_update_modifier_keys_warning_negative_button">এখন নয়</string>
   <string name="keycombo_warning_content_description">আপনার পরিবর্তক কী সম্পর্কিত আরও তথ্য</string>
   <string name="keycombo_warning_dialog_title">আপনার পরিবর্তক \'কী\' আপডেট করুন</string>
@@ -321,7 +321,7 @@
   <string name="summary_pref_gemini_support_disabled">Gemini বন্ধ করা আছে</string>
   <string name="screen_dimmed">স্ক্রিন লুকানো হয়েছে</string>
   <string name="screen_brightness_restored">স্ক্রিন দেখানো হচ্ছে</string>
-  <string name="screen_dimming_exit_instruction_line1">TalkBack অ্যাক্সেসযোগ্যতা পরিষেবা চালু আছে বলে স্ক্রিন লুকানো হয়েছে</string>
+  <string name="screen_dimming_exit_instruction_line1">BlindReader অ্যাক্সেসযোগ্যতা পরিষেবা চালু আছে বলে স্ক্রিন লুকানো হয়েছে</string>
   <string name="screen_dimming_exit_instruction_line2">এটি পরিবর্তন করতে, \'টকব্যাক\' মেনু খুলতে %1$s, \"%2$s\" বেছে নিন, তারপর ডবল ট্যাপ করুন।</string>
   <string name="shortcut_title_basic_navigation">প্রাথমিক নেভিগেশন</string>
   <string name="shortcut_title_system_actions">সিস্টেম সংক্রান্ত অ্যাকশন</string>
@@ -559,7 +559,7 @@
   <string name="pref_node_desc_order_entry_name_role_state_pos">নাম, প্রকার, রাজ্য</string>
   <string name="pref_time_feedback_format_entries_12_hour">১২ ঘণ্টা</string>
   <string name="pref_time_feedback_format_entries_24_hour">২৪ ঘণ্টা</string>
-  <string name="notification_title_talkback_gestures_changed">TalkBack ইঙ্গিতগুলি পরিবর্তন করা হয়েছে</string>
+  <string name="notification_title_talkback_gestures_changed">BlindReader ইঙ্গিতগুলি পরিবর্তন করা হয়েছে</string>
   <string name="notification_message_talkback_gestures_changed">অ্যাক্সেসযোগ্যতার অঙ্গভঙ্গিগুলিতে হওয়া পরিবর্তনগুলি পর্যালোচনা করতে আলতো চাপুন</string>
   <string name="always_show_warning_checkbox">সবসময় এই সতর্কবার্তা দেখান</string>
   <string name="label_dialog_title_add">লেবেল যোগ করুন</string>
@@ -569,7 +569,7 @@
   <string name="label_dialog_text">এই এলিমেন্টের লেবেল হিসেবে ব্যবহারের জন্য কিছু লিখুন\nঅভ্যন্তরীণ দৃশ্যের নাম: %1$s</string>
   <string name="label_dialog_edit_hint">লেবেলের পাঠ্য</string>
   <string name="label_import">কাস্টম লেবেলগুলি আমদানি করুন</string>
-  <string name="label_import_dialog_title">TalkBack এ কাস্টম লেবেলগুলি আমদানি করুন</string>
+  <string name="label_import_dialog_title">BlindReader এ কাস্টম লেবেলগুলি আমদানি করুন</string>
   <string name="label_import_dialog_message">কোনো দ্বন্দ্বের ক্ষেত্রে আপনি বিদ্যমান লেবেলগুলি ওভাররাইড করতে বা এড়িয়ে যেতে চান কি না নির্দিষ্ট করুন</string>
   <string name="label_import_dialog_skip">এড়িয়ে যান</string>
   <string name="label_import_dialog_override">ওভাররাইড করুন</string>
@@ -584,14 +584,14 @@
   <string name="no_apps_to_export_labels">লেবেলগুলি রপ্তানি করার মত কোনো অ্যাপ্লিকেশান খুঁজে পাওয়া যায় নি।</string>
   <string name="label_choose_app_to_import">লেবেলগুলি আমদানি করার জন্য অ্যাপ্লিকেশান বেছে নিন:</string>
   <string name="label_choose_app_to_export">লেবেলগুলি রপ্তানি করতে অ্যাপ্লিকেশান চয়্ন করুন:</string>
-  <string name="talkback_gesture_change_details">TalkBack এর এই সংস্করণে ডিফল্ট অ্যাক্সেসযোগ্যতা অঙ্গভঙ্গিগুলিতে করা পরিবর্তনগুলি রয়েছে৷ এইসব অঙ্গভঙ্গির সঙ্গে থাকা ক্রিয়াগুলি TalkBack সেটিংসে কাস্টমাইজ করা যেতে পারে৷ যখন স্পর্শের মাধ্যমে অন্বেষণ সক্ষমিত তখন আপনি কিছু ক্রিয়ার কার্য সম্পাদন করতে আপনি নিম্নলিখিত অঙ্গভঙ্গিগুলি ব্যবহার করতে পারেন৷\n\n%1$s</string>
+  <string name="talkback_gesture_change_details">BlindReader এর এই সংস্করণে ডিফল্ট অ্যাক্সেসযোগ্যতা অঙ্গভঙ্গিগুলিতে করা পরিবর্তনগুলি রয়েছে৷ এইসব অঙ্গভঙ্গির সঙ্গে থাকা ক্রিয়াগুলি BlindReader সেটিংসে কাস্টমাইজ করা যেতে পারে৷ যখন স্পর্শের মাধ্যমে অন্বেষণ সক্ষমিত তখন আপনি কিছু ক্রিয়ার কার্য সম্পাদন করতে আপনি নিম্নলিখিত অঙ্গভঙ্গিগুলি ব্যবহার করতে পারেন৷\n\n%1$s</string>
   <string name="dialog_title_dim_screen">স্ক্রিন লুকাবেন?</string>
   <string name="dialog_message_dim_screen">এটি গোপনীয়তার বিষয়টি উন্নত করার জন্য প্রদর্শনটি বন্ধ করে দেয় যাতে সর্বজনীন জায়গায় আপনার স্ক্রিনটি বাকিরা যেন দেখতে না পায়</string>
   <string name="talkback_built_in_gesture_change_details">\'টকব্যাক\' ফিচারের এই ভার্সনে ডিফল্ট অ্যাক্সেসিবিলিটি জেসচারে করা পরিবর্তনগুলি অন্তর্ভুক্ত রয়েছে।\n\nউপরে-তারপর-নিচে যাওয়ার জেসচার আপনাকে স্ক্রিনের প্রথম আইটেমে যেতে দেবে এবং নিচে-তারপর-উপরে যাওয়ার জেসচারের মাধ্যমে আপনি শেষ আইটেমে যেতে পারবেন।\n\nএকটি আইটেমে ফোকাস করে ও তারপরে টকব্যাক কন্টেক্সট মেনু থেকে গ্র্যানুলারিটি বেছে নিয়ে রিডিং গ্র্যানুলারিটি এখন পরিবর্তন করা যেতে পারে।\n\nআপনি \'টকব্যাক\' সেটিংসে এইসব জেসচারের মাধ্যমে করা অ্যাকশনগুলি পরিবর্তন করতে পারেন।</string>
   <string name="default_action_changed_details">মিডিয়া প্লে ও পজ করতে, আপনি এখন দুই আঙুলের মাধ্যমে ডবল ট্যাপ করে ধরে রাখতে পারবেন।\n\nঅন্য জেসচারও পরিবর্তন করা হয়েছে।</string>
   <string name="talkback_built_in_gesture_open_url">আরও জানতে ফোনে ওয়েবসাইট খুলুন</string>
-  <string name="talkback_built_in_gesture_change_details_45">TalkBack এর এই ভার্সনটিতে ডিফল্ট অ্যাক্সেসযোগ্যতার ইঙ্গিততে পরিবর্তনগুলি অন্তর্ভুক্ত আছে। \n\nউপরের ইঙ্গিতটি এখন পূর্ববর্তী নেভিগেশন সেটিং এ সরানো হয়েছে এবং নীচের ইঙ্গিত এখন পরবর্তী নেভিগেশন সেটিং এ সরানো হয়েছে।</string>
-  <string name="side_tap_shortcuts_removed_details">নির্ভরযোগ্যতা সংক্রান্ত সমস্যার জন্য, TalkBack থেকে এই সেটিংস সরিয়ে দেওয়া হয়েছে:\n• ডিভাইস জেসচারের পাশে ট্যাপ করুন\n• ক্রমাগত পড়া চালিয়ে যাওয়ার জন্য ডিভাইসটি ঝাঁকান</string>
+  <string name="talkback_built_in_gesture_change_details_45">BlindReader এর এই ভার্সনটিতে ডিফল্ট অ্যাক্সেসযোগ্যতার ইঙ্গিততে পরিবর্তনগুলি অন্তর্ভুক্ত আছে। \n\nউপরের ইঙ্গিতটি এখন পূর্ববর্তী নেভিগেশন সেটিং এ সরানো হয়েছে এবং নীচের ইঙ্গিত এখন পরবর্তী নেভিগেশন সেটিং এ সরানো হয়েছে।</string>
+  <string name="side_tap_shortcuts_removed_details">নির্ভরযোগ্যতা সংক্রান্ত সমস্যার জন্য, BlindReader থেকে এই সেটিংস সরিয়ে দেওয়া হয়েছে:\n• ডিভাইস জেসচারের পাশে ট্যাপ করুন\n• ক্রমাগত পড়া চালিয়ে যাওয়ার জন্য ডিভাইসটি ঝাঁকান</string>
   <string name="button_accept_changed_gesture_mappings">অঙ্গভঙ্গিগুলি স্বীকার করুন</string>
   <string name="button_customize_gesture_mappings">অঙ্গভঙ্গিগুলি কাস্টমাইজ করুন</string>
   <string name="button_disable_all_events">সবগুলি অক্ষম করুন</string>
@@ -685,7 +685,7 @@
   <string name="dialog_message_pass_through_mode">চাইম শুনলে, আপনি একটি সিস্টেম জেসচার ব্যবহার করতে পারবেন যা টকব্যাক ফিচারে ব্যবহার করা যায় না। এটিকে \'পাস-থ্রু\' জেসচার বলে।</string>
   <string name="hint_type_search_term">সার্চে ব্যবহৃত শব্দ</string>
   <string name="talkback_notification_channel_name">টকব্যাক</string>
-  <string name="talkback_notification_channel_description">TalkBack-এর বিজ্ঞপ্তি চ্যানেল</string>
+  <string name="talkback_notification_channel_description">BlindReader-এর বিজ্ঞপ্তি চ্যানেল</string>
   <string name="pref_selector_summary">সেটিং বেছে নিতে %1$s। তারপরে সেটিং অ্যাডজাস্ট করতে %2$s।</string>
   <string name="speech_rate_change">স্পিচ রেট %1$d%%</string>
   <string name="punctuation_state">যতিচিহ্ন %1$s</string>
@@ -735,7 +735,7 @@
   <string name="onboarding_detailed_image_descriptions_content_2_tts">আপনি যেকোনও সময় \'টকব্যাক সেটিংস &gt; ছবি ও আইকনের বিবরণ\' বিকল্প থেকে এই সেটিং পরিবর্তন করতে পারবেন।</string>
   <string name="onboarding_detailed_image_descriptions_content_3">মনে রাখবেন: এই ফিচার কিছু ভাষায় কাজ নাও করতে পারে।</string>
   <string name="onboarding_detailed_image_descriptions_content_4">কোন ভাষা কাজ করে সেই সম্পর্কে আরও জানুন</string>
-  <string name="onboarding_detailed_image_descriptions_image_content_description">স্যাম্পেল ছবি। বিবরণ সবিস্তারে শুনতে TalkBack মেনু খুলে \"ছবির বর্ণনা দিন\" বিকল্প বেছে নিন।</string>
+  <string name="onboarding_detailed_image_descriptions_image_content_description">স্যাম্পেল ছবি। বিবরণ সবিস্তারে শুনতে BlindReader মেনু খুলে \"ছবির বর্ণনা দিন\" বিকল্প বেছে নিন।</string>
   <string name="onboarding_google_disability_support_title">Google অক্ষমতায় সহায়তা টিম</string>
   <string name="onboarding_google_disability_support_content">Google অক্ষমতায় সহায়তা টিম টকব্যাক সহ, অ্যাক্সেসিবিলিটি ফিচার ও সহায়ক প্রযুক্তি নিয়ে সাহায্য করার জন্য উপলভ্য আছে।\n\nউপলভ্য থাকা যোগাযোগের পদ্ধতি বা কোনও সমস্যা সম্পর্কে রিপোর্ট করতে, \'টকব্যাক সেটিংস &gt; Google অক্ষমতায় সহায়তা টিমের সাথে যোগাযোগ করুন\' বিকল্পে যান।</string>
   <string name="onboarding_google_disability_support_content_tts">Google অক্ষমতায় সহায়তা টিম টকব্যাক সহ, অ্যাক্সেসিবিলিটি ফিচার ও সহায়ক প্রযুক্তি নিয়ে সাহায্য করার জন্য উপলভ্য আছে।\n\nউপলভ্য থাকা যোগাযোগের পদ্ধতি বা কোনও সমস্যা সম্পর্কে রিপোর্ট করতে, টকব্যাক সেটিংসে গিয়ে তারপর Google অক্ষমতায় সহায়তা টিমের সাথে যোগাযোগ করুন</string>
@@ -1010,11 +1010,11 @@
   <string name="delete_dialog_negative_button_text">বাতিল করুন</string>
   <string name="delete_icon_description_hint">আইকনের বর্ণনা মুছে ফেলা হয়েছে</string>
   <string name="delete_image_description_hint">ছবির বর্ণনা মুছে ফেলা হয়েছে</string>
-  <string name="gemini_enable_dialog_title">TalkBack-এ Gemini ব্যবহার করুন</string>
+  <string name="gemini_enable_dialog_title">BlindReader-এ Gemini ব্যবহার করুন</string>
   <string name="gemini_disable_dialog_message">Gemini-এর মাধ্যমে স্ক্রিনে থাকা কন্টেন্ট বোঝা</string>
   <string name="disable_gemini_dialog_subtext">Gemini-এর মাধ্যমে স্ক্রিনে থাকা কন্টেন্ট বোঝার সুবিধা পেতে চালু করুন</string>
   <string name="ai_services_update_dialog_title">Update %1$s to describe images</string>
-  <string name="ai_services_update_dialog_message">To hear image descriptions, get the latest version of %1$s  from Google Play.\n\nOnce download is complete, come back to TalkBack settings and turn on automatic image descriptions again.</string>
+  <string name="ai_services_update_dialog_message">To hear image descriptions, get the latest version of %1$s  from Google Play.\n\nOnce download is complete, come back to BlindReader settings and turn on automatic image descriptions again.</string>
   <string name="ai_services_update_dialog_button_text">Go to Google Play</string>
   <string name="aicore_app_name">AICore</string>
   <string name="astrea_app_name">Private Compute Service</string>

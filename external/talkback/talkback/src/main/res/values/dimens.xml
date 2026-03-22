@@ -159,6 +159,6 @@
     <dimen name="label_manager_button_height">56dp</dimen>
     <dimen name="label_dialog_padding">24dp</dimen>
 
-    <!-- Talkback keyboard -->
+    <!-- BlindReader keyboard -->
     <dimen name="two_target_min_width">72dp</dimen>
 </resources>

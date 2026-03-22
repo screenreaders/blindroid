@@ -1134,7 +1134,7 @@
     <string name="pref_deprecated_shortcut_down_and_left_default">@string/shortcut_value_back</string>
     <string name="pref_deprecated_shortcut_down_and_right_default">@string/shortcut_value_overview</string>
 
-    <!-- Old defaults for up/down gestures before TalkBack 4.5 -->
+    <!-- Old defaults for up/down gestures before BlindReader 4.5 -->
     <string name="pref_deprecated_shortcut_up">@string/shortcut_value_previous</string>
     <string name="pref_deprecated_shortcut_down">@string/shortcut_value_next</string>
 
@@ -1187,7 +1187,7 @@
     <item name="web_control" type="id"/>
     <item name="web_landmark" type="id"/>
 
-    <!-- Talkback Context Menu preferences -->
+    <!-- BlindReader Context Menu preferences -->
     <string name="pref_show_context_menu_custom_action_setting_key" translatable="false">pref_custom_action_menu_setting_key</string>
     <string name="pref_show_context_menu_editing_setting_key" translatable="false">pref_editing_menu_setting_key</string>
     <string name="pref_show_context_menu_links_setting_key" translatable="false">pref_links_menu_setting_key</string>
@@ -1267,7 +1267,7 @@
     <string name="pref_update_welcome_14_2_shown_key" translatable="false">pref_update_welcome_14_2_shown_key</string>
     <string name="pref_update_welcome_15_0_shown_key" translatable="false">pref_update_welcome_15_0_shown_key  </string>
 
-  <!-- Record the window animation scale before disabling animation. TalkBack will restore the value to animation before shut down. -->
+  <!-- Record the window animation scale before disabling animation. BlindReader will restore the value to animation before shut down. -->
     <string name="pref_previous_global_window_animation_scale_key" translatable="false">pref_previous_global_window_animation_scale_key</string>
     <string name="pref_window_animation_scale_default">1.0</string>
 
@@ -1296,10 +1296,10 @@
     <string name="pref_image_description_uninstalled_request">pref_image_description_uninstalled_request</string>
     <string name="pref_image_description_uninstalled_deny">pref_image_description_uninstalled_deny</string>
 
-    <!-- TalkBack user usage. -->
+    <!-- BlindReader user usage. -->
     <string name="talkback_enabled_count">talkback_enabled_count</string>
     <string name="talkback_off_timestamp">talkback_off_timestamp</string>
-    <!-- TalkBack user has switched and navigated the training pages. -->
+    <!-- BlindReader user has switched and navigated the training pages. -->
     <string name="has_training_page_switched">has_training_page_switched</string>
 
     <!-- Default volume preference. -->

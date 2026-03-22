@@ -491,6 +491,7 @@
     <string name="talkback_open_shortcut">Ustaw skrót czytnika</string>
     <string name="talkback_refresh">Sprawdź ponownie</string>
     <string name="talkback_hint">Włącz TalkBack w ustawieniach dostępności i wróć tutaj, aby potwierdzić.</string>
+    <string name="talkback_gesture_set_hint">Jeśli znasz VoiceOver z iOS, wybierz zestaw gestów „iOS (VoiceOver)” w ustawieniach gestów.</string>
     <string name="talkback_backup_title">Zapasowy czytnik BlindReader</string>
     <string name="talkback_backup_status_on">BlindReader: włączony</string>
     <string name="talkback_backup_status_off">BlindReader: wyłączony</string>

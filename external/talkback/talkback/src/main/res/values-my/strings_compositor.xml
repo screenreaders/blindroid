@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="talkback_on">TalkBack ဖွင့်ထား</string>
-  <string name="talkback_disabled">TalkBack ပိတ်ထားပါသည်</string>
+  <string name="talkback_on">BlindReader ဖွင့်ထား</string>
+  <string name="talkback_disabled">BlindReader ပိတ်ထားပါသည်</string>
   <string name="notification_type_beginning_of_field">ဖြည့်ရန်ပုံစံ၏အစ</string>
   <string name="notification_type_end_of_field">ဖြည့်ရန်ပုံစံ၏ အဆုံး</string>
   <string name="notification_type_selection_mode_on">ရွေးချယ်တဲ့မုဒ်ကို ဖွင့်ထားပါတယ်</string>

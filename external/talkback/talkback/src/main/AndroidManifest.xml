@@ -91,7 +91,7 @@
             android:name="com.google.android.accessibility.talkback.ipc.IpcService"
             android:enabled="true"
             android:exported="false"
-            android:label="TalkBackIpcService" />
+            android:label="BlindReaderIpcService" />
 
         <!-- TalkBack Preferences -->
         <activity
