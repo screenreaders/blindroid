@@ -2,6 +2,8 @@ package com.screenreaders.blindroid.launcher
 
 import android.content.Context
 import android.util.TypedValue
+import org.json.JSONArray
+import org.json.JSONObject
 import kotlin.math.roundToInt
 
 object LauncherPrefs {
@@ -56,7 +58,10 @@ object LauncherPrefs {
     private const val KEY_SHOW_VOICE_SEARCH = "show_voice_search"
     private const val KEY_SHOW_RESULTS_COUNT = "show_results_count"
     private const val KEY_SHOW_PAGE_INDICATOR = "show_page_indicator"
+    private const val KEY_SHOW_PAGE_NAV = "show_page_nav_buttons"
+    private const val KEY_SHOW_SCREEN_SHORTCUTS = "show_screen_shortcuts"
     private const val KEY_DEFAULT_HOME_PAGE = "default_home_page"
+    private const val KEY_SCREEN_SHORTCUTS = "screen_shortcuts"
     private const val KEY_ALL_APPS_COLUMNS = "all_apps_columns"
     private const val KEY_ALL_APPS_DEFAULT_TAB = "all_apps_default_tab"
     private const val KEY_SUGGESTED_COUNT = "suggested_count"
@@ -479,6 +484,58 @@ object LauncherPrefs {
 
     fun setPageIndicatorShown(context: Context, show: Boolean) {
         prefs(context).edit().putBoolean(KEY_SHOW_PAGE_INDICATOR, show).apply()
+    }
+
+    fun isPageNavShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_PAGE_NAV, true)
+
+    fun setPageNavShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_PAGE_NAV, show).apply()
+    }
+
+    fun isScreenShortcutsShown(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SHOW_SCREEN_SHORTCUTS, true)
+
+    fun setScreenShortcutsShown(context: Context, show: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SHOW_SCREEN_SHORTCUTS, show).apply()
+    }
+
+    fun getScreenShortcuts(context: Context): List<ScreenShortcut> {
+        val raw = prefs(context).getString(KEY_SCREEN_SHORTCUTS, null) ?: return emptyList()
+        return try {
+            val array = JSONArray(raw)
+            val result = mutableListOf<ScreenShortcut>()
+            for (i in 0 until array.length()) {
+                val obj = array.optJSONObject(i) ?: continue
+                val page = obj.optInt("page", -1)
+                val label = obj.optString("label", "").trim()
+                if (page > 0 && label.isNotBlank()) {
+                    result.add(ScreenShortcut(page, label))
+                }
+            }
+            result
+        } catch (_: Exception) {
+            emptyList()
+        }
+    }
+
+    fun setScreenShortcuts(context: Context, shortcuts: List<ScreenShortcut>) {
+        val array = JSONArray()
+        shortcuts.forEach { item ->
+            val obj = JSONObject()
+            obj.put("page", item.page)
+            obj.put("label", item.label)
+            array.put(obj)
+        }
+        prefs(context).edit().putString(KEY_SCREEN_SHORTCUTS, array.toString()).apply()
+    }
+
+    fun trimScreenShortcuts(context: Context, pageCount: Int): Boolean {
+        val current = getScreenShortcuts(context)
+        val filtered = current.filter { it.page in 1..pageCount }
+        if (filtered.size == current.size) return false
+        setScreenShortcuts(context, filtered)
+        return true
     }
 
     fun getDefaultHomePage(context: Context): Int =

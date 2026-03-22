@@ -77,6 +77,10 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var simpleFavoritesLabel: TextView
     private lateinit var simpleFavoritesGrid: RecyclerView
     private lateinit var pageIndicator: LinearLayout
+    private lateinit var pageNavRow: LinearLayout
+    private lateinit var prevPageButton: Button
+    private lateinit var nextPageButton: Button
+    private lateinit var screenShortcutRow: RecyclerView
     private lateinit var gestureDetector: GestureDetector
     private var twoFingerActive = false
     private var twoFingerStartX = 0f
@@ -94,6 +98,7 @@ class LauncherActivity : AppCompatActivity() {
     private lateinit var homeAdapter: HomePagerAdapter
     private lateinit var hotseatAdapter: HomeItemAdapter
     private lateinit var simpleFavoritesAdapter: AppAdapter
+    private lateinit var screenShortcutAdapter: ScreenShortcutAdapter
     private var hotseatTouchHelper: ItemTouchHelper? = null
 
     private var allApps: List<AppEntry> = emptyList()
@@ -218,6 +223,10 @@ class LauncherActivity : AppCompatActivity() {
         simpleFavoritesLabel = findViewById(R.id.simpleFavoritesLabel)
         simpleFavoritesGrid = findViewById(R.id.simpleFavoritesGrid)
         pageIndicator = findViewById(R.id.pageIndicator)
+        pageNavRow = findViewById(R.id.pageNavRow)
+        prevPageButton = findViewById(R.id.prevPageButton)
+        nextPageButton = findViewById(R.id.nextPageButton)
+        screenShortcutRow = findViewById(R.id.screenShortcutRow)
         soundFeedback = LauncherSoundFeedback(this)
         lastCustomVersion = LauncherStore.getCustomVersion(this)
         lastIconPackVersion = LauncherStore.getIconPackVersion(this)
@@ -265,6 +274,7 @@ class LauncherActivity : AppCompatActivity() {
         homePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 updatePageIndicator()
+                updatePageNavButtons()
                 val feedEnabled = LauncherPrefs.isFeedEnabled(this@LauncherActivity) &&
                     !LauncherPrefs.isSuperSimpleEnabled(this@LauncherActivity)
                 homeAdapter.setFeedVisible(feedEnabled && position == 0)
@@ -298,6 +308,17 @@ class LauncherActivity : AppCompatActivity() {
         )
         simpleFavoritesGrid.layoutManager = GridLayoutManager(this, LauncherPrefs.getSimpleFavoritesConfig(this, 0).columns)
         simpleFavoritesGrid.adapter = simpleFavoritesAdapter
+
+        screenShortcutAdapter = ScreenShortcutAdapter(
+            mutableListOf(),
+            LauncherPrefs.getThemeColors(this),
+            ::onScreenShortcutClick
+        )
+        screenShortcutRow.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        screenShortcutRow.adapter = screenShortcutAdapter
+
+        prevPageButton.setOnClickListener { goToPrevPage() }
+        nextPageButton.setOnClickListener { goToNextPage() }
 
         allAppsButton.setOnClickListener {
             soundFeedback?.playAction(LauncherPrefs.ACTION_OPEN_ALL_APPS)
@@ -441,6 +462,7 @@ class LauncherActivity : AppCompatActivity() {
                     updateSimpleFavorites()
                 }
                 updatePageIndicator()
+                updateScreenShortcuts()
                 applyDefaultHomePage()
             }
         }
@@ -604,9 +626,12 @@ class LauncherActivity : AppCompatActivity() {
         ThemeUtils.tintButton(widgetsButton, colors, true)
         ThemeUtils.tintButton(settingsButton, colors, false)
         ThemeUtils.tintButton(voiceButton, colors, true)
+        ThemeUtils.tintButton(prevPageButton, colors, true)
+        ThemeUtils.tintButton(nextPageButton, colors, true)
         simpleFavoritesLabel.setTextColor(colors.text)
         ThemeUtils.applySurface(searchRow, colors)
         ThemeUtils.applySurface(pageIndicator, colors)
+        ThemeUtils.applySurface(pageNavRow, colors)
         ThemeUtils.applySurface(hotseatRow, colors)
         ThemeUtils.applySurface(simpleFavoritesGrid, colors)
         (allAppsButton.parent as? View)?.let { ThemeUtils.applySurface(it, colors) }
@@ -617,6 +642,8 @@ class LauncherActivity : AppCompatActivity() {
         homeAdapter.setFeedVisible(feedEnabled && homePager.currentItem == 0)
         homePager.isUserInputEnabled = homeAdapter.itemCount > 1
         updatePageIndicator()
+        screenShortcutAdapter.updateColors(colors)
+        updateScreenShortcuts()
     }
 
     private fun applyPageTransformer() {
@@ -2036,6 +2063,28 @@ class LauncherActivity : AppCompatActivity() {
         updatePageIndicatorProgress(homePager.currentItem, 0f)
     }
 
+    private fun updateScreenShortcuts() {
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        val pageCount = LauncherPrefs.getPageCount(this)
+        if (pageCount > 0) {
+            LauncherPrefs.trimScreenShortcuts(this, pageCount)
+        }
+        val shortcuts = LauncherPrefs.getScreenShortcuts(this)
+        screenShortcutAdapter.submit(shortcuts)
+
+        val totalPages = pageCount + if (feedEnabled) 1 else 0
+        val showNavButtons = LauncherPrefs.isPageNavShown(this) && !simple && totalPages > 1
+        val showShortcuts = LauncherPrefs.isScreenShortcutsShown(this) &&
+            !simple && pageCount > 1 && shortcuts.isNotEmpty()
+
+        prevPageButton.visibility = if (showNavButtons) View.VISIBLE else View.GONE
+        nextPageButton.visibility = if (showNavButtons) View.VISIBLE else View.GONE
+        screenShortcutRow.visibility = if (showShortcuts) View.VISIBLE else View.GONE
+        pageNavRow.visibility = if (showNavButtons || showShortcuts) View.VISIBLE else View.GONE
+        updatePageNavButtons()
+    }
+
     private fun applyDefaultHomePage() {
         if (pages.isEmpty()) return
         val baseIndex = (LauncherPrefs.getDefaultHomePage(this) - 1).coerceIn(0, pages.lastIndex)
@@ -2110,6 +2159,23 @@ class LauncherActivity : AppCompatActivity() {
     private fun goToPrevPage() {
         val prev = (homePager.currentItem - 1).coerceAtLeast(0)
         homePager.currentItem = prev
+    }
+
+    private fun updatePageNavButtons() {
+        if (prevPageButton.visibility != View.VISIBLE && nextPageButton.visibility != View.VISIBLE) return
+        val count = homeAdapter.itemCount
+        prevPageButton.isEnabled = homePager.currentItem > 0
+        nextPageButton.isEnabled = homePager.currentItem < count - 1
+    }
+
+    private fun onScreenShortcutClick(shortcut: ScreenShortcut) {
+        goToHomePage(shortcut.page)
+    }
+
+    private fun goToHomePage(page: Int) {
+        val feedOffset = if (LauncherPrefs.isFeedEnabled(this) && !LauncherPrefs.isSuperSimpleEnabled(this)) 1 else 0
+        val target = (page - 1 + feedOffset).coerceIn(0, homeAdapter.itemCount - 1)
+        homePager.setCurrentItem(target, true)
     }
 
     private fun currentHomePageIndex(): Int {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/launcher_screen_shortcut_name" />
+
+    <EditText
+        android:id="@+id/shortcutNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/launcher_screen_shortcut_name_hint"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/launcher_screen_shortcut_page" />
+
+    <Spinner
+        android:id="@+id/shortcutPageSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

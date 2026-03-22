@@ -611,6 +611,25 @@
             android:layout_height="wrap_content"
             android:text="@string/launcher_settings_show_page_indicator" />
 
+        <Switch
+            android:id="@+id/showPageNavButtonsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_page_nav" />
+
+        <Switch
+            android:id="@+id/showScreenShortcutsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_show_screen_shortcuts" />
+
+        <Button
+            android:id="@+id/manageScreenShortcutsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_settings_manage_screen_shortcuts" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

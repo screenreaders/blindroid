@@ -1,13 +1,13 @@
 {
-  "tag_name": "v097",
-  "name": "v097",
-  "body": "Performance audit: reuse announcers and lazy TTS initialization.",
+  "tag_name": "v098",
+  "name": "v098",
+  "body": "Launcher: screen nav buttons and named page shortcuts.",
   "assets": [
     {
-      "name": "blindroid-097.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-097.apk",
-      "sha256": "92577404c957f3bbc58ed28ff7f9e592be959c8a35e5092cda314d23aeaf1c61",
-      "size": 68905060
+      "name": "blindroid-098.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-098.apk",
+      "sha256": "7bc7975af793a0d798a5ff6935a5d362849279e0e04f55aeae7a93843ec950af",
+      "size": 68947460
     }
   ]
 }

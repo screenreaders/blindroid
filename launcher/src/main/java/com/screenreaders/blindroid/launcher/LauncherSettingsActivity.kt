@@ -24,6 +24,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var homeEditLockSwitch: Switch
     private lateinit var hideHomeLabelsSwitch: Switch
     private lateinit var showPageIndicatorSwitch: Switch
+    private lateinit var showPageNavButtonsSwitch: Switch
+    private lateinit var showScreenShortcutsSwitch: Switch
+    private lateinit var manageScreenShortcutsButton: Button
     private lateinit var defaultHomePageSpinner: Spinner
     private lateinit var resetLayoutButton: Button
     private lateinit var clearFavoritesButton: Button
@@ -164,6 +167,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         homeEditLockSwitch = findViewById(R.id.homeEditLockSwitch)
         hideHomeLabelsSwitch = findViewById(R.id.hideHomeLabelsSwitch)
         showPageIndicatorSwitch = findViewById(R.id.showPageIndicatorSwitch)
+        showPageNavButtonsSwitch = findViewById(R.id.showPageNavButtonsSwitch)
+        showScreenShortcutsSwitch = findViewById(R.id.showScreenShortcutsSwitch)
+        manageScreenShortcutsButton = findViewById(R.id.manageScreenShortcutsButton)
         defaultHomePageSpinner = findViewById(R.id.defaultHomePageSpinner)
         resetLayoutButton = findViewById(R.id.resetLayoutButton)
         clearFavoritesButton = findViewById(R.id.clearFavoritesButton)
@@ -309,6 +315,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         homeEditLockSwitch.isChecked = LauncherPrefs.isHomeEditLocked(this)
         hideHomeLabelsSwitch.isChecked = LauncherPrefs.isHomeLabelsHidden(this)
         showPageIndicatorSwitch.isChecked = LauncherPrefs.isPageIndicatorShown(this)
+        showPageNavButtonsSwitch.isChecked = LauncherPrefs.isPageNavShown(this)
+        showScreenShortcutsSwitch.isChecked = LauncherPrefs.isScreenShortcutsShown(this)
         bindDefaultHomePage()
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
@@ -657,6 +665,21 @@ class LauncherSettingsActivity : AppCompatActivity() {
             toastSaved()
         }
 
+        showPageNavButtonsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setPageNavShown(this, isChecked)
+            toastSaved()
+        }
+
+        showScreenShortcutsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setScreenShortcutsShown(this, isChecked)
+            manageScreenShortcutsButton.isEnabled = isChecked && showScreenShortcutsSwitch.isEnabled
+            toastSaved()
+        }
+
+        manageScreenShortcutsButton.setOnClickListener {
+            openScreenShortcutsManager()
+        }
+
         hideDockLabelsSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setDockLabelsHidden(this, isChecked)
             toastSaved()
@@ -733,6 +756,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
             LauncherPrefs.setFeedEnabled(this, isChecked)
             feedModeSpinner.isEnabled = isChecked && !superSimpleSwitch.isChecked
             updateFeedAutoOpenState()
+            updatePageDependentState(LauncherPrefs.getPageCount(this))
             toastSaved()
         }
 
@@ -1590,14 +1614,114 @@ class LauncherSettingsActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun openScreenShortcutsManager() {
+        val pageCount = LauncherPrefs.getPageCount(this)
+        val shortcuts = LauncherPrefs.getScreenShortcuts(this)
+        if (shortcuts.isEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.launcher_screen_shortcuts_title)
+                .setMessage(R.string.launcher_screen_shortcuts_empty)
+                .setPositiveButton(R.string.launcher_screen_shortcuts_add) { _, _ ->
+                    showAddScreenShortcutDialog(pageCount)
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+            return
+        }
+        val items = shortcuts.map {
+            getString(R.string.launcher_screen_shortcut_item_format, it.label, it.page)
+        }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_title)
+            .setMessage(R.string.launcher_screen_shortcuts_tap_remove)
+            .setItems(items) { _, index ->
+                confirmRemoveScreenShortcut(shortcuts, index)
+            }
+            .setPositiveButton(R.string.launcher_screen_shortcuts_add) { _, _ ->
+                showAddScreenShortcutDialog(pageCount)
+            }
+            .setNeutralButton(R.string.launcher_screen_shortcuts_clear) { _, _ ->
+                LauncherPrefs.setScreenShortcuts(this, emptyList())
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun confirmRemoveScreenShortcut(shortcuts: List<ScreenShortcut>, index: Int) {
+        val item = shortcuts.getOrNull(index) ?: return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_remove_title)
+            .setMessage(getString(R.string.launcher_screen_shortcuts_remove_message, item.label))
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val updated = shortcuts.toMutableList()
+                updated.removeAt(index)
+                LauncherPrefs.setScreenShortcuts(this, updated)
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun showAddScreenShortcutDialog(pageCount: Int) {
+        if (pageCount <= 0) return
+        val view = layoutInflater.inflate(R.layout.dialog_screen_shortcut_add, null)
+        val nameInput = view.findViewById<EditText>(R.id.shortcutNameInput)
+        val pageSpinner = view.findViewById<Spinner>(R.id.shortcutPageSpinner)
+        val pageLabels = (1..pageCount).map {
+            getString(R.string.launcher_screen_shortcut_page_value, it)
+        }
+        pageSpinner.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            pageLabels
+        )
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_screen_shortcuts_add)
+            .setView(view)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val name = nameInput.text?.toString()?.trim().orEmpty()
+                val page = pageSpinner.selectedItemPosition + 1
+                if (name.isBlank()) {
+                    Toast.makeText(this, R.string.launcher_screen_shortcut_name_missing, Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                val trimmed = if (name.length > 30) name.substring(0, 30) else name
+                val updated = LauncherPrefs.getScreenShortcuts(this).toMutableList()
+                updated.add(ScreenShortcut(page = page, label = trimmed))
+                LauncherPrefs.setScreenShortcuts(this, updated)
+                toastSaved()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
     private fun updatePageDependentState(pageCount: Int) {
+        val simple = superSimpleSwitch.isChecked
         val multiple = pageCount > 1
-        showPageIndicatorSwitch.isEnabled = !superSimpleSwitch.isChecked && multiple
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        val totalPages = pageCount + if (feedEnabled) 1 else 0
+        LauncherPrefs.trimScreenShortcuts(this, pageCount)
+
+        showPageIndicatorSwitch.isEnabled = !simple && multiple
         if (!multiple && showPageIndicatorSwitch.isChecked) {
             showPageIndicatorSwitch.isChecked = false
             LauncherPrefs.setPageIndicatorShown(this, false)
         }
-        defaultHomePageSpinner.isEnabled = !superSimpleSwitch.isChecked && multiple
+        showPageNavButtonsSwitch.isEnabled = !simple && totalPages > 1
+        if (!showPageNavButtonsSwitch.isEnabled && showPageNavButtonsSwitch.isChecked) {
+            showPageNavButtonsSwitch.isChecked = false
+            LauncherPrefs.setPageNavShown(this, false)
+        }
+
+        showScreenShortcutsSwitch.isEnabled = !simple && multiple
+        if (!showScreenShortcutsSwitch.isEnabled && showScreenShortcutsSwitch.isChecked) {
+            showScreenShortcutsSwitch.isChecked = false
+            LauncherPrefs.setScreenShortcutsShown(this, false)
+        }
+        manageScreenShortcutsButton.isEnabled = showScreenShortcutsSwitch.isEnabled
+
+        defaultHomePageSpinner.isEnabled = !simple && multiple
     }
 
     private val backupLauncherFile = registerForActivityResult(
