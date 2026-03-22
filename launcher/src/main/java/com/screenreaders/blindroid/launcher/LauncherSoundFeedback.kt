@@ -27,7 +27,7 @@ class LauncherSoundFeedback(private val context: Context) {
         hapticTap()
     }
 
-    fun playAction(action: Int) {
+    fun playAction(action: Int, fromGesture: Boolean = false) {
         if (LauncherPrefs.isSoundFeedbackEnabled(context) &&
             LauncherPrefs.getSoundFeedbackVolume(context) > 0
         ) {
@@ -35,7 +35,7 @@ class LauncherSoundFeedback(private val context: Context) {
             val sequence = selectActionSequence(action)
             playSequence(sequence)
         }
-        hapticAction(action)
+        hapticAction(action, fromGesture)
     }
 
     private fun playSequence(sequence: List<ToneSpec>) {
@@ -53,8 +53,9 @@ class LauncherSoundFeedback(private val context: Context) {
         vibrateOnce(20L)
     }
 
-    private fun hapticAction(action: Int) {
+    private fun hapticAction(action: Int, fromGesture: Boolean) {
         if (!LauncherPrefs.isHapticFeedbackEnabled(context)) return
+        if (fromGesture && !LauncherPrefs.isGestureHapticEnabled(context)) return
         val pulses = when (action) {
             LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE -> listOf(30L, 60L, 30L)
             LauncherPrefs.ACTION_TOGGLE_DOCK -> listOf(25L, 40L, 25L)

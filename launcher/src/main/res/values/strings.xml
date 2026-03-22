@@ -143,6 +143,7 @@
     <string name="launcher_settings_hide_home_labels">Ukryj etykiety na pulpicie</string>
     <string name="launcher_settings_show_page_indicator">Pokaż wskaźnik stron</string>
     <string name="launcher_settings_show_page_nav">Pokaż przyciski poprzedni/następny</string>
+    <string name="launcher_settings_page_announce">Odczytuj zmianę strony</string>
     <string name="launcher_settings_show_screen_shortcuts">Pokaż skróty ekranów</string>
     <string name="launcher_settings_manage_screen_shortcuts">Zarządzaj skrótami ekranów</string>
     <string name="launcher_settings_layout_presets">Presety układu</string>
@@ -479,6 +480,7 @@
     <string name="launcher_settings_sound_volume">Głośność dźwięków launchera</string>
     <string name="launcher_settings_sound_scheme">Schemat dźwięków</string>
     <string name="launcher_settings_haptic_feedback">Wibracje przy akcjach</string>
+    <string name="launcher_settings_gesture_haptics">Wibracje potwierdzające gesty</string>
     <string name="launcher_settings_haptic_strength">Siła wibracji</string>
     <string name="launcher_haptic_light">Lekka</string>
     <string name="launcher_haptic_medium">Średnia</string>

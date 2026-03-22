@@ -184,6 +184,8 @@ class LauncherActivity : AppCompatActivity() {
     private var cachedBatteryLevel = -1
     private var cachedBatteryLevelTs = 0L
     private val appLabelCache = LruCache<String, String>(128)
+    private var lastPageAnnounceIndex = -1
+    private var lastPageAnnounceMs = 0L
     private var timeReceiverRegistered = false
     private val timeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -2106,8 +2108,20 @@ class LauncherActivity : AppCompatActivity() {
     private fun announceCurrentPage() {
         val manager = getSystemService(AccessibilityManager::class.java)
         if (manager?.isEnabled != true) return
+        if (!LauncherPrefs.isPageAnnouncementEnabled(this)) return
         val simple = LauncherPrefs.isSuperSimpleEnabled(this)
         val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        val pageKey = if (feedEnabled && homePager.currentItem == 0) {
+            -1
+        } else {
+            currentHomePageIndex()
+        }
+        val now = SystemClock.uptimeMillis()
+        if (pageKey == lastPageAnnounceIndex && now - lastPageAnnounceMs < 700L) {
+            return
+        }
+        lastPageAnnounceIndex = pageKey
+        lastPageAnnounceMs = now
         if (feedEnabled && homePager.currentItem == 0) {
             homePager.announceForAccessibility(getString(R.string.launcher_page_feed))
             return
@@ -2849,7 +2863,7 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.ACTION_OPEN_SOUND_SETTINGS -> openSoundSettings()
         }
         if (action != LauncherPrefs.ACTION_NONE) {
-            soundFeedback?.playAction(action)
+            soundFeedback?.playAction(action, fromGesture = true)
         }
     }
 

@@ -120,7 +120,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var soundVolumeValue: TextView
     private lateinit var soundSchemeSpinner: Spinner
     private lateinit var hapticFeedbackSwitch: Switch
+    private lateinit var gestureHapticSwitch: Switch
     private lateinit var hapticStrengthSpinner: Spinner
+    private lateinit var pageAnnouncementSwitch: Switch
     private lateinit var saveProfileButton: Button
     private lateinit var loadProfileButton: Button
     private lateinit var deleteProfileButton: Button
@@ -180,6 +182,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         showPageIndicatorSwitch = findViewById(R.id.showPageIndicatorSwitch)
         showPageNavButtonsSwitch = findViewById(R.id.showPageNavButtonsSwitch)
         showScreenShortcutsSwitch = findViewById(R.id.showScreenShortcutsSwitch)
+        pageAnnouncementSwitch = findViewById(R.id.pageAnnouncementSwitch)
         manageScreenShortcutsButton = findViewById(R.id.manageScreenShortcutsButton)
         defaultHomePageSpinner = findViewById(R.id.defaultHomePageSpinner)
         resetLayoutButton = findViewById(R.id.resetLayoutButton)
@@ -273,6 +276,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundVolumeValue = findViewById(R.id.soundVolumeValue)
         soundSchemeSpinner = findViewById(R.id.soundSchemeSpinner)
         hapticFeedbackSwitch = findViewById(R.id.hapticFeedbackSwitch)
+        gestureHapticSwitch = findViewById(R.id.gestureHapticSwitch)
         hapticStrengthSpinner = findViewById(R.id.hapticStrengthSpinner)
         saveProfileButton = findViewById(R.id.saveProfileButton)
         loadProfileButton = findViewById(R.id.loadProfileButton)
@@ -331,6 +335,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         showPageIndicatorSwitch.isChecked = LauncherPrefs.isPageIndicatorShown(this)
         showPageNavButtonsSwitch.isChecked = LauncherPrefs.isPageNavShown(this)
         showScreenShortcutsSwitch.isChecked = LauncherPrefs.isScreenShortcutsShown(this)
+        pageAnnouncementSwitch.isChecked = LauncherPrefs.isPageAnnouncementEnabled(this)
         bindDefaultHomePage()
         hideDockLabelsSwitch.isChecked = LauncherPrefs.isDockLabelsHidden(this)
         superSimpleSwitch.isChecked = LauncherPrefs.isSuperSimpleEnabled(this)
@@ -412,6 +417,8 @@ class LauncherSettingsActivity : AppCompatActivity() {
         bindSoundVolume()
         bindSoundScheme()
         hapticFeedbackSwitch.isChecked = LauncherPrefs.isHapticFeedbackEnabled(this)
+        gestureHapticSwitch.isChecked = LauncherPrefs.isGestureHapticEnabled(this)
+        gestureHapticSwitch.isEnabled = hapticFeedbackSwitch.isChecked
         bindHapticStrength()
         bindGestureSpinners()
         usageStatsSwitch.isChecked = LauncherPrefs.isUsageSuggestionsEnabled(this)
@@ -693,6 +700,11 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         showPageNavButtonsSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setPageNavShown(this, isChecked)
+            toastSaved()
+        }
+
+        pageAnnouncementSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setPageAnnouncementEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -1068,6 +1080,12 @@ class LauncherSettingsActivity : AppCompatActivity() {
         hapticFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
             LauncherPrefs.setHapticFeedbackEnabled(this, isChecked)
             hapticStrengthSpinner.isEnabled = isChecked
+            gestureHapticSwitch.isEnabled = isChecked
+            toastSaved()
+        }
+
+        gestureHapticSwitch.setOnCheckedChangeListener { _, isChecked ->
+            LauncherPrefs.setGestureHapticEnabled(this, isChecked)
             toastSaved()
         }
 
@@ -1742,6 +1760,12 @@ class LauncherSettingsActivity : AppCompatActivity() {
         if (!showPageNavButtonsSwitch.isEnabled && showPageNavButtonsSwitch.isChecked) {
             showPageNavButtonsSwitch.isChecked = false
             LauncherPrefs.setPageNavShown(this, false)
+        }
+
+        pageAnnouncementSwitch.isEnabled = !simple && totalPages > 1
+        if (!pageAnnouncementSwitch.isEnabled && pageAnnouncementSwitch.isChecked) {
+            pageAnnouncementSwitch.isChecked = false
+            LauncherPrefs.setPageAnnouncementEnabled(this, false)
         }
 
         showScreenShortcutsSwitch.isEnabled = !simple && multiple

@@ -60,6 +60,7 @@ object LauncherPrefs {
     private const val KEY_SHOW_PAGE_INDICATOR = "show_page_indicator"
     private const val KEY_SHOW_PAGE_NAV = "show_page_nav_buttons"
     private const val KEY_SHOW_SCREEN_SHORTCUTS = "show_screen_shortcuts"
+    private const val KEY_PAGE_ANNOUNCE = "page_announce"
     private const val KEY_DEFAULT_HOME_PAGE = "default_home_page"
     private const val KEY_SCREEN_SHORTCUTS = "screen_shortcuts"
     private const val KEY_ALL_APPS_COLUMNS = "all_apps_columns"
@@ -96,6 +97,7 @@ object LauncherPrefs {
     private const val KEY_SOUND_FEEDBACK_SCHEME = "sound_feedback_scheme"
     private const val KEY_HAPTIC_FEEDBACK = "haptic_feedback"
     private const val KEY_HAPTIC_STRENGTH = "haptic_strength"
+    private const val KEY_GESTURE_HAPTIC = "gesture_haptic"
     private const val KEY_GN_LAYOUT = "gn_layout"
     private const val KEY_WALLPAPER_PARALLAX = "wallpaper_parallax"
     private const val KEY_PAGE_ANIMATION = "page_animation"
@@ -499,6 +501,13 @@ object LauncherPrefs {
         prefs(context).edit().putBoolean(KEY_SHOW_PAGE_NAV, show).apply()
     }
 
+    fun isPageAnnouncementEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_PAGE_ANNOUNCE, true)
+
+    fun setPageAnnouncementEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_PAGE_ANNOUNCE, enabled).apply()
+    }
+
     fun isScreenShortcutsShown(context: Context): Boolean =
         prefs(context).getBoolean(KEY_SHOW_SCREEN_SHORTCUTS, true)
 
@@ -808,6 +817,13 @@ object LauncherPrefs {
 
     fun setHapticFeedbackEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_HAPTIC_FEEDBACK, enabled).apply()
+    }
+
+    fun isGestureHapticEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_GESTURE_HAPTIC, true)
+
+    fun setGestureHapticEnabled(context: Context, enabled: Boolean) {
+        prefs(context).edit().putBoolean(KEY_GESTURE_HAPTIC, enabled).apply()
     }
 
     fun getHapticStrength(context: Context): Int =

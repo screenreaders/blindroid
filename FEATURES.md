@@ -4,6 +4,8 @@
 - [x] Przyciski nawigacji stron (Poprzedni/Następny)
 - [x] Skróty do stron z nazwami i skokiem do wybranej karty
 - [x] Zarządzanie skrótami w ustawieniach launchera
+- [x] Przełącznik ogłaszania zmian stron (A11y)
+- [x] Przełącznik wibracji potwierdzających gesty
 
 ## Klawiatura brajlowska
 - [x] Moduł IME włączony w Blindroidzie

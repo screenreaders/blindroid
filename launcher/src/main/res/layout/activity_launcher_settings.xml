@@ -629,6 +629,12 @@
             android:text="@string/launcher_settings_show_page_nav" />
 
         <Switch
+            android:id="@+id/pageAnnouncementSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_page_announce" />
+
+        <Switch
             android:id="@+id/showScreenShortcutsSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -1143,6 +1149,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/launcher_settings_haptic_feedback" />
+
+        <Switch
+            android:id="@+id/gestureHapticSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_settings_gesture_haptics" />
 
         <TextView
             android:id="@+id/hapticStrengthLabel"

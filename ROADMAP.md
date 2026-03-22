@@ -3,9 +3,9 @@
 This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 
 ## Launcher Extensions (Post‑v099)
-- [ ] Review A11y announcements volume/rate with TalkBack (UX polish)
-- [ ] Add configurable page announcement toggle (A11y)
-- [ ] Add per‑gesture confirmation haptics toggle (UX)
+- [x] Review A11y announcements volume/rate with TalkBack (UX polish) — throttle duplicate page announces
+- [x] Add configurable page announcement toggle (A11y)
+- [x] Add per‑gesture confirmation haptics toggle (UX)
 
 ## BlindReader (Screen Reader)
 - [x] Audit and replace remaining "TalkBack" branding strings with "BlindReader" (resources)
@@ -27,11 +27,11 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - [x] Create `braillekeyboard` module inside Blindroid using Soft Braille sources
 - [x] Integrate liblouis native translator + tables
 - [x] Validate table file mappings against bundled liblouis assets
-- [ ] Build module and document steps
+- [x] Build module and document steps (BUILD.md)
 - [x] Update target/compile SDK to latest Android (16)
 - [x] Update IME manifest/service configuration for modern Android
-- [ ] Validate on Android 13/14/15/16 (emulators) with checklist
-- [ ] Integrate/ship inside Blindroid (module or separate app + installer flow)
+- [ ] Validate on Android 13/14/15/16 (emulators) with checklist (see VALIDATION.md)
+- [x] Integrate/ship inside Blindroid (bundled module + settings entry)
 
 ## Android IME Compatibility Checklist
 - [ ] Review Android 16 behavior changes (all apps + targeting)
@@ -53,6 +53,6 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
 - Create an input method (guide): https://developer.android.com/develop/ui/views/touch-and-input/creating-input-method
 
 ## Integrations & Delivery
-- [ ] Decide delivery: bundled IME module vs standalone APK
-- [ ] Update release pipeline to include IME APK (if standalone)
-- [ ] Add update channel entry for IME (if standalone)
+- [x] Decide delivery: bundled IME module vs standalone APK (bundled)
+- [x] Update release pipeline to include IME APK (if standalone) — N/A for bundled
+- [x] Add update channel entry for IME (if standalone) — N/A for bundled

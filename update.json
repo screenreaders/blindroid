@@ -1,13 +1,13 @@
 {
-  "tag_name": "v100",
-  "name": "v100",
-  "body": "Braille keyboard module with liblouis translation, clean build warnings.",
+  "tag_name": "v101",
+  "name": "v101",
+  "body": "Launcher A11y toggles (page announcements + gesture haptics), page announce throttle, braille build docs.",
   "assets": [
     {
-      "name": "blindroid-100.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-100.apk",
-      "sha256": "20ec2975a9145bb4bb8411d8200353c7b2747d4745d17a86ad7df2f0eac05b35",
-      "size": 62549931
+      "name": "blindroid-101.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-101.apk",
+      "sha256": "5107b9507630e42cbede36703066eb3d03d596e9fb46321e1a106390d7ae3300",
+      "size": 96470391
     }
   ]
 }
