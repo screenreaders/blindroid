@@ -1,9 +1,3 @@
-#!/bin/bash
-pushd $(dirname $0) >/dev/null
-rm tmp.att >/dev/null 2>&1
-echo "source $1.foma
-write att tmp.att
-quit" | foma &&
-/bin/python3 ../general/att2bin tmp.att ../../../data/languages/Slovak/$1.fst
-rm tmp.att >/dev/null 2>&1
-popd >/dev/null
+version https://git-lfs.github.com/spec/v1
+oid sha256:0b91290135c6ea11f4700cbdcef412df1eb404303dfd8eb8f5de98f07e0c10a4
+size 246

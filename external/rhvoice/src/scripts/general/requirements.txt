@@ -1,9 +1,3 @@
-matplotlib
-argparse
-cython
-pysoundfile
-numpy
-scipy
-webrtcvad
-pyworld
-tqdm
+version https://git-lfs.github.com/spec/v1
+oid sha256:1248ffa95038d089b26a7a2abf0c96bf1c131a626c67b07bfa73ddec6d36853c
+size 81

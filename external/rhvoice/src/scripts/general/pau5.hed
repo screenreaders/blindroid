@@ -1,2 +1,3 @@
-AT 2 6 0.2 {pau.transP}
-AT 6 2 0.2 {pau.transP}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1c0a022f9d78898e96d0106c5b4d63a47a867e70ea33e2e6805b686375b83e10
+size 48

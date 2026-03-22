@@ -1,26 +1,3 @@
-; -*- mode: Scheme -*-
-
-; Copyright (C) 2012  Olga Yakovleva <yakovleva.o.v@gmail.com>
-
-; This program is free software: you can redistribute it and/or modify
-; it under the terms of the GNU General Public License as published by
-; the Free Software Foundation, either version 3 of the License, or
-; (at your option) any later version.
-
-; This program is distributed in the hope that it will be useful,
-; but WITHOUT ANY WARRANTY; without even the implied warranty of
-; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-; GNU General Public License for more details.
-
-; You should have received a copy of the GNU General Public License
-; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-((R:Word.n.name is 0)
- ((B))
- ((R:Token.n.name is 0)
-  ((R:TokStructure.parent.parent.daughtern.name in ("," ":" ";" ")" "." "?" "!" "-" "–" "—"))
-   ((B))
-   ((R:TokStructure.parent.parent.n.daughter1.name in ("(" "¿" "¡" "-" "–" "—"))
-    ((B))
-    ((NB))))
-  ((NB))))
+version https://git-lfs.github.com/spec/v1
+oid sha256:064d71b2e552852bc30d5e9ac35687700832e37f994ce8cf4961b7177950e799
+size 1003

@@ -1,7 +1,3 @@
-#!/bin/bash
-./genunicode.py &&
-./foma2fst lseq &&
-./foma2fst tok &&
-./foma2fst downcase &&
-./foma2fst spell &&
-./foma2fst g2p
+version https://git-lfs.github.com/spec/v1
+oid sha256:5f18c6bb5a4e3e51f791df073fa7a394e631f768ca478665a8552516fd0b0ad6
+size 126

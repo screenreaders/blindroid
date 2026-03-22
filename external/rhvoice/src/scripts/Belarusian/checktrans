@@ -1,6 +1,3 @@
-#!/bin/bash
-# Source: original script from Polish sources
-#Transcription checking script:
-# Transcribes checktrans-cases.ssml, compares result with checktrans-expected-results.txt, prints found differences if any.
-pushd $(dirname $0) >/dev/null
-../../../build/windows/x86_64/utils/RHVoice-transcribe-sentences -v -b ssil "checktrans-cases.ssml" "checktrans-output.txt"
+version https://git-lfs.github.com/spec/v1
+oid sha256:a35ed8bc2ce9151bbbcf6da5544017f4634ca298286ec70f1626f11ffd663305
+size 368

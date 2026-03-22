@@ -1,33 +1,3 @@
-
-This voice is free for use for any purpose (commercial or otherwise)
-subject to the pretty light restrictions detailed below.
-
-############################################################################
-###                                                                       ##
-###                     Carnegie Mellon University                        ##
-###                         Copyright (c) 2003                            ##
-###                        All Rights Reserved.                           ##
-###                                                                       ##
-###  Permission to use, copy, modify,  and licence this software and its  ##
-###  documentation for any purpose, is hereby granted without fee,        ##
-###  subject to the following conditions:                                 ##
-###   1. The code must retain the above copyright notice, this list of    ##
-###      conditions and the following disclaimer.                         ##
-###   2. Any modifications must be clearly marked as such.                ##
-###   3. Original authors' names are not deleted.                         ##
-###                                                                       ##
-###  THE AUTHORS OF THIS WORK DISCLAIM ALL WARRANTIES WITH REGARD TO      ##
-###  THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY   ##
-###  AND FITNESS, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY         ##
-###  SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES            ##
-###  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN   ##
-###  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,          ##
-###  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF       ##
-###  THIS SOFTWARE.                                                       ##
-###                                                                       ##
-############################################################################
-###                                                                       ##
-###  See http://www.festvox.org/cmu_arctic/ for more details              ##
-###                                                                       ##
-############################################################################
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:469adc0262e10d84fb9658fa6181c883586415b5692f6bfbc2fde65dfc63f5c5
+size 2285

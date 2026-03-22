@@ -1,33 +1,3 @@
-# Copyright (C) 2017  Olga Yakovleva <yakovleva.o.v@gmail.com>
-
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 2.1 of the License, or
-# (at your option) any later version.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-define Vowel a|af|e|o|of|i|y|u|uf ; 
-
-define Stop b|d|g|gh|p|t|k|kk; 
-define Fricative v|z|zh|zhj|f|s|sh|shj|hh|h ; 
-define Sonorant m|n|ng|l|r ; 
-define Glide j|w ; 
-
-define Onset [(Stop) (Fricative) (Sonorant) (Glide)] & [?+] ; 
-
-define Consonant Stop | Fricative | Sonorant | Glide ; 
-
-define Coda Onset.r ; 
-
-define Syllabification 
-Vowel @-> ... "." || _ (Consonant) Vowel ,, 
-Vowel Coda @-> ... "." || _ Consonant+ Vowel ; 
-
-regex Syllabification ; 
+version https://git-lfs.github.com/spec/v1
+oid sha256:57b806c88992853c5dc1f07805b6702c2b8a4725a54b1465556e8130c1c63a32
+size 1177

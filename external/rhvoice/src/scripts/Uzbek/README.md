@@ -1,11 +1,3 @@
-# Uzbek language support in RHVoice
-
-This code implements text processing rules for the Uzbek language. It was created as part of the work on Sevinch, the first Uzbek voice for RHVoice.
-
-This repository contains the sourse code. You can find the compiled version [here](https://github.com/RHVoice/Uzbek-bin).
-
-## License
-
-Copyright (C) 2023 Non-Routine LLC.
-
-This code is licensed under LGPL version 2.1 or later.
+version https://git-lfs.github.com/spec/v1
+oid sha256:bbddc977d5ad2061fcc306901f1e041f536b5f2de4e2708050bb9f77f95ead33
+size 414

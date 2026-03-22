@@ -1,18 +1,3 @@
-# Copyright (C) 2022 Darko Milosevic <daremc86@gmail.com>
-
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 2.1 of the License, or
-# (at your option) any later version.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-regex 
-character:znak %%d | 
-capital:velký %%c ; 
+version https://git-lfs.github.com/spec/v1
+oid sha256:31e854abdefa249be20157ea0a3c9db15623baba3b058e2b8b1abb89cb5747e2
+size 785

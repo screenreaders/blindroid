@@ -1,31 +1,3 @@
-define UnstressedVowelPhonem [a | on | e | en | i | o | u | ih ] ;
-
-define setStress [a:a1|
-on:on1|
-e:e1|
-en:en1|
-i:i1|
-o:o1|
-u:u1|
-ih:ih1
-];
-
-define procStressG2p setStress @-> ||
-_ \UnstressedVowelPhonem+ UnstressedVowelPhonem+ .#.,
-_ \UnstressedVowelPhonem+ UnstressedVowelPhonem+ \UnstressedVowelPhonem+ .#.,
-.#. \UnstressedVowelPhonem+ _ \UnstressedVowelPhonem+ .#.;
-
-define procStressLseq setStress @-> ||
-_ \UnstressedVowelPhonem+ .#.,
-_  .#.;
-
-
-define procStress2 [a:a0|
-on:on0|
-e:e0|
-en:en0|
-i:i0|
-o:o0|
-u:u0|
-ih:ih0
-] @-> || _ ;
+version https://git-lfs.github.com/spec/v1
+oid sha256:703666ec76f3d35f3f4c2c8b7ca4b6572ad81ee9807f04c8d9b236eae2ef0d6c
+size 570

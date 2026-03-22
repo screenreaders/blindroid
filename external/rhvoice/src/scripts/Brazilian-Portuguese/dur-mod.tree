@@ -1,16 +1,3 @@
-                                        ; -*- Mode: Scheme -*-
-((utt_type is e)
- ((R:SylStructure.parent.parent.R:Phrase.parent.phrases_out is 0)
-  ((R:SylStructure.parent.ssyl_out is 0)
-   ((R:SylStructure.parent.stress is 1)
-    ((ph_vc is +)
-     ((150))
-     ((100)))
-    ((ssyl_in is 0)
-     ((100))
-     ((ph_vc is +)
-      ((150))
-      ((100)))))
-   ((100)))
-  ((100)))
- ((100)))
+version https://git-lfs.github.com/spec/v1
+oid sha256:4c99bb981ad23241a199004186be74436721119bcc5467e854b45fc7262e57ab
+size 388

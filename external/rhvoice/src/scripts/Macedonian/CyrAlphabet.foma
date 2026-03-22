@@ -1,33 +1,3 @@
-# Copyright (C) 2021 Non-Routine LLC.  <lp@louderpages.org>
-
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, version 3.0 of the License.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
-define lcCVowelLetter а|е|è|ѐ|и|ѝ|о|у|%'|’ ; 
-define ucCVowelLetter А|Е|È|Ѐ|И|Ѝ|О|У; #|%'|’ ; 
-define lcCConsonantLetter б|в|г|д|ѓ|ж|з|ѕ|ј|к|л|љ|м|н|њ|п|р|с|т|ќ|ф|х|ц|ч|џ|ш ; 
-define ucCConsonantLetter Б|В|Г|Д|Ѓ|Ж|З|Ѕ|Ј|К|Л|Љ|М|Н|Њ|П|Р|С|Т|Ќ|Ф|Х|Ц|Ч|Џ|Ш ; 
-define lcCLetter lcCVowelLetter | lcCConsonantLetter ;
-define ucCLetter ucCVowelLetter | ucCConsonantLetter ;
-define CVowelLetter lcCVowelLetter | ucCVowelLetter ; 
-define CVowelLetter lcCVowelLetter | ucCVowelLetter ; 
-define CConsonantLetter lcCConsonantLetter | ucCConsonantLetter ; 
-define CLetter  lcCLetter | ucCLetter ;
-define StressMark %` ;
-define CVowelLetter lcCVowelLetter | ucCVowelLetter ; 
-
-#define isLetter 
-# CLetter @-> ... yes || .#. _ .#. ;
-# regex isLetter ;
+version https://git-lfs.github.com/spec/v1
+oid sha256:137d6aabb7a768343c7927832f4a475cea6f8a0ce5563a2ff106bb95128560fa
+size 1481

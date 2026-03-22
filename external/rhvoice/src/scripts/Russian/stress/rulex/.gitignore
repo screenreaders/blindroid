@@ -1,4 +1,3 @@
-*.txt
-*.bin
-lexicon_rules.foma
-general_rules.foma
+version https://git-lfs.github.com/spec/v1
+oid sha256:565c5d0d9400558ed6473bfa9afda39db17dfa03b0780af5b6d6b4fb4914994e
+size 50

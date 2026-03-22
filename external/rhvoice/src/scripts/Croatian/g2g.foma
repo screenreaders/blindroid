@@ -1,4 +1,3 @@
-read spaced-text srp.txt
-define MyDict;
-
-regex MyDict;
+version https://git-lfs.github.com/spec/v1
+oid sha256:ec1a2d3b94fcc04a25d9d183960dadcfb11f8d60e0c286e431bbc0fd5105c088
+size 57

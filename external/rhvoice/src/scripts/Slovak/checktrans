@@ -1,8 +1,3 @@
-#!/bin/bash
-#Transcription checking script:
-# Transcribes checktrans-cases.ssml, compares result with checktrans-expected-results.txt, prints found differences if any.
-pushd $(dirname $0) >/dev/null
-../../../local/bin/RHVoice-transcribe-sentences checktrans-cases.ssml /dev/stdout |
-diff -b -u0 checktrans-expected-results.txt /dev/stdin &&
-echo "All $(wc -l <checktrans-expected-results.txt) tests passed." &&
-popd >/dev/null
+version https://git-lfs.github.com/spec/v1
+oid sha256:cbc9894319edb9bc2a42f0903eedf05c5875753d0b7b885afab7471a87b6fbce
+size 427
