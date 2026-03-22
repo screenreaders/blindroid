@@ -34,10 +34,13 @@ public final class BrailleDiagnostics {
 
     public static List<CheckResult> run(Context context) {
         List<CheckResult> results = new ArrayList<CheckResult>();
+        long initStart = System.nanoTime();
         LiblouisBridge.init(context);
+        long initMs = (System.nanoTime() - initStart) / 1_000_000L;
 
         boolean init = LiblouisBridge.isInitialized();
         results.add(new CheckResult("Liblouis init", init, init ? "initialized" : "not initialized"));
+        results.add(new CheckResult("Liblouis init time", true, initMs + " ms"));
 
         File tablesDir = LiblouisBridge.getTablesDir();
         boolean dirOk = tablesDir != null && tablesDir.exists() && tablesDir.isDirectory();
@@ -54,9 +57,12 @@ public final class BrailleDiagnostics {
         }
         results.add(new CheckResult("Table file", tableExists, tableExists ? "found" : "missing"));
 
+        long translateStart = System.nanoTime();
         String sample = LiblouisBridge.backTranslate("en-UEB-g1", new byte[] { 0x01 });
+        long translateMs = (System.nanoTime() - translateStart) / 1_000_000L;
         boolean translated = sample != null && sample.trim().length() > 0;
         results.add(new CheckResult("Sample translate", translated, translated ? sample : "no result"));
+        results.add(new CheckResult("Sample translate time", true, translateMs + " ms"));
 
         return results;
     }
