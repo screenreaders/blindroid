@@ -20,6 +20,7 @@ public class BrailleDiagnosticsActivity extends Activity {
     private Button runButton;
     private Button exportButton;
     private Button sendButton;
+    private volatile boolean autoSendInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class BrailleDiagnosticsActivity extends Activity {
         new Thread(() -> {
             List<BrailleDiagnostics.CheckResult> results = BrailleDiagnostics.run(getApplicationContext());
             final String text = BrailleDiagnostics.format(getApplicationContext(), results);
+            final String report = BrailleDiagnostics.buildReport(getApplicationContext());
+            BrailleReportUploader.saveReport(getApplicationContext(), report);
+            autoSendReport(report);
             runOnUiThread(() -> {
                 resultView.setText(text);
                 runButton.setEnabled(true);
@@ -60,6 +64,7 @@ public class BrailleDiagnosticsActivity extends Activity {
         resultView.setText(getString(R.string.braille_diagnostics_exporting));
         new Thread(() -> {
             String report = BrailleDiagnostics.buildReport(getApplicationContext());
+            BrailleReportUploader.saveReport(getApplicationContext(), report);
             File reportFile = writeReport(report);
             runOnUiThread(() -> {
                 runButton.setEnabled(true);
@@ -89,10 +94,21 @@ public class BrailleDiagnosticsActivity extends Activity {
         sendButton.setEnabled(false);
         resultView.setText(getString(R.string.braille_diagnostics_sending));
         final String report = BrailleDiagnostics.buildReport(getApplicationContext());
+        BrailleReportUploader.saveReport(getApplicationContext(), report);
         BrailleReportUploader.uploadAsync(getApplicationContext(), report, success -> runOnUiThread(() -> {
             runButton.setEnabled(true);
             exportButton.setEnabled(true);
             sendButton.setEnabled(true);
+            int message = success ? R.string.braille_diagnostics_send_ok : R.string.braille_diagnostics_send_fail;
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }));
+    }
+
+    private void autoSendReport(String report) {
+        if (autoSendInProgress) return;
+        autoSendInProgress = true;
+        BrailleReportUploader.uploadAsync(getApplicationContext(), report, success -> runOnUiThread(() -> {
+            autoSendInProgress = false;
             int message = success ? R.string.braille_diagnostics_send_ok : R.string.braille_diagnostics_send_fail;
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }));
