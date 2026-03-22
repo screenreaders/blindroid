@@ -136,7 +136,7 @@ class OnboardingActivity : AppCompatActivity() {
             findViewById<Button>(R.id.onboardTtsInstallButton).isEnabled = true
         } else {
             ttsStatus.text = getString(R.string.onboard_tts_status_ok, ttsEngines.size)
-            findViewById<Button>(R.id.onboardTtsInstallButton).isEnabled = !isRhvoiceCoreInstalled() || !isRhvoiceVoiceInstalled()
+            findViewById<Button>(R.id.onboardTtsInstallButton).isEnabled = false
         }
         updatesStatus.text = getString(R.string.onboard_updates_hint)
     }
@@ -228,6 +228,10 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun installRhvoiceIfNeeded() {
+        if (getTtsEngines().isNotEmpty()) {
+            openTtsSettings()
+            return
+        }
         val coreInstalled = isRhvoiceCoreInstalled()
         val voiceInstalled = isRhvoiceVoiceInstalled()
         val target = when {
