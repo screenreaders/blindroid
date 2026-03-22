@@ -28,6 +28,7 @@ public class MyTranslatorClient extends TranslatorClient {
     public MyTranslatorClient(Context context, OnInitListener onInitListener) {
         mContext = context;
         mOnInitListener = onInitListener;
+        LiblouisBridge.init(context);
         initTables(buildTables(context));
         notifyInit(SUCCESS);
     }

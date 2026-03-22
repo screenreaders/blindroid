@@ -18,7 +18,6 @@ public class TranslatorClient {
     protected OnInitListener mOnInitListener;
 
     private final List<TableInfo> tables = new ArrayList<TableInfo>();
-    private final BrailleTranslator translator = new SimpleBrailleTranslator();
 
     public TranslatorClient() {
     }
@@ -35,7 +34,7 @@ public class TranslatorClient {
     }
 
     public BrailleTranslator getTranslator(String id) {
-        return translator;
+        return new LiblouisBrailleTranslator(id);
     }
 
     public void destroy() {
