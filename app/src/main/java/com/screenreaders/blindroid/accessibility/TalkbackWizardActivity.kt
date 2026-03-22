@@ -29,6 +29,9 @@ class TalkbackWizardActivity : AppCompatActivity() {
         binding.backupSettingsButton.setOnClickListener {
             openBackupTalkBackSettings()
         }
+        binding.backupGesturesButton.setOnClickListener {
+            openBackupGestureSettings()
+        }
         binding.backupInstallButton.setOnClickListener {
             installBackupTalkBack()
         }
@@ -57,6 +60,7 @@ class TalkbackWizardActivity : AppCompatActivity() {
         }
         binding.backupStatus.text = getString(backupStatusRes)
         binding.backupSettingsButton.isEnabled = backupInstalled
+        binding.backupGesturesButton.isEnabled = backupInstalled
         binding.backupInstallButton.isEnabled = !backupInstalled && isBackupInstallerAvailable()
     }
 
@@ -82,6 +86,22 @@ class TalkbackWizardActivity : AppCompatActivity() {
             startActivity(intent)
         } catch (_: Exception) {
             openAccessibilitySettings()
+        }
+    }
+
+    private fun openBackupGestureSettings() {
+        if (!TalkbackUtils.isBackupTalkBackInstalled(this)) {
+            Toast.makeText(this, R.string.talkback_backup_status_missing, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = Intent().apply {
+            setClassName(BACKUP_TALKBACK_PACKAGE, BACKUP_TALKBACK_PREFS_ACTIVITY)
+            putExtra(EXTRA_FRAGMENT_NAME, BACKUP_GESTURE_FRAGMENT)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            openBackupTalkBackSettings()
         }
     }
 
@@ -138,6 +158,12 @@ class TalkbackWizardActivity : AppCompatActivity() {
             "android.settings.ACCESSIBILITY_DETAILS_SETTINGS"
         private const val EXTRA_ACCESSIBILITY_SERVICE_COMPONENT_NAME =
             "android.provider.extra.ACCESSIBILITY_SERVICE_COMPONENT_NAME"
+        private const val EXTRA_FRAGMENT_NAME = "FragmentName"
+        private const val BACKUP_TALKBACK_PACKAGE = "com.screenreaders.blindreader"
+        private const val BACKUP_TALKBACK_PREFS_ACTIVITY =
+            "com.android.talkback.TalkBackPreferencesActivity"
+        private const val BACKUP_GESTURE_FRAGMENT =
+            "com.google.android.accessibility.talkback.preference.base.TalkBackGestureShortcutPreferenceFragment"
         private const val BACKUP_TALKBACK_ASSET = "blindreader.apk"
         private const val APK_MIME = "application/vnd.android.package-archive"
     }

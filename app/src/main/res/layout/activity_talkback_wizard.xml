@@ -97,6 +97,13 @@
             android:text="@string/talkback_backup_open_settings" />
 
         <Button
+            android:id="@+id/backupGesturesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/talkback_backup_open_gestures" />
+
+        <Button
             android:id="@+id/talkbackRefreshButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

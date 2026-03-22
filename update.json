@@ -1,13 +1,13 @@
 {
-  "tag_name": "v103",
-  "name": "v103",
-  "body": "BlindReader installer flow in wizard, bundled BlindReader APK asset, TalkBack build fixes, API 33 IME validation.",
+  "tag_name": "v104",
+  "name": "v104",
+  "body": "BlindReader gesture settings shortcut in wizard, iOS gesture set selection entry point.",
   "assets": [
     {
-      "name": "blindroid-103.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-103.apk",
-      "sha256": "638c505f793ee8e46c946303b3245395d90fa3ca873fbf79bcc0d6b2a3f37cd5",
-      "size": 123065715
+      "name": "blindroid-104.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-104.apk",
+      "sha256": "56a1dff122cd40d564c190523c62ee0d12358592b02616b5e0e275bde8a000cb",
+      "size": 123066199
     }
   ]
 }
