@@ -520,6 +520,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@string/launcher_settings_layout_presets" />
+
+        <Spinner
+            android:id="@+id/layoutPresetSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/launcher_settings_page_count" />
 
         <Spinner
@@ -1144,6 +1155,33 @@
             android:id="@+id/hapticStrengthSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/launcher_profiles_title" />
+
+        <Button
+            android:id="@+id/saveProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_profile_save" />
+
+        <Button
+            android:id="@+id/loadProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_profile_load" />
+
+        <Button
+            android:id="@+id/deleteProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/launcher_profile_delete" />
 
         <Button
             android:id="@+id/backupButton"

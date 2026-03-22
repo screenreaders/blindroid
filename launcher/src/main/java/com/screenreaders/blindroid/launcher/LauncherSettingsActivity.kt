@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var columnsGroup: RadioGroup
     private lateinit var rowsGroup: RadioGroup
+    private lateinit var layoutPresetSpinner: Spinner
     private lateinit var pageCountSpinner: Spinner
     private lateinit var iconSizeGroup: RadioGroup
     private lateinit var labelSizeGroup: RadioGroup
@@ -120,6 +121,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
     private lateinit var soundSchemeSpinner: Spinner
     private lateinit var hapticFeedbackSwitch: Switch
     private lateinit var hapticStrengthSpinner: Spinner
+    private lateinit var saveProfileButton: Button
+    private lateinit var loadProfileButton: Button
+    private lateinit var deleteProfileButton: Button
     private lateinit var backupButton: Button
     private lateinit var restoreButton: Button
     private lateinit var usageStatsSwitch: Switch
@@ -151,7 +155,13 @@ class LauncherSettingsActivity : AppCompatActivity() {
         GestureActionOption(LauncherPrefs.ACTION_TOGGLE_DOCK, R.string.launcher_gesture_action_toggle_dock),
         GestureActionOption(LauncherPrefs.ACTION_TOGGLE_SUPER_SIMPLE, R.string.launcher_gesture_action_toggle_simple),
         GestureActionOption(LauncherPrefs.ACTION_NEXT_PAGE, R.string.launcher_gesture_action_next_page),
-        GestureActionOption(LauncherPrefs.ACTION_PREV_PAGE, R.string.launcher_gesture_action_prev_page)
+        GestureActionOption(LauncherPrefs.ACTION_PREV_PAGE, R.string.launcher_gesture_action_prev_page),
+        GestureActionOption(LauncherPrefs.ACTION_TOGGLE_WIFI, R.string.launcher_gesture_action_toggle_wifi),
+        GestureActionOption(LauncherPrefs.ACTION_TOGGLE_BLUETOOTH, R.string.launcher_gesture_action_toggle_bluetooth),
+        GestureActionOption(LauncherPrefs.ACTION_TOGGLE_DND, R.string.launcher_gesture_action_toggle_dnd),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_NOTIFICATIONS, R.string.launcher_gesture_action_notifications),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_DISPLAY_SETTINGS, R.string.launcher_gesture_action_display),
+        GestureActionOption(LauncherPrefs.ACTION_OPEN_SOUND_SETTINGS, R.string.launcher_gesture_action_sound)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,6 +170,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
 
         columnsGroup = findViewById(R.id.columnsGroup)
         rowsGroup = findViewById(R.id.rowsGroup)
+        layoutPresetSpinner = findViewById(R.id.layoutPresetSpinner)
         pageCountSpinner = findViewById(R.id.pageCountSpinner)
         iconSizeGroup = findViewById(R.id.iconSizeGroup)
         labelSizeGroup = findViewById(R.id.labelSizeGroup)
@@ -263,6 +274,9 @@ class LauncherSettingsActivity : AppCompatActivity() {
         soundSchemeSpinner = findViewById(R.id.soundSchemeSpinner)
         hapticFeedbackSwitch = findViewById(R.id.hapticFeedbackSwitch)
         hapticStrengthSpinner = findViewById(R.id.hapticStrengthSpinner)
+        saveProfileButton = findViewById(R.id.saveProfileButton)
+        loadProfileButton = findViewById(R.id.loadProfileButton)
+        deleteProfileButton = findViewById(R.id.deleteProfileButton)
         backupButton = findViewById(R.id.backupButton)
         restoreButton = findViewById(R.id.restoreButton)
         usageStatsSwitch = findViewById(R.id.usageStatsSwitch)
@@ -345,6 +359,7 @@ class LauncherSettingsActivity : AppCompatActivity() {
         bindAllAppsDefaultTab()
         bindAllAppsCounts()
         bindCategoryRanking()
+        bindLayoutPresets()
         nowAlarmSwitch.isChecked = LauncherPrefs.isNowAlarmEnabled(this)
         nowCalendarSwitch.isChecked = LauncherPrefs.isNowCalendarEnabled(this)
         nowWeatherSwitch.isChecked = LauncherPrefs.isNowWeatherEnabled(this)
@@ -607,6 +622,17 @@ class LauncherSettingsActivity : AppCompatActivity() {
             }
             LauncherPrefs.setRows(this, value)
             toastSaved()
+        }
+
+        layoutPresetSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                if (position == 0) return
+                applyLayoutPreset(position)
+                layoutPresetSpinner.setSelection(0, false)
+                toastSaved()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
         }
 
         pageCountSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -1063,6 +1089,10 @@ class LauncherSettingsActivity : AppCompatActivity() {
             LauncherPrefs.setWidgetSizeShown(this, isChecked)
             toastSaved()
         }
+
+        saveProfileButton.setOnClickListener { promptSaveProfile() }
+        loadProfileButton.setOnClickListener { promptLoadProfile() }
+        deleteProfileButton.setOnClickListener { promptDeleteProfile() }
 
         backupButton.setOnClickListener { backupLauncher() }
         restoreButton.setOnClickListener { restoreLauncher() }
@@ -1722,6 +1752,156 @@ class LauncherSettingsActivity : AppCompatActivity() {
         manageScreenShortcutsButton.isEnabled = showScreenShortcutsSwitch.isEnabled
 
         defaultHomePageSpinner.isEnabled = !simple && multiple
+    }
+
+    private fun bindLayoutPresets() {
+        val labels = listOf(
+            getString(R.string.launcher_preset_custom),
+            getString(R.string.launcher_preset_standard),
+            getString(R.string.launcher_preset_large_icons),
+            getString(R.string.launcher_preset_compact)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        layoutPresetSpinner.adapter = adapter
+        layoutPresetSpinner.setSelection(0, false)
+    }
+
+    private fun applyLayoutPreset(presetId: Int) {
+        when (presetId) {
+            1 -> {
+                LauncherPrefs.setColumns(this, 4)
+                LauncherPrefs.setRows(this, 5)
+                LauncherPrefs.setPageCount(this, 3)
+                LauncherPrefs.setIconSizeDp(this, 48)
+                LauncherPrefs.setLabelSizeSp(this, 14f)
+            }
+            2 -> {
+                LauncherPrefs.setColumns(this, 4)
+                LauncherPrefs.setRows(this, 4)
+                LauncherPrefs.setPageCount(this, 3)
+                LauncherPrefs.setIconSizeDp(this, 56)
+                LauncherPrefs.setLabelSizeSp(this, 16f)
+            }
+            3 -> {
+                LauncherPrefs.setColumns(this, 5)
+                LauncherPrefs.setRows(this, 6)
+                LauncherPrefs.setPageCount(this, 5)
+                LauncherPrefs.setIconSizeDp(this, 40)
+                LauncherPrefs.setLabelSizeSp(this, 12f)
+            }
+            else -> return
+        }
+        when (LauncherPrefs.getColumns(this)) {
+            3 -> columnsGroup.check(R.id.columns4)
+            4 -> columnsGroup.check(R.id.columns4)
+            else -> columnsGroup.check(R.id.columns5)
+        }
+        when (LauncherPrefs.getRows(this)) {
+            4 -> rowsGroup.check(R.id.rows4)
+            6 -> rowsGroup.check(R.id.rows6)
+            else -> rowsGroup.check(R.id.rows5)
+        }
+        val pageCount = LauncherPrefs.getPageCount(this)
+        pageCountSpinner.setSelection((pageCount - 1).coerceAtLeast(0))
+        bindDefaultHomePage(pageCount)
+        updatePageDependentState(pageCount)
+        when (LauncherPrefs.getIconSizeDp(this)) {
+            in 0..44 -> iconSizeGroup.check(R.id.iconSmall)
+            in 45..52 -> iconSizeGroup.check(R.id.iconNormal)
+            else -> iconSizeGroup.check(R.id.iconLarge)
+        }
+        when (LauncherPrefs.getLabelSizeSp(this).toInt()) {
+            in 0..12 -> labelSizeGroup.check(R.id.labelSmall)
+            13, 14 -> labelSizeGroup.check(R.id.labelNormal)
+            else -> labelSizeGroup.check(R.id.labelLarge)
+        }
+    }
+
+    private fun promptSaveProfile() {
+        val input = EditText(this)
+        input.hint = getString(R.string.launcher_profile_name_hint)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_profile_save)
+            .setView(input)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val name = input.text?.toString()?.trim().orEmpty()
+                if (name.isBlank()) {
+                    Toast.makeText(this, R.string.launcher_profile_name_missing, Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                val saved = LauncherProfiles.saveProfile(this, name)
+                Toast.makeText(
+                    this,
+                    if (saved) R.string.launcher_profile_saved else R.string.launcher_profile_failed,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun promptLoadProfile() {
+        val profiles = LauncherProfiles.listProfiles(this)
+        if (profiles.isEmpty()) {
+            Toast.makeText(this, R.string.launcher_profile_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val items = profiles.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_profile_load)
+            .setItems(items) { _, index ->
+                confirmLoadProfile(items[index])
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun confirmLoadProfile(name: String) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_profile_load)
+            .setMessage(getString(R.string.launcher_profile_confirm_load, name))
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val ok = LauncherProfiles.loadProfile(this, name)
+                Toast.makeText(
+                    this,
+                    if (ok) R.string.launcher_profile_loaded else R.string.launcher_profile_failed,
+                    Toast.LENGTH_SHORT
+                ).show()
+                if (ok) {
+                    recreate()
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun promptDeleteProfile() {
+        val profiles = LauncherProfiles.listProfiles(this)
+        if (profiles.isEmpty()) {
+            Toast.makeText(this, R.string.launcher_profile_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val items = profiles.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_profile_delete)
+            .setItems(items) { _, index ->
+                confirmDeleteProfile(items[index])
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun confirmDeleteProfile(name: String) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.launcher_profile_delete)
+            .setMessage(getString(R.string.launcher_profile_confirm_delete, name))
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                LauncherProfiles.deleteProfile(this, name)
+                Toast.makeText(this, R.string.launcher_profile_deleted, Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private val backupLauncherFile = registerForActivityResult(

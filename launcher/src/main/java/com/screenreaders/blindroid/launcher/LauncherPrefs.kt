@@ -164,6 +164,12 @@ object LauncherPrefs {
     const val ACTION_OPEN_DIALER = 13
     const val ACTION_OPEN_MESSAGES = 14
     const val ACTION_OPEN_GEMINI = 15
+    const val ACTION_TOGGLE_WIFI = 16
+    const val ACTION_TOGGLE_BLUETOOTH = 17
+    const val ACTION_TOGGLE_DND = 18
+    const val ACTION_OPEN_NOTIFICATIONS = 19
+    const val ACTION_OPEN_DISPLAY_SETTINGS = 20
+    const val ACTION_OPEN_SOUND_SETTINGS = 21
 
     const val SOUND_SCHEME_CLASSIC = 0
     const val SOUND_SCHEME_SOFT = 1
@@ -520,8 +526,18 @@ object LauncherPrefs {
     }
 
     fun setScreenShortcuts(context: Context, shortcuts: List<ScreenShortcut>) {
-        val array = JSONArray()
+        val unique = LinkedHashMap<String, ScreenShortcut>()
         shortcuts.forEach { item ->
+            val page = item.page
+            val label = item.label.trim()
+            if (page <= 0 || label.isBlank()) return@forEach
+            val key = "${page}_${label.lowercase()}"
+            if (!unique.containsKey(key)) {
+                unique[key] = ScreenShortcut(page, label)
+            }
+        }
+        val array = JSONArray()
+        unique.values.take(12).forEach { item ->
             val obj = JSONObject()
             obj.put("page", item.page)
             obj.put("label", item.label)

@@ -47,6 +47,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.view.accessibility.AccessibilityManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -279,6 +280,7 @@ class LauncherActivity : AppCompatActivity() {
                     !LauncherPrefs.isSuperSimpleEnabled(this@LauncherActivity)
                 homeAdapter.setFeedVisible(feedEnabled && position == 0)
                 maybeAutoOpenExternalFeed(position)
+                announceCurrentPage()
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -1437,6 +1439,13 @@ class LauncherActivity : AppCompatActivity() {
         )
     }
 
+    private fun openNotificationSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        }
+        safeStart(intent, Intent(Settings.ACTION_SETTINGS))
+    }
+
     private fun safeStart(primary: Intent, fallback: Intent? = null, showToast: Boolean = true): Boolean {
         return try {
             startActivity(primary)
@@ -2085,6 +2094,27 @@ class LauncherActivity : AppCompatActivity() {
         updatePageNavButtons()
     }
 
+    private fun announceCurrentPage() {
+        val manager = getSystemService(AccessibilityManager::class.java)
+        if (manager?.isEnabled != true) return
+        val simple = LauncherPrefs.isSuperSimpleEnabled(this)
+        val feedEnabled = LauncherPrefs.isFeedEnabled(this) && !simple
+        if (feedEnabled && homePager.currentItem == 0) {
+            homePager.announceForAccessibility(getString(R.string.launcher_page_feed))
+            return
+        }
+        val pageNumber = currentHomePageIndex() + 1
+        val label = LauncherPrefs.getScreenShortcuts(this)
+            .firstOrNull { it.page == pageNumber }
+            ?.label
+        val text = if (!label.isNullOrBlank()) {
+            getString(R.string.launcher_page_announce_named, pageNumber, label)
+        } else {
+            getString(R.string.launcher_page_announce, pageNumber)
+        }
+        homePager.announceForAccessibility(text)
+    }
+
     private fun applyDefaultHomePage() {
         if (pages.isEmpty()) return
         val baseIndex = (LauncherPrefs.getDefaultHomePage(this) - 1).coerceIn(0, pages.lastIndex)
@@ -2695,6 +2725,12 @@ class LauncherActivity : AppCompatActivity() {
             LauncherPrefs.ACTION_OPEN_DIALER -> openDialer()
             LauncherPrefs.ACTION_OPEN_MESSAGES -> openMessages()
             LauncherPrefs.ACTION_OPEN_GEMINI -> openGemini()
+            LauncherPrefs.ACTION_TOGGLE_WIFI -> toggleWifiFromFeed()
+            LauncherPrefs.ACTION_TOGGLE_BLUETOOTH -> toggleBluetoothFromFeed()
+            LauncherPrefs.ACTION_TOGGLE_DND -> toggleDndFromFeed()
+            LauncherPrefs.ACTION_OPEN_NOTIFICATIONS -> openNotificationSettings()
+            LauncherPrefs.ACTION_OPEN_DISPLAY_SETTINGS -> openDisplaySettings()
+            LauncherPrefs.ACTION_OPEN_SOUND_SETTINGS -> openSoundSettings()
         }
         if (action != LauncherPrefs.ACTION_NONE) {
             soundFeedback?.playAction(action)
