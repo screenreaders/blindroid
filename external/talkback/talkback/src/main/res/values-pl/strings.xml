@@ -103,6 +103,17 @@
   <string name="pref_gesture_import_summary">Wklej i zastosuj nadpisania gestów</string>
   <string name="pref_gesture_scheme_manager_title">Schematy gestów</string>
   <string name="pref_gesture_scheme_manager_summary">Zapisuj i stosuj nazwane schematy</string>
+  <string name="pref_backup_settings_title">Kopia ustawień</string>
+  <string name="pref_backup_settings_summary">Eksportuj lub przywracaj preferencje BlindReadera</string>
+  <string name="pref_backup_export_title">Eksportuj ustawienia</string>
+  <string name="pref_backup_export_summary">Udostępnij kopię JSON ustawień</string>
+  <string name="pref_backup_import_title">Importuj ustawienia</string>
+  <string name="pref_backup_import_summary">Wklej kopię JSON, aby przywrócić ustawienia</string>
+  <string name="pref_backup_export_success">Kopia gotowa do udostępnienia</string>
+  <string name="pref_backup_export_failed">Nie udało się wyeksportować kopii</string>
+  <string name="pref_backup_import_success">Zaimportowano %1$d ustawień</string>
+  <string name="pref_backup_import_failed">Nie udało się zaimportować kopii</string>
+  <string name="pref_backup_import_empty">Nie zaimportowano ustawień</string>
   <string name="pref_gesture_scheme_save_current_title">Zapisz bieżący schemat</string>
   <string name="pref_gesture_scheme_save_current_summary">Utwórz nazwany schemat z bieżących nadpisań</string>
   <string name="pref_gesture_scheme_import_title">Importuj schemat</string>

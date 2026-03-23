@@ -300,6 +300,17 @@
     <string name="pref_gesture_import_summary">Paste and apply gesture overrides</string>
     <string name="pref_gesture_scheme_manager_title">Gesture schemes</string>
     <string name="pref_gesture_scheme_manager_summary">Save and apply named schemes</string>
+    <string name="pref_backup_settings_title">Backup settings</string>
+    <string name="pref_backup_settings_summary">Export or restore BlindReader preferences</string>
+    <string name="pref_backup_export_title">Export settings</string>
+    <string name="pref_backup_export_summary">Share a JSON backup of your settings</string>
+    <string name="pref_backup_import_title">Import settings</string>
+    <string name="pref_backup_import_summary">Paste a JSON backup to restore your settings</string>
+    <string name="pref_backup_export_success">Backup ready to share</string>
+    <string name="pref_backup_export_failed">Backup export failed</string>
+    <string name="pref_backup_import_success">Imported %1$d settings</string>
+    <string name="pref_backup_import_failed">Backup import failed</string>
+    <string name="pref_backup_import_empty">No settings imported</string>
     <string name="pref_gesture_scheme_save_current_title">Save current scheme</string>
     <string name="pref_gesture_scheme_save_current_summary">Create a named scheme from current overrides</string>
     <string name="pref_gesture_scheme_import_title">Import scheme</string>

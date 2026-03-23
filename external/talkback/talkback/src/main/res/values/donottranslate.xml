@@ -772,6 +772,7 @@
         <item>@string/shortcut_document_scan</item>
         <item>@string/shortcut_read_screen</item>
         <item>@string/shortcut_scan_hub</item>
+        <item>@string/shortcut_gesture_scheme_manager</item>
     </string-array>
 
     <!-- Shortcut preference value of menu control -->
@@ -1492,6 +1493,9 @@
     <string name="pref_gesture_export_key" translatable="false">pref_gesture_export</string>
     <string name="pref_gesture_import_key" translatable="false">pref_gesture_import</string>
     <string name="pref_gesture_scheme_manager_key" translatable="false">pref_gesture_scheme_manager</string>
+    <string name="pref_backup_settings_key" translatable="false">pref_backup_settings</string>
+    <string name="pref_backup_export_key" translatable="false">pref_backup_export</string>
+    <string name="pref_backup_import_key" translatable="false">pref_backup_import</string>
     <string name="pref_gesture_scheme_save_current_key" translatable="false">pref_gesture_scheme_save_current</string>
     <string name="pref_gesture_scheme_import_key" translatable="false">pref_gesture_scheme_import</string>
     <string name="pref_gesture_scheme_list_category_key" translatable="false">pref_gesture_scheme_list_category</string>

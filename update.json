@@ -1,12 +1,12 @@
 {
-  "tag_name": "v112",
-  "name": "v112",
-  "body": "BlindReader: gesture scheme manager quick action.",
+  "tag_name": "v113",
+  "name": "v113",
+  "body": "BlindReader: backup manager (export/import settings).",
   "assets": [
     {
-      "name": "blindroid-112.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-112.apk",
-      "sha256": "b4f6fd4f39b02f1470c51c5a31c2c5fcef0c0aed6bd0d308e46e50e380182a95",
+      "name": "blindroid-113.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-113.apk",
+      "sha256": "79686cf3baaef55493dbe46fb39dfe179175ae8c665494ea9ed87679dc7759f9",
       "size": 123067855
     }
   ]

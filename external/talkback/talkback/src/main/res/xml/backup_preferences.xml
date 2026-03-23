@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_backup_export_key"
+      android:title="@string/pref_backup_export_title"
+      android:summary="@string/pref_backup_export_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_backup_import_key"
+      android:title="@string/pref_backup_import_title"
+      android:summary="@string/pref_backup_import_summary" />
+
+</PreferenceScreen>
