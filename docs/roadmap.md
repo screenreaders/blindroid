@@ -21,31 +21,29 @@ Sources read (local only):
 - [x] iOS gesture parity: VoiceOver control (screen curtain, mute, item chooser, quick settings).
 - [x] iOS gesture parity: rotor (two-finger rotate + swipe up/down for action).
 - [x] iOS gesture parity: pass-through gestures (double-tap-hold).
-- [ ] Dynamic gesture schemes (context-based auto switching).
-- [ ] Per-app gesture schemes with quick menu and scheme editor.
+- [x] Dynamic gesture schemes (context-based auto switching).
+- [x] Per-app gesture schemes with quick menu and scheme editor.
 - [x] Per-app gesture schemes: edit scope (global vs current app) with per-app overrides.
 - [x] Per-app gesture set override (Android/iOS) for current app.
 - [x] Per-app gesture set list management (saved overrides).
-- [ ] Gesture scheme manager (create/edit/share).
+- [x] Gesture scheme manager (create/edit/share).
 - [x] Per-app gesture set quick access (context menu).
-- [ ] Multi-part gestures (double fling).
+- [x] Multi-part gestures (double fling).
 - [x] Multi-part gestures enable/disable switch (angle + back-and-forth).
 - [ ] Edge gestures + edge menus (left/right/bottom) with custom items.
 - [x] Edge gestures (left/right edge swipes) with configurable actions.
-- [ ] Fingerprint reader gestures (Android 8+).
-- [ ] Invert swipe mode (traditional vs default).
+- [x] Fingerprint reader gestures (Android 8+).
 - [x] Invert swipe mode (traditional vs default).
 - [ ] Quick browsing mode.
 - [ ] Node browsing mode.
 - [ ] List browsing mode.
 - [ ] Automatic browsing + backwards auto.
 - [ ] Focus browsing mode.
-- [ ] Granular browsing/editing/selection (character/word/line/paragraph/custom).
-- [ ] Lift-to-activate mode.
-- [ ] Single-tap activate mode.
-- [ ] Tap-to-move-focus mode.
+- [x] Granular browsing/editing/selection (character/word/line/paragraph/custom).
+- [x] Lift-to-activate mode.
+- [x] Single-tap activate mode.
+- [x] Tap-to-move-focus mode.
 - [ ] Hold-to-long-press configuration.
-- [ ] Screen curtain (dim screen) toggle and startup behavior.
 - [x] Screen curtain (dim screen) toggle and startup behavior.
 - [ ] Gaming mode (auto pause touch explore per-app).
 - [ ] Content blacklist filtering during browsing.
@@ -54,9 +52,9 @@ Sources read (local only):
 ### TTS & audio
 - [ ] Multi-engine TTS support.
 - [ ] Dual-voice engine (two synthesizers at once).
-- [ ] Separate TTS profile for notifications.
-- [ ] Audio ducking.
-- [ ] Proximity sensor stops speech.
+- [x] Separate TTS profile for notifications.
+- [x] Audio ducking.
+- [x] Proximity sensor stops speech.
 - [ ] Per-mode TTS settings (character-by-character, auto reading).
 - [ ] Sound schemes (manager + volume + sounds).
 - [ ] AI/TTS: per-language default voice mapping for AI mode.
@@ -106,10 +104,10 @@ Sources read (local only):
 - [ ] Headset/media key integration for assistant.
 
 ### Plugins & tools
-- [ ] Plugin system (extensions) + manager.
+- [x] Plugin system (extensions) + manager.
 - [ ] Auto-start / scheduled extensions.
 - [ ] Tools manager.
-- [ ] Clipboard history manager.
+- [x] Clipboard history manager.
 - [ ] Label manager (custom labels).
 
 ### Backup & sync

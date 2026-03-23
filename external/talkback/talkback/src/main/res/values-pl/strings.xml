@@ -95,6 +95,12 @@
   <string name="message_reset_gesture_settings_confirm_dialog">Wszystkie ustawienia gestów zostaną przywrócone do działań domyślnych.\n\nWszystkie zmiany zostaną utracone.</string>
   <string name="reset_button_in_reset_gesture_settings_confirm_dialog">Resetuj</string>
   <string name="gestures_announce_reset_gesture_settings">To ustawienie gestu zostało zresetowane.</string>
+  <string name="gestures_announce_import_success">Schemat gestów został zaimportowany.</string>
+  <string name="gestures_announce_import_failed">Import nie powiódł się.</string>
+  <string name="pref_gesture_export_title">Eksportuj schemat gestów</string>
+  <string name="pref_gesture_export_summary">Udostępnij bieżące nadpisania gestów</string>
+  <string name="pref_gesture_import_title">Importuj schemat gestów</string>
+  <string name="pref_gesture_import_summary">Wklej i zastosuj nadpisania gestów</string>
   <string name="pref_speak_roles_title">Odczytuj typ elementu</string>
   <string name="pref_speak_roles_summary">W przypadku zaznaczonych elementów</string>
   <string name="title_pref_speak_element_ids">Odczytuj identyfikatory elementów</string>

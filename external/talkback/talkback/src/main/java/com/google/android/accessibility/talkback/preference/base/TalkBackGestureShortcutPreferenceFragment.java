@@ -18,12 +18,15 @@ package com.google.android.accessibility.talkback.preference.base;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -41,6 +44,11 @@ import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
 import com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /** Panel holding a set of shortcut preferences. Recreated when preset value changes. */
 public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragment {
@@ -181,6 +189,7 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
     Preference resetGesturePreferenceScreen =
         (Preference) findPreference(getString(R.string.pref_reset_gesture_settings_key));
     resetGesturePreferenceScreen.setOnPreferenceClickListener(resetGesturePreferenceClickListener);
+    setupExportImportPreferences(context);
 
     // Disable 2-finger swipe gestures which are reserved as 2-finger pass-through.
     if (FeatureSupport.isMultiFingerGestureSupported()) {
@@ -205,6 +214,25 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
           }
         }
       }
+    }
+  }
+
+  private void setupExportImportPreferences(Context context) {
+    Preference exportPref = findPreference(getString(R.string.pref_gesture_export_key));
+    if (exportPref != null) {
+      exportPref.setOnPreferenceClickListener(
+          preference -> {
+            exportGestureScheme(context);
+            return true;
+          });
+    }
+    Preference importPref = findPreference(getString(R.string.pref_gesture_import_key));
+    if (importPref != null) {
+      importPref.setOnPreferenceClickListener(
+          preference -> {
+            showImportDialog(context);
+            return true;
+          });
     }
   }
 
@@ -336,6 +364,133 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
       }
     }
     prefEditor.apply();
+  }
+
+  private void exportGestureScheme(Context context) {
+    int gestureSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    String scopeValue = getScopeValue();
+    String scopePackage = TextUtils.equals(scopeValue, "current_app") ? currentScopePackage : null;
+    String[] gesturePrefKeys = getResources().getStringArray(R.array.pref_shortcut_keys);
+    JSONObject mappings = new JSONObject();
+    try {
+      for (String baseKey : gesturePrefKeys) {
+        String scopedKey = applyScopeToKey(baseKey, scopePackage);
+        String prefKey = GestureShortcutMapping.getPrefKeyWithGestureSet(scopedKey, gestureSet);
+        if (!prefs.contains(prefKey)) {
+          continue;
+        }
+        String value = prefs.getString(prefKey, null);
+        if (TextUtils.isEmpty(value)) {
+          continue;
+        }
+        mappings.put(baseKey, value);
+      }
+      JSONObject payload = new JSONObject();
+      payload.put("version", 1);
+      payload.put("gestureSet", gestureSet);
+      payload.put("scope", scopeValue);
+      if (!TextUtils.isEmpty(scopePackage)) {
+        payload.put("package", scopePackage);
+      }
+      payload.put("mappings", mappings);
+
+      Intent share = new Intent(Intent.ACTION_SEND);
+      share.setType("application/json");
+      share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pref_gesture_export_title));
+      share.putExtra(Intent.EXTRA_TEXT, payload.toString(2));
+      startActivity(Intent.createChooser(share, getString(R.string.pref_gesture_export_title)));
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.gestures_announce_import_failed), context);
+    }
+  }
+
+  private void showImportDialog(Context context) {
+    EditText input = new EditText(context);
+    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+    input.setMinLines(6);
+    input.setHint(getString(R.string.pref_gesture_import_summary));
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_gesture_import_title)
+        .setView(input)
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> importGestureScheme(context, input.getText().toString()))
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void importGestureScheme(Context context, String json) {
+    if (TextUtils.isEmpty(json)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.gestures_announce_import_failed), context);
+      return;
+    }
+    JSONObject root;
+    try {
+      root = new JSONObject(json);
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.gestures_announce_import_failed), context);
+      return;
+    }
+    JSONObject mappings = root.optJSONObject("mappings");
+    if (mappings == null) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.gestures_announce_import_failed), context);
+      return;
+    }
+    int gestureSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    String scopeValue = getScopeValue();
+    String scopePackage = TextUtils.equals(scopeValue, "current_app") ? currentScopePackage : null;
+    if (TextUtils.equals(scopeValue, "current_app") && TextUtils.isEmpty(scopePackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.gestures_announce_import_failed), context);
+      return;
+    }
+
+    Set<String> allowedKeys = new HashSet<>();
+    String[] gesturePrefKeys = getResources().getStringArray(R.array.pref_shortcut_keys);
+    for (String key : gesturePrefKeys) {
+      allowedKeys.add(key);
+    }
+    Set<String> allowedActions = new HashSet<>(GestureShortcutMapping.getAllActionKeys(context));
+    allowedActions.add(getString(R.string.shortcut_value_unassigned));
+
+    SharedPreferences.Editor editor = prefs.edit();
+    int applied = 0;
+    Iterator<String> it = mappings.keys();
+    while (it.hasNext()) {
+      String baseKey = it.next();
+      if (!allowedKeys.contains(baseKey)) {
+        continue;
+      }
+      String action = mappings.optString(baseKey, null);
+      if (TextUtils.isEmpty(action) || !allowedActions.contains(action)) {
+        continue;
+      }
+      String scopedKey = applyScopeToKey(baseKey, scopePackage);
+      String prefKey = GestureShortcutMapping.getPrefKeyWithGestureSet(scopedKey, gestureSet);
+      editor.putString(prefKey, action);
+      applied++;
+    }
+    editor.apply();
+    updatePreferenceKey(gestureSet);
+    PreferencesActivityUtils.announceText(
+        applied > 0
+            ? getString(R.string.gestures_announce_import_success)
+            : getString(R.string.gestures_announce_import_failed),
+        context);
   }
 
   private void resolveScopeApp(Context context) {

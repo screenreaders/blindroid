@@ -1,12 +1,12 @@
 {
-  "tag_name": "v108",
-  "name": "v108",
-  "body": "BlindReader: haptic intensity control (low/medium/high).",
+  "tag_name": "v109",
+  "name": "v109",
+  "body": "BlindReader: gesture scheme export/import and roadmap status refresh.",
   "assets": [
     {
-      "name": "blindroid-108.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-108.apk",
-      "sha256": "fbf12089f823752bed7eeea2bb21d91b8dcac92df6e1ce0d11db16099ef63cc6",
+      "name": "blindroid-109.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-109.apk",
+      "sha256": "c2f51a6b1acb4e692792e724ab2c40653f783730a85810f9e844b865076c22fa",
       "size": 123067855
     }
   ]

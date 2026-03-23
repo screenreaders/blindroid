@@ -291,7 +291,13 @@
 
   <string name="reset_button_in_reset_gesture_settings_confirm_dialog">Reset</string>
   <!-- Announce reset the keymap -->
-  <string name="gestures_announce_reset_gesture_settings">The gesture settings have been reset.</string>
+    <string name="gestures_announce_reset_gesture_settings">The gesture settings have been reset.</string>
+    <string name="gestures_announce_import_success">Gesture scheme imported.</string>
+    <string name="gestures_announce_import_failed">Import failed.</string>
+    <string name="pref_gesture_export_title">Export gesture scheme</string>
+    <string name="pref_gesture_export_summary">Share the current gesture overrides</string>
+    <string name="pref_gesture_import_title">Import gesture scheme</string>
+    <string name="pref_gesture_import_summary">Paste and apply gesture overrides</string>
 
   <!--
     Source: Preference for speaking types of elements with  accessibility focus.

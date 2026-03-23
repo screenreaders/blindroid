@@ -23,6 +23,15 @@
       android:defaultValue="@string/pref_gesture_edit_scope_default"
       android:entries="@array/pref_gesture_edit_scope_entries"
       android:entryValues="@array/pref_gesture_edit_scope_values" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_gesture_export_key"
+      android:title="@string/pref_gesture_export_title"
+      android:summary="@string/pref_gesture_export_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_gesture_import_key"
+      android:title="@string/pref_gesture_import_title"
+      android:summary="@string/pref_gesture_import_summary"
+      app:allowDividerBelow="true" />
   <!-- One finger gestures -->
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_1finger_shortcuts_key"
