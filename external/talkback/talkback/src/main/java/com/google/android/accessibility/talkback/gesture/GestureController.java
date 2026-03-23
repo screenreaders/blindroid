@@ -329,6 +329,9 @@ public class GestureController {
     } else if (action.equals(service.getString(R.string.shortcut_value_gesture_scheme_manager))) {
       pipeline.returnFeedback(
           eventId, Feedback.triggerIntent(Feedback.TriggerIntent.Action.TRIGGER_GESTURE_SCHEME_MANAGER));
+    } else if (action.equals(service.getString(R.string.shortcut_value_backup_settings))) {
+      pipeline.returnFeedback(
+          eventId, Feedback.triggerIntent(Feedback.TriggerIntent.Action.TRIGGER_BACKUP_SETTINGS));
     } else if (action.equals(
         service.getString(R.string.shortcut_value_toggle_per_app_gesture_set))) {
       result = togglePerAppGestureSet(eventId);

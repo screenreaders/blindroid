@@ -1157,6 +1157,7 @@ public abstract class Feedback {
       TRIGGER_BRAILLE_DISPLAY_SETTINGS,
       TRIGGER_IMAGE_DESCRIPTIONS_SETTINGS,
       TRIGGER_GESTURE_SCHEME_MANAGER,
+      TRIGGER_BACKUP_SETTINGS,
     }
 
     public static TriggerIntent create(TriggerIntent.Action action) {

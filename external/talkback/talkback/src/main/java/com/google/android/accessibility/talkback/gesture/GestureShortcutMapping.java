@@ -563,6 +563,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         R.string.shortcut_value_clipboard_history, R.string.shortcut_clipboard_history),
     GESTURE_SCHEME_MANAGER(
         R.string.shortcut_value_gesture_scheme_manager, R.string.shortcut_gesture_scheme_manager),
+    BACKUP_SETTINGS(
+        R.string.shortcut_value_backup_settings, R.string.shortcut_backup_settings),
     TRANSLATE_TEXT(
         R.string.shortcut_value_translate_text, R.string.shortcut_translate_text),
     OBJECT_RECOGNITION(

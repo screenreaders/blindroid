@@ -98,6 +98,7 @@ import com.google.android.accessibility.talkback.focusmanagement.AccessibilityFo
 import com.google.android.accessibility.talkback.focusmanagement.action.NavigationAction;
 import com.google.android.accessibility.talkback.labeling.TalkBackLabelManager;
 import com.google.android.accessibility.talkback.preference.base.AutomaticDescriptionsFragment;
+import com.google.android.accessibility.talkback.preference.base.BackupSettingsFragment;
 import com.google.android.accessibility.talkback.preference.base.GestureSchemeManagerFragment;
 import com.google.android.accessibility.talkback.training.TutorialInitiator;
 import com.google.android.accessibility.utils.AccessibilityNode;
@@ -451,6 +452,11 @@ class Actors {
           intent = new Intent(context, TalkBackPreferencesActivity.class);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
           intent.putExtra(FRAGMENT_NAME, GestureSchemeManagerFragment.class.getName());
+          break;
+        case TRIGGER_BACKUP_SETTINGS:
+          intent = new Intent(context, TalkBackPreferencesActivity.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          intent.putExtra(FRAGMENT_NAME, BackupSettingsFragment.class.getName());
           break;
       }
       try {

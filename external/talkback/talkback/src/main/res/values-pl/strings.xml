@@ -282,6 +282,7 @@
     <string name="shortcut_quick_menu">Szybkie menu</string>
   <string name="shortcut_clipboard_history">Historia schowka</string>
   <string name="shortcut_gesture_scheme_manager">Schematy gestów</string>
+  <string name="shortcut_backup_settings">Kopia ustawień</string>
     <string name="shortcut_translate_text">Tłumacz tekst</string>
     <string name="shortcut_object_recognition">Rozpoznawanie obiektów</string>
     <string name="shortcut_face_recognition">Rozpoznawanie twarzy</string>
