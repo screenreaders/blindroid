@@ -20,4 +20,30 @@
       android:key="@string/pref_text_recognition_key"
       android:title="@string/title_pref_text_recognition" />
 
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_object_recognition_default"
+      android:key="@string/pref_auto_object_recognition_key"
+      android:title="@string/pref_auto_object_recognition_title"
+      android:summary="@string/pref_auto_object_recognition_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_scene_recognition_default"
+      android:key="@string/pref_auto_scene_recognition_key"
+      android:title="@string/pref_auto_scene_recognition_title"
+      android:summary="@string/pref_auto_scene_recognition_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_face_recognition_default"
+      android:key="@string/pref_auto_face_recognition_key"
+      android:title="@string/pref_auto_face_recognition_title"
+      android:summary="@string/pref_auto_face_recognition_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_money_recognition_default"
+      android:key="@string/pref_auto_money_recognition_key"
+      android:title="@string/pref_auto_money_recognition_title"
+      android:summary="@string/pref_auto_money_recognition_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_translate_captions_default"
+      android:key="@string/pref_auto_translate_captions_key"
+      android:title="@string/pref_auto_translate_captions_title"
+      android:summary="@string/pref_auto_translate_captions_summary" />
+
 </PreferenceScreen>

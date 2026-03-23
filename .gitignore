@@ -5,6 +5,9 @@ keystore/
 *.jks
 build/
 app/build/
+.venv/
+.venv_scons/
+info/
 external/rhvoice/src/android/.gradle/
 external/rhvoice/src/android/**/build/
 external/rhvoice/bin/

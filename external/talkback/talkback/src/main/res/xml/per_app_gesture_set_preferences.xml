@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_per_app_gesture_set_enabled_default"
+      android:key="@string/pref_per_app_gesture_set_enabled_key"
+      android:title="@string/pref_per_app_gesture_set_enabled_title"
+      android:summary="@string/pref_per_app_gesture_set_enabled_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteListPreference
+      android:defaultValue="@string/pref_per_app_gesture_set_value_default"
+      android:entries="@array/pref_per_app_gesture_set_entries"
+      android:entryValues="@array/pref_per_app_gesture_set_values"
+      android:key="@string/pref_per_app_gesture_set_current_key"
+      android:title="@string/pref_per_app_gesture_set_current_title"
+      android:summary="@string/pref_per_app_gesture_set_current_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_per_app_gesture_set_clear_key"
+      android:title="@string/pref_per_app_gesture_set_clear_title"
+      android:summary="@string/pref_per_app_gesture_set_clear_summary" />
+
+  <PreferenceCategory
+      android:key="@string/pref_per_app_gesture_set_list_key"
+      android:title="@string/pref_per_app_gesture_set_list_title" />
+
+</PreferenceScreen>

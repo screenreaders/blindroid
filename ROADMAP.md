@@ -20,6 +20,12 @@ This file tracks upcoming work. Use `[ ]` for TODO and `[x]` for done.
   - [x] 4‑finger top/bottom taps (closest available taps)
 - [x] Add onboarding hint to select gesture set (Android vs iOS)
 - [x] Verify gesture set labels for non‑PL locales (fallback set to EN)
+- [x] Quick menu (gesture‑launched) with customizable action list
+- [x] Clipboard history with persistence + quick access menu
+- [x] Translate current text action (ACTION_PROCESS_TEXT)
+- [x] Notification speech profile (rate/pitch) + toggle
+- [x] Object/face recognition actions (mapped to image description/captioning)
+- [x] Plugin manager screen (intent‑based discovery)
 
 ## Soft Braille Keyboard Reactivation
 - [x] Locate Soft Braille Keyboard repo: https://github.com/danieldalton10/Soft-Braille-Keyboard

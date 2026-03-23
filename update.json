@@ -1,13 +1,13 @@
 {
-  "tag_name": "v104",
-  "name": "v104",
-  "body": "BlindReader gesture settings shortcut in wizard, iOS gesture set selection entry point.",
+  "tag_name": "v105",
+  "name": "v105",
+  "body": "BlindReader: iOS gesture set, gesture macros, floating menu + quick menu, content settings (filters/auto OCR), scan hub action, plugin API, and performance polish.",
   "assets": [
     {
-      "name": "blindroid-104.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-104.apk",
-      "sha256": "56a1dff122cd40d564c190523c62ee0d12358592b02616b5e0e275bde8a000cb",
-      "size": 123066199
+      "name": "blindroid-105.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-105.apk",
+      "sha256": "3a858bac1364f9bd491312eea00c8593434168d3ef909ea28d8c037502242e3c",
+      "size": 123067855
     }
   ]
 }

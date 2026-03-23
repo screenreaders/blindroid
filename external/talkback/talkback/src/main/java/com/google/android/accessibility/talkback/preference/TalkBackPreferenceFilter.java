@@ -150,6 +150,10 @@ public class TalkBackPreferenceFilter {
     BRAILLE_DISPLAY(
         R.string.pref_brailledisplay_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH | HIDE_NO_BRAILLE_DISPLAY),
     CUSTOMIZE_MENU(R.string.pref_manage_customize_menus_key, HIDDEN_ON_TV),
+    GESTURE_MACROS(R.string.pref_gesture_macro_settings_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    CONTENT_SETTINGS(R.string.pref_content_settings_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    FLOATING_MENU(R.string.pref_floating_menu_enabled_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    FLOATING_MENU_ACTION(R.string.pref_floating_menu_action_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     // TalkBack/Reading Menu
     CUSTOMIZE_TALKBACK_MENU_VOICE_COMMAND_CONTROLS(
         R.string.pref_show_context_menu_voice_commands_setting_key, HIDDEN_ON_WATCH),
@@ -187,6 +191,7 @@ public class TalkBackPreferenceFilter {
     // Developer settings
     GESTURE_HANDLING(R.string.pref_talkback_gesture_detection_key, HIDDEN_ON_TV),
     EXPLORE_BY_TOUCH(R.string.pref_explore_by_touch_reflect_key, HIDDEN_ON_TV),
+    EXPLORE_BY_TOUCH_REQUEST(R.string.pref_explore_by_touch_key, HIDDEN_ON_TV),
     // Gesture/Verbosity Settings.
     CONFIG_ON_SCREEN_KEYBOARD_ECHO(R.string.pref_keyboard_echo_on_screen_key, HIDDEN_ON_WATCH),
     CONFIG_PHYSICAL_KEYBOARD_ECHO(R.string.pref_keyboard_echo_physical_key, HIDDEN_ON_WATCH),

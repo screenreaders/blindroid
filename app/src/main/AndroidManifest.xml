@@ -79,6 +79,13 @@
             android:excludeFromRecents="true" />
 
         <activity
+            android:name=".scan.ScanHubActivity"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true" />
+
+        <activity
             android:name=".navigation.NavigationAssistActivity"
             android:exported="false" />
         <activity

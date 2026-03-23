@@ -60,6 +60,7 @@ object Prefs {
     private const val KEY_FACE_SHORTCUT = "face_shortcut_enabled"
     private const val KEY_FACE_SOUND = "face_sound_enabled"
     private const val KEY_ANSWER_PICKUP = "answer_pickup_enabled"
+    private const val KEY_ANSWER_SHAKE = "answer_shake_enabled"
     private const val KEY_OBSTACLE_SOUND = "obstacle_sound_enabled"
     private const val KEY_SOS_NUMBER = "sos_number"
     private const val KEY_SOS_MESSAGE = "sos_message"
@@ -302,6 +303,13 @@ object Prefs {
 
     fun setAnswerPickupEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_ANSWER_PICKUP, value).apply()
+    }
+
+    fun isAnswerShakeEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_ANSWER_SHAKE, false)
+
+    fun setAnswerShakeEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_ANSWER_SHAKE, value).apply()
     }
 
     fun isObstacleSoundEnabled(context: Context): Boolean =

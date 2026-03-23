@@ -86,6 +86,8 @@ import static com.google.android.accessibility.talkback.analytics.TalkBackAnalyt
 import static com.google.android.accessibility.talkback.analytics.TalkBackAnalytics.VOICE_COMMAND_UNRECOGNIZED;
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.CUSTOM_ACTION;
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.LANGUAGE;
+import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.CLIPBOARD_HISTORY;
+import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.QUICK_MENU;
 import static com.google.android.accessibility.utils.Performance.EVENT_ID_UNTRACKED;
 
 import android.content.Intent;
@@ -99,15 +101,18 @@ import com.google.android.accessibility.talkback.Pipeline;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.actor.DimScreenActor;
+import com.google.android.accessibility.talkback.actor.gemini.GeminiFunctionUtils;
 import com.google.android.accessibility.talkback.actor.gemini.GeminiConfiguration;
 import com.google.android.accessibility.talkback.analytics.TalkBackAnalytics;
 import com.google.android.accessibility.talkback.analytics.TalkBackAnalytics.VoiceCommandTypeId;
 import com.google.android.accessibility.talkback.contextmenu.ContextMenuItem;
 import com.google.android.accessibility.talkback.contextmenu.ListMenuManager;
 import com.google.android.accessibility.talkback.focusmanagement.AccessibilityFocusMonitor;
+import com.google.android.accessibility.talkback.gesture.PerAppGestureSetUtils;
 import com.google.android.accessibility.talkback.menurules.RuleAction;
 import com.google.android.accessibility.talkback.selector.SelectorController;
 import com.google.android.accessibility.talkback.selector.SelectorController.Setting;
+import com.google.android.accessibility.utils.AccessibilityNodeInfoUtils;
 import com.google.android.accessibility.utils.FeatureSupport;
 import com.google.android.accessibility.utils.FormFactorUtils;
 import com.google.android.accessibility.utils.LocaleUtils;
@@ -118,6 +123,7 @@ import com.google.android.accessibility.utils.SpannableUtils;
 import com.google.android.accessibility.utils.WebInterfaceUtils;
 import com.google.android.accessibility.utils.input.CursorGranularity;
 import com.google.android.accessibility.utils.output.FeedbackItem;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.output.SpeechController.SpeakOptions;
 import com.google.android.accessibility.utils.screencapture.ScreenshotCapture;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
@@ -195,6 +201,33 @@ public class VoiceCommandProcessor {
 
   private static final int[] notificationsCommandResArray = {
     R.string.voice_commands_notification, R.string.voice_commands_notifications
+  };
+  private static final int[] quickMenuCommandResArray = {R.string.voice_commands_quick_menu};
+  private static final int[] clipboardCommandResArray = {R.string.voice_commands_clipboard_history};
+  private static final int[] translateCommandResArray = {R.string.voice_commands_translate};
+  private static final int[] objectRecognitionCommandResArray = {
+    R.string.voice_commands_object_recognition
+  };
+  private static final int[] faceRecognitionCommandResArray = {
+    R.string.voice_commands_face_recognition
+  };
+  private static final int[] moneyRecognitionCommandResArray = {
+    R.string.voice_commands_money_recognition
+  };
+  private static final int[] sceneRecognitionCommandResArray = {
+    R.string.voice_commands_scene_recognition
+  };
+  private static final int[] toggleGestureSetCommandResArray = {
+    R.string.voice_commands_toggle_gesture_set, R.string.voice_commands_switch_gesture_set
+  };
+  private static final int[] itemInfoCommandResArray = {
+    R.string.voice_commands_item_info, R.string.voice_commands_item_position
+  };
+  private static final int[] repeatLastCommandResArray = {
+    R.string.voice_commands_repeat_last, R.string.voice_commands_repeat_last_utterance
+  };
+  private static final int[] spellLastCommandResArray = {
+    R.string.voice_commands_spell_last, R.string.voice_commands_spell_last_utterance
   };
 
   private static final int[] hideScreenCommandResArray = {
@@ -393,6 +426,117 @@ public class VoiceCommandProcessor {
       }
 
       handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_CUSTOM_ACTION);
+      return true;
+    }
+
+    // quick menu voice command
+    // command format: quick menu
+    if (equals(command, quickMenuCommandResArray) >= 0) {
+      menuManager.showMenu(QUICK_MENU, eventId, R.string.quick_menu_empty);
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // clipboard history voice command
+    // command format: clipboard history
+    if (equals(command, clipboardCommandResArray) >= 0) {
+      menuManager.showMenu(CLIPBOARD_HISTORY, eventId, R.string.clipboard_history_empty);
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // translate voice command
+    // command format: translate
+    if (equals(command, translateCommandResArray) >= 0) {
+      boolean ok = performTranslateAction();
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // object recognition voice command
+    // command format: object recognition
+    if (equals(command, objectRecognitionCommandResArray) >= 0) {
+      boolean ok = performImageRecognition(/* preferDetailed= */ true);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // face recognition voice command
+    // command format: face recognition
+    if (equals(command, faceRecognitionCommandResArray) >= 0) {
+      boolean ok = performImageRecognition(/* preferDetailed= */ true);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // money recognition voice command
+    // command format: money recognition
+    if (equals(command, moneyRecognitionCommandResArray) >= 0) {
+      boolean ok = performImageRecognition(/* preferDetailed= */ true);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // scene recognition voice command
+    // command format: scene recognition
+    if (equals(command, sceneRecognitionCommandResArray) >= 0) {
+      boolean ok = performImageRecognition(/* preferDetailed= */ true);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // toggle per-app gesture set voice command
+    // command format: toggle gesture set
+    if (equals(command, toggleGestureSetCommandResArray) >= 0) {
+      boolean ok = togglePerAppGestureSet(eventId);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // item info voice command
+    // command format: item info
+    if (equals(command, itemInfoCommandResArray) >= 0) {
+      boolean ok = announceItemPosition(eventId);
+      if (!ok) {
+        pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
+      }
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // repeat last utterance voice command
+    // command format: repeat last
+    if (equals(command, repeatLastCommandResArray) >= 0) {
+      pipeline.returnFeedback(
+          eventId, Feedback.part().setSpeech(Feedback.Speech.create(REPEAT_SAVED)));
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
+      return true;
+    }
+
+    // spell last utterance voice command
+    // command format: spell last
+    if (equals(command, spellLastCommandResArray) >= 0) {
+      pipeline.returnFeedback(
+          eventId, Feedback.part().setSpeech(Feedback.Speech.create(SPELL_SAVED)));
+      handleVoiceCommandRecognized(VOICE_COMMAND_TYPE_ASSISTANT);
       return true;
     }
 
@@ -929,6 +1073,97 @@ public class VoiceCommandProcessor {
   private CharSequence remainder(String command, int stringResId) {
     CharSequence prefix = service.getString(stringResId).toLowerCase();
     return command.substring(prefix.length());
+  }
+
+  private boolean performTranslateAction() {
+    @Nullable AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
+    CharSequence text = AccessibilityNodeInfoUtils.getSelectedNodeText(node);
+    if (TextUtils.isEmpty(text)) {
+      text = AccessibilityNodeInfoUtils.getNodeText(node);
+    }
+    if (TextUtils.isEmpty(text)) {
+      speakDelayed(service.getString(R.string.translate_no_text));
+      return false;
+    }
+
+    Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
+    intent.setType("text/plain");
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT_READONLY, true);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+    if (intent.resolveActivity(service.getPackageManager()) == null) {
+      speakDelayed(service.getString(R.string.translate_no_app));
+      return false;
+    }
+
+    service.startActivity(intent);
+    return true;
+  }
+
+  private boolean performImageRecognition(boolean preferDetailed) {
+    AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ false);
+    if (node == null) {
+      speakDelayed(service.getString(R.string.image_caption_no_result));
+      return false;
+    }
+    Feedback.Part.Builder feedback =
+        GeminiFunctionUtils.getPreferredImageDescriptionFeedback(service, actorState, node);
+    if (feedback != null && preferDetailed) {
+      return pipeline.returnFeedback(EVENT_ID_UNTRACKED, feedback);
+    }
+    return pipeline.returnFeedback(EVENT_ID_UNTRACKED, Feedback.performImageCaptions(node, true));
+  }
+
+  private boolean togglePerAppGestureSet(EventId eventId) {
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      speakDelayed(service.getString(R.string.per_app_gesture_set_unavailable));
+      return false;
+    }
+    String packageName = service.getRootInActiveWindow().getPackageName().toString();
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    int globalSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    int currentSet = PerAppGestureSetUtils.getGestureSetForPackage(prefs, service, packageName);
+    int nextSet;
+    if (currentSet == PerAppGestureSetUtils.SET_GLOBAL) {
+      nextSet =
+          (globalSet == PerAppGestureSetUtils.SET_IOS)
+              ? PerAppGestureSetUtils.SET_DEFAULT
+              : PerAppGestureSetUtils.SET_IOS;
+    } else {
+      nextSet =
+          (currentSet == PerAppGestureSetUtils.SET_IOS)
+              ? PerAppGestureSetUtils.SET_DEFAULT
+              : PerAppGestureSetUtils.SET_IOS;
+    }
+    PerAppGestureSetUtils.setGestureSetForPackage(prefs, service, packageName, nextSet);
+    String[] entries = service.getResources().getStringArray(R.array.pref_gesture_set_entries);
+    String label = (nextSet >= 0 && nextSet < entries.length) ? entries[nextSet] : String.valueOf(nextSet);
+    speakDelayed(service.getString(R.string.per_app_gesture_set_switched, label));
+    return true;
+  }
+
+  private boolean announceItemPosition(EventId eventId) {
+    AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
+    CharSequence info = service.getGlobalVariables().getCollectionItemTransitionDescription(node);
+    if (TextUtils.isEmpty(info)) {
+      info = service.getGlobalVariables().getCollectionTransitionDescription();
+    }
+    if (TextUtils.isEmpty(info)) {
+      speakDelayed(service.getString(R.string.announce_item_position_unavailable));
+      return false;
+    }
+    pipeline.returnFeedback(eventId, Feedback.speech(info));
+    return true;
   }
 
   private @Nullable AccessibilityNodeInfoCompat getEditTextFocus() {

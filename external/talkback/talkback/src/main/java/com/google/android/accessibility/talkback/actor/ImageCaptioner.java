@@ -71,6 +71,7 @@ import static com.google.android.accessibility.utils.output.SpeechController.QUE
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Bitmap;
@@ -1446,6 +1447,9 @@ public class ImageCaptioner extends Handler
       SharedPreferences prefs,
       CaptionNodeType captionNodeType,
       boolean hasAiCore) {
+    if (!isAdvancedRecognitionEnabled(context, prefs)) {
+      return false;
+    }
     return hasAiCore
         ? needAutomaticImageCaptioning(
             context,
@@ -1460,6 +1464,29 @@ public class ImageCaptioner extends Handler
       Context context, SharedPreferences prefs, CaptionNodeType captionNodeType) {
     return needAutomaticImageCaptioning(
         context, prefs, FeatureSwitchDialogResources.TEXT_RECOGNITION, captionNodeType);
+  }
+
+  private static boolean isAdvancedRecognitionEnabled(Context context, SharedPreferences prefs) {
+    return SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_auto_object_recognition_key,
+            R.bool.pref_auto_object_recognition_default)
+        || SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_auto_scene_recognition_key,
+            R.bool.pref_auto_scene_recognition_default)
+        || SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_auto_face_recognition_key,
+            R.bool.pref_auto_face_recognition_default)
+        || SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_auto_money_recognition_key,
+            R.bool.pref_auto_money_recognition_default);
   }
 
   private static boolean needAutomaticImageCaptioning(
@@ -1668,6 +1695,7 @@ public class ImageCaptioner extends Handler
             : constructCaptionTextForAuto(
                 service, imageDescriptionResult, iconLabelResult, ocrTextResult);
     returnFeedback(result);
+    maybeAutoTranslate(result, isUserRequested);
   }
 
   private void returnFeedback(@StringRes int text) {
@@ -1678,6 +1706,30 @@ public class ImageCaptioner extends Handler
     pipeline.returnFeedback(
         EVENT_ID_UNTRACKED,
         Feedback.speech(text, SpeakOptions.create().setFlags(FLAG_NO_DEVICE_SLEEP)));
+  }
+
+  private void maybeAutoTranslate(String text, boolean isUserRequested) {
+    if (!isUserRequested) {
+      return;
+    }
+    boolean autoTranslate =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_auto_translate_captions_key,
+            R.bool.pref_auto_translate_captions_default);
+    if (!autoTranslate || TextUtils.isEmpty(text)) {
+      return;
+    }
+    Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
+    intent.setType("text/plain");
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT_READONLY, true);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    if (intent.resolveActivity(service.getPackageManager()) == null) {
+      return;
+    }
+    service.startActivity(intent);
   }
 
   /** Sends a message to handle results timeout. */

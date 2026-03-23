@@ -56,6 +56,8 @@ import static com.google.android.accessibility.talkback.actor.TalkBackUIActor.Ty
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.CONTEXT;
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.CUSTOM_ACTION;
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.LANGUAGE;
+import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.CLIPBOARD_HISTORY;
+import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.QUICK_MENU;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.ANNOUNCE_REAL_ACTION;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.UNKNOWN_ANNOUNCEMENT;
 import static com.google.android.accessibility.utils.Performance.EVENT_ID_UNTRACKED;
@@ -67,7 +69,9 @@ import static com.google.android.accessibility.utils.traversal.TraversalStrategy
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.FingerprintGestureController;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -79,12 +83,14 @@ import com.google.android.accessibility.talkback.Feedback.TriggerIntent.Action;
 import com.google.android.accessibility.talkback.Pipeline;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
+import com.google.android.accessibility.talkback.actor.gemini.GeminiConfiguration;
 import com.google.android.accessibility.talkback.actor.gemini.GeminiFunctionUtils;
 import com.google.android.accessibility.talkback.analytics.TalkBackAnalytics;
 import com.google.android.accessibility.talkback.contextmenu.ListMenuManager;
 import com.google.android.accessibility.talkback.focusmanagement.AccessibilityFocusMonitor;
 import com.google.android.accessibility.talkback.gesture.GestureShortcutMapping.TalkbackAction;
 import com.google.android.accessibility.talkback.interpreters.AccessibilityFocusInterpreter;
+import com.google.android.accessibility.talkback.plugin.PluginRegistry;
 import com.google.android.accessibility.talkback.selector.SelectorController;
 import com.google.android.accessibility.talkback.selector.SelectorController.AnnounceType;
 import com.google.android.accessibility.talkback.selector.SelectorController.Setting;
@@ -102,6 +108,7 @@ import com.google.android.accessibility.utils.monitor.ScreenMonitor;
 import com.google.android.accessibility.utils.output.FeedbackItem;
 import com.google.android.accessibility.utils.output.SpeechController;
 import com.google.android.accessibility.utils.output.SpeechController.SpeakOptions;
+import com.google.android.accessibility.utils.screencapture.ScreenshotCapture;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
@@ -116,6 +123,16 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public class GestureController {
 
   private static final String LOG_TAG = "GestureController";
+  private static final String BLINDROID_ASSIST_OBSTACLE =
+      "com.screenreaders.blindroid.obstacle.ObstacleAssistActivity";
+  private static final String BLINDROID_ASSIST_FACE =
+      "com.screenreaders.blindroid.face.FaceAssistActivity";
+  private static final String BLINDROID_ASSIST_CURRENCY =
+      "com.screenreaders.blindroid.currency.CurrencyActivity";
+  private static final String BLINDROID_ASSIST_DOCUMENT =
+      "com.screenreaders.blindroid.document.DocumentAssistActivity";
+  private static final String BLINDROID_ASSIST_SCAN_HUB =
+      "com.screenreaders.blindroid.scan.ScanHubActivity";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   // Member variables
@@ -213,6 +230,8 @@ public class GestureController {
       accessibilityFocusInterpreter.performSplitTap(EVENT_ID_UNTRACKED);
     } else if (action.equals(service.getString(R.string.shortcut_value_unassigned))) {
       // Do Nothing
+    } else if (PluginRegistry.isPluginActionKey(action)) {
+      result = PluginRegistry.launchAction(service, action);
     } else if (action.equals(service.getString(R.string.shortcut_value_previous))) {
       result =
           pipeline.returnFeedback(
@@ -303,6 +322,13 @@ public class GestureController {
       result = menuManager.showMenu(CONTEXT, eventId);
     } else if (action.equals(service.getString(R.string.shortcut_value_local_breakout))) {
       result = menuManager.showMenu(CONTEXT, eventId);
+    } else if (action.equals(service.getString(R.string.shortcut_value_quick_menu))) {
+      result = menuManager.showMenu(QUICK_MENU, eventId, R.string.quick_menu_empty);
+    } else if (action.equals(service.getString(R.string.shortcut_value_clipboard_history))) {
+      result = menuManager.showMenu(CLIPBOARD_HISTORY, eventId, R.string.clipboard_history_empty);
+    } else if (action.equals(
+        service.getString(R.string.shortcut_value_toggle_per_app_gesture_set))) {
+      result = togglePerAppGestureSet(eventId);
     } else if (action.equals(service.getString(R.string.shortcut_value_show_custom_actions))) {
       result = menuManager.showMenu(CUSTOM_ACTION, eventId);
     } else if (action.equals(service.getString(R.string.shortcut_value_editing))) {
@@ -440,6 +466,68 @@ public class GestureController {
       }
     } else if (action.equals(service.getString(R.string.shortcut_value_toggle_voice_feedback))) {
       pipeline.returnFeedback(eventId, Feedback.speech(TOGGLE_VOICE_FEEDBACK));
+    } else if (action.equals(service.getString(R.string.shortcut_value_toggle_explore_by_touch))) {
+      result =
+          toggleBooleanPreference(
+              eventId,
+              R.string.pref_explore_by_touch_key,
+              R.bool.pref_explore_by_touch_default,
+              R.string.explore_by_touch_state);
+    } else if (action.equals(service.getString(R.string.shortcut_value_toggle_single_tap))) {
+      result =
+          toggleBooleanPreference(
+              eventId,
+              R.string.pref_single_tap_key,
+              R.bool.pref_single_tap_default,
+              R.string.single_tap_state);
+    } else if (action.equals(service.getString(R.string.shortcut_value_toggle_web_scripts))) {
+      result =
+          toggleBooleanPreference(
+              eventId,
+              R.string.pref_web_scripts_key,
+              R.bool.pref_web_scripts_default,
+              R.string.web_scripts_state);
+    } else if (action.equals(
+        service.getString(R.string.shortcut_value_toggle_speak_notifications))) {
+      result =
+          toggleBooleanPreference(
+              eventId,
+              R.string.pref_speak_notifications_key,
+              R.bool.pref_speak_notifications_default,
+              R.string.speak_notifications_state);
+    } else if (action.equals(service.getString(R.string.shortcut_value_macro_1))) {
+      result = performGestureMacro(eventId, 1);
+    } else if (action.equals(service.getString(R.string.shortcut_value_macro_2))) {
+      result = performGestureMacro(eventId, 2);
+    } else if (action.equals(service.getString(R.string.shortcut_value_macro_3))) {
+      result = performGestureMacro(eventId, 3);
+    } else if (action.equals(service.getString(R.string.shortcut_value_document_scan))) {
+      result =
+          launchBlindroidAssist(BLINDROID_ASSIST_DOCUMENT)
+              || performImageRecognition(/* preferDetailed= */ true);
+    } else if (action.equals(service.getString(R.string.shortcut_value_read_screen))) {
+      result = performReadScreenAi(eventId);
+    } else if (action.equals(service.getString(R.string.shortcut_value_scan_hub))) {
+      result = launchBlindroidAssist(BLINDROID_ASSIST_SCAN_HUB);
+    } else if (action.equals(service.getString(R.string.shortcut_value_announce_item_position))) {
+      AccessibilityNodeInfoCompat node =
+          accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
+      CharSequence info = service.getGlobalVariables().getCollectionItemTransitionDescription(node);
+      if (TextUtils.isEmpty(info)) {
+        info = service.getGlobalVariables().getCollectionTransitionDescription();
+      }
+      if (TextUtils.isEmpty(info)) {
+        speak(service.getString(R.string.announce_item_position_unavailable));
+        result = false;
+      } else {
+        result = pipeline.returnFeedback(eventId, Feedback.speech(info));
+      }
+    } else if (action.equals(service.getString(R.string.shortcut_value_repeat_last_utterance))) {
+      pipeline.returnFeedback(
+          eventId, Feedback.part().setSpeech(Feedback.Speech.create(REPEAT_SAVED)));
+    } else if (action.equals(service.getString(R.string.shortcut_value_spell_last_utterance))) {
+      pipeline.returnFeedback(
+          eventId, Feedback.part().setSpeech(Feedback.Speech.create(SPELL_SAVED)));
     } else if (action.equals(service.getString(R.string.shortcut_value_copy_last_spoken_phrase))) {
       pipeline.returnFeedback(
           eventId, Feedback.part().setSpeech(Feedback.Speech.create(COPY_LAST)));
@@ -477,6 +565,24 @@ public class GestureController {
             GeminiFunctionUtils.getPreferredImageDescriptionFeedback(service, actorState, node);
         result = feedback != null && pipeline.returnFeedback(EVENT_ID_UNTRACKED, feedback);
       }
+    } else if (action.equals(service.getString(R.string.shortcut_value_translate_text))) {
+      result = performTranslateAction();
+    } else if (action.equals(service.getString(R.string.shortcut_value_object_recognition))) {
+      result =
+          launchBlindroidAssist(BLINDROID_ASSIST_OBSTACLE)
+              || performImageRecognition(/* preferDetailed= */ true);
+    } else if (action.equals(service.getString(R.string.shortcut_value_face_recognition))) {
+      result =
+          launchBlindroidAssist(BLINDROID_ASSIST_FACE)
+              || performImageRecognition(/* preferDetailed= */ true);
+    } else if (action.equals(service.getString(R.string.shortcut_value_money_recognition))) {
+      result =
+          launchBlindroidAssist(BLINDROID_ASSIST_CURRENCY)
+              || performImageRecognition(/* preferDetailed= */ true);
+    } else if (action.equals(service.getString(R.string.shortcut_value_scene_recognition))) {
+      result =
+          launchBlindroidAssist(BLINDROID_ASSIST_OBSTACLE)
+              || performImageRecognition(/* preferDetailed= */ true);
     }
 
     if (!result) {
@@ -642,6 +748,88 @@ public class GestureController {
     }
   }
 
+  private boolean performTranslateAction() {
+    @Nullable AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
+    CharSequence text = AccessibilityNodeInfoUtils.getSelectedNodeText(node);
+    if (TextUtils.isEmpty(text)) {
+      text = AccessibilityNodeInfoUtils.getNodeText(node);
+    }
+    if (TextUtils.isEmpty(text)) {
+      speak(service.getString(R.string.translate_no_text));
+      return false;
+    }
+
+    Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
+    intent.setType("text/plain");
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);
+    intent.putExtra(Intent.EXTRA_PROCESS_TEXT_READONLY, true);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+    if (intent.resolveActivity(service.getPackageManager()) == null) {
+      speak(service.getString(R.string.translate_no_app));
+      return false;
+    }
+
+    service.startActivity(intent);
+    return true;
+  }
+
+  private boolean performImageRecognition(boolean preferDetailed) {
+    AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ false);
+    if (node == null) {
+      speak(service.getString(R.string.image_caption_no_result));
+      return false;
+    }
+    Feedback.Part.Builder feedback =
+        GeminiFunctionUtils.getPreferredImageDescriptionFeedback(service, actorState, node);
+    if (feedback != null && preferDetailed) {
+      return pipeline.returnFeedback(EVENT_ID_UNTRACKED, feedback);
+    }
+    return pipeline.returnFeedback(EVENT_ID_UNTRACKED, Feedback.performImageCaptions(node, true));
+  }
+
+  private boolean performReadScreenAi(EventId eventId) {
+    String prompt = GeminiConfiguration.getReadScreenPrompt(service);
+    if (GeminiConfiguration.isReadScreenHapticEnabled(service)) {
+      pipeline.returnFeedback(
+          eventId,
+          Feedback.vibration(com.google.android.accessibility.utils.R.array.read_screen_pattern));
+    }
+    ScreenshotCapture.takeScreenshot(
+        service,
+        (screenCapture, isFormatSupported) -> {
+          pipeline.returnFeedback(
+              eventId, Feedback.geminiRequest(/* requestId= */ -1, prompt, screenCapture));
+        });
+    return true;
+  }
+
+  private boolean launchBlindroidAssist(String className) {
+    String packageName = getPackageNameForClass(className);
+    if (TextUtils.isEmpty(packageName)) {
+      return false;
+    }
+    Intent intent = new Intent();
+    intent.setComponent(new ComponentName(packageName, className));
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    if (intent.resolveActivity(service.getPackageManager()) == null) {
+      // Fall back to in-service recognition when Blindroid scanner is unavailable.
+      return false;
+    }
+    service.startActivity(intent);
+    return true;
+  }
+
+  private String getPackageNameForClass(String className) {
+    int lastDot = className.lastIndexOf('.');
+    if (lastDot <= 0) {
+      return className;
+    }
+    return className.substring(0, lastDot);
+  }
+
   private @Nullable AccessibilityNodeInfoCompat getEditTextFocus() {
     @Nullable AccessibilityNodeInfoCompat node =
         accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
@@ -663,6 +851,78 @@ public class GestureController {
                     | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_MICROPHONE_ACTIVE
                     | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_SSB_ACTIVE);
     pipeline.returnFeedback(EVENT_ID_UNTRACKED, Feedback.speech(text, speakOptions));
+  }
+
+  private boolean performGestureMacro(EventId eventId, int macroIndex) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    boolean enabled =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs, service.getResources(), R.string.pref_macro_enabled_key, R.bool.pref_macro_enabled_default);
+    if (!enabled) {
+      speak(service.getString(R.string.macro_disabled));
+      return false;
+    }
+
+    String name = getMacroName(prefs, macroIndex);
+    String unassigned = service.getString(R.string.shortcut_value_unassigned);
+    java.util.List<String> actions = GestureMacroStore.getActionList(service, macroIndex);
+    int count = 0;
+    for (String action : actions) {
+      if (TextUtils.isEmpty(action) || TextUtils.equals(action, unassigned)) {
+        continue;
+      }
+      if (isMacroAction(action)) {
+        continue;
+      }
+      count++;
+    }
+    if (count == 0) {
+      speak(service.getString(R.string.macro_empty, name));
+      return false;
+    }
+
+    speak(service.getString(R.string.macro_running, name));
+    for (String action : actions) {
+      if (TextUtils.isEmpty(action) || TextUtils.equals(action, unassigned)) {
+        continue;
+      }
+      if (isMacroAction(action)) {
+        continue;
+      }
+      performAction(action, eventId);
+    }
+    return true;
+  }
+
+  private String getMacroName(SharedPreferences prefs, int macroIndex) {
+    int keyResId;
+    int defaultResId;
+    switch (macroIndex) {
+      case 1:
+        keyResId = R.string.pref_macro_1_name_key;
+        defaultResId = R.string.macro_default_name_1;
+        break;
+      case 2:
+        keyResId = R.string.pref_macro_2_name_key;
+        defaultResId = R.string.macro_default_name_2;
+        break;
+      case 3:
+      default:
+        keyResId = R.string.pref_macro_3_name_key;
+        defaultResId = R.string.macro_default_name_3;
+        break;
+    }
+    String value = prefs.getString(service.getString(keyResId), null);
+    if (TextUtils.isEmpty(value)) {
+      value = service.getString(defaultResId);
+    }
+    return value;
+  }
+
+  private boolean isMacroAction(String action) {
+    return TextUtils.equals(action, service.getString(R.string.shortcut_value_macro_1))
+        || TextUtils.equals(action, service.getString(R.string.shortcut_value_macro_2))
+        || TextUtils.equals(action, service.getString(R.string.shortcut_value_macro_3));
   }
 
   private void changeAccessibilityVolume(EventId eventId, boolean decrease) {
@@ -707,5 +967,70 @@ public class GestureController {
             GESTURE_ACTION_OVERLAY,
             volumeText,
             /* showIcon= */ false));
+  }
+
+  private boolean toggleBooleanPreference(
+      EventId eventId, int keyResId, int defaultResId, int announcementResId) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    boolean newValue =
+        !SharedPreferencesUtils.getBooleanPref(
+            prefs, service.getResources(), keyResId, defaultResId);
+    SharedPreferencesUtils.putBooleanPref(prefs, service.getResources(), keyResId, newValue);
+    String announcement =
+        service.getString(
+            announcementResId,
+            newValue ? service.getString(R.string.value_on) : service.getString(R.string.value_off));
+    if (!TextUtils.isEmpty(announcement)) {
+      pipeline.returnFeedback(
+          eventId,
+          Feedback.speech(
+              announcement,
+              SpeakOptions.create()
+                  .setFlags(
+                      FeedbackItem.FLAG_NO_HISTORY
+                          | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_AUDIO_PLAYBACK_ACTIVE
+                          | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_MICROPHONE_ACTIVE
+                          | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_SSB_ACTIVE
+                          | FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_PHONE_CALL_ACTIVE
+                          | FeedbackItem.FLAG_SKIP_DUPLICATE)));
+    }
+    return true;
+  }
+
+  private boolean togglePerAppGestureSet(EventId eventId) {
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      pipeline.returnFeedback(
+          eventId, Feedback.speech(service.getString(R.string.per_app_gesture_set_unavailable)));
+      return false;
+    }
+    String packageName = service.getRootInActiveWindow().getPackageName().toString();
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    int globalSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    int currentSet = PerAppGestureSetUtils.getGestureSetForPackage(prefs, service, packageName);
+    int nextSet;
+    if (currentSet == PerAppGestureSetUtils.SET_GLOBAL) {
+      nextSet =
+          (globalSet == PerAppGestureSetUtils.SET_IOS)
+              ? PerAppGestureSetUtils.SET_DEFAULT
+              : PerAppGestureSetUtils.SET_IOS;
+    } else {
+      nextSet =
+          (currentSet == PerAppGestureSetUtils.SET_IOS)
+              ? PerAppGestureSetUtils.SET_DEFAULT
+              : PerAppGestureSetUtils.SET_IOS;
+    }
+    PerAppGestureSetUtils.setGestureSetForPackage(prefs, service, packageName, nextSet);
+    String[] entries = service.getResources().getStringArray(R.array.pref_gesture_set_entries);
+    String label = (nextSet >= 0 && nextSet < entries.length) ? entries[nextSet] : String.valueOf(nextSet);
+    pipeline.returnFeedback(
+        eventId,
+        Feedback.speech(service.getString(R.string.per_app_gesture_set_switched, label)));
+    return true;
   }
 }

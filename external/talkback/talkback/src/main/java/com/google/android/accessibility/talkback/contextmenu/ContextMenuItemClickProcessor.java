@@ -29,6 +29,7 @@ import static com.google.android.accessibility.utils.Performance.EVENT_ID_UNTRAC
 import static com.google.android.accessibility.utils.preference.PreferencesActivity.FRAGMENT_NAME;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import androidx.annotation.VisibleForTesting;
@@ -38,6 +39,8 @@ import com.google.android.accessibility.talkback.Feedback.TriggerIntent.Action;
 import com.google.android.accessibility.talkback.Pipeline;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
+import com.google.android.accessibility.talkback.gesture.PerAppGestureSetUtils;
+import com.google.android.accessibility.talkback.preference.base.BlindReaderPerAppGestureSetFragment;
 import com.google.android.accessibility.talkback.preference.base.VerbosityPrefFragment;
 import com.google.android.accessibility.utils.Performance.EventId;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
@@ -76,9 +79,15 @@ public class ContextMenuItemClickProcessor {
         || (itemId == R.id.spell_last_utterance)
         || (itemId == R.id.copy_last_utterance_to_clipboard)
         || (itemId == R.id.verbosity)
+        || (itemId == R.id.per_app_gesture_set)
+        || (itemId == R.id.toggle_per_app_gesture_set)
         || (itemId == R.id.audio_ducking)
         || (itemId == R.id.sound_feedback)
         || (itemId == R.id.vibration_feedback)
+        || (itemId == R.id.toggle_explore_by_touch)
+        || (itemId == R.id.toggle_single_tap)
+        || (itemId == R.id.toggle_web_scripts)
+        || (itemId == R.id.toggle_speak_notifications)
         || (itemId == R.id.talkback_settings)
         || (itemId == R.id.tts_settings)
         || (itemId == R.id.enable_dimming)
@@ -114,6 +123,12 @@ public class ContextMenuItemClickProcessor {
       Intent intent = createSettingsIntent();
       intent.putExtra(FRAGMENT_NAME, VerbosityPrefFragment.class.getName());
       service.startActivity(intent);
+    } else if (itemId == R.id.per_app_gesture_set) {
+      Intent intent = createSettingsIntent();
+      intent.putExtra(FRAGMENT_NAME, BlindReaderPerAppGestureSetFragment.class.getName());
+      service.startActivity(intent);
+    } else if (itemId == R.id.toggle_per_app_gesture_set) {
+      togglePerAppGestureSet(eventId);
     } else if (itemId == R.id.audio_ducking) {
       switchValueAndEcho(
           R.string.audio_focus_state,
@@ -129,6 +144,24 @@ public class ContextMenuItemClickProcessor {
           R.string.vibration_feedback_state,
           R.string.pref_vibration_key,
           R.bool.pref_vibration_default);
+    } else if (itemId == R.id.toggle_explore_by_touch) {
+      switchValueAndEcho(
+          R.string.explore_by_touch_state,
+          R.string.pref_explore_by_touch_key,
+          R.bool.pref_explore_by_touch_default);
+    } else if (itemId == R.id.toggle_single_tap) {
+      switchValueAndEcho(
+          R.string.single_tap_state,
+          R.string.pref_single_tap_key,
+          R.bool.pref_single_tap_default);
+    } else if (itemId == R.id.toggle_web_scripts) {
+      switchValueAndEcho(
+          R.string.web_scripts_state, R.string.pref_web_scripts_key, R.bool.pref_web_scripts_default);
+    } else if (itemId == R.id.toggle_speak_notifications) {
+      switchValueAndEcho(
+          R.string.speak_notifications_state,
+          R.string.pref_speak_notifications_key,
+          R.bool.pref_speak_notifications_default);
     } else if (itemId == R.id.talkback_settings) {
       final Intent settingsIntent = createSettingsIntent();
       service.startActivity(settingsIntent);
@@ -152,6 +185,42 @@ public class ContextMenuItemClickProcessor {
     }
 
     return true;
+  }
+
+  private void togglePerAppGestureSet(EventId eventId) {
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      pipeline.returnFeedback(
+          eventId, Feedback.speech(service.getString(R.string.per_app_gesture_set_unavailable)));
+      return;
+    }
+    String packageName = service.getRootInActiveWindow().getPackageName().toString();
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    int globalSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    int currentSet =
+        PerAppGestureSetUtils.getGestureSetForPackage(prefs, service, packageName);
+    int nextSet;
+    if (currentSet == PerAppGestureSetUtils.SET_GLOBAL) {
+      nextSet = (globalSet == PerAppGestureSetUtils.SET_IOS)
+          ? PerAppGestureSetUtils.SET_DEFAULT
+          : PerAppGestureSetUtils.SET_IOS;
+    } else {
+      nextSet =
+          (currentSet == PerAppGestureSetUtils.SET_IOS)
+              ? PerAppGestureSetUtils.SET_DEFAULT
+              : PerAppGestureSetUtils.SET_IOS;
+    }
+    PerAppGestureSetUtils.setGestureSetForPackage(prefs, service, packageName, nextSet);
+    String setLabel =
+        service.getResources().getStringArray(R.array.pref_gesture_set_entries)[nextSet];
+    pipeline.returnFeedback(
+        eventId,
+        Feedback.speech(service.getString(R.string.per_app_gesture_set_switched, setLabel)));
   }
 
   @VisibleForTesting

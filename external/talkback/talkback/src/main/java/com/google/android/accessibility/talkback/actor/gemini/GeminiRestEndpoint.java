@@ -48,7 +48,7 @@ public class GeminiRestEndpoint implements GeminiEndpoint {
   private final SharedPreferences prefs;
   private final String model;
   private final String url;
-  private final String urlWithApiKey;
+  private final String fallbackApiKey;
   private final GeminiRestRequestPerformer requestPerformer;
   private final String safetyThresholdHarassment;
   private final String safetyThresholdHateSpeech;
@@ -61,11 +61,7 @@ public class GeminiRestEndpoint implements GeminiEndpoint {
     this.context = context;
     model = GeminiConfiguration.getGeminiModel(context);
     url = GEMINI_URL + model + GEMINI_URL_NO_PARAM;
-    if (!TextUtils.isEmpty(apiKey)) {
-      urlWithApiKey = GEMINI_URL + model + GEMINI_URL_PARAM + apiKey;
-    } else {
-      urlWithApiKey = "";
-    }
+    fallbackApiKey = apiKey;
     this.requestPerformer = requestPerformer;
     safetyThresholdHarassment = GeminiConfiguration.getSafetyThresholdHarassment(context);
     safetyThresholdHateSpeech = GeminiConfiguration.getSafetyThresholdHateSpeech(context);
@@ -78,7 +74,7 @@ public class GeminiRestEndpoint implements GeminiEndpoint {
   }
 
   private boolean isSupported() {
-    return !TextUtils.isEmpty(urlWithApiKey) || requestPerformer.isKeylessInitialized();
+    return !TextUtils.isEmpty(resolveApiKey()) || requestPerformer.isKeylessInitialized();
   }
 
   @Override
@@ -112,7 +108,9 @@ public class GeminiRestEndpoint implements GeminiEndpoint {
       JSONObject postData =
           DataFieldUtils.createPostDataJson(prefixPrompt + command, encodedImage, safetySettings);
 
-      String urlTarget = TextUtils.isEmpty(urlWithApiKey) ? url : urlWithApiKey;
+      String apiKey = resolveApiKey();
+      String urlTarget =
+          TextUtils.isEmpty(apiKey) ? url : GEMINI_URL + model + GEMINI_URL_PARAM + apiKey;
       requestPerformer.performRequest(
           urlTarget,
           postData,
@@ -151,6 +149,11 @@ public class GeminiRestEndpoint implements GeminiEndpoint {
       return false;
     }
     return true;
+  }
+
+  private String resolveApiKey() {
+    String key = GeminiPrefs.getApiKey(context);
+    return TextUtils.isEmpty(key) ? fallbackApiKey : key;
   }
 
   @Override

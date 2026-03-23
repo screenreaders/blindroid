@@ -16,6 +16,10 @@
 package com.google.android.accessibility.talkback.actor.gemini;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
 
 /** This class implements the configuration flags for Gemini requests. */
 public final class GeminiConfiguration {
@@ -23,15 +27,76 @@ public final class GeminiConfiguration {
   private GeminiConfiguration() {}
 
   public static boolean isGeminiVoiceCommandEnabled(Context context) {
-    return false;
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    return SharedPreferencesUtils.getBooleanPref(
+        prefs, context.getResources(), R.string.pref_gemini_enabled_key, R.bool.pref_gemini_opt_in_default);
   }
 
   static String getGeminiModel(Context context) {
-    return "";
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String value =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gemini_model_key,
+            R.string.pref_gemini_model_default);
+    if (TextUtils.isEmpty(value)) {
+      return context.getString(R.string.pref_gemini_model_default);
+    }
+    return value;
   }
 
   static String getPrefixPrompt(Context context) {
-    return "";
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String value =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gemini_prefix_prompt_key,
+            R.string.pref_gemini_prefix_prompt_default);
+    return value == null ? "" : value;
+  }
+
+  static String getReadScreenPrompt(Context context) {
+    String style = getReadScreenStyle(context);
+    if (TextUtils.equals(
+        style, context.getString(R.string.pref_gemini_read_screen_style_value_summary))) {
+      return context.getString(R.string.gemini_read_screen_summary_prompt);
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String value =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gemini_read_screen_prompt_key,
+            R.string.gemini_read_screen_default_prompt);
+    if (TextUtils.isEmpty(value)) {
+      return context.getString(R.string.gemini_read_screen_default_prompt);
+    }
+    return value;
+  }
+
+  static String getReadScreenStyle(Context context) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String value =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gemini_read_screen_style_key,
+            R.string.pref_gemini_read_screen_style_default);
+    if (TextUtils.isEmpty(value)) {
+      return context.getString(R.string.pref_gemini_read_screen_style_default);
+    }
+    return value;
+  }
+
+  static boolean isReadScreenHapticEnabled(Context context) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    return SharedPreferencesUtils.getBooleanPref(
+        prefs,
+        context.getResources(),
+        R.string.pref_gemini_read_screen_haptic_key,
+        R.bool.pref_gemini_read_screen_haptic_default);
   }
 
   static String getSafetyThresholdHarassment(Context context) {
@@ -51,7 +116,7 @@ public final class GeminiConfiguration {
   }
 
   public static boolean isServerSideGeminiImageCaptioningEnabled(Context context) {
-    return false;
+    return isGeminiVoiceCommandEnabled(context);
   }
 
   public static boolean isOnDeviceGeminiImageCaptioningEnabled(Context context) {

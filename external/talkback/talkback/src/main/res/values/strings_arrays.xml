@@ -12,4 +12,110 @@
     <!-- The third item. [CHAR_LIMIT=NONE]-->
     <item>@string/scrolling_item_text</item>
   </string-array>
+
+  <string-array name="pref_per_app_gesture_set_entries">
+    <item>@string/pref_per_app_gesture_set_entry_global</item>
+    <item>@string/pref_per_app_gesture_set_entry_android</item>
+    <item>@string/pref_per_app_gesture_set_entry_ios</item>
+  </string-array>
+
+  <string-array name="pref_per_app_gesture_set_values" translatable="false">
+    <item>-1</item>
+    <item>0</item>
+    <item>1</item>
+  </string-array>
+
+  <string-array name="pref_floating_menu_action_entries">
+    <item>@string/pref_floating_menu_action_quick_menu</item>
+    <item>@string/pref_floating_menu_action_read_screen</item>
+    <item>@string/pref_floating_menu_action_scan_hub</item>
+  </string-array>
+
+  <string-array name="pref_floating_menu_action_values" translatable="false">
+    <item>@string/pref_floating_menu_action_value_quick_menu</item>
+    <item>@string/pref_floating_menu_action_value_read_screen</item>
+    <item>@string/pref_floating_menu_action_value_scan_hub</item>
+  </string-array>
+
+  <string-array name="pref_read_all_filter_entries">
+    <item>@string/pref_read_all_filter_all</item>
+    <item>@string/pref_read_all_filter_text</item>
+    <item>@string/pref_read_all_filter_controls</item>
+  </string-array>
+
+  <string-array name="pref_read_all_filter_values" translatable="false">
+    <item>@string/pref_read_all_filter_value_all</item>
+    <item>@string/pref_read_all_filter_value_text</item>
+    <item>@string/pref_read_all_filter_value_controls</item>
+  </string-array>
+
+  <string-array name="pref_read_all_style_entries">
+    <item>@string/pref_read_all_style_detailed</item>
+    <item>@string/pref_read_all_style_compact</item>
+  </string-array>
+
+  <string-array name="pref_read_all_style_values" translatable="false">
+    <item>@string/pref_read_all_style_value_detailed</item>
+    <item>@string/pref_read_all_style_value_compact</item>
+  </string-array>
+
+  <string-array name="pref_gemini_read_screen_style_entries">
+    <item>@string/pref_gemini_read_screen_style_detailed</item>
+    <item>@string/pref_gemini_read_screen_style_summary</item>
+  </string-array>
+
+  <string-array name="pref_gemini_read_screen_style_values" translatable="false">
+    <item>@string/pref_gemini_read_screen_style_value_detailed</item>
+    <item>@string/pref_gemini_read_screen_style_value_summary</item>
+  </string-array>
+
+  <string-array name="pref_gesture_edit_scope_entries">
+    <item>@string/pref_gesture_edit_scope_entry_global</item>
+    <item>@string/pref_gesture_edit_scope_entry_current</item>
+  </string-array>
+
+  <string-array name="pref_gesture_edit_scope_values" translatable="false">
+    <item>global</item>
+    <item>current_app</item>
+  </string-array>
+
+  <string-array name="pref_clipboard_history_max_entries">
+    <item>@string/pref_clipboard_history_max_5</item>
+    <item>@string/pref_clipboard_history_max_10</item>
+    <item>@string/pref_clipboard_history_max_20</item>
+  </string-array>
+
+  <string-array name="pref_clipboard_history_max_values" translatable="false">
+    <item>5</item>
+    <item>10</item>
+    <item>20</item>
+  </string-array>
+
+  <string-array name="pref_notification_speech_rate_entries">
+    <item>@string/pref_notification_speech_rate_80</item>
+    <item>@string/pref_notification_speech_rate_100</item>
+    <item>@string/pref_notification_speech_rate_120</item>
+    <item>@string/pref_notification_speech_rate_140</item>
+  </string-array>
+
+  <string-array name="pref_notification_speech_rate_values" translatable="false">
+    <item>0.8</item>
+    <item>1.0</item>
+    <item>1.2</item>
+    <item>1.4</item>
+  </string-array>
+
+  <string-array name="pref_notification_speech_pitch_entries">
+    <item>@string/pref_notification_speech_pitch_80</item>
+    <item>@string/pref_notification_speech_pitch_100</item>
+    <item>@string/pref_notification_speech_pitch_120</item>
+    <item>@string/pref_notification_speech_pitch_140</item>
+  </string-array>
+
+  <string-array name="pref_notification_speech_pitch_values" translatable="false">
+    <item>0.8</item>
+    <item>1.0</item>
+    <item>1.2</item>
+    <item>1.4</item>
+  </string-array>
 </resources>

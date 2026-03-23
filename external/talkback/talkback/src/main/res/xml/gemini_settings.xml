@@ -3,4 +3,31 @@
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
       android:key="@string/pref_gemini_enabled_key"
       android:title="@string/title_pref_gemini_enabled" />
+  <EditTextPreference
+      android:key="@string/pref_gemini_api_key_key"
+      android:title="@string/title_pref_gemini_api_key" />
+  <EditTextPreference
+      android:key="@string/pref_gemini_model_key"
+      android:title="@string/title_pref_gemini_model"
+      android:defaultValue="@string/pref_gemini_model_default" />
+  <EditTextPreference
+      android:key="@string/pref_gemini_prefix_prompt_key"
+      android:title="@string/title_pref_gemini_prefix_prompt"
+      android:defaultValue="@string/pref_gemini_prefix_prompt_default" />
+  <EditTextPreference
+      android:key="@string/pref_gemini_read_screen_prompt_key"
+      android:title="@string/title_pref_gemini_read_screen_prompt"
+      android:defaultValue="@string/gemini_read_screen_default_prompt" />
+  <ListPreference
+      android:key="@string/pref_gemini_read_screen_style_key"
+      android:title="@string/title_pref_gemini_read_screen_style"
+      android:summary="@string/summary_pref_gemini_read_screen_style"
+      android:entries="@array/pref_gemini_read_screen_style_entries"
+      android:entryValues="@array/pref_gemini_read_screen_style_values"
+      android:defaultValue="@string/pref_gemini_read_screen_style_default" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:key="@string/pref_gemini_read_screen_haptic_key"
+      android:title="@string/title_pref_gemini_read_screen_haptic"
+      android:summary="@string/summary_pref_gemini_read_screen_haptic"
+      android:defaultValue="@bool/pref_gemini_read_screen_haptic_default" />
 </PreferenceScreen>

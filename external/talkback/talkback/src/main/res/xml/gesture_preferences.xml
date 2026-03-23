@@ -16,6 +16,13 @@
       android:defaultValue="@string/pref_gesture_set_value_default"
       android:entries="@array/pref_gesture_set_entries"
       android:entryValues="@array/pref_gesture_set_values" />
+  <ListPreference
+      android:key="@string/pref_gesture_edit_scope_key"
+      android:title="@string/pref_gesture_edit_scope_title"
+      android:summary="@string/pref_gesture_edit_scope_unavailable"
+      android:defaultValue="@string/pref_gesture_edit_scope_default"
+      android:entries="@array/pref_gesture_edit_scope_entries"
+      android:entryValues="@array/pref_gesture_edit_scope_values" />
   <!-- One finger gestures -->
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_1finger_shortcuts_key"
@@ -116,6 +123,22 @@
         android:title="@string/title_pref_shortcut_right_and_down"/>
   </com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory>
 
+  <!-- Edge gestures -->
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory
+      android:key="@string/pref_category_edge_gestures_key"
+      android:title="@string/edge_gestures_title">
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_edge_swipe_right_default"
+        android:key="@string/pref_shortcut_edge_swipe_right_key"
+        android:summary="%s"
+        android:title="@string/title_pref_shortcut_edge_swipe_right"/>
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_edge_swipe_left_default"
+        android:key="@string/pref_shortcut_edge_swipe_left_key"
+        android:summary="%s"
+        android:title="@string/title_pref_shortcut_edge_swipe_left"/>
+  </com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory>
+
   <!-- Two finger gestures -->
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_2finger_shortcuts_key"
@@ -165,6 +188,16 @@
         android:key="@string/pref_shortcut_2finger_swipe_right_key"
         android:summary="%s"
         android:title="@string/title_pref_shortcut_2finger_swipe_right"/>
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_2finger_rotate_cw_default"
+        android:key="@string/pref_shortcut_2finger_rotate_cw_key"
+        android:summary="%s"
+        android:title="@string/title_pref_shortcut_2finger_rotate_cw"/>
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_2finger_rotate_ccw_default"
+        android:key="@string/pref_shortcut_2finger_rotate_ccw_key"
+        android:summary="%s"
+        android:title="@string/title_pref_shortcut_2finger_rotate_ccw"/>
   </com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory>
 
   <!-- Three finger gestures -->

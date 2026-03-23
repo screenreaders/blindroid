@@ -22,9 +22,11 @@ import static com.google.android.accessibility.utils.traversal.TraversalStrategy
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.text.TextUtils;
 import androidx.annotation.IntDef;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.accessibility.talkback.Feedback;
@@ -38,6 +40,8 @@ import com.google.android.accessibility.talkback.focusmanagement.record.FocusAct
 import com.google.android.accessibility.utils.AccessibilityNodeInfoUtils;
 import com.google.android.accessibility.utils.AccessibilityServiceCompatUtils;
 import com.google.android.accessibility.utils.Performance.EventId;
+import com.google.android.accessibility.utils.Role;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.WeakReferenceHandler;
 import com.google.android.accessibility.utils.output.SpeechController;
 import com.google.android.accessibility.utils.traversal.OrderedTraversalStrategy;
@@ -91,6 +95,7 @@ public class FullScreenReadActor {
   private Pipeline.FeedbackReturner pipeline;
 
   private final AccessibilityFocusMonitor accessibilityFocusMonitor;
+  private final SharedPreferences prefs;
 
   /** Wake lock for keeping the device unlocked while reading */
   private PowerManager.WakeLock wakeLock;
@@ -103,6 +108,14 @@ public class FullScreenReadActor {
   private final ScreenStateMonitor.State screenState;
 
   @Nullable AccessibilityNodeInfoCompat pausedNode;
+
+  @Nullable private AccessibilityNodeInfoCompat lastAutoOcrNode;
+
+  private static final String FILTER_ALL = "all";
+  private static final String FILTER_TEXT_ONLY = "text_only";
+  private static final String FILTER_CONTROLS_ONLY = "controls_only";
+  private static final String STYLE_DETAILED = "detailed";
+  private static final String STYLE_COMPACT = "compact";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   // State-reading interface
@@ -140,6 +153,7 @@ public class FullScreenReadActor {
     this.accessibilityFocusMonitor = accessibilityFocusMonitor;
     this.service = service;
     this.speechController = speechController;
+    this.prefs = SharedPreferencesUtils.getSharedPreferences(service);
     fullScreenReadDialog = new FullScreenReadDialog(service);
     wakeLock =
         ((PowerManager) service.getSystemService(Context.POWER_SERVICE))
@@ -190,7 +204,9 @@ public class FullScreenReadActor {
 
     // With this refocus to trigger the continuous reading mode from cursor position.
     EventState.getInstance().setFlag(EventState.EVENT_NODE_REFOCUSED);
-    moveTo(currentNode);
+    AccessibilityNodeInfoCompat target =
+        isFilteredReadingEnabled() ? findNextReadableNode(currentNode, /* includeCurrent= */ true) : currentNode;
+    moveTo(target != null ? target : currentNode);
   }
 
   /** Starts linearly reading from the top of the view hierarchy. */
@@ -218,13 +234,7 @@ public class FullScreenReadActor {
       return;
     }
 
-    TraversalStrategy traversal = new OrderedTraversalStrategy(rootNode);
-    AccessibilityNodeInfoCompat firstNode =
-        TraversalStrategyUtils.findFirstFocusInNodeTree(
-            traversal,
-            rootNode,
-            SEARCH_FOCUS_FORWARD,
-            AccessibilityNodeInfoUtils.FILTER_SHOULD_FOCUS);
+    AccessibilityNodeInfoCompat firstNode = findFirstReadableNode(rootNode);
 
     if (firstNode == null) {
       return;
@@ -273,6 +283,7 @@ public class FullScreenReadActor {
       LogUtils.d(TAG, "Continuous reading interrupt internal ");
     }
     setReadingState(STATE_STOPPED);
+    lastAutoOcrNode = null;
 
     if (wakeLock.isHeld()) {
       wakeLock.release();
@@ -289,10 +300,23 @@ public class FullScreenReadActor {
             .setFocus(Feedback.focus(node, focusActionInfo).setForceRefocus(true).build()))) {
       pipeline.returnFeedback(eventId, Feedback.sound(R.raw.complete));
       interrupt(/* internal= */ true);
+      return;
     }
+    maybeAutoOcr(node);
   }
 
   private void moveForward() {
+    if (isFilteredReadingEnabled()) {
+      AccessibilityNodeInfoCompat current =
+          accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ false);
+      if (current != null) {
+        AccessibilityNodeInfoCompat next = findNextReadableNode(current, /* includeCurrent= */ false);
+        if (next != null) {
+          moveTo(next);
+          return;
+        }
+      }
+    }
     EventId eventId = EVENT_ID_UNTRACKED; // First node's speech is already performance tracked.
     // Continuous reading mode (CRM) always uses default granularity.
     if (!pipeline.returnFeedback(
@@ -328,6 +352,127 @@ public class FullScreenReadActor {
    */
   public boolean isPreviousActive() {
     return previousState != STATE_STOPPED;
+  }
+
+  private boolean isFilteredReadingEnabled() {
+    String filter =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_read_all_filter_key,
+            R.string.pref_read_all_filter_default);
+    String style =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_read_all_style_key,
+            R.string.pref_read_all_style_default);
+    return !TextUtils.equals(filter, FILTER_ALL) || TextUtils.equals(style, STYLE_COMPACT);
+  }
+
+  private AccessibilityNodeInfoCompat findFirstReadableNode(AccessibilityNodeInfoCompat rootNode) {
+    TraversalStrategy traversal = new OrderedTraversalStrategy(rootNode);
+    AccessibilityNodeInfoCompat node =
+        TraversalStrategyUtils.findFirstFocusInNodeTree(
+            traversal,
+            rootNode,
+            SEARCH_FOCUS_FORWARD,
+            AccessibilityNodeInfoUtils.FILTER_SHOULD_FOCUS);
+    if (node == null) {
+      return null;
+    }
+    return findNextReadableNode(traversal, node, /* includeCurrent= */ true);
+  }
+
+  private AccessibilityNodeInfoCompat findNextReadableNode(
+      AccessibilityNodeInfoCompat startNode, boolean includeCurrent) {
+    AccessibilityNodeInfoCompat root =
+        AccessibilityServiceCompatUtils.getRootInActiveWindow(service);
+    if (root == null) {
+      return null;
+    }
+    TraversalStrategy traversal = new OrderedTraversalStrategy(root);
+    return findNextReadableNode(traversal, startNode, includeCurrent);
+  }
+
+  private AccessibilityNodeInfoCompat findNextReadableNode(
+      TraversalStrategy traversal, AccessibilityNodeInfoCompat startNode, boolean includeCurrent) {
+    AccessibilityNodeInfoCompat node = startNode;
+    if (!includeCurrent) {
+      node = traversal.findFocus(startNode, SEARCH_FOCUS_FORWARD);
+    }
+    while (node != null) {
+      if (AccessibilityNodeInfoUtils.FILTER_SHOULD_FOCUS.accept(node) && shouldReadNode(node)) {
+        return node;
+      }
+      node = traversal.findFocus(node, SEARCH_FOCUS_FORWARD);
+    }
+    return null;
+  }
+
+  private boolean shouldReadNode(AccessibilityNodeInfoCompat node) {
+    String filter =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_read_all_filter_key,
+            R.string.pref_read_all_filter_default);
+    String style =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_read_all_style_key,
+            R.string.pref_read_all_style_default);
+    boolean hasText = hasSpeakableText(node);
+    boolean isControl = AccessibilityNodeInfoUtils.FILTER_CONTROL.accept(node);
+    boolean isImage = isImageNode(node);
+    boolean allowImage = isAutoOcrEnabled() && isImage;
+    if (TextUtils.equals(filter, FILTER_TEXT_ONLY)) {
+      if (isControl) {
+        return false;
+      }
+      return hasText || allowImage;
+    } else if (TextUtils.equals(filter, FILTER_CONTROLS_ONLY)) {
+      return isControl;
+    }
+    if (TextUtils.equals(style, STYLE_COMPACT)) {
+      return hasText || allowImage;
+    }
+    return true;
+  }
+
+  private boolean hasSpeakableText(AccessibilityNodeInfoCompat node) {
+    CharSequence text = AccessibilityNodeInfoUtils.getNodeText(node);
+    CharSequence desc = node.getContentDescription();
+    return !TextUtils.isEmpty(text) || !TextUtils.isEmpty(desc);
+  }
+
+  private boolean isImageNode(AccessibilityNodeInfoCompat node) {
+    int role = Role.getRole(node);
+    return role == Role.ROLE_IMAGE || role == Role.ROLE_IMAGE_BUTTON;
+  }
+
+  private boolean isAutoOcrEnabled() {
+    return SharedPreferencesUtils.getBooleanPref(
+        prefs,
+        service.getResources(),
+        R.string.pref_read_all_auto_ocr_key,
+        R.bool.pref_read_all_auto_ocr_default);
+  }
+
+  private void maybeAutoOcr(AccessibilityNodeInfoCompat node) {
+    if (!isAutoOcrEnabled()) {
+      return;
+    }
+    if (!isImageNode(node) || hasSpeakableText(node)) {
+      return;
+    }
+    if (lastAutoOcrNode != null && lastAutoOcrNode.equals(node)) {
+      return;
+    }
+    lastAutoOcrNode = node;
+    pipeline.returnFeedback(
+        EVENT_ID_UNTRACKED, Feedback.performImageCaptions(node, /* isUserRequested= */ false));
   }
 
   /**

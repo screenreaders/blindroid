@@ -1,6 +1,12 @@
 # Blindroid – Test Report (IME Smoke)
 
-Date: 2026-03-22
+## Latest Build Status
+- Date: 2026-03-23
+- APK: `blindroid-105.apk`
+- Status: NOT RUN (build assembled without emulator run; previous smoke results below)
+
+## Previous Smoke (Reference)
+- Date: 2026-03-22
 
 ## Environment
 - Emulators: `phone_api33`, `phone_api34`, `phone_api35`, `phone_api36`

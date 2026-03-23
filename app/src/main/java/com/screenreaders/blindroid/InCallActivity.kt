@@ -5,6 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
 import android.os.BatteryManager
 import android.os.Bundle
@@ -29,6 +33,7 @@ import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.call.CallerInfoResolver
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityInCallBinding
+import kotlin.math.sqrt
 import java.text.Normalizer
 import java.util.Calendar
 import java.util.Locale
@@ -52,6 +57,26 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
     private val telephonyManager by lazy { getSystemService(TelephonyManager::class.java) }
     private val batteryManager by lazy { getSystemService(BatteryManager::class.java) }
     private var announcer: CallAnnouncer? = null
+    private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
+    private var accelSensor: Sensor? = null
+    private val shakeTimes = ArrayDeque<Long>()
+    private var lastShakeAction: Long = 0L
+    private var shakeListenerRegistered = false
+    private val shakeListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent) {
+            if (!Prefs.isAnswerShakeEnabled(this@InCallActivity)) return
+            if (currentCall?.details?.state != Call.STATE_RINGING) return
+            val now = System.currentTimeMillis()
+            val z = event.values.getOrNull(2) ?: return
+            val x = event.values.getOrNull(0) ?: 0f
+            val y = event.values.getOrNull(1) ?: 0f
+            val magnitude = sqrt(x * x + y * y + z * z)
+            val gForce = magnitude / 9.81f
+            detectShake(now, gForce)
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +105,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         if (announcer == null) {
             announcer = CallAnnouncer(this)
         }
+        accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     }
 
     override fun onStop() {
@@ -88,6 +114,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         stopListening()
         announcer?.shutdown()
         announcer = null
+        unregisterShakeListener()
     }
 
     override fun onCallChanged(call: Call?) {
@@ -101,6 +128,7 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         binding.callerText.text = displayName
         binding.stateText.text = stateLabel(state)
         updateButtons(state)
+        updateShakeListener(state)
     }
 
     private fun updateButtons(state: Int) {
@@ -122,6 +150,15 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
                 binding.rejectButton.visibility = android.view.View.GONE
                 binding.hangupButton.visibility = android.view.View.GONE
             }
+        }
+    }
+
+    private fun updateShakeListener(state: Int) {
+        val enabled = Prefs.isAnswerShakeEnabled(this) && state == Call.STATE_RINGING
+        if (enabled) {
+            registerShakeListener()
+        } else {
+            unregisterShakeListener()
         }
     }
 
@@ -174,6 +211,40 @@ class InCallActivity : AppCompatActivity(), CallManager.Listener {
         val active = CallManager.getActiveCall()
         val target = active ?: CallManager.getCall()
         target?.disconnect()
+    }
+
+    private fun registerShakeListener() {
+        if (shakeListenerRegistered) return
+        val sensor = accelSensor ?: return
+        sensorManager.registerListener(shakeListener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        shakeListenerRegistered = true
+    }
+
+    private fun unregisterShakeListener() {
+        if (!shakeListenerRegistered) return
+        sensorManager.unregisterListener(shakeListener)
+        shakeListenerRegistered = false
+        shakeTimes.clear()
+    }
+
+    private fun detectShake(now: Long, gForce: Float) {
+        if (gForce < shakeThreshold()) return
+        shakeTimes.addLast(now)
+        while (shakeTimes.size > 4) shakeTimes.removeFirst()
+        val window = if (shakeTimes.size >= 3) now - (shakeTimes.firstOrNull() ?: now) else Long.MAX_VALUE
+        if (shakeTimes.size >= 3 && window < 1500L && now - lastShakeAction > 6000L) {
+            lastShakeAction = now
+            shakeTimes.clear()
+            currentCall?.answer(VideoProfile.STATE_AUDIO_ONLY)
+        }
+    }
+
+    private fun shakeThreshold(): Float {
+        return when (Prefs.getSosShakeSensitivity(this)) {
+            0 -> 2.6f
+            2 -> 3.8f
+            else -> 3.2f
+        }
     }
 
     private fun updateVoiceCommandVisibility() {

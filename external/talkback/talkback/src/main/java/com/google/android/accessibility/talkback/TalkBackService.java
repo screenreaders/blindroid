@@ -109,6 +109,7 @@ import com.google.android.accessibility.talkback.actor.TalkBackUIActor;
 import com.google.android.accessibility.talkback.actor.TextEditActor;
 import com.google.android.accessibility.talkback.actor.TypoNavigator;
 import com.google.android.accessibility.talkback.actor.VolumeAdjustor;
+import com.google.android.accessibility.talkback.floating.FloatingMenuController;
 import com.google.android.accessibility.talkback.actor.gemini.AiCoreEndpoint;
 import com.google.android.accessibility.talkback.actor.gemini.ArateaEndpoint;
 import com.google.android.accessibility.talkback.actor.gemini.GeminiActor;
@@ -132,6 +133,7 @@ import com.google.android.accessibility.talkback.compositor.EventFilter;
 import com.google.android.accessibility.talkback.compositor.GlobalVariables;
 import com.google.android.accessibility.talkback.compositor.roledescription.RoleDescriptionExtractor.DescriptionOrder;
 import com.google.android.accessibility.talkback.contextmenu.ListMenuManager;
+import com.google.android.accessibility.talkback.clipboard.ClipboardHistoryManager;
 import com.google.android.accessibility.talkback.controller.TelevisionNavigationController;
 import com.google.android.accessibility.talkback.eventprocessor.AccessibilityEventProcessor;
 import com.google.android.accessibility.talkback.eventprocessor.AccessibilityEventProcessor.TalkBackListener;
@@ -553,6 +555,8 @@ public class TalkBackService extends AccessibilityService
 
   /** Manager for showing radial menus. */
   private ListMenuManager menuManager;
+  /** Controller for the floating menu overlay. */
+  private FloatingMenuController floatingMenuController;
 
   /** Manager for detecting missing labels and handling custom labels. */
   private TalkBackLabelManager labelManager;
@@ -660,7 +664,9 @@ public class TalkBackService extends AccessibilityService
   private PrimesController primesController;
   private SpeechLanguage speechLanguage;
   private ImageCaptioner imageCaptioner;
+  private ClipboardHistoryManager clipboardHistoryManager;
   private TalkBackExitController talkBackExitController;
+  private ProcessorVolumeStream processorVolumeStream;
 
   private @Nullable Boolean useServiceGestureDetection;
   private LanguageActor languageActor;
@@ -887,6 +893,14 @@ public class TalkBackService extends AccessibilityService
     Performance perf = Performance.getInstance();
     EventId eventId = perf.onEventReceived(event);
     int eventType = event.getEventType();
+    if ((eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            || eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED)
+        && gestureShortcutMapping != null) {
+      CharSequence packageName = event.getPackageName();
+      if (!TextUtils.isEmpty(packageName)) {
+        gestureShortcutMapping.setActivePackageName(packageName.toString());
+      }
+    }
     if (eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START) {
       // TODO: Could move the logic of TOUCH_INTERACTION related event handling out of
       // TalkBackService, and concentrated in a dedicated module such as ?
@@ -1531,6 +1545,7 @@ public class TalkBackService extends AccessibilityService
       FeedbackProcessingUtils.enableAggressiveChunking();
     }
     speechStateMonitor = new SpeechStateMonitor();
+    clipboardHistoryManager = new ClipboardHistoryManager(this);
     diagnosticOverlayController = new DiagnosticOverlayControllerImpl(this);
 
     gestureShortcutMapping = new GestureShortcutMapping(this);
@@ -1775,7 +1790,15 @@ public class TalkBackService extends AccessibilityService
             accessibilityFocusMonitor,
             nodeMenuRuleProcessor,
             analytics);
+    menuManager.setClipboardHistoryManager(clipboardHistoryManager);
     voiceCommandProcessor.setListMenuManager(menuManager);
+
+    floatingMenuController =
+        new FloatingMenuController(
+            this,
+            () -> {
+              handleFloatingMenuAction();
+            });
 
     selectorController =
         new SelectorController(
@@ -1851,7 +1874,7 @@ public class TalkBackService extends AccessibilityService
     headphoneStateMonitor = new HeadphoneStateMonitor(this);
     speakPasswordsManager = new SpeakPasswordsManager(this, headphoneStateMonitor, globalVariables);
 
-    ProcessorVolumeStream processorVolumeStream =
+    processorVolumeStream =
         new ProcessorVolumeStream(pipeline.getActorState(), this, touchInteractingIndicator);
     addEventListener(processorVolumeStream);
     keyEventListeners.add(processorVolumeStream);
@@ -1867,6 +1890,8 @@ public class TalkBackService extends AccessibilityService
             accessibilityFocusInterpreter,
             gestureShortcutMapping,
             analytics);
+    menuManager.setGestureController(gestureController);
+    processorVolumeStream.setGestureController(gestureController);
 
     audioPlaybackMonitor = new AudioPlaybackMonitor(this);
 
@@ -2377,6 +2402,9 @@ public class TalkBackService extends AccessibilityService
     }
 
     dimScreenController.suspend();
+    if (floatingMenuController != null) {
+      floatingMenuController.shutdown();
+    }
 
     interruptAllFeedback(/* stopTtsSpeechCompletely */ false);
 
@@ -2454,6 +2482,9 @@ public class TalkBackService extends AccessibilityService
 
     if (imageCaptioner != null) {
       imageCaptioner.shutdown();
+    }
+    if (clipboardHistoryManager != null) {
+      clipboardHistoryManager.shutdown();
     }
 
     if (proximitySensorListener != null) {
@@ -2607,6 +2638,34 @@ public class TalkBackService extends AccessibilityService
             R.string.pref_typing_long_press_duration_default));
     globalVariables.setInterpretAsEntryKey(
         accessibilityFocusInterpreter.getTypingMethod() == FORCE_LIFT_TO_TYPE_ON_IME);
+    globalVariables.setSpeakNotifications(
+        getBooleanPref(
+            R.string.pref_speak_notifications_key, R.bool.pref_speak_notifications_default));
+    globalVariables.setNotificationSpeechRate(
+        SharedPreferencesUtils.getFloatFromStringPref(
+            prefs,
+            res,
+            R.string.pref_notification_speech_rate_key,
+            R.string.pref_notification_speech_rate_default));
+    globalVariables.setNotificationSpeechPitch(
+        SharedPreferencesUtils.getFloatFromStringPref(
+            prefs,
+            res,
+            R.string.pref_notification_speech_pitch_key,
+            R.string.pref_notification_speech_pitch_default));
+
+    if (clipboardHistoryManager != null) {
+      clipboardHistoryManager.setEnabled(
+          getBooleanPref(
+              R.string.pref_clipboard_history_enabled_key,
+              R.bool.pref_clipboard_history_enabled_default));
+      clipboardHistoryManager.setMaxItems(
+          SharedPreferencesUtils.getIntFromStringPref(
+              prefs,
+              res,
+              R.string.pref_clipboard_history_max_key,
+              R.string.pref_clipboard_history_max_default));
+    }
 
     if (supportsTouchScreen && !isBrailleKeyboardActivated()) {
       // Touch exploration *must* be enabled on TVs for TalkBack to function.
@@ -2615,6 +2674,14 @@ public class TalkBackService extends AccessibilityService
               || getBooleanPref(
                   R.string.pref_explore_by_touch_key, R.bool.pref_explore_by_touch_default));
       requestTouchExploration(touchExploration);
+    }
+
+    if (floatingMenuController != null) {
+      boolean floatingEnabled =
+          getBooleanPref(
+              R.string.pref_floating_menu_enabled_key,
+              R.bool.pref_floating_menu_enabled_default);
+      floatingMenuController.setEnabled(floatingEnabled);
     }
 
     if (FeatureSupport.isMultiFingerGestureSupported()) {
@@ -2798,6 +2865,38 @@ public class TalkBackService extends AccessibilityService
     }
 
     FocusIndicatorUtils.applyFocusAppearancePreference(this, prefs, res);
+  }
+
+  private void handleFloatingMenuAction() {
+    if (prefs == null) {
+      return;
+    }
+    String action =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_floating_menu_action_key,
+            R.string.pref_floating_menu_action_default);
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_read_screen))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_read_screen), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scan_hub))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scan_hub), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (menuManager != null) {
+      menuManager.showMenu(
+          ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);
+    }
   }
 
   private void reloadPreferenceLogLevel() {

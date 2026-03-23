@@ -21,4 +21,28 @@
     <bool name="show_play_store">true</bool>
     <!-- Whether to skip showing tutorial in BlindReader launching. (not from user behaviors) -->
     <bool name="skip_tutorial_in_launching">false</bool>
+    <!-- Whether per-app gesture set overrides are enabled by default. -->
+    <bool name="pref_per_app_gesture_set_enabled_default">false</bool>
+    <!-- Whether to show dim screen confirmation dialog. -->
+    <bool name="pref_show_dim_screen_confirmation_dialog_default">true</bool>
+    <!-- Whether to invert left/right swipe gestures. -->
+    <bool name="pref_invert_swipe_gestures_default">false</bool>
+    <!-- Whether edge gestures are enabled. -->
+    <bool name="pref_edge_gestures_enabled_default">false</bool>
+    <!-- Whether multi-part gestures are enabled. -->
+    <bool name="pref_multi_part_gestures_enabled_default">true</bool>
+    <!-- Whether notification announcements are enabled. -->
+    <bool name="pref_speak_notifications_default">true</bool>
+    <!-- Whether clipboard history is enabled. -->
+    <bool name="pref_clipboard_history_enabled_default">true</bool>
+    <!-- Whether automatic caption results should be sent to translation apps. -->
+    <bool name="pref_auto_translate_captions_default">false</bool>
+    <!-- Whether automatic object recognition (image description) is enabled. -->
+    <bool name="pref_auto_object_recognition_default">true</bool>
+    <!-- Whether automatic face recognition is enabled. -->
+    <bool name="pref_auto_face_recognition_default">false</bool>
+    <!-- Whether automatic money recognition is enabled. -->
+    <bool name="pref_auto_money_recognition_default">false</bool>
+    <!-- Whether automatic scene recognition is enabled. -->
+    <bool name="pref_auto_scene_recognition_default">true</bool>
 </resources>

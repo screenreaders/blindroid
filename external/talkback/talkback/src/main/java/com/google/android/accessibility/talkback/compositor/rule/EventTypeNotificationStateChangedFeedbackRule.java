@@ -63,8 +63,13 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
     eventFeedbackRules.put(
         EVENT_TYPE_NOTIFICATION_STATE_CHANGED,
         eventOptions -> {
+          if (!globalVariables.getSpeakNotifications()) {
+            return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
+          }
           int role = Role.getSourceRole(eventOptions.eventObject);
           boolean isToast = role == Role.ROLE_TOAST;
+          double notificationPitch = globalVariables.getNotificationSpeechPitch();
+          double notificationRate = globalVariables.getNotificationSpeechRate();
           CharSequence notificationCategory =
               getNotificationCategoryStateText(
                   context, AccessibilityEventUtils.extractNotification(eventOptions.eventObject));
@@ -117,6 +122,8 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
               .setTtsOutput(Optional.of(ttsOutput))
               .setQueueMode(QUEUE_MODE_UNINTERRUPTIBLE_BY_NEW_SPEECH)
               .setTtsAddToHistory(true)
+              .setTtsPitch(notificationPitch)
+              .setTtsRate(notificationRate)
               .setForceFeedbackEvenIfAudioPlaybackActive(isToastOrCall)
               .setForceFeedbackEvenIfMicrophoneActive(isToastOrCall)
               .setForceFeedbackEvenIfSsbActive(false)

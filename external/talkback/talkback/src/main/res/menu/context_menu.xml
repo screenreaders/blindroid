@@ -26,6 +26,14 @@
       android:orderInCategory="13"
       android:title="@string/title_pref_selector_verbosity" />
   <item
+      android:id="@+id/per_app_gesture_set"
+      android:orderInCategory="15"
+      android:title="@string/title_per_app_gesture_set_menu" />
+  <item
+      android:id="@+id/toggle_per_app_gesture_set"
+      android:orderInCategory="16"
+      android:title="@string/title_toggle_per_app_gesture_set_menu" />
+  <item
       android:id="@+id/audio_ducking"
       android:orderInCategory="16"
       android:title="@string/title_pref_use_audio_focus" />
@@ -38,23 +46,39 @@
       android:orderInCategory="18"
       android:title="@string/title_pref_vibration" />
   <item
-      android:id="@+id/screen_search"
+      android:id="@+id/toggle_explore_by_touch"
       android:orderInCategory="19"
+      android:title="@string/shortcut_toggle_explore_by_touch" />
+  <item
+      android:id="@+id/toggle_single_tap"
+      android:orderInCategory="20"
+      android:title="@string/shortcut_toggle_single_tap" />
+  <item
+      android:id="@+id/toggle_web_scripts"
+      android:orderInCategory="21"
+      android:title="@string/shortcut_toggle_web_scripts" />
+  <item
+      android:id="@+id/toggle_speak_notifications"
+      android:orderInCategory="22"
+      android:title="@string/shortcut_toggle_speak_notifications" />
+  <item
+      android:id="@+id/screen_search"
+      android:orderInCategory="23"
       android:title="@string/title_show_screen_search" />
   <item
       android:id="@+id/voice_commands"
-      android:orderInCategory="21"
+      android:orderInCategory="24"
       android:title="@string/title_show_voice_commands" />
   <item
       android:id="@+id/talkback_settings"
-      android:orderInCategory="22"
+      android:orderInCategory="25"
       android:title="@string/talkback_show_talkback_settings" />
   <item
       android:id="@+id/tts_settings"
-      android:orderInCategory="23"
+      android:orderInCategory="26"
       android:title="@string/tts_preferences_title" />
   <item
       android:id="@+id/braille_display_settings"
-      android:orderInCategory="25"
+      android:orderInCategory="27"
       android:title="@string/title_show_braille_display_settings" />
 </menu>

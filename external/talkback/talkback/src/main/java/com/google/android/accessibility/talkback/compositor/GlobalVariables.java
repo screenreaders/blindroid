@@ -174,6 +174,9 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
   private boolean speakElementIds = false;
   private boolean speakSystemWindowTitles = true;
   private boolean textChangeRateUnlimited = false;
+  private boolean speakNotifications = true;
+  private float notificationSpeechRate = 1.0f;
+  private float notificationSpeechPitch = 1.0f;
   private final FormFactorUtils formFactorUtils;
   private final boolean enableMediaControlHintForCall;
   private final boolean enableShortAndLongDurationsForSpecificApps;
@@ -196,6 +199,30 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
 
   public void setWindowsDelegate(WindowsDelegate delegate) {
     mWindowsDelegate = delegate;
+  }
+
+  public void setSpeakNotifications(boolean enabled) {
+    speakNotifications = enabled;
+  }
+
+  public boolean getSpeakNotifications() {
+    return speakNotifications;
+  }
+
+  public void setNotificationSpeechRate(float rate) {
+    notificationSpeechRate = rate;
+  }
+
+  public float getNotificationSpeechRate() {
+    return notificationSpeechRate;
+  }
+
+  public void setNotificationSpeechPitch(float pitch) {
+    notificationSpeechPitch = pitch;
+  }
+
+  public float getNotificationSpeechPitch() {
+    return notificationSpeechPitch;
   }
 
   public void setKeyComboManager(KeyComboManager keyComboManager) {

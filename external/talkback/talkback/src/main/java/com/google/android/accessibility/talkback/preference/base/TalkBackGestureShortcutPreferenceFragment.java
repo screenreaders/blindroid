@@ -31,6 +31,7 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.gesture.GestureShortcutMapping;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.talkback.training.TutorialInitiator;
@@ -49,6 +50,8 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
   private SharedPreferences prefs;
 
   private FormFactorUtils formFactorUtils;
+  @Nullable private String currentScopePackage;
+  @Nullable private CharSequence currentScopeAppLabel;
 
   public TalkBackGestureShortcutPreferenceFragment() {
     super(R.xml.gesture_preferences);
@@ -155,6 +158,8 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
             R.string.pref_multiple_gesture_set_key,
             R.bool.pref_multiple_gesture_set_default);
 
+    resolveScopeApp(context);
+
     @Nullable
     Preference gestureSetPreference = findPreference(getString(R.string.pref_gesture_set_key));
     if (gestureSetEnabled) {
@@ -170,6 +175,8 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
     } else if (gestureSetPreference != null) {
       getPreferenceScreen().removePreference(gestureSetPreference);
     }
+
+    updateScopePreferenceSummary();
 
     Preference resetGesturePreferenceScreen =
         (Preference) findPreference(getString(R.string.pref_reset_gesture_settings_key));
@@ -201,18 +208,6 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
     }
   }
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-    prefs.unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
-  }
-
   /** Listener for preference changes. */
   private final OnSharedPreferenceChangeListener onSharedPreferenceChangeListener =
       new OnSharedPreferenceChangeListener() {
@@ -236,24 +231,63 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
             }
 
             updatePreferenceKey(Integer.parseInt(newValueString));
+          } else if (TextUtils.equals(key, getString(R.string.pref_gesture_edit_scope_key))) {
+            resolveScopeApp(getContext());
+            updateScopePreferenceSummary();
+            int gestureSet =
+                SharedPreferencesUtils.getIntFromStringPref(
+                    prefs,
+                    getResources(),
+                    R.string.pref_gesture_set_key,
+                    R.string.pref_gesture_set_value_default);
+            updatePreferenceKey(gestureSet);
           }
         }
       };
 
+  @Override
+  public void onResume() {
+    super.onResume();
+    prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+    resolveScopeApp(getContext());
+    updateScopePreferenceSummary();
+    int gestureSet =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    updatePreferenceKey(gestureSet);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    prefs.unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+  }
+
   private void updatePreferenceKeyForGesture(
-      AccessibilitySuitePreferenceCategory category, int gestureSet) {
+      AccessibilitySuitePreferenceCategory category, int gestureSet, @Nullable String scopePackage) {
     int count = category.getPreferenceCount();
 
     for (int i = 0; i < count; i++) {
       Preference preference = category.getPreference(i);
       if (preference instanceof GestureListPreference) {
         GestureListPreference gesture = (GestureListPreference) preference;
-        String key =
-            GestureShortcutMapping.getPrefKeyWithGestureSet(preference.getKey(), gestureSet);
+        String baseKey = stripScopeFromKey(preference.getKey());
+        String scopedBaseKey = applyScopeToKey(baseKey, scopePackage);
+        String key = GestureShortcutMapping.getPrefKeyWithGestureSet(scopedBaseKey, gestureSet);
         gesture.setKey(key);
         gesture.setSummary(
             GestureShortcutMapping.getActionString(
                 getContext(), prefs.getString(key, gesture.getDefaultValue())));
+        if (TextUtils.equals(getScopeValue(), "current_app")
+            && TextUtils.isEmpty(currentScopePackage)) {
+          gesture.setEnabled(false);
+          gesture.setSummary(R.string.pref_gesture_edit_scope_unavailable);
+        } else {
+          gesture.setEnabled(true);
+        }
       }
     }
   }
@@ -261,11 +295,13 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
   private void updatePreferenceKey(int gestureSet) {
     PreferenceGroup root = getPreferenceScreen();
     int count = root.getPreferenceCount();
+    String scopePackage =
+        TextUtils.equals(getScopeValue(), "current_app") ? currentScopePackage : null;
     for (int i = 0; i < count; i++) {
       Preference preference = root.getPreference(i);
       if (preference instanceof AccessibilitySuitePreferenceCategory) {
         updatePreferenceKeyForGesture(
-            (AccessibilitySuitePreferenceCategory) preference, gestureSet);
+            (AccessibilitySuitePreferenceCategory) preference, gestureSet, scopePackage);
       }
     }
   }
@@ -284,7 +320,11 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
     PreferenceGroup root = getPreferenceScreen();
 
     for (String defaultKey : gesturePrefKeys) {
-      String prefKey = GestureShortcutMapping.getPrefKeyWithGestureSet(defaultKey, gestureSet);
+      String scopedKey =
+          applyScopeToKey(
+              defaultKey,
+              TextUtils.equals(getScopeValue(), "current_app") ? currentScopePackage : null);
+      String prefKey = GestureShortcutMapping.getPrefKeyWithGestureSet(scopedKey, gestureSet);
       if (prefs.contains(prefKey)) {
         GestureListPreference preference = (GestureListPreference) root.findPreference(prefKey);
         if (preference != null) {
@@ -296,5 +336,81 @@ public class TalkBackGestureShortcutPreferenceFragment extends TalkbackBaseFragm
       }
     }
     prefEditor.apply();
+  }
+
+  private void resolveScopeApp(Context context) {
+    if (context == null) {
+      currentScopePackage = null;
+      currentScopeAppLabel = null;
+      return;
+    }
+    TalkBackService service = TalkBackService.getInstance();
+    if (service == null || !TalkBackService.isServiceActive()) {
+      currentScopePackage = null;
+      currentScopeAppLabel = null;
+      return;
+    }
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      currentScopePackage = null;
+      currentScopeAppLabel = null;
+      return;
+    }
+    currentScopePackage = service.getRootInActiveWindow().getPackageName().toString();
+    try {
+      currentScopeAppLabel =
+          context
+              .getPackageManager()
+              .getApplicationLabel(
+                  context.getPackageManager().getApplicationInfo(currentScopePackage, 0));
+    } catch (Exception e) {
+      currentScopeAppLabel = currentScopePackage;
+    }
+  }
+
+  private String getScopeValue() {
+    return prefs.getString(
+        getString(R.string.pref_gesture_edit_scope_key),
+        getString(R.string.pref_gesture_edit_scope_default));
+  }
+
+  private void updateScopePreferenceSummary() {
+    Preference scopePref = findPreference(getString(R.string.pref_gesture_edit_scope_key));
+    if (scopePref == null) {
+      return;
+    }
+    String scopeValue = getScopeValue();
+    if (TextUtils.equals(scopeValue, "current_app")) {
+      if (TextUtils.isEmpty(currentScopeAppLabel)) {
+        scopePref.setSummary(R.string.pref_gesture_edit_scope_unavailable);
+      } else {
+        scopePref.setSummary(
+            getString(R.string.pref_gesture_edit_scope_summary, currentScopeAppLabel));
+      }
+    } else {
+      scopePref.setSummary(
+          getString(R.string.pref_gesture_edit_scope_summary,
+              getString(R.string.pref_gesture_edit_scope_entry_global)));
+    }
+  }
+
+  private String applyScopeToKey(String baseKey, @Nullable String scopePackage) {
+    if (TextUtils.isEmpty(scopePackage)) {
+      return baseKey;
+    }
+    String prefix = getString(R.string.pref_gesture_scope_pkg_prefix);
+    return prefix + scopePackage + ":" + baseKey;
+  }
+
+  private String stripScopeFromKey(String key) {
+    String prefix = getString(R.string.pref_gesture_scope_pkg_prefix);
+    if (key == null || !key.startsWith(prefix)) {
+      return key;
+    }
+    int idx = key.indexOf(':');
+    if (idx > 0 && idx + 1 < key.length()) {
+      return key.substring(idx + 1);
+    }
+    return key;
   }
 }

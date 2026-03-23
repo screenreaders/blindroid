@@ -211,6 +211,7 @@ class MainActivity : AppCompatActivity() {
         binding.faceSwitch.isChecked = Prefs.isFaceAssistEnabled(this)
         binding.facePickupSwitch.isChecked = Prefs.isFacePickupEnabled(this)
         binding.answerPickupSwitch.isChecked = Prefs.isAnswerPickupEnabled(this)
+        binding.answerShakeSwitch.isChecked = Prefs.isAnswerShakeEnabled(this)
         binding.faceShortcutSwitch.isChecked = Prefs.isFaceShortcutEnabled(this)
         binding.faceButton.isEnabled = binding.faceSwitch.isChecked
         updateFaceControls()
@@ -337,6 +338,11 @@ class MainActivity : AppCompatActivity() {
             Prefs.setAnswerPickupEnabled(this, isChecked)
             logSettingChange("answer_pickup", isChecked)
             PickupService.sync(this)
+        }
+
+        binding.answerShakeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setAnswerShakeEnabled(this, isChecked)
+            logSettingChange("answer_shake", isChecked)
         }
 
         binding.faceShortcutSwitch.setOnCheckedChangeListener { _, isChecked ->

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+  <TextView
+      android:id="@+id/macro_editor_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:textStyle="bold"
+      android:paddingBottom="12dp" />
+
+  <TextView
+      android:id="@+id/macro_editor_empty"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/macro_action_list_empty"
+      android:visibility="gone"
+      android:paddingBottom="12dp" />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/macro_action_list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <Button
+      android:id="@+id/macro_action_add"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/macro_action_add"
+      android:layout_marginTop="12dp" />
+</LinearLayout>

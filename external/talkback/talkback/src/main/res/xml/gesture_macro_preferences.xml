@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_macro_enabled_default"
+      android:key="@string/pref_macro_enabled_key"
+      android:title="@string/pref_macro_enabled_title"
+      android:summary="@string/pref_macro_enabled_summary" />
+
+  <PreferenceCategory
+      android:title="@string/pref_macro_category_1">
+    <EditTextPreference
+        android:key="@string/pref_macro_1_name_key"
+        android:title="@string/pref_macro_name_title"
+        android:defaultValue="@string/macro_default_name_1" />
+    <Preference
+        android:key="@string/pref_macro_1_actions_list_key"
+        android:title="@string/pref_macro_actions_title" />
+  </PreferenceCategory>
+
+  <PreferenceCategory
+      android:title="@string/pref_macro_category_2">
+    <EditTextPreference
+        android:key="@string/pref_macro_2_name_key"
+        android:title="@string/pref_macro_name_title"
+        android:defaultValue="@string/macro_default_name_2" />
+    <Preference
+        android:key="@string/pref_macro_2_actions_list_key"
+        android:title="@string/pref_macro_actions_title" />
+  </PreferenceCategory>
+
+  <PreferenceCategory
+      android:title="@string/pref_macro_category_3">
+    <EditTextPreference
+        android:key="@string/pref_macro_3_name_key"
+        android:title="@string/pref_macro_name_title"
+        android:defaultValue="@string/macro_default_name_3" />
+    <Preference
+        android:key="@string/pref_macro_3_actions_list_key"
+        android:title="@string/pref_macro_actions_title" />
+  </PreferenceCategory>
+</PreferenceScreen>

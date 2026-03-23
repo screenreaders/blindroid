@@ -18,6 +18,7 @@ package com.google.android.accessibility.talkback.eventprocessor;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Message;
 import android.os.PowerManager;
@@ -26,10 +27,13 @@ import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import com.google.android.accessibility.talkback.ActorState;
+import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
+import com.google.android.accessibility.talkback.gesture.GestureController;
 import com.google.android.accessibility.utils.AccessibilityEventListener;
 import com.google.android.accessibility.utils.Performance.EventId;
 import com.google.android.accessibility.utils.ServiceKeyEventListener;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.WeakReferenceHandler;
 import com.google.android.accessibility.utils.compat.media.AudioManagerCompatUtils;
 import com.google.android.accessibility.utils.output.SpeechController;
@@ -87,6 +91,8 @@ public class ProcessorVolumeStream
 
   private final ActorState actorState;
   private final VolumeButtonPatternDetector patternDetector;
+  private final TalkBackService service;
+  private GestureController gestureController;
 
   private final MostRecentVolumeKeyAdjustment mostRecentVolumeKeyAdjustment =
       new MostRecentVolumeKeyAdjustment();
@@ -122,6 +128,7 @@ public class ProcessorVolumeStream
     audioManager = (AudioManager) service.getSystemService(Context.AUDIO_SERVICE);
     this.actorState = actorState;
     this.touchInteractingIndicator = touchInteractingIndicator;
+    this.service = service;
 
     final PowerManager pm = (PowerManager) service.getSystemService(Context.POWER_SERVICE);
     wakeLock =
@@ -225,7 +232,7 @@ public class ProcessorVolumeStream
         handleSingleShortTap(buttonCombination);
         break;
       case VolumeButtonPatternDetector.LONG_PRESS_PATTERN:
-        handleSingleLongTap(buttonCombination);
+        handleSingleLongTap(buttonCombination, eventId);
         break;
       default: // fall out
     }
@@ -251,8 +258,41 @@ public class ProcessorVolumeStream
     passThroughMediaButtonClick(button);
   }
 
-  private void handleSingleLongTap(int button) {
-    passThroughMediaButtonClick(button);
+  private void handleSingleLongTap(int button, EventId eventId) {
+    if (gestureController == null) {
+      passThroughMediaButtonClick(button);
+      return;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    boolean enabled =
+        prefs.getBoolean(
+            service.getString(R.string.pref_volume_key_shortcuts_enabled_key),
+            service.getResources().getBoolean(R.bool.pref_volume_key_shortcuts_enabled_default));
+    if (!enabled) {
+      passThroughMediaButtonClick(button);
+      return;
+    }
+    String actionKey;
+    if (button == VolumeButtonPatternDetector.VOLUME_UP) {
+      actionKey =
+          prefs.getString(
+              service.getString(R.string.pref_volume_key_shortcuts_up_key),
+              service.getString(R.string.pref_volume_key_shortcuts_up_default));
+    } else if (button == VolumeButtonPatternDetector.VOLUME_DOWN) {
+      actionKey =
+          prefs.getString(
+              service.getString(R.string.pref_volume_key_shortcuts_down_key),
+              service.getString(R.string.pref_volume_key_shortcuts_down_default));
+    } else {
+      passThroughMediaButtonClick(button);
+      return;
+    }
+    if (actionKey == null
+        || actionKey.equals(service.getString(R.string.shortcut_value_unassigned))) {
+      passThroughMediaButtonClick(button);
+      return;
+    }
+    gestureController.performAction(actionKey, eventId);
   }
 
   /**
@@ -286,5 +326,9 @@ public class ProcessorVolumeStream
   public interface TouchInteractingIndicator {
     /** Indicates if a finger is currently touching the touch-display. */
     boolean isTouchInteracting();
+  }
+
+  public void setGestureController(GestureController controller) {
+    this.gestureController = controller;
   }
 }

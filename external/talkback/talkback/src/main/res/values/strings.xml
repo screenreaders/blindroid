@@ -33,6 +33,47 @@
       Description: This is presented to the user when managing BlindReader settings. [CHAR_LIMIT=NONE]
     -->
     <string name="talkback_preferences_title">BlindReader settings</string>
+    <string name="pref_blindreader_gesture_set_title">Gesture set (Android / iOS)</string>
+    <string name="pref_blindreader_gesture_set_summary">Current: %1$s</string>
+    <string name="pref_blindreader_gesture_set_quick_title">Quick switch gesture set</string>
+    <string name="pref_blindreader_gesture_set_quick_summary">Current: %1$s. Tap to switch.</string>
+    <string name="pref_blindreader_gesture_set_toast">Gesture set: %1$s</string>
+    <string name="pref_per_app_gesture_set_title">Per-app gesture set</string>
+    <string name="pref_per_app_gesture_set_enabled_title">Enable per-app gesture sets</string>
+    <string name="pref_per_app_gesture_set_enabled_summary">Allow different gesture sets per application.</string>
+    <string name="pref_per_app_gesture_set_current_title">Gesture set for current app</string>
+    <string name="pref_per_app_gesture_set_current_summary">Current app: %1$s</string>
+    <string name="pref_per_app_gesture_set_current_summary_with_value">Current app: %1$s — %2$s</string>
+    <string name="pref_per_app_gesture_set_current_unavailable">Current app is not available. Open the app you want to configure and return here.</string>
+    <string name="pref_per_app_gesture_set_clear_title">Clear current app override</string>
+    <string name="pref_per_app_gesture_set_clear_summary">Remove the per-app gesture set for the current app.</string>
+    <string name="pref_per_app_gesture_set_entry_global">Use global gesture set</string>
+    <string name="pref_per_app_gesture_set_entry_android">Android gestures</string>
+    <string name="pref_per_app_gesture_set_entry_ios">iOS gestures</string>
+    <string name="pref_per_app_gesture_set_list_title">Saved app overrides</string>
+    <string name="pref_per_app_gesture_set_list_empty">No saved overrides</string>
+    <string name="pref_dim_when_talkback_enabled_title">Hide screen on startup</string>
+    <string name="pref_dim_when_talkback_enabled_summary">Automatically enable screen curtain when BlindReader starts.</string>
+    <string name="pref_show_dim_screen_confirmation_dialog_title">Confirm screen curtain</string>
+    <string name="pref_show_dim_screen_confirmation_dialog_summary">Show a confirmation dialog before hiding the screen.</string>
+    <string name="title_per_app_gesture_set_menu">Per-app gesture set</string>
+    <string name="pref_invert_swipe_gestures_title">Invert left/right swipes</string>
+    <string name="pref_invert_swipe_gestures_summary">Swap the actions of left and right swipe gestures.</string>
+    <string name="pref_edge_gestures_enabled_title">Enable edge gestures</string>
+    <string name="pref_edge_gestures_enabled_summary">Use swipes from the left or right edge as shortcuts.</string>
+    <string name="title_pref_shortcut_edge_swipe_left">Swipe from right edge</string>
+    <string name="title_pref_shortcut_edge_swipe_right">Swipe from left edge</string>
+    <string name="edge_gestures_title">Edge gestures</string>
+    <string name="pref_multi_part_gestures_enabled_title">Enable multi-part gestures</string>
+    <string name="pref_multi_part_gestures_enabled_summary">Allow gestures like swipe up then left or swipe left then right.</string>
+    <string name="pref_gesture_edit_scope_title">Edit gestures for</string>
+    <string name="pref_gesture_edit_scope_summary">Current: %1$s</string>
+    <string name="pref_gesture_edit_scope_entry_global">All apps (global)</string>
+    <string name="pref_gesture_edit_scope_entry_current">Current app</string>
+    <string name="pref_gesture_edit_scope_unavailable">Current app unavailable. Open an app and return.</string>
+    <string name="title_toggle_per_app_gesture_set_menu">Toggle gesture set for current app</string>
+    <string name="per_app_gesture_set_unavailable">Current app is not available.</string>
+    <string name="per_app_gesture_set_switched">Gesture set for current app: %1$s</string>
     <!--
       Source: Title for the activity that manages Text to speech settings.
       Description: This is presented to the user when managing Text to speech settings. [CHAR LIMIT=NONE]
@@ -146,7 +187,7 @@
       Source: Preference category for audio.
       Description: Contains preferences for customizing audio. [CHAR LIMIT=25]
     -->
-    <string name="title_pref_category_audio">Audio</string>
+    <string name="title_pref_category_audio">TTS</string>
     <!-- Title for preference that controls the volume of BlindReader's speech output. [CHAR LIMIT=25] -->
     <string name="title_pref_speech_volume">Speech volume</string>
     <!--
@@ -300,18 +341,131 @@
       Description: The user can check or not check this. [CHAR LIMIT=40]
     -->
     <string name="title_pref_explore_by_touch">Explore by touch</string>
+    <!-- Summary for explore by touch setting. [CHAR LIMIT=NONE] -->
+    <string name="summary_pref_explore_by_touch">Drag your finger to hear items under your touch</string>
     <!-- Category for gestures, menus or other controls. [CHAR LIMIT=40] -->
-    <string name="title_pref_category_controls">Controls</string>
+    <string name="title_pref_category_controls">Action</string>
     <!-- Category for braille features. [CHAR LIMIT=40] -->
     <string name="title_pref_category_braille">Braille</string>
     <!-- Category for general features. [CHAR LIMIT=40] -->
     <string name="title_pref_category_general">General</string>
+    <!-- Category for content features. [CHAR LIMIT=40] -->
+    <string name="title_pref_category_content">Content</string>
+    <!-- Category for advanced features. [CHAR LIMIT=40] -->
+    <string name="title_pref_category_advanced">Advanced</string>
     <!-- Category for tutorial & help. [CHAR LIMIT=40] -->
     <string name="title_pref_category_tutorial_and_help">Tutorial &#38; help</string>
     <!-- Preference for single-tap activation. When enabled, the user can place accessibility focus on an item and activate it using a single tap, rather than the default double-tap. [CHAR LIMIT=NONE]-->
     <string name="title_pref_single_tap">Single-tap to activate</string>
     <!-- Summary sub-text for single-tap activation. When enabled, the user can place accessibility focus on an item and activate it using a single tap, rather than the default double-tap. [CHAR LIMIT=NONE]-->
     <string name="summary_pref_single_tap">Tap once on a focused item to activate</string>
+    <!-- Preference for web scripts. [CHAR LIMIT=40] -->
+    <string name="title_pref_web_scripts">Web scripts</string>
+    <!-- Summary for web scripts. [CHAR LIMIT=NONE] -->
+    <string name="summary_pref_web_scripts">Enable enhanced navigation and controls on web pages</string>
+    <!-- Gemini settings. [CHAR LIMIT=40] -->
+    <string name="title_pref_gemini_api_key">Gemini API key</string>
+    <string name="summary_pref_gemini_api_key_set">API key is set</string>
+    <string name="summary_pref_gemini_api_key_empty">API key is not set</string>
+    <string name="title_pref_gemini_model">Gemini model</string>
+    <string name="summary_pref_gemini_model">Model used for screen reading</string>
+    <string name="title_pref_gemini_prefix_prompt">Gemini prompt prefix</string>
+    <string name="summary_pref_gemini_prefix_prompt">Prefix added before every Gemini request</string>
+    <string name="title_pref_gemini_read_screen_prompt">Read screen prompt</string>
+    <string name="summary_pref_gemini_read_screen_prompt">Prompt used for screen reading</string>
+    <string name="gemini_read_screen_default_prompt">Describe this screen for a blind user. Focus on UI structure, controls, and key information.</string>
+    <!-- Preference for floating menu toggle. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_enabled_title">Floating menu</string>
+    <!-- Summary for floating menu toggle. [CHAR_LIMIT=NONE] -->
+    <string name="pref_floating_menu_enabled_summary">Show a movable button for quick actions</string>
+    <!-- Preference for floating menu action. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_title">Floating menu action</string>
+    <!-- Summary for floating menu action. [CHAR_LIMIT=NONE] -->
+    <string name="pref_floating_menu_action_summary">Choose what the floating button does</string>
+    <!-- Entry for floating menu action: quick menu. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_quick_menu">Quick menu</string>
+    <!-- Entry for floating menu action: read screen. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_read_screen">Read screen (AI)</string>
+    <!-- Entry for floating menu action: scan hub. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_scan_hub">Scan center</string>
+    <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
+    <string name="pref_content_settings_title">Content settings</string>
+    <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->
+    <string name="pref_content_settings_summary">OCR auto-read, filters, and reading style</string>
+    <!-- Preference for auto OCR during read all. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_auto_ocr_title">Auto OCR during read all</string>
+    <!-- Summary for auto OCR during read all. [CHAR_LIMIT=NONE] -->
+    <string name="pref_read_all_auto_ocr_summary">Describe images while reading the screen</string>
+    <!-- Preference for read all filter. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_filter_title">Read all filter</string>
+    <!-- Summary for read all filter. [CHAR_LIMIT=NONE] -->
+    <string name="pref_read_all_filter_summary">Choose what content is spoken during read all</string>
+    <!-- Entry for read all filter: all content. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_filter_all">All content</string>
+    <!-- Entry for read all filter: text only. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_filter_text">Text only</string>
+    <!-- Entry for read all filter: controls only. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_filter_controls">Controls only</string>
+    <!-- Preference for read all style. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_style_title">Reading style</string>
+    <!-- Summary for read all style. [CHAR_LIMIT=NONE] -->
+    <string name="pref_read_all_style_summary">Choose between detailed or compact reading</string>
+    <!-- Entry for read all style: detailed. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_style_detailed">Detailed</string>
+    <!-- Entry for read all style: compact. [CHAR_LIMIT=40] -->
+    <string name="pref_read_all_style_compact">Compact</string>
+    <!-- Preference for read screen style. [CHAR_LIMIT=40] -->
+    <string name="title_pref_gemini_read_screen_style">Read screen style</string>
+    <!-- Summary for read screen style. [CHAR_LIMIT=NONE] -->
+    <string name="summary_pref_gemini_read_screen_style">Choose detailed or summary output</string>
+    <!-- Entry for read screen style: detailed. [CHAR_LIMIT=40] -->
+    <string name="pref_gemini_read_screen_style_detailed">Detailed</string>
+    <!-- Entry for read screen style: summary. [CHAR_LIMIT=40] -->
+    <string name="pref_gemini_read_screen_style_summary">Summary</string>
+    <!-- Preference for read screen haptic feedback. [CHAR_LIMIT=40] -->
+    <string name="title_pref_gemini_read_screen_haptic">Read screen haptic feedback</string>
+    <!-- Summary for read screen haptic feedback. [CHAR_LIMIT=NONE] -->
+    <string name="summary_pref_gemini_read_screen_haptic">Vibrate when read screen starts</string>
+    <!-- Default summary prompt for read screen. [CHAR_LIMIT=NONE] -->
+    <string name="gemini_read_screen_summary_prompt">Summarize this screen for a blind user. Provide a short overview and key controls.</string>
+    <!-- Preference for gesture macro settings. [CHAR_LIMIT=40] -->
+    <string name="pref_gesture_macro_settings_title">Gesture macros</string>
+    <!-- Summary for gesture macro settings. [CHAR_LIMIT=NONE] -->
+    <string name="pref_gesture_macro_settings_summary">Create action sequences and assign them to gestures</string>
+    <!-- Preference to enable macros. [CHAR_LIMIT=40] -->
+    <string name="pref_macro_enabled_title">Enable gesture macros</string>
+    <!-- Summary for enabling macros. [CHAR LIMIT=NONE] -->
+    <string name="pref_macro_enabled_summary">Allow gestures to trigger macro sequences</string>
+    <!-- Macro category titles. [CHAR LIMIT=40] -->
+    <string name="pref_macro_category_1">Macro 1</string>
+    <string name="pref_macro_category_2">Macro 2</string>
+    <string name="pref_macro_category_3">Macro 3</string>
+    <!-- Macro name title. [CHAR LIMIT=40] -->
+    <string name="pref_macro_name_title">Macro name</string>
+    <!-- Macro action titles. [CHAR LIMIT=40] -->
+    <string name="pref_macro_action_1_title">Action 1</string>
+    <string name="pref_macro_action_2_title">Action 2</string>
+    <string name="pref_macro_action_3_title">Action 3</string>
+    <string name="pref_macro_actions_title">Edit actions</string>
+    <string name="pref_macro_actions_summary">Actions in this macro: <xliff:g id="count">%1$d</xliff:g></string>
+    <!-- Macro default names. [CHAR LIMIT=40] -->
+    <string name="macro_default_name_1">Macro 1</string>
+    <string name="macro_default_name_2">Macro 2</string>
+    <string name="macro_default_name_3">Macro 3</string>
+    <!-- Spoken feedback for macros. [CHAR LIMIT=100] -->
+    <string name="macro_disabled">Gesture macros are disabled</string>
+    <string name="macro_empty">Macro <xliff:g id="macro_name">%1$s</xliff:g> has no actions</string>
+    <string name="macro_running">Running macro <xliff:g id="macro_name">%1$s</xliff:g></string>
+    <!-- Macro editor UI -->
+    <string name="macro_editor_title">Edit macro</string>
+    <string name="macro_action_add">Add action</string>
+    <string name="macro_action_move_up">Move up</string>
+    <string name="macro_action_move_down">Move down</string>
+    <string name="macro_action_remove">Remove</string>
+    <string name="macro_action_list_empty">No actions yet</string>
+    <string name="macro_action_picker_title">Select action</string>
+    <!-- Floating menu content description. [CHAR LIMIT=60] -->
+    <string name="floating_menu_content_description">Open BlindReader quick menu</string>
     <!-- Label for the button to launch an activity for managing BlindReader's verbosity. [CHAR LIMIT=40] -->
     <string name="pref_verbosity_title">Verbosity</string>
     <!--
@@ -327,6 +481,84 @@
     <string name="title_pref_manage_labels">Custom labels</string>
     <!-- Label for the button to launch an activity for managing custom menus. [CHAR LIMIT=70] -->
     <string name="title_pref_manage_customize_menus">Customize menus</string>
+
+    <string name="title_pref_category_notifications">Notification</string>
+    <string name="pref_speak_notifications_title">Speak notifications</string>
+    <string name="pref_speak_notifications_summary">Announce notification and toast contents</string>
+    <string name="pref_notification_speech_rate_title">Notification speech rate</string>
+    <string name="pref_notification_speech_pitch_title">Notification speech pitch</string>
+    <string name="pref_notification_speech_rate_summary">Speech rate used for notifications</string>
+    <string name="pref_notification_speech_pitch_summary">Speech pitch used for notifications</string>
+    <string name="pref_notification_speech_rate_80">0.8x</string>
+    <string name="pref_notification_speech_rate_100">1.0x</string>
+    <string name="pref_notification_speech_rate_120">1.2x</string>
+    <string name="pref_notification_speech_rate_140">1.4x</string>
+    <string name="pref_notification_speech_pitch_80">0.8x</string>
+    <string name="pref_notification_speech_pitch_100">1.0x</string>
+    <string name="pref_notification_speech_pitch_120">1.2x</string>
+    <string name="pref_notification_speech_pitch_140">1.4x</string>
+
+    <string name="title_pref_category_tools">Tools</string>
+    <string name="pref_clipboard_history_enabled_title">Clipboard history</string>
+    <string name="pref_clipboard_history_enabled_summary">Keep a history of copied text</string>
+    <string name="pref_clipboard_history_max_title">Clipboard history size</string>
+    <string name="pref_clipboard_history_max_summary">How many recent items to keep</string>
+    <string name="pref_clipboard_history_max_5">5 items</string>
+    <string name="pref_clipboard_history_max_10">10 items</string>
+    <string name="pref_clipboard_history_max_20">20 items</string>
+
+    <string name="title_clipboard_history">Clipboard history</string>
+    <string name="clipboard_history_empty">Clipboard history is empty</string>
+    <string name="clipboard_history_copied">Copied to clipboard</string>
+    <string name="clipboard_history_pasted">Pasted</string>
+    <string name="clipboard_history_clear">Clear clipboard history</string>
+
+    <string name="title_quick_menu">Quick menu</string>
+    <string name="quick_menu_empty">Quick menu has no items</string>
+
+    <string name="shortcut_quick_menu">Quick menu</string>
+    <string name="shortcut_clipboard_history">Clipboard history</string>
+    <string name="shortcut_translate_text">Translate text</string>
+    <string name="shortcut_object_recognition">Object recognition</string>
+    <string name="shortcut_face_recognition">Face recognition</string>
+    <string name="shortcut_money_recognition">Money recognition</string>
+    <string name="shortcut_scene_recognition">Scene recognition</string>
+    <string name="shortcut_toggle_per_app_gesture_set">Toggle per-app gesture set</string>
+    <string name="shortcut_announce_item_position">Announce item position</string>
+    <string name="shortcut_repeat_last_utterance">Repeat last utterance</string>
+    <string name="shortcut_spell_last_utterance">Spell last utterance</string>
+
+    <string name="pref_quick_menu_settings_title">Quick menu</string>
+    <string name="pref_quick_menu_settings_summary">Choose actions shown in the quick menu</string>
+    <string name="pref_quick_menu_actions_title">Quick menu actions</string>
+    <string name="pref_quick_menu_reset_title">Reset quick menu</string>
+    <string name="pref_quick_menu_reset_summary">Restore the default quick menu actions</string>
+
+    <string name="translate_no_text">No text to translate</string>
+    <string name="translate_no_app">No app available to translate text</string>
+    <string name="announce_item_position_unavailable">No item position information</string>
+
+    <string name="pref_volume_key_shortcuts_title">Volume key shortcuts</string>
+    <string name="pref_volume_key_shortcuts_summary">Assign actions to volume key long presses</string>
+    <string name="pref_volume_key_shortcuts_enabled_title">Enable volume key shortcuts</string>
+    <string name="pref_volume_key_shortcuts_enabled_summary">Use volume key long presses as BlindReader shortcuts</string>
+    <string name="pref_volume_key_shortcuts_up_title">Volume up long press</string>
+    <string name="pref_volume_key_shortcuts_down_title">Volume down long press</string>
+
+    <string name="pref_plugins_settings_title">Plugins</string>
+    <string name="pref_plugins_settings_summary">Manage installed plugins</string>
+    <string name="plugins_empty">No plugins installed</string>
+
+    <string name="pref_auto_translate_captions_title">Auto translate descriptions</string>
+    <string name="pref_auto_translate_captions_summary">Send manual OCR and image descriptions to a translator</string>
+    <string name="pref_auto_object_recognition_title">Automatic object recognition</string>
+    <string name="pref_auto_object_recognition_summary">Describe objects when screen content changes</string>
+    <string name="pref_auto_face_recognition_title">Automatic face recognition</string>
+    <string name="pref_auto_face_recognition_summary">Identify faces in images automatically</string>
+    <string name="pref_auto_money_recognition_title">Automatic money recognition</string>
+    <string name="pref_auto_money_recognition_summary">Detect currency and bills automatically</string>
+    <string name="pref_auto_scene_recognition_title">Automatic scene recognition</string>
+    <string name="pref_auto_scene_recognition_summary">Describe scenes and surroundings automatically</string>
     <!-- Label for the button to launch an activity for managing BlindReader's custom menus. [CHAR LIMIT=100] -->
     <string name="title_pref_category_context_menu">Customize BlindReader menu</string>
     <!-- Label for the button to launch an activity for managing BlindReader's custom menus. [CHAR LIMIT=100] -->
@@ -1146,6 +1378,26 @@ Description: Explain that the feature is enabled for all images. [CHAR_LIMIT=NON
     <string name="shortcut_pause_or_resume_feedback">Pause or resume speech</string>
     <!-- Label for the shortcut that toggle voice feedback from BlindReader. [CHAR_LIMIT=72] -->
     <string name="shortcut_toggle_voice_feedback">Turn speech on or off</string>
+    <!-- Label for the shortcut that triggers macro 1. [CHAR_LIMIT=40] -->
+    <string name="shortcut_macro_1">Macro 1</string>
+    <!-- Label for the shortcut that triggers macro 2. [CHAR_LIMIT=40] -->
+    <string name="shortcut_macro_2">Macro 2</string>
+    <!-- Label for the shortcut that triggers macro 3. [CHAR_LIMIT=40] -->
+    <string name="shortcut_macro_3">Macro 3</string>
+    <!-- Label for the shortcut that opens document scan. [CHAR_LIMIT=40] -->
+    <string name="shortcut_document_scan">Document scan</string>
+    <!-- Label for the shortcut that reads the screen with AI. [CHAR_LIMIT=40] -->
+    <string name="shortcut_read_screen">Read screen (AI)</string>
+    <!-- Label for the shortcut that opens scan center. [CHAR_LIMIT=40] -->
+    <string name="shortcut_scan_hub">Scan center</string>
+    <!-- Label for the shortcut that toggles touch exploration. [CHAR_LIMIT=60] -->
+    <string name="shortcut_toggle_explore_by_touch">Toggle explore by touch</string>
+    <!-- Label for the shortcut that toggles single-tap activation. [CHAR_LIMIT=60] -->
+    <string name="shortcut_toggle_single_tap">Toggle single-tap activation</string>
+    <!-- Label for the shortcut that toggles web scripts. [CHAR_LIMIT=60] -->
+    <string name="shortcut_toggle_web_scripts">Toggle web scripts</string>
+    <!-- Label for the shortcut that toggles notification speech. [CHAR_LIMIT=60] -->
+    <string name="shortcut_toggle_speak_notifications">Toggle notifications speech</string>
     <!-- Label for menu item that reads all on-screen content, starting from the top of the screen. [CHAR_LIMIT=40] -->
     <!--
       Source: Possible user requests from voice commands to read from top.
@@ -1502,6 +1754,10 @@ Description: Explain that the feature is enabled for all images. [CHAR_LIMIT=NON
     <string name="title_pref_shortcut_2finger_swipe_left">Swipe left with 2 fingers</string>
     <!-- Label for the preference that assigns an action to the "two-finger swipe right" gesture. [CHAR_LIMIT=78] -->
     <string name="title_pref_shortcut_2finger_swipe_right">Swipe right with 2 fingers</string>
+    <!-- Label for the preference that assigns an action to the "two-finger rotate clockwise" gesture. [CHAR_LIMIT=78] -->
+    <string name="title_pref_shortcut_2finger_rotate_cw">Rotate clockwise with 2 fingers</string>
+    <!-- Label for the preference that assigns an action to the "two-finger rotate counterclockwise" gesture. [CHAR_LIMIT=78] -->
+    <string name="title_pref_shortcut_2finger_rotate_ccw">Rotate counterclockwise with 2 fingers</string>
     <!-- Label for the preference that assigns an action to the "three-finger swipe up" gesture. [CHAR_LIMIT=75] -->
     <string name="title_pref_shortcut_3finger_swipe_up">Swipe up with 3 fingers</string>
     <!-- Label for the preference that assigns an action to the "three-finger swipe down" gesture. [CHAR_LIMIT=78] -->
@@ -2036,6 +2292,14 @@ Description: Explain that the feature is enabled for all images. [CHAR_LIMIT=NON
   <string name="sound_feedback_state">Sound feedback <xliff:g example="on" id="state">%1$s</xliff:g></string>
   <!-- Announces vibration feedback is turned on or off.  This is spoken to the user. [CHAR_LIMIT=100] -->
   <string name="vibration_feedback_state">Vibration feedback <xliff:g example="on" id="state">%1$s</xliff:g></string>
+  <!-- Announces explore by touch is turned on or off. [CHAR_LIMIT=100] -->
+  <string name="explore_by_touch_state">Explore by touch <xliff:g example="on" id="state">%1$s</xliff:g></string>
+  <!-- Announces single-tap activation is turned on or off. [CHAR_LIMIT=100] -->
+  <string name="single_tap_state">Single-tap activation <xliff:g example="on" id="state">%1$s</xliff:g></string>
+  <!-- Announces web scripts are turned on or off. [CHAR_LIMIT=100] -->
+  <string name="web_scripts_state">Web scripts <xliff:g example="on" id="state">%1$s</xliff:g></string>
+  <!-- Announces notification speech is turned on or off. [CHAR_LIMIT=100] -->
+  <string name="speak_notifications_state">Speak notifications <xliff:g example="on" id="state">%1$s</xliff:g></string>
 
   <!-- One or two gesture name. This is spoken to the user. [CHAR_LIMIT=100]-->
   <string name="gesture_1_or_2"><xliff:g example="swipe up">%1$s</xliff:g> or <xliff:g example="swipe down">%2$s</xliff:g></string>

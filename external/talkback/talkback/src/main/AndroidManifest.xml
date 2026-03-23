@@ -118,6 +118,15 @@
             android:theme="@style/TalkBackSettings">
         </activity>
 
+        <activity
+            android:name="com.google.android.accessibility.talkback.preference.base.GestureMacroEditorActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:label="@string/pref_gesture_macro_settings_title"
+            android:launchMode="singleTop"
+            android:theme="@style/TalkBackSettings"
+            android:taskAffinity="com.google.android.accessibility.talkback.SettingsAffinity" />
+
         <!-- TalkBack permission request activity proxy -->
         <activity
             android:name="com.google.android.accessibility.talkback.permission.PermissionRequestActivity"

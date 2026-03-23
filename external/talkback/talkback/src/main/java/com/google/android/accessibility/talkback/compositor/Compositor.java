@@ -522,8 +522,10 @@ public class Compositor {
       // Compose other speech flags/parameters.
       int flags = eventFeedback.getOutputSpeechFlags();
       double speechPitch = eventFeedback.ttsPitch();
+      double speechRate = eventFeedback.ttsRate();
       Bundle speechParams = new Bundle();
       speechParams.putFloat(SpeechParam.PITCH, (float) speechPitch);
+      speechParams.putFloat(SpeechParam.RATE, (float) speechRate);
 
       // Output feedback: speech, haptics, earcons.
       if (speakOptions == null) {

@@ -613,6 +613,13 @@
             android:text="@string/answer_pickup_enable" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answerShakeSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/answer_shake_enable" />
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/faceShortcutSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

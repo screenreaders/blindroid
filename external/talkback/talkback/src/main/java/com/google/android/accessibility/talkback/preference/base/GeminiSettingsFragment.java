@@ -21,14 +21,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.talkback.actor.gemini.GeminiPrefs;
 import com.google.android.accessibility.talkback.dialog.BaseDialog;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
 
@@ -57,6 +62,11 @@ public class GeminiSettingsFragment extends TalkbackBaseFragment {
     }
     prefs = SharedPreferencesUtils.getSharedPreferences(context);
     setupEnablePreference();
+    setupApiKeyPreference();
+    setupModelPreference();
+    setupPrefixPromptPreference();
+    setupReadScreenPromptPreference();
+    setupReadScreenStylePreference();
   }
 
   @Override
@@ -99,6 +109,84 @@ public class GeminiSettingsFragment extends TalkbackBaseFragment {
           }.showDialog();
           return true;
         });
+  }
+
+  private void setupApiKeyPreference() {
+    EditTextPreference apiKeyPreference =
+        (EditTextPreference) findPreferenceByResId(R.string.pref_gemini_api_key_key);
+    if (apiKeyPreference == null) {
+      return;
+    }
+    apiKeyPreference.setPersistent(false);
+    apiKeyPreference.setText(GeminiPrefs.getApiKey(context));
+    apiKeyPreference.setSummaryProvider(
+        preference ->
+            GeminiPrefs.hasApiKey(context)
+                ? getString(R.string.summary_pref_gemini_api_key_set)
+                : getString(R.string.summary_pref_gemini_api_key_empty));
+    apiKeyPreference.setOnBindEditTextListener(
+        editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+    apiKeyPreference.setOnPreferenceChangeListener(
+        (preference, newValue) -> {
+          String value = newValue == null ? "" : newValue.toString().trim();
+          GeminiPrefs.setApiKey(context, value);
+          apiKeyPreference.setText(value);
+          return false;
+        });
+  }
+
+  private void setupModelPreference() {
+    EditTextPreference modelPreference =
+        (EditTextPreference) findPreferenceByResId(R.string.pref_gemini_model_key);
+    if (modelPreference == null) {
+      return;
+    }
+    modelPreference.setSummaryProvider(
+        preference -> {
+          String value = modelPreference.getText();
+          return TextUtils.isEmpty(value)
+              ? getString(R.string.pref_gemini_model_default)
+              : value;
+        });
+  }
+
+  private void setupPrefixPromptPreference() {
+    EditTextPreference prefixPreference =
+        (EditTextPreference) findPreferenceByResId(R.string.pref_gemini_prefix_prompt_key);
+    if (prefixPreference == null) {
+      return;
+    }
+    prefixPreference.setSummaryProvider(
+        preference -> {
+          String value = prefixPreference.getText();
+          return TextUtils.isEmpty(value)
+              ? getString(R.string.pref_gemini_prefix_prompt_default)
+              : value;
+        });
+  }
+
+  private void setupReadScreenPromptPreference() {
+    EditTextPreference promptPreference =
+        (EditTextPreference) findPreferenceByResId(R.string.pref_gemini_read_screen_prompt_key);
+    if (promptPreference == null) {
+      return;
+    }
+    promptPreference.setSummaryProvider(
+        preference -> {
+          String value = promptPreference.getText();
+          return TextUtils.isEmpty(value)
+              ? getString(R.string.gemini_read_screen_default_prompt)
+              : value;
+        });
+  }
+
+  private void setupReadScreenStylePreference() {
+    ListPreference stylePreference =
+        (ListPreference) findPreferenceByResId(R.string.pref_gemini_read_screen_style_key);
+    if (stylePreference == null) {
+      return;
+    }
+    stylePreference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
   }
 
   private boolean getBooleanPref(int key, int defaultValue) {

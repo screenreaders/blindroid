@@ -19,6 +19,7 @@ import static com.google.android.accessibility.talkback.preference.PreferencesAc
 import static com.google.android.accessibility.talkback.trainingcommon.TrainingUtils.GUP_SUPPORT_PORTAL_URL;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -27,6 +28,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -39,6 +42,7 @@ import com.google.android.accessibility.talkback.HelpAndFeedbackUtils;
 import com.google.android.accessibility.talkback.NotificationActivity;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
+import com.google.android.accessibility.talkback.FeatureFlagReader;
 import com.google.android.accessibility.talkback.actor.ImageCaptioner;
 import com.google.android.accessibility.talkback.training.OnboardingInitiator;
 import com.google.android.accessibility.talkback.training.TutorialInitiator;
@@ -93,6 +97,7 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
     settingsMetricStore = new SettingsMetricStore(context);
 
     fixListSummaries(getPreferenceScreen());
+    setupGestureSetShortcuts();
 
     HatsRequesterViewModel viewModel =
         new ViewModelProvider(getActivity()).get(HatsRequesterViewModel.class);
@@ -165,6 +170,82 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
     updateGeminiPreferenceState();
   }
 
+  private void setupGestureSetShortcuts() {
+    if (!FeatureFlagReader.useMultipleGestureSet(context)) {
+      removePreference(
+          R.string.pref_category_controls_key, R.string.pref_blindreader_gesture_set_screen_key);
+      removePreference(
+          R.string.pref_category_controls_key, R.string.pref_blindreader_gesture_set_quick_key);
+      return;
+    }
+
+    Preference screenPref = findPreferenceByResId(R.string.pref_blindreader_gesture_set_screen_key);
+    Preference quickPref = findPreferenceByResId(R.string.pref_blindreader_gesture_set_quick_key);
+
+    updateGestureSetSummary(screenPref);
+    updateGestureSetSummary(quickPref);
+
+    if (quickPref != null) {
+      quickPref.setOnPreferenceClickListener(
+          preference -> {
+            toggleGestureSet();
+            updateGestureSetSummary(screenPref);
+            updateGestureSetSummary(quickPref);
+            return true;
+          });
+    }
+  }
+
+  private void updateGestureSetSummary(@Nullable Preference preference) {
+    if (preference == null) {
+      return;
+    }
+    int current =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    String[] entries = context.getResources().getStringArray(R.array.pref_gesture_set_entries);
+    String label = (current >= 0 && current < entries.length) ? entries[current] : String.valueOf(current);
+    String key = preference.getKey();
+    if (key != null
+        && key.equals(context.getString(R.string.pref_blindreader_gesture_set_quick_key))) {
+      preference.setSummary(
+          context.getString(R.string.pref_blindreader_gesture_set_quick_summary, label));
+    } else {
+      preference.setSummary(context.getString(R.string.pref_blindreader_gesture_set_summary, label));
+    }
+  }
+
+  private void toggleGestureSet() {
+    String[] values = context.getResources().getStringArray(R.array.pref_gesture_set_values);
+    String[] entries = context.getResources().getStringArray(R.array.pref_gesture_set_entries);
+    if (values.length == 0) {
+      return;
+    }
+    int current =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_gesture_set_key,
+            R.string.pref_gesture_set_value_default);
+    int currentIndex = 0;
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(String.valueOf(current))) {
+        currentIndex = i;
+        break;
+      }
+    }
+    int nextIndex = (currentIndex + 1) % values.length;
+    SharedPreferencesUtils.putStringPref(
+        prefs, context.getResources(), R.string.pref_gesture_set_key, values[nextIndex]);
+    String label = nextIndex < entries.length ? entries[nextIndex] : values[nextIndex];
+    Toast.makeText(
+            context, context.getString(R.string.pref_blindreader_gesture_set_toast, label), Toast.LENGTH_SHORT)
+        .show();
+  }
+
   private void updateGeminiPreferenceState() {
     Preference geminiSupport = findPreferenceByResId(R.string.pref_gemini_settings_key);
     if (geminiSupport != null) {
@@ -216,6 +297,7 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
     super.onResume();
     updateSurveyOption();
     updateGeminiPreferenceState();
+    updateTouchExplorationState();
   }
 
   @Override
@@ -228,6 +310,34 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
     final PreferenceGroup category = (PreferenceGroup) findPreferenceByResId(categoryKeyId);
     if (category != null) {
       PreferenceSettingsUtils.hidePreference(context, category, preferenceKeyId);
+    }
+  }
+
+  /**
+   * Returns whether touch exploration is enabled. This is more reliable than
+   * AccessibilityManager.isTouchExplorationEnabled() because it updates atomically.
+   */
+  private static boolean isTouchExplorationEnabled(ContentResolver resolver) {
+    return Settings.Secure.getInt(resolver, Settings.Secure.TOUCH_EXPLORATION_ENABLED, 0) == 1;
+  }
+
+  /** Syncs single-tap preference availability with the actual touch exploration state. */
+  private void updateTouchExplorationState() {
+    if (context == null) {
+      return;
+    }
+    final ContentResolver resolver = context.getContentResolver();
+    final boolean requestedState =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            getResources(),
+            R.string.pref_explore_by_touch_key,
+            R.bool.pref_explore_by_touch_default);
+    final boolean actualState =
+        TalkBackService.isServiceActive() ? isTouchExplorationEnabled(resolver) : requestedState;
+    Preference singleTapPref = findPreferenceByResId(R.string.pref_single_tap_key);
+    if (singleTapPref != null) {
+      singleTapPref.setEnabled(actualState);
     }
   }
 

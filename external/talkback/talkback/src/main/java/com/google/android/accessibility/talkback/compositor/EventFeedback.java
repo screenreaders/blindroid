@@ -52,6 +52,8 @@ public abstract class EventFeedback {
 
   public abstract Double ttsPitch();
 
+  public abstract Double ttsRate();
+
   public abstract Boolean preventDeviceSleep();
 
   public abstract Boolean refreshSourceNode();
@@ -127,6 +129,7 @@ public abstract class EventFeedback {
             "ttsClearQueueGroup", ttsClearQueueGroup(), SpeechController.UTTERANCE_GROUP_DEFAULT),
         StringBuilderUtils.optionalTag("ttsSkipDuplicate", ttsSkipDuplicate()),
         StringBuilderUtils.optionalDouble("ttsPitch", ttsPitch(), 1.0d),
+        StringBuilderUtils.optionalDouble("ttsRate", ttsRate(), 1.0d),
         StringBuilderUtils.optionalTag("advanceContinuousReading", advanceContinuousReading()),
         StringBuilderUtils.optionalTag("preventDeviceSleep", preventDeviceSleep()),
         StringBuilderUtils.optionalTag("refreshSourceNode", refreshSourceNode()),
@@ -150,6 +153,7 @@ public abstract class EventFeedback {
         .setTtsClearQueueGroup(SpeechController.UTTERANCE_GROUP_DEFAULT)
         .setTtsSkipDuplicate(false)
         .setTtsPitch(1.0d)
+        .setTtsRate(1.0d)
         .setAdvanceContinuousReading(false)
         .setPreventDeviceSleep(false)
         .setRefreshSourceNode(false)
@@ -186,6 +190,8 @@ public abstract class EventFeedback {
     public abstract Builder setTtsForceFeedback(Boolean value);
 
     public abstract Builder setTtsPitch(double value);
+
+    public abstract Builder setTtsRate(double value);
 
     public abstract Builder setPreventDeviceSleep(Boolean value);
 

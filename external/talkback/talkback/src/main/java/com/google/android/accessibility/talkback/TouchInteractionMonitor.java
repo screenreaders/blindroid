@@ -35,6 +35,7 @@ import android.accessibilityservice.AccessibilityGestureEvent;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.TouchInteractionController;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -49,6 +50,8 @@ import androidx.annotation.WorkerThread;
 import com.google.android.accessibility.utils.AccessibilityServiceCompatUtils;
 import com.google.android.accessibility.utils.Performance;
 import com.google.android.accessibility.utils.Performance.EventId;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
+import com.google.android.accessibility.talkback.gesture.GestureShortcutMapping;
 import com.google.android.accessibility.utils.gestures.GestureConfiguration;
 import com.google.android.accessibility.utils.gestures.GestureManifold;
 import com.google.android.accessibility.utils.gestures.GestureUtils;
@@ -77,6 +80,11 @@ public class TouchInteractionMonitor
   // The height of the top and bottom edges for  edge-swipes.
   // For now this is only used to allow three-finger edge-swipes from the bottom.
   private static final float EDGE_SWIPE_HEIGHT_CM = 0.25f;
+  private static final float EDGE_SWIPE_WIDTH_DP = 24f;
+  private static final float EDGE_SWIPE_MIN_DISTANCE_DP = 96f;
+  private static final float EDGE_SWIPE_MAX_OFF_AXIS_DP = 72f;
+  private static final float ROTATION_MIN_DISTANCE_DP = 48f;
+  private static final float ROTATION_MIN_ANGLE_DEGREES = 25f;
 
   // Queue size to hold the most recent change requests of controller state.
   private static final int MAX_CHANGE_REQUEST_SIZE = 5;
@@ -119,6 +127,18 @@ public class TouchInteractionMonitor
   private final int passthroughTotalSlop;
   // The calculated edge height for the top and bottom edges.
   private final float edgeSwipeHeightPixels;
+  private final float edgeSwipeWidthPixels;
+  private final float edgeSwipeMinDistancePixels;
+  private final float edgeSwipeMaxOffAxisPixels;
+  private final float rotationMinDistancePixels;
+  private final float rotationMinAngleRadians;
+  private boolean edgeGestureTracking = false;
+  private boolean edgeGestureFromLeft = false;
+  private float edgeStartX = 0f;
+  private float edgeStartY = 0f;
+  private boolean rotationGestureTracking = false;
+  private float rotationInitialAngle = 0f;
+  private float rotationInitialDistance = 0f;
   // The time we take to determine what the user is doing.
   // We reduce it by 50 ms in order that touch exploration start doesn't arrive in the framework
   // after the finger has been lifted.
@@ -200,6 +220,11 @@ public class TouchInteractionMonitor
     requestTouchExplorationDelayed = new RequestTouchExplorationDelayed(determineUserIntentTimeout);
     DisplayMetrics metrics = context.getResources().getDisplayMetrics();
     edgeSwipeHeightPixels = metrics.ydpi / GestureUtils.CM_PER_INCH * EDGE_SWIPE_HEIGHT_CM;
+    edgeSwipeWidthPixels = metrics.density * EDGE_SWIPE_WIDTH_DP;
+    edgeSwipeMinDistancePixels = metrics.density * EDGE_SWIPE_MIN_DISTANCE_DP;
+    edgeSwipeMaxOffAxisPixels = metrics.density * EDGE_SWIPE_MAX_OFF_AXIS_DP;
+    rotationMinDistancePixels = metrics.density * ROTATION_MIN_DISTANCE_DP;
+    rotationMinAngleRadians = (float) Math.toRadians(ROTATION_MIN_ANGLE_DEGREES);
 
     LogUtils.v(LOG_TAG, "Touch Slop: %s", touchSlop);
     previousState = STATE_CLEAR;
@@ -255,6 +280,21 @@ public class TouchInteractionMonitor
   }
 
   public void handleMotionEventStateTouchInteracting(MotionEvent event) {
+    Integer edgeGesture = maybeDetectEdgeGesture(event);
+    if (edgeGesture != null) {
+      dispatchGestureToMainThreadAndClear(
+          new AccessibilityGestureEvent(edgeGesture, displayId, new ArrayList<MotionEvent>()));
+      return;
+    }
+    Integer rotationGesture = maybeDetectRotationGesture(event);
+    if (rotationGesture != null) {
+      dispatchGestureToMainThreadAndClear(
+          new AccessibilityGestureEvent(rotationGesture, displayId, new ArrayList<MotionEvent>()));
+      return;
+    }
+    if (edgeGestureTracking) {
+      return;
+    }
     switch (event.getActionMasked()) {
       case ACTION_DOWN:
         if (waitFirstMotionEvent) {
@@ -320,6 +360,134 @@ public class TouchInteractionMonitor
       default:
         break;
     }
+  }
+
+  private boolean isEdgeGestureEnabled() {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    return prefs.getBoolean(
+        service.getString(R.string.pref_edge_gestures_enabled_key),
+        service.getResources().getBoolean(R.bool.pref_edge_gestures_enabled_default));
+  }
+
+  private Integer maybeDetectEdgeGesture(MotionEvent event) {
+    if (!isEdgeGestureEnabled()) {
+      edgeGestureTracking = false;
+      return null;
+    }
+    int action = event.getActionMasked();
+    if (action == ACTION_DOWN) {
+      edgeGestureTracking = false;
+      if (event.getPointerCount() != 1) {
+        return null;
+      }
+      float x = event.getX();
+      float y = event.getY();
+      float width = context.getResources().getDisplayMetrics().widthPixels;
+      if (x <= edgeSwipeWidthPixels) {
+        edgeGestureTracking = true;
+        edgeGestureFromLeft = true;
+        edgeStartX = x;
+        edgeStartY = y;
+      } else if (x >= (width - edgeSwipeWidthPixels)) {
+        edgeGestureTracking = true;
+        edgeGestureFromLeft = false;
+        edgeStartX = x;
+        edgeStartY = y;
+      }
+      return null;
+    }
+
+    if (!edgeGestureTracking) {
+      return null;
+    }
+
+    if (action == MotionEvent.ACTION_POINTER_DOWN || action == MotionEvent.ACTION_CANCEL) {
+      edgeGestureTracking = false;
+      return null;
+    }
+
+    if (action == MotionEvent.ACTION_UP) {
+      edgeGestureTracking = false;
+      float dx = event.getX() - edgeStartX;
+      float dy = event.getY() - edgeStartY;
+      if (Math.abs(dy) > edgeSwipeMaxOffAxisPixels) {
+        return null;
+      }
+      if (edgeGestureFromLeft && dx >= edgeSwipeMinDistancePixels) {
+        return GestureShortcutMapping.GESTURE_EDGE_SWIPE_RIGHT;
+      }
+      if (!edgeGestureFromLeft && dx <= -edgeSwipeMinDistancePixels) {
+        return GestureShortcutMapping.GESTURE_EDGE_SWIPE_LEFT;
+      }
+    }
+
+    return null;
+  }
+
+  private Integer maybeDetectRotationGesture(MotionEvent event) {
+    if (!gestureDetector.isMultiFingerGesturesEnabled()) {
+      rotationGestureTracking = false;
+      return null;
+    }
+    int action = event.getActionMasked();
+    int pointerCount = event.getPointerCount();
+    if (pointerCount > 2) {
+      rotationGestureTracking = false;
+      return null;
+    }
+    if (action == ACTION_POINTER_DOWN && pointerCount == 2) {
+      rotationGestureTracking = true;
+      rotationInitialAngle = getRotationAngle(event);
+      rotationInitialDistance = getRotationDistance(event);
+      return null;
+    }
+    if (!rotationGestureTracking) {
+      return null;
+    }
+    if (action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_CANCEL) {
+      rotationGestureTracking = false;
+      return null;
+    }
+    if (action == MotionEvent.ACTION_UP) {
+      rotationGestureTracking = false;
+      return null;
+    }
+    if (action == MotionEvent.ACTION_MOVE && pointerCount == 2) {
+      if (rotationInitialDistance < rotationMinDistancePixels) {
+        return null;
+      }
+      float angle = getRotationAngle(event);
+      float delta = normalizeAngleRadians(angle - rotationInitialAngle);
+      if (Math.abs(delta) >= rotationMinAngleRadians) {
+        rotationGestureTracking = false;
+        return delta > 0
+            ? GestureShortcutMapping.GESTURE_ROTATE_CW
+            : GestureShortcutMapping.GESTURE_ROTATE_CCW;
+      }
+    }
+    return null;
+  }
+
+  private float getRotationAngle(MotionEvent event) {
+    float dx = event.getX(1) - event.getX(0);
+    float dy = event.getY(1) - event.getY(0);
+    return (float) Math.atan2(dy, dx);
+  }
+
+  private float getRotationDistance(MotionEvent event) {
+    float dx = event.getX(1) - event.getX(0);
+    float dy = event.getY(1) - event.getY(0);
+    return (float) Math.hypot(dx, dy);
+  }
+
+  private float normalizeAngleRadians(float angle) {
+    while (angle > Math.PI) {
+      angle -= 2 * Math.PI;
+    }
+    while (angle < -Math.PI) {
+      angle += 2 * Math.PI;
+    }
+    return angle;
   }
 
   public void handleMotionEventStateDragging(MotionEvent event) {
@@ -400,6 +568,9 @@ public class TouchInteractionMonitor
     touchExploreGate.addAll(TOUCH_EXPLORE_GATE);
     keepMonitorTouchExplore = true;
     waitFirstMotionEvent = false;
+    rotationGestureTracking = false;
+    rotationInitialAngle = 0f;
+    rotationInitialDistance = 0f;
     if (eventId != null) {
       Performance.getInstance().onGestureDetectionStopped(eventId);
       eventId = null;

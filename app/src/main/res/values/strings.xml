@@ -89,6 +89,7 @@
     <string name="unknown_caller">Nieznany numer</string>
     <string name="section_currency">Rozpoznawanie walut</string>
     <string name="section_camera">Kamera</string>
+    <string name="scan_hub_title">Centrum skanowania</string>
     <string name="section_documents">Dokumenty</string>
     <string name="section_face">FaceID - asystent</string>
     <string name="section_obstacle">Przeszkody</string>
@@ -449,6 +450,7 @@
     <string name="face_pickup_enable">Uruchamiaj po podniesieniu telefonu</string>
     <string name="face_shortcut_enable">Skrót FaceID na ekranie blokady</string>
     <string name="answer_pickup_enable">Odbieraj połączenie po podniesieniu</string>
+    <string name="answer_shake_enable">Odbieraj połączenie potrząśnięciem</string>
     <string name="missed_call_back_enable">Oddzwaniaj po 3 stuknięciach w plecy</string>
     <string name="missed_call_back_missing">Brak nieodebranego połączenia</string>
     <string name="back_tap_sensitivity">Czułość stuknięć</string>

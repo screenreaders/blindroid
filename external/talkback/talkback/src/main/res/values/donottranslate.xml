@@ -106,6 +106,12 @@
     <string name="pref_detailed_image_description_key" translatable="false">pref_detailed_image_description_key</string>
     <string name="pref_auto_on_devices_image_description_key" translatable="false">pref_auto_on_devices_image_description_key</string>
     <string name="pref_gemini_enabled_key" translatable="false">pref_gemini_enabled_key</string>
+    <string name="pref_gemini_api_key_key" translatable="false">pref_gemini_api_key</string>
+    <string name="pref_gemini_model_key" translatable="false">pref_gemini_model</string>
+    <string name="pref_gemini_prefix_prompt_key" translatable="false">pref_gemini_prefix_prompt</string>
+    <string name="pref_gemini_read_screen_prompt_key" translatable="false">pref_gemini_read_screen_prompt</string>
+    <string name="pref_gemini_model_default" translatable="false">gemini-1.5-flash</string>
+    <string name="pref_gemini_prefix_prompt_default" translatable="false"></string>
     <string name="pref_gemini_repeat_opt_in_count_key" translatable="false">pref_gemini_repeat_opt_in_count_key</string>
     <string name="pref_gemini_opt_in_show_dialog_key">pref_gemini_opt_in_show_dialog_key</string>
     <string name="pref_gemini_opt_in_consent_key">pref_gemini_opt_in_consent_key</string>
@@ -182,6 +188,7 @@
     <!-- Gesture set preferences -->
     <string name="pref_gesture_set_key">pref_gesture_set_key</string>
     <string name="pref_gesture_set_value_default">0</string>
+    <string name="pref_per_app_gesture_set_value_default">-1</string>
     <!-- Currently, we support 2 sets; in case to extended the set, we need to add both pref_gesture_set_entries & pref_gesture_set_values. -->
     <string-array name="pref_gesture_set_entries">
       <item>@string/pref_gesture_set_entry_0</item>
@@ -210,6 +217,7 @@
     <string name="pref_category_1finger_shortcuts_key" translatable="false">pref_category_1finger_shortcuts</string>
     <string name="pref_category_1finger_back_forth_shortcuts_key" translatable="false">pref_category_1finger_back_forth_shortcuts</string>
     <string name="pref_category_1finger_angle_shortcuts_key" translatable="false">pref_category_1finger_angle_shortcuts</string>
+    <string name="pref_category_edge_gestures_key" translatable="false">pref_category_edge_gestures</string>
     <string name="pref_category_2finger_shortcuts_key" translatable="false">pref_category_2finger_shortcuts</string>
     <string name="pref_category_3finger_shortcuts_key" translatable="false">pref_category_3finger_shortcuts</string>
     <string name="pref_category_4finger_shortcuts_key" translatable="false">pref_category_4finger_shortcuts</string>
@@ -218,6 +226,20 @@
     <string name="pref_manage_customize_menus_key" translatable="false">pref_manage_customize_menus</string>
     <string name="pref_category_manage_context_menu_key" translatable="false">pref_category_manage_context_menu</string>
     <string name="pref_category_manage_selector_menu_key" translatable="false">pref_category_manage_selector_menu</string>
+    <string name="pref_blindreader_gesture_set_screen_key" translatable="false">pref_blindreader_gesture_set_screen</string>
+    <string name="pref_blindreader_gesture_set_quick_key" translatable="false">pref_blindreader_gesture_set_quick</string>
+    <string name="pref_per_app_gesture_set_screen_key" translatable="false">pref_per_app_gesture_set_screen</string>
+    <string name="pref_per_app_gesture_set_enabled_key" translatable="false">pref_per_app_gesture_set_enabled</string>
+    <string name="pref_per_app_gesture_set_current_key" translatable="false">pref_per_app_gesture_set_current</string>
+    <string name="pref_per_app_gesture_set_clear_key" translatable="false">pref_per_app_gesture_set_clear</string>
+    <string name="pref_per_app_gesture_set_list_key" translatable="false">pref_per_app_gesture_set_list</string>
+    <string name="pref_per_app_gesture_set_prefix" translatable="false">pref_per_app_gesture_set_pkg_</string>
+    <string name="pref_invert_swipe_gestures_key" translatable="false">pref_invert_swipe_gestures</string>
+    <string name="pref_edge_gestures_enabled_key" translatable="false">pref_edge_gestures_enabled</string>
+    <string name="pref_multi_part_gestures_enabled_key" translatable="false">pref_multi_part_gestures_enabled</string>
+    <string name="pref_gesture_edit_scope_key" translatable="false">pref_gesture_edit_scope</string>
+    <string name="pref_gesture_edit_scope_default" translatable="false">global</string>
+    <string name="pref_gesture_scope_pkg_prefix" translatable="false">pref_gesture_scope_pkg_</string>
     <string name="pref_category_navigation_options_menu_key" translatable="false">pref_category_manage_navigation_options_menu</string>
     <string name="pref_show_context_menu_contextual_actions_category_key" translatable="false">pref_show_context_menu_contextual_actions_category</string>
     <string name="pref_show_context_menu_navigation_category_key" translatable="false">pref_show_context_menu_navigation_category</string>
@@ -243,6 +265,8 @@
     <string name="pref_shortcut_right_and_up_key">pref_shortcut_right_and_up</string>
     <string name="pref_shortcut_left_and_down_key">pref_shortcut_left_and_down</string>
     <string name="pref_shortcut_left_and_up_key">pref_shortcut_left_and_up</string>
+    <string name="pref_shortcut_edge_swipe_left_key">pref_shortcut_edge_swipe_left</string>
+    <string name="pref_shortcut_edge_swipe_right_key">pref_shortcut_edge_swipe_right</string>
 
     <string name="pref_shortcut_1finger_2tap_key">pref_shortcut_one_finger_double_tap</string>
     <string name="pref_shortcut_1finger_2tap_hold_key">pref_shortcut_one_finger_double_tap_and_hold</string>
@@ -261,6 +285,8 @@
     <string name="pref_shortcut_2finger_swipe_down_key">pref_shortcut_two_finger_swipe_down</string>
     <string name="pref_shortcut_2finger_swipe_left_key">pref_shortcut_two_finger_swipe_left</string>
     <string name="pref_shortcut_2finger_swipe_right_key">pref_shortcut_two_finger_swipe_right</string>
+    <string name="pref_shortcut_2finger_rotate_cw_key">pref_shortcut_two_finger_rotate_cw</string>
+    <string name="pref_shortcut_2finger_rotate_ccw_key">pref_shortcut_two_finger_rotate_ccw</string>
     <string name="pref_shortcut_3finger_swipe_up_key">pref_shortcut_three_finger_swipe_up</string>
     <string name="pref_shortcut_3finger_swipe_down_key">pref_shortcut_three_finger_swipe_down</string>
     <string name="pref_shortcut_3finger_swipe_left_key">pref_shortcut_three_finger_swipe_left</string>
@@ -402,10 +428,15 @@
       <item>@string/pref_shortcut_4finger_2tap_key</item>
       <item>@string/pref_shortcut_4finger_3tap_key</item>
 
+      <item>@string/pref_shortcut_edge_swipe_left_key</item>
+      <item>@string/pref_shortcut_edge_swipe_right_key</item>
+
       <item>@string/pref_shortcut_2finger_swipe_up_key</item>
       <item>@string/pref_shortcut_2finger_swipe_down_key</item>
       <item>@string/pref_shortcut_2finger_swipe_left_key</item>
       <item>@string/pref_shortcut_2finger_swipe_right_key</item>
+      <item>@string/pref_shortcut_2finger_rotate_cw_key</item>
+      <item>@string/pref_shortcut_2finger_rotate_ccw_key</item>
       <item>@string/pref_shortcut_3finger_swipe_up_key</item>
       <item>@string/pref_shortcut_3finger_swipe_down_key</item>
       <item>@string/pref_shortcut_3finger_swipe_left_key</item>
@@ -699,6 +730,9 @@
         <item>@string/shortcut_pause_or_resume_feedback</item>
         <item>@string/shortcut_toggle_voice_feedback</item>
         <item>@string/shortcut_show_language_options</item>
+        <item>@string/shortcut_announce_item_position</item>
+        <item>@string/shortcut_repeat_last_utterance</item>
+        <item>@string/shortcut_spell_last_utterance</item>
     </string-array>
 
     <!-- Shortcut preference value of reading control -->
@@ -708,6 +742,9 @@
         <item>@string/shortcut_value_pause_or_resume_feedback</item>
         <item>@string/shortcut_value_toggle_voice_feedback</item>
         <item>@string/shortcut_value_show_language_options</item>
+        <item>@string/shortcut_value_announce_item_position</item>
+        <item>@string/shortcut_value_repeat_last_utterance</item>
+        <item>@string/shortcut_value_spell_last_utterance</item>
     </string-array>
 
     <!-- Shortcut preference of menu control -->
@@ -717,6 +754,24 @@
         <item>@string/shortcut_select_next_setting</item>
         <item>@string/shortcut_selected_setting_previous_action</item>
         <item>@string/shortcut_selected_setting_next_action</item>
+        <item>@string/shortcut_quick_menu</item>
+        <item>@string/shortcut_clipboard_history</item>
+        <item>@string/shortcut_translate_text</item>
+        <item>@string/shortcut_object_recognition</item>
+        <item>@string/shortcut_face_recognition</item>
+        <item>@string/shortcut_money_recognition</item>
+        <item>@string/shortcut_scene_recognition</item>
+        <item>@string/shortcut_toggle_per_app_gesture_set</item>
+        <item>@string/shortcut_toggle_explore_by_touch</item>
+        <item>@string/shortcut_toggle_single_tap</item>
+        <item>@string/shortcut_toggle_web_scripts</item>
+        <item>@string/shortcut_toggle_speak_notifications</item>
+        <item>@string/shortcut_macro_1</item>
+        <item>@string/shortcut_macro_2</item>
+        <item>@string/shortcut_macro_3</item>
+        <item>@string/shortcut_document_scan</item>
+        <item>@string/shortcut_read_screen</item>
+        <item>@string/shortcut_scan_hub</item>
     </string-array>
 
     <!-- Shortcut preference value of menu control -->
@@ -726,6 +781,48 @@
         <item>@string/shortcut_value_select_next_setting</item>
         <item>@string/shortcut_value_selected_setting_previous_action</item>
         <item>@string/shortcut_value_selected_setting_next_action</item>
+        <item>@string/shortcut_value_quick_menu</item>
+        <item>@string/shortcut_value_clipboard_history</item>
+        <item>@string/shortcut_value_translate_text</item>
+        <item>@string/shortcut_value_object_recognition</item>
+        <item>@string/shortcut_value_face_recognition</item>
+        <item>@string/shortcut_value_money_recognition</item>
+        <item>@string/shortcut_value_scene_recognition</item>
+        <item>@string/shortcut_value_toggle_per_app_gesture_set</item>
+        <item>@string/shortcut_value_toggle_explore_by_touch</item>
+        <item>@string/shortcut_value_toggle_single_tap</item>
+        <item>@string/shortcut_value_toggle_web_scripts</item>
+        <item>@string/shortcut_value_toggle_speak_notifications</item>
+        <item>@string/shortcut_value_macro_1</item>
+        <item>@string/shortcut_value_macro_2</item>
+        <item>@string/shortcut_value_macro_3</item>
+        <item>@string/shortcut_value_document_scan</item>
+        <item>@string/shortcut_value_read_screen</item>
+        <item>@string/shortcut_value_scan_hub</item>
+    </string-array>
+
+    <string-array name="pref_quick_menu_action_defaults" translatable="false">
+        <item>@string/shortcut_value_back</item>
+        <item>@string/shortcut_value_home</item>
+        <item>@string/shortcut_value_notifications</item>
+        <item>@string/shortcut_value_quick_settings</item>
+        <item>@string/shortcut_value_toggle_speak_notifications</item>
+        <item>@string/shortcut_value_talkback_breakout</item>
+        <item>@string/shortcut_value_read_from_top</item>
+        <item>@string/shortcut_value_read_from_current</item>
+        <item>@string/shortcut_value_show_hide_screen</item>
+        <item>@string/shortcut_value_toggle_explore_by_touch</item>
+        <item>@string/shortcut_value_read_screen</item>
+        <item>@string/shortcut_value_scan_hub</item>
+        <item>@string/shortcut_value_describe_image</item>
+        <item>@string/shortcut_value_translate_text</item>
+        <item>@string/shortcut_value_object_recognition</item>
+        <item>@string/shortcut_value_face_recognition</item>
+        <item>@string/shortcut_value_money_recognition</item>
+        <item>@string/shortcut_value_scene_recognition</item>
+        <item>@string/shortcut_value_toggle_per_app_gesture_set</item>
+        <item>@string/shortcut_value_repeat_last_utterance</item>
+        <item>@string/shortcut_value_clipboard_history</item>
     </string-array>
 
     <!-- Shortcut preference of text editing -->
@@ -795,6 +892,79 @@
     <!-- TODO: add selector shortcuts to perform next and previous actions specific to the selected setting. add shortcuts to string-array pref_shortcut_values-->
     <string name="shortcut_value_selected_setting_next_action">SELECTED_SETTING_NEXT_ACTION</string>
     <string name="shortcut_value_selected_setting_previous_action">SELECTED_SETTING_PREVIOUS_ACTION</string>
+    <string name="shortcut_value_quick_menu">QUICK_MENU</string>
+    <string name="shortcut_value_clipboard_history">CLIPBOARD_HISTORY</string>
+    <string name="shortcut_value_translate_text">TRANSLATE_TEXT</string>
+    <string name="shortcut_value_object_recognition">OBJECT_RECOGNITION</string>
+    <string name="shortcut_value_face_recognition">FACE_RECOGNITION</string>
+    <string name="shortcut_value_money_recognition">MONEY_RECOGNITION</string>
+    <string name="shortcut_value_scene_recognition">SCENE_RECOGNITION</string>
+    <string name="shortcut_value_toggle_per_app_gesture_set">TOGGLE_PER_APP_GESTURE_SET</string>
+    <string name="shortcut_value_announce_item_position">ANNOUNCE_ITEM_POSITION</string>
+    <string name="shortcut_value_repeat_last_utterance">REPEAT_LAST_UTTERANCE</string>
+    <string name="shortcut_value_spell_last_utterance">SPELL_LAST_UTTERANCE</string>
+    <string name="shortcut_value_toggle_explore_by_touch" translatable="false">TOGGLE_EXPLORE_BY_TOUCH</string>
+    <string name="shortcut_value_toggle_single_tap" translatable="false">TOGGLE_SINGLE_TAP</string>
+    <string name="shortcut_value_toggle_web_scripts" translatable="false">TOGGLE_WEB_SCRIPTS</string>
+    <string name="shortcut_value_toggle_speak_notifications" translatable="false">TOGGLE_SPEAK_NOTIFICATIONS</string>
+    <string name="shortcut_value_macro_1" translatable="false">MACRO_1</string>
+    <string name="shortcut_value_macro_2" translatable="false">MACRO_2</string>
+    <string name="shortcut_value_macro_3" translatable="false">MACRO_3</string>
+    <string name="shortcut_value_document_scan" translatable="false">DOCUMENT_SCAN</string>
+    <string name="shortcut_value_read_screen" translatable="false">READ_SCREEN</string>
+    <string name="shortcut_value_scan_hub" translatable="false">SCAN_HUB</string>
+
+    <string name="pref_volume_key_shortcuts_enabled_key" translatable="false">pref_volume_key_shortcuts_enabled</string>
+    <string name="pref_volume_key_shortcuts_up_key" translatable="false">pref_volume_key_shortcuts_up</string>
+    <string name="pref_volume_key_shortcuts_down_key" translatable="false">pref_volume_key_shortcuts_down</string>
+    <bool name="pref_volume_key_shortcuts_enabled_default">false</bool>
+    <string name="pref_volume_key_shortcuts_up_default">@string/shortcut_value_unassigned</string>
+    <string name="pref_volume_key_shortcuts_down_default">@string/shortcut_value_unassigned</string>
+    <string name="pref_floating_menu_enabled_key" translatable="false">pref_floating_menu_enabled</string>
+    <bool name="pref_floating_menu_enabled_default">false</bool>
+    <string name="pref_floating_menu_action_key" translatable="false">pref_floating_menu_action</string>
+    <string name="pref_floating_menu_action_default" translatable="false">quick_menu</string>
+    <string name="pref_floating_menu_action_value_quick_menu" translatable="false">quick_menu</string>
+    <string name="pref_floating_menu_action_value_read_screen" translatable="false">read_screen</string>
+    <string name="pref_floating_menu_action_value_scan_hub" translatable="false">scan_hub</string>
+    <string name="pref_category_content_key" translatable="false">pref_category_content</string>
+    <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
+    <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
+    <string name="pref_read_all_auto_ocr_key" translatable="false">pref_read_all_auto_ocr</string>
+    <bool name="pref_read_all_auto_ocr_default">false</bool>
+    <string name="pref_read_all_filter_key" translatable="false">pref_read_all_filter</string>
+    <string name="pref_read_all_filter_default" translatable="false">all</string>
+    <string name="pref_read_all_filter_value_all" translatable="false">all</string>
+    <string name="pref_read_all_filter_value_text" translatable="false">text_only</string>
+    <string name="pref_read_all_filter_value_controls" translatable="false">controls_only</string>
+    <string name="pref_read_all_style_key" translatable="false">pref_read_all_style</string>
+    <string name="pref_read_all_style_default" translatable="false">detailed</string>
+    <string name="pref_read_all_style_value_detailed" translatable="false">detailed</string>
+    <string name="pref_read_all_style_value_compact" translatable="false">compact</string>
+    <string name="pref_gemini_read_screen_style_key" translatable="false">pref_gemini_read_screen_style</string>
+    <string name="pref_gemini_read_screen_style_default" translatable="false">detailed</string>
+    <string name="pref_gemini_read_screen_style_value_detailed" translatable="false">detailed</string>
+    <string name="pref_gemini_read_screen_style_value_summary" translatable="false">summary</string>
+    <string name="pref_gemini_read_screen_haptic_key" translatable="false">pref_gemini_read_screen_haptic</string>
+    <bool name="pref_gemini_read_screen_haptic_default">true</bool>
+    <string name="pref_gesture_macro_settings_key" translatable="false">pref_gesture_macro_settings</string>
+    <string name="pref_macro_enabled_key" translatable="false">pref_gesture_macro_enabled</string>
+    <bool name="pref_macro_enabled_default">false</bool>
+    <string name="pref_macro_1_name_key" translatable="false">pref_macro_1_name</string>
+    <string name="pref_macro_2_name_key" translatable="false">pref_macro_2_name</string>
+    <string name="pref_macro_3_name_key" translatable="false">pref_macro_3_name</string>
+    <string name="pref_macro_1_action_1_key" translatable="false">pref_macro_1_action_1</string>
+    <string name="pref_macro_1_action_2_key" translatable="false">pref_macro_1_action_2</string>
+    <string name="pref_macro_1_action_3_key" translatable="false">pref_macro_1_action_3</string>
+    <string name="pref_macro_2_action_1_key" translatable="false">pref_macro_2_action_1</string>
+    <string name="pref_macro_2_action_2_key" translatable="false">pref_macro_2_action_2</string>
+    <string name="pref_macro_2_action_3_key" translatable="false">pref_macro_2_action_3</string>
+    <string name="pref_macro_3_action_1_key" translatable="false">pref_macro_3_action_1</string>
+    <string name="pref_macro_3_action_2_key" translatable="false">pref_macro_3_action_2</string>
+    <string name="pref_macro_3_action_3_key" translatable="false">pref_macro_3_action_3</string>
+    <string name="pref_macro_1_actions_list_key" translatable="false">pref_macro_1_actions_list</string>
+    <string name="pref_macro_2_actions_list_key" translatable="false">pref_macro_2_actions_list</string>
+    <string name="pref_macro_3_actions_list_key" translatable="false">pref_macro_3_actions_list</string>
     <string name="shortcut_value_action_setting_activate_current_action" translatable="false">ACTION_SETTING_ACTIVATE_CURRENT_ACTION</string>
     <string name="shortcut_value_show_hide_screen">SHOW_HIDE SCREEN</string>
     <string name="shortcut_value_screen_search">SCREEN SEARCH</string>
@@ -1087,6 +1257,8 @@
     <string name="pref_shortcut_right_and_up_default">@string/shortcut_value_voice_commands</string>
     <string name="pref_shortcut_left_and_down_default">@string/shortcut_value_screen_search</string>
     <string name="pref_shortcut_left_and_up_default">@string/shortcut_value_overview</string>
+    <string name="pref_shortcut_edge_swipe_left_default">@string/shortcut_value_show_custom_actions</string>
+    <string name="pref_shortcut_edge_swipe_right_default">@string/shortcut_value_talkback_breakout</string>
 
     <string name="pref_shortcut_1finger_2tap_default">@string/shortcut_value_action_setting_activate_current_action</string>
     <string name="pref_shortcut_1finger_2tap_hold_default">@string/shortcut_value_perform_long_click_action</string>
@@ -1101,6 +1273,8 @@
     <string name="pref_shortcut_2finger_swipe_down_default">@string/shortcut_value_scroll_down</string>
     <string name="pref_shortcut_2finger_swipe_left_default">@string/shortcut_value_scroll_left</string>
     <string name="pref_shortcut_2finger_swipe_right_default">@string/shortcut_value_scroll_right</string>
+    <string name="pref_shortcut_2finger_rotate_cw_default">@string/shortcut_value_unassigned</string>
+    <string name="pref_shortcut_2finger_rotate_ccw_default">@string/shortcut_value_unassigned</string>
     <string name="pref_shortcut_3finger_swipe_up_default">@string/shortcut_value_select_previous_setting</string>
     <string name="pref_shortcut_3finger_swipe_down_default">@string/shortcut_value_select_next_setting</string>
     <string name="pref_shortcut_3finger_swipe_left_default">@string/shortcut_value_select_previous_setting</string>
@@ -1295,6 +1469,30 @@
     <string name="pref_image_description_install_lib_deny">pref_image_description_install_lib_deny</string>
     <string name="pref_image_description_uninstalled_request">pref_image_description_uninstalled_request</string>
     <string name="pref_image_description_uninstalled_deny">pref_image_description_uninstalled_deny</string>
+
+    <string name="pref_category_notifications_key" translatable="false">pref_category_notifications</string>
+    <string name="pref_speak_notifications_key" translatable="false">pref_speak_notifications</string>
+    <string name="pref_notification_speech_rate_key" translatable="false">pref_notification_speech_rate</string>
+    <string name="pref_notification_speech_rate_default" translatable="false">1.0</string>
+    <string name="pref_notification_speech_pitch_key" translatable="false">pref_notification_speech_pitch</string>
+    <string name="pref_notification_speech_pitch_default" translatable="false">1.0</string>
+    <string name="pref_category_tools_key" translatable="false">pref_category_tools</string>
+    <string name="pref_clipboard_history_enabled_key" translatable="false">pref_clipboard_history_enabled</string>
+    <string name="pref_clipboard_history_max_key" translatable="false">pref_clipboard_history_max</string>
+    <string name="pref_clipboard_history_max_default" translatable="false">10</string>
+    <string name="pref_clipboard_history_store_key" translatable="false">pref_clipboard_history_store</string>
+    <string name="pref_quick_menu_settings_key" translatable="false">pref_quick_menu_settings</string>
+    <string name="pref_quick_menu_reset_key" translatable="false">pref_quick_menu_reset</string>
+    <string name="pref_quick_menu_actions_category_key" translatable="false">pref_quick_menu_actions_category</string>
+    <string name="pref_quick_menu_customized_key" translatable="false">pref_quick_menu_customized</string>
+    <string name="pref_quick_menu_action_prefix" translatable="false">pref_quick_menu_action_</string>
+    <string name="pref_volume_key_shortcuts_category_key" translatable="false">pref_volume_key_shortcuts_category</string>
+    <string name="pref_plugins_settings_key" translatable="false">pref_plugins_settings</string>
+    <string name="pref_auto_translate_captions_key" translatable="false">pref_auto_translate_captions</string>
+    <string name="pref_auto_object_recognition_key" translatable="false">pref_auto_object_recognition</string>
+    <string name="pref_auto_face_recognition_key" translatable="false">pref_auto_face_recognition</string>
+    <string name="pref_auto_money_recognition_key" translatable="false">pref_auto_money_recognition</string>
+    <string name="pref_auto_scene_recognition_key" translatable="false">pref_auto_scene_recognition</string>
 
     <!-- BlindReader user usage. -->
     <string name="talkback_enabled_count">talkback_enabled_count</string>

@@ -25,6 +25,7 @@ import static com.google.android.accessibility.talkback.contextmenu.ListMenuMana
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.LANGUAGE;
 import static com.google.android.accessibility.talkback.contextmenu.ListMenuManager.MenuId.LINKS;
 import static com.google.android.accessibility.talkback.eventprocessor.EventState.EVENT_SKIP_FOCUS_SYNC_FROM_VIEW_FOCUSED;
+import static com.google.android.accessibility.utils.Performance.EVENT_ID_UNTRACKED;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -41,20 +42,25 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.text.TextUtils;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.accessibility.talkback.ActorState;
 import com.google.android.accessibility.talkback.Feedback;
+import com.google.android.accessibility.talkback.clipboard.ClipboardHistoryManager;
 import com.google.android.accessibility.talkback.Pipeline;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.analytics.TalkBackAnalytics;
 import com.google.android.accessibility.talkback.contextmenu.ContextMenuItem.DeferredType;
 import com.google.android.accessibility.talkback.eventprocessor.EventState;
+import com.google.android.accessibility.talkback.gesture.GestureController;
+import com.google.android.accessibility.talkback.quickmenu.QuickMenuPreferences;
 import com.google.android.accessibility.talkback.focusmanagement.AccessibilityFocusMonitor;
 import com.google.android.accessibility.talkback.focusmanagement.record.FocusActionRecord;
 import com.google.android.accessibility.talkback.menurules.NodeMenuRuleProcessor;
 import com.google.android.accessibility.utils.AccessibilityEventListener;
+import com.google.android.accessibility.utils.AccessibilityNodeInfoUtils;
 import com.google.android.accessibility.utils.FormFactorUtils;
 import com.google.android.accessibility.utils.Performance.EventId;
 import com.google.android.accessibility.utils.SettingsUtils;
@@ -92,6 +98,10 @@ public class ListMenuManager implements WindowEventHandler, AccessibilityEventLi
       AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED;
 
   private static final int INVALID_RES_ID = -1;
+  private static final int QUICK_MENU_ITEM_ID_BASE = 20000;
+  private static final int CLIPBOARD_MENU_ITEM_ID_BASE = 21000;
+  private static final int CLIPBOARD_MENU_ITEM_ID_CLEAR = 21999;
+  private static final int CLIPBOARD_MENU_LABEL_MAX_CHARS = 60;
 
   private TalkBackService service;
   private final Pipeline.FeedbackReturner pipeline;
@@ -108,6 +118,8 @@ public class ListMenuManager implements WindowEventHandler, AccessibilityEventLi
   private AccessibilityNodeInfoCompat currentNode;
   private ContextMenu contextMenu;
   private final FormFactorUtils formFactorUtils;
+  private @Nullable ClipboardHistoryManager clipboardHistoryManager;
+  private @Nullable GestureController gestureController;
 
   /** Id to identify the menu content. */
   public enum MenuId {
@@ -115,6 +127,8 @@ public class ListMenuManager implements WindowEventHandler, AccessibilityEventLi
     CUSTOM_ACTION,
     LANGUAGE,
     LINKS,
+    QUICK_MENU,
+    CLIPBOARD_HISTORY,
   }
 
   public ListMenuManager(
@@ -132,6 +146,14 @@ public class ListMenuManager implements WindowEventHandler, AccessibilityEventLi
     this.analytics = analytics;
     this.formFactorUtils = FormFactorUtils.getInstance();
     menuClickProcessor = new ContextMenuItemClickProcessor(service, pipeline);
+  }
+
+  public void setClipboardHistoryManager(@Nullable ClipboardHistoryManager manager) {
+    clipboardHistoryManager = manager;
+  }
+
+  public void setGestureController(@Nullable GestureController controller) {
+    gestureController = controller;
   }
 
   @CanIgnoreReturnValue
@@ -243,7 +265,86 @@ public class ListMenuManager implements WindowEventHandler, AccessibilityEventLi
       // Menu for spannables
       nodeMenuRuleProcessor.prepareRuleMenuForNode(menu, currentNode, R.id.links_menu);
       menu.setTitle(service.getString(R.string.links));
+    } else if (menuId == QUICK_MENU) {
+      prepareQuickMenu(menu);
+    } else if (menuId == CLIPBOARD_HISTORY) {
+      prepareClipboardMenu(menu);
     }
+  }
+
+  private void prepareQuickMenu(ContextMenu menu) {
+    menu.setTitle(service.getString(R.string.title_quick_menu));
+    if (gestureController == null) {
+      return;
+    }
+
+    List<String> actionKeys = QuickMenuPreferences.getQuickMenuActions(service);
+    int order = 0;
+    for (String actionKey : actionKeys) {
+      if (TextUtils.isEmpty(actionKey)
+          || TextUtils.equals(actionKey, service.getString(R.string.shortcut_value_unassigned))) {
+        continue;
+      }
+      String label = QuickMenuPreferences.getActionLabel(service, actionKey);
+      ContextMenuItem item =
+          menu.add(Menu.NONE, QUICK_MENU_ITEM_ID_BASE + order, order, label);
+      item.setOnMenuItemClickListener(
+          (menuItem) -> {
+            gestureController.performAction(actionKey, EVENT_ID_UNTRACKED);
+            return true;
+          });
+      order++;
+    }
+  }
+
+  private void prepareClipboardMenu(ContextMenu menu) {
+    menu.setTitle(service.getString(R.string.title_clipboard_history));
+    if (clipboardHistoryManager == null || !clipboardHistoryManager.isEnabled()) {
+      return;
+    }
+    List<ClipboardHistoryManager.ClipboardItem> items = clipboardHistoryManager.getHistory();
+    int order = 0;
+    for (ClipboardHistoryManager.ClipboardItem item : items) {
+      String label = clipboardHistoryManager.buildMenuLabel(item, CLIPBOARD_MENU_LABEL_MAX_CHARS);
+      ContextMenuItem menuItem =
+          menu.add(Menu.NONE, CLIPBOARD_MENU_ITEM_ID_BASE + order, order, label);
+      menuItem.setOnMenuItemClickListener((clicked) -> handleClipboardItemClick(item));
+      order++;
+    }
+    if (!items.isEmpty()) {
+      ContextMenuItem clearItem =
+          menu.add(Menu.NONE, CLIPBOARD_MENU_ITEM_ID_CLEAR, order + 1,
+              service.getString(R.string.clipboard_history_clear));
+      clearItem.setOnMenuItemClickListener((clicked) -> handleClipboardClearClick());
+    }
+  }
+
+  private boolean handleClipboardItemClick(ClipboardHistoryManager.ClipboardItem item) {
+    if (clipboardHistoryManager == null) {
+      return false;
+    }
+    clipboardHistoryManager.setPrimaryClip(item.getText());
+    AccessibilityNodeInfoCompat node =
+        accessibilityFocusMonitor.getAccessibilityFocus(/* useInputFocusIfEmpty= */ true);
+    if (node != null && AccessibilityNodeInfoUtils.isEditable(node)) {
+      pipeline.returnFeedback(EVENT_ID_UNTRACKED, Feedback.edit(node, Feedback.EditText.Action.PASTE));
+      pipeline.returnFeedback(
+          EVENT_ID_UNTRACKED, Feedback.speech(service.getString(R.string.clipboard_history_pasted)));
+    } else {
+      pipeline.returnFeedback(
+          EVENT_ID_UNTRACKED, Feedback.speech(service.getString(R.string.clipboard_history_copied)));
+    }
+    return true;
+  }
+
+  private boolean handleClipboardClearClick() {
+    if (clipboardHistoryManager == null) {
+      return false;
+    }
+    clipboardHistoryManager.clear();
+    pipeline.returnFeedback(
+        EVENT_ID_UNTRACKED, Feedback.speech(service.getString(R.string.clipboard_history_empty)));
+    return true;
   }
 
   protected void showDialogMenu(

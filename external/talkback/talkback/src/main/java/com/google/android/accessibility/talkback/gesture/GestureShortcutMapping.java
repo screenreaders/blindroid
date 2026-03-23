@@ -46,6 +46,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -211,6 +212,16 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         MULTI_FINGER,
         R.string.pref_shortcut_1finger_2tap_hold_key,
         R.string.pref_shortcut_1finger_2tap_hold_default),
+    EDGE_SWIPE_RIGHT(
+        GESTURE_EDGE_SWIPE_RIGHT,
+        SINGLE_FINGER,
+        R.string.pref_shortcut_edge_swipe_right_key,
+        R.string.pref_shortcut_edge_swipe_right_default),
+    EDGE_SWIPE_LEFT(
+        GESTURE_EDGE_SWIPE_LEFT,
+        SINGLE_FINGER,
+        R.string.pref_shortcut_edge_swipe_left_key,
+        R.string.pref_shortcut_edge_swipe_left_default),
     // Multi-finger Gestures
     TWO_FINGER_SINGLE_TAP(
         AccessibilityService.GESTURE_2_FINGER_SINGLE_TAP,
@@ -282,6 +293,16 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         MULTI_FINGER,
         R.string.pref_shortcut_2finger_swipe_right_key,
         R.string.pref_shortcut_2finger_swipe_right_default),
+    TWO_FINGER_ROTATE_CW(
+        GESTURE_ROTATE_CW,
+        MULTI_FINGER,
+        R.string.pref_shortcut_2finger_rotate_cw_key,
+        R.string.pref_shortcut_2finger_rotate_cw_default),
+    TWO_FINGER_ROTATE_CCW(
+        GESTURE_ROTATE_CCW,
+        MULTI_FINGER,
+        R.string.pref_shortcut_2finger_rotate_ccw_key,
+        R.string.pref_shortcut_2finger_rotate_ccw_default),
     THREE_FINGER_SWIPE_UP(
         AccessibilityService.GESTURE_3_FINGER_SWIPE_UP,
         MULTI_FINGER,
@@ -401,6 +422,65 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     final int defaultActionId;
   }
 
+  private static final int GESTURE_SET_IOS = 1;
+  private static final EnumMap<TalkBackGesture, Integer> IOS_DEFAULT_ACTIONS =
+      new EnumMap<>(TalkBackGesture.class);
+
+  static {
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_RIGHT, R.string.shortcut_value_next);
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_RIGHT_RTL, R.string.shortcut_value_next);
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_LEFT, R.string.shortcut_value_previous);
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_LEFT_RTL, R.string.shortcut_value_previous);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.SWIPE_UP, R.string.shortcut_value_selected_setting_previous_action);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.SWIPE_DOWN, R.string.shortcut_value_selected_setting_next_action);
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_LEFT_AND_RIGHT, R.string.shortcut_value_back);
+    IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_RIGHT_AND_LEFT, R.string.shortcut_value_back);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.ONE_FINGER_DOUBLE_TAP_AND_HOLD,
+        R.string.shortcut_value_pass_through_next_gesture);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_SWIPE_UP, R.string.shortcut_value_read_from_top);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_SWIPE_DOWN, R.string.shortcut_value_read_from_current);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_SWIPE_LEFT, R.string.shortcut_value_prev_container);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_SWIPE_RIGHT, R.string.shortcut_value_next_container);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_ROTATE_CW, R.string.shortcut_value_select_next_setting);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_ROTATE_CCW, R.string.shortcut_value_select_previous_setting);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_TRIPLE_TAP, R.string.shortcut_value_quick_menu);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_TRIPLE_TAP_AND_HOLD, R.string.shortcut_value_quick_settings);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_DOUBLE_TAP_AND_HOLD,
+        R.string.shortcut_value_show_custom_actions);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_SINGLE_TAP, R.string.shortcut_value_announce_item_position);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_DOUBLE_TAP, R.string.shortcut_value_toggle_voice_feedback);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_TRIPLE_TAP, R.string.shortcut_value_show_hide_screen);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_SWIPE_UP, R.string.shortcut_value_scroll_down);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_SWIPE_DOWN, R.string.shortcut_value_scroll_up);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_SWIPE_LEFT, R.string.shortcut_value_scroll_forward);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_SWIPE_RIGHT, R.string.shortcut_value_scroll_back);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.FOUR_FINGER_SINGLE_TAP, R.string.shortcut_value_first_in_screen);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.FOUR_FINGER_DOUBLE_TAP, R.string.shortcut_value_last_in_screen);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.FOUR_FINGER_TRIPLE_TAP, R.string.shortcut_value_describe_image);
+  }
+
   /** All supported actions. */
   public enum TalkbackAction {
     UNASSIGNED_ACTION(-1, -1),
@@ -444,6 +524,23 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         R.string.shortcut_pause_or_resume_feedback),
     TOGGLE_VOICE_FEEDBACK(
         R.string.shortcut_value_toggle_voice_feedback, R.string.shortcut_toggle_voice_feedback),
+    TOGGLE_EXPLORE_BY_TOUCH(
+        R.string.shortcut_value_toggle_explore_by_touch,
+        R.string.shortcut_toggle_explore_by_touch),
+    TOGGLE_SINGLE_TAP(
+        R.string.shortcut_value_toggle_single_tap, R.string.shortcut_toggle_single_tap),
+    TOGGLE_WEB_SCRIPTS(
+        R.string.shortcut_value_toggle_web_scripts, R.string.shortcut_toggle_web_scripts),
+    TOGGLE_SPEAK_NOTIFICATIONS(
+        R.string.shortcut_value_toggle_speak_notifications,
+        R.string.shortcut_toggle_speak_notifications),
+    MACRO_1(R.string.shortcut_value_macro_1, R.string.shortcut_macro_1),
+    MACRO_2(R.string.shortcut_value_macro_2, R.string.shortcut_macro_2),
+    MACRO_3(R.string.shortcut_value_macro_3, R.string.shortcut_macro_3),
+    DOCUMENT_SCAN(
+        R.string.shortcut_value_document_scan, R.string.shortcut_document_scan),
+    SCAN_HUB(
+        R.string.shortcut_value_scan_hub, R.string.shortcut_scan_hub),
     SHOW_LANGUAGE_OPTIONS(
         R.string.shortcut_value_show_language_options, R.string.shortcut_show_language_options),
 
@@ -460,6 +557,31 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     SELECTED_SETTING_NEXT_ACTION(
         R.string.shortcut_value_selected_setting_next_action,
         R.string.shortcut_selected_setting_next_action),
+    QUICK_MENU(R.string.shortcut_value_quick_menu, R.string.shortcut_quick_menu),
+    CLIPBOARD_HISTORY(
+        R.string.shortcut_value_clipboard_history, R.string.shortcut_clipboard_history),
+    TRANSLATE_TEXT(
+        R.string.shortcut_value_translate_text, R.string.shortcut_translate_text),
+    OBJECT_RECOGNITION(
+        R.string.shortcut_value_object_recognition, R.string.shortcut_object_recognition),
+    FACE_RECOGNITION(
+        R.string.shortcut_value_face_recognition, R.string.shortcut_face_recognition),
+    MONEY_RECOGNITION(
+        R.string.shortcut_value_money_recognition, R.string.shortcut_money_recognition),
+    SCENE_RECOGNITION(
+        R.string.shortcut_value_scene_recognition, R.string.shortcut_scene_recognition),
+    TOGGLE_PER_APP_GESTURE_SET(
+        R.string.shortcut_value_toggle_per_app_gesture_set,
+        R.string.shortcut_toggle_per_app_gesture_set),
+    ANNOUNCE_ITEM_POSITION(
+        R.string.shortcut_value_announce_item_position,
+        R.string.shortcut_announce_item_position),
+    REPEAT_LAST_UTTERANCE(
+        R.string.shortcut_value_repeat_last_utterance,
+        R.string.shortcut_repeat_last_utterance),
+    SPELL_LAST_UTTERANCE(
+        R.string.shortcut_value_spell_last_utterance,
+        R.string.shortcut_spell_last_utterance),
 
     // Text editing.
     START_SELECTION_MODE(
@@ -529,6 +651,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
    * FeatureSupport#FLAG_SEND_MOTION_EVENTS} is set.
    */
   public static final int GESTURE_PASSTHROUGH = -1;
+  public static final int GESTURE_EDGE_SWIPE_RIGHT = -10;
+  public static final int GESTURE_EDGE_SWIPE_LEFT = -11;
+  public static final int GESTURE_ROTATE_CW = -12;
+  public static final int GESTURE_ROTATE_CCW = -13;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   // Member variables
@@ -546,8 +672,13 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
 
   private Context context;
   private boolean gestureSetEnabled;
+  private boolean perAppGestureSetEnabled;
+  private boolean invertSwipeGestures;
+  private boolean multiPartGesturesEnabled;
   // Specify which gesture set (0/1) is activated. Default value is 0.
   private int currentGestureSet;
+  @Nullable private String currentPackageName;
+  @Nullable private Integer currentPackageGestureSetOverride;
   private final SharedPreferences prefs;
   private int previousScreenLayout = 0;
   private final List<HashMap<String, GestureCollector>> actionToGesture = new ArrayList<>();
@@ -575,6 +706,40 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
                   prefs,
                   R.string.pref_multiple_gesture_set_key,
                   R.bool.pref_multiple_gesture_set_default);
+          updatePerAppGestureOverride();
+        } else if (context
+            .getResources()
+            .getString(R.string.pref_per_app_gesture_set_enabled_key)
+            .equals(key)) {
+          perAppGestureSetEnabled =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_per_app_gesture_set_enabled_key,
+                  R.bool.pref_per_app_gesture_set_enabled_default);
+          updatePerAppGestureOverride();
+        } else if (key != null
+            && key.startsWith(context.getString(R.string.pref_per_app_gesture_set_prefix))) {
+          updatePerAppGestureOverride();
+        } else if (context.getResources().getString(R.string.pref_invert_swipe_gestures_key)
+            .equals(key)) {
+          invertSwipeGestures =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_invert_swipe_gestures_key,
+                  R.bool.pref_invert_swipe_gestures_default);
+        } else if (context
+            .getResources()
+            .getString(R.string.pref_multi_part_gestures_enabled_key)
+            .equals(key)) {
+          multiPartGesturesEnabled =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_multi_part_gestures_enabled_key,
+                  R.bool.pref_multi_part_gestures_enabled_default);
+          loadGestureIdToActionKeyMap();
         }
       };
 
@@ -600,6 +765,24 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
             prefs,
             R.string.pref_multiple_gesture_set_key,
             R.bool.pref_multiple_gesture_set_default);
+    perAppGestureSetEnabled =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_per_app_gesture_set_enabled_key,
+            R.bool.pref_per_app_gesture_set_enabled_default);
+    invertSwipeGestures =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_invert_swipe_gestures_key,
+            R.bool.pref_invert_swipe_gestures_default);
+    multiPartGesturesEnabled =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            context.getResources(),
+            R.string.pref_multi_part_gestures_enabled_key,
+            R.bool.pref_multi_part_gestures_enabled_default);
     currentGestureSet =
         gestureSetEnabled
             ? SharedPreferencesUtils.getIntFromStringPref(
@@ -608,6 +791,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
                 R.string.pref_gesture_set_key,
                 R.string.pref_gesture_set_value_default)
             : 0;
+    updatePerAppGestureOverride();
   }
 
   private void applyIosGestureSetDefaultsIfNeeded() {
@@ -667,7 +851,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_2finger_2tap_hold_key,
-        R.string.shortcut_value_show_custom_actions,
+        R.string.shortcut_value_talkback_breakout,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
@@ -678,7 +862,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_3finger_1tap_key,
-        R.string.shortcut_value_talkback_breakout,
+        R.string.shortcut_value_show_custom_actions,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
@@ -831,7 +1015,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
    * @return action key string
    */
   public String getActionKeyFromGestureId(int gestureId) {
-    return getActionKeyFromGestureId(currentGestureSet, gestureId);
+    int resolvedGestureId = maybeSwapGestureId(gestureId);
+    return getActionKeyFromGestureId(getActiveGestureSet(), resolvedGestureId);
   }
 
   private String getActionKeyFromGestureId(int index, int gestureId) {
@@ -878,11 +1063,12 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
    */
   @Nullable
   public String getGestureFromActionKey(String action) {
-    if (TextUtils.isEmpty(action) || !actionToGesture.get(currentGestureSet).containsKey(action)) {
+    int activeGestureSet = getActiveGestureSet();
+    if (TextUtils.isEmpty(action) || !actionToGesture.get(activeGestureSet).containsKey(action)) {
       return null;
     }
 
-    GestureCollector gestureCollector = actionToGesture.get(currentGestureSet).get(action);
+    GestureCollector gestureCollector = actionToGesture.get(activeGestureSet).get(action);
     TalkBackGesture gesture = gestureCollector.getPrioritizedGesture();
     if (gesture == null) {
       LogUtils.w(
@@ -914,6 +1100,65 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
       }
     }
     return matchedGestures;
+  }
+
+  /** Updates active package name for per-app gesture set. */
+  public void setActivePackageName(@Nullable String packageName) {
+    if (TextUtils.equals(currentPackageName, packageName)) {
+      return;
+    }
+    currentPackageName = packageName;
+    updatePerAppGestureOverride();
+    loadGestureIdToActionKeyMap();
+  }
+
+  private int getActiveGestureSet() {
+    if (currentPackageGestureSetOverride != null) {
+      return currentPackageGestureSetOverride;
+    }
+    return currentGestureSet;
+  }
+
+  private void updatePerAppGestureOverride() {
+    if (!gestureSetEnabled
+        || !perAppGestureSetEnabled
+        || TextUtils.isEmpty(currentPackageName)) {
+      currentPackageGestureSetOverride = null;
+      return;
+    }
+    int appGestureSet =
+        PerAppGestureSetUtils.getGestureSetForPackage(prefs, context, currentPackageName);
+    if (appGestureSet < 0 || appGestureSet >= NUMBER_OF_GESTURE_SET) {
+      currentPackageGestureSetOverride = null;
+    } else {
+      currentPackageGestureSetOverride = appGestureSet;
+    }
+  }
+
+  private String getScopedGestureKey(String baseKey) {
+    if (!perAppGestureSetEnabled || TextUtils.isEmpty(currentPackageName)) {
+      return baseKey;
+    }
+    String prefix = context.getString(R.string.pref_gesture_scope_pkg_prefix);
+    return prefix + currentPackageName + ":" + baseKey;
+  }
+
+  private int maybeSwapGestureId(int gestureId) {
+    if (!invertSwipeGestures) {
+      return gestureId;
+    }
+    switch (gestureId) {
+      case AccessibilityService.GESTURE_SWIPE_LEFT:
+        return AccessibilityService.GESTURE_SWIPE_RIGHT;
+      case AccessibilityService.GESTURE_SWIPE_RIGHT:
+        return AccessibilityService.GESTURE_SWIPE_LEFT;
+      case AccessibilityService.GESTURE_SWIPE_LEFT_AND_RIGHT:
+        return AccessibilityService.GESTURE_SWIPE_RIGHT_AND_LEFT;
+      case AccessibilityService.GESTURE_SWIPE_RIGHT_AND_LEFT:
+        return AccessibilityService.GESTURE_SWIPE_LEFT_AND_RIGHT;
+      default:
+        return gestureId;
+    }
   }
 
   /**
@@ -983,13 +1228,25 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
           continue;
         }
 
+        if (!multiPartGesturesEnabled && isMultiPartGesture(gesture)) {
+          continue;
+        }
+
         // Skip fingerprint gestures when isFingerprintOn = false.
         if (!isFingerprintOn && gesture.gestureType == FINGERPRINT) {
           continue;
         }
 
-        String keyId = getPrefKeyWithGestureSet(context.getString(gesture.keyId), index);
-        String action = prefs.getString(keyId, context.getString(gesture.defaultActionId));
+        String keyId =
+            getPrefKeyWithGestureSet(
+                getScopedGestureKey(context.getString(gesture.keyId)), index);
+        int defaultActionId = getDefaultActionIdForGestureSet(gesture, index);
+        String action =
+            prefs.getString(
+                keyId,
+                prefs.getString(
+                    getPrefKeyWithGestureSet(context.getString(gesture.keyId), index),
+                    context.getString(defaultActionId)));
         // When diagnosis-mode is on, override a gesture to dump node-tree to logs.
         if ((gesture == TalkBackGesture.FOUR_FINGER_SINGLE_TAP)
             && PreferencesActivityUtils.isDiagnosisModeOn(prefs, context.getResources())) {
@@ -1018,7 +1275,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
           newFingerPrintGestureIdToActionKey.put(
               gesture.gestureId,
               prefs.getString(
-                  context.getString(gesture.keyId), context.getString(gesture.defaultActionId)));
+                  getScopedGestureKey(context.getString(gesture.keyId)),
+                  prefs.getString(
+                      context.getString(gesture.keyId),
+                      context.getString(gesture.defaultActionId))));
         } else {
           gestureIdToActionKeyMap.put(gesture.gestureId, action);
         }
@@ -1039,6 +1299,36 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
       }
     }
     fingerprintGestureIdToActionKey = newFingerPrintGestureIdToActionKey;
+  }
+
+  private int getDefaultActionIdForGestureSet(TalkBackGesture gesture, int index) {
+    if (index == GESTURE_SET_IOS) {
+      Integer override = IOS_DEFAULT_ACTIONS.get(gesture);
+      if (override != null) {
+        return override;
+      }
+    }
+    return gesture.defaultActionId;
+  }
+
+  private boolean isMultiPartGesture(TalkBackGesture gesture) {
+    switch (gesture.gestureId) {
+      case AccessibilityService.GESTURE_SWIPE_UP_AND_DOWN:
+      case AccessibilityService.GESTURE_SWIPE_DOWN_AND_UP:
+      case AccessibilityService.GESTURE_SWIPE_LEFT_AND_RIGHT:
+      case AccessibilityService.GESTURE_SWIPE_RIGHT_AND_LEFT:
+      case AccessibilityService.GESTURE_SWIPE_UP_AND_LEFT:
+      case AccessibilityService.GESTURE_SWIPE_UP_AND_RIGHT:
+      case AccessibilityService.GESTURE_SWIPE_DOWN_AND_LEFT:
+      case AccessibilityService.GESTURE_SWIPE_DOWN_AND_RIGHT:
+      case AccessibilityService.GESTURE_SWIPE_LEFT_AND_UP:
+      case AccessibilityService.GESTURE_SWIPE_LEFT_AND_DOWN:
+      case AccessibilityService.GESTURE_SWIPE_RIGHT_AND_UP:
+      case AccessibilityService.GESTURE_SWIPE_RIGHT_AND_DOWN:
+        return true;
+      default:
+        return false;
+    }
   }
 
   private boolean skipGestureForRTL(TalkBackGesture gesture) {
@@ -1104,6 +1394,24 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     return map;
   }
 
+  /** Returns all supported action keys. */
+  public static List<String> getAllActionKeys(Context context) {
+    ArrayList<String> keys = new ArrayList<>();
+    for (TalkbackAction action : TalkbackAction.values()) {
+      if (action == TalkbackAction.UNASSIGNED_ACTION) {
+        continue;
+      }
+      if (action.actionKeyResId == -1) {
+        continue;
+      }
+      String key = context.getString(action.actionKeyResId);
+      if (!TextUtils.isEmpty(key)) {
+        keys.add(key);
+      }
+    }
+    return keys;
+  }
+
   /** Returns if the device supports multiple gesture set. */
   public static boolean isGestureSetEnabled(
       Context context, SharedPreferences prefs, int resKeyId, int defaultValue) {
@@ -1158,6 +1466,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         return context.getString(R.string.title_pref_shortcut_left);
       case AccessibilityService.GESTURE_SWIPE_RIGHT:
         return context.getString(R.string.title_pref_shortcut_right);
+      case GESTURE_EDGE_SWIPE_RIGHT:
+        return context.getString(R.string.title_pref_shortcut_edge_swipe_right);
+      case GESTURE_EDGE_SWIPE_LEFT:
+        return context.getString(R.string.title_pref_shortcut_edge_swipe_left);
       case AccessibilityService.GESTURE_SWIPE_UP_AND_DOWN:
         return context.getString(R.string.title_pref_shortcut_up_and_down);
       case AccessibilityService.GESTURE_SWIPE_DOWN_AND_UP:
@@ -1190,6 +1502,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         return context.getString(R.string.title_pref_shortcut_2finger_swipe_left);
       case AccessibilityService.GESTURE_2_FINGER_SWIPE_RIGHT:
         return context.getString(R.string.title_pref_shortcut_2finger_swipe_right);
+      case GESTURE_ROTATE_CW:
+        return context.getString(R.string.title_pref_shortcut_2finger_rotate_cw);
+      case GESTURE_ROTATE_CCW:
+        return context.getString(R.string.title_pref_shortcut_2finger_rotate_ccw);
       case AccessibilityService.GESTURE_2_FINGER_SINGLE_TAP:
         return context.getString(R.string.title_pref_shortcut_2finger_1tap);
       case AccessibilityService.GESTURE_2_FINGER_DOUBLE_TAP:

@@ -20,5 +20,16 @@
     <item>255</item><!-- scale -->
     <item>50</item><!-- delayMs -->
   </integer-array>
-</resources>
 
+  <!-- Vibration pattern for read screen action. -->
+  <integer-array name="read_screen_pattern">
+    <item>0</item>
+    <item>12</item>
+    <item>30</item>
+    <item>12</item>
+    <item>-9999</item><!-- SENTINEL SEPARATOR -->
+    <item>7</item><!-- TICK -->
+    <item>180</item><!-- scale -->
+    <item>0</item><!-- delayMs -->
+  </integer-array>
+</resources>

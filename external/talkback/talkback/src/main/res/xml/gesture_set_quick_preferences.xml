@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <ListPreference
+      android:key="@string/pref_gesture_set_key"
+      android:title="@string/pref_blindreader_gesture_set_title"
+      android:summary="%s"
+      android:defaultValue="@string/pref_gesture_set_value_default"
+      android:entries="@array/pref_gesture_set_entries"
+      android:entryValues="@array/pref_gesture_set_values" />
+</PreferenceScreen>
