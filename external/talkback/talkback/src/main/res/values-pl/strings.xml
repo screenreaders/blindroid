@@ -189,10 +189,26 @@
     <string name="title_pref_category_notifications">Powiadomienia</string>
     <string name="pref_speak_notifications_title">Czytaj powiadomienia</string>
     <string name="pref_speak_notifications_summary">Odczytuj treść powiadomień i toastów</string>
+    <string name="pref_notification_read_app_name_title">Czytaj nazwę aplikacji w powiadomieniach</string>
+    <string name="pref_notification_read_app_name_summary">Dołącz nazwę aplikacji podczas odczytu powiadomień</string>
     <string name="pref_notification_speech_rate_title">Tempo mowy dla powiadomień</string>
     <string name="pref_notification_speech_pitch_title">Wysokość głosu dla powiadomień</string>
     <string name="pref_notification_speech_rate_summary">Tempo mowy używane do powiadomień</string>
     <string name="pref_notification_speech_pitch_summary">Wysokość głosu używana do powiadomień</string>
+
+    <string name="pref_notification_filter_title">Filtr aplikacji powiadomień</string>
+    <string name="pref_notification_filter_summary">Wyciszaj odczyt powiadomień z wybranych aplikacji</string>
+    <string name="pref_notification_filter_enabled_title">Włącz filtr aplikacji powiadomień</string>
+    <string name="pref_notification_filter_enabled_summary">Pozwala wyciszać odczyt powiadomień dla poszczególnych aplikacji</string>
+    <string name="pref_notification_filter_current_title">Wycisz bieżącą aplikację: %1$s</string>
+    <string name="pref_notification_filter_current_title_placeholder">Wycisz bieżącą aplikację</string>
+    <string name="pref_notification_filter_current_summary_on">Powiadomienia z tej aplikacji są wyciszone</string>
+    <string name="pref_notification_filter_current_summary_off">Powiadomienia z tej aplikacji będą czytane</string>
+    <string name="pref_notification_filter_current_unavailable">Otwórz aplikację, którą chcesz skonfigurować, i wróć tutaj</string>
+    <string name="pref_notification_filter_disabled_summary">Filtrowanie jest wyłączone</string>
+    <string name="pref_notification_filter_list_title">Wyciszone aplikacje</string>
+    <string name="pref_notification_filter_list_empty">Brak wyciszonych aplikacji</string>
+    <string name="pref_notification_filter_list_item_summary">Stuknij, aby odciszyć</string>
     <string name="pref_notification_speech_rate_80">0,8x</string>
     <string name="pref_notification_speech_rate_100">1,0x</string>
     <string name="pref_notification_speech_rate_120">1,2x</string>

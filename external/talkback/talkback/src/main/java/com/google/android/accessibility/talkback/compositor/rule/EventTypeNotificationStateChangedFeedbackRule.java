@@ -20,6 +20,9 @@ import static com.google.android.accessibility.utils.output.SpeechController.QUE
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.compositor.AccessibilityEventFeedbackUtils;
@@ -27,10 +30,12 @@ import com.google.android.accessibility.talkback.compositor.Compositor.HandleEve
 import com.google.android.accessibility.talkback.compositor.CompositorUtils;
 import com.google.android.accessibility.talkback.compositor.EventFeedback;
 import com.google.android.accessibility.talkback.compositor.GlobalVariables;
+import com.google.android.accessibility.talkback.notification.NotificationFilterUtils;
 import com.google.android.accessibility.utils.AccessibilityEventUtils;
 import com.google.android.accessibility.utils.FeatureSupport;
 import com.google.android.accessibility.utils.Role;
 import com.google.android.accessibility.utils.StringBuilderUtils;
+import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,20 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
           if (!globalVariables.getSpeakNotifications()) {
             return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
           }
+          SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+          CharSequence packageNameChar = eventOptions.eventObject.getPackageName();
+          String packageName = packageNameChar == null ? null : packageNameChar.toString();
+          if (NotificationFilterUtils.isPackageMuted(prefs, context, packageName)) {
+            return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
+          }
+          boolean includeAppName =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_notification_read_app_name_key,
+                  R.bool.pref_notification_read_app_name_default);
+          CharSequence appLabel =
+              includeAppName ? getApplicationLabel(context, packageName) : null;
           int role = Role.getSourceRole(eventOptions.eventObject);
           boolean isToast = role == Role.ROLE_TOAST;
           double notificationPitch = globalVariables.getNotificationSpeechPitch();
@@ -111,6 +130,10 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
                     StringBuilderUtils.optionalText("notificationCategory", notificationCategory),
                     StringBuilderUtils.optionalText("notificationDetails", notificationDetails),
                     StringBuilderUtils.optionalText(", role", Role.roleToString(role))));
+          }
+
+          if (!TextUtils.isEmpty(appLabel)) {
+            ttsOutput = CompositorUtils.joinCharSequences(appLabel, ttsOutput);
           }
 
           boolean isToastOrCall =
@@ -198,5 +221,19 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
             ? null
             : StringBuilderUtils.getAggregateText(notificationDetails);
     return text == null ? "" : text;
+  }
+
+  private static @Nullable CharSequence getApplicationLabel(
+      Context context, @Nullable String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return null;
+    }
+    PackageManager pm = context.getPackageManager();
+    try {
+      ApplicationInfo info = pm.getApplicationInfo(packageName, 0);
+      return pm.getApplicationLabel(info);
+    } catch (PackageManager.NameNotFoundException e) {
+      return packageName;
+    }
   }
 }

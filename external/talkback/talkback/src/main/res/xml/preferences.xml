@@ -178,6 +178,16 @@
         android:key="@string/pref_speak_notifications_key"
         android:title="@string/pref_speak_notifications_title"
         android:summary="@string/pref_speak_notifications_summary" />
+    <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="@bool/pref_notification_read_app_name_default"
+        android:key="@string/pref_notification_read_app_name_key"
+        android:title="@string/pref_notification_read_app_name_title"
+        android:summary="@string/pref_notification_read_app_name_summary" />
+    <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+        android:fragment="com.google.android.accessibility.talkback.preference.base.NotificationFilterFragment"
+        android:key="@string/pref_notification_filter_screen_key"
+        android:title="@string/pref_notification_filter_title"
+        android:summary="@string/pref_notification_filter_summary" />
     <com.google.android.accessibility.utils.preference.AccessibilitySuiteListPreference
         android:defaultValue="@string/pref_notification_speech_rate_default"
         android:dialogTitle="@string/pref_notification_speech_rate_title"

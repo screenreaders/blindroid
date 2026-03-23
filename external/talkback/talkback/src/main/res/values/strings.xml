@@ -485,6 +485,8 @@
     <string name="title_pref_category_notifications">Notification</string>
     <string name="pref_speak_notifications_title">Speak notifications</string>
     <string name="pref_speak_notifications_summary">Announce notification and toast contents</string>
+    <string name="pref_notification_read_app_name_title">Speak app name for notifications</string>
+    <string name="pref_notification_read_app_name_summary">Include the app name when announcing notifications</string>
     <string name="pref_notification_speech_rate_title">Notification speech rate</string>
     <string name="pref_notification_speech_pitch_title">Notification speech pitch</string>
     <string name="pref_notification_speech_rate_summary">Speech rate used for notifications</string>
@@ -497,6 +499,20 @@
     <string name="pref_notification_speech_pitch_100">1.0x</string>
     <string name="pref_notification_speech_pitch_120">1.2x</string>
     <string name="pref_notification_speech_pitch_140">1.4x</string>
+
+    <string name="pref_notification_filter_title">Notification app filter</string>
+    <string name="pref_notification_filter_summary">Mute notification speech from selected apps</string>
+    <string name="pref_notification_filter_enabled_title">Enable notification app filter</string>
+    <string name="pref_notification_filter_enabled_summary">Let you mute notification speech per app</string>
+    <string name="pref_notification_filter_current_title">Mute current app: %1$s</string>
+    <string name="pref_notification_filter_current_title_placeholder">Mute current app</string>
+    <string name="pref_notification_filter_current_summary_on">Notifications from this app are muted</string>
+    <string name="pref_notification_filter_current_summary_off">Notifications from this app will be spoken</string>
+    <string name="pref_notification_filter_current_unavailable">Open the app you want to configure and return here</string>
+    <string name="pref_notification_filter_disabled_summary">Filtering is disabled</string>
+    <string name="pref_notification_filter_list_title">Muted apps</string>
+    <string name="pref_notification_filter_list_empty">No muted apps</string>
+    <string name="pref_notification_filter_list_item_summary">Tap to unmute</string>
 
     <string name="title_pref_category_tools">Tools</string>
     <string name="pref_clipboard_history_enabled_title">Clipboard history</string>

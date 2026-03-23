@@ -33,6 +33,10 @@
     <bool name="pref_multi_part_gestures_enabled_default">true</bool>
     <!-- Whether notification announcements are enabled. -->
     <bool name="pref_speak_notifications_default">true</bool>
+    <!-- Whether to include app name in notification announcements. -->
+    <bool name="pref_notification_read_app_name_default">false</bool>
+    <!-- Whether per-app notification filtering is enabled. -->
+    <bool name="pref_notification_filter_enabled_default">false</bool>
     <!-- Whether clipboard history is enabled. -->
     <bool name="pref_clipboard_history_enabled_default">true</bool>
     <!-- Whether automatic caption results should be sent to translation apps. -->

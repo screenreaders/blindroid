@@ -1,12 +1,12 @@
 {
-  "tag_name": "v105",
-  "name": "v105",
-  "body": "BlindReader: iOS gesture set, gesture macros, floating menu + quick menu, content settings (filters/auto OCR), scan hub action, plugin API, and performance polish.",
+  "tag_name": "v106",
+  "name": "v106",
+  "body": "BlindReader: notification app filter, app-name announcements for notifications, and notification settings polish.",
   "assets": [
     {
-      "name": "blindroid-105.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-105.apk",
-      "sha256": "3a858bac1364f9bd491312eea00c8593434168d3ef909ea28d8c037502242e3c",
+      "name": "blindroid-106.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-106.apk",
+      "sha256": "4f82563b30c0bca26b1a5675ecffd1073ea74e29363291a97f1e4a0c29f0318d",
       "size": 123067855
     }
   ]

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_notification_filter_enabled_default"
+      android:key="@string/pref_notification_filter_enabled_key"
+      android:title="@string/pref_notification_filter_enabled_title"
+      android:summary="@string/pref_notification_filter_enabled_summary" />
+
+  <androidx.preference.SwitchPreferenceCompat
+      android:key="@string/pref_notification_filter_current_key"
+      android:title="@string/pref_notification_filter_current_title_placeholder"
+      android:summary="@string/pref_notification_filter_current_summary_off" />
+
+  <PreferenceCategory
+      android:key="@string/pref_notification_filter_list_key"
+      android:title="@string/pref_notification_filter_list_title" />
+
+</PreferenceScreen>

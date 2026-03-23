@@ -92,9 +92,9 @@ Sources read (local only):
 - [ ] Favorites.
 
 ### Notifications
-- [ ] Read notifications (bar/toast/internal).
-- [ ] Read source app for notifications.
-- [ ] Notification whitelist/blacklist.
+- [x] Read notifications (bar/toast/internal).
+- [x] Read source app for notifications.
+- [x] Notification whitelist/blacklist.
 - [ ] Read notifications on lock screen.
 - [ ] Suppress notifications during reading/auto browsing.
 
