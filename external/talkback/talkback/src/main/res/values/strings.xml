@@ -566,6 +566,7 @@
 
     <string name="shortcut_quick_menu">Quick menu</string>
     <string name="shortcut_clipboard_history">Clipboard history</string>
+    <string name="shortcut_gesture_scheme_manager">Gesture schemes</string>
     <string name="shortcut_translate_text">Translate text</string>
     <string name="shortcut_object_recognition">Object recognition</string>
     <string name="shortcut_face_recognition">Face recognition</string>

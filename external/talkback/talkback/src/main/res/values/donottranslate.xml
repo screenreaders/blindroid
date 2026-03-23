@@ -799,6 +799,7 @@
         <item>@string/shortcut_value_document_scan</item>
         <item>@string/shortcut_value_read_screen</item>
         <item>@string/shortcut_value_scan_hub</item>
+        <item>@string/shortcut_value_gesture_scheme_manager</item>
     </string-array>
 
     <string-array name="pref_quick_menu_action_defaults" translatable="false">
@@ -823,6 +824,7 @@
         <item>@string/shortcut_value_toggle_per_app_gesture_set</item>
         <item>@string/shortcut_value_repeat_last_utterance</item>
         <item>@string/shortcut_value_clipboard_history</item>
+        <item>@string/shortcut_value_gesture_scheme_manager</item>
     </string-array>
 
     <!-- Shortcut preference of text editing -->
@@ -913,6 +915,7 @@
     <string name="shortcut_value_document_scan" translatable="false">DOCUMENT_SCAN</string>
     <string name="shortcut_value_read_screen" translatable="false">READ_SCREEN</string>
     <string name="shortcut_value_scan_hub" translatable="false">SCAN_HUB</string>
+    <string name="shortcut_value_gesture_scheme_manager" translatable="false">GESTURE_SCHEME_MANAGER</string>
 
     <string name="pref_volume_key_shortcuts_enabled_key" translatable="false">pref_volume_key_shortcuts_enabled</string>
     <string name="pref_volume_key_shortcuts_up_key" translatable="false">pref_volume_key_shortcuts_up</string>

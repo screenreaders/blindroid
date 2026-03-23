@@ -326,6 +326,9 @@ public class GestureController {
       result = menuManager.showMenu(QUICK_MENU, eventId, R.string.quick_menu_empty);
     } else if (action.equals(service.getString(R.string.shortcut_value_clipboard_history))) {
       result = menuManager.showMenu(CLIPBOARD_HISTORY, eventId, R.string.clipboard_history_empty);
+    } else if (action.equals(service.getString(R.string.shortcut_value_gesture_scheme_manager))) {
+      pipeline.returnFeedback(
+          eventId, Feedback.triggerIntent(Feedback.TriggerIntent.Action.TRIGGER_GESTURE_SCHEME_MANAGER));
     } else if (action.equals(
         service.getString(R.string.shortcut_value_toggle_per_app_gesture_set))) {
       result = togglePerAppGestureSet(eventId);
