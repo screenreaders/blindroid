@@ -2,7 +2,7 @@
 
 ## Latest Build Status
 - Date: 2026-03-23
-- APK: `blindroid-110.apk`
+- APK: `blindroid-111.apk`
 - Status: NOT RUN (build assembled without emulator run; previous smoke results below)
 
 ## Previous Smoke (Reference)

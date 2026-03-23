@@ -1,13 +1,13 @@
 {
-  "tag_name": "v110",
-  "name": "v110",
-  "body": "BlindReader: gesture scheme manager with save/apply/import/export.",
+  "tag_name": "v111",
+  "name": "v111",
+  "body": "BlindReader: dynamic gesture schemes linked per app.",
   "assets": [
     {
-      "name": "blindroid-110.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-110.apk",
-      "sha256": "c9cc12fb13911882e936e6507feb95393b7bb8b595679da463362c7e99db608c",
-      "size": 123067855
+      "name": "blindroid-111.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-111.apk",
+      "sha256": "878fed4cfde50a203845b64490c79ad1a9b4f572f26ac2a2d239db29afd97a98",
+      "size": 123067851
     }
   ]
 }

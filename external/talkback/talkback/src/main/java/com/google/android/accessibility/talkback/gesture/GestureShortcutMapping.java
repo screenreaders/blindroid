@@ -36,6 +36,7 @@ import com.google.android.accessibility.talkback.FeatureFlagReader;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.compositor.GestureShortcutProvider;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
+import com.google.android.accessibility.talkback.gesture.GestureSchemeStore;
 import com.google.android.accessibility.utils.FeatureSupport;
 import com.google.android.accessibility.utils.Logger;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
@@ -1108,6 +1109,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
       return;
     }
     currentPackageName = packageName;
+    GestureSchemeStore.applyLinkedSchemeIfNeeded(context, prefs, currentPackageName);
     updatePerAppGestureOverride();
     loadGestureIdToActionKeyMap();
   }

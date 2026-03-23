@@ -157,7 +157,16 @@ public class GestureSchemeManagerFragment extends TalkbackBaseFragment {
         TextUtils.equals(scheme.scope, "current_app")
             ? (TextUtils.isEmpty(scheme.packageName) ? "current_app" : scheme.packageName)
             : "global";
-    return "Set " + scheme.gestureSet + " • " + scope;
+    StringBuilder sb = new StringBuilder();
+    sb.append("Set ").append(scheme.gestureSet).append(" • ").append(scope);
+    if (!TextUtils.isEmpty(currentScopePackage)) {
+      String linked =
+          GestureSchemeStore.getLinkedSchemeId(context, currentScopePackage);
+      if (scheme.id.equals(linked)) {
+        sb.append(" • ").append(getString(R.string.pref_gesture_scheme_linked_current));
+      }
+    }
+    return sb.toString();
   }
 
   private void showSaveDialog(Context context, @Nullable String schemeId, @Nullable String name) {
@@ -243,40 +252,46 @@ public class GestureSchemeManagerFragment extends TalkbackBaseFragment {
   }
 
   private void showSchemeActions(Context context, GestureSchemeStore.Scheme scheme) {
-    String[] items =
-        new String[] {
-          getString(R.string.pref_gesture_scheme_action_apply),
-          getString(R.string.pref_gesture_scheme_action_update),
-          getString(R.string.pref_gesture_scheme_action_rename),
-          getString(R.string.pref_gesture_scheme_action_export),
-          getString(R.string.pref_gesture_scheme_action_delete)
-        };
+    boolean hasCurrentApp = !TextUtils.isEmpty(currentScopePackage);
+    boolean linkedToCurrent =
+        hasCurrentApp
+            && scheme.id.equals(GestureSchemeStore.getLinkedSchemeId(context, currentScopePackage));
+    List<String> items = new ArrayList<>();
+    items.add(getString(R.string.pref_gesture_scheme_action_apply));
+    items.add(getString(R.string.pref_gesture_scheme_action_update));
+    items.add(getString(R.string.pref_gesture_scheme_action_rename));
+    items.add(getString(R.string.pref_gesture_scheme_action_export));
+    if (hasCurrentApp) {
+      items.add(
+          linkedToCurrent
+              ? getString(R.string.pref_gesture_scheme_action_unlink)
+              : getString(R.string.pref_gesture_scheme_action_link));
+    }
+    items.add(getString(R.string.pref_gesture_scheme_action_delete));
+    String[] itemArray = items.toArray(new String[0]);
     A11yAlertDialogWrapper.alertDialogBuilder(context)
         .setTitle(R.string.pref_gesture_scheme_action_title)
         .setItems(
-            items,
+            itemArray,
             (dialog, which) -> {
-              switch (which) {
-                case 0:
-                  applyScheme(context, scheme);
-                  break;
-                case 1:
-                  showSaveDialog(context, scheme.id, scheme.name);
-                  break;
-                case 2:
-                  showRenameDialog(context, scheme);
-                  break;
-                case 3:
-                  exportScheme(context, scheme);
-                  break;
-                case 4:
-                  GestureSchemeStore.deleteScheme(context, scheme.id);
-                  PreferencesActivityUtils.announceText(
-                      getString(R.string.pref_gesture_scheme_deleted), context);
-                  populateSchemeList(context);
-                  break;
-                default:
-                  break;
+              String selected = itemArray[which];
+              if (selected.equals(getString(R.string.pref_gesture_scheme_action_apply))) {
+                applyScheme(context, scheme);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_update))) {
+                showSaveDialog(context, scheme.id, scheme.name);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_rename))) {
+                showRenameDialog(context, scheme);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_export))) {
+                exportScheme(context, scheme);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_link))) {
+                linkSchemeToCurrentApp(context, scheme);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_unlink))) {
+                unlinkSchemeFromCurrentApp(context);
+              } else if (selected.equals(getString(R.string.pref_gesture_scheme_action_delete))) {
+                GestureSchemeStore.deleteScheme(context, scheme.id);
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_gesture_scheme_deleted), context);
+                populateSchemeList(context);
               }
             })
         .show();
@@ -397,6 +412,7 @@ public class GestureSchemeManagerFragment extends TalkbackBaseFragment {
     allowedActions.add(getString(R.string.shortcut_value_unassigned));
 
     SharedPreferences.Editor editor = prefs.edit();
+    boolean perApp = TextUtils.equals(scopeValue, "current_app") && !TextUtils.isEmpty(targetPackage);
     Iterator<String> it = scheme.mappings.keys();
     while (it.hasNext()) {
       String baseKey = it.next();
@@ -411,11 +427,39 @@ public class GestureSchemeManagerFragment extends TalkbackBaseFragment {
       String prefKey = GestureShortcutMapping.getPrefKeyWithGestureSet(scopedKey, scheme.gestureSet);
       editor.putString(prefKey, action);
     }
-    editor.putString(
-        getString(R.string.pref_gesture_set_key), String.valueOf(scheme.gestureSet));
+    if (perApp) {
+      editor.putBoolean(
+          getString(R.string.pref_per_app_gesture_set_enabled_key), true);
+    } else {
+      editor.putString(
+          getString(R.string.pref_gesture_set_key), String.valueOf(scheme.gestureSet));
+    }
     editor.apply();
+    if (perApp) {
+      com.google.android.accessibility.talkback.gesture.PerAppGestureSetUtils.setGestureSetForPackage(
+          prefs, context, targetPackage, scheme.gestureSet);
+    }
     PreferencesActivityUtils.announceText(
         getString(R.string.pref_gesture_scheme_applied), context);
+  }
+
+  private void linkSchemeToCurrentApp(Context context, GestureSchemeStore.Scheme scheme) {
+    if (TextUtils.isEmpty(currentScopePackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_gesture_scheme_invalid), context);
+      return;
+    }
+    GestureSchemeStore.linkSchemeToPackage(context, currentScopePackage, scheme.id);
+    GestureSchemeStore.applyLinkedSchemeIfNeeded(context, prefs, currentScopePackage);
+    populateSchemeList(context);
+  }
+
+  private void unlinkSchemeFromCurrentApp(Context context) {
+    if (TextUtils.isEmpty(currentScopePackage)) {
+      return;
+    }
+    GestureSchemeStore.unlinkSchemeFromPackage(context, currentScopePackage);
+    populateSchemeList(context);
   }
 
   private String applyScopeToKey(String baseKey, @Nullable String scopePackage) {

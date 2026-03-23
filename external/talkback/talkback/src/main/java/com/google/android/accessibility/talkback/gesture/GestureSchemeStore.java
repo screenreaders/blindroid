@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -125,6 +128,97 @@ public final class GestureSchemeStore {
     String prefix = context.getString(R.string.pref_gesture_scheme_store_prefix);
     prefs.edit().remove(prefix + id).apply();
     updateList(context, id, /* add= */ false);
+  }
+
+  public static void linkSchemeToPackage(Context context, String packageName, String schemeId) {
+    if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(schemeId)) {
+      return;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String prefix = context.getString(R.string.pref_gesture_scheme_app_prefix);
+    prefs.edit().putString(prefix + packageName, schemeId).apply();
+  }
+
+  public static void unlinkSchemeFromPackage(Context context, String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String prefix = context.getString(R.string.pref_gesture_scheme_app_prefix);
+    String lastPrefix = context.getString(R.string.pref_gesture_scheme_app_last_prefix);
+    prefs.edit().remove(prefix + packageName).remove(lastPrefix + packageName).apply();
+  }
+
+  public static @Nullable String getLinkedSchemeId(Context context, String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return null;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String prefix = context.getString(R.string.pref_gesture_scheme_app_prefix);
+    return prefs.getString(prefix + packageName, null);
+  }
+
+  public static boolean applyLinkedSchemeIfNeeded(
+      Context context, SharedPreferences prefs, @Nullable String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return false;
+    }
+    String schemeId = getLinkedSchemeId(context, packageName);
+    if (TextUtils.isEmpty(schemeId)) {
+      return false;
+    }
+    String lastPrefix = context.getString(R.string.pref_gesture_scheme_app_last_prefix);
+    String lastApplied = prefs.getString(lastPrefix + packageName, null);
+    if (schemeId.equals(lastApplied)) {
+      return false;
+    }
+    Scheme scheme = loadScheme(context, schemeId);
+    if (scheme == null) {
+      return false;
+    }
+    boolean applied = applySchemeToPackage(context, prefs, scheme, packageName);
+    if (applied) {
+      prefs.edit().putString(lastPrefix + packageName, schemeId).apply();
+    }
+    return applied;
+  }
+
+  private static boolean applySchemeToPackage(
+      Context context, SharedPreferences prefs, Scheme scheme, String packageName) {
+    if (scheme == null || TextUtils.isEmpty(packageName)) {
+      return false;
+    }
+    Set<String> allowedKeys = new HashSet<>();
+    String[] gesturePrefKeys = context.getResources().getStringArray(R.array.pref_shortcut_keys);
+    for (String key : gesturePrefKeys) {
+      allowedKeys.add(key);
+    }
+    Set<String> allowedActions = new HashSet<>(GestureShortcutMapping.getAllActionKeys(context));
+    allowedActions.add(context.getString(R.string.shortcut_value_unassigned));
+
+    SharedPreferences.Editor editor = prefs.edit();
+    Iterator<String> it = scheme.mappings.keys();
+    while (it.hasNext()) {
+      String baseKey = it.next();
+      if (!allowedKeys.contains(baseKey)) {
+        continue;
+      }
+      String action = scheme.mappings.optString(baseKey, null);
+      if (TextUtils.isEmpty(action) || !allowedActions.contains(action)) {
+        continue;
+      }
+      String scopedKey =
+          context.getString(R.string.pref_gesture_scope_pkg_prefix) + packageName + ":" + baseKey;
+      String prefKey =
+          GestureShortcutMapping.getPrefKeyWithGestureSet(scopedKey, scheme.gestureSet);
+      editor.putString(prefKey, action);
+    }
+    editor.putBoolean(
+        context.getString(R.string.pref_per_app_gesture_set_enabled_key), true);
+    editor.apply();
+    PerAppGestureSetUtils.setGestureSetForPackage(
+        prefs, context, packageName, scheme.gestureSet);
+    return true;
   }
 
   private static void updateList(Context context, String id, boolean add) {

@@ -312,6 +312,9 @@
     <string name="pref_gesture_scheme_action_export">Export</string>
     <string name="pref_gesture_scheme_action_delete">Delete</string>
     <string name="pref_gesture_scheme_action_update">Overwrite with current</string>
+    <string name="pref_gesture_scheme_action_link">Link to current app</string>
+    <string name="pref_gesture_scheme_action_unlink">Unlink from current app</string>
+    <string name="pref_gesture_scheme_linked_current">Linked to current app</string>
     <string name="pref_gesture_scheme_name_hint">Scheme name</string>
     <string name="pref_gesture_scheme_saved">Scheme saved.</string>
     <string name="pref_gesture_scheme_applied">Scheme applied.</string>

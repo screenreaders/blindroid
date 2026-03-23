@@ -115,6 +115,9 @@
   <string name="pref_gesture_scheme_action_export">Eksportuj</string>
   <string name="pref_gesture_scheme_action_delete">Usuń</string>
   <string name="pref_gesture_scheme_action_update">Nadpisz bieżącym</string>
+  <string name="pref_gesture_scheme_action_link">Powiąż z bieżącą aplikacją</string>
+  <string name="pref_gesture_scheme_action_unlink">Usuń powiązanie z bieżącą aplikacją</string>
+  <string name="pref_gesture_scheme_linked_current">Powiązany z bieżącą aplikacją</string>
   <string name="pref_gesture_scheme_name_hint">Nazwa schematu</string>
   <string name="pref_gesture_scheme_saved">Schemat zapisany.</string>
   <string name="pref_gesture_scheme_applied">Schemat zastosowany.</string>
