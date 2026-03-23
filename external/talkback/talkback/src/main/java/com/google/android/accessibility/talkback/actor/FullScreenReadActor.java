@@ -334,6 +334,9 @@ public class FullScreenReadActor {
     currentState = newState;
 
     speechController.setShouldInjectAutoReadingCallbacks(isActive(), nodeSpokenRunnable);
+    if (service instanceof TalkBackService) {
+      ((TalkBackService) service).getGlobalVariables().setReadingActive(isActive());
+    }
   }
 
   /**

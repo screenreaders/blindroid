@@ -37,6 +37,10 @@
     <bool name="pref_notification_read_app_name_default">false</bool>
     <!-- Whether per-app notification filtering is enabled. -->
     <bool name="pref_notification_filter_enabled_default">false</bool>
+    <!-- Whether to speak notifications on the lock screen. -->
+    <bool name="pref_notification_read_lockscreen_default">true</bool>
+    <!-- Whether to suppress notifications while read-all is active. -->
+    <bool name="pref_notification_suppress_during_reading_default">false</bool>
     <!-- Whether clipboard history is enabled. -->
     <bool name="pref_clipboard_history_enabled_default">true</bool>
     <!-- Whether automatic caption results should be sent to translation apps. -->

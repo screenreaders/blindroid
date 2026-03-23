@@ -487,6 +487,10 @@
     <string name="pref_speak_notifications_summary">Announce notification and toast contents</string>
     <string name="pref_notification_read_app_name_title">Speak app name for notifications</string>
     <string name="pref_notification_read_app_name_summary">Include the app name when announcing notifications</string>
+    <string name="pref_notification_read_lockscreen_title">Read notifications on lock screen</string>
+    <string name="pref_notification_read_lockscreen_summary">Allow speaking notifications while the device is locked</string>
+    <string name="pref_notification_suppress_during_reading_title">Mute notifications during reading</string>
+    <string name="pref_notification_suppress_during_reading_summary">Suppress notification speech while read-all is active</string>
     <string name="pref_notification_speech_rate_title">Notification speech rate</string>
     <string name="pref_notification_speech_pitch_title">Notification speech pitch</string>
     <string name="pref_notification_speech_rate_summary">Speech rate used for notifications</string>

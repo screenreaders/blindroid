@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.app.KeyguardManager;
 import android.text.TextUtils;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.compositor.AccessibilityEventFeedbackUtils;
@@ -75,6 +76,24 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
           CharSequence packageNameChar = eventOptions.eventObject.getPackageName();
           String packageName = packageNameChar == null ? null : packageNameChar.toString();
           if (NotificationFilterUtils.isPackageMuted(prefs, context, packageName)) {
+            return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
+          }
+          boolean allowOnLockscreen =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_notification_read_lockscreen_key,
+                  R.bool.pref_notification_read_lockscreen_default);
+          if (!allowOnLockscreen && isDeviceLocked(context)) {
+            return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
+          }
+          boolean suppressDuringReading =
+              SharedPreferencesUtils.getBooleanPref(
+                  prefs,
+                  context.getResources(),
+                  R.string.pref_notification_suppress_during_reading_key,
+                  R.bool.pref_notification_suppress_during_reading_default);
+          if (suppressDuringReading && globalVariables.isReadingActive()) {
             return EventFeedback.builder().setTtsOutput(Optional.empty()).build();
           }
           boolean includeAppName =
@@ -235,5 +254,11 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
     } catch (PackageManager.NameNotFoundException e) {
       return packageName;
     }
+  }
+
+  private static boolean isDeviceLocked(Context context) {
+    KeyguardManager keyguard =
+        (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+    return keyguard != null && keyguard.isKeyguardLocked();
   }
 }

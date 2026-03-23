@@ -175,6 +175,7 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
   private boolean speakSystemWindowTitles = true;
   private boolean textChangeRateUnlimited = false;
   private boolean speakNotifications = true;
+  private boolean readingActive = false;
   private float notificationSpeechRate = 1.0f;
   private float notificationSpeechPitch = 1.0f;
   private final FormFactorUtils formFactorUtils;
@@ -207,6 +208,14 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
 
   public boolean getSpeakNotifications() {
     return speakNotifications;
+  }
+
+  public void setReadingActive(boolean active) {
+    readingActive = active;
+  }
+
+  public boolean isReadingActive() {
+    return readingActive;
   }
 
   public void setNotificationSpeechRate(float rate) {

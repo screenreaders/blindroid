@@ -95,8 +95,8 @@ Sources read (local only):
 - [x] Read notifications (bar/toast/internal).
 - [x] Read source app for notifications.
 - [x] Notification whitelist/blacklist.
-- [ ] Read notifications on lock screen.
-- [ ] Suppress notifications during reading/auto browsing.
+- [x] Read notifications on lock screen.
+- [x] Suppress notifications during reading/auto browsing.
 
 ### Assistant & automation
 - [ ] Voice assistant core.
