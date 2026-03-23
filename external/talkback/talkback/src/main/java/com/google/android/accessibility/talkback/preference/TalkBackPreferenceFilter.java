@@ -214,6 +214,7 @@ public class TalkBackPreferenceFilter {
     SPEAK_PUNCTUATION_LEGACY(R.string.pref_punctuation_key, HIDDEN), // Temporarily hide the legacy
     SPEAK_PUNCTUATION(R.string.pref_punctuation_verbosity, HIDDEN_ON_WATCH),
     CUSTOMIZE_GESTURE(R.string.pref_category_manage_gestures_key, HIDDEN_ON_TV),
+    GESTURE_SCHEME_MANAGER(R.string.pref_gesture_scheme_manager_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     MULTIPLE_GESTURE_SET(
         R.string.pref_gesture_set_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH | HIDE_MULTIPLE_GESTURE_SET),
     CUSTOMIZE_GESTURE_GROUP_2FINGER(

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_gesture_scheme_save_current_key"
+      android:title="@string/pref_gesture_scheme_save_current_title"
+      android:summary="@string/pref_gesture_scheme_save_current_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_gesture_scheme_import_key"
+      android:title="@string/pref_gesture_scheme_import_title"
+      android:summary="@string/pref_gesture_scheme_import_summary" />
+
+  <PreferenceCategory
+      android:key="@string/pref_gesture_scheme_list_category_key"
+      android:title="@string/pref_gesture_scheme_list_title" />
+</PreferenceScreen>

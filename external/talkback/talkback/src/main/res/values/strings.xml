@@ -298,6 +298,25 @@
     <string name="pref_gesture_export_summary">Share the current gesture overrides</string>
     <string name="pref_gesture_import_title">Import gesture scheme</string>
     <string name="pref_gesture_import_summary">Paste and apply gesture overrides</string>
+    <string name="pref_gesture_scheme_manager_title">Gesture schemes</string>
+    <string name="pref_gesture_scheme_manager_summary">Save and apply named schemes</string>
+    <string name="pref_gesture_scheme_save_current_title">Save current scheme</string>
+    <string name="pref_gesture_scheme_save_current_summary">Create a named scheme from current overrides</string>
+    <string name="pref_gesture_scheme_import_title">Import scheme</string>
+    <string name="pref_gesture_scheme_import_summary">Paste a scheme JSON and save it</string>
+    <string name="pref_gesture_scheme_list_title">Saved schemes</string>
+    <string name="pref_gesture_scheme_list_empty">No saved schemes</string>
+    <string name="pref_gesture_scheme_action_title">Scheme actions</string>
+    <string name="pref_gesture_scheme_action_apply">Apply</string>
+    <string name="pref_gesture_scheme_action_rename">Rename</string>
+    <string name="pref_gesture_scheme_action_export">Export</string>
+    <string name="pref_gesture_scheme_action_delete">Delete</string>
+    <string name="pref_gesture_scheme_action_update">Overwrite with current</string>
+    <string name="pref_gesture_scheme_name_hint">Scheme name</string>
+    <string name="pref_gesture_scheme_saved">Scheme saved.</string>
+    <string name="pref_gesture_scheme_applied">Scheme applied.</string>
+    <string name="pref_gesture_scheme_deleted">Scheme deleted.</string>
+    <string name="pref_gesture_scheme_invalid">Invalid scheme.</string>
 
   <!--
     Source: Preference for speaking types of elements with  accessibility focus.

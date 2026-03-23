@@ -32,6 +32,12 @@
       android:title="@string/pref_gesture_import_title"
       android:summary="@string/pref_gesture_import_summary"
       app:allowDividerBelow="true" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:fragment="com.google.android.accessibility.talkback.preference.base.GestureSchemeManagerFragment"
+      android:key="@string/pref_gesture_scheme_manager_key"
+      android:title="@string/pref_gesture_scheme_manager_title"
+      android:summary="@string/pref_gesture_scheme_manager_summary"
+      app:allowDividerBelow="true" />
   <!-- One finger gestures -->
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_1finger_shortcuts_key"

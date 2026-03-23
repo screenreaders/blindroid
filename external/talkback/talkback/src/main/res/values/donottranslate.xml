@@ -1488,6 +1488,12 @@
     <string name="pref_haptic_intensity_default" translatable="false">1.0</string>
     <string name="pref_gesture_export_key" translatable="false">pref_gesture_export</string>
     <string name="pref_gesture_import_key" translatable="false">pref_gesture_import</string>
+    <string name="pref_gesture_scheme_manager_key" translatable="false">pref_gesture_scheme_manager</string>
+    <string name="pref_gesture_scheme_save_current_key" translatable="false">pref_gesture_scheme_save_current</string>
+    <string name="pref_gesture_scheme_import_key" translatable="false">pref_gesture_scheme_import</string>
+    <string name="pref_gesture_scheme_list_category_key" translatable="false">pref_gesture_scheme_list_category</string>
+    <string name="pref_gesture_scheme_store_list_key" translatable="false">pref_gesture_scheme_store_list</string>
+    <string name="pref_gesture_scheme_store_prefix" translatable="false">pref_gesture_scheme_store_</string>
     <string name="pref_category_tools_key" translatable="false">pref_category_tools</string>
     <string name="pref_clipboard_history_enabled_key" translatable="false">pref_clipboard_history_enabled</string>
     <string name="pref_clipboard_history_max_key" translatable="false">pref_clipboard_history_max</string>
