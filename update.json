@@ -1,12 +1,12 @@
 {
-  "tag_name": "v107",
-  "name": "v107",
-  "body": "BlindReader: lockscreen notification control and suppress notifications during read-all.",
+  "tag_name": "v108",
+  "name": "v108",
+  "body": "BlindReader: haptic intensity control (low/medium/high).",
   "assets": [
     {
-      "name": "blindroid-107.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-107.apk",
-      "sha256": "190ec6c413590848d4bcf802d193684c4fe1ab3628ed2959b490005ecc587c68",
+      "name": "blindroid-108.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-108.apk",
+      "sha256": "fbf12089f823752bed7eeea2bb21d91b8dcac92df6e1ce0d11db16099ef63cc6",
       "size": 123067855
     }
   ]

@@ -2767,6 +2767,13 @@ public class TalkBackService extends AccessibilityService
         FeatureSupport.isVibratorSupported(getApplicationContext())
             && getBooleanPref(R.string.pref_vibration_key, R.bool.pref_vibration_default);
     feedbackController.setHapticEnabled(hapticEnabled);
+    float hapticIntensity =
+        SharedPreferencesUtils.getFloatFromStringPref(
+            prefs,
+            res,
+            R.string.pref_haptic_intensity_key,
+            R.string.pref_haptic_intensity_default);
+    feedbackController.setHapticIntensity(hapticIntensity);
 
     boolean auditoryEnabled =
         getBooleanPref(R.string.pref_soundback_key, R.bool.pref_soundback_default);

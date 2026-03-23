@@ -458,6 +458,11 @@
   <string name="title_pref_brailleime">Klawiatura brajlowska</string>
   <string name="title_pref_speech_footer">Możesz szybko dostosować niektóre ustawienia dźwięku BlindReader na dowolnym ekranie.\n\nGłośność powiadomień: przytrzymaj 1 palec na ekranie i naciśnij przycisk zwiększania lub zmniejszania głośności.\nSzybkość mowy: przesuń 3 palcami w górę lub w dół.</string>
   <string name="title_pref_vibration">Sygnał wibracyjny</string>
+  <string name="pref_haptic_intensity_title">Siła wibracji</string>
+  <string name="pref_haptic_intensity_summary">Moc wibracji sprzężenia zwrotnego</string>
+  <string name="pref_haptic_intensity_low">Niska</string>
+  <string name="pref_haptic_intensity_medium">Średnia</string>
+  <string name="pref_haptic_intensity_high">Wysoka</string>
   <string name="title_pref_soundback">Sygnał dźwiękowy</string>
   <string name="title_pref_use_audio_focus">Wyciszanie tła</string>
   <string name="title_pref_soundback_volume">Głośność sygnału dźwiękowego</string>

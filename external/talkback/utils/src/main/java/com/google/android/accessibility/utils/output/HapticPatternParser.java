@@ -68,20 +68,26 @@ public class HapticPatternParser {
    * <p>See the {@link HapticPatternParser} class docs for the definition spec.
    */
   public VibrationEffect parse(int[] pattern) {
+    return parse(pattern, /* intensity= */ 1.0f);
+  }
+
+  public VibrationEffect parse(int[] pattern, float intensity) {
     int splitIndex = indexOf(pattern, SENTINEL_SEPARATOR);
+    float clamped = clampIntensity(intensity);
     if (splitIndex >= 0 && BuildVersionUtils.isAtLeastR()) {
       try {
-        return parseComposition(pattern, splitIndex + 1);
+        return parseComposition(pattern, splitIndex + 1, clamped);
       } catch (ParseException e) {
         LogUtils.e(TAG, e, "Failed to parse haptic pattern");
       }
     }
 
-    return parseFallback(pattern, splitIndex);
+    return parseFallback(pattern, splitIndex, clamped);
   }
 
   @TargetApi(VERSION_CODES.R)
-  private VibrationEffect parseComposition(int[] pattern, int splitIndex) throws ParseException {
+  private VibrationEffect parseComposition(int[] pattern, int splitIndex, float intensity)
+      throws ParseException {
     Composition effect = VibrationEffect.startComposition();
     for (int i = splitIndex; i < pattern.length; i += 3) {
       int primitive = pattern[i];
@@ -90,19 +96,48 @@ public class HapticPatternParser {
             "At least one composition primitives not supported by vibrator", i);
       }
 
-      effect.addPrimitive(primitive, (float) pattern[i + 1] / SCALE_MAX, pattern[i + 2]);
+      float scale = (float) pattern[i + 1] / SCALE_MAX;
+      float scaled = Math.max(0f, Math.min(1f, scale * intensity));
+      effect.addPrimitive(primitive, scaled, pattern[i + 2]);
     }
 
     return effect.compose();
   }
 
-  private VibrationEffect parseFallback(int[] patternDefinition, int splitIndex) {
+  private VibrationEffect parseFallback(
+      int[] patternDefinition, int splitIndex, float intensity) {
     int patternLength = splitIndex >= 0 ? splitIndex : patternDefinition.length;
     final long[] pattern = new long[patternLength];
     for (int i = 0; i < patternLength; i++) {
       pattern[i] = patternDefinition[i];
     }
 
+    if (BuildVersionUtils.isAtLeastO() && intensity < 0.99f) {
+      int amplitude = Math.round(255f * intensity);
+      if (amplitude < 0) {
+        amplitude = 0;
+      } else if (amplitude > 255) {
+        amplitude = 255;
+      }
+      int[] amplitudes = new int[patternLength];
+      for (int i = 0; i < patternLength; i++) {
+        amplitudes[i] = (i % 2 == 0) ? 0 : amplitude;
+      }
+      return VibrationEffect.createWaveform(pattern, amplitudes, /* repeat= */ -1);
+    }
     return waveformCreator.apply(pattern);
+  }
+
+  private static float clampIntensity(float intensity) {
+    if (Float.isNaN(intensity)) {
+      return 1.0f;
+    }
+    if (intensity < 0f) {
+      return 0f;
+    }
+    if (intensity > 1f) {
+      return 1f;
+    }
+    return intensity;
   }
 }

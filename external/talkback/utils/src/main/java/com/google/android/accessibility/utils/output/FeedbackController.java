@@ -82,6 +82,7 @@ public class FeedbackController {
 
   private boolean mAuditoryEnabled;
   private boolean mHapticEnabled;
+  private float mHapticIntensity = 1.0f;
 
   private final Set<HapticFeedbackListener> mHapticFeedbackListeners = new HashSet<>();
 
@@ -125,7 +126,7 @@ public class FeedbackController {
       return false;
     }
 
-    VibrationEffect effect = parser.parse(patternArray);
+    VibrationEffect effect = parser.parse(patternArray, mHapticIntensity);
 
     long nanoTime = System.nanoTime();
     for (HapticFeedbackListener listener : mHapticFeedbackListeners) {
@@ -244,6 +245,25 @@ public class FeedbackController {
    */
   public void setHapticEnabled(boolean enabled) {
     mHapticEnabled = enabled;
+  }
+
+  /**
+   * Sets the intensity multiplier for haptic feedback.
+   *
+   * @param intensity A value in range [0,1].
+   */
+  public void setHapticIntensity(float intensity) {
+    if (Float.isNaN(intensity)) {
+      mHapticIntensity = 1.0f;
+      return;
+    }
+    if (intensity < 0f) {
+      mHapticIntensity = 0f;
+    } else if (intensity > 1f) {
+      mHapticIntensity = 1f;
+    } else {
+      mHapticIntensity = intensity;
+    }
   }
 
   /**

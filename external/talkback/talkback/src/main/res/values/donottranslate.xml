@@ -1484,6 +1484,8 @@
     <string name="pref_notification_filter_current_key" translatable="false">pref_notification_filter_current</string>
     <string name="pref_notification_filter_list_key" translatable="false">pref_notification_filter_list</string>
     <string name="pref_notification_filter_prefix" translatable="false">pref_notification_filter_pkg_</string>
+    <string name="pref_haptic_intensity_key" translatable="false">pref_haptic_intensity</string>
+    <string name="pref_haptic_intensity_default" translatable="false">1.0</string>
     <string name="pref_category_tools_key" translatable="false">pref_category_tools</string>
     <string name="pref_clipboard_history_enabled_key" translatable="false">pref_clipboard_history_enabled</string>
     <string name="pref_clipboard_history_max_key" translatable="false">pref_clipboard_history_max</string>

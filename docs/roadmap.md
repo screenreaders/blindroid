@@ -119,7 +119,7 @@ Sources read (local only):
 ### Accessibility / system
 - [x] Volume key shortcuts.
 - [x] Read list index and range.
-- [ ] Haptic feedback intensity.
+- [x] Haptic feedback intensity.
 - [ ] Logging + log upload.
 
 ## Blindroid (app + system integration)

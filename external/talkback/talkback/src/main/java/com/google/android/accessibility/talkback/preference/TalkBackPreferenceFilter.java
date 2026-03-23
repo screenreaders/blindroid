@@ -121,6 +121,7 @@ public class TalkBackPreferenceFilter {
     A11Y_VOLUME(R.string.pref_a11y_volume_key, HIDE_NO_ACCESSIBILITY_AUDIO_STREAM),
     AUDIO_DUCKING(R.string.pref_use_audio_focus_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     VIBRATION_FEEDBACK(R.string.pref_vibration_key, HIDDEN_NO_VIBRATION),
+    HAPTIC_INTENSITY(R.string.pref_haptic_intensity_key, HIDDEN_NO_VIBRATION),
     SPEECH_FOOTER(R.string.pref_speech_footer_key, HIDE_NO_ACCESSIBILITY_AUDIO_STREAM),
     NOTIFICATION_APP_NAME(R.string.pref_notification_read_app_name_key, HIDDEN_ON_WATCH),
     NOTIFICATION_APP_FILTER(R.string.pref_notification_filter_screen_key, HIDDEN_ON_WATCH),
