@@ -1,12 +1,12 @@
 {
-  "tag_name": "v137",
-  "name": "v137",
-  "body": "Quick menu: export/import current app menu (share/paste).",
+  "tag_name": "v138",
+  "name": "v138",
+  "body": "Quick menu: export/import current app menu to file (SAF).",
   "assets": [
     {
-      "name": "blindroid-137.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-137.apk",
-      "sha256": "0442c771f504ef81d06e40afd9988b4c0cd33ff4f6cc33ce0bd2ff5b62978139",
+      "name": "blindroid-138.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-138.apk",
+      "sha256": "0fa39960e71ee634503af8b707e8632b4738f652218806e2ebbc75b50b35e7f4",
       "size": 123067855
     }
   ]

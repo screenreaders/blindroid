@@ -1540,6 +1540,8 @@
     <string name="pref_quick_menu_link_default_current_key" translatable="false">pref_quick_menu_link_default_current</string>
     <string name="pref_quick_menu_export_current_key" translatable="false">pref_quick_menu_export_current</string>
     <string name="pref_quick_menu_import_current_key" translatable="false">pref_quick_menu_import_current</string>
+    <string name="pref_quick_menu_export_current_file_key" translatable="false">pref_quick_menu_export_current_file</string>
+    <string name="pref_quick_menu_import_current_file_key" translatable="false">pref_quick_menu_import_current_file</string>
     <string name="pref_quick_menu_apply_saved_current_key" translatable="false">pref_quick_menu_apply_saved_current</string>
     <string name="pref_quick_menu_saved_apps_category_key" translatable="false">pref_quick_menu_saved_apps_category</string>
     <string name="pref_quick_menu_clear_saved_key" translatable="false">pref_quick_menu_clear_saved</string>

@@ -80,10 +80,14 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference disableAllActionsPreference;
   private Preference exportCurrentAppMenuPreference;
   private Preference importCurrentAppMenuPreference;
+  private Preference exportCurrentAppMenuFilePreference;
+  private Preference importCurrentAppMenuFilePreference;
   private ActivityResultLauncher<Intent> exportQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> importQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> exportAppMenusFileLauncher;
   private ActivityResultLauncher<Intent> importAppMenusFileLauncher;
+  private ActivityResultLauncher<Intent> exportCurrentAppMenuFileLauncher;
+  private ActivityResultLauncher<Intent> importCurrentAppMenuFileLauncher;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -158,6 +162,40 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
                 return;
               }
               readAppMenusFromUri(context, data.getData());
+            });
+
+    exportCurrentAppMenuFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_quick_menu_export_current_failed), context);
+                return;
+              }
+              writeCurrentAppMenuToUri(context, data.getData());
+            });
+
+    importCurrentAppMenuFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_quick_menu_import_current_failed), context);
+                return;
+              }
+              readCurrentAppMenuFromUri(context, data.getData());
             });
   }
 
@@ -314,6 +352,34 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     appCategory.addPreference(importCurrentAppMenuPreference);
+
+    exportCurrentAppMenuFilePreference = new Preference(context);
+    exportCurrentAppMenuFilePreference.setKey(
+        context.getString(R.string.pref_quick_menu_export_current_file_key));
+    exportCurrentAppMenuFilePreference.setTitle(
+        R.string.pref_quick_menu_export_current_file_title);
+    exportCurrentAppMenuFilePreference.setSummary(
+        R.string.pref_quick_menu_export_current_file_summary);
+    exportCurrentAppMenuFilePreference.setOnPreferenceClickListener(
+        pref -> {
+          launchExportCurrentAppMenuToFile(context);
+          return true;
+        });
+    appCategory.addPreference(exportCurrentAppMenuFilePreference);
+
+    importCurrentAppMenuFilePreference = new Preference(context);
+    importCurrentAppMenuFilePreference.setKey(
+        context.getString(R.string.pref_quick_menu_import_current_file_key));
+    importCurrentAppMenuFilePreference.setTitle(
+        R.string.pref_quick_menu_import_current_file_title);
+    importCurrentAppMenuFilePreference.setSummary(
+        R.string.pref_quick_menu_import_current_file_summary);
+    importCurrentAppMenuFilePreference.setOnPreferenceClickListener(
+        pref -> {
+          launchImportCurrentAppMenuFromFile();
+          return true;
+        });
+    appCategory.addPreference(importCurrentAppMenuFilePreference);
 
     applySavedToCurrentPreference = new Preference(context);
     applySavedToCurrentPreference.setKey(
@@ -1214,6 +1280,119 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         getString(R.string.pref_quick_menu_import_current_success), context);
     populateSavedApps(context);
     updateAppLinkUi(context);
+  }
+
+  private void launchExportCurrentAppMenuToFile(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_link_current_missing), context);
+      return;
+    }
+    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    intent.putExtra(Intent.EXTRA_TITLE, buildCurrentAppMenuFileName());
+    exportCurrentAppMenuFileLauncher.launch(intent);
+  }
+
+  private void launchImportCurrentAppMenuFromFile() {
+    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    importCurrentAppMenuFileLauncher.launch(intent);
+  }
+
+  private String buildCurrentAppMenuFileName() {
+    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    return "blindreader-appmenu-" + format.format(new Date()) + ".json";
+  }
+
+  private void writeCurrentAppMenuToUri(Context context, Uri uri) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_current_failed), context);
+      return;
+    }
+    List<String> actions = QuickMenuPreferences.getActionsForPackage(context, currentPackage);
+    if (actions == null || actions.isEmpty()) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_current_missing), context);
+      return;
+    }
+    try {
+      JSONObject payload = new JSONObject();
+      payload.put("version", 1);
+      payload.put("package", currentPackage);
+      JSONArray array = new JSONArray();
+      List<String> filtered = filterSupportedActions(context, actions);
+      for (String action : filtered) {
+        array.put(action);
+      }
+      payload.put("actions", array);
+      byte[] bytes = payload.toString(2).getBytes("UTF-8");
+      try (OutputStream output = context.getContentResolver().openOutputStream(uri)) {
+        if (output == null) {
+          PreferencesActivityUtils.announceText(
+              getString(R.string.pref_quick_menu_export_current_failed), context);
+          return;
+        }
+        output.write(bytes);
+        output.flush();
+      }
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_current_file_success), context);
+    } catch (IOException | JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_current_failed), context);
+    }
+  }
+
+  private void readCurrentAppMenuFromUri(Context context, Uri uri) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_current_failed), context);
+      return;
+    }
+    try (InputStream input = context.getContentResolver().openInputStream(uri)) {
+      if (input == null) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_quick_menu_import_current_failed), context);
+        return;
+      }
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      byte[] buffer = new byte[4096];
+      int read;
+      while ((read = input.read(buffer)) != -1) {
+        output.write(buffer, 0, read);
+      }
+      String json = output.toString("UTF-8");
+      JSONObject root = new JSONObject(json);
+      JSONArray actionsJson = root.optJSONArray("actions");
+      if (actionsJson == null) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_quick_menu_import_current_failed), context);
+        return;
+      }
+      List<String> actions = new ArrayList<>();
+      for (int i = 0; i < actionsJson.length(); i++) {
+        String value = actionsJson.optString(i, null);
+        if (!TextUtils.isEmpty(value)) {
+          actions.add(value);
+        }
+      }
+      List<String> filtered = filterSupportedActions(context, actions);
+      QuickMenuPreferences.saveActionsForPackage(context, currentPackage, filtered);
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_current_file_success), context);
+      populateSavedApps(context);
+      updateAppLinkUi(context);
+    } catch (IOException | JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_current_failed), context);
+    }
   }
 
   private void showApplySavedMenuDialog(Context context) {
