@@ -33,4 +33,11 @@
       android:layout_height="wrap_content"
       android:text="@string/macro_action_add"
       android:layout_marginTop="12dp" />
+
+  <Button
+      android:id="@+id/macro_action_clear"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/macro_action_clear"
+      android:layout_marginTop="8dp" />
 </LinearLayout>

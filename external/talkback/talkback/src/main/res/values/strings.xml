@@ -517,6 +517,9 @@
     <!-- Macro editor UI -->
     <string name="macro_editor_title">Edit macro</string>
     <string name="macro_action_add">Add action</string>
+    <string name="macro_action_clear">Clear actions</string>
+    <string name="macro_action_clear_title">Clear macro actions</string>
+    <string name="macro_action_clear_confirm">Remove all actions from this macro?</string>
     <string name="macro_action_move_up">Move up</string>
     <string name="macro_action_move_down">Move down</string>
     <string name="macro_action_remove">Remove</string>

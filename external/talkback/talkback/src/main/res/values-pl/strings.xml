@@ -231,6 +231,9 @@
   <string name="macro_running">Uruchamiam makro %1$s</string>
   <string name="macro_editor_title">Edytuj makro</string>
   <string name="macro_action_add">Dodaj akcję</string>
+  <string name="macro_action_clear">Wyczyść akcje</string>
+  <string name="macro_action_clear_title">Wyczyść akcje makra</string>
+  <string name="macro_action_clear_confirm">Usunąć wszystkie akcje z tego makra?</string>
   <string name="macro_action_move_up">Przenieś w górę</string>
   <string name="macro_action_move_down">Przenieś w dół</string>
   <string name="macro_action_remove">Usuń</string>

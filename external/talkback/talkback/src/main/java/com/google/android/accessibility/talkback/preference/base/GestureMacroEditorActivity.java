@@ -60,6 +60,7 @@ public class GestureMacroEditorActivity extends AppCompatActivity {
     emptyView = findViewById(R.id.macro_editor_empty);
     RecyclerView recyclerView = findViewById(R.id.macro_action_list);
     Button addButton = findViewById(R.id.macro_action_add);
+    Button clearButton = findViewById(R.id.macro_action_clear);
 
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     adapter = new MacroActionAdapter(this, actions, this::onEditAction, this::onMoveUp, this::onMoveDown, this::onRemove);
@@ -70,6 +71,7 @@ public class GestureMacroEditorActivity extends AppCompatActivity {
     updateEmptyState();
 
     addButton.setOnClickListener(v -> showActionPicker(-1));
+    clearButton.setOnClickListener(v -> confirmClearActions());
   }
 
   private void loadActions() {
@@ -159,6 +161,24 @@ public class GestureMacroEditorActivity extends AppCompatActivity {
               }
               persistActions();
             })
+        .show();
+  }
+
+  private void confirmClearActions() {
+    if (actions.isEmpty()) {
+      return;
+    }
+    new AlertDialog.Builder(this)
+        .setTitle(R.string.macro_action_clear_title)
+        .setMessage(R.string.macro_action_clear_confirm)
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> {
+              actions.clear();
+              adapter.notifyDataSetChanged();
+              persistActions();
+            })
+        .setNegativeButton(android.R.string.cancel, null)
         .show();
   }
 

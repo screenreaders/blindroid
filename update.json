@@ -1,12 +1,12 @@
 {
-  "tag_name": "v130",
-  "name": "v130",
-  "body": "Gesture macros: export/import to file (SAF).",
+  "tag_name": "v131",
+  "name": "v131",
+  "body": "Gesture macros: clear actions button in editor.",
   "assets": [
     {
-      "name": "blindroid-130.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-130.apk",
-      "sha256": "e834344074976d6f1d62f0ae335f72405ccb6c4e17b75d00a78959a9f606571d",
+      "name": "blindroid-131.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-131.apk",
+      "sha256": "f494cb916b18a220bbc759dcd830abc28ff82e2071629d725e7eb972626abead",
       "size": 123067855
     }
   ]
