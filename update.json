@@ -1,12 +1,12 @@
 {
-  "tag_name": "v123",
-  "name": "v123",
-  "body": "BlindReader: show saved app menu action preview.",
+  "tag_name": "v124",
+  "name": "v124",
+  "body": "BlindReader: link default quick menu to current app.",
   "assets": [
     {
-      "name": "blindroid-123.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-123.apk",
-      "sha256": "506838d4b31da137c52094e5fe34ae221e92aa6023e3f9aa9ca1407f62b51315",
+      "name": "blindroid-124.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-124.apk",
+      "sha256": "2236d19d4e549dc04bdf232054882803b7fd01e373b752e3f529f1a48740f22a",
       "size": 123067855
     }
   ]

@@ -167,6 +167,8 @@ public class TalkBackPreferenceFilter {
     QUICK_MENU_UNLINK_CURRENT(R.string.pref_quick_menu_unlink_current_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_USE_CURRENT_DEFAULT(
         R.string.pref_quick_menu_use_current_default_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    QUICK_MENU_LINK_DEFAULT_CURRENT(
+        R.string.pref_quick_menu_link_default_current_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_SAVED_APPS(R.string.pref_quick_menu_saved_apps_category_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_CLEAR_SAVED(R.string.pref_quick_menu_clear_saved_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     // TalkBack/Reading Menu

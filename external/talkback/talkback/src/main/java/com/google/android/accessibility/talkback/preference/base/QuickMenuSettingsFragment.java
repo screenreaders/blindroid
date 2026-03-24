@@ -56,6 +56,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference exportQuickMenuPreference;
   private Preference importQuickMenuPreference;
   private Preference clearSavedAppsPreference;
+  private Preference linkDefaultToCurrentPreference;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -146,6 +147,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     appCategory.addPreference(useCurrentAsDefaultPreference);
+
+    linkDefaultToCurrentPreference = new Preference(context);
+    linkDefaultToCurrentPreference.setKey(
+        context.getString(R.string.pref_quick_menu_link_default_current_key));
+    linkDefaultToCurrentPreference.setTitle(R.string.pref_quick_menu_link_default_current_title);
+    linkDefaultToCurrentPreference.setOnPreferenceClickListener(
+        pref -> {
+          linkDefaultToCurrent(context);
+          return true;
+        });
+    appCategory.addPreference(linkDefaultToCurrentPreference);
 
     actionCategory = new PreferenceCategory(context);
     actionCategory.setTitle(R.string.pref_quick_menu_actions_title);
@@ -258,6 +270,15 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         useCurrentAsDefaultPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
       }
       useCurrentAsDefaultPreference.setEnabled(hasApp && linked);
+    }
+    if (linkDefaultToCurrentPreference != null) {
+      if (hasApp) {
+        linkDefaultToCurrentPreference.setSummary(
+            getString(R.string.pref_quick_menu_link_default_current_summary, currentLabel));
+      } else {
+        linkDefaultToCurrentPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
+      }
+      linkDefaultToCurrentPreference.setEnabled(hasApp);
     }
   }
 
@@ -518,6 +539,19 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     QuickMenuPreferences.setGlobalActions(context, actions);
     PreferencesActivityUtils.announceText(
         getString(R.string.pref_quick_menu_use_current_default_announce, currentLabel), context);
+  }
+
+  private void linkDefaultToCurrent(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      return;
+    }
+    List<String> actions = QuickMenuPreferences.getGlobalActions(context);
+    QuickMenuPreferences.saveActionsForPackage(context, currentPackage, actions);
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_link_default_current_announce, currentLabel), context);
+    populateSavedApps(context);
+    updateAppLinkUi(context);
   }
 
   private List<String> collectSelectedActions() {

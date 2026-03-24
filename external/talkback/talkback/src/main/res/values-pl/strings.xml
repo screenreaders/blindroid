@@ -321,6 +321,9 @@
     <string name="pref_quick_menu_use_current_default_summary">Ustaw domyślne szybkie menu na %1$s</string>
     <string name="pref_quick_menu_use_current_default_missing">Najpierw powiąż szybkie menu</string>
     <string name="pref_quick_menu_use_current_default_announce">Zaktualizowano domyślne szybkie menu z %1$s</string>
+    <string name="pref_quick_menu_link_default_current_title">Powiąż domyślne z bieżącą aplikacją</string>
+    <string name="pref_quick_menu_link_default_current_summary">Użyj domyślnego szybkiego menu dla %1$s</string>
+    <string name="pref_quick_menu_link_default_current_announce">Powiązano domyślne szybkie menu dla %1$s</string>
     <string name="pref_quick_menu_actions_title">Akcje szybkiego menu</string>
     <string name="pref_quick_menu_reset_title">Resetuj szybkie menu</string>
     <string name="pref_quick_menu_reset_summary">Przywróć domyślne akcje szybkiego menu</string>
