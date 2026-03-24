@@ -16,15 +16,19 @@
 
 package com.google.android.accessibility.talkback.preference.base;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.widget.EditText;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -35,8 +39,15 @@ import com.google.android.accessibility.talkback.preference.PreferencesActivityU
 import com.google.android.accessibility.talkback.quickmenu.QuickMenuPreferences;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,13 +66,55 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference useCurrentAsDefaultPreference;
   private Preference exportQuickMenuPreference;
   private Preference importQuickMenuPreference;
+  private Preference exportQuickMenuFilePreference;
+  private Preference importQuickMenuFilePreference;
   private Preference exportAppMenusPreference;
   private Preference importAppMenusPreference;
   private Preference clearSavedAppsPreference;
   private Preference linkDefaultToCurrentPreference;
+  private ActivityResultLauncher<Intent> exportQuickMenuFileLauncher;
+  private ActivityResultLauncher<Intent> importQuickMenuFileLauncher;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    exportQuickMenuFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_quick_menu_export_failed), context);
+                return;
+              }
+              writeQuickMenuToUri(context, data.getData());
+            });
+
+    importQuickMenuFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_quick_menu_import_failed), context);
+                return;
+              }
+              readQuickMenuFromUri(context, data.getData());
+            });
   }
 
   @Override
@@ -114,6 +167,28 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     screen.addPreference(importQuickMenuPreference);
+
+    exportQuickMenuFilePreference = new Preference(context);
+    exportQuickMenuFilePreference.setKey(context.getString(R.string.pref_quick_menu_export_file_key));
+    exportQuickMenuFilePreference.setTitle(R.string.pref_quick_menu_export_file_title);
+    exportQuickMenuFilePreference.setSummary(R.string.pref_quick_menu_export_file_summary);
+    exportQuickMenuFilePreference.setOnPreferenceClickListener(
+        pref -> {
+          launchExportQuickMenuToFile(context);
+          return true;
+        });
+    screen.addPreference(exportQuickMenuFilePreference);
+
+    importQuickMenuFilePreference = new Preference(context);
+    importQuickMenuFilePreference.setKey(context.getString(R.string.pref_quick_menu_import_file_key));
+    importQuickMenuFilePreference.setTitle(R.string.pref_quick_menu_import_file_title);
+    importQuickMenuFilePreference.setSummary(R.string.pref_quick_menu_import_file_summary);
+    importQuickMenuFilePreference.setOnPreferenceClickListener(
+        pref -> {
+          launchImportQuickMenuFromFile();
+          return true;
+        });
+    screen.addPreference(importQuickMenuFilePreference);
 
     PreferenceCategory appCategory = new PreferenceCategory(context);
     appCategory.setTitle(R.string.pref_quick_menu_app_category_title);
@@ -355,13 +430,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
 
   private void exportQuickMenu(Context context) {
     try {
-      JSONObject payload = new JSONObject();
-      payload.put("version", 1);
-      JSONArray array = new JSONArray();
-      for (String action : QuickMenuPreferences.getGlobalActions(context)) {
-        array.put(action);
-      }
-      payload.put("actions", array);
+      JSONObject payload = buildQuickMenuJson(context);
       Intent share = new Intent(Intent.ACTION_SEND);
       share.setType("application/json");
       share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pref_quick_menu_export_title));
@@ -372,6 +441,86 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     } catch (JSONException e) {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_quick_menu_export_failed), context);
+    }
+  }
+
+  private void launchExportQuickMenuToFile(Context context) {
+    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    intent.putExtra(Intent.EXTRA_TITLE, buildQuickMenuFileName());
+    exportQuickMenuFileLauncher.launch(intent);
+  }
+
+  private void launchImportQuickMenuFromFile() {
+    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    importQuickMenuFileLauncher.launch(intent);
+  }
+
+  private String buildQuickMenuFileName() {
+    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    return "blindreader-quickmenu-" + format.format(new Date()) + ".json";
+  }
+
+  private JSONObject buildQuickMenuJson(Context context) throws JSONException {
+    JSONObject payload = new JSONObject();
+    payload.put("version", 1);
+    JSONArray array = new JSONArray();
+    for (String action : QuickMenuPreferences.getGlobalActions(context)) {
+      array.put(action);
+    }
+    payload.put("actions", array);
+    return payload;
+  }
+
+  private void writeQuickMenuToUri(Context context, Uri uri) {
+    try {
+      JSONObject payload = buildQuickMenuJson(context);
+      byte[] bytes = payload.toString(2).getBytes("UTF-8");
+      try (OutputStream output = context.getContentResolver().openOutputStream(uri)) {
+        if (output == null) {
+          PreferencesActivityUtils.announceText(
+              getString(R.string.pref_quick_menu_export_failed), context);
+          return;
+        }
+        output.write(bytes);
+        output.flush();
+      }
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_file_success), context);
+    } catch (IOException | JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_failed), context);
+    }
+  }
+
+  private void readQuickMenuFromUri(Context context, Uri uri) {
+    try (InputStream input = context.getContentResolver().openInputStream(uri)) {
+      if (input == null) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_quick_menu_import_failed), context);
+        return;
+      }
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      byte[] buffer = new byte[4096];
+      int read;
+      while ((read = input.read(buffer)) != -1) {
+        output.write(buffer, 0, read);
+      }
+      String json = output.toString("UTF-8");
+      if (applyQuickMenuJson(context, json)) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_quick_menu_import_file_success), context);
+        applyDefaultsToUi(context);
+      } else {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_quick_menu_import_failed), context);
+      }
+    } catch (IOException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_failed), context);
     }
   }
 
@@ -391,24 +540,29 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   }
 
   private void importQuickMenu(Context context, String json) {
-    if (TextUtils.isEmpty(json)) {
+    if (applyQuickMenuJson(context, json)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_success), context);
+      applyDefaultsToUi(context);
+    } else {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_quick_menu_import_failed), context);
-      return;
+    }
+  }
+
+  private boolean applyQuickMenuJson(Context context, String json) {
+    if (TextUtils.isEmpty(json)) {
+      return false;
     }
     JSONObject root;
     try {
       root = new JSONObject(json);
     } catch (JSONException e) {
-      PreferencesActivityUtils.announceText(
-          getString(R.string.pref_quick_menu_import_failed), context);
-      return;
+      return false;
     }
     JSONArray actionsJson = root.optJSONArray("actions");
     if (actionsJson == null) {
-      PreferencesActivityUtils.announceText(
-          getString(R.string.pref_quick_menu_import_failed), context);
-      return;
+      return false;
     }
     List<String> actions = new ArrayList<>();
     for (int i = 0; i < actionsJson.length(); i++) {
@@ -418,8 +572,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       }
     }
     QuickMenuPreferences.setGlobalActions(context, actions);
-    PreferencesActivityUtils.announceText(
-        getString(R.string.pref_quick_menu_import_success), context);
+    return true;
   }
 
   private void exportAppMenus(Context context) {

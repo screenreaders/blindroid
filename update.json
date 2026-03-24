@@ -1,12 +1,12 @@
 {
-  "tag_name": "v125",
-  "name": "v125",
-  "body": "BlindReader: export/import app quick menus.",
+  "tag_name": "v126",
+  "name": "v126",
+  "body": "Quick menu: export/import to file (global actions).",
   "assets": [
     {
-      "name": "blindroid-125.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-125.apk",
-      "sha256": "272c4b77898b059af26768e22f193259b006c508817a0b8efb339ba42ce39ff5",
+      "name": "blindroid-126.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-126.apk",
+      "sha256": "8bc4bfd92238850926e2097b2bf562f661e4505c9015d43a57742372a081a5a8",
       "size": 123067855
     }
   ]
