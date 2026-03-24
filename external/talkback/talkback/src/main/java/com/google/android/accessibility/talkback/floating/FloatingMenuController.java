@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
+import android.view.HapticFeedbackConstants;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -131,6 +132,7 @@ public final class FloatingMenuController {
                 return true;
               case MotionEvent.ACTION_UP:
                 if (!moved && actionHandler != null) {
+                  view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                   actionHandler.onFloatingMenuClicked();
                 }
                 return true;

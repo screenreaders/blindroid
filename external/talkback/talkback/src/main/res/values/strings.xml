@@ -443,6 +443,10 @@
     <string name="pref_floating_menu_action_read_screen">Read screen (AI)</string>
     <!-- Entry for floating menu action: scan hub. [CHAR_LIMIT=40] -->
     <string name="pref_floating_menu_action_scan_hub">Scan center</string>
+    <!-- Entry for floating menu action: item chooser. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_item_chooser">Item chooser</string>
+    <!-- Entry for floating menu action: live recognition. [CHAR_LIMIT=40] -->
+    <string name="pref_floating_menu_action_live_recognition">Live recognition</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

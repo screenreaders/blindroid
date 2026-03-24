@@ -3003,6 +3003,22 @@ public class TalkBackService extends AccessibilityService
       }
       return;
     }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_item_chooser))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_item_chooser), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_live_recognition))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_live_recognition), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
     if (menuManager != null) {
       menuManager.showMenu(
           ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);
