@@ -55,6 +55,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference useCurrentAsDefaultPreference;
   private Preference exportQuickMenuPreference;
   private Preference importQuickMenuPreference;
+  private Preference clearSavedAppsPreference;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -156,6 +157,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     savedAppsCategory.setKey(context.getString(R.string.pref_quick_menu_saved_apps_category_key));
     screen.addPreference(savedAppsCategory);
 
+    clearSavedAppsPreference = new Preference(context);
+    clearSavedAppsPreference.setKey(context.getString(R.string.pref_quick_menu_clear_saved_key));
+    clearSavedAppsPreference.setTitle(R.string.pref_quick_menu_clear_saved_title);
+    clearSavedAppsPreference.setSummary(R.string.pref_quick_menu_clear_saved_summary);
+    clearSavedAppsPreference.setOnPreferenceClickListener(
+        pref -> {
+          clearAllSavedMenus(context);
+          return true;
+        });
+    savedAppsCategory.addPreference(clearSavedAppsPreference);
+
     buildActionList(context);
     updateAppLinkUi(context);
     populateSavedApps(context);
@@ -254,6 +266,9 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       return;
     }
     savedAppsCategory.removeAll();
+    if (clearSavedAppsPreference != null) {
+      savedAppsCategory.addPreference(clearSavedAppsPreference);
+    }
     List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
     if (packages.isEmpty()) {
       Preference empty = new Preference(context);
@@ -402,6 +417,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
             })
         .setNegativeButton(android.R.string.cancel, null)
         .show();
+  }
+
+  private void clearAllSavedMenus(Context context) {
+    List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
+    for (String packageName : packages) {
+      QuickMenuPreferences.removeActionsForPackage(context, packageName);
+    }
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_clear_saved_announce), context);
+    populateSavedApps(context);
+    updateAppLinkUi(context);
   }
 
   private void resolveCurrentApp(Context context) {

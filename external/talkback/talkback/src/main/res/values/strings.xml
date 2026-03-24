@@ -629,6 +629,9 @@
     <string name="pref_quick_menu_saved_apps_edit_title">Edit quick menu for %1$s</string>
     <string name="pref_quick_menu_saved_apps_updated">Saved quick menu for %1$s</string>
     <string name="pref_quick_menu_saved_apps_remove_action">Remove</string>
+    <string name="pref_quick_menu_clear_saved_title">Clear saved menus</string>
+    <string name="pref_quick_menu_clear_saved_summary">Remove all saved app quick menus</string>
+    <string name="pref_quick_menu_clear_saved_announce">Cleared all saved app menus</string>
 
     <string name="translate_no_text">No text to translate</string>
     <string name="translate_no_app">No app available to translate text</string>
