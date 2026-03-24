@@ -1,12 +1,12 @@
 {
-  "tag_name": "v131",
-  "name": "v131",
-  "body": "Gesture macros: clear actions button in editor.",
+  "tag_name": "v132",
+  "name": "v132",
+  "body": "Gesture macros: copy actions between macros.",
   "assets": [
     {
-      "name": "blindroid-131.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-131.apk",
-      "sha256": "f494cb916b18a220bbc759dcd830abc28ff82e2071629d725e7eb972626abead",
+      "name": "blindroid-132.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-132.apk",
+      "sha256": "23270a3af566b92137214ab8b009922eba774fb87daac09a21c0e10954adce61",
       "size": 123067855
     }
   ]

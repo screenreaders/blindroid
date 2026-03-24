@@ -217,6 +217,12 @@
   <string name="pref_macro_export_file_summary">Zapisz plik JSON z akcjami makr</string>
   <string name="pref_macro_import_file_title">Importuj makra z pliku</string>
   <string name="pref_macro_import_file_summary">Wczytaj plik JSON z akcjami makr</string>
+  <string name="pref_macro_copy_title">Kopiuj akcje makra</string>
+  <string name="pref_macro_copy_summary">Skopiuj akcje z jednego makra do drugiego</string>
+  <string name="pref_macro_copy_source_title">Wybierz makro źródłowe</string>
+  <string name="pref_macro_copy_target_title">Wybierz makro docelowe</string>
+  <string name="pref_macro_copy_announce">Skopiowano akcje %1$s do %2$s</string>
+  <string name="pref_macro_copy_failed">Nie udało się skopiować akcji makra</string>
   <string name="pref_macro_export_success">Makra gotowe do udostępnienia</string>
   <string name="pref_macro_export_failed">Nie udało się wyeksportować makr</string>
   <string name="pref_macro_import_success">Zaimportowano %1$d makra</string>

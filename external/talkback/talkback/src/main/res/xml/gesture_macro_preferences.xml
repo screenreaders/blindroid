@@ -60,4 +60,9 @@
       android:key="@string/pref_macro_import_file_key"
       android:title="@string/pref_macro_import_file_title"
       android:summary="@string/pref_macro_import_file_summary" />
+
+  <Preference
+      android:key="@string/pref_macro_copy_key"
+      android:title="@string/pref_macro_copy_title"
+      android:summary="@string/pref_macro_copy_summary" />
 </PreferenceScreen>

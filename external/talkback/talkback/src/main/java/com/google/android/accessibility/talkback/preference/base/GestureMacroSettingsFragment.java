@@ -57,6 +57,7 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
   private Preference importMacrosPreference;
   private Preference exportMacrosFilePreference;
   private Preference importMacrosFilePreference;
+  private Preference copyMacrosPreference;
   private ActivityResultLauncher<Intent> exportMacrosFileLauncher;
   private ActivityResultLauncher<Intent> importMacrosFileLauncher;
 
@@ -152,6 +153,15 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
       importMacrosFilePreference.setOnPreferenceClickListener(
           pref -> {
             launchImportFromFile();
+            return true;
+          });
+    }
+
+    copyMacrosPreference = findPreference(getString(R.string.pref_macro_copy_key));
+    if (copyMacrosPreference != null) {
+      copyMacrosPreference.setOnPreferenceClickListener(
+          pref -> {
+            showCopyDialog(getContext());
             return true;
           });
     }
@@ -331,6 +341,71 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_macro_import_failed), context);
     }
+  }
+
+  private void showCopyDialog(Context context) {
+    if (context == null) {
+      return;
+    }
+    final CharSequence[] macroNames = buildMacroNameList(context);
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_macro_copy_source_title)
+        .setItems(
+            macroNames,
+            (dialog, which) -> showCopyTargetDialog(context, which + 1, macroNames))
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void showCopyTargetDialog(Context context, int sourceIndex, CharSequence[] macroNames) {
+    CharSequence[] targetNames = new CharSequence[macroNames.length - 1];
+    int[] targetIndices = new int[macroNames.length - 1];
+    int cursor = 0;
+    for (int i = 0; i < macroNames.length; i++) {
+      int index = i + 1;
+      if (index == sourceIndex) {
+        continue;
+      }
+      targetNames[cursor] = macroNames[i];
+      targetIndices[cursor] = index;
+      cursor++;
+    }
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_macro_copy_target_title)
+        .setItems(
+            targetNames,
+            (dialog, which) -> copyMacro(context, sourceIndex, targetIndices[which], macroNames))
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void copyMacro(
+      Context context, int sourceIndex, int targetIndex, CharSequence[] macroNames) {
+    if (sourceIndex == targetIndex) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_macro_copy_failed), context);
+      return;
+    }
+    List<String> actions = GestureMacroStore.getActionList(context, sourceIndex);
+    GestureMacroStore.saveActionList(context, targetIndex, actions);
+    PreferencesActivityUtils.announceText(
+        getString(
+            R.string.pref_macro_copy_announce,
+            macroNames[sourceIndex - 1],
+            macroNames[targetIndex - 1]),
+        context);
+    updateActionsSummary(macro1ActionsPreference, 1);
+    updateActionsSummary(macro2ActionsPreference, 2);
+    updateActionsSummary(macro3ActionsPreference, 3);
+  }
+
+  private CharSequence[] buildMacroNameList(Context context) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    CharSequence[] names = new CharSequence[3];
+    for (int i = 0; i < 3; i++) {
+      names[i] = GestureMacroEditorActivity.getMacroName(context, i + 1, prefs);
+    }
+    return names;
   }
 
   private JSONObject buildMacrosJson(Context context) throws JSONException {
