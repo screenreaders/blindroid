@@ -40,4 +40,14 @@
         android:key="@string/pref_macro_3_actions_list_key"
         android:title="@string/pref_macro_actions_title" />
   </PreferenceCategory>
+
+  <Preference
+      android:key="@string/pref_macro_export_key"
+      android:title="@string/pref_macro_export_title"
+      android:summary="@string/pref_macro_export_summary" />
+
+  <Preference
+      android:key="@string/pref_macro_import_key"
+      android:title="@string/pref_macro_import_title"
+      android:summary="@string/pref_macro_import_summary" />
 </PreferenceScreen>

@@ -1,12 +1,12 @@
 {
-  "tag_name": "v128",
-  "name": "v128",
-  "body": "Quick menu: apply saved app menu to current app.",
+  "tag_name": "v129",
+  "name": "v129",
+  "body": "Gesture macros: export/import JSON (share/paste).",
   "assets": [
     {
-      "name": "blindroid-128.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-128.apk",
-      "sha256": "8119d8a0a0927ce339a9320d04a68a6e211ac7b0ccf893d416390b937e65a2fc",
+      "name": "blindroid-129.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-129.apk",
+      "sha256": "ef76f2b9714025496f0f5bc4d9371b96bf3f9c3ccd64b87f78fc1c6e0b110c78",
       "size": 123067855
     }
   ]
