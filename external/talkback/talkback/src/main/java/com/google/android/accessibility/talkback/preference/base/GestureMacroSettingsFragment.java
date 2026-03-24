@@ -30,6 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.Preference;
 import androidx.preference.EditTextPreference;
 import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.talkback.gesture.GestureShortcutMapping;
 import com.google.android.accessibility.talkback.gesture.GestureMacroStore;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
@@ -210,8 +211,33 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
     if (preference == null || getContext() == null) {
       return;
     }
-    int count = GestureMacroStore.getActionList(getContext(), macroIndex).size();
-    preference.setSummary(getString(R.string.pref_macro_actions_summary, count));
+    List<String> actions = GestureMacroStore.getActionList(getContext(), macroIndex);
+    int count = actions.size();
+    if (count == 0) {
+      preference.setSummary(getString(R.string.pref_macro_actions_summary, count));
+      return;
+    }
+    StringBuilder summary = new StringBuilder();
+    int maxItems = 3;
+    int added = 0;
+    for (String action : actions) {
+      if (TextUtils.isEmpty(action)) {
+        continue;
+      }
+      if (summary.length() > 0) {
+        summary.append(", ");
+      }
+      summary.append(GestureShortcutMapping.getActionString(getContext(), action));
+      added++;
+      if (added >= maxItems) {
+        break;
+      }
+    }
+    if (count > maxItems) {
+      summary.append("…");
+    }
+    preference.setSummary(
+        getString(R.string.pref_macro_actions_summary_with_list, count, summary.toString()));
   }
 
   private void exportMacros(Context context) {

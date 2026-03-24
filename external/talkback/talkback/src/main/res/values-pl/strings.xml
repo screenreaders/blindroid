@@ -209,6 +209,7 @@
   <string name="pref_macro_action_3_title">Akcja 3</string>
   <string name="pref_macro_actions_title">Edytuj akcje</string>
   <string name="pref_macro_actions_summary">Liczba akcji w makrze: %1$d</string>
+  <string name="pref_macro_actions_summary_with_list">Liczba akcji w makrze: %1$d • %2$s</string>
   <string name="pref_macro_export_title">Eksportuj makra</string>
   <string name="pref_macro_export_summary">Udostępnij kopię JSON akcji makr</string>
   <string name="pref_macro_import_title">Importuj makra</string>

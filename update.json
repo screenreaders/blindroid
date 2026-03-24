@@ -1,12 +1,12 @@
 {
-  "tag_name": "v138",
-  "name": "v138",
-  "body": "Quick menu: export/import current app menu to file (SAF).",
+  "tag_name": "v139",
+  "name": "v139",
+  "body": "Gesture macros: show a short action preview in summaries.",
   "assets": [
     {
-      "name": "blindroid-138.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-138.apk",
-      "sha256": "0fa39960e71ee634503af8b707e8632b4738f652218806e2ebbc75b50b35e7f4",
+      "name": "blindroid-139.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-139.apk",
+      "sha256": "cd8a0d54f82142bd485aa2cf98edbf401c3582c626db0bc77354a58ecac8e68d",
       "size": 123067855
     }
   ]

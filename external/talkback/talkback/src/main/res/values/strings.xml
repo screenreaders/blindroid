@@ -492,6 +492,7 @@
     <string name="pref_macro_action_3_title">Action 3</string>
     <string name="pref_macro_actions_title">Edit actions</string>
     <string name="pref_macro_actions_summary">Actions in this macro: <xliff:g id="count">%1$d</xliff:g></string>
+    <string name="pref_macro_actions_summary_with_list">Actions in this macro: <xliff:g id="count">%1$d</xliff:g> • %2$s</string>
     <string name="pref_macro_export_title">Export macros</string>
     <string name="pref_macro_export_summary">Share a JSON backup of macro actions</string>
     <string name="pref_macro_import_title">Import macros</string>
