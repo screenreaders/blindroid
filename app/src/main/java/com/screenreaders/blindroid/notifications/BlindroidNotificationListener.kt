@@ -68,12 +68,18 @@ class BlindroidNotificationListener : NotificationListenerService() {
         }
 
         Prefs.addRecentNotification(this, message)
+        val useSeparate = Prefs.isNotificationTtsSeparateEnabled(this)
+        val rate = if (useSeparate) Prefs.getNotificationSpeechRate(this) else Prefs.getSpeechRate(this)
+        val volume =
+            if (useSeparate) Prefs.getNotificationSpeechVolume(this) else Prefs.getSpeechVolume(this)
+        val voiceName =
+            if (useSeparate) Prefs.getNotificationVoiceName(this) else Prefs.getVoiceName(this)
         announcer.speak(
             text = message,
             repeatCount = 1,
-            rate = Prefs.getSpeechRate(this),
-            volume = Prefs.getSpeechVolume(this),
-            voiceName = Prefs.getVoiceName(this)
+            rate = rate,
+            volume = volume,
+            voiceName = voiceName
         )
     }
 

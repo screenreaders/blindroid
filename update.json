@@ -1,13 +1,13 @@
 {
-  "tag_name": "v147",
-  "name": "v147",
-  "body": "iOS gestures: split-tap substitute (3-finger tap-hold) activates items, and 4-finger swipe up/down now maps to first/last item on screen. Added Split Tap action plus iOS defaults updates.",
+  "tag_name": "v148",
+  "name": "v148",
+  "body": "Notifications: added separate TTS voice, rate, and volume for notification reading (optional switch).",
   "assets": [
     {
-      "name": "blindroid-147.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-147.apk",
-      "sha256": "ce434c490a04665b1be7182b6d8496a642e15981c76f19cc37d3f08a41f49e10",
-      "size": 123067855
+      "name": "blindroid-148.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-148.apk",
+      "sha256": "12f96bf38fd60920e9202de11d00713655d085811f2a03407c3244fa2798ee27",
+      "size": 123087091
     }
   ]
 }

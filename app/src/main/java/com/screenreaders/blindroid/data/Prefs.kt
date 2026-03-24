@@ -9,6 +9,10 @@ object Prefs {
     private const val KEY_VOICE = "tts_voice"
     private const val KEY_SPEECH_RATE = "tts_rate"
     private const val KEY_SPEECH_VOLUME = "tts_volume"
+    private const val KEY_NOTIFICATION_VOICE = "notification_tts_voice"
+    private const val KEY_NOTIFICATION_RATE = "notification_tts_rate"
+    private const val KEY_NOTIFICATION_VOLUME = "notification_tts_volume"
+    private const val KEY_NOTIFICATION_SEPARATE = "notification_tts_separate"
     private const val KEY_REPEAT_COUNT = "tts_repeat"
     private const val KEY_ANNOUNCE_MODE = "announce_mode"
     private const val KEY_ANNOUNCE_DURING_CALL = "announce_during_call"
@@ -177,6 +181,34 @@ object Prefs {
 
     fun setSpeechVolume(context: Context, value: Float) {
         prefs(context).edit().putFloat(KEY_SPEECH_VOLUME, value).apply()
+    }
+
+    fun isNotificationTtsSeparateEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOTIFICATION_SEPARATE, false)
+
+    fun setNotificationTtsSeparateEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOTIFICATION_SEPARATE, value).apply()
+    }
+
+    fun getNotificationVoiceName(context: Context): String? =
+        prefs(context).getString(KEY_NOTIFICATION_VOICE, null)
+
+    fun setNotificationVoiceName(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_NOTIFICATION_VOICE, value).apply()
+    }
+
+    fun getNotificationSpeechRate(context: Context): Float =
+        prefs(context).getFloat(KEY_NOTIFICATION_RATE, 1.0f)
+
+    fun setNotificationSpeechRate(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NOTIFICATION_RATE, value).apply()
+    }
+
+    fun getNotificationSpeechVolume(context: Context): Float =
+        prefs(context).getFloat(KEY_NOTIFICATION_VOLUME, 1.0f)
+
+    fun setNotificationSpeechVolume(context: Context, value: Float) {
+        prefs(context).edit().putFloat(KEY_NOTIFICATION_VOLUME, value).apply()
     }
 
     fun getRepeatCount(context: Context): Int =

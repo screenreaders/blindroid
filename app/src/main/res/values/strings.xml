@@ -32,6 +32,11 @@
     <string name="tts_voice">Głos TTS</string>
     <string name="tts_rate">Prędkość mowy</string>
     <string name="tts_volume">Głośność komunikatu</string>
+    <string name="notification_tts_title">Powiadomienia – TTS</string>
+    <string name="notification_tts_separate">Osobny głos dla powiadomień</string>
+    <string name="notification_tts_voice">Głos powiadomień</string>
+    <string name="notification_tts_rate">Prędkość mowy (powiadomienia)</string>
+    <string name="notification_tts_volume">Głośność (powiadomienia)</string>
     <string name="tts_repeat">Powtórzenia</string>
     <string name="tts_mode">Tryb powiadomień</string>
     <string name="tts_mode_ring_and_speech">Dzwonek + mowa</string>

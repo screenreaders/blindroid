@@ -7,6 +7,9 @@
 - [x] Przełącznik ogłaszania zmian stron (A11y)
 - [x] Przełącznik wibracji potwierdzających gesty
 
+## TTS
+- [x] Osobny głos i parametry TTS dla powiadomień
+
 ## Klawiatura brajlowska
 - [x] Moduł IME włączony w Blindroidzie
 - [x] Integracja liblouis (JNI + tablice w assets)

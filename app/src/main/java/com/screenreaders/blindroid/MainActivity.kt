@@ -1129,6 +1129,8 @@ class MainActivity : AppCompatActivity() {
         val currentVolume = Prefs.getSpeechVolume(this)
         val currentRepeat = Prefs.getRepeatCount(this)
         val currentMode = Prefs.getAnnounceMode(this)
+        val notificationRate = Prefs.getNotificationSpeechRate(this)
+        val notificationVolume = Prefs.getNotificationSpeechVolume(this)
 
         binding.ttsRateSeek.progress = (currentRate * 100).toInt().coerceIn(50, 200)
         binding.ttsRateValue.text = String.format(Locale.getDefault(), "%.1fx", currentRate)
@@ -1149,6 +1151,25 @@ class MainActivity : AppCompatActivity() {
         binding.ttsRepeatValue.text = String.format(Locale.getDefault(), "%dx", repeatDisplay)
         binding.ttsRepeatValue.contentDescription =
             "${getString(R.string.tts_repeat)} ${binding.ttsRepeatValue.text}"
+
+        binding.notificationTtsSeparateSwitch.isChecked =
+            Prefs.isNotificationTtsSeparateEnabled(this)
+        binding.notificationTtsRateSeek.progress =
+            (notificationRate * 100).toInt().coerceIn(50, 200)
+        binding.notificationTtsRateValue.text =
+            String.format(Locale.getDefault(), "%.1fx", notificationRate)
+        binding.notificationTtsRateValue.contentDescription =
+            "${getString(R.string.notification_tts_rate)} ${binding.notificationTtsRateValue.text}"
+
+        binding.notificationTtsVolumeSeek.progress =
+            (notificationVolume * 100).toInt().coerceIn(0, 100)
+        binding.notificationTtsVolumeValue.text = String.format(
+            Locale.getDefault(),
+            "%d%%",
+            (notificationVolume * 100).toInt()
+        )
+        binding.notificationTtsVolumeValue.contentDescription =
+            "${getString(R.string.notification_tts_volume)} ${binding.notificationTtsVolumeValue.text}"
 
         when (currentMode) {
             Prefs.MODE_SPEECH_ONLY -> binding.ttsModeSpeechOnly.isChecked = true
@@ -1205,6 +1226,50 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        binding.notificationTtsSeparateSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNotificationTtsSeparateEnabled(this@MainActivity, isChecked)
+            updateNotificationTtsControls()
+        }
+
+        binding.notificationTtsRateSeek.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    val rate = (progress.coerceIn(50, 200)) / 100f
+                    binding.notificationTtsRateValue.text =
+                        String.format(Locale.getDefault(), "%.1fx", rate)
+                    binding.notificationTtsRateValue.contentDescription =
+                        "${getString(R.string.notification_tts_rate)} ${binding.notificationTtsRateValue.text}"
+                    Prefs.setNotificationSpeechRate(this@MainActivity, rate)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
+
+        binding.notificationTtsVolumeSeek.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    val value = progress.coerceIn(0, 100)
+                    val volume = value / 100f
+                    binding.notificationTtsVolumeValue.text =
+                        String.format(Locale.getDefault(), "%d%%", value)
+                    binding.notificationTtsVolumeValue.contentDescription =
+                        "${getString(R.string.notification_tts_volume)} ${binding.notificationTtsVolumeValue.text}"
+                    Prefs.setNotificationSpeechVolume(this@MainActivity, volume)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
+
         binding.ttsVoiceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -1220,6 +1285,23 @@ class MainActivity : AppCompatActivity() {
                 // No-op
             }
         }
+
+        binding.notificationTtsVoiceSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val entry = voiceEntries.getOrNull(position)
+                    Prefs.setNotificationVoiceName(this@MainActivity, entry?.name)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // No-op
+                }
+            }
 
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
@@ -1237,6 +1319,7 @@ class MainActivity : AppCompatActivity() {
                     setVoiceSpinnerUnavailable()
                 } else {
                     binding.ttsVoiceSpinner.isEnabled = true
+                    binding.notificationTtsVoiceSpinner.isEnabled = true
                     val adapter = ArrayAdapter(
                         this@MainActivity,
                         android.R.layout.simple_spinner_item,
@@ -1244,6 +1327,15 @@ class MainActivity : AppCompatActivity() {
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     binding.ttsVoiceSpinner.adapter = adapter
+                    val notificationAdapter = ArrayAdapter(
+                        this@MainActivity,
+                        android.R.layout.simple_spinner_item,
+                        voiceEntries.map { it.label }
+                    )
+                    notificationAdapter.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item
+                    )
+                    binding.notificationTtsVoiceSpinner.adapter = notificationAdapter
 
                     val saved = Prefs.getVoiceName(this@MainActivity)
                     val defaultVoiceName = engine.defaultVoice?.name
@@ -1252,11 +1344,21 @@ class MainActivity : AppCompatActivity() {
                     if (index >= 0) {
                         binding.ttsVoiceSpinner.setSelection(index)
                     }
+
+                    val savedNotification = Prefs.getNotificationVoiceName(this@MainActivity)
+                    val notificationTarget = savedNotification ?: target
+                    val notificationIndex =
+                        voiceEntries.indexOfFirst { it.name == notificationTarget }
+                    if (notificationIndex >= 0) {
+                        binding.notificationTtsVoiceSpinner.setSelection(notificationIndex)
+                    }
                 }
             } else {
                 setVoiceSpinnerUnavailable()
             }
         }
+
+        updateNotificationTtsControls()
     }
 
     private fun setVoiceSpinnerUnavailable() {
@@ -1269,6 +1371,20 @@ class MainActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.ttsVoiceSpinner.adapter = adapter
         binding.ttsVoiceSpinner.isEnabled = false
+        binding.notificationTtsVoiceSpinner.adapter = adapter
+        binding.notificationTtsVoiceSpinner.isEnabled = false
+    }
+
+    private fun updateNotificationTtsControls() {
+        val enabled = Prefs.isNotificationTtsSeparateEnabled(this)
+        binding.notificationTtsVoiceLabel.isEnabled = enabled
+        binding.notificationTtsVoiceSpinner.isEnabled = enabled
+        binding.notificationTtsRateLabel.isEnabled = enabled
+        binding.notificationTtsRateValue.isEnabled = enabled
+        binding.notificationTtsRateSeek.isEnabled = enabled
+        binding.notificationTtsVolumeLabel.isEnabled = enabled
+        binding.notificationTtsVolumeValue.isEnabled = enabled
+        binding.notificationTtsVolumeSeek.isEnabled = enabled
     }
 
     private data class VoiceEntry(val label: String, val name: String)

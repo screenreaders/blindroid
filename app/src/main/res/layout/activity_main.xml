@@ -430,6 +430,78 @@
             android:layout_marginTop="8dp"
             android:text="@string/switch_notifications" />
 
+        <TextView
+            android:id="@+id/notificationTtsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/notification_tts_title"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/notificationTtsSeparateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/notification_tts_separate" />
+
+        <TextView
+            android:id="@+id/notificationTtsVoiceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:labelFor="@id/notificationTtsVoiceSpinner"
+            android:text="@string/notification_tts_voice"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/notificationTtsVoiceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/notificationTtsRateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:labelFor="@id/notificationTtsRateSeek"
+            android:text="@string/notification_tts_rate"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/notificationTtsRateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0x" />
+
+        <SeekBar
+            android:id="@+id/notificationTtsRateSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:min="50" />
+
+        <TextView
+            android:id="@+id/notificationTtsVolumeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:labelFor="@id/notificationTtsVolumeSeek"
+            android:text="@string/notification_tts_volume"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/notificationTtsVolumeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%" />
+
+        <SeekBar
+            android:id="@+id/notificationTtsVolumeSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/unlockedSwitch"
             android:layout_width="match_parent"
