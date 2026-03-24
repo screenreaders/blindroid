@@ -22,6 +22,17 @@
 - Android 15 (API 35): PASS – IME listed, enabled, default set.
 - Android 16 (API 36): PASS – IME listed, enabled, default set.
 
+## Latest Functional Smoke (App)
+- Date: 2026-03-24
+- Emulator: `phone_api36`
+- APK: `blindroid-143.apk`
+
+### Results
+- MainActivity launch: PASS
+- TalkbackWizardActivity: SKIPPED (not exported; cannot be launched from shell)
+- DiagnosticsActivity: SKIPPED (not exported; cannot be launched from shell)
+- OnboardingActivity: SKIPPED (not exported; cannot be launched from shell)
+
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
 
