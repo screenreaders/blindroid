@@ -961,6 +961,7 @@
     <string name="pref_floating_menu_action_value_scan_hub" translatable="false">scan_hub</string>
     <string name="pref_floating_menu_action_value_item_chooser" translatable="false">item_chooser</string>
     <string name="pref_floating_menu_action_value_live_recognition" translatable="false">live_recognition</string>
+    <string name="pref_floating_menu_action_value_voice_commands" translatable="false">voice_commands</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

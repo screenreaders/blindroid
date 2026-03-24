@@ -7,6 +7,11 @@
 - [x] Przełącznik ogłaszania zmian stron (A11y)
 - [x] Przełącznik wibracji potwierdzających gesty
 
+## BlindReader (Screen Reader)
+- [x] Akcje menu pływającego: Read screen, Scan hub, Item chooser, Live recognition, Voice commands
+- [x] Domyślne skróty quick menu: Item chooser i Live recognition
+- [x] Haptyka przy tapnięciu pozycji menu pływającego
+
 ## TTS
 - [x] Osobny głos i parametry TTS dla powiadomień
 

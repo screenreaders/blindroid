@@ -1,12 +1,12 @@
 {
-  "tag_name": "v152",
-  "name": "v152",
-  "body": "Quick menu defaults now include Item Chooser and Live Recognition actions.",
+  "tag_name": "v153",
+  "name": "v153",
+  "body": "Floating menu action now supports Voice commands.",
   "assets": [
     {
-      "name": "blindroid-152.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-152.apk",
-      "sha256": "cebe1a1d16fe23e89532ee09db1851a6a3f814c84f4c74520f85451cc8f2f03c",
+      "name": "blindroid-153.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-153.apk",
+      "sha256": "959eae34de69fb76f9fc0a77bc038d42095e1c061fccb5f368a679c33124b1cf",
       "size": 123087115
     }
   ]

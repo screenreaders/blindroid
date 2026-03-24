@@ -31,6 +31,7 @@
     <item>@string/pref_floating_menu_action_scan_hub</item>
     <item>@string/pref_floating_menu_action_item_chooser</item>
     <item>@string/pref_floating_menu_action_live_recognition</item>
+    <item>@string/pref_floating_menu_action_voice_commands</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -39,6 +40,7 @@
     <item>@string/pref_floating_menu_action_value_scan_hub</item>
     <item>@string/pref_floating_menu_action_value_item_chooser</item>
     <item>@string/pref_floating_menu_action_value_live_recognition</item>
+    <item>@string/pref_floating_menu_action_value_voice_commands</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">
