@@ -3,13 +3,24 @@
 ## Latest Build Status
 - Date: 2026-03-24
 - APK: `blindroid-143.apk`
-- Status: Build assembled; emulator smoke not run.
+- Status: Build assembled; emulator smoke run.
 
 ## Latest Unit Tests
 - Date: 2026-03-24
 - Command: `./gradlew test`
 - Result: PASS (no unit tests detected in app, launcher, braillekeyboard)
 - Notes: Re-run after performance optimizations.
+
+## Latest Smoke (IME)
+- Date: 2026-03-24
+- Emulators: `phone_api33`, `phone_api34`, `phone_api35`, `phone_api36`
+- APK: `blindroid-143.apk`
+
+### Results
+- Android 13 (API 33): PASS – IME listed, enabled, default set.
+- Android 14 (API 34): PASS – IME listed, enabled, default set.
+- Android 15 (API 35): PASS – IME listed, enabled, default set.
+- Android 16 (API 36): PASS – IME listed, enabled, default set.
 
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
