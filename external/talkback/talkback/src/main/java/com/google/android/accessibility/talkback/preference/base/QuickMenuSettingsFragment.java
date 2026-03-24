@@ -75,6 +75,8 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference clearSavedAppsPreference;
   private Preference linkDefaultToCurrentPreference;
   private Preference applySavedToCurrentPreference;
+  private Preference enableAllActionsPreference;
+  private Preference disableAllActionsPreference;
   private ActivityResultLauncher<Intent> exportQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> importQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> exportAppMenusFileLauncher;
@@ -290,6 +292,28 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     actionCategory.setTitle(R.string.pref_quick_menu_actions_title);
     actionCategory.setKey(context.getString(R.string.pref_quick_menu_actions_category_key));
     screen.addPreference(actionCategory);
+
+    enableAllActionsPreference = new Preference(context);
+    enableAllActionsPreference.setKey(context.getString(R.string.pref_quick_menu_enable_all_key));
+    enableAllActionsPreference.setTitle(R.string.pref_quick_menu_enable_all_title);
+    enableAllActionsPreference.setSummary(R.string.pref_quick_menu_enable_all_summary);
+    enableAllActionsPreference.setOnPreferenceClickListener(
+        pref -> {
+          setAllActionsEnabled(context, true);
+          return true;
+        });
+    actionCategory.addPreference(enableAllActionsPreference);
+
+    disableAllActionsPreference = new Preference(context);
+    disableAllActionsPreference.setKey(context.getString(R.string.pref_quick_menu_disable_all_key));
+    disableAllActionsPreference.setTitle(R.string.pref_quick_menu_disable_all_title);
+    disableAllActionsPreference.setSummary(R.string.pref_quick_menu_disable_all_summary);
+    disableAllActionsPreference.setOnPreferenceClickListener(
+        pref -> {
+          setAllActionsEnabled(context, false);
+          return true;
+        });
+    actionCategory.addPreference(disableAllActionsPreference);
 
     savedAppsCategory = new PreferenceCategory(context);
     savedAppsCategory.setTitle(R.string.pref_quick_menu_saved_apps_title);
@@ -1101,6 +1125,36 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       actions.add(key.substring(prefix.length()));
     }
     return actions;
+  }
+
+  private void setAllActionsEnabled(Context context, boolean enabled) {
+    if (actionCategory == null) {
+      return;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    SharedPreferences.Editor editor = prefs.edit();
+    String prefix = context.getString(R.string.pref_quick_menu_action_prefix);
+    int count = actionCategory.getPreferenceCount();
+    for (int i = 0; i < count; i++) {
+      Preference preference = actionCategory.getPreference(i);
+      if (!(preference instanceof CheckBoxPreference)) {
+        continue;
+      }
+      String key = preference.getKey();
+      if (key == null || !key.startsWith(prefix)) {
+        continue;
+      }
+      ((CheckBoxPreference) preference).setChecked(enabled);
+      editor.putBoolean(key, enabled);
+    }
+    editor.apply();
+    QuickMenuPreferences.markCustomized(context);
+    PreferencesActivityUtils.announceText(
+        getString(
+            enabled
+                ? R.string.pref_quick_menu_enable_all_announce
+                : R.string.pref_quick_menu_disable_all_announce),
+        context);
   }
 
   @Override

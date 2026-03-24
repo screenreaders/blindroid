@@ -1,12 +1,12 @@
 {
-  "tag_name": "v132",
-  "name": "v132",
-  "body": "Gesture macros: copy actions between macros.",
+  "tag_name": "v133",
+  "name": "v133",
+  "body": "Quick menu: enable/disable all actions shortcuts.",
   "assets": [
     {
-      "name": "blindroid-132.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-132.apk",
-      "sha256": "23270a3af566b92137214ab8b009922eba774fb87daac09a21c0e10954adce61",
+      "name": "blindroid-133.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-133.apk",
+      "sha256": "c7eebf77f56684eaf83ac4d368424a80c04b324588d2ab8e1a8d5b8153eff9e2",
       "size": 123067855
     }
   ]
