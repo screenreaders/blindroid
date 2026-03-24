@@ -300,6 +300,15 @@
 
     <string name="pref_quick_menu_settings_title">Szybkie menu</string>
     <string name="pref_quick_menu_settings_summary">Wybierz akcje widoczne w szybkim menu</string>
+    <string name="pref_quick_menu_app_category_title">Szybkie menu dla aplikacji</string>
+    <string name="pref_quick_menu_link_current_title">Powiąż bieżącą aplikację</string>
+    <string name="pref_quick_menu_link_current_summary">Zapisz szybkie menu dla %1$s</string>
+    <string name="pref_quick_menu_link_current_missing">Otwórz aplikację, aby powiązać szybkie menu</string>
+    <string name="pref_quick_menu_unlink_current_title">Usuń powiązanie bieżącej aplikacji</string>
+    <string name="pref_quick_menu_unlink_current_summary">Usuń nadpisanie szybkiego menu dla %1$s</string>
+    <string name="pref_quick_menu_unlink_current_missing">Brak nadpisania szybkiego menu dla tej aplikacji</string>
+    <string name="pref_quick_menu_link_current_announce">Powiązano szybkie menu dla %1$s</string>
+    <string name="pref_quick_menu_unlink_current_announce">Usunięto powiązanie szybkiego menu dla %1$s</string>
     <string name="pref_quick_menu_actions_title">Akcje szybkiego menu</string>
     <string name="pref_quick_menu_reset_title">Resetuj szybkie menu</string>
     <string name="pref_quick_menu_reset_summary">Przywróć domyślne akcje szybkiego menu</string>

@@ -596,6 +596,15 @@
 
     <string name="pref_quick_menu_settings_title">Quick menu</string>
     <string name="pref_quick_menu_settings_summary">Choose actions shown in the quick menu</string>
+    <string name="pref_quick_menu_app_category_title">Per-app quick menu</string>
+    <string name="pref_quick_menu_link_current_title">Link current app</string>
+    <string name="pref_quick_menu_link_current_summary">Save quick menu for %1$s</string>
+    <string name="pref_quick_menu_link_current_missing">Open an app to link its quick menu</string>
+    <string name="pref_quick_menu_unlink_current_title">Unlink current app</string>
+    <string name="pref_quick_menu_unlink_current_summary">Remove quick menu override for %1$s</string>
+    <string name="pref_quick_menu_unlink_current_missing">No quick menu override for this app</string>
+    <string name="pref_quick_menu_link_current_announce">Linked quick menu for %1$s</string>
+    <string name="pref_quick_menu_unlink_current_announce">Unlinked quick menu for %1$s</string>
     <string name="pref_quick_menu_actions_title">Quick menu actions</string>
     <string name="pref_quick_menu_reset_title">Reset quick menu</string>
     <string name="pref_quick_menu_reset_summary">Restore the default quick menu actions</string>

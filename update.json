@@ -1,13 +1,13 @@
 {
-  "tag_name": "v115",
-  "name": "v115",
-  "body": "BlindReader: backup manager file import/export.",
+  "tag_name": "v116",
+  "name": "v116",
+  "body": "BlindReader: per-app quick menu profiles.",
   "assets": [
     {
-      "name": "blindroid-115.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-115.apk",
-      "sha256": "c2684e627b1cf444c6b3a0cb19e83207762d483a2ffd0f31b686f04bbe54163e",
-      "size": 123067855
+      "name": "blindroid-116.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-116.apk",
+      "sha256": "c1d0e698e70c5230a9a5e5310599c8236253cecc15336b81886e2c7f80db46a1",
+      "size": 123067851
     }
   ]
 }

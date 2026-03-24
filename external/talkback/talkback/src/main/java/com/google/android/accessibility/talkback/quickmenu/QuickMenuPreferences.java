@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.gesture.GestureShortcutMapping;
 import com.google.android.accessibility.talkback.plugin.PluginRegistry;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
@@ -28,6 +29,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /** Preference helpers for BlindReader quick menu. */
 public final class QuickMenuPreferences {
@@ -35,6 +38,13 @@ public final class QuickMenuPreferences {
   private QuickMenuPreferences() {}
 
   public static List<String> getQuickMenuActions(Context context) {
+    String packageName = getCurrentPackageName(context);
+    if (!TextUtils.isEmpty(packageName)) {
+      List<String> appActions = getActionsForPackage(context, packageName);
+      if (appActions != null && !appActions.isEmpty()) {
+        return filterSupportedActions(context, appActions);
+      }
+    }
     SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
     if (!isCustomized(context, prefs)) {
       return getDefaultActions(context);
@@ -56,6 +66,60 @@ public final class QuickMenuPreferences {
   public static List<String> getSupportedActions(Context context) {
     List<String> actions = new ArrayList<>(GestureShortcutMapping.getAllActionKeys(context));
     actions.addAll(PluginRegistry.getQuickActionKeys(context));
+    return actions;
+  }
+
+  public static void saveActionsForPackage(Context context, String packageName, List<String> actions) {
+    if (TextUtils.isEmpty(packageName)) {
+      return;
+    }
+    JSONArray array = new JSONArray();
+    for (String action : actions) {
+      if (!TextUtils.isEmpty(action)) {
+        array.put(action);
+      }
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    prefs.edit().putString(getAppPrefKey(context, packageName), array.toString()).apply();
+  }
+
+  public static void removeActionsForPackage(Context context, String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    prefs.edit().remove(getAppPrefKey(context, packageName)).apply();
+  }
+
+  public static boolean hasActionsForPackage(Context context, String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return false;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    return prefs.contains(getAppPrefKey(context, packageName));
+  }
+
+  public static List<String> getActionsForPackage(Context context, String packageName) {
+    if (TextUtils.isEmpty(packageName)) {
+      return null;
+    }
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String raw = prefs.getString(getAppPrefKey(context, packageName), null);
+    if (TextUtils.isEmpty(raw)) {
+      return null;
+    }
+    List<String> actions = new ArrayList<>();
+    try {
+      JSONArray array = new JSONArray(raw);
+      for (int i = 0; i < array.length(); i++) {
+        String value = array.optString(i, null);
+        if (!TextUtils.isEmpty(value)) {
+          actions.add(value);
+        }
+      }
+    } catch (JSONException e) {
+      return null;
+    }
     return actions;
   }
 
@@ -113,6 +177,34 @@ public final class QuickMenuPreferences {
 
   public static String buildActionPrefKey(Context context, String actionKey) {
     return context.getString(R.string.pref_quick_menu_action_prefix) + actionKey;
+  }
+
+  private static String getAppPrefKey(Context context, String packageName) {
+    return context.getString(R.string.pref_quick_menu_app_prefix) + packageName;
+  }
+
+  private static String getCurrentPackageName(Context context) {
+    TalkBackService service = TalkBackService.getInstance();
+    if (service == null || !TalkBackService.isServiceActive()) {
+      return null;
+    }
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      return null;
+    }
+    return service.getRootInActiveWindow().getPackageName().toString();
+  }
+
+  private static List<String> filterSupportedActions(Context context, List<String> actions) {
+    List<String> supported = getSupportedActions(context);
+    List<String> filtered = new ArrayList<>();
+    for (String action : actions) {
+      if (supported.contains(action)
+          && !TextUtils.equals(action, context.getString(R.string.shortcut_value_unassigned))) {
+        filtered.add(action);
+      }
+    }
+    return filtered;
   }
 
   public static String getActionLabel(Context context, String actionKey) {

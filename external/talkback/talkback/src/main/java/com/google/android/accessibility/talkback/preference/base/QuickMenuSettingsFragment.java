@@ -18,21 +18,32 @@ package com.google.android.accessibility.talkback.preference.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
 import com.google.android.accessibility.talkback.R;
+import com.google.android.accessibility.talkback.TalkBackService;
+import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.talkback.quickmenu.QuickMenuPreferences;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
+import java.util.ArrayList;
 import java.util.List;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Settings for configuring the BlindReader quick menu. */
 public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     implements Preference.OnPreferenceChangeListener {
 
   private PreferenceCategory actionCategory;
+  private @Nullable String currentPackage;
+  private @Nullable CharSequence currentLabel;
+  private Preference linkCurrentAppPreference;
+  private Preference unlinkCurrentAppPreference;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -67,12 +78,48 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         });
     screen.addPreference(reset);
 
+    PreferenceCategory appCategory = new PreferenceCategory(context);
+    appCategory.setTitle(R.string.pref_quick_menu_app_category_title);
+    appCategory.setKey(context.getString(R.string.pref_quick_menu_app_category_key));
+    screen.addPreference(appCategory);
+
+    linkCurrentAppPreference = new Preference(context);
+    linkCurrentAppPreference.setKey(context.getString(R.string.pref_quick_menu_link_current_key));
+    linkCurrentAppPreference.setTitle(R.string.pref_quick_menu_link_current_title);
+    linkCurrentAppPreference.setOnPreferenceClickListener(
+        pref -> {
+          linkCurrentApp(context);
+          return true;
+        });
+    appCategory.addPreference(linkCurrentAppPreference);
+
+    unlinkCurrentAppPreference = new Preference(context);
+    unlinkCurrentAppPreference.setKey(context.getString(R.string.pref_quick_menu_unlink_current_key));
+    unlinkCurrentAppPreference.setTitle(R.string.pref_quick_menu_unlink_current_title);
+    unlinkCurrentAppPreference.setOnPreferenceClickListener(
+        pref -> {
+          unlinkCurrentApp(context);
+          return true;
+        });
+    appCategory.addPreference(unlinkCurrentAppPreference);
+
     actionCategory = new PreferenceCategory(context);
     actionCategory.setTitle(R.string.pref_quick_menu_actions_title);
     actionCategory.setKey(context.getString(R.string.pref_quick_menu_actions_category_key));
     screen.addPreference(actionCategory);
 
     buildActionList(context);
+    updateAppLinkUi(context);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    Context context = getContext();
+    if (context == null) {
+      return;
+    }
+    updateAppLinkUi(context);
   }
 
   private void buildActionList(Context context) {
@@ -108,6 +155,105 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       ((CheckBoxPreference) preference).setChecked(
           QuickMenuPreferences.isActionEnabled(context, actionKey));
     }
+  }
+
+  private void updateAppLinkUi(Context context) {
+    resolveCurrentApp(context);
+    boolean hasApp = !TextUtils.isEmpty(currentPackage);
+    boolean linked = hasApp && QuickMenuPreferences.hasActionsForPackage(context, currentPackage);
+
+    if (linkCurrentAppPreference != null) {
+      if (hasApp) {
+        linkCurrentAppPreference.setSummary(
+            getString(R.string.pref_quick_menu_link_current_summary, currentLabel));
+      } else {
+        linkCurrentAppPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
+      }
+      linkCurrentAppPreference.setEnabled(hasApp);
+    }
+    if (unlinkCurrentAppPreference != null) {
+      if (linked) {
+        unlinkCurrentAppPreference.setSummary(
+            getString(R.string.pref_quick_menu_unlink_current_summary, currentLabel));
+      } else if (hasApp) {
+        unlinkCurrentAppPreference.setSummary(R.string.pref_quick_menu_unlink_current_missing);
+      } else {
+        unlinkCurrentAppPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
+      }
+      unlinkCurrentAppPreference.setEnabled(hasApp && linked);
+    }
+  }
+
+  private void resolveCurrentApp(Context context) {
+    TalkBackService service = TalkBackService.getInstance();
+    if (service == null || !TalkBackService.isServiceActive()) {
+      currentPackage = null;
+      currentLabel = null;
+      return;
+    }
+    if (service.getRootInActiveWindow() == null
+        || service.getRootInActiveWindow().getPackageName() == null) {
+      currentPackage = null;
+      currentLabel = null;
+      return;
+    }
+    currentPackage = service.getRootInActiveWindow().getPackageName().toString();
+    PackageManager pm = context.getPackageManager();
+    try {
+      ApplicationInfo info = pm.getApplicationInfo(currentPackage, 0);
+      currentLabel = pm.getApplicationLabel(info);
+    } catch (PackageManager.NameNotFoundException e) {
+      currentLabel = currentPackage;
+    }
+  }
+
+  private void linkCurrentApp(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_link_current_missing), context);
+      return;
+    }
+    List<String> actions = collectSelectedActions();
+    QuickMenuPreferences.saveActionsForPackage(context, currentPackage, actions);
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_link_current_announce, currentLabel), context);
+    updateAppLinkUi(context);
+  }
+
+  private void unlinkCurrentApp(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      return;
+    }
+    QuickMenuPreferences.removeActionsForPackage(context, currentPackage);
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_unlink_current_announce, currentLabel), context);
+    updateAppLinkUi(context);
+  }
+
+  private List<String> collectSelectedActions() {
+    List<String> actions = new ArrayList<>();
+    if (actionCategory == null || getContext() == null) {
+      return actions;
+    }
+    String prefix = getContext().getString(R.string.pref_quick_menu_action_prefix);
+    int count = actionCategory.getPreferenceCount();
+    for (int i = 0; i < count; i++) {
+      Preference preference = actionCategory.getPreference(i);
+      if (!(preference instanceof CheckBoxPreference)) {
+        continue;
+      }
+      if (!((CheckBoxPreference) preference).isChecked()) {
+        continue;
+      }
+      String key = preference.getKey();
+      if (key == null || !key.startsWith(prefix)) {
+        continue;
+      }
+      actions.add(key.substring(prefix.length()));
+    }
+    return actions;
   }
 
   @Override
