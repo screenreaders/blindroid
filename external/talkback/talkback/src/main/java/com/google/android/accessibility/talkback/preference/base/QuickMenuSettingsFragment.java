@@ -376,6 +376,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     savedAppsCategory.addPreference(clearSavedAppsPreference);
 
     buildActionList(context);
+    updateActionCategorySummary(context);
     updateAppLinkUi(context);
     populateSavedApps(context);
   }
@@ -389,6 +390,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     }
     updateAppLinkUi(context);
     populateSavedApps(context);
+    updateActionCategorySummary(context);
   }
 
   private void buildActionList(Context context) {
@@ -428,6 +430,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       ((CheckBoxPreference) preference).setChecked(
           QuickMenuPreferences.isActionEnabled(context, actionKey));
     }
+    updateActionCategorySummary(context);
   }
 
   private void updateAppLinkUi(Context context) {
@@ -667,6 +670,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_quick_menu_import_success), context);
       applyDefaultsToUi(context);
+      updateActionCategorySummary(context);
     } else {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_quick_menu_import_failed), context);
@@ -1162,6 +1166,33 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
                 ? R.string.pref_quick_menu_enable_all_announce
                 : R.string.pref_quick_menu_disable_all_announce),
         context);
+    updateActionCategorySummary(context);
+  }
+
+  private void updateActionCategorySummary(Context context) {
+    if (actionCategory == null) {
+      return;
+    }
+    int total = 0;
+    int enabled = 0;
+    String prefix = context.getString(R.string.pref_quick_menu_action_prefix);
+    int count = actionCategory.getPreferenceCount();
+    for (int i = 0; i < count; i++) {
+      Preference preference = actionCategory.getPreference(i);
+      if (!(preference instanceof CheckBoxPreference)) {
+        continue;
+      }
+      String key = preference.getKey();
+      if (key == null || !key.startsWith(prefix)) {
+        continue;
+      }
+      total++;
+      if (((CheckBoxPreference) preference).isChecked()) {
+        enabled++;
+      }
+    }
+    actionCategory.setSummary(
+        getString(R.string.pref_quick_menu_actions_summary, enabled, total));
   }
 
   @Override
@@ -1176,6 +1207,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       persistAllActionStates(prefs, preference.getKey(), (Boolean) newValue);
     }
     QuickMenuPreferences.markCustomized(context);
+    updateActionCategorySummary(context);
     return true;
   }
 
