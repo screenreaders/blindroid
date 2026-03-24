@@ -1,12 +1,12 @@
 {
-  "tag_name": "v144",
-  "name": "v144",
-  "body": "iOS gesture parity improvements: rotor (2-finger rotate) defaults mapped to reading controls and 3-finger tap now announces item position.",
+  "tag_name": "v145",
+  "name": "v145",
+  "body": "iOS gesture parity improvements: right+left default maps to Back (scrub substitute) and 2-finger 3-tap hold defaults to Quick Settings.",
   "assets": [
     {
-      "name": "blindroid-144.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-144.apk",
-      "sha256": "84050034cd66ddd2a550f28e05e80d0ac439a842b67fc96b1afe7bad2b167abe",
+      "name": "blindroid-145.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-145.apk",
+      "sha256": "41465e9185a398ce8522b5ed7e8696df9156f093567a689eb401fbde6bfc672c",
       "size": 123067855
     }
   ]

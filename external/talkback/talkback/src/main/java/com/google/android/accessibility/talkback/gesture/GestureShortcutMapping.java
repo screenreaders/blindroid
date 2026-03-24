@@ -813,6 +813,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor, R.string.pref_shortcut_left_and_right_key, R.string.shortcut_value_back, iosGestureSet);
     applyDefaultIfAbsent(
+        editor, R.string.pref_shortcut_right_and_left_key, R.string.shortcut_value_back, iosGestureSet);
+    applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_1finger_2tap_key,
         R.string.shortcut_value_perform_click_action,
@@ -862,6 +864,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         editor,
         R.string.pref_shortcut_2finger_3tap_key,
         R.string.shortcut_value_screen_search,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_2finger_3tap_hold_key,
+        R.string.shortcut_value_quick_settings,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
