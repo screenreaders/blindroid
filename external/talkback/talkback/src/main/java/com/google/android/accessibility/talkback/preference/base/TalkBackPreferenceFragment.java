@@ -48,6 +48,8 @@ import com.google.android.accessibility.talkback.FeatureFlagReader;
 import com.google.android.accessibility.talkback.actor.ImageCaptioner;
 import com.google.android.accessibility.talkback.training.OnboardingInitiator;
 import com.google.android.accessibility.talkback.training.TutorialInitiator;
+import com.google.android.accessibility.talkback.trainingcommon.TrainingActivity;
+import com.google.android.accessibility.talkback.trainingcommon.TrainingConfig.TrainingId;
 import com.google.android.accessibility.talkback.trainingcommon.tv.TvTutorialInitiator;
 import com.google.android.accessibility.talkback.trainingcommon.tv.VendorConfigReader;
 import com.google.android.accessibility.talkback.utils.RemoteIntentUtils;
@@ -113,6 +115,7 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
         listener -> listener.setOnSurveyAvailableListener(() -> updateSurveyOption()));
 
     assignNewFeaturesIntent();
+    assignVoiceCommandHelpIntent();
 
     showTalkBackVersion();
 
@@ -447,6 +450,19 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
       newFeatureIntent = OnboardingInitiator.createOnboardingIntentForSettings(context);
     }
     prefNewFeatures.setIntent(newFeatureIntent);
+  }
+
+  private void assignVoiceCommandHelpIntent() {
+    Preference pref = findPreferenceByResId(R.string.pref_voice_commands_settings_key);
+    if (pref == null) {
+      return;
+    }
+    Intent intent = TrainingActivity.createTrainingIntent(context, TrainingId.TRAINING_ID_VOICE_COMMAND_HELP);
+    if (canHandleIntent(intent)) {
+      pref.setIntent(intent);
+    } else {
+      PreferenceSettingsUtils.hidePreference(context, getPreferenceScreen(), R.string.pref_voice_commands_settings_key);
+    }
   }
 
   private void setupTtsEnginePreferences() {

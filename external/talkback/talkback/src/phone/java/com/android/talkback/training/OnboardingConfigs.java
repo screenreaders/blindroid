@@ -19,6 +19,7 @@ package com.google.android.accessibility.talkback.training;
 import static com.google.android.accessibility.talkback.trainingcommon.NavigationButtonBar.BUTTON_TYPE_EXIT;
 import static com.google.android.accessibility.talkback.trainingcommon.NavigationButtonBar.DEFAULT_BUTTONS;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.PageAndContentPredicate.SUPPORT_EXIT_BANNER;
+import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.PageId.PAGE_ID_AI_FEATURES;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.PageId.PAGE_ID_DETAILED_IMAGE_DESCRIPTIONS;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.PageId.PAGE_ID_GOOGLE_DISABILITY_SUPPORT;
 import static com.google.android.accessibility.talkback.trainingcommon.PageConfig.PageId.PAGE_ID_NEW_BRAILLE_SHORTCUTS;
@@ -115,6 +116,14 @@ final class OnboardingConfigs {
               R.string.onboarding_detailed_image_descriptions_content_4,
               IMAGE_DESCRIPTION_SUPPORTED_LANGUAGES_URL);
 
+  static final PageConfig.Builder aiFeatures =
+      PageConfig.builder(PAGE_ID_AI_FEATURES, R.string.onboarding_ai_features_title)
+          .addText(R.string.onboarding_ai_features_content_1)
+          .addTextWithBullet(R.string.onboarding_ai_features_bullet_read_screen)
+          .addTextWithBullet(R.string.onboarding_ai_features_bullet_ocr)
+          .addTextWithBullet(R.string.onboarding_ai_features_bullet_privacy)
+          .addText(R.string.onboarding_ai_features_content_2);
+
   static final PageConfig.Builder googleDisabilitySupport =
       PageConfig.builder(
               PAGE_ID_GOOGLE_DISABILITY_SUPPORT,
@@ -173,6 +182,7 @@ final class OnboardingConfigs {
     List<PageConfig.Builder> pages = new ArrayList<>();
     pages.add(updateWelcome);
     pages.add(imageDescription);
+    pages.add(aiFeatures);
     pages.add(googleDisabilitySupport);
     pages.add(punctuationAndSymbols);
     return TrainingConfig.builder(R.string.new_feature_in_talkback_title)

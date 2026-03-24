@@ -799,6 +799,14 @@ public class GestureController {
   }
 
   private boolean performReadScreenAi(EventId eventId) {
+    if (!SharedPreferencesUtils.getBooleanPref(
+        SharedPreferencesUtils.getSharedPreferences(service),
+        service.getResources(),
+        R.string.pref_ai_read_screen_enabled_key,
+        R.bool.pref_ai_read_screen_enabled_default)) {
+      speak(service.getString(R.string.read_screen_ai_disabled));
+      return false;
+    }
     if (!GeminiConfiguration.isGeminiVoiceCommandEnabled(service)
         || !GeminiPrefs.hasApiKey(service)
         || !NetworkUtils.isNetworkConnected(service)) {

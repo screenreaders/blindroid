@@ -6,10 +6,10 @@ Use `[ ]` for TODO and `[x]` for done.
 ## BlindReader Core (Screen Reader)
 - [x] Multi-engine TTS selection inside BlindReader (not just system-wide).
 - [x] Separate TTS engine for notifications (engine-level, not only rate/pitch profile).
-- [ ] Unified Content/OCR settings screen (auto-read, filters, reading style).
-- [ ] Advanced OCR modes control (text/object/face/money/scene) in one place.
+- [x] Unified Content/OCR settings screen (auto-read, filters, reading style).
+- [x] Advanced OCR modes control (text/object/face/money/scene) in one place.
 - [x] Auto-translation for OCR/text (optional, configurable).
-- [ ] Voice assistant actions (voice command execution UI + bindings) parity check.
+- [x] Voice assistant actions (voice command execution UI + bindings) parity check.
 - [x] Plugin API for third-party extensions (beyond plugin manager UI).
 - [x] Hardware-trigger actions (e.g., shake device) when available.
 
@@ -22,8 +22,8 @@ Use `[ ]` for TODO and `[x]` for done.
 
 ## UX / Settings Parity
 - [x] Dedicated Assistant/AI settings screen (Gemini settings).
-- [ ] Per-feature enable/disable toggles for AI/OCR modules.
-- [ ] Usage hints for AI features in onboarding.
+- [x] Per-feature enable/disable toggles for AI/OCR modules.
+- [x] Usage hints for AI features in onboarding.
 
 ## Documentation / Compliance
 - [x] Document AI data flow and privacy controls.

@@ -1,12 +1,12 @@
 {
-  "tag_name": "v141",
-  "name": "v141",
-  "body": "BlindReader: selectable TTS engines (main + notifications), shake actions, OCR auto-translate, AI offline fallback, and new plugin/AI privacy docs.",
+  "tag_name": "v142",
+  "name": "v142",
+  "body": "BlindReader: unified Content & OCR settings, advanced OCR controls, AI read screen toggle, voice commands help entry, and AI onboarding hints.",
   "assets": [
     {
-      "name": "blindroid-141.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-141.apk",
-      "sha256": "c86ba6d7a63ad1cc415f96c213e96588c4988eb43197e7108113cfd16c7b8314",
+      "name": "blindroid-142.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-142.apk",
+      "sha256": "7486a61becd986f480ecf1f7171fe60a509a9793e0cbbd4dd6640c2570e6eb2a",
       "size": 123067855
     }
   ]

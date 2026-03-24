@@ -68,6 +68,10 @@
         android:title="@string/pref_gesture_macro_settings_title"
         android:summary="@string/pref_gesture_macro_settings_summary" />
     <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+        android:key="@string/pref_voice_commands_settings_key"
+        android:title="@string/pref_voice_commands_settings_title"
+        android:summary="@string/pref_voice_commands_settings_summary" />
+    <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
         android:fragment="com.google.android.accessibility.talkback.preference.base.BlindReaderGestureSetFragment"
         android:key="@string/pref_blindreader_gesture_set_screen_key"
         android:title="@string/pref_blindreader_gesture_set_title" />
@@ -182,14 +186,10 @@
       android:key="@string/pref_category_content_key"
       android:title="@string/title_pref_category_content">
     <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
-        android:fragment="com.google.android.accessibility.talkback.preference.base.ContentSettingsFragment"
+        android:fragment="com.google.android.accessibility.talkback.preference.base.AutomaticDescriptionsFragment"
         android:key="@string/pref_content_settings_key"
         android:title="@string/pref_content_settings_title"
         android:summary="@string/pref_content_settings_summary" />
-    <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
-        android:fragment="com.google.android.accessibility.talkback.preference.base.AutomaticDescriptionsFragment"
-        android:key="@string/pref_auto_image_captioning_key"
-        android:title="@string/title_pref_icon_image_description" />
     <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
         android:fragment="com.google.android.accessibility.talkback.preference.base.GeminiSettingsFragment"
         android:key="@string/pref_gemini_settings_key"

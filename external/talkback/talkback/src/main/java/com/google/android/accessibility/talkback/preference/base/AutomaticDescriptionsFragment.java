@@ -34,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 import com.google.android.accessibility.talkback.R;
@@ -85,7 +86,7 @@ public class AutomaticDescriptionsFragment extends TalkbackBaseFragment {
 
   @Override
   protected CharSequence getTitle() {
-    return getText(R.string.title_pref_icon_image_description);
+    return getText(R.string.pref_content_settings_title);
   }
 
   @Override
@@ -109,6 +110,16 @@ public class AutomaticDescriptionsFragment extends TalkbackBaseFragment {
     setupTextRecognitionPreference();
     setupDetailedImageDescriptionPreference(
         FeatureSwitchDialogResources.DETAILED_IMAGE_DESCRIPTION);
+    setupListSummary(R.string.pref_read_all_filter_key);
+    setupListSummary(R.string.pref_read_all_style_key);
+  }
+
+  private void setupListSummary(int keyResId) {
+    ListPreference preference = (ListPreference) findPreferenceByResId(keyResId);
+    if (preference == null) {
+      return;
+    }
+    preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
   }
 
   @Override

@@ -1567,6 +1567,8 @@
     <string name="pref_auto_translate_captions_key" translatable="false">pref_auto_translate_captions</string>
     <string name="pref_auto_translate_captions_auto_key" translatable="false">pref_auto_translate_captions_auto</string>
     <string name="pref_auto_translate_ocr_key" translatable="false">pref_auto_translate_ocr</string>
+    <string name="pref_ai_read_screen_enabled_key" translatable="false">pref_ai_read_screen_enabled</string>
+    <string name="pref_voice_commands_settings_key" translatable="false">pref_voice_commands_settings</string>
     <string name="pref_auto_object_recognition_key" translatable="false">pref_auto_object_recognition</string>
     <string name="pref_auto_face_recognition_key" translatable="false">pref_auto_face_recognition</string>
     <string name="pref_auto_money_recognition_key" translatable="false">pref_auto_money_recognition</string>
@@ -1584,5 +1586,6 @@
     <string name="pref_has_performed_restore_key">pref_has_performed_restore_key</string>
     <bool name="pref_has_performed_restore_default">false</bool>
     <bool name="pref_auto_translate_ocr_default">false</bool>
+    <bool name="pref_ai_read_screen_enabled_default">true</bool>
 
 </resources>

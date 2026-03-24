@@ -93,6 +93,8 @@ public final class PageConfigMapperImpl implements PageConfigMapper {
         return OnboardingConfigs.punctuationAndSymbols.build();
       case PAGE_ID_NEW_BRAILLE_SHORTCUTS:
         return OnboardingConfigs.newBrailleShortcuts.build();
+      case PAGE_ID_AI_FEATURES:
+        return OnboardingConfigs.aiFeatures.build();
       case PAGE_ID_TV_OVERVIEW:
       case PAGE_ID_TV_SHORTCUT:
       case PAGE_ID_TV_REMOTE:
