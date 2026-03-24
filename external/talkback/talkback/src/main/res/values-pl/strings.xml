@@ -318,6 +318,9 @@
     <string name="pref_quick_menu_saved_apps_remove_title">Usuń menu aplikacji</string>
     <string name="pref_quick_menu_saved_apps_remove_message">Usunąć zapisane szybkie menu dla %1$s?</string>
     <string name="pref_quick_menu_saved_apps_removed">Usunięto zapisane menu dla %1$s</string>
+    <string name="pref_quick_menu_saved_apps_edit_title">Edytuj szybkie menu dla %1$s</string>
+    <string name="pref_quick_menu_saved_apps_updated">Zapisano szybkie menu dla %1$s</string>
+    <string name="pref_quick_menu_saved_apps_remove_action">Usuń</string>
 
     <string name="translate_no_text">Brak tekstu do tłumaczenia</string>
     <string name="translate_no_app">Brak aplikacji do tłumaczenia tekstu</string>

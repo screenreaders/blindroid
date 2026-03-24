@@ -1,12 +1,12 @@
 {
-  "tag_name": "v118",
-  "name": "v118",
-  "body": "BlindReader: saved per-app quick menu list.",
+  "tag_name": "v119",
+  "name": "v119",
+  "body": "BlindReader: edit saved app quick menus.",
   "assets": [
     {
-      "name": "blindroid-118.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-118.apk",
-      "sha256": "3a591af6b13d4757c8d131fda7213ee095b0b3b9c0db6eed802cdb17e3cc8cbf",
+      "name": "blindroid-119.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-119.apk",
+      "sha256": "45a8994cfa16c3d17ce15ce7e6a4eb9aa572bba89da2a79617e46a9ecb8e7362",
       "size": 123067855
     }
   ]

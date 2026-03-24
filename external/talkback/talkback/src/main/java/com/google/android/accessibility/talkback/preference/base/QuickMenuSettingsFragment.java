@@ -132,8 +132,12 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   }
 
   private void buildActionList(Context context) {
+    String unassigned = context.getString(R.string.shortcut_value_unassigned);
     List<String> actions = QuickMenuPreferences.getSupportedActions(context);
     for (String actionKey : actions) {
+      if (TextUtils.equals(actionKey, unassigned)) {
+        continue;
+      }
       CheckBoxPreference pref = new CheckBoxPreference(context);
       pref.setKey(QuickMenuPreferences.buildActionPrefKey(context, actionKey));
       pref.setTitle(QuickMenuPreferences.getActionLabel(context, actionKey));
@@ -221,19 +225,53 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       pref.setSummary(getString(R.string.pref_quick_menu_saved_apps_summary, count));
       pref.setOnPreferenceClickListener(
           clicked -> {
-            showRemoveDialog(context, packageName, label);
+            showEditDialog(context, packageName, label);
             return true;
           });
       savedAppsCategory.addPreference(pref);
     }
   }
 
-  private void showRemoveDialog(Context context, String packageName, CharSequence label) {
+  private void showEditDialog(Context context, String packageName, CharSequence label) {
+    List<String> supported = QuickMenuPreferences.getSupportedActions(context);
+    String unassigned = context.getString(R.string.shortcut_value_unassigned);
+    List<String> filtered = new ArrayList<>();
+    for (String action : supported) {
+      if (!TextUtils.equals(action, unassigned)) {
+        filtered.add(action);
+      }
+    }
+    List<String> existing = QuickMenuPreferences.getActionsForPackage(context, packageName);
+    boolean[] checked = new boolean[filtered.size()];
+    CharSequence[] titles = new CharSequence[filtered.size()];
+    for (int i = 0; i < filtered.size(); i++) {
+      String actionKey = filtered.get(i);
+      titles[i] = QuickMenuPreferences.getActionLabel(context, actionKey);
+      checked[i] = existing != null && existing.contains(actionKey);
+    }
     A11yAlertDialogWrapper.alertDialogBuilder(context)
-        .setTitle(R.string.pref_quick_menu_saved_apps_remove_title)
-        .setMessage(getString(R.string.pref_quick_menu_saved_apps_remove_message, label))
+        .setTitle(getString(R.string.pref_quick_menu_saved_apps_edit_title, label))
+        .setMultiChoiceItems(
+            titles,
+            checked,
+            (dialog, which, isChecked) -> checked[which] = isChecked)
         .setPositiveButton(
             android.R.string.ok,
+            (dialog, which) -> {
+              List<String> actions = new ArrayList<>();
+              for (int i = 0; i < filtered.size(); i++) {
+                if (checked[i]) {
+                  actions.add(filtered.get(i));
+                }
+              }
+              QuickMenuPreferences.saveActionsForPackage(context, packageName, actions);
+              PreferencesActivityUtils.announceText(
+                  getString(R.string.pref_quick_menu_saved_apps_updated, label), context);
+              populateSavedApps(context);
+              updateAppLinkUi(context);
+            })
+        .setNeutralButton(
+            R.string.pref_quick_menu_saved_apps_remove_action,
             (dialog, which) -> {
               QuickMenuPreferences.removeActionsForPackage(context, packageName);
               PreferencesActivityUtils.announceText(
