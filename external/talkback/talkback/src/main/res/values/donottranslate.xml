@@ -744,6 +744,8 @@
         <item>@string/shortcut_announce_item_position</item>
         <item>@string/shortcut_repeat_last_utterance</item>
         <item>@string/shortcut_spell_last_utterance</item>
+        <item>@string/shortcut_announce_time</item>
+        <item>@string/shortcut_announce_battery</item>
     </string-array>
 
     <!-- Shortcut preference value of reading control -->
@@ -756,6 +758,8 @@
         <item>@string/shortcut_value_announce_item_position</item>
         <item>@string/shortcut_value_repeat_last_utterance</item>
         <item>@string/shortcut_value_spell_last_utterance</item>
+        <item>@string/shortcut_value_announce_time</item>
+        <item>@string/shortcut_value_announce_battery</item>
     </string-array>
 
     <!-- Shortcut preference of menu control -->
@@ -766,12 +770,14 @@
         <item>@string/shortcut_selected_setting_previous_action</item>
         <item>@string/shortcut_selected_setting_next_action</item>
         <item>@string/shortcut_quick_menu</item>
+        <item>@string/shortcut_item_chooser</item>
         <item>@string/shortcut_clipboard_history</item>
         <item>@string/shortcut_translate_text</item>
         <item>@string/shortcut_object_recognition</item>
         <item>@string/shortcut_face_recognition</item>
         <item>@string/shortcut_money_recognition</item>
         <item>@string/shortcut_scene_recognition</item>
+        <item>@string/shortcut_live_recognition</item>
         <item>@string/shortcut_toggle_per_app_gesture_set</item>
         <item>@string/shortcut_toggle_explore_by_touch</item>
         <item>@string/shortcut_toggle_single_tap</item>
@@ -795,12 +801,14 @@
         <item>@string/shortcut_value_selected_setting_previous_action</item>
         <item>@string/shortcut_value_selected_setting_next_action</item>
         <item>@string/shortcut_value_quick_menu</item>
+        <item>@string/shortcut_value_item_chooser</item>
         <item>@string/shortcut_value_clipboard_history</item>
         <item>@string/shortcut_value_translate_text</item>
         <item>@string/shortcut_value_object_recognition</item>
         <item>@string/shortcut_value_face_recognition</item>
         <item>@string/shortcut_value_money_recognition</item>
         <item>@string/shortcut_value_scene_recognition</item>
+        <item>@string/shortcut_value_live_recognition</item>
         <item>@string/shortcut_value_toggle_per_app_gesture_set</item>
         <item>@string/shortcut_value_toggle_explore_by_touch</item>
         <item>@string/shortcut_value_toggle_single_tap</item>
@@ -992,6 +1000,8 @@
     <string name="shortcut_value_action_setting_activate_current_action" translatable="false">ACTION_SETTING_ACTIVATE_CURRENT_ACTION</string>
     <string name="shortcut_value_show_hide_screen">SHOW_HIDE SCREEN</string>
     <string name="shortcut_value_screen_search">SCREEN SEARCH</string>
+    <string name="shortcut_value_item_chooser" translatable="false">ITEM_CHOOSER</string>
+    <string name="shortcut_value_live_recognition" translatable="false">LIVE_RECOGNITION</string>
     <string name="shortcut_value_media_control">MEDIA_CONTROL</string>
     <string name="shortcut_value_increase_volume">INCREASE_VOLUME</string>
     <string name="shortcut_value_decrease_volume">DECREASE_VOLUME</string>
@@ -1007,6 +1017,8 @@
     <string name="shortcut_value_cut" translatable="false">CUT</string>
     <string name="shortcut_value_paste" translatable="false">PASTE</string>
     <string name="shortcut_value_copy_last_spoken_phrase" translatable="false">COPY_LAST_SPOKEN_UTTERANCE</string>
+    <string name="shortcut_value_announce_time" translatable="false">ANNOUNCE_TIME</string>
+    <string name="shortcut_value_announce_battery" translatable="false">ANNOUNCE_BATTERY</string>
     <string name="shortcut_value_pause_or_resume_feedback">PAUSE_FEEDBACK</string>
     <string name="shortcut_value_all_apps" translatable="false">ALL_APPS</string>
     <string name="shortcut_value_braille_keyboard" translatable="false">BRAILLE_KEYBOARD</string>

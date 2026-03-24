@@ -624,6 +624,7 @@
     <string name="quick_menu_empty">Quick menu has no items</string>
 
     <string name="shortcut_quick_menu">Quick menu</string>
+    <string name="shortcut_item_chooser">Item chooser</string>
     <string name="shortcut_clipboard_history">Clipboard history</string>
     <string name="shortcut_gesture_scheme_manager">Gesture schemes</string>
     <string name="shortcut_backup_settings">Backup settings</string>
@@ -632,10 +633,13 @@
     <string name="shortcut_face_recognition">Face recognition</string>
     <string name="shortcut_money_recognition">Money recognition</string>
     <string name="shortcut_scene_recognition">Scene recognition</string>
+    <string name="shortcut_live_recognition">Live recognition</string>
     <string name="shortcut_toggle_per_app_gesture_set">Toggle per-app gesture set</string>
     <string name="shortcut_announce_item_position">Announce item position</string>
     <string name="shortcut_repeat_last_utterance">Repeat last utterance</string>
     <string name="shortcut_spell_last_utterance">Spell last utterance</string>
+    <string name="shortcut_announce_time">Announce time</string>
+    <string name="shortcut_announce_battery">Announce battery</string>
 
     <string name="pref_quick_menu_settings_title">Quick menu</string>
     <string name="pref_quick_menu_settings_summary">Choose actions shown in the quick menu</string>
@@ -733,6 +737,11 @@
     <string name="translate_no_text">No text to translate</string>
     <string name="translate_no_app">No app available to translate text</string>
     <string name="announce_item_position_unavailable">No item position information</string>
+    <string name="live_recognition_enabled">Live recognition on</string>
+    <string name="live_recognition_disabled">Live recognition off</string>
+    <string name="announce_time_template">Time %1$s</string>
+    <string name="announce_battery_template">Battery %1$d percent</string>
+    <string name="announce_battery_unavailable">Battery status unavailable</string>
 
     <string name="pref_volume_key_shortcuts_title">Volume key shortcuts</string>
     <string name="pref_volume_key_shortcuts_summary">Assign actions to volume key long presses</string>

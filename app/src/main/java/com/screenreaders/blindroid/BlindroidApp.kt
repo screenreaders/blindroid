@@ -3,7 +3,8 @@ package com.screenreaders.blindroid
 import android.app.Application
 import android.app.Activity
 import android.os.Bundle
-import com.screenreaders.blindroid.diagnostics.AnrWatchdog
+import com.screenreaders.blindroid.data.Prefs
+import com.screenreaders.blindroid.diagnostics.AnrWatchdogManager
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.update.UpdateScheduler
@@ -13,7 +14,9 @@ class BlindroidApp : Application() {
         super.onCreate()
         CrashReporter.init(this)
         DiagnosticLog.log(this, "app_start")
-        AnrWatchdog(this).start()
+        if (Prefs.isCrashReportingEnabled(this)) {
+            AnrWatchdogManager.ensureStarted(this)
+        }
         UpdateScheduler.schedule(this)
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             private var startedCount = 0

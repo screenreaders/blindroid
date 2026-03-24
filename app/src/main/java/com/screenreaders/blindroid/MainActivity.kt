@@ -38,6 +38,7 @@ import com.screenreaders.blindroid.currency.CurrencyActivity
 import com.screenreaders.blindroid.data.Prefs
 import com.screenreaders.blindroid.databinding.ActivityMainBinding
 import com.screenreaders.blindroid.document.DocumentAssistActivity
+import com.screenreaders.blindroid.diagnostics.AnrWatchdogManager
 import com.screenreaders.blindroid.diagnostics.CrashReporter
 import com.screenreaders.blindroid.diagnostics.DiagnosticLog
 import com.screenreaders.blindroid.face.FaceAssistActivity
@@ -438,6 +439,12 @@ class MainActivity : AppCompatActivity() {
         binding.crashReportSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setCrashReportingEnabled(this, isChecked)
             logSettingChange("crash_reporting", isChecked)
+            if (isChecked) {
+                CrashReporter.init(this)
+                AnrWatchdogManager.ensureStarted(this)
+            } else {
+                AnrWatchdogManager.stop()
+            }
             updateCrashReportControls()
         }
         binding.crashReportWifiSwitch.setOnCheckedChangeListener { _, isChecked ->

@@ -193,6 +193,12 @@ object CrashReporter {
         sb.appendLine("announce=${Prefs.isAnnounceEnabled(context)}")
         sb.appendLine("speaker=${Prefs.isAutoSpeakerEnabled(context)}")
         sb.appendLine("moduleShortcuts=${Prefs.isModuleShortcutsEnabled(context)}")
+        val diag = DiagnosticLog.dump(context)
+        if (diag.isNotEmpty()) {
+            sb.appendLine()
+            sb.appendLine("Diagnostics:")
+            diag.forEach { sb.appendLine(it) }
+        }
         if (Prefs.isCrashDeviceInfoEnabled(context)) {
             sb.appendLine()
             sb.appendLine("DeviceInfo:")

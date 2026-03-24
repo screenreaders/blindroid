@@ -72,7 +72,9 @@ import android.accessibilityservice.FingerprintGestureController;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
 import android.os.SystemClock;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -400,6 +402,10 @@ public class GestureController {
       }
     } else if (action.equals(service.getString(R.string.shortcut_value_screen_search))) {
       result = pipeline.returnFeedback(eventId, Feedback.universalSearch(TOGGLE_SEARCH));
+    } else if (action.equals(service.getString(R.string.shortcut_value_item_chooser))) {
+      result = pipeline.returnFeedback(eventId, Feedback.universalSearch(TOGGLE_SEARCH));
+    } else if (action.equals(service.getString(R.string.shortcut_value_live_recognition))) {
+      result = toggleLiveRecognition();
     } else if (action.equals(service.getString(R.string.shortcut_value_show_hide_screen))) {
       if (actorState.getDimScreen().isDimmingEnabled()) {
         result = pipeline.returnFeedback(eventId, Feedback.dimScreen(BRIGHTEN));
@@ -530,6 +536,16 @@ public class GestureController {
         result = false;
       } else {
         result = pipeline.returnFeedback(eventId, Feedback.speech(info));
+      }
+    } else if (action.equals(service.getString(R.string.shortcut_value_announce_time))) {
+      String timeText = java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT).format(new java.util.Date());
+      speak(service.getString(R.string.announce_time_template, timeText));
+    } else if (action.equals(service.getString(R.string.shortcut_value_announce_battery))) {
+      Integer percent = getBatteryPercent();
+      if (percent == null) {
+        speak(service.getString(R.string.announce_battery_unavailable));
+      } else {
+        speak(service.getString(R.string.announce_battery_template, percent));
       }
     } else if (action.equals(service.getString(R.string.shortcut_value_repeat_last_utterance))) {
       pipeline.returnFeedback(
@@ -1040,6 +1056,46 @@ public class GestureController {
                           | FeedbackItem.FLAG_SKIP_DUPLICATE)));
     }
     return true;
+  }
+
+  private boolean toggleLiveRecognition() {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(service);
+    boolean imageEnabled =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_auto_image_description_key,
+            R.bool.pref_auto_image_description_default);
+    boolean textEnabled =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_auto_text_recognition_key,
+            R.bool.pref_auto_text_recognition_default);
+    boolean newValue = !(imageEnabled || textEnabled);
+    SharedPreferencesUtils.putBooleanPref(
+        prefs, service.getResources(), R.string.pref_auto_image_description_key, newValue);
+    SharedPreferencesUtils.putBooleanPref(
+        prefs, service.getResources(), R.string.pref_auto_text_recognition_key, newValue);
+    speak(
+        service.getString(
+            newValue ? R.string.live_recognition_enabled : R.string.live_recognition_disabled));
+    return true;
+  }
+
+  @Nullable
+  private Integer getBatteryPercent() {
+    Intent batteryStatus =
+        service.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    if (batteryStatus == null) {
+      return null;
+    }
+    int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+    int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+    if (level < 0 || scale <= 0) {
+      return null;
+    }
+    return Math.round(level * 100f / scale);
   }
 
   private boolean togglePerAppGestureSet(EventId eventId) {

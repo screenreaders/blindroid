@@ -454,7 +454,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.TWO_FINGER_ROTATE_CCW, R.string.shortcut_value_select_previous_setting);
     IOS_DEFAULT_ACTIONS.put(
-        TalkBackGesture.TWO_FINGER_TRIPLE_TAP, R.string.shortcut_value_quick_menu);
+        TalkBackGesture.TWO_FINGER_TRIPLE_TAP, R.string.shortcut_value_item_chooser);
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.TWO_FINGER_TRIPLE_TAP_AND_HOLD, R.string.shortcut_value_quick_settings);
     IOS_DEFAULT_ACTIONS.put(
@@ -479,7 +479,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.FOUR_FINGER_DOUBLE_TAP, R.string.shortcut_value_last_in_screen);
     IOS_DEFAULT_ACTIONS.put(
-        TalkBackGesture.FOUR_FINGER_TRIPLE_TAP, R.string.shortcut_value_describe_image);
+        TalkBackGesture.FOUR_FINGER_TRIPLE_TAP, R.string.shortcut_value_live_recognition);
   }
 
   /** All supported actions. */
@@ -559,6 +559,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         R.string.shortcut_value_selected_setting_next_action,
         R.string.shortcut_selected_setting_next_action),
     QUICK_MENU(R.string.shortcut_value_quick_menu, R.string.shortcut_quick_menu),
+    ITEM_CHOOSER(R.string.shortcut_value_item_chooser, R.string.shortcut_item_chooser),
     CLIPBOARD_HISTORY(
         R.string.shortcut_value_clipboard_history, R.string.shortcut_clipboard_history),
     GESTURE_SCHEME_MANAGER(
@@ -575,6 +576,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         R.string.shortcut_value_money_recognition, R.string.shortcut_money_recognition),
     SCENE_RECOGNITION(
         R.string.shortcut_value_scene_recognition, R.string.shortcut_scene_recognition),
+    LIVE_RECOGNITION(
+        R.string.shortcut_value_live_recognition, R.string.shortcut_live_recognition),
     TOGGLE_PER_APP_GESTURE_SET(
         R.string.shortcut_value_toggle_per_app_gesture_set,
         R.string.shortcut_toggle_per_app_gesture_set),
@@ -587,6 +590,9 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     SPELL_LAST_UTTERANCE(
         R.string.shortcut_value_spell_last_utterance,
         R.string.shortcut_spell_last_utterance),
+    ANNOUNCE_TIME(R.string.shortcut_value_announce_time, R.string.shortcut_announce_time),
+    ANNOUNCE_BATTERY(
+        R.string.shortcut_value_announce_battery, R.string.shortcut_announce_battery),
 
     // Text editing.
     START_SELECTION_MODE(
@@ -863,7 +869,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_2finger_3tap_key,
-        R.string.shortcut_value_screen_search,
+        R.string.shortcut_value_item_chooser,
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
@@ -935,7 +941,7 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_4finger_3tap_key,
-        R.string.shortcut_value_describe_image,
+        R.string.shortcut_value_live_recognition,
         iosGestureSet);
 
     editor.apply();
