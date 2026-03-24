@@ -666,6 +666,15 @@
     <string name="pref_quick_menu_link_default_current_title">Link default to current app</string>
     <string name="pref_quick_menu_link_default_current_summary">Use default quick menu for %1$s</string>
     <string name="pref_quick_menu_link_default_current_announce">Linked default quick menu for %1$s</string>
+    <string name="pref_quick_menu_export_current_title">Export current app menu</string>
+    <string name="pref_quick_menu_export_current_summary">Share the quick menu for the current app</string>
+    <string name="pref_quick_menu_export_current_missing">No saved quick menu for this app</string>
+    <string name="pref_quick_menu_export_current_success">Current app menu ready to share</string>
+    <string name="pref_quick_menu_export_current_failed">Current app menu export failed</string>
+    <string name="pref_quick_menu_import_current_title">Import current app menu</string>
+    <string name="pref_quick_menu_import_current_summary">Paste a JSON backup to restore this app menu</string>
+    <string name="pref_quick_menu_import_current_success">Current app menu imported</string>
+    <string name="pref_quick_menu_import_current_failed">Current app menu import failed</string>
     <string name="pref_quick_menu_apply_saved_current_title">Apply saved app menu</string>
     <string name="pref_quick_menu_apply_saved_current_summary">Apply a saved app menu to %1$s</string>
     <string name="pref_quick_menu_apply_saved_current_missing">No saved app menus available</string>

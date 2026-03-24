@@ -1,12 +1,12 @@
 {
-  "tag_name": "v136",
-  "name": "v136",
-  "body": "Quick menu: view current actions list.",
+  "tag_name": "v137",
+  "name": "v137",
+  "body": "Quick menu: export/import current app menu (share/paste).",
   "assets": [
     {
-      "name": "blindroid-136.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-136.apk",
-      "sha256": "e8af3f429808d965d2932255af904d7d51cca427c20d213ca1bea103cd175093",
+      "name": "blindroid-137.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-137.apk",
+      "sha256": "0442c771f504ef81d06e40afd9988b4c0cd33ff4f6cc33ce0bd2ff5b62978139",
       "size": 123067855
     }
   ]
