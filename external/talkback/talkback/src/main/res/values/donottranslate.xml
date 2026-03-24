@@ -831,6 +831,8 @@
         <item>@string/shortcut_value_home</item>
         <item>@string/shortcut_value_notifications</item>
         <item>@string/shortcut_value_quick_settings</item>
+        <item>@string/shortcut_value_item_chooser</item>
+        <item>@string/shortcut_value_live_recognition</item>
         <item>@string/shortcut_value_toggle_speak_notifications</item>
         <item>@string/shortcut_value_talkback_breakout</item>
         <item>@string/shortcut_value_read_from_top</item>

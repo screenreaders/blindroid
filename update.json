@@ -1,13 +1,13 @@
 {
-  "tag_name": "v151",
-  "name": "v151",
-  "body": "BlindReader floating menu: added Item Chooser and Live Recognition actions plus haptic feedback on tap.",
+  "tag_name": "v152",
+  "name": "v152",
+  "body": "Quick menu defaults now include Item Chooser and Live Recognition actions.",
   "assets": [
     {
-      "name": "blindroid-151.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-151.apk",
-      "sha256": "ae68b3f4b0908deb123a67290fe8af0b2b989645142b04136e1cc527c1a137a1",
-      "size": 123087111
+      "name": "blindroid-152.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-152.apk",
+      "sha256": "cebe1a1d16fe23e89532ee09db1851a6a3f814c84f4c74520f85451cc8f2f03c",
+      "size": 123087115
     }
   ]
 }
