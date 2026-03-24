@@ -1520,6 +1520,7 @@
     <string name="pref_quick_menu_app_category_key" translatable="false">pref_quick_menu_app_category</string>
     <string name="pref_quick_menu_link_current_key" translatable="false">pref_quick_menu_link_current</string>
     <string name="pref_quick_menu_unlink_current_key" translatable="false">pref_quick_menu_unlink_current</string>
+    <string name="pref_quick_menu_saved_apps_category_key" translatable="false">pref_quick_menu_saved_apps_category</string>
     <string name="pref_quick_menu_customized_key" translatable="false">pref_quick_menu_customized</string>
     <string name="pref_quick_menu_action_prefix" translatable="false">pref_quick_menu_action_</string>
     <string name="pref_quick_menu_app_prefix" translatable="false">pref_quick_menu_app_</string>

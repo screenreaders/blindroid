@@ -608,6 +608,12 @@
     <string name="pref_quick_menu_actions_title">Quick menu actions</string>
     <string name="pref_quick_menu_reset_title">Reset quick menu</string>
     <string name="pref_quick_menu_reset_summary">Restore the default quick menu actions</string>
+    <string name="pref_quick_menu_saved_apps_title">Saved app menus</string>
+    <string name="pref_quick_menu_saved_apps_empty">No saved app menus</string>
+    <string name="pref_quick_menu_saved_apps_summary">%1$d actions</string>
+    <string name="pref_quick_menu_saved_apps_remove_title">Remove app menu</string>
+    <string name="pref_quick_menu_saved_apps_remove_message">Remove saved quick menu for %1$s?</string>
+    <string name="pref_quick_menu_saved_apps_removed">Removed saved menu for %1$s</string>
 
     <string name="translate_no_text">No text to translate</string>
     <string name="translate_no_app">No app available to translate text</string>

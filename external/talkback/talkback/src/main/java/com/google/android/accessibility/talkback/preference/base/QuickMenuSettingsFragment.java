@@ -31,6 +31,7 @@ import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.talkback.quickmenu.QuickMenuPreferences;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
+import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -40,6 +41,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     implements Preference.OnPreferenceChangeListener {
 
   private PreferenceCategory actionCategory;
+  private PreferenceCategory savedAppsCategory;
   private @Nullable String currentPackage;
   private @Nullable CharSequence currentLabel;
   private Preference linkCurrentAppPreference;
@@ -108,8 +110,14 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     actionCategory.setKey(context.getString(R.string.pref_quick_menu_actions_category_key));
     screen.addPreference(actionCategory);
 
+    savedAppsCategory = new PreferenceCategory(context);
+    savedAppsCategory.setTitle(R.string.pref_quick_menu_saved_apps_title);
+    savedAppsCategory.setKey(context.getString(R.string.pref_quick_menu_saved_apps_category_key));
+    screen.addPreference(savedAppsCategory);
+
     buildActionList(context);
     updateAppLinkUi(context);
+    populateSavedApps(context);
   }
 
   @Override
@@ -120,6 +128,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       return;
     }
     updateAppLinkUi(context);
+    populateSavedApps(context);
   }
 
   private void buildActionList(Context context) {
@@ -182,6 +191,58 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       }
       unlinkCurrentAppPreference.setEnabled(hasApp && linked);
     }
+  }
+
+  private void populateSavedApps(Context context) {
+    if (savedAppsCategory == null) {
+      return;
+    }
+    savedAppsCategory.removeAll();
+    List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
+    if (packages.isEmpty()) {
+      Preference empty = new Preference(context);
+      empty.setSelectable(false);
+      empty.setTitle(R.string.pref_quick_menu_saved_apps_empty);
+      savedAppsCategory.addPreference(empty);
+      return;
+    }
+    for (String packageName : packages) {
+      CharSequence label = packageName;
+      try {
+        ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
+        label = context.getPackageManager().getApplicationLabel(info);
+      } catch (PackageManager.NameNotFoundException e) {
+        label = packageName;
+      }
+      Preference pref = new Preference(context);
+      pref.setTitle(label);
+      List<String> actions = QuickMenuPreferences.getActionsForPackage(context, packageName);
+      int count = actions == null ? 0 : actions.size();
+      pref.setSummary(getString(R.string.pref_quick_menu_saved_apps_summary, count));
+      pref.setOnPreferenceClickListener(
+          clicked -> {
+            showRemoveDialog(context, packageName, label);
+            return true;
+          });
+      savedAppsCategory.addPreference(pref);
+    }
+  }
+
+  private void showRemoveDialog(Context context, String packageName, CharSequence label) {
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_quick_menu_saved_apps_remove_title)
+        .setMessage(getString(R.string.pref_quick_menu_saved_apps_remove_message, label))
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> {
+              QuickMenuPreferences.removeActionsForPackage(context, packageName);
+              PreferencesActivityUtils.announceText(
+                  getString(R.string.pref_quick_menu_saved_apps_removed, label), context);
+              populateSavedApps(context);
+              updateAppLinkUi(context);
+            })
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
   }
 
   private void resolveCurrentApp(Context context) {

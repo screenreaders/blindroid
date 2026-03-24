@@ -69,6 +69,22 @@ public final class QuickMenuPreferences {
     return actions;
   }
 
+  public static List<String> getLinkedPackages(Context context) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    String prefix = context.getString(R.string.pref_quick_menu_app_prefix);
+    List<String> packages = new ArrayList<>();
+    for (String key : prefs.getAll().keySet()) {
+      if (key.startsWith(prefix)) {
+        String pkg = key.substring(prefix.length());
+        if (!TextUtils.isEmpty(pkg)) {
+          packages.add(pkg);
+        }
+      }
+    }
+    packages.sort(String::compareToIgnoreCase);
+    return packages;
+  }
+
   public static void saveActionsForPackage(Context context, String packageName, List<String> actions) {
     if (TextUtils.isEmpty(packageName)) {
       return;
