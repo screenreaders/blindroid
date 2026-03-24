@@ -1,13 +1,13 @@
 {
-  "tag_name": "v149",
-  "name": "v149",
-  "body": "Performance: notification reader now caches app labels to reduce PackageManager lookups.",
+  "tag_name": "v150",
+  "name": "v150",
+  "body": "Testing: added TestFlowActivity entrypoint for automated launches of onboarding/diagnostics/wizard flows (token-gated).",
   "assets": [
     {
-      "name": "blindroid-149.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-149.apk",
-      "sha256": "752957d1a251f70b58fee100ea81aaa1f668ae96d16a2e338d6192e96508dae6",
-      "size": 123087091
+      "name": "blindroid-150.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-150.apk",
+      "sha256": "a20fb98a274e69cbb117acdb2a77b64683e13097d5a82f83804512df1c5b6a87",
+      "size": 123087115
     }
   ]
 }
