@@ -16,13 +16,17 @@
 
 package com.google.android.accessibility.talkback.preference.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.widget.EditText;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.Preference;
 import androidx.preference.EditTextPreference;
 import com.google.android.accessibility.talkback.R;
@@ -30,8 +34,15 @@ import com.google.android.accessibility.talkback.gesture.GestureMacroStore;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,9 +55,51 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
   private Preference macro3ActionsPreference;
   private Preference exportMacrosPreference;
   private Preference importMacrosPreference;
+  private Preference exportMacrosFilePreference;
+  private Preference importMacrosFilePreference;
+  private ActivityResultLauncher<Intent> exportMacrosFileLauncher;
+  private ActivityResultLauncher<Intent> importMacrosFileLauncher;
 
   public GestureMacroSettingsFragment() {
     super(R.xml.gesture_macro_preferences);
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    exportMacrosFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_macro_export_failed), context);
+                return;
+              }
+              writeMacrosToUri(context, data.getData());
+            });
+
+    importMacrosFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_macro_import_failed), context);
+                return;
+              }
+              readMacrosFromUri(context, data.getData());
+            });
   }
 
   @Override
@@ -81,6 +134,24 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
       importMacrosPreference.setOnPreferenceClickListener(
           pref -> {
             showImportDialog(getContext());
+            return true;
+          });
+    }
+
+    exportMacrosFilePreference = findPreference(getString(R.string.pref_macro_export_file_key));
+    if (exportMacrosFilePreference != null) {
+      exportMacrosFilePreference.setOnPreferenceClickListener(
+          pref -> {
+            launchExportToFile(getContext());
+            return true;
+          });
+    }
+
+    importMacrosFilePreference = findPreference(getString(R.string.pref_macro_import_file_key));
+    if (importMacrosFilePreference != null) {
+      importMacrosFilePreference.setOnPreferenceClickListener(
+          pref -> {
+            launchImportFromFile();
             return true;
           });
     }
@@ -152,6 +223,29 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
     }
   }
 
+  private void launchExportToFile(Context context) {
+    if (context == null) {
+      return;
+    }
+    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    intent.putExtra(Intent.EXTRA_TITLE, buildFileName());
+    exportMacrosFileLauncher.launch(intent);
+  }
+
+  private void launchImportFromFile() {
+    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    importMacrosFileLauncher.launch(intent);
+  }
+
+  private String buildFileName() {
+    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    return "blindreader-macros-" + format.format(new Date()) + ".json";
+  }
+
   private void showImportDialog(Context context) {
     if (context == null) {
       return;
@@ -182,6 +276,58 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
       updateActionsSummary(macro2ActionsPreference, 2);
       updateActionsSummary(macro3ActionsPreference, 3);
     } else {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_macro_import_failed), context);
+    }
+  }
+
+  private void writeMacrosToUri(Context context, Uri uri) {
+    try {
+      JSONObject payload = buildMacrosJson(context);
+      byte[] bytes = payload.toString(2).getBytes("UTF-8");
+      try (OutputStream output = context.getContentResolver().openOutputStream(uri)) {
+        if (output == null) {
+          PreferencesActivityUtils.announceText(
+              getString(R.string.pref_macro_export_failed), context);
+          return;
+        }
+        output.write(bytes);
+        output.flush();
+      }
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_macro_export_file_success), context);
+    } catch (IOException | JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_macro_export_failed), context);
+    }
+  }
+
+  private void readMacrosFromUri(Context context, Uri uri) {
+    try (InputStream input = context.getContentResolver().openInputStream(uri)) {
+      if (input == null) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_macro_import_failed), context);
+        return;
+      }
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      byte[] buffer = new byte[4096];
+      int read;
+      while ((read = input.read(buffer)) != -1) {
+        output.write(buffer, 0, read);
+      }
+      String json = output.toString("UTF-8");
+      int imported = applyMacrosJson(context, json);
+      if (imported > 0) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_macro_import_file_success, imported), context);
+        updateActionsSummary(macro1ActionsPreference, 1);
+        updateActionsSummary(macro2ActionsPreference, 2);
+        updateActionsSummary(macro3ActionsPreference, 3);
+      } else {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_macro_import_failed), context);
+      }
+    } catch (IOException e) {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_macro_import_failed), context);
     }

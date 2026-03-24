@@ -213,10 +213,16 @@
   <string name="pref_macro_export_summary">Udostępnij kopię JSON akcji makr</string>
   <string name="pref_macro_import_title">Importuj makra</string>
   <string name="pref_macro_import_summary">Wklej kopię JSON, aby przywrócić akcje makr</string>
+  <string name="pref_macro_export_file_title">Eksportuj makra do pliku</string>
+  <string name="pref_macro_export_file_summary">Zapisz plik JSON z akcjami makr</string>
+  <string name="pref_macro_import_file_title">Importuj makra z pliku</string>
+  <string name="pref_macro_import_file_summary">Wczytaj plik JSON z akcjami makr</string>
   <string name="pref_macro_export_success">Makra gotowe do udostępnienia</string>
   <string name="pref_macro_export_failed">Nie udało się wyeksportować makr</string>
   <string name="pref_macro_import_success">Zaimportowano %1$d makra</string>
   <string name="pref_macro_import_failed">Nie udało się zaimportować makr</string>
+  <string name="pref_macro_export_file_success">Zapisano makra</string>
+  <string name="pref_macro_import_file_success">Zaimportowano %1$d makra z pliku</string>
   <string name="macro_default_name_1">Makro 1</string>
   <string name="macro_default_name_2">Makro 2</string>
   <string name="macro_default_name_3">Makro 3</string>

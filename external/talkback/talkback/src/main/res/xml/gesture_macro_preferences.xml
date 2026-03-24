@@ -50,4 +50,14 @@
       android:key="@string/pref_macro_import_key"
       android:title="@string/pref_macro_import_title"
       android:summary="@string/pref_macro_import_summary" />
+
+  <Preference
+      android:key="@string/pref_macro_export_file_key"
+      android:title="@string/pref_macro_export_file_title"
+      android:summary="@string/pref_macro_export_file_summary" />
+
+  <Preference
+      android:key="@string/pref_macro_import_file_key"
+      android:title="@string/pref_macro_import_file_title"
+      android:summary="@string/pref_macro_import_file_summary" />
 </PreferenceScreen>

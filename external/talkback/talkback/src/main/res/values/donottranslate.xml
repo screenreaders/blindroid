@@ -975,6 +975,8 @@
     <string name="pref_macro_3_actions_list_key" translatable="false">pref_macro_3_actions_list</string>
     <string name="pref_macro_export_key" translatable="false">pref_macro_export</string>
     <string name="pref_macro_import_key" translatable="false">pref_macro_import</string>
+    <string name="pref_macro_export_file_key" translatable="false">pref_macro_export_file</string>
+    <string name="pref_macro_import_file_key" translatable="false">pref_macro_import_file</string>
     <string name="shortcut_value_action_setting_activate_current_action" translatable="false">ACTION_SETTING_ACTIVATE_CURRENT_ACTION</string>
     <string name="shortcut_value_show_hide_screen">SHOW_HIDE SCREEN</string>
     <string name="shortcut_value_screen_search">SCREEN SEARCH</string>

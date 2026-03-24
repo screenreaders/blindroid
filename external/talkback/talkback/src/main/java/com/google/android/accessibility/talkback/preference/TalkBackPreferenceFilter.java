@@ -159,6 +159,10 @@ public class TalkBackPreferenceFilter {
     GESTURE_MACROS(R.string.pref_gesture_macro_settings_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     GESTURE_MACROS_EXPORT(R.string.pref_macro_export_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     GESTURE_MACROS_IMPORT(R.string.pref_macro_import_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    GESTURE_MACROS_EXPORT_FILE(
+        R.string.pref_macro_export_file_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    GESTURE_MACROS_IMPORT_FILE(
+        R.string.pref_macro_import_file_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     CONTENT_SETTINGS(R.string.pref_content_settings_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     FLOATING_MENU(R.string.pref_floating_menu_enabled_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     FLOATING_MENU_ACTION(R.string.pref_floating_menu_action_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
