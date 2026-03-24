@@ -289,7 +289,10 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       pref.setTitle(label);
       List<String> actions = QuickMenuPreferences.getActionsForPackage(context, packageName);
       int count = actions == null ? 0 : actions.size();
-      pref.setSummary(getString(R.string.pref_quick_menu_saved_apps_summary, count));
+      String actionSummary = buildActionsSummary(context, actions);
+      pref.setSummary(
+          getString(R.string.pref_quick_menu_saved_apps_summary, count)
+              + (actionSummary.isEmpty() ? "" : " • " + actionSummary));
       pref.setOnPreferenceClickListener(
           clicked -> {
             showEditDialog(context, packageName, label);
@@ -428,6 +431,29 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         getString(R.string.pref_quick_menu_clear_saved_announce), context);
     populateSavedApps(context);
     updateAppLinkUi(context);
+  }
+
+  private String buildActionsSummary(Context context, @Nullable List<String> actions) {
+    if (actions == null || actions.isEmpty()) {
+      return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    int maxLen = 80;
+    for (String action : actions) {
+      String label = QuickMenuPreferences.getActionLabel(context, action);
+      if (TextUtils.isEmpty(label)) {
+        continue;
+      }
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
+      sb.append(label);
+      if (sb.length() > maxLen) {
+        sb.append("…");
+        break;
+      }
+    }
+    return sb.toString();
   }
 
   private void resolveCurrentApp(Context context) {

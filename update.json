@@ -1,12 +1,12 @@
 {
-  "tag_name": "v122",
-  "name": "v122",
-  "body": "BlindReader: clear all saved app quick menus.",
+  "tag_name": "v123",
+  "name": "v123",
+  "body": "BlindReader: show saved app menu action preview.",
   "assets": [
     {
-      "name": "blindroid-122.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-122.apk",
-      "sha256": "20d4596c5516e47ead0e59c94adc183715b2fbc573f3c110f757a6937cfee75e",
+      "name": "blindroid-123.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-123.apk",
+      "sha256": "506838d4b31da137c52094e5fe34ae221e92aa6023e3f9aa9ca1407f62b51315",
       "size": 123067855
     }
   ]
