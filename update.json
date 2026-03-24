@@ -1,12 +1,12 @@
 {
-  "tag_name": "v143",
-  "name": "v143",
-  "body": "Performance optimizations: cached Gemini prefs, AI screenshot downscale, lazy init for search/clipboard, and AI/OCR latency logging.",
+  "tag_name": "v144",
+  "name": "v144",
+  "body": "iOS gesture parity improvements: rotor (2-finger rotate) defaults mapped to reading controls and 3-finger tap now announces item position.",
   "assets": [
     {
-      "name": "blindroid-143.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-143.apk",
-      "sha256": "2db9417e50804fbd48b910f5e06c5a1a79f1350dace7ae660c8344b77b22f1e3",
+      "name": "blindroid-144.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-144.apk",
+      "sha256": "84050034cd66ddd2a550f28e05e80d0ac439a842b67fc96b1afe7bad2b167abe",
       "size": 123067855
     }
   ]
