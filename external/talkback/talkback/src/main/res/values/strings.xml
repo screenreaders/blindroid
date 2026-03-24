@@ -624,6 +624,7 @@
     <string name="quick_menu_empty">Quick menu has no items</string>
 
     <string name="shortcut_quick_menu">Quick menu</string>
+    <string name="shortcut_split_tap_activate">Split tap activate</string>
     <string name="shortcut_item_chooser">Item chooser</string>
     <string name="shortcut_clipboard_history">Clipboard history</string>
     <string name="shortcut_gesture_scheme_manager">Gesture schemes</string>

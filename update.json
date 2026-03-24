@@ -1,12 +1,12 @@
 {
-  "tag_name": "v146",
-  "name": "v146",
-  "body": "iOS gestures: 2-finger triple tap now opens Item Chooser (Screen Search UI) and 4-finger triple tap toggles Live Recognition. Added actions for announce time/battery, and crash reports now include diagnostics while ANR watchdog runs only when crash reporting is enabled.",
+  "tag_name": "v147",
+  "name": "v147",
+  "body": "iOS gestures: split-tap substitute (3-finger tap-hold) activates items, and 4-finger swipe up/down now maps to first/last item on screen. Added Split Tap action plus iOS defaults updates.",
   "assets": [
     {
-      "name": "blindroid-146.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-146.apk",
-      "sha256": "0feaed068c495259437efcd387c485b524ed5933fc79eb82cc938697fd25fe19",
+      "name": "blindroid-147.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-147.apk",
+      "sha256": "ce434c490a04665b1be7182b6d8496a642e15981c76f19cc37d3f08a41f49e10",
       "size": 123067855
     }
   ]

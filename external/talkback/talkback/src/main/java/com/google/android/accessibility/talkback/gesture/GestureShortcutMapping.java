@@ -461,6 +461,9 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         TalkBackGesture.TWO_FINGER_DOUBLE_TAP_AND_HOLD,
         R.string.shortcut_value_show_custom_actions);
     IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.THREE_FINGER_TAP_AND_HOLD,
+        R.string.shortcut_value_split_tap_activate);
+    IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.THREE_FINGER_SINGLE_TAP, R.string.shortcut_value_announce_item_position);
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.THREE_FINGER_DOUBLE_TAP, R.string.shortcut_value_toggle_voice_feedback);
@@ -479,6 +482,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.FOUR_FINGER_DOUBLE_TAP, R.string.shortcut_value_last_in_screen);
     IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.FOUR_FINGER_SWIPE_UP, R.string.shortcut_value_first_in_screen);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.FOUR_FINGER_SWIPE_DOWN, R.string.shortcut_value_last_in_screen);
+    IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.FOUR_FINGER_TRIPLE_TAP, R.string.shortcut_value_live_recognition);
   }
 
@@ -488,6 +495,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     // Basic navigation.
     PERFORM_CLICK(
         R.string.shortcut_value_perform_click_action, R.string.shortcut_perform_click_action),
+    SPLIT_TAP_ACTIVATE(
+        R.string.shortcut_value_split_tap_activate, R.string.shortcut_split_tap_activate),
     PERFORM_LONG_CLICK(
         R.string.shortcut_value_perform_click_action, R.string.shortcut_perform_long_click_action),
     PREVIOUS(R.string.shortcut_value_previous, R.string.shortcut_previous),
@@ -894,6 +903,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         iosGestureSet);
     applyDefaultIfAbsent(
         editor,
+        R.string.pref_shortcut_3finger_1tap_hold_key,
+        R.string.shortcut_value_split_tap_activate,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
         R.string.pref_shortcut_3finger_swipe_up_key,
         R.string.shortcut_value_scroll_down,
         iosGestureSet);
@@ -931,6 +945,16 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
     applyDefaultIfAbsent(
         editor,
         R.string.pref_shortcut_4finger_2tap_key,
+        R.string.shortcut_value_last_in_screen,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_swipe_up_key,
+        R.string.shortcut_value_first_in_screen,
+        iosGestureSet);
+    applyDefaultIfAbsent(
+        editor,
+        R.string.pref_shortcut_4finger_swipe_down_key,
         R.string.shortcut_value_last_in_screen,
         iosGestureSet);
     applyDefaultIfAbsent(

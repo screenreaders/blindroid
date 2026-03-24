@@ -376,7 +376,8 @@ public class GestureController {
       Performance.getInstance().displayLabelToStats();
       Performance.getInstance().displayStatToLabelCompare();
       Performance.getInstance().displayAllEventStats();
-    } else if (action.equals(service.getString(R.string.shortcut_value_perform_click_action))) {
+    } else if (action.equals(service.getString(R.string.shortcut_value_perform_click_action))
+        || action.equals(service.getString(R.string.shortcut_value_split_tap_activate))) {
       result = pipeline.returnFeedback(eventId, Feedback.focus(CLICK_CURRENT));
     } else if (action.equals(
         service.getString(R.string.shortcut_value_perform_long_click_action))) {

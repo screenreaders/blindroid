@@ -687,6 +687,7 @@
   <!-- Shortcut preference of basic navigation -->
     <string-array name="shortcut_basic_navigation">
         <item>@string/shortcut_perform_click_action</item>
+        <item>@string/shortcut_split_tap_activate</item>
         <item>@string/shortcut_perform_long_click_action</item>
         <item>@string/shortcut_previous</item>
         <item>@string/shortcut_next</item>
@@ -703,6 +704,7 @@
     <!-- Shortcut preference value of basic navigation -->
     <string-array name="shortcut_value_basic_navigation">
         <item>@string/shortcut_value_perform_click_action</item>
+        <item>@string/shortcut_value_split_tap_activate</item>
         <item>@string/shortcut_value_perform_long_click_action</item>
         <item>@string/shortcut_value_previous</item>
         <item>@string/shortcut_value_next</item>
@@ -908,6 +910,7 @@
     <string name="shortcut_value_read_from_top">READ_FROM_TOP</string>
     <string name="shortcut_value_read_from_current">READ_FROM_CURRENT</string>
     <string name="shortcut_value_perform_click_action">PERFORM_CLICK_ACTION</string>
+    <string name="shortcut_value_split_tap_activate" translatable="false">SPLIT_TAP_ACTIVATE</string>
     <string name="shortcut_value_perform_long_click_action">PERFORM_LONG_CLICK_ACTION</string>
     <string name="shortcut_value_print_node_tree">PRINT_NODE_TREE</string>
     <string name="shortcut_value_print_performance_stats">PRINT_PERFORMANCE_STATS</string>
