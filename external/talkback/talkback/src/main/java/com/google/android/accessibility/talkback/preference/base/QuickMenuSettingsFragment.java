@@ -74,6 +74,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference importAppMenusFilePreference;
   private Preference clearSavedAppsPreference;
   private Preference linkDefaultToCurrentPreference;
+  private Preference applySavedToCurrentPreference;
   private ActivityResultLauncher<Intent> exportQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> importQuickMenuFileLauncher;
   private ActivityResultLauncher<Intent> exportAppMenusFileLauncher;
@@ -274,6 +275,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         });
     appCategory.addPreference(linkDefaultToCurrentPreference);
 
+    applySavedToCurrentPreference = new Preference(context);
+    applySavedToCurrentPreference.setKey(
+        context.getString(R.string.pref_quick_menu_apply_saved_current_key));
+    applySavedToCurrentPreference.setTitle(R.string.pref_quick_menu_apply_saved_current_title);
+    applySavedToCurrentPreference.setOnPreferenceClickListener(
+        pref -> {
+          showApplySavedMenuDialog(context);
+          return true;
+        });
+    appCategory.addPreference(applySavedToCurrentPreference);
+
     actionCategory = new PreferenceCategory(context);
     actionCategory.setTitle(R.string.pref_quick_menu_actions_title);
     actionCategory.setKey(context.getString(R.string.pref_quick_menu_actions_category_key));
@@ -438,6 +450,20 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         linkDefaultToCurrentPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
       }
       linkDefaultToCurrentPreference.setEnabled(hasApp);
+    }
+    if (applySavedToCurrentPreference != null) {
+      List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
+      boolean hasSaved = !packages.isEmpty();
+      if (hasApp && hasSaved) {
+        applySavedToCurrentPreference.setSummary(
+            getString(R.string.pref_quick_menu_apply_saved_current_summary, currentLabel));
+      } else if (!hasApp) {
+        applySavedToCurrentPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
+      } else {
+        applySavedToCurrentPreference.setSummary(
+            R.string.pref_quick_menu_apply_saved_current_missing);
+      }
+      applySavedToCurrentPreference.setEnabled(hasApp && hasSaved);
     }
   }
 
@@ -992,6 +1018,65 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         getString(R.string.pref_quick_menu_link_default_current_announce, currentLabel), context);
     populateSavedApps(context);
     updateAppLinkUi(context);
+  }
+
+  private void showApplySavedMenuDialog(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_link_current_missing), context);
+      return;
+    }
+    List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
+    if (packages.isEmpty()) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_apply_saved_current_missing), context);
+      return;
+    }
+    CharSequence[] labels = new CharSequence[packages.size()];
+    PackageManager pm = context.getPackageManager();
+    for (int i = 0; i < packages.size(); i++) {
+      String packageName = packages.get(i);
+      try {
+        ApplicationInfo info = pm.getApplicationInfo(packageName, 0);
+        labels[i] = pm.getApplicationLabel(info);
+      } catch (PackageManager.NameNotFoundException e) {
+        labels[i] = packageName;
+      }
+    }
+    final int[] selected = new int[] {0};
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_quick_menu_apply_saved_current_pick_title)
+        .setSingleChoiceItems(
+            labels,
+            0,
+            (dialog, which) -> selected[0] = which)
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> {
+              if (selected[0] < 0 || selected[0] >= packages.size()) {
+                return;
+              }
+              String sourcePackage = packages.get(selected[0]);
+              List<String> actions =
+                  QuickMenuPreferences.getActionsForPackage(context, sourcePackage);
+              if (actions == null || actions.isEmpty()) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_quick_menu_apply_saved_current_failed), context);
+                return;
+              }
+              QuickMenuPreferences.saveActionsForPackage(context, currentPackage, actions);
+              PreferencesActivityUtils.announceText(
+                  getString(
+                      R.string.pref_quick_menu_apply_saved_current_announce,
+                      labels[selected[0]],
+                      currentLabel),
+                  context);
+              populateSavedApps(context);
+              updateAppLinkUi(context);
+            })
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
   }
 
   private List<String> collectSelectedActions() {

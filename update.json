@@ -1,12 +1,12 @@
 {
-  "tag_name": "v127",
-  "name": "v127",
-  "body": "Quick menu: export/import app menus to file (SAF).",
+  "tag_name": "v128",
+  "name": "v128",
+  "body": "Quick menu: apply saved app menu to current app.",
   "assets": [
     {
-      "name": "blindroid-127.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-127.apk",
-      "sha256": "533b61e89235710471f507a1c6ed5de071f0933811216b33c2d02204e81da91f",
+      "name": "blindroid-128.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-128.apk",
+      "sha256": "8119d8a0a0927ce339a9320d04a68a6e211ac7b0ccf893d416390b937e65a2fc",
       "size": 123067855
     }
   ]

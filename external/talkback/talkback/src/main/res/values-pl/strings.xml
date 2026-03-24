@@ -344,6 +344,12 @@
     <string name="pref_quick_menu_link_default_current_title">Powiąż domyślne z bieżącą aplikacją</string>
     <string name="pref_quick_menu_link_default_current_summary">Użyj domyślnego szybkiego menu dla %1$s</string>
     <string name="pref_quick_menu_link_default_current_announce">Powiązano domyślne szybkie menu dla %1$s</string>
+    <string name="pref_quick_menu_apply_saved_current_title">Zastosuj zapisane menu aplikacji</string>
+    <string name="pref_quick_menu_apply_saved_current_summary">Zastosuj zapisane menu aplikacji do %1$s</string>
+    <string name="pref_quick_menu_apply_saved_current_missing">Brak zapisanych menu aplikacji</string>
+    <string name="pref_quick_menu_apply_saved_current_pick_title">Wybierz zapisane menu</string>
+    <string name="pref_quick_menu_apply_saved_current_announce">Zastosowano menu %1$s do %2$s</string>
+    <string name="pref_quick_menu_apply_saved_current_failed">Nie udało się zastosować zapisanego menu</string>
     <string name="pref_quick_menu_actions_title">Akcje szybkiego menu</string>
     <string name="pref_quick_menu_reset_title">Resetuj szybkie menu</string>
     <string name="pref_quick_menu_reset_summary">Przywróć domyślne akcje szybkiego menu</string>
