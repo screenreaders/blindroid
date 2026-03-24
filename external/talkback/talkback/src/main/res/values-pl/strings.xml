@@ -309,6 +309,10 @@
     <string name="pref_quick_menu_unlink_current_missing">Brak nadpisania szybkiego menu dla tej aplikacji</string>
     <string name="pref_quick_menu_link_current_announce">Powiązano szybkie menu dla %1$s</string>
     <string name="pref_quick_menu_unlink_current_announce">Usunięto powiązanie szybkiego menu dla %1$s</string>
+    <string name="pref_quick_menu_use_current_default_title">Użyj bieżącej aplikacji jako domyślnej</string>
+    <string name="pref_quick_menu_use_current_default_summary">Ustaw domyślne szybkie menu na %1$s</string>
+    <string name="pref_quick_menu_use_current_default_missing">Najpierw powiąż szybkie menu</string>
+    <string name="pref_quick_menu_use_current_default_announce">Zaktualizowano domyślne szybkie menu z %1$s</string>
     <string name="pref_quick_menu_actions_title">Akcje szybkiego menu</string>
     <string name="pref_quick_menu_reset_title">Resetuj szybkie menu</string>
     <string name="pref_quick_menu_reset_summary">Przywróć domyślne akcje szybkiego menu</string>

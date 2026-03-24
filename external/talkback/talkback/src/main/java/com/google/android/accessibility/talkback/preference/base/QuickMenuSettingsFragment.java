@@ -46,6 +46,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private @Nullable CharSequence currentLabel;
   private Preference linkCurrentAppPreference;
   private Preference unlinkCurrentAppPreference;
+  private Preference useCurrentAsDefaultPreference;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -104,6 +105,16 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     appCategory.addPreference(unlinkCurrentAppPreference);
+
+    useCurrentAsDefaultPreference = new Preference(context);
+    useCurrentAsDefaultPreference.setKey(context.getString(R.string.pref_quick_menu_use_current_default_key));
+    useCurrentAsDefaultPreference.setTitle(R.string.pref_quick_menu_use_current_default_title);
+    useCurrentAsDefaultPreference.setOnPreferenceClickListener(
+        pref -> {
+          applyCurrentAsDefault(context);
+          return true;
+        });
+    appCategory.addPreference(useCurrentAsDefaultPreference);
 
     actionCategory = new PreferenceCategory(context);
     actionCategory.setTitle(R.string.pref_quick_menu_actions_title);
@@ -194,6 +205,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         unlinkCurrentAppPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
       }
       unlinkCurrentAppPreference.setEnabled(hasApp && linked);
+    }
+    if (useCurrentAsDefaultPreference != null) {
+      if (linked) {
+        useCurrentAsDefaultPreference.setSummary(
+            getString(R.string.pref_quick_menu_use_current_default_summary, currentLabel));
+      } else if (hasApp) {
+        useCurrentAsDefaultPreference.setSummary(R.string.pref_quick_menu_use_current_default_missing);
+      } else {
+        useCurrentAsDefaultPreference.setSummary(R.string.pref_quick_menu_link_current_missing);
+      }
+      useCurrentAsDefaultPreference.setEnabled(hasApp && linked);
     }
   }
 
@@ -329,6 +351,22 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     PreferencesActivityUtils.announceText(
         getString(R.string.pref_quick_menu_unlink_current_announce, currentLabel), context);
     updateAppLinkUi(context);
+  }
+
+  private void applyCurrentAsDefault(Context context) {
+    resolveCurrentApp(context);
+    if (TextUtils.isEmpty(currentPackage)) {
+      return;
+    }
+    List<String> actions = QuickMenuPreferences.getActionsForPackage(context, currentPackage);
+    if (actions == null || actions.isEmpty()) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_use_current_default_missing), context);
+      return;
+    }
+    QuickMenuPreferences.setGlobalActions(context, actions);
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_use_current_default_announce, currentLabel), context);
   }
 
   private List<String> collectSelectedActions() {

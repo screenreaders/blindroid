@@ -187,6 +187,25 @@ public final class QuickMenuPreferences {
     editor.apply();
   }
 
+  public static void setGlobalActions(Context context, List<String> actions) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    SharedPreferences.Editor editor = prefs.edit();
+    List<String> supported = getSupportedActions(context);
+    Set<String> enabled = new HashSet<>();
+    for (String action : actions) {
+      if (!TextUtils.isEmpty(action)
+          && !TextUtils.equals(action, context.getString(R.string.shortcut_value_unassigned))
+          && supported.contains(action)) {
+        enabled.add(action);
+      }
+    }
+    for (String actionKey : supported) {
+      editor.putBoolean(buildActionPrefKey(context, actionKey), enabled.contains(actionKey));
+    }
+    editor.putBoolean(context.getString(R.string.pref_quick_menu_customized_key), true);
+    editor.apply();
+  }
+
   public static boolean isCustomized(Context context, SharedPreferences prefs) {
     return prefs.getBoolean(context.getString(R.string.pref_quick_menu_customized_key), false);
   }
