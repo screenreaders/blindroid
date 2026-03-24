@@ -1709,15 +1709,16 @@ public class ImageCaptioner extends Handler
   }
 
   private void maybeAutoTranslate(String text, boolean isUserRequested) {
-    if (!isUserRequested) {
-      return;
-    }
     boolean autoTranslate =
         SharedPreferencesUtils.getBooleanPref(
             prefs,
             service.getResources(),
-            R.string.pref_auto_translate_captions_key,
-            R.bool.pref_auto_translate_captions_default);
+            isUserRequested
+                ? R.string.pref_auto_translate_captions_key
+                : R.string.pref_auto_translate_captions_auto_key,
+            isUserRequested
+                ? R.bool.pref_auto_translate_captions_default
+                : R.bool.pref_auto_translate_captions_auto_default);
     if (!autoTranslate || TextUtils.isEmpty(text)) {
       return;
     }

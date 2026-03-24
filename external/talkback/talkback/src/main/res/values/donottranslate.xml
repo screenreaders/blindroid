@@ -1526,6 +1526,7 @@
     <string name="pref_volume_key_shortcuts_category_key" translatable="false">pref_volume_key_shortcuts_category</string>
     <string name="pref_plugins_settings_key" translatable="false">pref_plugins_settings</string>
     <string name="pref_auto_translate_captions_key" translatable="false">pref_auto_translate_captions</string>
+    <string name="pref_auto_translate_captions_auto_key" translatable="false">pref_auto_translate_captions_auto</string>
     <string name="pref_auto_object_recognition_key" translatable="false">pref_auto_object_recognition</string>
     <string name="pref_auto_face_recognition_key" translatable="false">pref_auto_face_recognition</string>
     <string name="pref_auto_money_recognition_key" translatable="false">pref_auto_money_recognition</string>

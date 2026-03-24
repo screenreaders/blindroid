@@ -45,6 +45,7 @@
     <bool name="pref_clipboard_history_enabled_default">true</bool>
     <!-- Whether automatic caption results should be sent to translation apps. -->
     <bool name="pref_auto_translate_captions_default">false</bool>
+    <bool name="pref_auto_translate_captions_auto_default">false</bool>
     <!-- Whether automatic object recognition (image description) is enabled. -->
     <bool name="pref_auto_object_recognition_default">true</bool>
     <!-- Whether automatic face recognition is enabled. -->

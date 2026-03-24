@@ -626,6 +626,8 @@
 
     <string name="pref_auto_translate_captions_title">Auto translate descriptions</string>
     <string name="pref_auto_translate_captions_summary">Send manual OCR and image descriptions to a translator</string>
+    <string name="pref_auto_translate_captions_auto_title">Auto translate automatic captions</string>
+    <string name="pref_auto_translate_captions_auto_summary">Send automatic OCR and image descriptions to a translator</string>
     <string name="pref_auto_object_recognition_title">Automatic object recognition</string>
     <string name="pref_auto_object_recognition_summary">Describe objects when screen content changes</string>
     <string name="pref_auto_face_recognition_title">Automatic face recognition</string>

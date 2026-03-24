@@ -1,13 +1,13 @@
 {
-  "tag_name": "v116",
-  "name": "v116",
-  "body": "BlindReader: per-app quick menu profiles.",
+  "tag_name": "v117",
+  "name": "v117",
+  "body": "BlindReader: auto-translate automatic captions toggle.",
   "assets": [
     {
-      "name": "blindroid-116.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-116.apk",
-      "sha256": "c1d0e698e70c5230a9a5e5310599c8236253cecc15336b81886e2c7f80db46a1",
-      "size": 123067851
+      "name": "blindroid-117.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-117.apk",
+      "sha256": "32c2e82fb602cf90bae28753f1628fe3dc7695a68ab7867965c067290c8997d7",
+      "size": 123067855
     }
   ]
 }
