@@ -614,10 +614,16 @@
     <string name="pref_quick_menu_export_apps_summary">Share a JSON backup of app menus</string>
     <string name="pref_quick_menu_import_apps_title">Import app menus</string>
     <string name="pref_quick_menu_import_apps_summary">Paste a JSON backup to restore app menus</string>
+    <string name="pref_quick_menu_export_apps_file_title">Export app menus to file</string>
+    <string name="pref_quick_menu_export_apps_file_summary">Save a JSON file with app menus</string>
+    <string name="pref_quick_menu_import_apps_file_title">Import app menus from file</string>
+    <string name="pref_quick_menu_import_apps_file_summary">Load app menus from a JSON file</string>
     <string name="pref_quick_menu_export_apps_success">App menus ready to share</string>
     <string name="pref_quick_menu_export_apps_failed">App menus export failed</string>
     <string name="pref_quick_menu_import_apps_success">Imported %1$d app menus</string>
     <string name="pref_quick_menu_import_apps_failed">App menus import failed</string>
+    <string name="pref_quick_menu_export_apps_file_success">App menus saved</string>
+    <string name="pref_quick_menu_import_apps_file_success">Imported %1$d app menus from file</string>
     <string name="pref_quick_menu_app_category_title">Per-app quick menu</string>
     <string name="pref_quick_menu_link_current_title">Link current app</string>
     <string name="pref_quick_menu_link_current_summary">Save quick menu for %1$s</string>

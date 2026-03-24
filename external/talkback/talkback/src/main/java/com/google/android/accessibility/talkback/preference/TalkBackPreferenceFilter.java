@@ -166,6 +166,10 @@ public class TalkBackPreferenceFilter {
     QUICK_MENU_IMPORT_FILE(R.string.pref_quick_menu_import_file_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_EXPORT_APPS(R.string.pref_quick_menu_export_apps_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_IMPORT_APPS(R.string.pref_quick_menu_import_apps_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    QUICK_MENU_EXPORT_APPS_FILE(
+        R.string.pref_quick_menu_export_apps_file_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
+    QUICK_MENU_IMPORT_APPS_FILE(
+        R.string.pref_quick_menu_import_apps_file_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_APP_CATEGORY(R.string.pref_quick_menu_app_category_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_LINK_CURRENT(R.string.pref_quick_menu_link_current_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
     QUICK_MENU_UNLINK_CURRENT(R.string.pref_quick_menu_unlink_current_key, HIDDEN_ON_TV | HIDDEN_ON_WATCH),
