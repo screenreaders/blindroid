@@ -55,6 +55,8 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference useCurrentAsDefaultPreference;
   private Preference exportQuickMenuPreference;
   private Preference importQuickMenuPreference;
+  private Preference exportAppMenusPreference;
+  private Preference importAppMenusPreference;
   private Preference clearSavedAppsPreference;
   private Preference linkDefaultToCurrentPreference;
 
@@ -168,6 +170,28 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
     savedAppsCategory.setTitle(R.string.pref_quick_menu_saved_apps_title);
     savedAppsCategory.setKey(context.getString(R.string.pref_quick_menu_saved_apps_category_key));
     screen.addPreference(savedAppsCategory);
+
+    exportAppMenusPreference = new Preference(context);
+    exportAppMenusPreference.setKey(context.getString(R.string.pref_quick_menu_export_apps_key));
+    exportAppMenusPreference.setTitle(R.string.pref_quick_menu_export_apps_title);
+    exportAppMenusPreference.setSummary(R.string.pref_quick_menu_export_apps_summary);
+    exportAppMenusPreference.setOnPreferenceClickListener(
+        pref -> {
+          exportAppMenus(context);
+          return true;
+        });
+    savedAppsCategory.addPreference(exportAppMenusPreference);
+
+    importAppMenusPreference = new Preference(context);
+    importAppMenusPreference.setKey(context.getString(R.string.pref_quick_menu_import_apps_key));
+    importAppMenusPreference.setTitle(R.string.pref_quick_menu_import_apps_title);
+    importAppMenusPreference.setSummary(R.string.pref_quick_menu_import_apps_summary);
+    importAppMenusPreference.setOnPreferenceClickListener(
+        pref -> {
+          showImportAppMenusDialog(context);
+          return true;
+        });
+    savedAppsCategory.addPreference(importAppMenusPreference);
 
     clearSavedAppsPreference = new Preference(context);
     clearSavedAppsPreference.setKey(context.getString(R.string.pref_quick_menu_clear_saved_key));
@@ -287,6 +311,12 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       return;
     }
     savedAppsCategory.removeAll();
+    if (exportAppMenusPreference != null) {
+      savedAppsCategory.addPreference(exportAppMenusPreference);
+    }
+    if (importAppMenusPreference != null) {
+      savedAppsCategory.addPreference(importAppMenusPreference);
+    }
     if (clearSavedAppsPreference != null) {
       savedAppsCategory.addPreference(clearSavedAppsPreference);
     }
@@ -392,6 +422,104 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
         getString(R.string.pref_quick_menu_import_success), context);
   }
 
+  private void exportAppMenus(Context context) {
+    try {
+      JSONObject payload = new JSONObject();
+      payload.put("version", 1);
+      JSONObject apps = new JSONObject();
+      List<String> packages = QuickMenuPreferences.getLinkedPackages(context);
+      for (String packageName : packages) {
+        List<String> actions = QuickMenuPreferences.getActionsForPackage(context, packageName);
+        List<String> filtered = filterSupportedActions(context, actions);
+        JSONArray array = new JSONArray();
+        for (String action : filtered) {
+          array.put(action);
+        }
+        apps.put(packageName, array);
+      }
+      payload.put("apps", apps);
+      Intent share = new Intent(Intent.ACTION_SEND);
+      share.setType("application/json");
+      share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pref_quick_menu_export_apps_title));
+      share.putExtra(Intent.EXTRA_TEXT, payload.toString(2));
+      startActivity(Intent.createChooser(share, getString(R.string.pref_quick_menu_export_apps_title)));
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_apps_success), context);
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_apps_failed), context);
+    }
+  }
+
+  private void showImportAppMenusDialog(Context context) {
+    EditText input = new EditText(context);
+    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+    input.setMinLines(6);
+    input.setHint(getString(R.string.pref_quick_menu_import_apps_summary));
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_quick_menu_import_apps_title)
+        .setView(input)
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> importAppMenus(context, input.getText().toString()))
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void importAppMenus(Context context, String json) {
+    if (TextUtils.isEmpty(json)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_apps_failed), context);
+      return;
+    }
+    JSONObject root;
+    try {
+      root = new JSONObject(json);
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_apps_failed), context);
+      return;
+    }
+    JSONObject apps = root.optJSONObject("apps");
+    if (apps == null) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_apps_failed), context);
+      return;
+    }
+    int imported = 0;
+    JSONArray names = apps.names();
+    if (names != null) {
+      for (int i = 0; i < names.length(); i++) {
+        String packageName = names.optString(i, null);
+        if (TextUtils.isEmpty(packageName)) {
+          continue;
+        }
+        JSONArray actionsJson = apps.optJSONArray(packageName);
+        if (actionsJson == null) {
+          continue;
+        }
+        List<String> actions = new ArrayList<>();
+        for (int j = 0; j < actionsJson.length(); j++) {
+          String value = actionsJson.optString(j, null);
+          if (!TextUtils.isEmpty(value)) {
+            actions.add(value);
+          }
+        }
+        List<String> filtered = filterSupportedActions(context, actions);
+        QuickMenuPreferences.saveActionsForPackage(context, packageName, filtered);
+        imported++;
+      }
+    }
+    if (imported > 0) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_apps_success, imported), context);
+    } else {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_apps_failed), context);
+    }
+    populateSavedApps(context);
+  }
+
   private void showEditDialog(Context context, String packageName, CharSequence label) {
     List<String> supported = QuickMenuPreferences.getSupportedActions(context);
     String unassigned = context.getString(R.string.shortcut_value_unassigned);
@@ -475,6 +603,24 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       }
     }
     return sb.toString();
+  }
+
+  private List<String> filterSupportedActions(Context context, @Nullable List<String> actions) {
+    List<String> filtered = new ArrayList<>();
+    if (actions == null) {
+      return filtered;
+    }
+    List<String> supported = QuickMenuPreferences.getSupportedActions(context);
+    String unassigned = context.getString(R.string.shortcut_value_unassigned);
+    for (String action : actions) {
+      if (TextUtils.isEmpty(action)
+          || TextUtils.equals(action, unassigned)
+          || !supported.contains(action)) {
+        continue;
+      }
+      filtered.add(action);
+    }
+    return filtered;
   }
 
   private void resolveCurrentApp(Context context) {

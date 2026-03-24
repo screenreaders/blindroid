@@ -308,6 +308,14 @@
     <string name="pref_quick_menu_export_failed">Nie udało się wyeksportować szybkiego menu</string>
     <string name="pref_quick_menu_import_success">Zaimportowano szybkie menu</string>
     <string name="pref_quick_menu_import_failed">Nie udało się zaimportować szybkiego menu</string>
+    <string name="pref_quick_menu_export_apps_title">Eksportuj menu aplikacji</string>
+    <string name="pref_quick_menu_export_apps_summary">Udostępnij kopię JSON menu aplikacji</string>
+    <string name="pref_quick_menu_import_apps_title">Importuj menu aplikacji</string>
+    <string name="pref_quick_menu_import_apps_summary">Wklej kopię JSON, aby przywrócić menu aplikacji</string>
+    <string name="pref_quick_menu_export_apps_success">Menu aplikacji gotowe do udostępnienia</string>
+    <string name="pref_quick_menu_export_apps_failed">Nie udało się wyeksportować menu aplikacji</string>
+    <string name="pref_quick_menu_import_apps_success">Zaimportowano %1$d menu aplikacji</string>
+    <string name="pref_quick_menu_import_apps_failed">Nie udało się zaimportować menu aplikacji</string>
     <string name="pref_quick_menu_app_category_title">Szybkie menu dla aplikacji</string>
     <string name="pref_quick_menu_link_current_title">Powiąż bieżącą aplikację</string>
     <string name="pref_quick_menu_link_current_summary">Zapisz szybkie menu dla %1$s</string>
