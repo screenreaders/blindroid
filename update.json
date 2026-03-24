@@ -1,12 +1,12 @@
 {
-  "tag_name": "v135",
-  "name": "v135",
-  "body": "Quick menu: actions summary with enabled count.",
+  "tag_name": "v136",
+  "name": "v136",
+  "body": "Quick menu: view current actions list.",
   "assets": [
     {
-      "name": "blindroid-135.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-135.apk",
-      "sha256": "8065e179bcd91ec4a7bb655a8e258135d8341e01becbadfa5a365bb61cf45ac9",
+      "name": "blindroid-136.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-136.apk",
+      "sha256": "e8af3f429808d965d2932255af904d7d51cca427c20d213ca1bea103cd175093",
       "size": 123067855
     }
   ]

@@ -1523,6 +1523,7 @@
     <string name="pref_quick_menu_reset_key" translatable="false">pref_quick_menu_reset</string>
     <string name="pref_quick_menu_export_key" translatable="false">pref_quick_menu_export</string>
     <string name="pref_quick_menu_import_key" translatable="false">pref_quick_menu_import</string>
+    <string name="pref_quick_menu_view_current_key" translatable="false">pref_quick_menu_view_current</string>
     <string name="pref_quick_menu_export_file_key" translatable="false">pref_quick_menu_export_file</string>
     <string name="pref_quick_menu_import_file_key" translatable="false">pref_quick_menu_import_file</string>
     <string name="pref_quick_menu_export_apps_key" translatable="false">pref_quick_menu_export_apps</string>

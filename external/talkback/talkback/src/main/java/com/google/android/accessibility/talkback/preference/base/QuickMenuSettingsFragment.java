@@ -68,6 +68,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference importQuickMenuPreference;
   private Preference exportQuickMenuFilePreference;
   private Preference importQuickMenuFilePreference;
+  private Preference viewQuickMenuPreference;
   private Preference exportAppMenusPreference;
   private Preference importAppMenusPreference;
   private Preference exportAppMenusFilePreference;
@@ -208,6 +209,17 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     screen.addPreference(importQuickMenuPreference);
+
+    viewQuickMenuPreference = new Preference(context);
+    viewQuickMenuPreference.setKey(context.getString(R.string.pref_quick_menu_view_current_key));
+    viewQuickMenuPreference.setTitle(R.string.pref_quick_menu_view_current_title);
+    viewQuickMenuPreference.setSummary(R.string.pref_quick_menu_view_current_summary);
+    viewQuickMenuPreference.setOnPreferenceClickListener(
+        pref -> {
+          showCurrentQuickMenuDialog(context);
+          return true;
+        });
+    screen.addPreference(viewQuickMenuPreference);
 
     exportQuickMenuFilePreference = new Preference(context);
     exportQuickMenuFilePreference.setKey(context.getString(R.string.pref_quick_menu_export_file_key));
@@ -675,6 +687,31 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_quick_menu_import_failed), context);
     }
+  }
+
+  private void showCurrentQuickMenuDialog(Context context) {
+    List<String> actions = QuickMenuPreferences.getQuickMenuActions(context);
+    if (actions.isEmpty()) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_view_current_empty), context);
+      return;
+    }
+    StringBuilder message = new StringBuilder();
+    for (String action : actions) {
+      String label = QuickMenuPreferences.getActionLabel(context, action);
+      if (TextUtils.isEmpty(label)) {
+        continue;
+      }
+      if (message.length() > 0) {
+        message.append("\n");
+      }
+      message.append("• ").append(label);
+    }
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_quick_menu_view_current_title)
+        .setMessage(message.toString())
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
   }
 
   private boolean applyQuickMenuJson(Context context, String json) {
