@@ -170,6 +170,7 @@ public final class EventTypeNotificationStateChangedFeedbackRule {
               .setForceFeedbackEvenIfMicrophoneActive(isToastOrCall)
               .setForceFeedbackEvenIfSsbActive(false)
               .setForceFeedbackEvenIfPhoneCallActive(isToastOrCall)
+              .setTtsUseNotificationTts(true)
               .build();
         });
   }

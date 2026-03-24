@@ -43,6 +43,10 @@ public final class PluginRegistry {
     return ACTION_PREFIX + componentName.flattenToString();
   }
 
+  public static String buildActionKeyFromId(String actionId) {
+    return ACTION_PREFIX + actionId;
+  }
+
   @Nullable
   private static ComponentName parseActionKey(String actionKey) {
     if (!isPluginActionKey(actionKey)) {
@@ -53,6 +57,28 @@ public final class PluginRegistry {
       return null;
     }
     return ComponentName.unflattenFromString(value);
+  }
+
+  @Nullable
+  private static String resolveMetaString(Context context, ResolveInfo info, String key) {
+    if (info == null || info.activityInfo == null || info.activityInfo.metaData == null) {
+      return null;
+    }
+    Object raw = info.activityInfo.metaData.get(key);
+    if (raw instanceof String) {
+      return (String) raw;
+    }
+    if (raw instanceof Integer) {
+      int resId = (Integer) raw;
+      try {
+        return context.getPackageManager()
+            .getResourcesForApplication(info.activityInfo.packageName)
+            .getString(resId);
+      } catch (Exception e) {
+        return null;
+      }
+    }
+    return null;
   }
 
   public static List<PluginAction> getQuickActions(Context context) {
@@ -71,7 +97,11 @@ public final class PluginRegistry {
       ComponentName component =
           new ComponentName(info.activityInfo.packageName, info.activityInfo.name);
       String label = String.valueOf(info.loadLabel(pm));
-      actions.add(new PluginAction(buildActionKey(component), label, component));
+      String actionId =
+          resolveMetaString(context, info, PluginContract.META_ACTION_ID);
+      String key =
+          TextUtils.isEmpty(actionId) ? buildActionKey(component) : buildActionKeyFromId(actionId);
+      actions.add(new PluginAction(key, label, component));
     }
     actions.sort(Comparator.comparing(a -> a.label));
     return actions;

@@ -25,6 +25,20 @@
         android:key="@string/pref_speech_volume_key"
         android:summary="%s"
         android:title="@string/title_pref_speech_volume" />
+    <com.google.android.accessibility.utils.preference.AccessibilitySuiteListPreference
+        android:defaultValue="@string/pref_blindreader_tts_engine_default"
+        android:entries="@array/pref_tts_engine_entries"
+        android:entryValues="@array/pref_tts_engine_values"
+        android:key="@string/pref_blindreader_tts_engine_key"
+        android:summary="%s"
+        android:title="@string/pref_tts_engine_title" />
+    <com.google.android.accessibility.utils.preference.AccessibilitySuiteListPreference
+        android:defaultValue="@string/pref_blindreader_notification_tts_engine_default"
+        android:entries="@array/pref_tts_engine_entries"
+        android:entryValues="@array/pref_tts_engine_values"
+        android:key="@string/pref_blindreader_notification_tts_engine_key"
+        android:summary="%s"
+        android:title="@string/pref_notification_tts_engine_title" />
     <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
         android:key="@string/pref_tts_settings_key"
         android:title="@string/tts_preferences_title" />
@@ -136,6 +150,18 @@
           android:summary="%s"
           android:title="@string/pref_volume_key_shortcuts_down_title" />
     </com.google.android.accessibility.utils.preference.AccessibilitySuitePreferenceCategory>
+    <com.google.android.accessibility.utils.preference.AccessibilitySuiteListPreference
+        android:defaultValue="@string/pref_shake_to_read_threshold_default"
+        android:entries="@array/pref_shake_to_read_threshold_entries"
+        android:entryValues="@array/pref_shake_to_read_threshold_values"
+        android:key="@string/pref_shake_to_read_threshold_key"
+        android:summary="%s"
+        android:title="@string/pref_shake_sensitivity_title" />
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shake_action_default"
+        android:key="@string/pref_shake_action_key"
+        android:summary="%s"
+        android:title="@string/pref_shake_action_title" />
     <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
         android:defaultValue="@bool/pref_proximity_default"
         android:key="@string/pref_proximity_key"

@@ -54,6 +54,8 @@ public abstract class EventFeedback {
 
   public abstract Double ttsRate();
 
+  public abstract Boolean ttsUseNotificationTts();
+
   public abstract Boolean preventDeviceSleep();
 
   public abstract Boolean refreshSourceNode();
@@ -105,6 +107,9 @@ public abstract class EventFeedback {
     if (preventDeviceSleep()) {
       flags |= FeedbackItem.FLAG_NO_DEVICE_SLEEP;
     }
+    if (ttsUseNotificationTts()) {
+      flags |= FeedbackItem.FLAG_NOTIFICATION_TTS;
+    }
 
     return flags;
   }
@@ -130,6 +135,7 @@ public abstract class EventFeedback {
         StringBuilderUtils.optionalTag("ttsSkipDuplicate", ttsSkipDuplicate()),
         StringBuilderUtils.optionalDouble("ttsPitch", ttsPitch(), 1.0d),
         StringBuilderUtils.optionalDouble("ttsRate", ttsRate(), 1.0d),
+        StringBuilderUtils.optionalTag("ttsUseNotificationTts", ttsUseNotificationTts()),
         StringBuilderUtils.optionalTag("advanceContinuousReading", advanceContinuousReading()),
         StringBuilderUtils.optionalTag("preventDeviceSleep", preventDeviceSleep()),
         StringBuilderUtils.optionalTag("refreshSourceNode", refreshSourceNode()),
@@ -154,6 +160,7 @@ public abstract class EventFeedback {
         .setTtsSkipDuplicate(false)
         .setTtsPitch(1.0d)
         .setTtsRate(1.0d)
+        .setTtsUseNotificationTts(false)
         .setAdvanceContinuousReading(false)
         .setPreventDeviceSleep(false)
         .setRefreshSourceNode(false)
@@ -192,6 +199,8 @@ public abstract class EventFeedback {
     public abstract Builder setTtsPitch(double value);
 
     public abstract Builder setTtsRate(double value);
+
+    public abstract Builder setTtsUseNotificationTts(Boolean value);
 
     public abstract Builder setPreventDeviceSleep(Boolean value);
 

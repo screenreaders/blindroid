@@ -1,12 +1,12 @@
 {
-  "tag_name": "v140",
-  "name": "v140",
-  "body": "Gesture macros: export/import now includes enabled state.",
+  "tag_name": "v141",
+  "name": "v141",
+  "body": "BlindReader: selectable TTS engines (main + notifications), shake actions, OCR auto-translate, AI offline fallback, and new plugin/AI privacy docs.",
   "assets": [
     {
-      "name": "blindroid-140.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-140.apk",
-      "sha256": "b1771d85971d7be60f27d4b01db766548a6913e0864b822c928c0e805d988a7f",
+      "name": "blindroid-141.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-141.apk",
+      "sha256": "c86ba6d7a63ad1cc415f96c213e96588c4988eb43197e7108113cfd16c7b8314",
       "size": 123067855
     }
   ]

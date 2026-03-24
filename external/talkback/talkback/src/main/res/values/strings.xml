@@ -79,6 +79,11 @@
       Description: This is presented to the user when managing Text to speech settings. [CHAR LIMIT=NONE]
     -->
     <string name="tts_preferences_title">Text-to-speech settings</string>
+    <string name="pref_tts_engine_title">Speech engine</string>
+    <string name="pref_tts_engine_summary">Choose the speech engine used by BlindReader.</string>
+    <string name="pref_notification_tts_engine_title">Notification speech engine</string>
+    <string name="pref_notification_tts_engine_summary">Choose the engine used for notification announcements.</string>
+    <string name="pref_tts_engine_system_default">System default</string>
     <!--
       Source: Title for the menu item that opens the dialog with TTS  languages installed by the user.
       Description: This is presented to the user. [CHAR LIMIT=NONE]
@@ -89,6 +94,12 @@
     Description: This is presented to the user. [CHAR LIMIT="70"]
     -->
     <string name="spoken_language">Spoken language</string>
+    <string name="pref_shake_action_title">Shake action</string>
+    <string name="pref_shake_action_summary">Action performed when you shake the device.</string>
+    <string name="pref_shake_sensitivity_title">Shake sensitivity</string>
+    <string name="pref_shake_sensitivity_summary">How strongly you need to shake to trigger the action.</string>
+    <string name="pref_auto_translate_ocr_title">Auto-translate OCR text</string>
+    <string name="pref_auto_translate_ocr_summary">Send OCR text to your translation app automatically.</string>
     <!--
     Source: Title for the menu item of BlindReader Menu that presents actions which can be performed by the user.
     Description: This is presented to the user. [CHAR_LIMIT=70]
@@ -470,6 +481,7 @@
     <string name="title_pref_gemini_read_screen_haptic">Read screen haptic feedback</string>
     <!-- Summary for read screen haptic feedback. [CHAR_LIMIT=NONE] -->
     <string name="summary_pref_gemini_read_screen_haptic">Vibrate when read screen starts</string>
+    <string name="read_screen_ai_unavailable_fallback">AI is unavailable. Reading screen content.</string>
     <!-- Default summary prompt for read screen. [CHAR_LIMIT=NONE] -->
     <string name="gemini_read_screen_summary_prompt">Summarize this screen for a blind user. Provide a short overview and key controls.</string>
     <!-- Preference for gesture macro settings. [CHAR_LIMIT=40] -->

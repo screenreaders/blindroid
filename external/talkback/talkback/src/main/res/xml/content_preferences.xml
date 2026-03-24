@@ -6,6 +6,11 @@
       android:key="@string/pref_read_all_auto_ocr_key"
       android:title="@string/pref_read_all_auto_ocr_title"
       android:summary="@string/pref_read_all_auto_ocr_summary" />
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_auto_translate_ocr_default"
+      android:key="@string/pref_auto_translate_ocr_key"
+      android:title="@string/pref_auto_translate_ocr_title"
+      android:summary="@string/pref_auto_translate_ocr_summary" />
 
   <ListPreference
       android:defaultValue="@string/pref_read_all_filter_default"

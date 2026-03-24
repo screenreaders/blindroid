@@ -167,6 +167,9 @@ public class FailoverTextToSpeech {
   /** The package name of the preferred TTS engine. */
   private String mDefaultTtsEngine;
 
+  /** The package name of the app-selected TTS engine. */
+  private @Nullable String mPreferredTtsEngine;
+
   /** The package name of the system TTS engine. */
   private String mSystemTtsEngine;
 
@@ -817,10 +820,11 @@ public class FailoverTextToSpeech {
     }
 
     if (Intent.ACTION_MEDIA_MOUNTED.equals(action)) {
-      if (!TextUtils.equals(mDefaultTtsEngine, mTtsEngine)) {
-        // Try to switch back to the default engine.
+      String targetEngine = getPreferredOrDefaultEngine();
+      if (!TextUtils.isEmpty(targetEngine) && !TextUtils.equals(targetEngine, mTtsEngine)) {
+        // Try to switch back to the preferred/default engine.
         LogUtils.v(TAG, "Saw media mount");
-        setTtsEngine(mDefaultTtsEngine, true);
+        setTtsEngine(targetEngine, true);
       }
     }
   }
@@ -839,15 +843,33 @@ public class FailoverTextToSpeech {
     mDefaultTtsEngine = Secure.getString(resolver, Secure.TTS_DEFAULT_SYNTH);
 
     // Switch engines when the system default changes and it's not the current engine.
-    if (mTtsEngine == null || !mTtsEngine.equals(mDefaultTtsEngine)) {
-      if (mInstalledTtsEngines.contains(mDefaultTtsEngine)) {
-        // Can load the default engine.
-        setTtsEngine(mDefaultTtsEngine, true);
-      } else if (!mInstalledTtsEngines.isEmpty()) {
-        // We'll take whatever TTS we can get.
-        setTtsEngine(mInstalledTtsEngines.get(0), true);
-      }
+    String targetEngine = getPreferredOrDefaultEngine();
+    if (!TextUtils.isEmpty(targetEngine) && (mTtsEngine == null || !mTtsEngine.equals(targetEngine))) {
+      setTtsEngine(targetEngine, true);
     }
+  }
+
+  public void setPreferredTtsEngine(@Nullable String preferredEngine) {
+    String normalized = TextUtils.isEmpty(preferredEngine) ? null : preferredEngine;
+    if (TextUtils.equals(mPreferredTtsEngine, normalized)) {
+      return;
+    }
+    mPreferredTtsEngine = normalized;
+    updateDefaultEngine();
+  }
+
+  public @Nullable String getPreferredTtsEngine() {
+    return mPreferredTtsEngine;
+  }
+
+  private @Nullable String getPreferredOrDefaultEngine() {
+    if (!TextUtils.isEmpty(mPreferredTtsEngine) && mInstalledTtsEngines.contains(mPreferredTtsEngine)) {
+      return mPreferredTtsEngine;
+    }
+    if (!TextUtils.isEmpty(mDefaultTtsEngine) && mInstalledTtsEngines.contains(mDefaultTtsEngine)) {
+      return mDefaultTtsEngine;
+    }
+    return mInstalledTtsEngines.isEmpty() ? null : mInstalledTtsEngines.get(0);
   }
 
   /**

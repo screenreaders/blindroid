@@ -582,6 +582,9 @@ public class TalkBackService extends AccessibilityService
   /** Tracks changes to audio output and provides information on what types of audio are playing. */
   private AudioPlaybackMonitor audioPlaybackMonitor;
 
+  /** Detects hardware shake gestures for quick actions. */
+  private @Nullable com.google.android.accessibility.talkback.hardware.ShakeDetector shakeDetector;
+
   /** Manages screen dimming */
   private DimScreenActor dimScreenController;
 
@@ -827,6 +830,10 @@ public class TalkBackService extends AccessibilityService
     if (ipcClientCallback != null) {
       ipcClientCallback.notifyServerOnDestroyIfNecessary();
       ipcClientCallback.clearServerOnDestroyListener();
+    }
+
+    if (shakeDetector != null) {
+      shakeDetector.stop();
     }
 
     super.onDestroy();
@@ -1893,6 +1900,24 @@ public class TalkBackService extends AccessibilityService
     menuManager.setGestureController(gestureController);
     processorVolumeStream.setGestureController(gestureController);
 
+    if (shakeDetector == null) {
+      shakeDetector =
+          new com.google.android.accessibility.talkback.hardware.ShakeDetector(
+              this,
+              () -> {
+                if (gestureController == null || prefs == null) {
+                  return;
+                }
+                String action =
+                    prefs.getString(
+                        getString(R.string.pref_shake_action_key),
+                        getString(R.string.pref_shake_action_default));
+                if (!TextUtils.isEmpty(action)) {
+                  gestureController.performAction(action, EVENT_ID_UNTRACKED);
+                }
+              });
+    }
+
     audioPlaybackMonitor = new AudioPlaybackMonitor(this);
 
     // Add event processors. These will process incoming AccessibilityEvents
@@ -2405,6 +2430,9 @@ public class TalkBackService extends AccessibilityService
     if (floatingMenuController != null) {
       floatingMenuController.shutdown();
     }
+    if (shakeDetector != null) {
+      shakeDetector.stop();
+    }
 
     interruptAllFeedback(/* stopTtsSpeechCompletely */ false);
 
@@ -2618,6 +2646,7 @@ public class TalkBackService extends AccessibilityService
         prefs.getInt(res.getString(R.string.pref_dump_event_mask_key), 0));
 
     proximitySensorListener.reloadSilenceOnProximity();
+    updateShakeDetector();
     reloadPreferenceLogLevel();
 
     final boolean useSingleTap =
@@ -2735,6 +2764,20 @@ public class TalkBackService extends AccessibilityService
         SharedPreferencesUtils.getFloatFromStringPref(
             prefs, res, R.string.pref_speech_rate_key, R.string.pref_speech_rate_default);
     pipeline.setSpeechRate(speechRate);
+    String ttsEngine =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            res,
+            R.string.pref_blindreader_tts_engine_key,
+            R.string.pref_blindreader_tts_engine_default);
+    speechController.setPreferredTtsEngine(ttsEngine);
+    String notificationTtsEngine =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            res,
+            R.string.pref_blindreader_notification_tts_engine_key,
+            R.string.pref_blindreader_notification_tts_engine_default);
+    speechController.setPreferredNotificationTtsEngine(notificationTtsEngine);
     int onScreenKeyboardPref = VerbosityPreferences.readOnScreenKeyboardEcho(prefs, getResources());
     textEventInterpreter.setOnScreenKeyboardEcho(onScreenKeyboardPref);
 
@@ -2872,6 +2915,45 @@ public class TalkBackService extends AccessibilityService
     }
 
     FocusIndicatorUtils.applyFocusAppearancePreference(this, prefs, res);
+  }
+
+  private void updateShakeDetector() {
+    if (shakeDetector == null || prefs == null) {
+      return;
+    }
+    if (!shakeDetector.isSupported()) {
+      shakeDetector.stop();
+      return;
+    }
+    String thresholdValue =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_shake_to_read_threshold_key,
+            R.string.pref_shake_to_read_threshold_default);
+    int threshold;
+    try {
+      threshold = Integer.parseInt(thresholdValue);
+    } catch (NumberFormatException e) {
+      threshold = -1;
+    }
+    String action =
+        SharedPreferencesUtils.getStringPref(
+            prefs,
+            getResources(),
+            R.string.pref_shake_action_key,
+            R.string.pref_shake_action_default);
+    boolean enabled =
+        threshold > 0
+            && !TextUtils.isEmpty(action)
+            && !TextUtils.equals(action, getString(R.string.shortcut_value_unassigned));
+    if (!enabled) {
+      shakeDetector.stop();
+      return;
+    }
+    float thresholdG = Math.max(1.1f, threshold / 100f);
+    shakeDetector.setThresholdG(thresholdG);
+    shakeDetector.start();
   }
 
   private void handleFloatingMenuAction() {

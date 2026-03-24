@@ -80,6 +80,7 @@ public final class HeadsUpNotificationAppearedFeedbackRule {
               .setForceFeedbackEvenIfMicrophoneActive(true)
               .setForceFeedbackEvenIfSsbActive(false)
               .setForceFeedbackEvenIfPhoneCallActive(true)
+              .setTtsUseNotificationTts(true)
               .build();
         });
   }

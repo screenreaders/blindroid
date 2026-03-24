@@ -171,6 +171,7 @@ public class SpeechControllerImpl implements SpeechController {
 
   /** The text-to-speech service, used for speaking. */
   private final FailoverTextToSpeech mFailoverTts;
+  private final FailoverTextToSpeech mNotificationFailoverTts;
 
   private final boolean removeUnnecessarySpans;
 
@@ -266,6 +267,7 @@ public class SpeechControllerImpl implements SpeechController {
         delegate,
         feedbackController,
         new FailoverTextToSpeech(context),
+        new FailoverTextToSpeech(context),
         /* removeUnnecessarySpans= */ false);
   }
 
@@ -280,6 +282,7 @@ public class SpeechControllerImpl implements SpeechController {
         delegate,
         feedbackController,
         new FailoverTextToSpeech(context, cacheTtsLocale),
+        new FailoverTextToSpeech(context, cacheTtsLocale),
         removeUnnecessarySpans);
   }
 
@@ -289,6 +292,7 @@ public class SpeechControllerImpl implements SpeechController {
       Delegate delegate,
       FeedbackController feedbackController,
       FailoverTextToSpeech failOverTts,
+      FailoverTextToSpeech notificationFailOverTts,
       boolean removeUnnecessarySpans) {
     mContext = context;
     mDelegate = delegate;
@@ -296,7 +300,39 @@ public class SpeechControllerImpl implements SpeechController {
     mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
     mFailoverTts = failOverTts;
-    mFailoverTts.addListener(
+    mNotificationFailoverTts = notificationFailOverTts;
+    attachFailoverTtsListeners(mFailoverTts, /* announceEngineChanges= */ true);
+    attachFailoverTtsListeners(mNotificationFailoverTts, /* announceEngineChanges= */ false);
+
+    mFeedbackController = feedbackController;
+    mInjectFullScreenReadCallbacks = false;
+    this.removeUnnecessarySpans = removeUnnecessarySpans;
+  }
+
+  @VisibleForTesting
+  public SpeechControllerImpl(
+      Context context,
+      Delegate delegate,
+      FeedbackController feedbackController,
+      FailoverTextToSpeech failOverTts,
+      boolean removeUnnecessarySpans) {
+    this(
+        context,
+        delegate,
+        feedbackController,
+        failOverTts,
+        new FailoverTextToSpeech(context),
+        removeUnnecessarySpans);
+  }
+
+  @Override
+  public void setTTSChangeAnnouncementEnabled(boolean enabled) {
+    ttsChangeAnnouncementEnabled = enabled;
+  }
+
+  private void attachFailoverTtsListeners(
+      FailoverTextToSpeech tts, boolean announceEngineChanges) {
+    tts.addListener(
         new FailoverTextToSpeech.FailoverTtsListener() {
           @Override
           public void onBeforeUtteranceRequested(
@@ -306,7 +342,11 @@ public class SpeechControllerImpl implements SpeechController {
 
           @Override
           public void onTtsInitialized(boolean wasSwitchingEngines, String enginePackageName) {
-            SpeechControllerImpl.this.onTtsInitialized(wasSwitchingEngines);
+            if (announceEngineChanges) {
+              SpeechControllerImpl.this.onTtsInitialized(wasSwitchingEngines);
+            } else {
+              SpeechControllerImpl.this.onNotificationTtsInitialized(wasSwitchingEngines);
+            }
           }
 
           @Override
@@ -326,15 +366,6 @@ public class SpeechControllerImpl implements SpeechController {
                 utteranceId, success, true /* advance */, true /* notifyObserver */);
           }
         });
-
-    mFeedbackController = feedbackController;
-    mInjectFullScreenReadCallbacks = false;
-    this.removeUnnecessarySpans = removeUnnecessarySpans;
-  }
-
-  @Override
-  public void setTTSChangeAnnouncementEnabled(boolean enabled) {
-    ttsChangeAnnouncementEnabled = enabled;
   }
 
   /**
@@ -451,6 +482,7 @@ public class SpeechControllerImpl implements SpeechController {
   public void setHandleTtsCallbackInMainThread(boolean shouldHandleInMainThread) {
     mShouldHandleTtsCallBackInMainThread = shouldHandleInMainThread;
     mFailoverTts.setHandleTtsCallbackInMainThread(shouldHandleInMainThread);
+    mNotificationFailoverTts.setHandleTtsCallbackInMainThread(shouldHandleInMainThread);
   }
 
   /**
@@ -477,6 +509,22 @@ public class SpeechControllerImpl implements SpeechController {
   public void updateTtsEngine(boolean quiet) {
     mSkipNextTTSChangeAnnouncement = quiet;
     mFailoverTts.updateDefaultEngine();
+  }
+
+  public void updateNotificationTtsEngine(boolean quiet) {
+    mNotificationFailoverTts.updateDefaultEngine();
+  }
+
+  public void setPreferredTtsEngine(@Nullable String enginePackage) {
+    mFailoverTts.setPreferredTtsEngine(enginePackage);
+  }
+
+  public void setPreferredNotificationTtsEngine(@Nullable String enginePackage) {
+    mNotificationFailoverTts.setPreferredTtsEngine(enginePackage);
+  }
+
+  public FailoverTextToSpeech getNotificationFailoverTts() {
+    return mNotificationFailoverTts;
   }
 
   /**
@@ -1155,7 +1203,8 @@ public class SpeechControllerImpl implements SpeechController {
     }
 
     // If TTS isn't ready, this should be the only item in the queue.
-    if (!mFailoverTts.isReady()) {
+    FailoverTextToSpeech ttsForItem = getFailoverTtsForItem(item);
+    if (!ttsForItem.isReady()) {
       LogUtils.e(
           TAG, "TTS is not ready. Attempted to speak before TTS was initialized. Item: " + item);
       return;
@@ -1428,9 +1477,11 @@ public class SpeechControllerImpl implements SpeechController {
     if (stopTtsSpeechCompletely) {
       // Stop all TTS audios.
       mFailoverTts.stopAll();
+      mNotificationFailoverTts.stopAll();
     } else {
       // Stop TTS audio from TalkBack.
       mFailoverTts.stopFromTalkBack();
+      mNotificationFailoverTts.stopFromTalkBack();
     }
   }
 
@@ -1467,6 +1518,7 @@ public class SpeechControllerImpl implements SpeechController {
       mCurrentFeedbackItem = null;
       requestPause = true;
       mFailoverTts.stopFromTalkBack();
+      mNotificationFailoverTts.stopFromTalkBack();
     }
   }
 
@@ -1487,6 +1539,7 @@ public class SpeechControllerImpl implements SpeechController {
     interrupt(false /* stopTtsSpeechCompletely */);
 
     mFailoverTts.shutdown();
+    mNotificationFailoverTts.shutdown();
 
     setOverlayEnabled(false);
   }
@@ -1580,6 +1633,15 @@ public class SpeechControllerImpl implements SpeechController {
   private boolean shouldSilenceSpeechWhenPhoneCallActive(FeedbackItem item) {
     return !item.hasFlag(FeedbackItem.FLAG_FORCE_FEEDBACK_EVEN_IF_PHONE_CALL_ACTIVE)
         && mDelegate.isPhoneCallActive();
+  }
+
+  private FailoverTextToSpeech getFailoverTtsForItem(@Nullable FeedbackItem item) {
+    if (item != null
+        && item.hasFlag(FeedbackItem.FLAG_NOTIFICATION_TTS)
+        && mNotificationFailoverTts.isReady()) {
+      return mNotificationFailoverTts;
+    }
+    return mFailoverTts;
   }
 
   /**
@@ -1746,7 +1808,8 @@ public class SpeechControllerImpl implements SpeechController {
     // It's okay if the utterance is empty, the fail-over TTS will
     // immediately call the fragment completion listener. This process is
     // important for things like continuous reading.
-    mFailoverTts.speak(
+    getFailoverTtsForItem(feedbackItem)
+        .speak(
         text,
         locale,
         pitch,
@@ -2186,6 +2249,22 @@ public class SpeechControllerImpl implements SpeechController {
     mSkipNextTTSChangeAnnouncement = false;
   }
 
+  private void onNotificationTtsInitialized(boolean wasSwitchingEngines) {
+    mDelegate.onTtsReady();
+    if (mCurrentFeedbackItem != null) {
+      onFragmentCompleted(
+          mCurrentFeedbackItem.getUtteranceId(),
+          false /* success */,
+          false /* advance */,
+          true /* notifyObserver */);
+      mCurrentFeedbackItem = null;
+    }
+
+    if (!feedbackQueue.isEmpty()) {
+      speakNextItem();
+    }
+  }
+
   private void runUtteranceCompleteRunnable(
       @NonNull UtteranceCompleteRunnable runnable, int status) {
     CompletionRunner runner = new CompletionRunner(runnable, status);
@@ -2257,6 +2336,8 @@ public class SpeechControllerImpl implements SpeechController {
   private void dumpLanguages(Logger dumpLogger) {
     dumpLogger.log(" supported languages=%s", getLanguages());
     getFailoverTts().dump(dumpLogger);
+    dumpLogger.log(" notification TTS:");
+    getNotificationFailoverTts().dump(dumpLogger);
   }
 
   /**

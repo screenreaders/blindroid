@@ -46,8 +46,19 @@
     <string name="per_app_gesture_set_unavailable">Bieżąca aplikacja jest niedostępna.</string>
     <string name="per_app_gesture_set_switched">Zestaw gestów dla bieżącej aplikacji: %1$s</string>
   <string name="tts_preferences_title">Ustawienia zamiany tekstu na mowę</string>
+  <string name="pref_tts_engine_title">Silnik mowy</string>
+  <string name="pref_tts_engine_summary">Wybierz silnik mowy używany przez BlindReader.</string>
+  <string name="pref_notification_tts_engine_title">Silnik mowy dla powiadomień</string>
+  <string name="pref_notification_tts_engine_summary">Wybierz silnik używany do ogłaszania powiadomień.</string>
+  <string name="pref_tts_engine_system_default">Domyślny systemu</string>
   <string name="language_options">Języki</string>
   <string name="spoken_language">Język wypowiedzi</string>
+  <string name="pref_shake_action_title">Akcja potrząśnięcia</string>
+  <string name="pref_shake_action_summary">Akcja wykonywana po potrząśnięciu urządzeniem.</string>
+  <string name="pref_shake_sensitivity_title">Czułość potrząśnięcia</string>
+  <string name="pref_shake_sensitivity_summary">Jak mocno trzeba potrząsnąć, aby uruchomić akcję.</string>
+  <string name="pref_auto_translate_ocr_title">Automatyczne tłumaczenie tekstu OCR</string>
+  <string name="pref_auto_translate_ocr_summary">Automatycznie wysyłaj tekst OCR do aplikacji tłumaczącej.</string>
   <string name="actions">Działania</string>
   <string name="system_actions">Działania systemowe</string>
   <string name="talkback_preferences_subtitle">Wersja %1$s</string>
@@ -195,6 +206,7 @@
   <string name="pref_gemini_read_screen_style_summary">Podsumowanie</string>
   <string name="title_pref_gemini_read_screen_haptic">Wibracje przy czytaniu ekranu</string>
   <string name="summary_pref_gemini_read_screen_haptic">Wibracja po uruchomieniu czytania ekranu</string>
+  <string name="read_screen_ai_unavailable_fallback">AI jest niedostępne. Czytam zawartość ekranu.</string>
   <string name="gemini_read_screen_summary_prompt">Streszcz ten ekran dla osoby niewidomej. Podaj krótki opis i najważniejsze elementy.</string>
   <string name="pref_gesture_macro_settings_title">Makra gestów</string>
   <string name="pref_gesture_macro_settings_summary">Twórz sekwencje akcji i przypisuj je do gestów</string>

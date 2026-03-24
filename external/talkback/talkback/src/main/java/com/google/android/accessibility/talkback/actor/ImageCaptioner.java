@@ -1696,6 +1696,7 @@ public class ImageCaptioner extends Handler
                 service, imageDescriptionResult, iconLabelResult, ocrTextResult);
     returnFeedback(result);
     maybeAutoTranslate(result, isUserRequested);
+    maybeAutoTranslateOcrText(ocrTextResult);
   }
 
   private void returnFeedback(@StringRes int text) {
@@ -1722,6 +1723,26 @@ public class ImageCaptioner extends Handler
     if (!autoTranslate || TextUtils.isEmpty(text)) {
       return;
     }
+    launchTranslateIntent(text);
+  }
+
+  private void maybeAutoTranslateOcrText(@Nullable Result ocrTextResult) {
+    if (Result.isEmpty(ocrTextResult) || TextUtils.isEmpty(ocrTextResult.text())) {
+      return;
+    }
+    boolean autoTranslate =
+        SharedPreferencesUtils.getBooleanPref(
+            prefs,
+            service.getResources(),
+            R.string.pref_auto_translate_ocr_key,
+            R.bool.pref_auto_translate_ocr_default);
+    if (!autoTranslate) {
+      return;
+    }
+    launchTranslateIntent(ocrTextResult.text().toString());
+  }
+
+  private void launchTranslateIntent(String text) {
     Intent intent = new Intent(Intent.ACTION_PROCESS_TEXT);
     intent.setType("text/plain");
     intent.putExtra(Intent.EXTRA_PROCESS_TEXT, text);

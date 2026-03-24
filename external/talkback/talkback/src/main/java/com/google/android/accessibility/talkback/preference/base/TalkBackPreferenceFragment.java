@@ -18,8 +18,8 @@ package com.google.android.accessibility.talkback.preference.base;
 import static com.google.android.accessibility.talkback.preference.PreferencesActivityUtils.HELP_URL;
 import static com.google.android.accessibility.talkback.trainingcommon.TrainingUtils.GUP_SUPPORT_PORTAL_URL;
 
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -29,6 +29,8 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
+import android.text.TextUtils;
 import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
@@ -56,6 +58,9 @@ import com.google.android.accessibility.utils.PackageManagerUtils;
 import com.google.android.accessibility.utils.PreferenceSettingsUtils;
 import com.google.android.accessibility.utils.SettingsUtils;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -98,6 +103,8 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
 
     fixListSummaries(getPreferenceScreen());
     setupGestureSetShortcuts();
+    setupTtsEnginePreferences();
+    setupShakeActionPreferences();
 
     HatsRequesterViewModel viewModel =
         new ViewModelProvider(getActivity()).get(HatsRequesterViewModel.class);
@@ -440,6 +447,113 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
       newFeatureIntent = OnboardingInitiator.createOnboardingIntentForSettings(context);
     }
     prefNewFeatures.setIntent(newFeatureIntent);
+  }
+
+  private void setupTtsEnginePreferences() {
+    ListPreference ttsEnginePreference =
+        (ListPreference) findPreferenceByResId(R.string.pref_blindreader_tts_engine_key);
+    ListPreference notificationEnginePreference =
+        (ListPreference) findPreferenceByResId(R.string.pref_blindreader_notification_tts_engine_key);
+    if (ttsEnginePreference == null && notificationEnginePreference == null) {
+      return;
+    }
+
+    List<TtsEngineEntry> engines = getInstalledTtsEngines(context);
+    List<CharSequence> entries = new ArrayList<>();
+    List<String> values = new ArrayList<>();
+    entries.add(getString(R.string.pref_tts_engine_system_default));
+    values.add("");
+    for (TtsEngineEntry entry : engines) {
+      entries.add(entry.label);
+      values.add(entry.packageName);
+    }
+
+    if (ttsEnginePreference != null) {
+      configureEnginePreference(
+          ttsEnginePreference,
+          entries,
+          values,
+          getString(R.string.pref_blindreader_tts_engine_default));
+    }
+    if (notificationEnginePreference != null) {
+      configureEnginePreference(
+          notificationEnginePreference,
+          entries,
+          values,
+          getString(R.string.pref_blindreader_notification_tts_engine_default));
+    }
+  }
+
+  private void configureEnginePreference(
+      ListPreference preference,
+      List<CharSequence> entries,
+      List<String> values,
+      String defaultValue) {
+    preference.setEntries(entries.toArray(new CharSequence[0]));
+    preference.setEntryValues(values.toArray(new CharSequence[0]));
+    preference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+    String value = preference.getValue();
+    if (TextUtils.isEmpty(value) || !values.contains(value)) {
+      preference.setValue(defaultValue);
+    }
+  }
+
+  private List<TtsEngineEntry> getInstalledTtsEngines(Context context) {
+    PackageManager pm = context.getPackageManager();
+    Intent intent = new Intent(TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE);
+    List<ResolveInfo> resolveInfos = pm.queryIntentServices(intent, PackageManager.MATCH_DEFAULT_ONLY);
+    if (resolveInfos == null || resolveInfos.isEmpty()) {
+      return Collections.emptyList();
+    }
+    List<TtsEngineEntry> entries = new ArrayList<>();
+    for (ResolveInfo info : resolveInfos) {
+      if (info.serviceInfo == null) {
+        continue;
+      }
+      String packageName = info.serviceInfo.packageName;
+      CharSequence label = info.loadLabel(pm);
+      if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(label)) {
+        continue;
+      }
+      entries.add(new TtsEngineEntry(packageName, label));
+    }
+    entries.sort(Comparator.comparing(entry -> entry.label.toString().toLowerCase()));
+    return entries;
+  }
+
+  private void setupShakeActionPreferences() {
+    ListPreference thresholdPreference =
+        (ListPreference) findPreferenceByResId(R.string.pref_shake_to_read_threshold_key);
+    Preference actionPreference = findPreferenceByResId(R.string.pref_shake_action_key);
+    if (thresholdPreference == null || actionPreference == null) {
+      return;
+    }
+    updateShakeActionEnabled(thresholdPreference, actionPreference);
+    thresholdPreference.setOnPreferenceChangeListener(
+        (pref, newValue) -> {
+          String value = newValue == null ? "" : newValue.toString();
+          updateShakeActionEnabled(value, actionPreference);
+          return true;
+        });
+  }
+
+  private void updateShakeActionEnabled(ListPreference thresholdPreference, Preference actionPreference) {
+    updateShakeActionEnabled(thresholdPreference.getValue(), actionPreference);
+  }
+
+  private void updateShakeActionEnabled(String thresholdValue, Preference actionPreference) {
+    boolean enabled = !TextUtils.isEmpty(thresholdValue) && !TextUtils.equals(thresholdValue, "-1");
+    actionPreference.setEnabled(enabled);
+  }
+
+  private static final class TtsEngineEntry {
+    final String packageName;
+    final CharSequence label;
+
+    TtsEngineEntry(String packageName, CharSequence label) {
+      this.packageName = packageName;
+      this.label = label;
+    }
   }
 
   private void updateSurveyOption() {

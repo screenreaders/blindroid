@@ -85,6 +85,7 @@ import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.TalkBackService;
 import com.google.android.accessibility.talkback.actor.gemini.GeminiConfiguration;
 import com.google.android.accessibility.talkback.actor.gemini.GeminiFunctionUtils;
+import com.google.android.accessibility.talkback.actor.gemini.GeminiPrefs;
 import com.google.android.accessibility.talkback.analytics.TalkBackAnalytics;
 import com.google.android.accessibility.talkback.contextmenu.ListMenuManager;
 import com.google.android.accessibility.talkback.focusmanagement.AccessibilityFocusMonitor;
@@ -97,6 +98,7 @@ import com.google.android.accessibility.talkback.selector.SelectorController.Set
 import com.google.android.accessibility.talkback.trainingcommon.TrainingActivity;
 import com.google.android.accessibility.utils.AccessibilityNodeInfoUtils;
 import com.google.android.accessibility.utils.KeyboardUtils;
+import com.google.android.accessibility.utils.NetworkUtils;
 import com.google.android.accessibility.utils.Performance;
 import com.google.android.accessibility.utils.Performance.EventId;
 import com.google.android.accessibility.utils.Role;
@@ -797,6 +799,11 @@ public class GestureController {
   }
 
   private boolean performReadScreenAi(EventId eventId) {
+    if (!GeminiConfiguration.isGeminiVoiceCommandEnabled(service)
+        || !GeminiPrefs.hasApiKey(service)
+        || !NetworkUtils.isNetworkConnected(service)) {
+      return performReadScreenOffline(eventId);
+    }
     String prompt = GeminiConfiguration.getReadScreenPrompt(service);
     if (GeminiConfiguration.isReadScreenHapticEnabled(service)) {
       pipeline.returnFeedback(
@@ -806,9 +813,20 @@ public class GestureController {
     ScreenshotCapture.takeScreenshot(
         service,
         (screenCapture, isFormatSupported) -> {
+          if (!isFormatSupported) {
+            performReadScreenOffline(eventId);
+            return;
+          }
           pipeline.returnFeedback(
               eventId, Feedback.geminiRequest(/* requestId= */ -1, prompt, screenCapture));
         });
+    return true;
+  }
+
+  private boolean performReadScreenOffline(EventId eventId) {
+    pipeline.returnFeedback(
+        eventId, Feedback.speech(service.getString(R.string.read_screen_ai_unavailable_fallback)));
+    pipeline.returnFeedback(eventId, Feedback.continuousRead(START_AT_TOP));
     return true;
   }
 

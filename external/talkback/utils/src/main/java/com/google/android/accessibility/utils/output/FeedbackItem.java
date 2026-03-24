@@ -97,6 +97,9 @@ public class FeedbackItem {
   /** Flag to indicate that the aggressive chunking is applied to the feedback item. */
   public static final int FLAG_CHUNKING_APPLIED = 0x4000;
 
+  /** Flag to route this feedback item through the notification TTS engine. */
+  public static final int FLAG_NOTIFICATION_TTS = 0x8000;
+
   /** Unique ID defining this generated feedback */
   private String mUtteranceId = "";
 
