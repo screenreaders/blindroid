@@ -1,12 +1,12 @@
 {
-  "tag_name": "v142",
-  "name": "v142",
-  "body": "BlindReader: unified Content & OCR settings, advanced OCR controls, AI read screen toggle, voice commands help entry, and AI onboarding hints.",
+  "tag_name": "v143",
+  "name": "v143",
+  "body": "Performance optimizations: cached Gemini prefs, AI screenshot downscale, lazy init for search/clipboard, and AI/OCR latency logging.",
   "assets": [
     {
-      "name": "blindroid-142.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-142.apk",
-      "sha256": "7486a61becd986f480ecf1f7171fe60a509a9793e0cbbd4dd6640c2570e6eb2a",
+      "name": "blindroid-143.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-143.apk",
+      "sha256": "2db9417e50804fbd48b910f5e06c5a1a79f1350dace7ae660c8344b77b22f1e3",
       "size": 123067855
     }
   ]
