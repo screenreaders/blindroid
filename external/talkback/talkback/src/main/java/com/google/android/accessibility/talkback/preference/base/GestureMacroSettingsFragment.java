@@ -436,9 +436,14 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
 
   private JSONObject buildMacrosJson(Context context) throws JSONException {
     JSONObject payload = new JSONObject();
-    payload.put("version", 1);
+    payload.put("version", 2);
     JSONArray macros = new JSONArray();
     SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    boolean enabled =
+        prefs.getBoolean(
+            context.getString(R.string.pref_macro_enabled_key),
+            context.getResources().getBoolean(R.bool.pref_macro_enabled_default));
+    payload.put("enabled", enabled);
     for (int index = 1; index <= 3; index++) {
       JSONObject macro = new JSONObject();
       macro.put("index", index);
@@ -474,6 +479,11 @@ public class GestureMacroSettingsFragment extends TalkbackBaseFragment {
       return 0;
     }
     SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    if (root.has("enabled")) {
+      prefs.edit()
+          .putBoolean(context.getString(R.string.pref_macro_enabled_key), root.optBoolean("enabled"))
+          .apply();
+    }
     int imported = 0;
     for (int i = 0; i < macros.length(); i++) {
       JSONObject macro = macros.optJSONObject(i);
