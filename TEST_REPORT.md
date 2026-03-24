@@ -3,7 +3,12 @@
 ## Latest Build Status
 - Date: 2026-03-24
 - APK: `blindroid-142.apk`
-- Status: NOT RUN (build assembled without emulator run; previous smoke results below)
+- Status: Unit tests run (no unit tests present); emulator smoke not run.
+
+## Latest Unit Tests
+- Date: 2026-03-24
+- Command: `./gradlew test`
+- Result: PASS (no unit tests detected in app, launcher, braillekeyboard)
 
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
