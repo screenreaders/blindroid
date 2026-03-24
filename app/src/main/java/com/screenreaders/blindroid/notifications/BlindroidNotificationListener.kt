@@ -3,6 +3,7 @@ package com.screenreaders.blindroid.notifications
 import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.util.LruCache
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
@@ -13,6 +14,7 @@ import com.screenreaders.blindroid.util.QuietHours
 @Suppress("DEPRECATION")
 class BlindroidNotificationListener : NotificationListenerService() {
     private lateinit var announcer: CallAnnouncer
+    private val appNameCache = LruCache<String, String>(50)
 
     override fun onCreate() {
         super.onCreate()
@@ -84,9 +86,12 @@ class BlindroidNotificationListener : NotificationListenerService() {
     }
 
     private fun getAppName(packageName: String): String {
+        appNameCache.get(packageName)?.let { return it }
         return try {
             val appInfo = packageManager.getApplicationInfo(packageName, 0)
-            packageManager.getApplicationLabel(appInfo).toString()
+            packageManager.getApplicationLabel(appInfo).toString().also {
+                appNameCache.put(packageName, it)
+            }
         } catch (_: Exception) {
             packageName
         }

@@ -1,12 +1,12 @@
 {
-  "tag_name": "v148",
-  "name": "v148",
-  "body": "Notifications: added separate TTS voice, rate, and volume for notification reading (optional switch).",
+  "tag_name": "v149",
+  "name": "v149",
+  "body": "Performance: notification reader now caches app labels to reduce PackageManager lookups.",
   "assets": [
     {
-      "name": "blindroid-148.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-148.apk",
-      "sha256": "12f96bf38fd60920e9202de11d00713655d085811f2a03407c3244fa2798ee27",
+      "name": "blindroid-149.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-149.apk",
+      "sha256": "752957d1a251f70b58fee100ea81aaa1f668ae96d16a2e338d6192e96508dae6",
       "size": 123087091
     }
   ]
