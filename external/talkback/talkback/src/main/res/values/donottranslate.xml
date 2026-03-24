@@ -1500,6 +1500,8 @@
     <string name="pref_backup_settings_key" translatable="false">pref_backup_settings</string>
     <string name="pref_backup_export_key" translatable="false">pref_backup_export</string>
     <string name="pref_backup_import_key" translatable="false">pref_backup_import</string>
+    <string name="pref_backup_export_file_key" translatable="false">pref_backup_export_file</string>
+    <string name="pref_backup_import_file_key" translatable="false">pref_backup_import_file</string>
     <string name="pref_gesture_scheme_save_current_key" translatable="false">pref_gesture_scheme_save_current</string>
     <string name="pref_gesture_scheme_import_key" translatable="false">pref_gesture_scheme_import</string>
     <string name="pref_gesture_scheme_list_category_key" translatable="false">pref_gesture_scheme_list_category</string>

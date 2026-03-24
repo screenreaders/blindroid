@@ -16,22 +16,33 @@
 
 package com.google.android.accessibility.talkback.preference.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.widget.EditText;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.preference.Preference;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.preference.PreferencesActivityUtils;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +63,46 @@ public class BackupSettingsFragment extends TalkbackBaseFragment {
   private static final String TYPE_STRING_SET = "string_set";
 
   private SharedPreferences prefs;
+  private ActivityResultLauncher<Intent> exportFileLauncher;
+  private ActivityResultLauncher<Intent> importFileLauncher;
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    exportFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_backup_export_failed), context);
+                return;
+              }
+              writeBackupToUri(context, data.getData());
+            });
+
+    importFileLauncher =
+        registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+              Context context = getContext();
+              if (context == null || result.getResultCode() != Activity.RESULT_OK) {
+                return;
+              }
+              Intent data = result.getData();
+              if (data == null || data.getData() == null) {
+                PreferencesActivityUtils.announceText(
+                    getString(R.string.pref_backup_import_failed), context);
+                return;
+              }
+              readBackupFromUri(context, data.getData());
+            });
+  }
 
   public BackupSettingsFragment() {
     super(R.xml.backup_preferences);
@@ -88,6 +139,24 @@ public class BackupSettingsFragment extends TalkbackBaseFragment {
             return true;
           });
     }
+
+    Preference exportFilePref = findPreference(getString(R.string.pref_backup_export_file_key));
+    if (exportFilePref != null) {
+      exportFilePref.setOnPreferenceClickListener(
+          preference -> {
+            launchExportToFile(context);
+            return true;
+          });
+    }
+
+    Preference importFilePref = findPreference(getString(R.string.pref_backup_import_file_key));
+    if (importFilePref != null) {
+      importFilePref.setOnPreferenceClickListener(
+          preference -> {
+            launchImportFromFile();
+            return true;
+          });
+    }
   }
 
   private void exportBackup(Context context) {
@@ -104,6 +173,72 @@ public class BackupSettingsFragment extends TalkbackBaseFragment {
       PreferencesActivityUtils.announceText(
           getString(R.string.pref_backup_export_failed), context);
     }
+  }
+
+  private void launchExportToFile(Context context) {
+    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    intent.putExtra(Intent.EXTRA_TITLE, buildDefaultFileName());
+    exportFileLauncher.launch(intent);
+  }
+
+  private void launchImportFromFile() {
+    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("application/json");
+    importFileLauncher.launch(intent);
+  }
+
+  private String buildDefaultFileName() {
+    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    return "blindreader-backup-" + format.format(new Date()) + ".json";
+  }
+
+  private void writeBackupToUri(Context context, Uri uri) {
+    try {
+      JSONObject payload = buildBackupJson();
+      byte[] bytes = payload.toString(2).getBytes("UTF-8");
+      try (OutputStream output = context.getContentResolver().openOutputStream(uri)) {
+        if (output == null) {
+          PreferencesActivityUtils.announceText(
+              getString(R.string.pref_backup_export_failed), context);
+          return;
+        }
+        output.write(bytes);
+        output.flush();
+      }
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_backup_export_file_success), context);
+    } catch (IOException | JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_backup_export_failed), context);
+    }
+  }
+
+  private void readBackupFromUri(Context context, Uri uri) {
+    try (InputStream input = context.getContentResolver().openInputStream(uri)) {
+      if (input == null) {
+        PreferencesActivityUtils.announceText(
+            getString(R.string.pref_backup_import_failed), context);
+        return;
+      }
+      String json = new String(readAllBytes(input), "UTF-8");
+      importBackup(context, json);
+    } catch (IOException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_backup_import_failed), context);
+    }
+  }
+
+  private byte[] readAllBytes(InputStream input) throws IOException {
+    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    byte[] data = new byte[4096];
+    int count;
+    while ((count = input.read(data)) != -1) {
+      buffer.write(data, 0, count);
+    }
+    return buffer.toByteArray();
   }
 
   private JSONObject buildBackupJson() throws JSONException {

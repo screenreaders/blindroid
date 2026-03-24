@@ -304,9 +304,14 @@
     <string name="pref_backup_settings_summary">Export or restore BlindReader preferences</string>
     <string name="pref_backup_export_title">Export settings</string>
     <string name="pref_backup_export_summary">Share a JSON backup of your settings</string>
+    <string name="pref_backup_export_file_title">Export to file</string>
+    <string name="pref_backup_export_file_summary">Save a JSON backup to a file</string>
     <string name="pref_backup_import_title">Import settings</string>
     <string name="pref_backup_import_summary">Paste a JSON backup to restore your settings</string>
+    <string name="pref_backup_import_file_title">Import from file</string>
+    <string name="pref_backup_import_file_summary">Choose a JSON backup file to restore</string>
     <string name="pref_backup_export_success">Backup ready to share</string>
+    <string name="pref_backup_export_file_success">Backup saved</string>
     <string name="pref_backup_export_failed">Backup export failed</string>
     <string name="pref_backup_import_success">Imported %1$d settings</string>
     <string name="pref_backup_import_failed">Backup import failed</string>

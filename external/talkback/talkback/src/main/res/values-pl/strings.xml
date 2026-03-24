@@ -107,9 +107,14 @@
   <string name="pref_backup_settings_summary">Eksportuj lub przywracaj preferencje BlindReadera</string>
   <string name="pref_backup_export_title">Eksportuj ustawienia</string>
   <string name="pref_backup_export_summary">Udostępnij kopię JSON ustawień</string>
+  <string name="pref_backup_export_file_title">Eksportuj do pliku</string>
+  <string name="pref_backup_export_file_summary">Zapisz kopię JSON do pliku</string>
   <string name="pref_backup_import_title">Importuj ustawienia</string>
   <string name="pref_backup_import_summary">Wklej kopię JSON, aby przywrócić ustawienia</string>
+  <string name="pref_backup_import_file_title">Importuj z pliku</string>
+  <string name="pref_backup_import_file_summary">Wybierz plik kopii JSON do przywrócenia</string>
   <string name="pref_backup_export_success">Kopia gotowa do udostępnienia</string>
+  <string name="pref_backup_export_file_success">Kopia zapisana</string>
   <string name="pref_backup_export_failed">Nie udało się wyeksportować kopii</string>
   <string name="pref_backup_import_success">Zaimportowano %1$d ustawień</string>
   <string name="pref_backup_import_failed">Nie udało się zaimportować kopii</string>

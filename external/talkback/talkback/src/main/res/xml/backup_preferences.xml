@@ -8,8 +8,18 @@
       android:summary="@string/pref_backup_export_summary" />
 
   <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_backup_export_file_key"
+      android:title="@string/pref_backup_export_file_title"
+      android:summary="@string/pref_backup_export_file_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
       android:key="@string/pref_backup_import_key"
       android:title="@string/pref_backup_import_title"
       android:summary="@string/pref_backup_import_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuitePreference
+      android:key="@string/pref_backup_import_file_key"
+      android:title="@string/pref_backup_import_file_title"
+      android:summary="@string/pref_backup_import_file_summary" />
 
 </PreferenceScreen>
