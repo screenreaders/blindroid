@@ -1,12 +1,12 @@
 {
-  "tag_name": "v133",
-  "name": "v133",
-  "body": "Quick menu: enable/disable all actions shortcuts.",
+  "tag_name": "v134",
+  "name": "v134",
+  "body": "Quick menu: sort saved apps by label.",
   "assets": [
     {
-      "name": "blindroid-133.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-133.apk",
-      "sha256": "c7eebf77f56684eaf83ac4d368424a80c04b324588d2ab8e1a8d5b8153eff9e2",
+      "name": "blindroid-134.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-134.apk",
+      "sha256": "7acc8cc4554e92e68cd648506f8f4bc85e5c599b71835037c19160a17a34fe64",
       "size": 123067855
     }
   ]

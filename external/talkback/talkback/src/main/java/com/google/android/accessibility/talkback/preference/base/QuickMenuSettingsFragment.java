@@ -519,17 +519,24 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       savedAppsCategory.addPreference(empty);
       return;
     }
+    List<SavedAppEntry> entries = new ArrayList<>();
+    PackageManager pm = context.getPackageManager();
     for (String packageName : packages) {
       CharSequence label = packageName;
       try {
-        ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
-        label = context.getPackageManager().getApplicationLabel(info);
+        ApplicationInfo info = pm.getApplicationInfo(packageName, 0);
+        label = pm.getApplicationLabel(info);
       } catch (PackageManager.NameNotFoundException e) {
         label = packageName;
       }
+      entries.add(new SavedAppEntry(packageName, label));
+    }
+    entries.sort(
+        (a, b) -> a.label.toString().compareToIgnoreCase(b.label.toString()));
+    for (SavedAppEntry entry : entries) {
       Preference pref = new Preference(context);
-      pref.setTitle(label);
-      List<String> actions = QuickMenuPreferences.getActionsForPackage(context, packageName);
+      pref.setTitle(entry.label);
+      List<String> actions = QuickMenuPreferences.getActionsForPackage(context, entry.packageName);
       int count = actions == null ? 0 : actions.size();
       String actionSummary = buildActionsSummary(context, actions);
       pref.setSummary(
@@ -537,7 +544,7 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
               + (actionSummary.isEmpty() ? "" : " • " + actionSummary));
       pref.setOnPreferenceClickListener(
           clicked -> {
-            showEditDialog(context, packageName, label);
+            showEditDialog(context, entry.packageName, entry.label);
             return true;
           });
       savedAppsCategory.addPreference(pref);
@@ -1193,5 +1200,15 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
       editor.putBoolean(key, value);
     }
     editor.apply();
+  }
+
+  private static final class SavedAppEntry {
+    final String packageName;
+    final CharSequence label;
+
+    SavedAppEntry(String packageName, CharSequence label) {
+      this.packageName = packageName;
+      this.label = label;
+    }
   }
 }
