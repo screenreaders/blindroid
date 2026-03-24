@@ -73,6 +73,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
@@ -807,6 +808,8 @@ public class GestureController {
       speak(service.getString(R.string.read_screen_ai_disabled));
       return false;
     }
+    boolean performanceEnabled = Performance.getInstance().getComputeStatsEnabled();
+    long startMs = SystemClock.elapsedRealtime();
     if (!GeminiConfiguration.isGeminiVoiceCommandEnabled(service)
         || !GeminiPrefs.hasApiKey(service)
         || !NetworkUtils.isNetworkConnected(service)) {
@@ -818,16 +821,26 @@ public class GestureController {
           eventId,
           Feedback.vibration(com.google.android.accessibility.utils.R.array.read_screen_pattern));
     }
+    int maxDimension = service.getResources().getInteger(R.integer.blindreader_ai_screenshot_max_dim);
     ScreenshotCapture.takeScreenshot(
         service,
         (screenCapture, isFormatSupported) -> {
+          if (performanceEnabled) {
+            long durationMs = SystemClock.elapsedRealtime() - startMs;
+            LogUtils.i(
+                LOG_TAG,
+                "Read screen AI screenshot latency=%dms (formatSupported=%s)",
+                durationMs,
+                isFormatSupported);
+          }
           if (!isFormatSupported) {
             performReadScreenOffline(eventId);
             return;
           }
           pipeline.returnFeedback(
               eventId, Feedback.geminiRequest(/* requestId= */ -1, prompt, screenCapture));
-        });
+        },
+        maxDimension);
     return true;
   }
 

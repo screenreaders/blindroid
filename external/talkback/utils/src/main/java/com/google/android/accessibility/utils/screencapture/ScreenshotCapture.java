@@ -57,6 +57,15 @@ public class ScreenshotCapture {
   }
 
   /**
+   * Method to take screenshot with optional downscale. If maxDimension is less than or equal to 0,
+   * no scaling is applied. Otherwise the largest side will be scaled down to maxDimension.
+   */
+  public static void takeScreenshot(
+      AccessibilityService service, CaptureListener listener, int maxDimension) {
+    takeScreenshot(service, listener, service.getMainExecutor(), maxDimension);
+  }
+
+  /**
    * Method to take screenshot with native support method.
    *
    * @param service The Accessibility service which has already been granted this feature by
@@ -68,6 +77,28 @@ public class ScreenshotCapture {
   public static void takeScreenshot(
       AccessibilityService service, CaptureListener listener, Executor executor) {
     takeScreenshot(service, listener, executor, WINDOW_ID_NONE);
+  }
+
+  /**
+   * Method to take screenshot with optional downscale. If maxDimension is less than or equal to 0,
+   * no scaling is applied. Otherwise the largest side will be scaled down to maxDimension.
+   */
+  public static void takeScreenshot(
+      AccessibilityService service,
+      CaptureListener listener,
+      Executor executor,
+      int maxDimension) {
+    takeScreenshot(
+        service,
+        (screenCapture, isFormatSupported) -> {
+          if (!isFormatSupported || screenCapture == null) {
+            listener.onScreenCaptureFinished(screenCapture, isFormatSupported);
+            return;
+          }
+          Bitmap scaled = maybeScaleBitmap(screenCapture, maxDimension);
+          listener.onScreenCaptureFinished(scaled, /* isFormatSupported= */ scaled != null);
+        },
+        executor);
   }
 
   private static void takeScreenshot(
@@ -113,6 +144,31 @@ public class ScreenshotCapture {
       service.takeScreenshotOfWindow(windowId, executor, callback);
     } else {
       service.takeScreenshot(Display.DEFAULT_DISPLAY, executor, callback);
+    }
+  }
+
+  private static Bitmap maybeScaleBitmap(Bitmap bitmap, int maxDimension) {
+    if (bitmap == null || maxDimension <= 0) {
+      return bitmap;
+    }
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    int maxSide = Math.max(width, height);
+    if (maxSide <= maxDimension) {
+      return bitmap;
+    }
+    float scale = (float) maxDimension / (float) maxSide;
+    int targetWidth = Math.max(1, Math.round(width * scale));
+    int targetHeight = Math.max(1, Math.round(height * scale));
+    try {
+      Bitmap scaled = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, /* filter= */ true);
+      if (scaled != bitmap) {
+        bitmap.recycle();
+      }
+      return scaled;
+    } catch (OutOfMemoryError e) {
+      LogUtils.w(TAG, "Failed to scale screenshot, using original bitmap.");
+      return bitmap;
     }
   }
 

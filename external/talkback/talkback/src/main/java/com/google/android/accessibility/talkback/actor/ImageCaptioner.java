@@ -1285,12 +1285,24 @@ public class ImageCaptioner extends Handler
     screenshotRequests.performNextRequest();
   }
 
+  private void logCaptionLatency(String label, Request request) {
+    if (!Performance.getInstance().getComputeStatsEnabled()) {
+      return;
+    }
+    long duration = request.getDurationMillis();
+    if (duration == INVALID_DURATION) {
+      return;
+    }
+    LogUtils.i(TAG, "%s latency=%dms", label, duration);
+  }
+
   @VisibleForTesting
   void onCharacterCaptionFinish(
       CaptionRequest request, AccessibilityNode node, Result result, boolean isUserRequested) {
     if (request.getDurationMillis() != INVALID_DURATION) {
       primesController.recordDuration(IMAGE_CAPTION_OCR_SUCCEED, request.getDurationMillis());
     }
+    logCaptionLatency("OCR", request);
     analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_OCR_PERFORM_SUCCEED);
     LogUtils.v(
         TAG,
@@ -1319,6 +1331,7 @@ public class ImageCaptioner extends Handler
                 primesController.recordDuration(
                     IMAGE_CAPTION_OCR_FAILED, errorRequest.getDurationMillis());
               }
+              logCaptionLatency("OCR (failed)", errorRequest);
               analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_OCR_PERFORM_FAIL);
               LogUtils.v(TAG, "onError(), error= %s", Request.errorName(errorCode));
               characterCaptionRequests.performNextRequest();
@@ -1338,6 +1351,7 @@ public class ImageCaptioner extends Handler
       primesController.recordDuration(
           IMAGE_CAPTION_ICON_LABEL_SUCCEED, request.getDurationMillis());
     }
+    logCaptionLatency("Icon detection", request);
     analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_ICON_DETECT_SUCCEED);
     LogUtils.v(TAG, "onIconDetectionFinish() result=%s node=%s", result.text(), node);
     iconDetectionRequests.performNextRequest();
@@ -1362,6 +1376,7 @@ public class ImageCaptioner extends Handler
                 primesController.recordDuration(
                     IMAGE_CAPTION_ICON_LABEL_FAILED, errorRequest.getDurationMillis());
               }
+              logCaptionLatency("Icon detection (failed)", errorRequest);
               analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_ICON_DETECT_FAIL);
               LogUtils.v(TAG, "onError(), error=%s", Request.errorName(errorCode));
               iconDetectionRequests.performNextRequest();
@@ -1380,6 +1395,7 @@ public class ImageCaptioner extends Handler
       primesController.recordDuration(
           IMAGE_CAPTION_IMAGE_DESCRIPTION_SUCCEED, request.getDurationMillis());
     }
+    logCaptionLatency("Image description", request);
     analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_IMAGE_DESCRIBE_SUCCEED);
     LogUtils.v(
         TAG,
@@ -1409,6 +1425,7 @@ public class ImageCaptioner extends Handler
                 primesController.recordDuration(
                     IMAGE_CAPTION_IMAGE_DESCRIPTION_FAILED, errorRequest.getDurationMillis());
               }
+              logCaptionLatency("Image description (failed)", errorRequest);
               analytics.onImageCaptionEvent(IMAGE_CAPTION_EVENT_IMAGE_DESCRIBE_FAIL);
               LogUtils.v(TAG, "onError(), error=%s", Request.errorName(errorCode));
               imageDescriptionRequests.performNextRequest();

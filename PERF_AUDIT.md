@@ -20,8 +20,8 @@ Date: 2026-03-22
 - Runtime is dominated by TalkBackService’s event pipeline and speech output path.
 - AI/OCR work is already gated by feature toggles and network availability, but still incurs screenshot allocation when triggered.
 
-### Potential Optimizations (Not Applied Yet)
-- Consider caching Gemini prefs in memory with a preference change listener to avoid repeated `SharedPreferences` lookups on frequent actions. `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/actor/gemini/GeminiConfiguration.java`
-- Add optional downscale for AI screenshot capture to reduce bitmap memory pressure (especially on lower-end devices). `external/talkback/utils/src/main/java/com/google/android/accessibility/utils/screencapture/ScreenshotCapture.java`
-- Evaluate lazy initialization for rarely used actors created in `TalkBackService` (e.g., search, clipboard history, dim screen) to reduce startup cost and idle memory. `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/TalkBackService.java`
-- Add lightweight telemetry around AI/OCR latency (guarded by developer prefs) to target real bottlenecks before deeper optimizations.
+### Applied Optimizations (2026-03-24)
+- Cached Gemini prefs with a shared preference listener to reduce repeated reads. `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/actor/gemini/GeminiConfiguration.java`
+- Added optional downscale for AI screenshot capture to reduce bitmap memory pressure. `external/talkback/utils/src/main/java/com/google/android/accessibility/utils/screencapture/ScreenshotCapture.java`
+- Lazy initialization for universal search manager and clipboard history manager when enabled. `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/TalkBackService.java`
+- Added lightweight AI/OCR latency logging when performance stats are enabled. `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/gesture/GestureController.java`, `external/talkback/talkback/src/main/java/com/google/android/accessibility/talkback/actor/ImageCaptioner.java`

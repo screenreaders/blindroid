@@ -31,4 +31,7 @@
     <!-- For finish buttons in training. -->
     <item name="training_finish_button_0" type="id" />
     <item name="training_finish_button_1" type="id" />
+
+    <!-- Max dimension for AI screen capture downscale (0 to disable). -->
+    <integer name="blindreader_ai_screenshot_max_dim">1080</integer>
 </resources>

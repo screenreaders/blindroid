@@ -809,6 +809,7 @@ public class TalkBackService extends AccessibilityService
     if (eventLatencyLogger != null) {
       eventLatencyLogger.destroy();
     }
+    GeminiConfiguration.shutdown();
 
     if (shouldUseTalkbackGestureDetection()) {
       unregisterGestureDetection();
@@ -1367,6 +1368,7 @@ public class TalkBackService extends AccessibilityService
 
     SharedPreferencesUtils.migrateSharedPreferences(this);
     prefs = SharedPreferencesUtils.getSharedPreferences(this);
+    GeminiConfiguration.initialize(this);
 
     if (FeatureFlagReader.logEventBasedLatency(getBaseContext())) {
       eventLatencyLogger = new EventLatencyLogger(primesController, getApplicationContext(), prefs);
@@ -1552,7 +1554,6 @@ public class TalkBackService extends AccessibilityService
       FeedbackProcessingUtils.enableAggressiveChunking();
     }
     speechStateMonitor = new SpeechStateMonitor();
-    clipboardHistoryManager = new ClipboardHistoryManager(this);
     diagnosticOverlayController = new DiagnosticOverlayControllerImpl(this);
 
     gestureShortcutMapping = new GestureShortcutMapping(this);
@@ -1797,7 +1798,6 @@ public class TalkBackService extends AccessibilityService
             accessibilityFocusMonitor,
             nodeMenuRuleProcessor,
             analytics);
-    menuManager.setClipboardHistoryManager(clipboardHistoryManager);
     voiceCommandProcessor.setListMenuManager(menuManager);
 
     floatingMenuController =
@@ -2002,10 +2002,6 @@ public class TalkBackService extends AccessibilityService
 
     addEventListener(new ProcessLivingEvent(analytics));
 
-    universalSearchManager =
-        new UniversalSearchManager(
-            pipeline.getFeedbackReturner(), ringerModeAndScreenMonitor, windowEventInterpreter);
-
     keyEventListeners.add(keyComboManager);
     serviceStateListeners.add(keyComboManager);
 
@@ -2163,7 +2159,27 @@ public class TalkBackService extends AccessibilityService
   }
 
   public UniversalSearchManager getUniversalSearchManager() {
+    if (universalSearchManager == null
+        && pipeline != null
+        && ringerModeAndScreenMonitor != null
+        && windowEventInterpreter != null) {
+      universalSearchManager =
+          new UniversalSearchManager(
+              pipeline.getFeedbackReturner(),
+              ringerModeAndScreenMonitor,
+              windowEventInterpreter);
+    }
     return universalSearchManager;
+  }
+
+  private ClipboardHistoryManager ensureClipboardHistoryManager() {
+    if (clipboardHistoryManager == null) {
+      clipboardHistoryManager = new ClipboardHistoryManager(this);
+      if (menuManager != null) {
+        menuManager.setClipboardHistoryManager(clipboardHistoryManager);
+      }
+    }
+    return clipboardHistoryManager;
   }
 
   @VisibleForTesting
@@ -2683,17 +2699,22 @@ public class TalkBackService extends AccessibilityService
             R.string.pref_notification_speech_pitch_key,
             R.string.pref_notification_speech_pitch_default));
 
+    boolean clipboardEnabled =
+        getBooleanPref(
+            R.string.pref_clipboard_history_enabled_key,
+            R.bool.pref_clipboard_history_enabled_default);
+    int clipboardMaxItems =
+        SharedPreferencesUtils.getIntFromStringPref(
+            prefs,
+            res,
+            R.string.pref_clipboard_history_max_key,
+            R.string.pref_clipboard_history_max_default);
+    if (clipboardHistoryManager == null && clipboardEnabled) {
+      ensureClipboardHistoryManager();
+    }
     if (clipboardHistoryManager != null) {
-      clipboardHistoryManager.setEnabled(
-          getBooleanPref(
-              R.string.pref_clipboard_history_enabled_key,
-              R.bool.pref_clipboard_history_enabled_default));
-      clipboardHistoryManager.setMaxItems(
-          SharedPreferencesUtils.getIntFromStringPref(
-              prefs,
-              res,
-              R.string.pref_clipboard_history_max_key,
-              R.string.pref_clipboard_history_max_default));
+      clipboardHistoryManager.setEnabled(clipboardEnabled);
+      clipboardHistoryManager.setMaxItems(clipboardMaxItems);
     }
 
     if (supportsTouchScreen && !isBrailleKeyboardActivated()) {

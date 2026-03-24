@@ -9,6 +9,7 @@
 - Date: 2026-03-24
 - Command: `./gradlew test`
 - Result: PASS (no unit tests detected in app, launcher, braillekeyboard)
+- Notes: Re-run after performance optimizations.
 
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
