@@ -1,12 +1,12 @@
 {
-  "tag_name": "v120",
-  "name": "v120",
-  "body": "BlindReader: use current app menu as default quick menu.",
+  "tag_name": "v121",
+  "name": "v121",
+  "body": "BlindReader: export/import quick menu JSON.",
   "assets": [
     {
-      "name": "blindroid-120.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-120.apk",
-      "sha256": "5a41fb484e12d858c6ffa50275c55f5c2d069915df287bfa35f4eb9a49488999",
+      "name": "blindroid-121.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-121.apk",
+      "sha256": "531f733885d161a981bc0168b10b8267acf347a48a2b4b58752716fa333c679c",
       "size": 123067855
     }
   ]

@@ -20,8 +20,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.widget.EditText;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -34,6 +37,9 @@ import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Settings for configuring the BlindReader quick menu. */
@@ -47,6 +53,8 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
   private Preference linkCurrentAppPreference;
   private Preference unlinkCurrentAppPreference;
   private Preference useCurrentAsDefaultPreference;
+  private Preference exportQuickMenuPreference;
+  private Preference importQuickMenuPreference;
 
   public QuickMenuSettingsFragment() {
     super(R.xml.empty_preferences);
@@ -80,6 +88,28 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           return true;
         });
     screen.addPreference(reset);
+
+    exportQuickMenuPreference = new Preference(context);
+    exportQuickMenuPreference.setKey(context.getString(R.string.pref_quick_menu_export_key));
+    exportQuickMenuPreference.setTitle(R.string.pref_quick_menu_export_title);
+    exportQuickMenuPreference.setSummary(R.string.pref_quick_menu_export_summary);
+    exportQuickMenuPreference.setOnPreferenceClickListener(
+        pref -> {
+          exportQuickMenu(context);
+          return true;
+        });
+    screen.addPreference(exportQuickMenuPreference);
+
+    importQuickMenuPreference = new Preference(context);
+    importQuickMenuPreference.setKey(context.getString(R.string.pref_quick_menu_import_key));
+    importQuickMenuPreference.setTitle(R.string.pref_quick_menu_import_title);
+    importQuickMenuPreference.setSummary(R.string.pref_quick_menu_import_summary);
+    importQuickMenuPreference.setOnPreferenceClickListener(
+        pref -> {
+          showImportQuickMenuDialog(context);
+          return true;
+        });
+    screen.addPreference(importQuickMenuPreference);
 
     PreferenceCategory appCategory = new PreferenceCategory(context);
     appCategory.setTitle(R.string.pref_quick_menu_app_category_title);
@@ -252,6 +282,75 @@ public class QuickMenuSettingsFragment extends TalkbackBaseFragment
           });
       savedAppsCategory.addPreference(pref);
     }
+  }
+
+  private void exportQuickMenu(Context context) {
+    try {
+      JSONObject payload = new JSONObject();
+      payload.put("version", 1);
+      JSONArray array = new JSONArray();
+      for (String action : QuickMenuPreferences.getGlobalActions(context)) {
+        array.put(action);
+      }
+      payload.put("actions", array);
+      Intent share = new Intent(Intent.ACTION_SEND);
+      share.setType("application/json");
+      share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pref_quick_menu_export_title));
+      share.putExtra(Intent.EXTRA_TEXT, payload.toString(2));
+      startActivity(Intent.createChooser(share, getString(R.string.pref_quick_menu_export_title)));
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_success), context);
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_export_failed), context);
+    }
+  }
+
+  private void showImportQuickMenuDialog(Context context) {
+    android.widget.EditText input = new android.widget.EditText(context);
+    input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+    input.setMinLines(6);
+    input.setHint(getString(R.string.pref_quick_menu_import_summary));
+    A11yAlertDialogWrapper.alertDialogBuilder(context)
+        .setTitle(R.string.pref_quick_menu_import_title)
+        .setView(input)
+        .setPositiveButton(
+            android.R.string.ok,
+            (dialog, which) -> importQuickMenu(context, input.getText().toString()))
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void importQuickMenu(Context context, String json) {
+    if (TextUtils.isEmpty(json)) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_failed), context);
+      return;
+    }
+    JSONObject root;
+    try {
+      root = new JSONObject(json);
+    } catch (JSONException e) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_failed), context);
+      return;
+    }
+    JSONArray actionsJson = root.optJSONArray("actions");
+    if (actionsJson == null) {
+      PreferencesActivityUtils.announceText(
+          getString(R.string.pref_quick_menu_import_failed), context);
+      return;
+    }
+    List<String> actions = new ArrayList<>();
+    for (int i = 0; i < actionsJson.length(); i++) {
+      String value = actionsJson.optString(i, null);
+      if (!TextUtils.isEmpty(value)) {
+        actions.add(value);
+      }
+    }
+    QuickMenuPreferences.setGlobalActions(context, actions);
+    PreferencesActivityUtils.announceText(
+        getString(R.string.pref_quick_menu_import_success), context);
   }
 
   private void showEditDialog(Context context, String packageName, CharSequence label) {

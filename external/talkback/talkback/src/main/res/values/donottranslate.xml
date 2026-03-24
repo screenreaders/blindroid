@@ -1516,6 +1516,8 @@
     <string name="pref_clipboard_history_store_key" translatable="false">pref_clipboard_history_store</string>
     <string name="pref_quick_menu_settings_key" translatable="false">pref_quick_menu_settings</string>
     <string name="pref_quick_menu_reset_key" translatable="false">pref_quick_menu_reset</string>
+    <string name="pref_quick_menu_export_key" translatable="false">pref_quick_menu_export</string>
+    <string name="pref_quick_menu_import_key" translatable="false">pref_quick_menu_import</string>
     <string name="pref_quick_menu_actions_category_key" translatable="false">pref_quick_menu_actions_category</string>
     <string name="pref_quick_menu_app_category_key" translatable="false">pref_quick_menu_app_category</string>
     <string name="pref_quick_menu_link_current_key" translatable="false">pref_quick_menu_link_current</string>

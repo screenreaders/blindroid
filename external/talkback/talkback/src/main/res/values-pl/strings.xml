@@ -300,6 +300,14 @@
 
     <string name="pref_quick_menu_settings_title">Szybkie menu</string>
     <string name="pref_quick_menu_settings_summary">Wybierz akcje widoczne w szybkim menu</string>
+    <string name="pref_quick_menu_export_title">Eksportuj szybkie menu</string>
+    <string name="pref_quick_menu_export_summary">Udostępnij kopię JSON akcji szybkiego menu</string>
+    <string name="pref_quick_menu_import_title">Importuj szybkie menu</string>
+    <string name="pref_quick_menu_import_summary">Wklej kopię JSON, aby przywrócić akcje szybkiego menu</string>
+    <string name="pref_quick_menu_export_success">Szybkie menu gotowe do udostępnienia</string>
+    <string name="pref_quick_menu_export_failed">Nie udało się wyeksportować szybkiego menu</string>
+    <string name="pref_quick_menu_import_success">Zaimportowano szybkie menu</string>
+    <string name="pref_quick_menu_import_failed">Nie udało się zaimportować szybkiego menu</string>
     <string name="pref_quick_menu_app_category_title">Szybkie menu dla aplikacji</string>
     <string name="pref_quick_menu_link_current_title">Powiąż bieżącą aplikację</string>
     <string name="pref_quick_menu_link_current_summary">Zapisz szybkie menu dla %1$s</string>

@@ -63,6 +63,24 @@ public final class QuickMenuPreferences {
     return actions;
   }
 
+  public static List<String> getGlobalActions(Context context) {
+    SharedPreferences prefs = SharedPreferencesUtils.getSharedPreferences(context);
+    if (!isCustomized(context, prefs)) {
+      return getDefaultActions(context);
+    }
+    List<String> actions = new ArrayList<>();
+    for (String actionKey : getSupportedActions(context)) {
+      if (PluginRegistry.isPluginActionKey(actionKey)) {
+        String key = buildActionPrefKey(context, actionKey);
+        if (!prefs.contains(key) || prefs.getBoolean(key, false)) {
+          actions.add(actionKey);
+        }
+      } else if (prefs.getBoolean(buildActionPrefKey(context, actionKey), false)) {
+        actions.add(actionKey);
+      }
+    }
+    return actions;
+  }
   public static List<String> getSupportedActions(Context context) {
     List<String> actions = new ArrayList<>(GestureShortcutMapping.getAllActionKeys(context));
     actions.addAll(PluginRegistry.getQuickActionKeys(context));
