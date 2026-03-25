@@ -3331,6 +3331,134 @@ public class TalkBackService extends AccessibilityService
       }
       return;
     }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_next))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_next), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_previous))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_previous), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_next_container))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_next_container), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_prev_container))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_prev_container), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_next_granularity))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_next_granularity), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_previous_granularity))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_previous_granularity), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_next_window))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_next_window), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_previous_window))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_previous_window), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_up))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_up), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_down))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_down), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_left))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_left), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_right))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_right), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_forward))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_forward), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_scroll_back))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_scroll_back), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_first_in_screen))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_first_in_screen), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_last_in_screen))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_last_in_screen), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
     if (menuManager != null) {
       menuManager.showMenu(
           ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);

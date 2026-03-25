@@ -1000,6 +1000,22 @@
     <string name="pref_floating_menu_action_value_braille_keyboard" translatable="false">braille_keyboard</string>
     <string name="pref_floating_menu_action_value_braille_display_settings" translatable="false">braille_display_settings</string>
     <string name="pref_floating_menu_action_value_toggle_braille_display" translatable="false">toggle_braille_display</string>
+    <string name="pref_floating_menu_action_value_next" translatable="false">next</string>
+    <string name="pref_floating_menu_action_value_previous" translatable="false">previous</string>
+    <string name="pref_floating_menu_action_value_next_container" translatable="false">next_container</string>
+    <string name="pref_floating_menu_action_value_prev_container" translatable="false">prev_container</string>
+    <string name="pref_floating_menu_action_value_next_granularity" translatable="false">next_granularity</string>
+    <string name="pref_floating_menu_action_value_previous_granularity" translatable="false">previous_granularity</string>
+    <string name="pref_floating_menu_action_value_next_window" translatable="false">next_window</string>
+    <string name="pref_floating_menu_action_value_previous_window" translatable="false">previous_window</string>
+    <string name="pref_floating_menu_action_value_scroll_up" translatable="false">scroll_up</string>
+    <string name="pref_floating_menu_action_value_scroll_down" translatable="false">scroll_down</string>
+    <string name="pref_floating_menu_action_value_scroll_left" translatable="false">scroll_left</string>
+    <string name="pref_floating_menu_action_value_scroll_right" translatable="false">scroll_right</string>
+    <string name="pref_floating_menu_action_value_scroll_forward" translatable="false">scroll_forward</string>
+    <string name="pref_floating_menu_action_value_scroll_back" translatable="false">scroll_back</string>
+    <string name="pref_floating_menu_action_value_first_in_screen" translatable="false">first_in_screen</string>
+    <string name="pref_floating_menu_action_value_last_in_screen" translatable="false">last_in_screen</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

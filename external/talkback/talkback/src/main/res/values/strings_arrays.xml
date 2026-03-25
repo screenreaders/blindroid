@@ -70,6 +70,22 @@
     <item>@string/pref_floating_menu_action_braille_keyboard</item>
     <item>@string/pref_floating_menu_action_braille_display_settings</item>
     <item>@string/pref_floating_menu_action_toggle_braille_display</item>
+    <item>@string/pref_floating_menu_action_next</item>
+    <item>@string/pref_floating_menu_action_previous</item>
+    <item>@string/pref_floating_menu_action_next_container</item>
+    <item>@string/pref_floating_menu_action_prev_container</item>
+    <item>@string/pref_floating_menu_action_next_granularity</item>
+    <item>@string/pref_floating_menu_action_previous_granularity</item>
+    <item>@string/pref_floating_menu_action_next_window</item>
+    <item>@string/pref_floating_menu_action_previous_window</item>
+    <item>@string/pref_floating_menu_action_scroll_up</item>
+    <item>@string/pref_floating_menu_action_scroll_down</item>
+    <item>@string/pref_floating_menu_action_scroll_left</item>
+    <item>@string/pref_floating_menu_action_scroll_right</item>
+    <item>@string/pref_floating_menu_action_scroll_forward</item>
+    <item>@string/pref_floating_menu_action_scroll_back</item>
+    <item>@string/pref_floating_menu_action_first_in_screen</item>
+    <item>@string/pref_floating_menu_action_last_in_screen</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -117,6 +133,22 @@
     <item>@string/pref_floating_menu_action_value_braille_keyboard</item>
     <item>@string/pref_floating_menu_action_value_braille_display_settings</item>
     <item>@string/pref_floating_menu_action_value_toggle_braille_display</item>
+    <item>@string/pref_floating_menu_action_value_next</item>
+    <item>@string/pref_floating_menu_action_value_previous</item>
+    <item>@string/pref_floating_menu_action_value_next_container</item>
+    <item>@string/pref_floating_menu_action_value_prev_container</item>
+    <item>@string/pref_floating_menu_action_value_next_granularity</item>
+    <item>@string/pref_floating_menu_action_value_previous_granularity</item>
+    <item>@string/pref_floating_menu_action_value_next_window</item>
+    <item>@string/pref_floating_menu_action_value_previous_window</item>
+    <item>@string/pref_floating_menu_action_value_scroll_up</item>
+    <item>@string/pref_floating_menu_action_value_scroll_down</item>
+    <item>@string/pref_floating_menu_action_value_scroll_left</item>
+    <item>@string/pref_floating_menu_action_value_scroll_right</item>
+    <item>@string/pref_floating_menu_action_value_scroll_forward</item>
+    <item>@string/pref_floating_menu_action_value_scroll_back</item>
+    <item>@string/pref_floating_menu_action_value_first_in_screen</item>
+    <item>@string/pref_floating_menu_action_value_last_in_screen</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">
