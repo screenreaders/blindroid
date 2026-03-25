@@ -966,6 +966,8 @@
     <string name="pref_floating_menu_action_value_translate_text" translatable="false">translate_text</string>
     <string name="pref_floating_menu_action_value_describe_image" translatable="false">describe_image</string>
     <string name="pref_floating_menu_action_value_face_recognition" translatable="false">face_recognition</string>
+    <string name="pref_floating_menu_action_value_screen_curtain" translatable="false">screen_curtain</string>
+    <string name="pref_floating_menu_action_value_quick_settings" translatable="false">quick_settings</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
