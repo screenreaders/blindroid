@@ -1,12 +1,12 @@
 {
-  "tag_name": "v160",
-  "name": "v160",
-  "body": "Floating menu action now supports Media control and Copy last spoken.",
+  "tag_name": "v161",
+  "name": "v161",
+  "body": "Floating menu action now supports Back and Home.",
   "assets": [
     {
-      "name": "blindroid-160.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-160.apk",
-      "sha256": "8535bbf8bfbda671adc3c89ae84f9b282294965baa0fe2090da34523649e2899",
+      "name": "blindroid-161.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-161.apk",
+      "sha256": "ef305bce2363cf0dc8c44c9b72075be80dacefced1098099290fca811498aa74",
       "size": 123087111
     }
   ]

@@ -975,6 +975,8 @@
     <string name="pref_floating_menu_action_value_announce_battery" translatable="false">announce_battery</string>
     <string name="pref_floating_menu_action_value_media_control" translatable="false">media_control</string>
     <string name="pref_floating_menu_action_value_copy_last_spoken" translatable="false">copy_last_spoken</string>
+    <string name="pref_floating_menu_action_value_back" translatable="false">back</string>
+    <string name="pref_floating_menu_action_value_home" translatable="false">home</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
