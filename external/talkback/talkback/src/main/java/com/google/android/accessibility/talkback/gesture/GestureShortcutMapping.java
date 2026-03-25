@@ -436,6 +436,10 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         TalkBackGesture.SWIPE_UP, R.string.shortcut_value_selected_setting_previous_action);
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.SWIPE_DOWN, R.string.shortcut_value_selected_setting_next_action);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_SINGLE_TAP, R.string.shortcut_value_pause_or_resume_feedback);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_DOUBLE_TAP, R.string.shortcut_value_media_control);
     IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_LEFT_AND_RIGHT, R.string.shortcut_value_back);
     IOS_DEFAULT_ACTIONS.put(TalkBackGesture.SWIPE_RIGHT_AND_LEFT, R.string.shortcut_value_back);
     IOS_DEFAULT_ACTIONS.put(

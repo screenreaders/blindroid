@@ -1,13 +1,13 @@
 {
-  "tag_name": "v175",
-  "name": "v175",
-  "body": "Quick menu defaults now include Voice commands.",
+  "tag_name": "v176",
+  "name": "v176",
+  "body": "iOS gesture set: 2-finger tap now pauses/resumes speech; 2-finger double tap controls media.",
   "assets": [
     {
-      "name": "blindroid-175.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-175.apk",
-      "sha256": "a024408e55608644d483e4933128ffada0523fb12d9cea3fa631ccd57102ccfc",
-      "size": 123087115
+      "name": "blindroid-176.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-176.apk",
+      "sha256": "0df33341a5bcad9fd67d1bd883c8c85e950acf6f13cf13779f2b78e9c4d0e267",
+      "size": 123087111
     }
   ]
 }
