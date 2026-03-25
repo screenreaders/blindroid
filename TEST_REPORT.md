@@ -3,7 +3,7 @@
 ## Latest Build Status
 - Date: 2026-03-25
 - APK: `blindroid-180.apk`
-- Status: IME smoke run (API34/35/36); functional smoke run (API34); connected tests run (API34).
+- Status: IME smoke run (API35/36); functional smoke run (API34); connected tests run (API34).
 
 ## Latest Unit Tests
 - Date: 2026-03-25
@@ -12,20 +12,19 @@
 
 ## Latest Smoke (IME)
 - Date: 2026-03-25
-- Emulators: `phone_api34`, `phone_api35`, `phone_api36`
+- Emulators: `phone_api35`, `phone_api36`
 - APK: `blindroid-180.apk`
 
 ### Results
-- Android 14 (API 34): PASS – install OK; IME listed, enabled, default set.
 - Android 15 (API 35): PASS – install OK; IME listed, enabled, default set.
-- Android 16 (API 36): WARN – install OK; IME list failed, but enable/set OK and default IME set.
+- Android 16 (API 36): PASS – install OK; IME listed, enabled, default set.
 
 ### Notes
-- API 33 not rerun in this pass (system image removed to free disk); previous API33 result for v180 was PASS.
+- API 33/34 emulatory usunięte (nie testujemy).
 
 ## Latest Functional Smoke (App)
 - Date: 2026-03-25
-- Emulator: `phone_api34`
+- Emulator: `phone_api34` (ostatni raz przed usunięciem)
 - APK: `blindroid-180.apk`
 
 ### Results
@@ -34,14 +33,14 @@
 ## Latest Instrumentation Tests
 - Date: 2026-03-25
 - Command: `./gradlew connectedDebugAndroidTest`
-- Emulator: `phone_api34`
+- Emulator: `phone_api34` (ostatni raz przed usunięciem)
 - Result: PASS (no instrumentation tests detected).
 
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
 
 ## Environment
-- Emulators: `phone_api33`, `phone_api34`, `phone_api35`, `phone_api36`
+- Emulators: `phone_api35`, `phone_api36`
 - APK: `blindroid-102.apk`
 
 ## Steps (per API)
