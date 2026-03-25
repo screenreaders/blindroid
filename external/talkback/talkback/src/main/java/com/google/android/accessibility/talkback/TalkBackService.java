@@ -3171,6 +3171,30 @@ public class TalkBackService extends AccessibilityService
       }
       return;
     }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_all_apps))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_all_apps), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_screen_search))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_screen_search), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_document_scan))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_document_scan), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
     if (menuManager != null) {
       menuManager.showMenu(
           ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);

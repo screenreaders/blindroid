@@ -1,12 +1,12 @@
 {
-  "tag_name": "v162",
-  "name": "v162",
-  "body": "Floating menu action now supports Notifications, Toggle speak notifications, and Overview.",
+  "tag_name": "v163",
+  "name": "v163",
+  "body": "Floating menu action now supports All apps, Screen search, and Document scan.",
   "assets": [
     {
-      "name": "blindroid-162.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-162.apk",
-      "sha256": "932719e7145a40e3b7bd7dba55c0de8ce19eb92dff2ce67ba810e1708aa475d1",
+      "name": "blindroid-163.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-163.apk",
+      "sha256": "eeaa0ea2002f755b7aa705fc3c29ff67383f9477f5bbe8e3459bbb09a37bf016",
       "size": 123087111
     }
   ]

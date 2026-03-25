@@ -50,6 +50,9 @@
     <item>@string/pref_floating_menu_action_notifications</item>
     <item>@string/pref_floating_menu_action_toggle_speak_notifications</item>
     <item>@string/pref_floating_menu_action_overview</item>
+    <item>@string/pref_floating_menu_action_all_apps</item>
+    <item>@string/pref_floating_menu_action_screen_search</item>
+    <item>@string/pref_floating_menu_action_document_scan</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -77,6 +80,9 @@
     <item>@string/pref_floating_menu_action_value_notifications</item>
     <item>@string/pref_floating_menu_action_value_toggle_speak_notifications</item>
     <item>@string/pref_floating_menu_action_value_overview</item>
+    <item>@string/pref_floating_menu_action_value_all_apps</item>
+    <item>@string/pref_floating_menu_action_value_screen_search</item>
+    <item>@string/pref_floating_menu_action_value_document_scan</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">

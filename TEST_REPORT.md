@@ -2,8 +2,8 @@
 
 ## Latest Build Status
 - Date: 2026-03-24
-- APK: `blindroid-162.apk`
-- Status: Build assembled; emulator smoke run (v143). v162 not smoke-tested.
+- APK: `blindroid-163.apk`
+- Status: Build assembled; emulator smoke run (v143). v163 not smoke-tested.
 
 ## Latest Unit Tests
 - Date: 2026-03-24

@@ -980,6 +980,9 @@
     <string name="pref_floating_menu_action_value_notifications" translatable="false">notifications</string>
     <string name="pref_floating_menu_action_value_toggle_speak_notifications" translatable="false">toggle_speak_notifications</string>
     <string name="pref_floating_menu_action_value_overview" translatable="false">overview</string>
+    <string name="pref_floating_menu_action_value_all_apps" translatable="false">all_apps</string>
+    <string name="pref_floating_menu_action_value_screen_search" translatable="false">screen_search</string>
+    <string name="pref_floating_menu_action_value_document_scan" translatable="false">document_scan</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
