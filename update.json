@@ -1,12 +1,12 @@
 {
-  "tag_name": "v154",
-  "name": "v154",
-  "body": "Floating menu action now supports Clipboard history.",
+  "tag_name": "v155",
+  "name": "v155",
+  "body": "Floating menu action now supports Translate text.",
   "assets": [
     {
-      "name": "blindroid-154.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-154.apk",
-      "sha256": "e8cf5031543f08cde0027bc239cf166ed4cb096dbdb354673b1b3a7b0bd30763",
+      "name": "blindroid-155.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-155.apk",
+      "sha256": "bd649aeed2cfffd8c62fea64d3cc21ea4e46788f9541d2f6b58f42335f585e67",
       "size": 123087115
     }
   ]
