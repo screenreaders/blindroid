@@ -977,6 +977,9 @@
     <string name="pref_floating_menu_action_value_copy_last_spoken" translatable="false">copy_last_spoken</string>
     <string name="pref_floating_menu_action_value_back" translatable="false">back</string>
     <string name="pref_floating_menu_action_value_home" translatable="false">home</string>
+    <string name="pref_floating_menu_action_value_notifications" translatable="false">notifications</string>
+    <string name="pref_floating_menu_action_value_toggle_speak_notifications" translatable="false">toggle_speak_notifications</string>
+    <string name="pref_floating_menu_action_value_overview" translatable="false">overview</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

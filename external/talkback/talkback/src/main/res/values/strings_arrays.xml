@@ -47,6 +47,9 @@
     <item>@string/pref_floating_menu_action_copy_last_spoken</item>
     <item>@string/pref_floating_menu_action_back</item>
     <item>@string/pref_floating_menu_action_home</item>
+    <item>@string/pref_floating_menu_action_notifications</item>
+    <item>@string/pref_floating_menu_action_toggle_speak_notifications</item>
+    <item>@string/pref_floating_menu_action_overview</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -71,6 +74,9 @@
     <item>@string/pref_floating_menu_action_value_copy_last_spoken</item>
     <item>@string/pref_floating_menu_action_value_back</item>
     <item>@string/pref_floating_menu_action_value_home</item>
+    <item>@string/pref_floating_menu_action_value_notifications</item>
+    <item>@string/pref_floating_menu_action_value_toggle_speak_notifications</item>
+    <item>@string/pref_floating_menu_action_value_overview</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">

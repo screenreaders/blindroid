@@ -1,12 +1,12 @@
 {
-  "tag_name": "v161",
-  "name": "v161",
-  "body": "Floating menu action now supports Back and Home.",
+  "tag_name": "v162",
+  "name": "v162",
+  "body": "Floating menu action now supports Notifications, Toggle speak notifications, and Overview.",
   "assets": [
     {
-      "name": "blindroid-161.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-161.apk",
-      "sha256": "ef305bce2363cf0dc8c44c9b72075be80dacefced1098099290fca811498aa74",
+      "name": "blindroid-162.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-162.apk",
+      "sha256": "932719e7145a40e3b7bd7dba55c0de8ce19eb92dff2ce67ba810e1708aa475d1",
       "size": 123087111
     }
   ]
