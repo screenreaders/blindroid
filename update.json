@@ -1,7 +1,7 @@
 {
   "tag_name": "v180",
   "name": "v180",
-  "body": "Notification filters (white/black list), subtitle reader, web content filter, article mode, favorites/tools, scheduled actions, iOS scrub gesture.",
+  "body": "v180: filtry powiadomień (biała/czarna lista), auto‑czytanie napisów, filtr treści web, tryb artykułu (read‑all), ulubione/narzędzia, zaplanowane akcje, gest iOS 2‑finger scrub.",
   "assets": [
     {
       "name": "blindroid-180.apk",

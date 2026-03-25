@@ -6,10 +6,10 @@
 - Status: Build assembled; emulator smoke run (v143). v180 not smoke-tested.
 
 ## Latest Unit Tests
-- Date: 2026-03-24
+- Date: 2026-03-25
 - Command: `./gradlew test`
 - Result: PASS (no unit tests detected in app, launcher, braillekeyboard)
-- Notes: Re-run after performance optimizations.
+- Notes: Smoke tests for v180 still pending.
 
 ## Latest Smoke (IME)
 - Date: 2026-03-24
