@@ -1,7 +1,7 @@
 {
   "tag_name": "v180",
   "name": "v180",
-  "body": "v180: filtry powiadomień (biała/czarna lista), auto‑czytanie napisów, filtr treści web, tryb artykułu (read‑all), ulubione/narzędzia, zaplanowane akcje, gest iOS 2‑finger scrub.",
+  "body": "v180: filtry powiadomień (biała/czarna lista), auto‑czytanie napisów, filtr treści web, tryb artykułu (read‑all), ulubione/narzędzia, zaplanowane akcje, gest iOS 2‑finger scrub. Testy: IME smoke API33/34 OK; API35 timeout instalacji; API36 boot fail w emulatorze; MainActivity nie utrzymuje procesu na API34 (emulator).",
   "assets": [
     {
       "name": "blindroid-180.apk",

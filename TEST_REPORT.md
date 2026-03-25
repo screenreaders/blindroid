@@ -3,35 +3,40 @@
 ## Latest Build Status
 - Date: 2026-03-25
 - APK: `blindroid-180.apk`
-- Status: Build assembled; emulator smoke run (v143). v180 not smoke-tested.
+- Status: IME smoke run (v180); functional smoke run (API34); connected tests run (API34).
 
 ## Latest Unit Tests
 - Date: 2026-03-25
 - Command: `./gradlew test`
 - Result: PASS (no unit tests detected in app, launcher, braillekeyboard)
-- Notes: Smoke tests for v180 still pending.
 
 ## Latest Smoke (IME)
-- Date: 2026-03-24
+- Date: 2026-03-25
 - Emulators: `phone_api33`, `phone_api34`, `phone_api35`, `phone_api36`
-- APK: `blindroid-143.apk`
+- APK: `blindroid-180.apk`
 
 ### Results
-- Android 13 (API 33): PASS – IME listed, enabled, default set.
-- Android 14 (API 34): PASS – IME listed, enabled, default set.
-- Android 15 (API 35): PASS – IME listed, enabled, default set.
-- Android 16 (API 36): PASS – IME listed, enabled, default set.
+- Android 13 (API 33): PASS – install OK; IME listed, enabled, default set.
+- Android 14 (API 34): PASS – install OK; IME listed, enabled, default set.
+- Android 15 (API 35): WARN – install timeout; IME listed, enabled, default set (existing install likely present).
+- Android 16 (API 36): FAIL – boot incomplete within 4 minutes; IME service unavailable.
 
 ## Latest Functional Smoke (App)
-- Date: 2026-03-24
-- Emulator: `phone_api36`
-- APK: `blindroid-143.apk`
+- Date: 2026-03-25
+- Emulator: `phone_api34`
+- APK: `blindroid-180.apk`
 
 ### Results
-- MainActivity launch: PASS
-- TalkbackWizardActivity: SKIPPED (not exported; cannot be launched from shell)
-- DiagnosticsActivity: SKIPPED (not exported; cannot be launched from shell)
-- OnboardingActivity: SKIPPED (not exported; cannot be launched from shell)
+- MainActivity launch: FAIL – `am start` succeeded but process not detected after 3 seconds.
+
+### Notes
+- API 36 functional smoke aborted due to emulator boot hang (>6 minutes).
+
+## Latest Instrumentation Tests
+- Date: 2026-03-25
+- Command: `./gradlew connectedDebugAndroidTest`
+- Emulator: `phone_api34`
+- Result: PASS (no instrumentation tests detected).
 
 ## Previous Smoke (Reference)
 - Date: 2026-03-22
