@@ -1,12 +1,12 @@
 {
-  "tag_name": "v172",
-  "name": "v172",
-  "body": "Floating menu action now supports Clipboard history menu.",
+  "tag_name": "v173",
+  "name": "v173",
+  "body": "Quick menu defaults now include Screen search and Document scan.",
   "assets": [
     {
-      "name": "blindroid-172.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-172.apk",
-      "sha256": "6c9294726c526fdb879b49fc048404769097c15165092145ef26c0d42c120434",
+      "name": "blindroid-173.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-173.apk",
+      "sha256": "46560f248b1faaa6d5b1a019d6caf9ce93277f20c565b0a1a22a6ff44df57644",
       "size": 123087115
     }
   ]

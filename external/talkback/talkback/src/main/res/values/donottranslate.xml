@@ -841,6 +841,8 @@
         <item>@string/shortcut_value_toggle_explore_by_touch</item>
         <item>@string/shortcut_value_read_screen</item>
         <item>@string/shortcut_value_scan_hub</item>
+        <item>@string/shortcut_value_screen_search</item>
+        <item>@string/shortcut_value_document_scan</item>
         <item>@string/shortcut_value_describe_image</item>
         <item>@string/shortcut_value_translate_text</item>
         <item>@string/shortcut_value_object_recognition</item>
