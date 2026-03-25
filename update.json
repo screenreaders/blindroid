@@ -1,12 +1,12 @@
 {
-  "tag_name": "v173",
-  "name": "v173",
-  "body": "Quick menu defaults now include Screen search and Document scan.",
+  "tag_name": "v174",
+  "name": "v174",
+  "body": "Quick menu defaults now include Overview and All apps.",
   "assets": [
     {
-      "name": "blindroid-173.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-173.apk",
-      "sha256": "46560f248b1faaa6d5b1a019d6caf9ce93277f20c565b0a1a22a6ff44df57644",
+      "name": "blindroid-174.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-174.apk",
+      "sha256": "f2e1ecaf8fbc8f8992ecc625a820033d3e8dfec52d0f86b754acea85df173161",
       "size": 123087115
     }
   ]
