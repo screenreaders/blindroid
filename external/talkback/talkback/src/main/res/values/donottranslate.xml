@@ -994,6 +994,12 @@
     <string name="pref_floating_menu_action_value_spell_last_utterance" translatable="false">spell_last_utterance</string>
     <string name="pref_floating_menu_action_value_announce_item_position" translatable="false">announce_item_position</string>
     <string name="pref_floating_menu_action_value_show_language_options" translatable="false">show_language_options</string>
+    <string name="pref_floating_menu_action_value_macro_1" translatable="false">macro_1</string>
+    <string name="pref_floating_menu_action_value_macro_2" translatable="false">macro_2</string>
+    <string name="pref_floating_menu_action_value_macro_3" translatable="false">macro_3</string>
+    <string name="pref_floating_menu_action_value_braille_keyboard" translatable="false">braille_keyboard</string>
+    <string name="pref_floating_menu_action_value_braille_display_settings" translatable="false">braille_display_settings</string>
+    <string name="pref_floating_menu_action_value_toggle_braille_display" translatable="false">toggle_braille_display</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

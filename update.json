@@ -1,12 +1,12 @@
 {
-  "tag_name": "v166",
-  "name": "v166",
-  "body": "Floating menu action now supports Repeat/Spell last utterance, Announce item position, and Language options.",
+  "tag_name": "v167",
+  "name": "v167",
+  "body": "Floating menu action now supports Macros and Braille controls.",
   "assets": [
     {
-      "name": "blindroid-166.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-166.apk",
-      "sha256": "efb691a315b3e8f3653d1cebe3aa9e3e8ff8f2e6f81c2c7ed4d06bb5b05a1900",
+      "name": "blindroid-167.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-167.apk",
+      "sha256": "a11cde0fad7d7105caa99ebce02421332d91ab8a0a55d4159a9242786192a7a7",
       "size": 123087111
     }
   ]

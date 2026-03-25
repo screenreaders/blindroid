@@ -481,6 +481,12 @@
     <string name="pref_floating_menu_action_spell_last_utterance">Spell last utterance</string>
     <string name="pref_floating_menu_action_announce_item_position">Announce item position</string>
     <string name="pref_floating_menu_action_show_language_options">Language options</string>
+    <string name="pref_floating_menu_action_macro_1">Macro 1</string>
+    <string name="pref_floating_menu_action_macro_2">Macro 2</string>
+    <string name="pref_floating_menu_action_macro_3">Macro 3</string>
+    <string name="pref_floating_menu_action_braille_keyboard">Braille keyboard</string>
+    <string name="pref_floating_menu_action_braille_display_settings">Braille display settings</string>
+    <string name="pref_floating_menu_action_toggle_braille_display">Toggle braille display</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

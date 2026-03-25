@@ -3283,6 +3283,54 @@ public class TalkBackService extends AccessibilityService
       }
       return;
     }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_macro_1))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_macro_1), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_macro_2))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_macro_2), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_macro_3))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_macro_3), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_braille_keyboard))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_braille_keyboard), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_braille_display_settings))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_braille_display_settings), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_toggle_braille_display))) {
+      if (gestureController != null) {
+        gestureController.performAction(
+            getString(R.string.shortcut_value_toggle_braille_display), EVENT_ID_UNTRACKED);
+      }
+      return;
+    }
     if (menuManager != null) {
       menuManager.showMenu(
           ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);
