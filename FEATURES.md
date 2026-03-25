@@ -8,7 +8,7 @@
 - [x] Przełącznik wibracji potwierdzających gesty
 
 ## BlindReader (Screen Reader)
-- [x] Akcje menu pływającego: Read screen, Scan hub, Item chooser, Live recognition, Voice commands, Clipboard history, Translate text, Describe image, Face recognition, Screen curtain, Quick settings, Read from top, Read from current, Toggle voice feedback, Announce time, Announce battery, Media control, Copy last spoken, Back, Home, Notifications, Toggle speak notifications, Overview, All apps, Screen search, Document scan
+- [x] Akcje menu pływającego: Read screen, Scan hub, Item chooser, Live recognition, Voice commands, Clipboard history, Translate text, Describe image, Face recognition, Screen curtain, Quick settings, Read from top, Read from current, Toggle voice feedback, Announce time, Announce battery, Media control, Copy last spoken, Back, Home, Notifications, Toggle speak notifications, Overview, All apps, Screen search, Document scan, Object recognition, Scene recognition, Money recognition
 - [x] Domyślne skróty quick menu: Item chooser i Live recognition
 - [x] Haptyka przy tapnięciu pozycji menu pływającego
 

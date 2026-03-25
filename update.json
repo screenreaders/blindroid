@@ -1,12 +1,12 @@
 {
-  "tag_name": "v163",
-  "name": "v163",
-  "body": "Floating menu action now supports All apps, Screen search, and Document scan.",
+  "tag_name": "v164",
+  "name": "v164",
+  "body": "Floating menu action now supports Object/Scene/Money recognition.",
   "assets": [
     {
-      "name": "blindroid-163.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-163.apk",
-      "sha256": "eeaa0ea2002f755b7aa705fc3c29ff67383f9477f5bbe8e3459bbb09a37bf016",
+      "name": "blindroid-164.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-164.apk",
+      "sha256": "b214f5b90064d169f5649e91bb79ace43e9b6e414e900808982d055aff33b5e1",
       "size": 123087111
     }
   ]

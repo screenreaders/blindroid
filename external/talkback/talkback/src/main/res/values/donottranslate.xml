@@ -983,6 +983,9 @@
     <string name="pref_floating_menu_action_value_all_apps" translatable="false">all_apps</string>
     <string name="pref_floating_menu_action_value_screen_search" translatable="false">screen_search</string>
     <string name="pref_floating_menu_action_value_document_scan" translatable="false">document_scan</string>
+    <string name="pref_floating_menu_action_value_object_recognition" translatable="false">object_recognition</string>
+    <string name="pref_floating_menu_action_value_scene_recognition" translatable="false">scene_recognition</string>
+    <string name="pref_floating_menu_action_value_money_recognition" translatable="false">money_recognition</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
