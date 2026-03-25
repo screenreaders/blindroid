@@ -18,8 +18,8 @@
 ### Results
 - Android 13 (API 33): PASS – install OK; IME listed, enabled, default set.
 - Android 14 (API 34): PASS – install OK; IME listed, enabled, default set.
-- Android 15 (API 35): WARN – install timeout; IME listed, enabled, default set (existing install likely present).
-- Android 16 (API 36): FAIL – boot incomplete within 4 minutes; IME service unavailable.
+- Android 15 (API 35): FAIL – emulator cannot start: insufficient disk to create userdata partition.
+- Android 16 (API 36): FAIL – emulator failed to stay running (no device attached).
 
 ## Latest Functional Smoke (App)
 - Date: 2026-03-25
@@ -27,10 +27,10 @@
 - APK: `blindroid-180.apk`
 
 ### Results
-- MainActivity launch: FAIL – `am start` succeeded but process not detected after 3 seconds.
+- MainActivity launch: PASS – `am start` succeeded; PID observed after 5 seconds.
 
 ### Notes
-- API 36 functional smoke aborted due to emulator boot hang (>6 minutes).
+- API 36 functional smoke aborted due to emulator not attaching to ADB.
 
 ## Latest Instrumentation Tests
 - Date: 2026-03-25
