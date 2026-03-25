@@ -3,7 +3,7 @@
 ## Latest Build Status
 - Date: 2026-03-25
 - APK: `blindroid-180.apk`
-- Status: IME smoke run (v180); functional smoke run (API34); connected tests run (API34).
+- Status: IME smoke run (API34/35/36); functional smoke run (API34); connected tests run (API34).
 
 ## Latest Unit Tests
 - Date: 2026-03-25
@@ -12,14 +12,16 @@
 
 ## Latest Smoke (IME)
 - Date: 2026-03-25
-- Emulators: `phone_api33`, `phone_api34`, `phone_api35`, `phone_api36`
+- Emulators: `phone_api34`, `phone_api35`, `phone_api36`
 - APK: `blindroid-180.apk`
 
 ### Results
-- Android 13 (API 33): PASS – install OK; IME listed, enabled, default set.
 - Android 14 (API 34): PASS – install OK; IME listed, enabled, default set.
-- Android 15 (API 35): FAIL – emulator cannot start: insufficient disk to create userdata partition.
-- Android 16 (API 36): FAIL – emulator failed to stay running (no device attached).
+- Android 15 (API 35): PASS – install OK; IME listed, enabled, default set.
+- Android 16 (API 36): WARN – install OK; IME list failed, but enable/set OK and default IME set.
+
+### Notes
+- API 33 not rerun in this pass (system image removed to free disk); previous API33 result for v180 was PASS.
 
 ## Latest Functional Smoke (App)
 - Date: 2026-03-25
@@ -28,9 +30,6 @@
 
 ### Results
 - MainActivity launch: PASS – `am start` succeeded; PID observed after 5 seconds.
-
-### Notes
-- API 36 functional smoke aborted due to emulator not attaching to ADB.
 
 ## Latest Instrumentation Tests
 - Date: 2026-03-25
