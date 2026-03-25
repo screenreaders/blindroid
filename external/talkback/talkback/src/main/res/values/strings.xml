@@ -477,6 +477,10 @@
     <string name="pref_floating_menu_action_paste">Paste</string>
     <string name="pref_floating_menu_action_cut">Cut</string>
     <string name="pref_floating_menu_action_select_all">Select all</string>
+    <string name="pref_floating_menu_action_repeat_last_utterance">Repeat last utterance</string>
+    <string name="pref_floating_menu_action_spell_last_utterance">Spell last utterance</string>
+    <string name="pref_floating_menu_action_announce_item_position">Announce item position</string>
+    <string name="pref_floating_menu_action_show_language_options">Language options</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

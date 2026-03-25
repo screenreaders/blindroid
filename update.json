@@ -1,12 +1,12 @@
 {
-  "tag_name": "v165",
-  "name": "v165",
-  "body": "Floating menu action now supports Copy, Paste, Cut, and Select all.",
+  "tag_name": "v166",
+  "name": "v166",
+  "body": "Floating menu action now supports Repeat/Spell last utterance, Announce item position, and Language options.",
   "assets": [
     {
-      "name": "blindroid-165.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-165.apk",
-      "sha256": "1c1d1c86948a9bf04c2ca8eea6446c1d58cd2f1cf2a0a9b57ae7aaada1bc1835",
+      "name": "blindroid-166.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-166.apk",
+      "sha256": "efb691a315b3e8f3653d1cebe3aa9e3e8ff8f2e6f81c2c7ed4d06bb5b05a1900",
       "size": 123087111
     }
   ]

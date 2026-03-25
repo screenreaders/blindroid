@@ -60,6 +60,10 @@
     <item>@string/pref_floating_menu_action_paste</item>
     <item>@string/pref_floating_menu_action_cut</item>
     <item>@string/pref_floating_menu_action_select_all</item>
+    <item>@string/pref_floating_menu_action_repeat_last_utterance</item>
+    <item>@string/pref_floating_menu_action_spell_last_utterance</item>
+    <item>@string/pref_floating_menu_action_announce_item_position</item>
+    <item>@string/pref_floating_menu_action_show_language_options</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -97,6 +101,10 @@
     <item>@string/pref_floating_menu_action_value_paste</item>
     <item>@string/pref_floating_menu_action_value_cut</item>
     <item>@string/pref_floating_menu_action_value_select_all</item>
+    <item>@string/pref_floating_menu_action_value_repeat_last_utterance</item>
+    <item>@string/pref_floating_menu_action_value_spell_last_utterance</item>
+    <item>@string/pref_floating_menu_action_value_announce_item_position</item>
+    <item>@string/pref_floating_menu_action_value_show_language_options</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">

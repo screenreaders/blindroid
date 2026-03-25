@@ -990,6 +990,10 @@
     <string name="pref_floating_menu_action_value_paste" translatable="false">paste</string>
     <string name="pref_floating_menu_action_value_cut" translatable="false">cut</string>
     <string name="pref_floating_menu_action_value_select_all" translatable="false">select_all</string>
+    <string name="pref_floating_menu_action_value_repeat_last_utterance" translatable="false">repeat_last_utterance</string>
+    <string name="pref_floating_menu_action_value_spell_last_utterance" translatable="false">spell_last_utterance</string>
+    <string name="pref_floating_menu_action_value_announce_item_position" translatable="false">announce_item_position</string>
+    <string name="pref_floating_menu_action_value_show_language_options" translatable="false">show_language_options</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
