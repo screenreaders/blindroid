@@ -1,12 +1,12 @@
 {
-  "tag_name": "v153",
-  "name": "v153",
-  "body": "Floating menu action now supports Voice commands.",
+  "tag_name": "v154",
+  "name": "v154",
+  "body": "Floating menu action now supports Clipboard history.",
   "assets": [
     {
-      "name": "blindroid-153.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-153.apk",
-      "sha256": "959eae34de69fb76f9fc0a77bc038d42095e1c061fccb5f368a679c33124b1cf",
+      "name": "blindroid-154.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-154.apk",
+      "sha256": "e8cf5031543f08cde0027bc239cf166ed4cb096dbdb354673b1b3a7b0bd30763",
       "size": 123087115
     }
   ]
