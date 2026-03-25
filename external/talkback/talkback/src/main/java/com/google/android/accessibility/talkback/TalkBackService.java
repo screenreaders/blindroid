@@ -3759,6 +3759,16 @@ public class TalkBackService extends AccessibilityService
       }
       return;
     }
+    if (TextUtils.equals(
+        action, getString(R.string.pref_floating_menu_action_value_clipboard_history_menu))) {
+      if (menuManager != null) {
+        menuManager.showMenu(
+            ListMenuManager.MenuId.CLIPBOARD_HISTORY,
+            EVENT_ID_UNTRACKED,
+            R.string.clipboard_history_empty);
+      }
+      return;
+    }
     if (menuManager != null) {
       menuManager.showMenu(
           ListMenuManager.MenuId.QUICK_MENU, EVENT_ID_UNTRACKED, R.string.quick_menu_empty);

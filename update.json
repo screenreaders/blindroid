@@ -1,12 +1,12 @@
 {
-  "tag_name": "v171",
-  "name": "v171",
-  "body": "Floating menu action now supports Language menu and Links menu.",
+  "tag_name": "v172",
+  "name": "v172",
+  "body": "Floating menu action now supports Clipboard history menu.",
   "assets": [
     {
-      "name": "blindroid-171.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-171.apk",
-      "sha256": "44d7c3197ffaa51b75507b153539e979e0859f8d560b77b56998e93c94b986fc",
+      "name": "blindroid-172.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-172.apk",
+      "sha256": "6c9294726c526fdb879b49fc048404769097c15165092145ef26c0d42c120434",
       "size": 123087115
     }
   ]
