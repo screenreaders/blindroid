@@ -859,6 +859,10 @@
         <item>@string/shortcut_value_scene_recognition</item>
         <item>@string/shortcut_value_toggle_per_app_gesture_set</item>
         <item>@string/shortcut_value_repeat_last_utterance</item>
+        <item>@string/shortcut_value_spell_last_utterance</item>
+        <item>@string/shortcut_value_copy_last_spoken_phrase</item>
+        <item>@string/shortcut_value_announce_item_position</item>
+        <item>@string/shortcut_value_show_language_options</item>
         <item>@string/shortcut_value_clipboard_history</item>
         <item>@string/shortcut_value_gesture_scheme_manager</item>
         <item>@string/shortcut_value_backup_settings</item>

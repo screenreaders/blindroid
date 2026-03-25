@@ -1,12 +1,12 @@
 {
-  "tag_name": "v177",
-  "name": "v177",
-  "body": "Quick menu defaults now include pause/resume, media control, and time/battery announce.",
+  "tag_name": "v178",
+  "name": "v178",
+  "body": "Quick menu defaults expanded with language options and speech utilities.",
   "assets": [
     {
-      "name": "blindroid-177.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-177.apk",
-      "sha256": "3f268e5a68963aca5ac95fe397a2c0968637ba67ff79d89ce9d32f317dc21600",
+      "name": "blindroid-178.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-178.apk",
+      "sha256": "8c99525d2bd697755755e1e50f8ef46c7418248f368f98c63c7fb7cc2b8ab70d",
       "size": 123087115
     }
   ]
