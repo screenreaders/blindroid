@@ -1,12 +1,12 @@
 {
-  "tag_name": "v170",
-  "name": "v170",
-  "body": "Floating menu action now supports Context menu and Custom actions menu.",
+  "tag_name": "v171",
+  "name": "v171",
+  "body": "Floating menu action now supports Language menu and Links menu.",
   "assets": [
     {
-      "name": "blindroid-170.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-170.apk",
-      "sha256": "6bb19361088385375e928edc03b5b915acccdcc89b9cd5ee831fd35206fda89d",
+      "name": "blindroid-171.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-171.apk",
+      "sha256": "44d7c3197ffaa51b75507b153539e979e0859f8d560b77b56998e93c94b986fc",
       "size": 123087115
     }
   ]

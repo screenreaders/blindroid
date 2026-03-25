@@ -1052,6 +1052,8 @@
     <string name="pref_floating_menu_action_value_move_cursor_to_end" translatable="false">move_cursor_to_end</string>
     <string name="pref_floating_menu_action_value_context_menu" translatable="false">context_menu</string>
     <string name="pref_floating_menu_action_value_custom_actions_menu" translatable="false">custom_actions_menu</string>
+    <string name="pref_floating_menu_action_value_language_menu" translatable="false">language_menu</string>
+    <string name="pref_floating_menu_action_value_links_menu" translatable="false">links_menu</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

@@ -122,6 +122,8 @@
     <item>@string/pref_floating_menu_action_move_cursor_to_end</item>
     <item>@string/pref_floating_menu_action_context_menu</item>
     <item>@string/pref_floating_menu_action_custom_actions_menu</item>
+    <item>@string/pref_floating_menu_action_language_menu</item>
+    <item>@string/pref_floating_menu_action_links_menu</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -221,6 +223,8 @@
     <item>@string/pref_floating_menu_action_value_move_cursor_to_end</item>
     <item>@string/pref_floating_menu_action_value_context_menu</item>
     <item>@string/pref_floating_menu_action_value_custom_actions_menu</item>
+    <item>@string/pref_floating_menu_action_value_language_menu</item>
+    <item>@string/pref_floating_menu_action_value_links_menu</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">
