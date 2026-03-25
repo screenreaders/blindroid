@@ -821,6 +821,7 @@
         <item>@string/shortcut_value_macro_3</item>
         <item>@string/shortcut_value_document_scan</item>
         <item>@string/shortcut_value_read_screen</item>
+        <item>@string/shortcut_value_voice_commands</item>
         <item>@string/shortcut_value_scan_hub</item>
         <item>@string/shortcut_value_gesture_scheme_manager</item>
         <item>@string/shortcut_value_backup_settings</item>
