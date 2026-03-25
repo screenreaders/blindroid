@@ -1,12 +1,12 @@
 {
-  "tag_name": "v158",
-  "name": "v158",
-  "body": "Floating menu action now supports Read from top/current and Toggle voice feedback.",
+  "tag_name": "v159",
+  "name": "v159",
+  "body": "Floating menu action now supports Announce time and Announce battery.",
   "assets": [
     {
-      "name": "blindroid-158.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-158.apk",
-      "sha256": "2a614e4a8941ec95d36d87d4df7a1313194a0a776dc656ce95e9eb5c17deace2",
+      "name": "blindroid-159.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-159.apk",
+      "sha256": "0027bbe304c03f80a23b4642837259290b79ff19a82f94fd3f9223f49ecaf5ed",
       "size": 123087115
     }
   ]
