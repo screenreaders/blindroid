@@ -537,6 +537,8 @@
     <string name="pref_floating_menu_action_start_selection_mode">Start selection mode</string>
     <string name="pref_floating_menu_action_move_cursor_to_beginning">Move cursor to beginning</string>
     <string name="pref_floating_menu_action_move_cursor_to_end">Move cursor to end</string>
+    <string name="pref_floating_menu_action_context_menu">Context menu</string>
+    <string name="pref_floating_menu_action_custom_actions_menu">Custom actions menu</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->
