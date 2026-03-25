@@ -451,6 +451,8 @@
     <string name="pref_floating_menu_action_voice_commands">Voice commands</string>
     <string name="pref_floating_menu_action_clipboard_history">Clipboard history</string>
     <string name="pref_floating_menu_action_translate_text">Translate text</string>
+    <string name="pref_floating_menu_action_describe_image">Describe image</string>
+    <string name="pref_floating_menu_action_face_recognition">Face recognition</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

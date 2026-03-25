@@ -1,12 +1,12 @@
 {
-  "tag_name": "v155",
-  "name": "v155",
-  "body": "Floating menu action now supports Translate text.",
+  "tag_name": "v156",
+  "name": "v156",
+  "body": "Floating menu action now supports Describe image and Face recognition.",
   "assets": [
     {
-      "name": "blindroid-155.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-155.apk",
-      "sha256": "bd649aeed2cfffd8c62fea64d3cc21ea4e46788f9541d2f6b58f42335f585e67",
+      "name": "blindroid-156.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-156.apk",
+      "sha256": "b5e9aa7d68597aa9db379c6b3d4eb42422f9a639bd556e0f26f24e14291ec804",
       "size": 123087115
     }
   ]
