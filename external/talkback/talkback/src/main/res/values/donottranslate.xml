@@ -843,6 +843,11 @@
         <item>@string/shortcut_value_show_hide_screen</item>
         <item>@string/shortcut_value_toggle_explore_by_touch</item>
         <item>@string/shortcut_value_read_screen</item>
+        <item>@string/shortcut_value_voice_commands</item>
+        <item>@string/shortcut_value_pause_or_resume_feedback</item>
+        <item>@string/shortcut_value_media_control</item>
+        <item>@string/shortcut_value_announce_time</item>
+        <item>@string/shortcut_value_announce_battery</item>
         <item>@string/shortcut_value_scan_hub</item>
         <item>@string/shortcut_value_screen_search</item>
         <item>@string/shortcut_value_document_scan</item>

@@ -1,13 +1,13 @@
 {
-  "tag_name": "v176",
-  "name": "v176",
-  "body": "iOS gesture set: 2-finger tap now pauses/resumes speech; 2-finger double tap controls media.",
+  "tag_name": "v177",
+  "name": "v177",
+  "body": "Quick menu defaults now include pause/resume, media control, and time/battery announce.",
   "assets": [
     {
-      "name": "blindroid-176.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-176.apk",
-      "sha256": "0df33341a5bcad9fd67d1bd883c8c85e950acf6f13cf13779f2b78e9c4d0e267",
-      "size": 123087111
+      "name": "blindroid-177.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-177.apk",
+      "sha256": "3f268e5a68963aca5ac95fe397a2c0968637ba67ff79d89ce9d32f317dc21600",
+      "size": 123087115
     }
   ]
 }
