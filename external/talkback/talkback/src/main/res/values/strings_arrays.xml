@@ -38,6 +38,9 @@
     <item>@string/pref_floating_menu_action_face_recognition</item>
     <item>@string/pref_floating_menu_action_screen_curtain</item>
     <item>@string/pref_floating_menu_action_quick_settings</item>
+    <item>@string/pref_floating_menu_action_read_from_top</item>
+    <item>@string/pref_floating_menu_action_read_from_current</item>
+    <item>@string/pref_floating_menu_action_toggle_voice_feedback</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -53,6 +56,9 @@
     <item>@string/pref_floating_menu_action_value_face_recognition</item>
     <item>@string/pref_floating_menu_action_value_screen_curtain</item>
     <item>@string/pref_floating_menu_action_value_quick_settings</item>
+    <item>@string/pref_floating_menu_action_value_read_from_top</item>
+    <item>@string/pref_floating_menu_action_value_read_from_current</item>
+    <item>@string/pref_floating_menu_action_value_toggle_voice_feedback</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">

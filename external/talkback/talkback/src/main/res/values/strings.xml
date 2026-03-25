@@ -455,6 +455,9 @@
     <string name="pref_floating_menu_action_face_recognition">Face recognition</string>
     <string name="pref_floating_menu_action_screen_curtain">Screen curtain</string>
     <string name="pref_floating_menu_action_quick_settings">Quick settings</string>
+    <string name="pref_floating_menu_action_read_from_top">Read from top</string>
+    <string name="pref_floating_menu_action_read_from_current">Read from current</string>
+    <string name="pref_floating_menu_action_toggle_voice_feedback">Toggle voice feedback</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->
