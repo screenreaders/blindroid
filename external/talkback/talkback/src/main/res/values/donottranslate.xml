@@ -986,6 +986,10 @@
     <string name="pref_floating_menu_action_value_object_recognition" translatable="false">object_recognition</string>
     <string name="pref_floating_menu_action_value_scene_recognition" translatable="false">scene_recognition</string>
     <string name="pref_floating_menu_action_value_money_recognition" translatable="false">money_recognition</string>
+    <string name="pref_floating_menu_action_value_copy" translatable="false">copy</string>
+    <string name="pref_floating_menu_action_value_paste" translatable="false">paste</string>
+    <string name="pref_floating_menu_action_value_cut" translatable="false">cut</string>
+    <string name="pref_floating_menu_action_value_select_all" translatable="false">select_all</string>
     <string name="pref_category_content_key" translatable="false">pref_category_content</string>
     <string name="pref_category_advanced_key" translatable="false">pref_category_advanced</string>
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>

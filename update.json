@@ -1,12 +1,12 @@
 {
-  "tag_name": "v164",
-  "name": "v164",
-  "body": "Floating menu action now supports Object/Scene/Money recognition.",
+  "tag_name": "v165",
+  "name": "v165",
+  "body": "Floating menu action now supports Copy, Paste, Cut, and Select all.",
   "assets": [
     {
-      "name": "blindroid-164.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-164.apk",
-      "sha256": "b214f5b90064d169f5649e91bb79ace43e9b6e414e900808982d055aff33b5e1",
+      "name": "blindroid-165.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-165.apk",
+      "sha256": "1c1d1c86948a9bf04c2ca8eea6446c1d58cd2f1cf2a0a9b57ae7aaada1bc1835",
       "size": 123087111
     }
   ]

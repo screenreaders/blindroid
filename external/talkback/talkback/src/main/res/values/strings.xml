@@ -473,6 +473,10 @@
     <string name="pref_floating_menu_action_object_recognition">Object recognition</string>
     <string name="pref_floating_menu_action_scene_recognition">Scene recognition</string>
     <string name="pref_floating_menu_action_money_recognition">Money recognition</string>
+    <string name="pref_floating_menu_action_copy">Copy</string>
+    <string name="pref_floating_menu_action_paste">Paste</string>
+    <string name="pref_floating_menu_action_cut">Cut</string>
+    <string name="pref_floating_menu_action_select_all">Select all</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

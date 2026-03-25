@@ -56,6 +56,10 @@
     <item>@string/pref_floating_menu_action_object_recognition</item>
     <item>@string/pref_floating_menu_action_scene_recognition</item>
     <item>@string/pref_floating_menu_action_money_recognition</item>
+    <item>@string/pref_floating_menu_action_copy</item>
+    <item>@string/pref_floating_menu_action_paste</item>
+    <item>@string/pref_floating_menu_action_cut</item>
+    <item>@string/pref_floating_menu_action_select_all</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -89,6 +93,10 @@
     <item>@string/pref_floating_menu_action_value_object_recognition</item>
     <item>@string/pref_floating_menu_action_value_scene_recognition</item>
     <item>@string/pref_floating_menu_action_value_money_recognition</item>
+    <item>@string/pref_floating_menu_action_value_copy</item>
+    <item>@string/pref_floating_menu_action_value_paste</item>
+    <item>@string/pref_floating_menu_action_value_cut</item>
+    <item>@string/pref_floating_menu_action_value_select_all</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">
