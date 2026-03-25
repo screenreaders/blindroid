@@ -45,6 +45,8 @@
     <string name="tts_unavailable">Brak silnika TTS</string>
     <string name="switch_sms">Czytaj SMS na ekranie blokady</string>
     <string name="switch_notifications">Czytaj powiadomienia na ekranie blokady</string>
+    <string name="switch_notification_queue">Kolejkuj powiadomienia (bez przerywania mowy)</string>
+    <string name="switch_notification_summary">Czytaj tylko tytuł powiadomienia</string>
     <string name="switch_unlocked">Czytaj także po odblokowaniu</string>
     <string name="switch_privacy">Tryb prywatny: tylko nadawca/aplikacja</string>
     <string name="switch_privacy_title">Prywatny: czytaj tylko tytuł powiadomień</string>

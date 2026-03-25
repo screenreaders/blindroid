@@ -277,6 +277,7 @@
     <string name="pref_shortcut_2finger_1tap_key">pref_shortcut_two_finger_single_tap</string>
     <string name="pref_shortcut_2finger_2tap_key">pref_shortcut_two_finger_double_tap</string>
     <string name="pref_shortcut_2finger_3tap_key">pref_shortcut_two_finger_triple_tap</string>
+    <string name="pref_shortcut_2finger_4tap_key">pref_shortcut_two_finger_quadruple_tap</string>
     <string name="pref_shortcut_3finger_1tap_key">pref_shortcut_three_finger_single_tap</string>
     <string name="pref_shortcut_3finger_2tap_key">pref_shortcut_three_finger_double_tap</string>
     <string name="pref_shortcut_3finger_3tap_key">pref_shortcut_three_finger_triple_tap</string>
@@ -424,6 +425,7 @@
       <item>@string/pref_shortcut_2finger_1tap_key</item>
       <item>@string/pref_shortcut_2finger_2tap_key</item>
       <item>@string/pref_shortcut_2finger_3tap_key</item>
+      <item>@string/pref_shortcut_2finger_4tap_key</item>
       <item>@string/pref_shortcut_3finger_1tap_key</item>
       <item>@string/pref_shortcut_3finger_2tap_key</item>
       <item>@string/pref_shortcut_3finger_3tap_key</item>
@@ -1232,6 +1234,7 @@
       <item>MAPPER_GESTURE_2_FINGER_DOUBLE_TAP</item>
       <item>MAPPER_GESTURE_2_FINGER_DOUBLE_TAP_AND_HOLD</item>
       <item>MAPPER_GESTURE_2_FINGER_TRIPLE_TAP</item>
+      <item>MAPPER_GESTURE_2_FINGER_QUADRUPLE_TAP</item>
       <item>MAPPER_GESTURE_2_FINGER_TRIPLE_TAP_AND_HOLD</item>
       <!-- Three-finger taps. -->
       <item>MAPPER_GESTURE_3_FINGER_SINGLE_TAP</item>
@@ -1417,6 +1420,7 @@
     <string name="pref_shortcut_2finger_1tap_default">@string/shortcut_value_pause_or_resume_feedback</string>
     <string name="pref_shortcut_2finger_2tap_default">@string/shortcut_value_media_control</string>
     <string name="pref_shortcut_2finger_3tap_default">@string/shortcut_value_read_from_current</string>
+    <string name="pref_shortcut_2finger_4tap_default">@string/shortcut_value_unassigned</string>
     <string name="pref_shortcut_3finger_1tap_default">@string/shortcut_value_talkback_breakout</string>
     <string name="pref_shortcut_3finger_2tap_default">@string/shortcut_value_copy</string>
     <string name="pref_shortcut_3finger_3tap_default">@string/shortcut_value_paste</string>

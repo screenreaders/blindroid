@@ -17,6 +17,7 @@
 package com.google.android.accessibility.talkback.gesture;
 
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_FAKED_SPLIT_TYPING;
+import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_2_FINGER_QUADRUPLE_TAP;
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_TAP_HOLD_AND_2ND_FINGER_BACKWARD_DOUBLE_TAP;
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_TAP_HOLD_AND_2ND_FINGER_FORWARD_DOUBLE_TAP;
 
@@ -239,6 +240,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         MULTI_FINGER,
         R.string.pref_shortcut_2finger_3tap_key,
         R.string.pref_shortcut_2finger_3tap_default),
+    TWO_FINGER_QUADRUPLE_TAP(
+        GESTURE_2_FINGER_QUADRUPLE_TAP,
+        MULTI_FINGER,
+        R.string.pref_shortcut_2finger_4tap_key,
+        R.string.pref_shortcut_2finger_4tap_default),
     THREE_FINGER_SINGLE_TAP(
         AccessibilityService.GESTURE_3_FINGER_SINGLE_TAP,
         MULTI_FINGER,
@@ -459,6 +465,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         TalkBackGesture.TWO_FINGER_ROTATE_CCW, R.string.shortcut_value_select_previous_setting);
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.TWO_FINGER_TRIPLE_TAP, R.string.shortcut_value_item_chooser);
+    IOS_DEFAULT_ACTIONS.put(
+        TalkBackGesture.TWO_FINGER_QUADRUPLE_TAP, R.string.shortcut_value_quick_settings);
     IOS_DEFAULT_ACTIONS.put(
         TalkBackGesture.TWO_FINGER_TRIPLE_TAP_AND_HOLD, R.string.shortcut_value_quick_settings);
     IOS_DEFAULT_ACTIONS.put(
@@ -1569,6 +1577,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         return context.getString(R.string.title_pref_shortcut_2finger_2tap);
       case AccessibilityService.GESTURE_2_FINGER_TRIPLE_TAP:
         return context.getString(R.string.title_pref_shortcut_2finger_3tap);
+      case GESTURE_2_FINGER_QUADRUPLE_TAP:
+        return context.getString(R.string.title_pref_shortcut_2finger_4tap);
       case AccessibilityService.GESTURE_3_FINGER_SWIPE_UP:
         return context.getString(R.string.title_pref_shortcut_3finger_swipe_up);
       case AccessibilityService.GESTURE_3_FINGER_SWIPE_DOWN:

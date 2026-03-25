@@ -4,6 +4,7 @@ import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.LruCache
+import java.util.ArrayDeque
 import com.screenreaders.blindroid.call.CallAnnouncer
 import com.screenreaders.blindroid.call.CallManager
 import com.screenreaders.blindroid.data.Prefs
@@ -15,6 +16,8 @@ import com.screenreaders.blindroid.util.QuietHours
 class BlindroidNotificationListener : NotificationListenerService() {
     private lateinit var announcer: CallAnnouncer
     private val appNameCache = LruCache<String, String>(50)
+    private val pendingNotifications = ArrayDeque<NotificationSpeakRequest>()
+    private var isQueueSpeaking = false
 
     override fun onCreate() {
         super.onCreate()
@@ -23,6 +26,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        pendingNotifications.clear()
         announcer.shutdown()
     }
 
@@ -41,6 +45,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
 
         val privacy = Prefs.isPrivacyModeEnabled(this)
         val privacyTitleOnly = Prefs.isPrivacyTitleOnlyEnabled(this)
+        val summaryOnly = Prefs.isNotificationSummaryOnlyEnabled(this)
         val message = if (privacy) {
             if (privacyTitleOnly) {
                 val extras = sbn.notification.extras
@@ -51,6 +56,15 @@ class BlindroidNotificationListener : NotificationListenerService() {
                     val appName = getAppName(sbn.packageName)
                     "Powiadomienie od $appName"
                 }
+            } else {
+                val appName = getAppName(sbn.packageName)
+                "Powiadomienie od $appName"
+            }
+        } else if (summaryOnly) {
+            val extras = sbn.notification.extras
+            val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty()
+            if (title.isNotBlank()) {
+                title
             } else {
                 val appName = getAppName(sbn.packageName)
                 "Powiadomienie od $appName"
@@ -76,13 +90,57 @@ class BlindroidNotificationListener : NotificationListenerService() {
             if (useSeparate) Prefs.getNotificationSpeechVolume(this) else Prefs.getSpeechVolume(this)
         val voiceName =
             if (useSeparate) Prefs.getNotificationVoiceName(this) else Prefs.getVoiceName(this)
+        if (Prefs.isNotificationQueueEnabled(this)) {
+            enqueueNotification(
+                message = message,
+                rate = rate,
+                volume = volume,
+                voiceName = voiceName
+            )
+        } else {
+            pendingNotifications.clear()
+            announcer.speak(
+                text = message,
+                repeatCount = 1,
+                rate = rate,
+                volume = volume,
+                voiceName = voiceName
+            )
+        }
+    }
+
+    private fun enqueueNotification(
+        message: String,
+        rate: Float,
+        volume: Float,
+        voiceName: String?
+    ) {
+        if (pendingNotifications.size >= MAX_QUEUE_SIZE) {
+            pendingNotifications.removeFirst()
+        }
+        pendingNotifications.addLast(NotificationSpeakRequest(message, rate, volume, voiceName))
+        if (!isQueueSpeaking) {
+            speakNextNotification()
+        }
+    }
+
+    private fun speakNextNotification() {
+        val next = pendingNotifications.pollFirst()
+        if (next == null) {
+            isQueueSpeaking = false
+            return
+        }
+        isQueueSpeaking = true
         announcer.speak(
-            text = message,
+            text = next.message,
             repeatCount = 1,
-            rate = rate,
-            volume = volume,
-            voiceName = voiceName
-        )
+            rate = next.rate,
+            volume = next.volume,
+            voiceName = next.voiceName
+        ) {
+            isQueueSpeaking = false
+            speakNextNotification()
+        }
     }
 
     private fun getAppName(packageName: String): String {
@@ -95,5 +153,16 @@ class BlindroidNotificationListener : NotificationListenerService() {
         } catch (_: Exception) {
             packageName
         }
+    }
+
+    private data class NotificationSpeakRequest(
+        val message: String,
+        val rate: Float,
+        val volume: Float,
+        val voiceName: String?
+    )
+
+    private companion object {
+        private const val MAX_QUEUE_SIZE = 8
     }
 }

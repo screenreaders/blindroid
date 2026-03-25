@@ -201,6 +201,10 @@ class MainActivity : AppCompatActivity() {
         binding.missedCallBackSwitch.isChecked = Prefs.isMissedCallBackEnabled(this)
         binding.smsSwitch.isChecked = Prefs.isSmsReadEnabled(this)
         binding.notificationSwitch.isChecked = Prefs.isNotificationsReadEnabled(this)
+        binding.notificationQueueSwitch.isChecked = Prefs.isNotificationQueueEnabled(this)
+        binding.notificationSummarySwitch.isChecked = Prefs.isNotificationSummaryOnlyEnabled(this)
+        binding.notificationQueueSwitch.isEnabled = binding.notificationSwitch.isChecked
+        binding.notificationSummarySwitch.isEnabled = binding.notificationSwitch.isChecked
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
         binding.privacySwitch.isChecked = Prefs.isPrivacyModeEnabled(this)
         binding.privacyTitleSwitch.isChecked = Prefs.isPrivacyTitleOnlyEnabled(this)
@@ -284,9 +288,21 @@ class MainActivity : AppCompatActivity() {
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNotificationsReadEnabled(this, isChecked)
             logSettingChange("notifications_read", isChecked)
+            binding.notificationQueueSwitch.isEnabled = isChecked
+            binding.notificationSummarySwitch.isEnabled = isChecked
             if (isChecked && !isNotificationAccessEnabled()) {
                 openNotificationAccessSettings()
             }
+        }
+
+        binding.notificationQueueSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNotificationQueueEnabled(this, isChecked)
+            logSettingChange("notifications_queue", isChecked)
+        }
+
+        binding.notificationSummarySwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setNotificationSummaryOnlyEnabled(this, isChecked)
+            logSettingChange("notifications_summary_only", isChecked)
         }
 
         binding.unlockedSwitch.setOnCheckedChangeListener { _, isChecked ->

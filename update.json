@@ -1,13 +1,13 @@
 {
-  "tag_name": "v178",
-  "name": "v178",
-  "body": "Quick menu defaults expanded with language options and speech utilities.",
+  "tag_name": "v179",
+  "name": "v179",
+  "body": "Jieshuo/Orion parity: notification queue + summary-only. iOS gestures: 2-finger quadruple tap. Branding cleanup.",
   "assets": [
     {
-      "name": "blindroid-178.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-178.apk",
-      "sha256": "8c99525d2bd697755755e1e50f8ef46c7418248f368f98c63c7fb7cc2b8ab70d",
-      "size": 123087115
+      "name": "blindroid-179.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-179.apk",
+      "sha256": "de2d16679d9365e2d87753aa35c638b2ff07e5000b0835928d01f5e7aefcbf20",
+      "size": 123088139
     }
   ]
 }

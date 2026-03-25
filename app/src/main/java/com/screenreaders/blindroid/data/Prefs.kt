@@ -13,6 +13,8 @@ object Prefs {
     private const val KEY_NOTIFICATION_RATE = "notification_tts_rate"
     private const val KEY_NOTIFICATION_VOLUME = "notification_tts_volume"
     private const val KEY_NOTIFICATION_SEPARATE = "notification_tts_separate"
+    private const val KEY_NOTIFICATION_QUEUE = "notification_queue"
+    private const val KEY_NOTIFICATION_SUMMARY_ONLY = "notification_summary_only"
     private const val KEY_REPEAT_COUNT = "tts_repeat"
     private const val KEY_ANNOUNCE_MODE = "announce_mode"
     private const val KEY_ANNOUNCE_DURING_CALL = "announce_during_call"
@@ -188,6 +190,20 @@ object Prefs {
 
     fun setNotificationTtsSeparateEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOTIFICATION_SEPARATE, value).apply()
+    }
+
+    fun isNotificationQueueEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOTIFICATION_QUEUE, false)
+
+    fun setNotificationQueueEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOTIFICATION_QUEUE, value).apply()
+    }
+
+    fun isNotificationSummaryOnlyEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_NOTIFICATION_SUMMARY_ONLY, false)
+
+    fun setNotificationSummaryOnlyEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_NOTIFICATION_SUMMARY_ONLY, value).apply()
     }
 
     fun getNotificationVoiceName(context: Context): String? =
