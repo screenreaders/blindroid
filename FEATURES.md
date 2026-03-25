@@ -12,11 +12,21 @@
 - [x] Domyślne skróty quick menu: Back, Home, Notifications, Quick settings, Overview, All apps, Item chooser, Live recognition, Voice commands, Screen search, Document scan, Read screen, Scan hub, Describe image, Translate text, Object/Face/Money/Scene recognition, Toggle speak notifications, TalkBack breakout, Read from top/current, Screen curtain, Toggle explore by touch, Pause/resume feedback, Media control, Announce time/battery, Repeat/Spell last utterance, Copy last spoken, Announce item position, Language options, Clipboard history, Gesture scheme manager, Backup settings
 - [x] Haptyka przy tapnięciu pozycji menu pływającego
 - [x] iOS gesty: 2-finger quadruple tap (Quick settings)
+- [x] iOS gesty: 2-finger scrub (Z) – akcja Back
+- [x] Automatyczne czytanie napisów (live captions)
+- [x] Filtrowanie treści web (redukcja szumu)
+- [x] Tryb artykułu (tekst + compact) dla ciągłego czytania
 
 ## TTS
 - [x] Osobny głos i parametry TTS dla powiadomień
 - [x] Kolejkowanie powiadomień (bez przerywania mowy)
 - [x] Powiadomienia: czytanie tylko tytułu
+- [x] Filtr powiadomień (biała/czarna lista)
+
+## Narzędzia i harmonogram
+- [x] Ulubione aplikacje (zarządzanie i szybkie uruchamianie)
+- [x] Narzędzia: export/import ustawień, diagnostyka, skróty systemowe
+- [x] Zaplanowane akcje (autostart modułów o wybranej godzinie)
 
 ## Klawiatura brajlowska
 - [x] Moduł IME włączony w Blindroidzie

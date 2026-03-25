@@ -278,6 +278,7 @@
     <string name="pref_shortcut_2finger_2tap_key">pref_shortcut_two_finger_double_tap</string>
     <string name="pref_shortcut_2finger_3tap_key">pref_shortcut_two_finger_triple_tap</string>
     <string name="pref_shortcut_2finger_4tap_key">pref_shortcut_two_finger_quadruple_tap</string>
+    <string name="pref_shortcut_2finger_scrub_key">pref_shortcut_two_finger_scrub</string>
     <string name="pref_shortcut_3finger_1tap_key">pref_shortcut_three_finger_single_tap</string>
     <string name="pref_shortcut_3finger_2tap_key">pref_shortcut_three_finger_double_tap</string>
     <string name="pref_shortcut_3finger_3tap_key">pref_shortcut_three_finger_triple_tap</string>
@@ -426,6 +427,7 @@
       <item>@string/pref_shortcut_2finger_2tap_key</item>
       <item>@string/pref_shortcut_2finger_3tap_key</item>
       <item>@string/pref_shortcut_2finger_4tap_key</item>
+      <item>@string/pref_shortcut_2finger_scrub_key</item>
       <item>@string/pref_shortcut_3finger_1tap_key</item>
       <item>@string/pref_shortcut_3finger_2tap_key</item>
       <item>@string/pref_shortcut_3finger_3tap_key</item>
@@ -1076,6 +1078,8 @@
     <string name="pref_content_settings_key" translatable="false">pref_content_settings</string>
     <string name="pref_read_all_auto_ocr_key" translatable="false">pref_read_all_auto_ocr</string>
     <bool name="pref_read_all_auto_ocr_default">false</bool>
+    <string name="pref_read_all_article_mode_key" translatable="false">pref_read_all_article_mode</string>
+    <bool name="pref_read_all_article_mode_default">false</bool>
     <string name="pref_read_all_filter_key" translatable="false">pref_read_all_filter</string>
     <string name="pref_read_all_filter_default" translatable="false">all</string>
     <string name="pref_read_all_filter_value_all" translatable="false">all</string>
@@ -1085,6 +1089,10 @@
     <string name="pref_read_all_style_default" translatable="false">detailed</string>
     <string name="pref_read_all_style_value_detailed" translatable="false">detailed</string>
     <string name="pref_read_all_style_value_compact" translatable="false">compact</string>
+    <string name="pref_subtitle_reader_key" translatable="false">pref_subtitle_reader</string>
+    <bool name="pref_subtitle_reader_default">false</bool>
+    <string name="pref_web_content_filter_key" translatable="false">pref_web_content_filter</string>
+    <bool name="pref_web_content_filter_default">false</bool>
     <string name="pref_gemini_read_screen_style_key" translatable="false">pref_gemini_read_screen_style</string>
     <string name="pref_gemini_read_screen_style_default" translatable="false">detailed</string>
     <string name="pref_gemini_read_screen_style_value_detailed" translatable="false">detailed</string>
@@ -1235,6 +1243,7 @@
       <item>MAPPER_GESTURE_2_FINGER_DOUBLE_TAP_AND_HOLD</item>
       <item>MAPPER_GESTURE_2_FINGER_TRIPLE_TAP</item>
       <item>MAPPER_GESTURE_2_FINGER_QUADRUPLE_TAP</item>
+      <item>MAPPER_GESTURE_2_FINGER_SCRUB</item>
       <item>MAPPER_GESTURE_2_FINGER_TRIPLE_TAP_AND_HOLD</item>
       <!-- Three-finger taps. -->
       <item>MAPPER_GESTURE_3_FINGER_SINGLE_TAP</item>
@@ -1421,6 +1430,7 @@
     <string name="pref_shortcut_2finger_2tap_default">@string/shortcut_value_media_control</string>
     <string name="pref_shortcut_2finger_3tap_default">@string/shortcut_value_read_from_current</string>
     <string name="pref_shortcut_2finger_4tap_default">@string/shortcut_value_unassigned</string>
+    <string name="pref_shortcut_2finger_scrub_default">@string/shortcut_value_back</string>
     <string name="pref_shortcut_3finger_1tap_default">@string/shortcut_value_talkback_breakout</string>
     <string name="pref_shortcut_3finger_2tap_default">@string/shortcut_value_copy</string>
     <string name="pref_shortcut_3finger_3tap_default">@string/shortcut_value_paste</string>

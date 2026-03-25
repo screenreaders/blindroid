@@ -18,6 +18,7 @@ package com.google.android.accessibility.talkback.gesture;
 
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_FAKED_SPLIT_TYPING;
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_2_FINGER_QUADRUPLE_TAP;
+import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_2_FINGER_SCRUB;
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_TAP_HOLD_AND_2ND_FINGER_BACKWARD_DOUBLE_TAP;
 import static com.google.android.accessibility.utils.gestures.GestureManifold.GESTURE_TAP_HOLD_AND_2ND_FINGER_FORWARD_DOUBLE_TAP;
 
@@ -245,6 +246,11 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         MULTI_FINGER,
         R.string.pref_shortcut_2finger_4tap_key,
         R.string.pref_shortcut_2finger_4tap_default),
+    TWO_FINGER_SCRUB(
+        GESTURE_2_FINGER_SCRUB,
+        MULTI_FINGER,
+        R.string.pref_shortcut_2finger_scrub_key,
+        R.string.pref_shortcut_2finger_scrub_default),
     THREE_FINGER_SINGLE_TAP(
         AccessibilityService.GESTURE_3_FINGER_SINGLE_TAP,
         MULTI_FINGER,
@@ -1567,6 +1573,8 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
         return context.getString(R.string.title_pref_shortcut_2finger_swipe_left);
       case AccessibilityService.GESTURE_2_FINGER_SWIPE_RIGHT:
         return context.getString(R.string.title_pref_shortcut_2finger_swipe_right);
+      case GESTURE_2_FINGER_SCRUB:
+        return context.getString(R.string.title_pref_shortcut_2finger_scrub);
       case GESTURE_ROTATE_CW:
         return context.getString(R.string.title_pref_shortcut_2finger_rotate_cw);
       case GESTURE_ROTATE_CCW:

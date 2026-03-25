@@ -15,6 +15,9 @@ object Prefs {
     private const val KEY_NOTIFICATION_SEPARATE = "notification_tts_separate"
     private const val KEY_NOTIFICATION_QUEUE = "notification_queue"
     private const val KEY_NOTIFICATION_SUMMARY_ONLY = "notification_summary_only"
+    private const val KEY_NOTIFICATION_FILTER_MODE = "notification_filter_mode"
+    private const val KEY_NOTIFICATION_WHITELIST = "notification_whitelist"
+    private const val KEY_NOTIFICATION_BLACKLIST = "notification_blacklist"
     private const val KEY_REPEAT_COUNT = "tts_repeat"
     private const val KEY_ANNOUNCE_MODE = "announce_mode"
     private const val KEY_ANNOUNCE_DURING_CALL = "announce_during_call"
@@ -41,6 +44,10 @@ object Prefs {
     private const val KEY_CHIME_END = "chime_end"
     private const val KEY_RECENT_NOTIFICATIONS = "recent_notifications"
     private const val KEY_MODULE_SHORTCUTS = "module_shortcuts"
+    private const val KEY_FAVORITE_APPS = "favorite_apps"
+    private const val KEY_SCHEDULED_ACTION_ENABLED = "scheduled_action_enabled"
+    private const val KEY_SCHEDULED_ACTION_TIME = "scheduled_action_time"
+    private const val KEY_SCHEDULED_ACTION_TARGET = "scheduled_action_target"
     private const val KEY_CURRENCY_MODE = "currency_mode"
     private const val KEY_CURRENCY_MODEL_URI = "currency_model_uri"
     private const val KEY_CURRENCY_LABELS_URI = "currency_labels_uri"
@@ -146,6 +153,9 @@ object Prefs {
     const val NAV_POI_SOURCE_HYBRID = 3
     const val NAV_IMPORT_MODE_RADIUS = 0
     const val NAV_IMPORT_MODE_MANUAL = 1
+    const val NOTIFICATION_FILTER_ALL = 0
+    const val NOTIFICATION_FILTER_WHITELIST = 1
+    const val NOTIFICATION_FILTER_BLACKLIST = 2
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -204,6 +214,55 @@ object Prefs {
 
     fun setNotificationSummaryOnlyEnabled(context: Context, value: Boolean) {
         prefs(context).edit().putBoolean(KEY_NOTIFICATION_SUMMARY_ONLY, value).apply()
+    }
+
+    fun getNotificationFilterMode(context: Context): Int =
+        prefs(context).getInt(KEY_NOTIFICATION_FILTER_MODE, NOTIFICATION_FILTER_ALL)
+
+    fun setNotificationFilterMode(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_NOTIFICATION_FILTER_MODE, value).apply()
+    }
+
+    fun getNotificationWhitelist(context: Context): Set<String> =
+        prefs(context).getStringSet(KEY_NOTIFICATION_WHITELIST, emptySet())?.toSet().orEmpty()
+
+    fun setNotificationWhitelist(context: Context, value: Set<String>) {
+        prefs(context).edit().putStringSet(KEY_NOTIFICATION_WHITELIST, value).apply()
+    }
+
+    fun getNotificationBlacklist(context: Context): Set<String> =
+        prefs(context).getStringSet(KEY_NOTIFICATION_BLACKLIST, emptySet())?.toSet().orEmpty()
+
+    fun setNotificationBlacklist(context: Context, value: Set<String>) {
+        prefs(context).edit().putStringSet(KEY_NOTIFICATION_BLACKLIST, value).apply()
+    }
+
+    fun getFavoriteApps(context: Context): Set<String> =
+        prefs(context).getStringSet(KEY_FAVORITE_APPS, emptySet())?.toSet().orEmpty()
+
+    fun setFavoriteApps(context: Context, value: Set<String>) {
+        prefs(context).edit().putStringSet(KEY_FAVORITE_APPS, value).apply()
+    }
+
+    fun isScheduledActionEnabled(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_SCHEDULED_ACTION_ENABLED, false)
+
+    fun setScheduledActionEnabled(context: Context, value: Boolean) {
+        prefs(context).edit().putBoolean(KEY_SCHEDULED_ACTION_ENABLED, value).apply()
+    }
+
+    fun getScheduledActionTime(context: Context): Int =
+        prefs(context).getInt(KEY_SCHEDULED_ACTION_TIME, 8 * 60)
+
+    fun setScheduledActionTime(context: Context, value: Int) {
+        prefs(context).edit().putInt(KEY_SCHEDULED_ACTION_TIME, value).apply()
+    }
+
+    fun getScheduledActionTarget(context: Context): String? =
+        prefs(context).getString(KEY_SCHEDULED_ACTION_TARGET, null)
+
+    fun setScheduledActionTarget(context: Context, value: String?) {
+        prefs(context).edit().putString(KEY_SCHEDULED_ACTION_TARGET, value).apply()
     }
 
     fun getNotificationVoiceName(context: Context): String? =

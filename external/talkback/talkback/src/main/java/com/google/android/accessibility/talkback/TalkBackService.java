@@ -163,6 +163,7 @@ import com.google.android.accessibility.talkback.interpreters.ManualScrollInterp
 import com.google.android.accessibility.talkback.interpreters.PassThroughModeInterpreter;
 import com.google.android.accessibility.talkback.interpreters.ScrollPositionInterpreter;
 import com.google.android.accessibility.talkback.interpreters.StateChangeEventInterpreter;
+import com.google.android.accessibility.talkback.interpreters.SubtitleReader;
 import com.google.android.accessibility.talkback.interpreters.SubtreeChangeEventInterpreter;
 import com.google.android.accessibility.talkback.interpreters.UiChangeEventInterpreter;
 import com.google.android.accessibility.talkback.ipc.IpcService;
@@ -1973,6 +1974,7 @@ public class TalkBackService extends AccessibilityService
 
     addEventListener(processorEventQueue);
     addEventListener(processorPhoneticLetters);
+    addEventListener(new SubtitleReader(this, pipeline.getFeedbackReturner()));
 
     // Create window event interpreter and announcer.
     windowEventInterpreter = new WindowEventInterpreter(this, displayMonitor);

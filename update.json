@@ -1,13 +1,13 @@
 {
-  "tag_name": "v179",
-  "name": "v179",
-  "body": "Jieshuo/Orion parity: notification queue + summary-only. iOS gestures: 2-finger quadruple tap. Branding cleanup.",
+  "tag_name": "v180",
+  "name": "v180",
+  "body": "Notification filters (white/black list), subtitle reader, web content filter, article mode, favorites/tools, scheduled actions, iOS scrub gesture.",
   "assets": [
     {
-      "name": "blindroid-179.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-179.apk",
-      "sha256": "de2d16679d9365e2d87753aa35c638b2ff07e5000b0835928d01f5e7aefcbf20",
-      "size": 123088139
+      "name": "blindroid-180.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-180.apk",
+      "sha256": "0329ee38d0fb8a6b4baaac25f63fda8da518c6024633bfa68ada8732bc25fbb5",
+      "size": 123119435
     }
   ]
 }

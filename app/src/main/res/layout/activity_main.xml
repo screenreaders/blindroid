@@ -445,6 +445,34 @@
             android:text="@string/switch_notification_summary" />
 
         <TextView
+            android:id="@+id/notificationFilterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:labelFor="@id/notificationFilterSpinner"
+            android:text="@string/notification_filter_label"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/notificationFilterSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/notificationWhitelistButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/notification_whitelist_button" />
+
+        <Button
+            android:id="@+id/notificationBlacklistButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/notification_blacklist_button" />
+
+        <TextView
             android:id="@+id/notificationTtsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -911,6 +939,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="00:00" />
+
+        <TextView
+            android:id="@+id/toolsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/tools_label"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/favoritesManageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/favorites_manage" />
+
+        <Button
+            android:id="@+id/favoritesOpenButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/favorites_open" />
+
+        <Button
+            android:id="@+id/toolsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tools_open" />
+
+        <TextView
+            android:id="@+id/scheduledActionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/scheduled_action_label"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/scheduledActionSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/scheduled_action_enable" />
+
+        <TextView
+            android:id="@+id/scheduledActionTargetLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/scheduledActionSpinner"
+            android:text="@string/scheduled_action_target"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/scheduledActionSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/scheduledActionTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/scheduledActionTimeButton"
+            android:text="@string/scheduled_action_time"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/scheduledActionTimeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="08:00" />
 
         <TextView
             android:id="@+id/updateLabel"

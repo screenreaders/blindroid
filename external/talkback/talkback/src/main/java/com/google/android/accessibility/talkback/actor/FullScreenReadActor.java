@@ -358,18 +358,8 @@ public class FullScreenReadActor {
   }
 
   private boolean isFilteredReadingEnabled() {
-    String filter =
-        SharedPreferencesUtils.getStringPref(
-            prefs,
-            service.getResources(),
-            R.string.pref_read_all_filter_key,
-            R.string.pref_read_all_filter_default);
-    String style =
-        SharedPreferencesUtils.getStringPref(
-            prefs,
-            service.getResources(),
-            R.string.pref_read_all_style_key,
-            R.string.pref_read_all_style_default);
+    String filter = getReadAllFilter();
+    String style = getReadAllStyle();
     return !TextUtils.equals(filter, FILTER_ALL) || TextUtils.equals(style, STYLE_COMPACT);
   }
 
@@ -414,18 +404,8 @@ public class FullScreenReadActor {
   }
 
   private boolean shouldReadNode(AccessibilityNodeInfoCompat node) {
-    String filter =
-        SharedPreferencesUtils.getStringPref(
-            prefs,
-            service.getResources(),
-            R.string.pref_read_all_filter_key,
-            R.string.pref_read_all_filter_default);
-    String style =
-        SharedPreferencesUtils.getStringPref(
-            prefs,
-            service.getResources(),
-            R.string.pref_read_all_style_key,
-            R.string.pref_read_all_style_default);
+    String filter = getReadAllFilter();
+    String style = getReadAllStyle();
     boolean hasText = hasSpeakableText(node);
     boolean isControl = AccessibilityNodeInfoUtils.FILTER_CONTROL.accept(node);
     boolean isImage = isImageNode(node);
@@ -442,6 +422,36 @@ public class FullScreenReadActor {
       return hasText || allowImage;
     }
     return true;
+  }
+
+  private String getReadAllFilter() {
+    if (isArticleModeEnabled()) {
+      return FILTER_TEXT_ONLY;
+    }
+    return SharedPreferencesUtils.getStringPref(
+        prefs,
+        service.getResources(),
+        R.string.pref_read_all_filter_key,
+        R.string.pref_read_all_filter_default);
+  }
+
+  private String getReadAllStyle() {
+    if (isArticleModeEnabled()) {
+      return STYLE_COMPACT;
+    }
+    return SharedPreferencesUtils.getStringPref(
+        prefs,
+        service.getResources(),
+        R.string.pref_read_all_style_key,
+        R.string.pref_read_all_style_default);
+  }
+
+  private boolean isArticleModeEnabled() {
+    return SharedPreferencesUtils.getBooleanPref(
+        prefs,
+        service.getResources(),
+        R.string.pref_read_all_article_mode_key,
+        R.bool.pref_read_all_article_mode_default);
   }
 
   private boolean hasSpeakableText(AccessibilityNodeInfoCompat node) {

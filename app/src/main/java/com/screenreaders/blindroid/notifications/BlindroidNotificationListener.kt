@@ -38,6 +38,7 @@ class BlindroidNotificationListener : NotificationListenerService() {
         if (sbn.packageName == packageName) return
         if (sbn.isOngoing) return
         if (sbn.notification.flags and Notification.FLAG_GROUP_SUMMARY != 0) return
+        if (!isNotificationAllowed(sbn.packageName)) return
         DiagnosticLog.log(this, "notification_posted pkg=${sbn.packageName}")
 
         val activeCall = CallManager.getCall()
@@ -161,6 +162,16 @@ class BlindroidNotificationListener : NotificationListenerService() {
         val volume: Float,
         val voiceName: String?
     )
+
+    private fun isNotificationAllowed(packageName: String): Boolean {
+        return when (Prefs.getNotificationFilterMode(this)) {
+            Prefs.NOTIFICATION_FILTER_WHITELIST ->
+                Prefs.getNotificationWhitelist(this).contains(packageName)
+            Prefs.NOTIFICATION_FILTER_BLACKLIST ->
+                !Prefs.getNotificationBlacklist(this).contains(packageName)
+            else -> true
+        }
+    }
 
     private companion object {
         private const val MAX_QUEUE_SIZE = 8

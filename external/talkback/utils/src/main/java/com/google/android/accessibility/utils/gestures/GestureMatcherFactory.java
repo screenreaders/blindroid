@@ -114,6 +114,7 @@ class GestureMatcherFactory {
     MAPPER_GESTURE_2_FINGER_TRIPLE_TAP(GESTURE_2_FINGER_TRIPLE_TAP, 2, 3, NONE, NONE),
     MAPPER_GESTURE_2_FINGER_QUADRUPLE_TAP(
         GestureManifold.GESTURE_2_FINGER_QUADRUPLE_TAP, 2, 4, NONE, NONE),
+    MAPPER_GESTURE_2_FINGER_SCRUB(GestureManifold.GESTURE_2_FINGER_SCRUB, 2, 0, NONE, NONE),
     MAPPER_GESTURE_2_FINGER_TRIPLE_TAP_AND_HOLD(
         GESTURE_2_FINGER_TRIPLE_TAP_AND_HOLD, 2, 3, true, NONE, NONE),
     // Three-finger taps.
@@ -215,6 +216,9 @@ class GestureMatcherFactory {
       Context context,
       GestureMatchConfig gestureMatchConfig,
       GestureMatcher.StateChangeListener listener) {
+    if (gestureMatchConfig.gestureId == GestureManifold.GESTURE_2_FINGER_SCRUB) {
+      return new TwoFingerScrub(context, gestureMatchConfig.gestureId, listener);
+    }
 
     // 1-finger
     if (gestureMatchConfig.finger == 1) {

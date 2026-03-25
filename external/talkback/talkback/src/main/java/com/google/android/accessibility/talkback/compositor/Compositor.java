@@ -31,6 +31,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.accessibility.talkback.compositor.parsetree.ParseTree;
 import com.google.android.accessibility.talkback.compositor.roledescription.RoleDescriptionExtractor;
 import com.google.android.accessibility.talkback.eventprocessor.ProcessorPhoneticLetters;
+import com.google.android.accessibility.talkback.utils.WebContentFilter;
 import com.google.android.accessibility.utils.AccessibilityEventUtils;
 import com.google.android.accessibility.utils.ImageContents;
 import com.google.android.accessibility.utils.Performance.EventId;
@@ -508,6 +509,9 @@ public class Compositor {
       // TODO: Think about a unified clean up strategy instead of calling clean ups at
       // various places in the code.
       ttsOutput = SpeechCleanupUtils.cleanUp(mContext, ttsOutput);
+      if (WebContentFilter.isEnabled(mContext)) {
+        ttsOutput = WebContentFilter.filter(mContext, ttsOutput);
+      }
       // Compute queueing mode.
       int queueMode = eventFeedback.queueMode();
       if (queueMode == QUEUE_MODE_INTERRUPTIBLE_IF_LONG) {

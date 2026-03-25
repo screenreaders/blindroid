@@ -28,4 +28,22 @@
       android:entries="@array/pref_read_all_style_entries"
       android:entryValues="@array/pref_read_all_style_values" />
 
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_read_all_article_mode_default"
+      android:key="@string/pref_read_all_article_mode_key"
+      android:title="@string/pref_read_all_article_mode_title"
+      android:summary="@string/pref_read_all_article_mode_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_subtitle_reader_default"
+      android:key="@string/pref_subtitle_reader_key"
+      android:title="@string/pref_subtitle_reader_title"
+      android:summary="@string/pref_subtitle_reader_summary" />
+
+  <com.google.android.accessibility.utils.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="@bool/pref_web_content_filter_default"
+      android:key="@string/pref_web_content_filter_key"
+      android:title="@string/pref_web_content_filter_title"
+      android:summary="@string/pref_web_content_filter_summary" />
+
 </PreferenceScreen>

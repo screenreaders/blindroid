@@ -46,6 +46,7 @@ import com.screenreaders.blindroid.face.PickupService
 import com.screenreaders.blindroid.light.LightActivity
 import com.screenreaders.blindroid.navigation.NavigationAssistActivity
 import com.screenreaders.blindroid.obstacle.ObstacleAssistActivity
+import com.screenreaders.blindroid.schedule.ScheduledActionScheduler
 import com.screenreaders.blindroid.update.UpdateChecker
 import com.screenreaders.blindroid.update.UpdateScheduler
 import com.screenreaders.blindroid.util.LowVisionStyler
@@ -133,11 +134,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private data class LowVisionOption(val id: Int, val labelRes: Int)
+    private data class AppEntry(val label: String, val packageName: String)
+    private data class NotificationFilterOption(val mode: Int, val labelRes: Int)
+    private data class ScheduledActionOption(val id: String?, val labelRes: Int)
     private val lowVisionOptions = listOf(
         LowVisionOption(LowVisionStyler.STYLE_DEFAULT, R.string.low_vision_theme_default),
         LowVisionOption(LowVisionStyler.STYLE_DARK, R.string.low_vision_theme_dark),
         LowVisionOption(LowVisionStyler.STYLE_LIGHT, R.string.low_vision_theme_light),
         LowVisionOption(LowVisionStyler.STYLE_YELLOW, R.string.low_vision_theme_yellow)
+    )
+    private val notificationFilterOptions = listOf(
+        NotificationFilterOption(Prefs.NOTIFICATION_FILTER_ALL, R.string.notification_filter_all),
+        NotificationFilterOption(Prefs.NOTIFICATION_FILTER_WHITELIST, R.string.notification_filter_whitelist),
+        NotificationFilterOption(Prefs.NOTIFICATION_FILTER_BLACKLIST, R.string.notification_filter_blacklist)
+    )
+    private val scheduledActionOptions = listOf(
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_NONE, R.string.scheduled_action_target_none),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_MAIN, R.string.scheduled_action_target_main),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_NAVIGATION, R.string.scheduled_action_target_navigation),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_DOCUMENTS, R.string.scheduled_action_target_documents),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_FACE, R.string.scheduled_action_target_face),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_OBSTACLE, R.string.scheduled_action_target_obstacle),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_CURRENCY, R.string.scheduled_action_target_currency),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_LIGHT, R.string.scheduled_action_target_light),
+        ScheduledActionOption(ScheduledActionScheduler.TARGET_SCAN, R.string.scheduled_action_target_scan)
     )
     private data class LowVisionPreset(
         val id: Int,
@@ -190,6 +210,9 @@ class MainActivity : AppCompatActivity() {
         binding.brailleButton.setOnClickListener {
             startActivity(Intent(this, com.screenreaders.blindroid.braille.BrailleSettingsActivity::class.java))
         }
+        binding.favoritesManageButton.setOnClickListener { showFavoritesManageDialog() }
+        binding.favoritesOpenButton.setOnClickListener { showFavoritesDialog() }
+        binding.toolsButton.setOnClickListener { showToolsDialog() }
 
         binding.announceSwitch.isChecked = Prefs.isAnnounceEnabled(this)
         binding.speakerSwitch.isChecked = Prefs.isAutoSpeakerEnabled(this)
@@ -205,6 +228,9 @@ class MainActivity : AppCompatActivity() {
         binding.notificationSummarySwitch.isChecked = Prefs.isNotificationSummaryOnlyEnabled(this)
         binding.notificationQueueSwitch.isEnabled = binding.notificationSwitch.isChecked
         binding.notificationSummarySwitch.isEnabled = binding.notificationSwitch.isChecked
+        binding.notificationFilterSpinner.isEnabled = binding.notificationSwitch.isChecked
+        binding.notificationWhitelistButton.isEnabled = binding.notificationSwitch.isChecked
+        binding.notificationBlacklistButton.isEnabled = binding.notificationSwitch.isChecked
         binding.unlockedSwitch.isChecked = Prefs.isReadWhenUnlockedEnabled(this)
         binding.privacySwitch.isChecked = Prefs.isPrivacyModeEnabled(this)
         binding.privacyTitleSwitch.isChecked = Prefs.isPrivacyTitleOnlyEnabled(this)
@@ -213,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         binding.launcherSwitch.isChecked = isLauncherEnabled()
         binding.moduleShortcutsSwitch.isChecked = Prefs.isModuleShortcutsEnabled(this)
         binding.diagnosticsSwitch.isChecked = Prefs.isDiagnosticsEnabled(this)
+        binding.scheduledActionSwitch.isChecked = Prefs.isScheduledActionEnabled(this)
         binding.faceSwitch.isChecked = Prefs.isFaceAssistEnabled(this)
         binding.facePickupSwitch.isChecked = Prefs.isFacePickupEnabled(this)
         binding.answerPickupSwitch.isChecked = Prefs.isAnswerPickupEnabled(this)
@@ -225,6 +252,9 @@ class MainActivity : AppCompatActivity() {
         initGestureCalibrationUi()
         PickupService.sync(this)
         initLowVisionUi()
+        initNotificationFilterUi()
+        initToolsUi()
+        initScheduledActionUi()
         binding.diagnosticsViewButton.setOnClickListener {
             startActivity(Intent(this, DiagnosticsActivity::class.java))
         }
@@ -290,6 +320,8 @@ class MainActivity : AppCompatActivity() {
             logSettingChange("notifications_read", isChecked)
             binding.notificationQueueSwitch.isEnabled = isChecked
             binding.notificationSummarySwitch.isEnabled = isChecked
+            binding.notificationFilterSpinner.isEnabled = isChecked
+            updateNotificationFilterButtons(isChecked)
             if (isChecked && !isNotificationAccessEnabled()) {
                 openNotificationAccessSettings()
             }
@@ -303,6 +335,14 @@ class MainActivity : AppCompatActivity() {
         binding.notificationSummarySwitch.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setNotificationSummaryOnlyEnabled(this, isChecked)
             logSettingChange("notifications_summary_only", isChecked)
+        }
+
+        binding.notificationWhitelistButton.setOnClickListener {
+            showNotificationListDialog(isWhitelist = true)
+        }
+
+        binding.notificationBlacklistButton.setOnClickListener {
+            showNotificationListDialog(isWhitelist = false)
         }
 
         binding.unlockedSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -1557,6 +1597,250 @@ class MainActivity : AppCompatActivity() {
 
         updateChimeTimeButtons()
         setChimeControlsEnabled(Prefs.isChimeEnabled(this))
+    }
+
+    private fun initNotificationFilterUi() {
+        val labels = notificationFilterOptions.map { getString(it.labelRes) }
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            labels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.notificationFilterSpinner.adapter = adapter
+
+        val currentMode = Prefs.getNotificationFilterMode(this)
+        val index = notificationFilterOptions.indexOfFirst { it.mode == currentMode }.let {
+            if (it >= 0) it else 0
+        }
+        binding.notificationFilterSpinner.setSelection(index)
+
+        binding.notificationFilterSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val mode = notificationFilterOptions.getOrElse(position) {
+                        notificationFilterOptions.first()
+                    }.mode
+                    Prefs.setNotificationFilterMode(this@MainActivity, mode)
+                    updateNotificationFilterButtons(binding.notificationSwitch.isChecked)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        updateNotificationFilterButtons(binding.notificationSwitch.isChecked)
+    }
+
+    private fun updateNotificationFilterButtons(notificationsEnabled: Boolean) {
+        val mode = Prefs.getNotificationFilterMode(this)
+        binding.notificationWhitelistButton.isEnabled =
+            notificationsEnabled && mode == Prefs.NOTIFICATION_FILTER_WHITELIST
+        binding.notificationBlacklistButton.isEnabled =
+            notificationsEnabled && mode == Prefs.NOTIFICATION_FILTER_BLACKLIST
+    }
+
+    private fun showNotificationListDialog(isWhitelist: Boolean) {
+        val apps = loadInstalledApps(includeNonLaunchable = true)
+        val selected = if (isWhitelist) {
+            Prefs.getNotificationWhitelist(this).toMutableSet()
+        } else {
+            Prefs.getNotificationBlacklist(this).toMutableSet()
+        }
+        val labels = apps.map { it.label }.toTypedArray()
+        val checked = BooleanArray(apps.size) { selected.contains(apps[it].packageName) }
+        val titleRes =
+            if (isWhitelist) R.string.notification_whitelist_title else R.string.notification_blacklist_title
+        AlertDialog.Builder(this)
+            .setTitle(titleRes)
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked ->
+                val pkg = apps[which].packageName
+                if (isChecked) {
+                    selected.add(pkg)
+                } else {
+                    selected.remove(pkg)
+                }
+            }
+            .setPositiveButton(R.string.notification_list_save) { _, _ ->
+                if (isWhitelist) {
+                    Prefs.setNotificationWhitelist(this, selected)
+                } else {
+                    Prefs.setNotificationBlacklist(this, selected)
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun initToolsUi() {
+        // Placeholder for future tooling setup.
+    }
+
+    private fun showFavoritesManageDialog() {
+        val apps = loadInstalledApps(includeNonLaunchable = false)
+        val selected = Prefs.getFavoriteApps(this).toMutableSet()
+        val labels = apps.map { it.label }.toTypedArray()
+        val checked = BooleanArray(apps.size) { selected.contains(apps[it].packageName) }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.favorites_manage)
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked ->
+                val pkg = apps[which].packageName
+                if (isChecked) {
+                    selected.add(pkg)
+                } else {
+                    selected.remove(pkg)
+                }
+            }
+            .setPositiveButton(R.string.notification_list_save) { _, _ ->
+                Prefs.setFavoriteApps(this, selected)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun showFavoritesDialog() {
+        val favorites = Prefs.getFavoriteApps(this)
+        val apps = loadInstalledApps(includeNonLaunchable = false)
+            .filter { favorites.contains(it.packageName) }
+        if (apps.isEmpty()) {
+            Toast.makeText(this, getString(R.string.favorites_empty), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val labels = apps.map { it.label }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.favorites_open)
+            .setItems(labels) { _, which ->
+                val pkg = apps[which].packageName
+                val intent = packageManager.getLaunchIntentForPackage(pkg)
+                if (intent != null) {
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, pkg, Toast.LENGTH_SHORT).show()
+                }
+            }
+            .show()
+    }
+
+    private fun showToolsDialog() {
+        val actions = listOf(
+            getString(R.string.tools_action_export),
+            getString(R.string.tools_action_import),
+            getString(R.string.tools_action_logs),
+            getString(R.string.tools_action_updates),
+            getString(R.string.tools_action_data)
+        )
+        AlertDialog.Builder(this)
+            .setTitle(R.string.tools_dialog_title)
+            .setItems(actions.toTypedArray()) { _, which ->
+                when (which) {
+                    0 -> exportSettingsLauncher.launch("blindroid-settings.json")
+                    1 -> importSettingsLauncher.launch(arrayOf("application/json"))
+                    2 -> startActivity(Intent(this, DiagnosticsActivity::class.java))
+                    3 -> startActivity(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
+                    4 -> startActivity(
+                        Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.parse("package:$packageName")
+                        )
+                    )
+                }
+            }
+            .show()
+    }
+
+    private fun initScheduledActionUi() {
+        val labels = scheduledActionOptions.map { getString(it.labelRes) }
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            labels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.scheduledActionSpinner.adapter = adapter
+
+        val currentTarget = Prefs.getScheduledActionTarget(this)
+        val index = scheduledActionOptions.indexOfFirst { it.id == currentTarget }.let {
+            if (it >= 0) it else 0
+        }
+        binding.scheduledActionSpinner.setSelection(index)
+
+        binding.scheduledActionSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val option = scheduledActionOptions.getOrElse(position) {
+                        scheduledActionOptions.first()
+                    }
+                    Prefs.setScheduledActionTarget(this@MainActivity, option.id)
+                    ScheduledActionScheduler.schedule(this@MainActivity)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        binding.scheduledActionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Prefs.setScheduledActionEnabled(this, isChecked)
+            updateScheduledActionControls(isChecked)
+            if (isChecked) {
+                maybeRequestExactAlarmPermission()
+            }
+            ScheduledActionScheduler.schedule(this)
+        }
+
+        binding.scheduledActionTimeButton.setOnClickListener {
+            showScheduledActionTimePicker()
+        }
+
+        updateScheduledActionTimeButton()
+        updateScheduledActionControls(Prefs.isScheduledActionEnabled(this))
+        ScheduledActionScheduler.schedule(this)
+    }
+
+    private fun updateScheduledActionControls(enabled: Boolean) {
+        binding.scheduledActionSpinner.isEnabled = enabled
+        binding.scheduledActionTimeButton.isEnabled = enabled
+    }
+
+    private fun showScheduledActionTimePicker() {
+        val current = Prefs.getScheduledActionTime(this)
+        val hour = current / 60
+        val minute = current % 60
+        TimePickerDialog(
+            this,
+            { _, selectedHour, selectedMinute ->
+                val total = (selectedHour * 60) + selectedMinute
+                Prefs.setScheduledActionTime(this, total)
+                updateScheduledActionTimeButton()
+                ScheduledActionScheduler.schedule(this)
+            },
+            hour,
+            minute,
+            true
+        ).show()
+    }
+
+    private fun updateScheduledActionTimeButton() {
+        val minutes = Prefs.getScheduledActionTime(this)
+        binding.scheduledActionTimeButton.text = formatMinutes(minutes)
+    }
+
+    private fun loadInstalledApps(includeNonLaunchable: Boolean): List<AppEntry> {
+        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        val entries = apps.map { appInfo ->
+            val label = packageManager.getApplicationLabel(appInfo).toString()
+            AppEntry(label, appInfo.packageName)
+        }.filter { entry ->
+            includeNonLaunchable || packageManager.getLaunchIntentForPackage(entry.packageName) != null
+        }.sortedBy { it.label.lowercase(Locale.getDefault()) }
+        return entries
     }
 
     private fun setChimeControlsEnabled(enabled: Boolean) {

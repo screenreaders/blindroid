@@ -48,6 +48,7 @@ public class GestureManifold implements GestureMatcher.StateChangeListener {
   public static final int GESTURE_TAP_HOLD_AND_2ND_FINGER_BACKWARD_DOUBLE_TAP = -5;
   public static final int GESTURE_TOUCH_EXPLORE = -6;
   public static final int GESTURE_2_FINGER_QUADRUPLE_TAP = -7;
+  public static final int GESTURE_2_FINGER_SCRUB = -8;
 
   private static final String LOG_TAG = "GestureManifold";
 
