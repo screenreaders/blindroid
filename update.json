@@ -1,13 +1,13 @@
 {
-  "tag_name": "v159",
-  "name": "v159",
-  "body": "Floating menu action now supports Announce time and Announce battery.",
+  "tag_name": "v160",
+  "name": "v160",
+  "body": "Floating menu action now supports Media control and Copy last spoken.",
   "assets": [
     {
-      "name": "blindroid-159.apk",
-      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-159.apk",
-      "sha256": "0027bbe304c03f80a23b4642837259290b79ff19a82f94fd3f9223f49ecaf5ed",
-      "size": 123087115
+      "name": "blindroid-160.apk",
+      "browser_download_url": "https://raw.githubusercontent.com/screenreaders/blindroid/main/blindroid-160.apk",
+      "sha256": "8535bbf8bfbda671adc3c89ae84f9b282294965baa0fe2090da34523649e2899",
+      "size": 123087111
     }
   ]
 }

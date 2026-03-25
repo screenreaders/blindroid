@@ -460,6 +460,8 @@
     <string name="pref_floating_menu_action_toggle_voice_feedback">Toggle voice feedback</string>
     <string name="pref_floating_menu_action_announce_time">Announce time</string>
     <string name="pref_floating_menu_action_announce_battery">Announce battery</string>
+    <string name="pref_floating_menu_action_media_control">Media control</string>
+    <string name="pref_floating_menu_action_copy_last_spoken">Copy last spoken</string>
     <!-- Preference for content settings screen. [CHAR_LIMIT=40] -->
     <string name="pref_content_settings_title">Content &amp; OCR</string>
     <!-- Summary for content settings screen. [CHAR_LIMIT=NONE] -->

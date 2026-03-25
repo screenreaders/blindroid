@@ -43,6 +43,8 @@
     <item>@string/pref_floating_menu_action_toggle_voice_feedback</item>
     <item>@string/pref_floating_menu_action_announce_time</item>
     <item>@string/pref_floating_menu_action_announce_battery</item>
+    <item>@string/pref_floating_menu_action_media_control</item>
+    <item>@string/pref_floating_menu_action_copy_last_spoken</item>
   </string-array>
 
   <string-array name="pref_floating_menu_action_values" translatable="false">
@@ -63,6 +65,8 @@
     <item>@string/pref_floating_menu_action_value_toggle_voice_feedback</item>
     <item>@string/pref_floating_menu_action_value_announce_time</item>
     <item>@string/pref_floating_menu_action_value_announce_battery</item>
+    <item>@string/pref_floating_menu_action_value_media_control</item>
+    <item>@string/pref_floating_menu_action_value_copy_last_spoken</item>
   </string-array>
 
   <string-array name="pref_read_all_filter_entries">
